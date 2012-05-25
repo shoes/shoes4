@@ -1,0 +1,1 @@
+../simple-stripes.rb
