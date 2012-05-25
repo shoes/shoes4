@@ -1,7 +1,10 @@
+
 shoes4
 ======
 
 Shoes 4
+
+
 
 Hacking
 -------
@@ -34,3 +37,19 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt            # Run the specs for the Swt implementation
     $ rake spec[Shape]         # Run all the specs for Shape
     $ rake spec:shoes[Shape]   # Run just the DSL specs for Shape
+    
+Running a Shoes App
+-------------------
+
+Shoes 4 comes with a command-line app runner. Just pass it the filename of your Shoes app.
+
+    $ bin/swt-shoooes samples/working/simple-sound.rb
+
+Build Status
+------------
+
+[![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=master)](http://travis-ci.org/shoes/shoes4)
+
+
+
+
