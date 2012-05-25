@@ -1,0 +1,47 @@
+# Original contributor: Michael Fellinger <m.fellinger@gmail.com>
+# Updated by: 
+# Tapio Saarinen <admin@bitlong.org>
+# Steve Klabnik <steve@steveklabnik.com>
+# Michael Fellinger <m.fellinger@gmail.com>
+
+pkgname=shoes
+pkgver=3.0
+pkgrel=1
+pkgdesc="The best little GUI toolkit, for Ruby."
+url="http://shoesrb.com/"
+arch=(i686 x86_64)
+license="MIT"
+depends=('ruby' 'giflib' 'gtk2' 'curl' 'portaudio' 'tk')
+makedepends=('git')
+conflicts=('shoes')
+replaces=('shoes')
+provides=('shoes')
+backup=()
+install=
+source=()
+md5sums=()
+
+_pkgname=shoes
+_gitrepo="git://github.com/shoes/shoes.git"
+
+build() {
+  cd $srcdir
+
+  msg "Getting source..."
+  if [ -d $_pkgname ]; then
+    cd $_pkgname
+    git pull || return 1
+  else
+    git clone $_gitrepo $_pkgname || return 1
+    cd $_pkgname
+  fi
+
+  rake
+  cd dist
+
+  mkdir -p $pkgdir/usr/{bin,lib/shoes}
+  cp -r * $pkgdir/usr/lib/shoes/
+
+  ln -s /usr/lib/shoes/shoes $pkgdir/usr/bin/shoes
+	install -D -m644 $srcdir/$_pkgname/COPYING $pkgdir/usr/share/licenses/$pkgname/LICENSE
+}

@@ -1,0 +1,167 @@
+body {
+  font-family: verdana, arial, sans-serif;
+  background: #DDD;
+  margin: 0; padding: 0;
+}
+a {
+  color: #378;
+  text-decoration: none;
+}
+a.hi {
+  color: #C30;
+  font-weight: bold;
+}
+a:hover {
+  text-decoration: underline;
+}
+#main {
+  width: 720px;
+  margin: 40px auto;
+}
+.sidebar {
+  position: fixed;
+  width: 120px;
+}
+#manual {
+  float: right;
+  width: 540px;
+  padding: 20px;
+  border: solid 1px #BBB;
+  background: #eee;
+  margin-bottom: 80px;
+}
+#manual li {
+  margin-bottom: 8px;
+}
+h1 {
+  font-weight: normal;
+  font-size: 42px;
+  margin-top: 0;
+}
+h2 {
+  font-weight: normal;
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+}
+h4 {
+  font-weight: normal;
+  font-size: 32px;
+  margin-bottom: 0;
+}
+#manual img {
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+}
+div.method {
+  background: #333;
+  padding: 4px;
+  color: #CCC;
+}
+div.method a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.intro {
+  font-size: 140%;
+  border-bottom: solid 1px #BBB;
+}
+.sidebar ul {
+  list-style: none;
+  text-align: center;
+  margin: 0; padding: 10px;
+  font-size: 18px;
+}
+.sidebar ul.sub {
+  margin: 6px 0; padding: 0;
+  border-left: solid 1px #CCC;
+  border-right: solid 1px #CCC;
+}
+.sidebar ul.sub li {
+  margin: 0; padding: 0;
+  font-size: 14px;
+}
+.sidebar ul.sub a {
+  font-weight: normal;
+}
+.sidebar a {
+  color: #666;
+  font-weight: bold;
+  text-decoration: none;
+}
+.sidebar .prime {
+  display: block;
+  color: #BBB;
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+.sidebar a:hover {
+  color: black;
+}
+div.color {
+  width: 31%;
+  float: left;
+  text-align: center;
+  padding: 6px;
+  font-size: 80%;
+}
+div.color h3, div.color p {
+  margin: 4px;
+}
+p.next {
+  clear: both;
+  border-top: solid 1px #BBB;
+  text-align: right;
+  font-size: 120%;
+  padding: 8px;
+}
+
+/* code highlighting */
+pre {
+  background: white;
+  padding: 8px 0;
+  border: solid 1px #ddd;
+}
+pre .comment, .ruby .comment {
+  color: #696;
+}                                                                                                            pre .string, .ruby .string {
+  color: teal;
+}
+pre .constant, .ruby .constant {
+  font-weight: bold;
+}
+pre .symbol, .ruby .symbol {
+  color: green;
+}
+pre .keywords, .ruby .keywords {
+  color: #662;
+}
+pre .global, pre .ivar, .ruby .ivar {
+  color: #F60;
+}
+pre .brackets, .ruby .brackets {
+  color: #993;
+}
+
+/* index pages */
+#index .hibox {
+  background: white;
+  border: solid 1px #ddd;
+}
+#index .hibox p {
+  font-size: 14px;
+  margin: 8px;
+}
+#index h1 {
+  margin: 0;
+}
+#index ul {
+  list-style: none;
+  font-size: 13px;
+}
+#index ul a.hi,
+#index ul a.lo {
+  font-size: 18px;
+}
