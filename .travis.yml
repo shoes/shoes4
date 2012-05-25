@@ -1,5 +1,4 @@
-before_script: "sudo aptitude -y -q install libcairo2-dev libpixman-1-dev libpango1.0-dev libgif-dev libjpeg-dev libgtk2.0-dev vlc libvlc-dev portaudio19-dev libsqlite3-dev libcurl4-openssl-dev makeself curl"
-script: "bundle exec rake && bundle exec rake features"
-rvm: 1.9.2
+script: "rake spec:all"
+rvm: jruby
 notifications:
   irc: "irc.freenode.org#shoes"
