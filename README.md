@@ -12,7 +12,7 @@ Hacking
 
 2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org)
 
-        $ rvm install jruby 1.6.5
+        $ rvm install jruby
 
 3. Set up your local environment
 
