@@ -7,7 +7,7 @@ describe Shoes::Flow do
 
   describe "initialize" do
     it "should set accessors" do
-      input_block = lambda {}
+      input_block = Proc.new {}
       input_opts = {:width => 131, :height => 137, :margin => 143}
       flow = Shoes::Flow.new("parent_container", "parent_gui_container", input_opts, input_block)
       flow.parent_container.should == "parent_container"

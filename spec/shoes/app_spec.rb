@@ -7,7 +7,7 @@ describe Shoes::App do
   describe "initialize" do
 
     it "should set accessors from constructor args" do
-      input_blk = lambda {}
+      input_blk = Proc.new {}
       args = {:args => true}
       Shoes::App.any_instance.stub(:flow)
       app = Shoes::App.new args, &input_blk
@@ -18,7 +18,7 @@ describe Shoes::App do
     end
 
     it "should set default accessor values" do
-      input_blk = lambda {}
+      input_blk = Proc.new {}
       args = {}
       Shoes::App.any_instance.stub(:flow)
       app = Shoes::App.new args, &input_blk
@@ -27,7 +27,7 @@ describe Shoes::App do
       app.title.should_not be_nil
     end
     it "should set accessors from opts" do
-      input_blk = lambda {}
+      input_blk = Proc.new {}
       args = {:width => 1, :height => 2, :title => "Shoes::App Spec"}
       Shoes::App.any_instance.stub(:flow)
       app = Shoes::App.new args, &input_blk

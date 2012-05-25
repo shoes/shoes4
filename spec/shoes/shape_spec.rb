@@ -8,7 +8,7 @@ describe Shoes::Shape do
 
   describe "octagon" do
     let(:draw) {
-      lambda {
+      Proc.new {
         xs = [200, 300, 370, 370, 300, 200, 130, 130]
         ys = [100, 100, 170, 270, 340, 340, 270, 170]
         move_to xs.first, ys.first
