@@ -1,0 +1,32 @@
+= BROWN SHOES NEEDS A NEW RELEASE SCHEDULE!!
+* Name Suggestions anyone?
+
+= Policeman
+== 17th August, 2010
+* Move to Ruby 1.9.1
+* General stability improvements
+* Updated all dependancies
+* Ported OSX to Cocoa
+* Now works with Windows Vista and Windows 7
+
+= Raisins (0.r1134)
+== 5th December, 2008
+<http://shoooes.net/about/raisins>
+* Built-in Shoes manual. (Alt-?)
+* Error console. (Alt-/)
+* In-memory and on-disk image cache.
+* Asynchronous download method.
+* External font support.
+* Packager for building EXE, DMG, RUN and SHY.
+* Effects (blurs, shadows, glows).
+* Arbitrary shape method.
+* Image blocks.
+* Switched from Carbon to Cocoa.
+* RubyGems integration.
+
+= Curious (0.r396)
+== 8th January, 2008
+* First official release of Shoes.
+* Support for OS X, Win32 and GTK+.
+* Scrolling stacks newly added.
+* VLC embedded for Video.

@@ -1,0 +1,40 @@
+## MAC OS
+.DS_Store
+
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+tags
+*.bundle
+*.so
+
+## BUNDLER
+.bundle
+
+## INTELLIJ/RUBYMINE
+.idea
+
+## PROJECT::GENERAL
+coverage
+rdoc
+pkg
+
+## PROJECT::SPECIFIC
+*.o
+*.obj
+*.res
+bin/main.c
+shoes/version.h
+deps
+dist
+pkg
+*.app
+docs-*
