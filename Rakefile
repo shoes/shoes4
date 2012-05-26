@@ -8,6 +8,7 @@ JRuby.runtime.instance_config.runRubyInProcess = false
 
 # thanks Dan Lucraft!
 def jruby_run(cmd, swt = false)
+  puts "swt: #{swt.inspect}"
   opts = "-J-XstartOnFirstThread" if swt && Config::CONFIG["host_os"] =~ /darwin/
 
   # see https://github.com/jruby/jruby/wiki/FAQs
@@ -84,7 +85,7 @@ namespace :spec do
   Limit the examples to specific :modules : "
   task "shoes", [:module] do |t, args|
     argh = args.to_hash
-    files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
+    files = Dir['spec/shoes/*_spec.rb'].join ' '
     jruby_rspec(files, argh)
   end
 
