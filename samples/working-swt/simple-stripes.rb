@@ -1,1 +1,1 @@
-../simple-stripes.rb
+require "samples/simple-stripes"

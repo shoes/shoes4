@@ -58,15 +58,17 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt            # Run the specs for the Swt implementation
     $ rake spec[Shape]         # Run all the specs for Shape
     $ rake spec:shoes[Shape]   # Run just the DSL specs for Shape
+
+**Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
     
 Running a Shoes App
 -------------------
 
 Shoes 4 comes with a command-line app runner. Just pass it the filename of your Shoes app.
 
-    $ bin/swt-shoooes samples/working/simple-sound.rb
+    $ bin/swt-shoooes samples/working-swt/simple-sound.rb
 
-**Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
+**Note:** For Windows, `C:\tmp\shoes4>bin\swt-shoooes samples\working-swt\simple-sound.rb`
 
 Build Status
 ------------

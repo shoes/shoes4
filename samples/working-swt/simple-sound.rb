@@ -1,1 +1,1 @@
-../simple-sound.rb
+require "samples/simple-sound"
