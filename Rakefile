@@ -76,14 +76,16 @@ namespace :spec do
   task "swt", [:module] do |t, args|
     argh = args.to_hash
     argh[:swt] = true
-    jruby_rspec("spec/swt_shoes/*_spec.rb", argh)
+    files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
+    jruby_rspec(files, argh)
   end
 
   desc "Specs for base Shoes libraries 
   Limit the examples to specific :modules : "
   task "shoes", [:module] do |t, args|
     argh = args.to_hash
-    jruby_rspec("spec/shoes/*_spec.rb", argh)
+    files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
+    jruby_rspec(files, argh)
   end
 
 end

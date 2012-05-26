@@ -66,6 +66,8 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
     $ bin/swt-shoooes samples/working/simple-sound.rb
 
+**Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
+
 Build Status
 ------------
 
