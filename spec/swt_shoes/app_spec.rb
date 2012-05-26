@@ -1,4 +1,3 @@
-require "spec_helper"
 require "swt_shoes/spec_helper"
 
 describe SwtShoes::App do

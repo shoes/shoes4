@@ -1,6 +1,4 @@
-require 'spec_helper'
-require 'shoes/line'
-require 'white_shoes'
+require 'shoes/spec_helper'
 
 describe Shoes::Line do
   describe "basic" do

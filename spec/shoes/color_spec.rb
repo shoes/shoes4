@@ -1,4 +1,4 @@
-require 'shoes/color'
+require 'shoes/spec_helper'
 
 describe Shoes::Color do
 

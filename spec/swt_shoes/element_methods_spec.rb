@@ -21,16 +21,6 @@ describe "Basic Element Methods" do
     }
   }
 
-
-  shared_examples_for "paintable" do
-    it "registers for painting" do
-      gui_container.should_receive(:add_paint_listener) do |callback|
-        callback.should be_lambda
-      end
-      subject
-    end
-  end
-
   describe "line" do
     specify "creates a Shoes::Line" do
       gui_container.should_receive(:add_paint_listener)

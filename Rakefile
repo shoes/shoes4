@@ -8,12 +8,11 @@ JRuby.runtime.instance_config.runRubyInProcess = false
 
 # thanks Dan Lucraft!
 def jruby_run(cmd, swt = false)
-  puts "swt: #{swt.inspect}"
   opts = "-J-XstartOnFirstThread" if swt && Config::CONFIG["host_os"] =~ /darwin/
 
   # see https://github.com/jruby/jruby/wiki/FAQs
   # "How can I increase the heap/memory size when launching a sub-JRuby?"
-  sh( "jruby --debug --1.9 #{opts} -S #{cmd}" )
+  sh( "jruby --debug --1.9 -Ispec #{opts} -S #{cmd}" )
 end
 
 def rspec(files, options = "")

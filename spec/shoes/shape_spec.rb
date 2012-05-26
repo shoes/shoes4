@@ -1,6 +1,4 @@
-require 'spec_helper'
-require 'shoes/shape'
-require 'white_shoes'
+require 'shoes/spec_helper'
 
 describe Shoes::Shape do
   it_behaves_like "object with stroke"

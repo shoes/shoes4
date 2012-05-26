@@ -1,6 +1,4 @@
-require "spec_helper"
-
-require "white_shoes"
+require 'shoes/spec_helper'
 
 describe Shoes::Flow do
     

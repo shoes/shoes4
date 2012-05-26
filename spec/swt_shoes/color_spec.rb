@@ -1,5 +1,4 @@
-require 'swt_shoes/color'
-require 'shoes/color'
+require 'swt_shoes/spec_helper'
 
 describe SwtShoes::Color do
   subject { Shoes::COLORS[:salmon].to_native }

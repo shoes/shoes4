@@ -1,6 +1,4 @@
-require 'spec_helper'
-require 'shoes/oval'
-require 'white_shoes'
+require 'shoes/spec_helper'
 
 describe Shoes::Oval do
   describe "basic" do

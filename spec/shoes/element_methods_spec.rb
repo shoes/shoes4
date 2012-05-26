@@ -1,9 +1,6 @@
-require_relative 'spec_helper'
-require "shoes/color"
-require 'shoes/element_methods'
-require 'shoes/configuration'
+require 'shoes/spec_helper'
 
-describe "Basic Element Methods" do
+describe Shoes::ElementMethods do
   class ElementMethodsShoeLaces
     attr_accessor :gui_container
     attr_reader :style
