@@ -3,7 +3,7 @@ require 'java'
 require 'rubygems'
 require 'facets/hash'
 
-require 'lib/log4j/log4j-1.2.16.jar'
+require 'support/log4j-1.2.16.jar'
 require 'log4jruby'
 require 'log4jruby/logger_for_class'
 
