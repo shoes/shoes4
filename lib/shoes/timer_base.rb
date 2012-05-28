@@ -1,5 +1,26 @@
 module Shoes
   class TimerBase
-    # To change this template use File | Settings | File Templates.
+    def initialize gui_container, opts, &blk
+      @gui_container = gui_container
+      @blk = blk
+      @stopped = false
+      gui_init
+    end
+
+    def start
+      @stopped = false
+    end
+
+    def stop
+      @stopped = true
+    end
+
+    def stopped?
+      @stopped
+    end
+
+    def toggle
+     @stopped = !@stopped
+    end
   end
 end

@@ -20,7 +20,7 @@ end
 require 'shoes/app'
 #require 'shoes/native'
 #require 'shoes/element_methods'
-#require 'shoes/animation'
+require 'shoes/animation'
 #require 'shoes/runnable_block'
 #require 'shoes/timer_base'
 #require 'shoes/layout'

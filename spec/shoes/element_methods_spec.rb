@@ -1,6 +1,9 @@
-require 'shoes/spec_helper'
+require_relative 'spec_helper'
+require "shoes/color"
+require 'shoes/element_methods'
+require 'shoes/configuration'
 
-describe Shoes::ElementMethods do
+describe "Basic Element Methods" do
   class ElementMethodsShoeLaces
     attr_accessor :gui_container
     attr_reader :style
@@ -152,6 +155,34 @@ describe Shoes::ElementMethods do
         style[:fill].should eq(color)
       end
       app.oval(10, 10, 100, 100)
+    end
+  end
+
+  describe "animate" do
+    let(:app) { ElementMethodsShoeLaces.new }
+
+    shared_examples_for "basic" do
+      it { should be_an_instance_of(Shoes::Animation) }
+    end
+
+    shared_examples_for "10fps" do
+      its(:framerate) { should eq(10) }
+    end
+
+    context "defaults" do
+      subject { app.animate {} }
+      it_behaves_like "basic"
+      its(:framerate) { should eq(24) }
+    end
+
+    context "with numeric argument" do
+      subject { app.animate(10) {} }
+      it_behaves_like "basic"
+      it_behaves_like "10fps"
+    end
+
+    context "with hash argument" do
+
     end
   end
   #it "Should return 0 for left for button_one" do

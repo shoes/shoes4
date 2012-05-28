@@ -1,5 +1,6 @@
 
 #require 'white_shoes/base'
+require 'white_shoes/animation'
 require 'white_shoes/app'
 require 'white_shoes/flow'
 require 'white_shoes/button'

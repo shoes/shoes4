@@ -4,31 +4,26 @@ require 'shoes/timer_base'
 module Shoes
   class Animation < TimerBase
 
-    import javax.swing.Timer
-
-    attr_reader :jtimer
-
-    def initialize this, fps, &blk
-      ms_per_frame = 1000 / fps
-
-      if block_given?
-        @runnable = RunnableBlock.new(this, blk)
-        @jtimer = Timer.new(ms_per_frame, @runnable )
-
-        #@runnable.init
-        @jtimer.start
-      end
+    # Creates a new Animation.
+    #
+    # Arguments
+    #
+    # gui_container - The gui element that is the parent of this animation
+    # opts          - Either an integer, representing the framerate (frames per
+    #                 second) of the animation, or a Hash of options. Right now,
+    #                 framerate is the only supported option. If no framerate
+    #                 is provided, the default is 24.
+    # blk           - A block of code to be executed for each frame of the
+    #                 animation.
+    #
+    def initialize gui_container, *opts, &blk
+      @current_frame = 0
+      @style = opts.last.class == Hash ? opts.pop : {}
+      @style[:framerate] = opts.first if opts.length == 1
+      @framerate = @style[:framerate] || 24
+      super gui_container, opts, &blk
     end
 
-    def stop
-      #@runnable.stop
-      @jtimer.stop
-    end
-
-    def start
-      #@runnable.start
-      @jtimer.start
-    end
-
+    attr_reader :framerate
   end
 end

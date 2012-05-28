@@ -34,8 +34,27 @@ module Shoes
       #button
     end
 
-    def animate(fps = 10, &blk)
-      anim = Shoes::Animation.new(self, fps, &blk)
+    # Creates an animation that runs the given block of code.
+    #
+    # Signatures
+    #
+    #   # Defaults to framerate of 24 frames per second
+    #   animate do
+    #     # animation code
+    #   end
+    #
+    #   # Uses a framerate of 10 frames per second
+    #   animate 10 do
+    #     # animation code
+    #   end
+    #
+    #   # Uses a framerate of 10 frames per second
+    #   animate :framerate => 10 do
+    #     # animation code
+    #   end
+    #
+    def animate(opts = {}, &blk)
+      animation = Shoes::Animation.new(gui_container, opts, &blk)
     end
 
     # similar controls as Shoes::Video (#video)
