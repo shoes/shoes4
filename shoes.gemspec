@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "shoes/version"
+require File.expand_path('../lib/shoes/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "shoes"
@@ -10,12 +9,21 @@ Gem::Specification.new do |s|
   s.email       = ["steve@steveklabnik.com"]
   s.homepage    = "http://github.com/shoes/shoes"
   s.summary     = %q{Shoes is the best little GUI toolkit for Ruby.}
-  s.description = %q{Shoes is the best little GUI toolkit for Ruby. This gem is currently a placeholder until we properly gemfiy Shoes.}
-
-  #s.add_development_dependency "watchr"
+  s.description = %q{Shoes is the best little GUI toolkit for Ruby.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   #s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["gemlib"]
+  s.require_paths = ["lib"]
+
+  s.add_dependency "facets"
+  s.add_dependency "log4jruby"
+  s.add_dependency "swt"
+
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec"
+
+  s.add_development_dependency "cucumber"
+  s.add_development_dependency "rspec", "~>2.10"
+  s.add_development_dependency "rake"
 end
