@@ -23,11 +23,13 @@ require 'swt_shoes/color'
 
 module SwtShoes
   module Shoes
-    include Log4jruby::LoggerForClass
-
     def self.app(opts={}, &blk)
       Shoes::App.new(opts, &blk)
-      logger.debug "Exiting Shoes.app"
+      Shoes.logger.debug "Exiting Shoes.app"
+    end
+
+    def self.logger
+      ::Shoes.logger
     end
 
     def self.display
