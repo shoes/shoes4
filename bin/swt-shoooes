@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 jruby --1.9 -J-XstartOnFirstThread -rrubygems -Ilib -rshoes -rshoes/configuration -e \
-  "Shoes.configuration.framework = 'swt_shoes'; require $1"
+  "Shoes.configuration.framework = 'swt_shoes'; require '$1';"
