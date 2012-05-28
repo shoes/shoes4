@@ -1,12 +1,4 @@
-#!/usr/bin/env jruby --1.9 -J-XstartOnFirstThread
-require 'rubygems'
+#!/usr/bin/env sh
 
-$:<< "lib"
-
-require 'shoes'
-require 'shoes/configuration'
-Shoes.configuration.framework = 'swt_shoes'
-
-require ARGV[0]
-
-exit 0
+jruby --1.9 -J-XstartOnFirstThread -rrubygems -Ilib -rshoes -rshoes/configuration -e \
+  "Shoes.configuration.framework = 'swt_shoes'; require $1"
