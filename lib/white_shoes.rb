@@ -8,7 +8,6 @@ require 'white_shoes/line'
 require 'white_shoes/oval'
 require 'white_shoes/shape'
 
-require 'rubygems'
 require 'facets/hash'
 
 module WhiteShoes

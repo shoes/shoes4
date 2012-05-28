@@ -1,6 +1,3 @@
-require 'java'
-
-require 'rubygems'
 require 'facets/hash'
 
 require 'support/log4j-1.2.16.jar'
