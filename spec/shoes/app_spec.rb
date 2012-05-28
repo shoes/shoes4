@@ -80,4 +80,16 @@ describe Shoes::App do
     end
   end
 
+  describe "default styles" do
+    it "is independent among Shoes::App instances" do
+      app1 = Shoes::App.new
+      app2 = Shoes::App.new
+
+      app1.strokewidth 10
+      app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
+
+      # .. but does not affect app2
+      app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
+    end
+  end
 end
