@@ -34,6 +34,7 @@ module Shoes
       
       self.opts = opts
 
+      @app = self
       @style = DEFAULT_STYLE
 
       gui_init

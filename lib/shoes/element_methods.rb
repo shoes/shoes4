@@ -24,11 +24,13 @@ module Shoes
     #end
 
     def flow(opts = {}, &blk)
+      opts.merge! :app => @app
       swt_flow = Shoes::Flow.new(self, self.gui_container, opts, blk)
     end
 
 
     def button(text, opts={}, &blk)
+      opts.merge! :app => @app
       button = Shoes::Button.new(self.gui_container, text, opts, blk)
       #@elements[button.to_s] = button
       #button
@@ -54,6 +56,8 @@ module Shoes
     #   end
     #
     def animate(opts = {}, &blk)
+      opts = {:framerate => opts} unless opts.is_a? Hash
+      opts.merge! :app => @app
       animation = Shoes::Animation.new(gui_container, opts, &blk)
     end
 

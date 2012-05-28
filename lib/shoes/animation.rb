@@ -21,7 +21,7 @@ module Shoes
       @style = opts.last.class == Hash ? opts.pop : {}
       @style[:framerate] = opts.first if opts.length == 1
       @framerate = @style[:framerate] || 24
-      super gui_container, opts, &blk
+      super gui_container, @style, &blk
     end
 
     attr_reader :framerate

@@ -3,6 +3,7 @@ require 'shoes/spec_helper'
 describe Shoes::Shape do
   it_behaves_like "object with stroke"
   it_behaves_like "object with style"
+  it_behaves_like "movable object"
 
   describe "octagon" do
     let(:draw) {
@@ -24,5 +25,7 @@ describe Shoes::Shape do
     its(:bottom) { should eq(340) }
     its(:width) { should eq(240) }
     its(:height) { should eq(240) }
+
+    it_behaves_like "movable object"
   end
 end

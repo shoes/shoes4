@@ -9,10 +9,10 @@ module SwtShoes
       task = Proc.new do
         @blk.call(@current_frame)
         @current_frame += 1
-        @gui_container.redraw
-        Swt.display.timer_exec 1000 / @framerate, task
+        @app.gui_container.redraw
+        Swt.display.timer_exec (2000 / @framerate), task
       end
-      Swt.display.timer_exec 1000 / @framerate, task
+      Swt.display.timer_exec (2000 / @framerate), task
     end
 
     #def stop

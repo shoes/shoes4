@@ -78,6 +78,12 @@ module Shoes
 
     end
 
+    # Moves an element to a specific pixel position. The element is still in the slot,
+    # but will no longer be stacked or flowed with the other stuff in the slot.
+    def move(left, top)
+      @left, @top = left, top
+    end
+
     # displace(left: a number, top: a number) » self
     # Displacing an element moves it.  But without changing the layout around it.
     def displace(left, top)

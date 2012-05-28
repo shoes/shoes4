@@ -18,6 +18,7 @@ module Shoes
       self.width = opts['width']
       self.height = opts['height']
       self.margin = opts['margin']
+      @app = opts['app']
 
       self.blk = blk
 

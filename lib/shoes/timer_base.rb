@@ -3,6 +3,7 @@ module Shoes
     def initialize gui_container, opts, &blk
       @gui_container = gui_container
       @blk = blk
+      @app = opts[:app]
       @stopped = false
       gui_init
     end

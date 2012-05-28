@@ -5,7 +5,7 @@ module SwtShoes
   module Flow
 
     def gui_flow_init
-      self.gui_container = container = Swt::Widgets::Composite.new(self.parent_gui_container, Swt::SWT::NONE)
+      self.gui_container = container = Swt::Widgets::Composite.new(self.parent_gui_container, Swt::SWT::NO_BACKGROUND)
 
       # RowLayout is horizontal by default, wrapping by default
       layout = Swt::Layout::RowLayout.new

@@ -1,7 +1,4 @@
-require_relative 'spec_helper'
-require "shoes/color"
-require 'shoes/element_methods'
-require 'shoes/configuration'
+require 'shoes/spec_helper'
 
 describe "Basic Element Methods" do
   class ElementMethodsShoeLaces
@@ -30,8 +27,9 @@ describe "Basic Element Methods" do
     it "should use self, gui_container, opts, blk" do
       subject = ElementMethodsShoeLaces.new
       subject.gui_container = "gui_container"
-      blk = lambda {}
+      blk = Proc.new {}
       opts = mock(:hash)
+      opts.should_receive(:merge!).and_return(opts)
       Shoes::Flow.should_receive(:new).
         with(subject, "gui_container", opts, blk)
       subject.flow opts, &blk

@@ -42,15 +42,19 @@ module SwtShoes
       # @gui_opts should be nil
       if @gui_opts
         @gui_container = @gui_opts[:container]
-        @gui_element = @gui_opts[:element] || Swt::Path.new(Shoes.display)
+        @gui_element = @gui_opts[:element] || Swt::Path.new(Swt.display)
+        #@transform.translate(-130, -100)
         @gui_paint_callback = lambda do |event|
           gc = event.gc
+          @transform = Swt::Transform.new(Swt.display) unless @transform
+          gc.setTransform(@transform)
           gc.set_background self.fill.to_native
           gc.fill_path(@gui_element)
           gc.set_antialias Swt::SWT::ON
           gc.set_foreground self.stroke.to_native
           gc.set_line_width self.style[:strokewidth]
           gc.draw_path(@gui_element)
+          @transform.dispose
         end
         @gui_container.add_paint_listener(@gui_paint_callback)
       end
@@ -65,11 +69,26 @@ module SwtShoes
       @x, @y = x, y
       @gui_element.move_to(x, y)
     end
+
+    def move(left, top)
+      super left, top
+      @transform = Swt::Transform.new(Swt.display)
+      @transform.translate(self.left, self.top)
+    end
   end
 end
 
 module Shoes
   class Shape
-    include SwtShoes::Shape
+    # This is a hack to allow methods in this class to override methods
+    # defined in Shoes::Shape. It would be better fixed by a different
+    # architecture. The self.extend doesn't work if the module has already
+    # been included by the class.
+    #include SwtShoes::Shape
+    alias :old_initialize :initialize
+    def initialize(opts = {}, blk = nil)
+      self.extend SwtShoes::Shape
+      old_initialize opts, blk
+    end
   end
 end

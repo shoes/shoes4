@@ -5,6 +5,7 @@ describe Shoes::Oval do
     subject { Shoes::Oval.new(20, 30, 100, 200) }
     it_behaves_like "object with stroke"
     it_behaves_like "object with fill"
+    it_behaves_like "movable object"
   end
 
   context "(eccentric)" do
