@@ -37,6 +37,7 @@ group :test do
   gem "cucumber"
   gem "rspec", "~> 2.10"
   gem "rake"
+  gem "pry"
   #gem "shoes-cucumber"
 end
 
