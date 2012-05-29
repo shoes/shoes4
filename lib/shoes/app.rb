@@ -14,10 +14,6 @@ module Shoes
   end
 
   class App
-
-    DEFAULTS = { 'width' => 800, 'height' => 600, 'title' => "Shoooes!"}
-    DEFAULT_STYLE = { :stroke => Shoes::COLORS[:black], :strokewidth => 1 }
-
     include Shoes::ElementMethods
 
     attr_accessor :elements, :gui_container
@@ -26,23 +22,36 @@ module Shoes
     attr_accessor :width, :height, :title
 
     def initialize(opts={}, &blk)
+      opts = default_options.merge(opts)
       opts.stringify_keys!
-      opts = DEFAULTS.merge(opts)
-      self.width = opts['width']
+      self.width  = opts['width']
       self.height = opts['height']
-      self.title = opts['title']
-      
-      self.opts = opts
+      self.title  = opts['title']
+      self.opts   = opts
 
       @app = self
-      @style = DEFAULT_STYLE.dup
+      @style = default_styles
 
       gui_init
 
       instance_eval &blk if blk
 
       gui_open
+    end
 
+    def default_options
+      {
+        'width'  => 800,
+        'height' => 600,
+        'title'  => "Shoooes!"
+      }
+    end
+
+    def default_styles
+      {
+        :stroke      => Shoes::COLORS[:black],
+        :strokewidth => 1
+      }
     end
 
     #import javax.swing.JPanel

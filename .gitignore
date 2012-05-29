@@ -18,6 +18,7 @@ tags
 
 ## BUNDLER
 .bundle
+Gemfile.lock
 
 ## INTELLIJ/RUBYMINE
 .idea
