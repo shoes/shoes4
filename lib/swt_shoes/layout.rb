@@ -9,7 +9,6 @@ module SwtShoes
 
 
       #include SwtShoes::ElementMethods
-      include Log4jruby::LoggerForClass
 
       # default initializer for calls to
       # super() from descendant classes

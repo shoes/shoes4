@@ -1,20 +1,12 @@
-require 'java'
-
 require 'rubygems'
 require 'facets/hash'
 
-require 'support/log4j-1.2.16.jar'
-require 'log4jruby'
-require 'log4jruby/logger_for_class'
-
 module Shoes
-  attr_accessor :logger
-  def self.logger
-    @logger
+  class << self
+    def logger
+      Shoes.configuration.logger_instance
+    end
   end
-
-  @logger = Log4jruby::Logger.get('test', :tracing => true, :level => :debug)
-  @logger.debug("Shoooes!")
 end
 
 require 'shoes/app'
@@ -36,3 +28,4 @@ require 'shoes/oval'
 require 'shoes/sound'
 require 'shoes/shape'
 require 'shoes/configuration'
+require 'shoes/logger'

@@ -4,8 +4,12 @@ require 'facets/string'
 module Shoes
   class Configuration
     class << self
-      attr_accessor :framework
+      def reset
+        @logger = nil
+        @logger_instance = nil
+      end
 
+      attr_reader :framework
       def framework=(value)
         @framework = value
         require value
@@ -13,8 +17,20 @@ module Shoes
       def framework_class
         constant(@framework.camelcase)
       end
-    end
 
+      def logger=(value)
+        @logger = value
+        @logger_instance = nil
+      end
+
+      def logger
+        @logger ||= :ruby
+      end
+
+      def logger_instance
+        @logger_instance ||= Shoes::Logger.get(self.logger).new
+      end
+    end
   end
 end
 
