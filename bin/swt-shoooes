@@ -1,4 +1,10 @@
 #!/usr/bin/env sh
 
-jruby --1.9 -J-XstartOnFirstThread -rrubygems -Ilib -rshoes -rshoes/configuration -e \
+case "${MACHTYPE:-}" in
+  (*darwin*)
+    swt_opt="-J-XstartOnFirstThread"
+    ;;
+esac
+
+jruby --1.9 ${swt_opt:-} -rrubygems -Ilib -rshoes -rshoes/configuration -e \
   "Shoes.configuration.framework = 'swt_shoes'; require '$1';"
