@@ -1,5 +1,4 @@
 require 'shoes/timer_base'
-require 'shoes/runnable_block'
 
 module SwtShoes
   module Animation
