@@ -12,7 +12,6 @@ end
 require 'swt_shoes/element_methods'
 require 'swt_shoes/animation'
 require 'swt_shoes/app'
-require 'swt_shoes/layout'
 #require 'swt_shoes/window'
 require 'swt_shoes/flow'
 require 'swt_shoes/button'
