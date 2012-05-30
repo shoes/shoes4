@@ -3,10 +3,10 @@ require 'white_shoes/common_methods'
 module WhiteShoes
   # Shape methods
   #
-  # Including classes must provide:
+  # Including classes must provide instance variables:
   #
-  # @x          - the current x-value
-  # @y          - the current y-value
+  #     @x          - the current x-value
+  #     @y          - the current y-value
   #
   module Shape
     attr_accessor :gui_container

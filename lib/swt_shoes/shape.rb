@@ -1,11 +1,11 @@
 module SwtShoes
   # Shape methods
   #
-  # Including classes must provide:
+  # Including classes must provide instance variables:
   #
-  # @x          - the current x-value
-  # @y          - the current y-value
-  # @opts       - options
+  #     @x          - the current x-value
+  #     @y          - the current y-value
+  #     @opts       - options
   #
   module Shape
     attr_reader :gui_container, :gui_element

@@ -6,16 +6,18 @@ module Shoes
 
     # Creates a new Animation.
     #
-    # Arguments
-    #
-    # gui_container - The gui element that is the parent of this animation
-    # opts          - Either an integer, representing the framerate (frames per
-    #                 second) of the animation, or a Hash of options. Right now,
-    #                 framerate is the only supported option. If no framerate
-    #                 is provided, the default is 24.
-    # blk           - A block of code to be executed for each frame of the
-    #                 animation.
-    #
+    # @overload initialize(gui_container, framerate, &blk)
+    #   @param [Object] gui_container The gui element that is the parent of this animation
+    #   @param [Integer] framerate The framerate (frames per second).
+    #     Defaults to 24
+    #   @param [Proc] blk A block of code to be executed for each
+    #     animation frame
+    # @overload initialize(gui_container, opts, &blk)
+    #   @param gui_container The gui element that is the parent of this animation
+    #   @param [Hash] opts An options hash
+    #   @param [Proc] blk A block of code to be executed for each
+    #     animation frame
+    #   @option opts [Integer] :framerate (24) The framerate (frames per second)
     def initialize gui_container, *opts, &blk
       @current_frame = 0
       @style = opts.last.class == Hash ? opts.pop : {}

@@ -20,6 +20,11 @@ tags
 .bundle
 Gemfile.lock
 
+## YARD
+.yardoc
+_yardoc
+doc
+
 ## INTELLIJ/RUBYMINE
 .idea
 
