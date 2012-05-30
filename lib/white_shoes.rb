@@ -7,6 +7,7 @@ require 'white_shoes/button'
 require 'white_shoes/line'
 require 'white_shoes/oval'
 require 'white_shoes/shape'
+require 'white_shoes/sound'
 
 require 'facets/hash'
 

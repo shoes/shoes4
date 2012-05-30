@@ -1,3 +1,4 @@
+require 'java'
 require 'swt'
 
 module Swt
@@ -19,6 +20,7 @@ require 'swt_shoes/line'
 require 'swt_shoes/oval'
 require 'swt_shoes/shape'
 require 'swt_shoes/color'
+require 'swt_shoes/sound'
 
 module SwtShoes
   module Shoes
