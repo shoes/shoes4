@@ -3,7 +3,6 @@ module Shoes
     def initialize(gui_container, filepath, opts={}, &blk)
       self.gui_container = gui_container
       self.filepath = filepath
-      opts.stringify_keys!
 
       #self.blk = blk
 

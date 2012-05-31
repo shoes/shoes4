@@ -1,4 +1,3 @@
-require 'facets/hash'
 require 'shoes/common_methods'
 require 'shoes/common/paint'
 require 'shoes/common/style'

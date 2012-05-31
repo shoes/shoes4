@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'rake'
 require 'rspec/core/rake_task'
-require 'facets/hash'
 
 require 'jruby'
 JRuby.runtime.instance_config.runRubyInProcess = false

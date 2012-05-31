@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'facets/hash'
 
 module Shoes
   class << self

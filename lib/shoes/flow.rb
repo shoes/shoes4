@@ -1,5 +1,3 @@
-require 'facets/hash'
-
 module Shoes
   class Flow
 
@@ -13,12 +11,11 @@ module Shoes
     def initialize(parent_container, parent_gui_container, opts={}, blk = nil)
       self.parent_container = parent_container
       self.parent_gui_container = parent_gui_container
-      opts.stringify_keys!
 
-      self.width = opts['width']
-      self.height = opts['height']
-      self.margin = opts['margin']
-      @app = opts['app']
+      self.width = opts[:width]
+      self.height = opts[:height]
+      self.margin = opts[:margin]
+      @app = opts[:app]
 
       self.blk = blk
 

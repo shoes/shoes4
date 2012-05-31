@@ -9,8 +9,6 @@ require 'white_shoes/oval'
 require 'white_shoes/shape'
 require 'white_shoes/sound'
 
-require 'facets/hash'
-
 module WhiteShoes
 
     #def adapter
