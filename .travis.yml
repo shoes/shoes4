@@ -1,3 +1,4 @@
+language: ruby
 script: "rake spec:all"
 rvm: jruby
 notifications:
