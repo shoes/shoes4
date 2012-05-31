@@ -20,9 +20,9 @@ describe Shoes::App do
       args = {}
       Shoes::App.any_instance.stub(:flow)
       app = Shoes::App.new args, &input_blk
-      app.width.should_not be_nil
-      app.height.should_not be_nil
-      app.title.should_not be_nil
+      app.width.should == 600
+      app.height.should == 500
+      app.title.should == 'Shoooes!'
     end
     it "should set accessors from opts" do
       input_blk = Proc.new {}

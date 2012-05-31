@@ -40,8 +40,8 @@ module Shoes
 
     def default_options
       {
-        :width  => 800,
-        :height => 600,
+        :width  => 600,
+        :height => 500,
         :title  => "Shoooes!"
       }
     end
