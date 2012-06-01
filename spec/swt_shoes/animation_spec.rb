@@ -1,8 +1,8 @@
 require 'swt_shoes/spec_helper'
 
-describe SwtShoes::Animation do
+describe Shoes::Swt::Animation do
   class AnimationShoeLaces
-    include SwtShoes::Animation
+    include Shoes::Swt::Animation
     # This is painfully duplicated from Shoes::Animation
     def initialize(*opts, &blk)
       @style = opts.last.class == Hash ? opts.pop : {}
@@ -15,12 +15,12 @@ describe SwtShoes::Animation do
   end
 
   let(:block) { Proc.new {} }
-  let(:display) { Swt.display }
+  let(:display) { ::Swt.display }
   let(:gui_container) { double(:gui_container) }
   subject { AnimationShoeLaces.new &block }
 
   it "injects into Shoes::Animation" do
-    Shoes::Animation.ancestors.should include(SwtShoes::Animation)
+    Shoes::Animation.ancestors.should include(Shoes::Swt::Animation)
   end
 
   it "triggers an Swt timer" do

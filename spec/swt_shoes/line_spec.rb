@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe SwtShoes::Line do
+describe Shoes::Swt::Line do
   let(:gui_container) { double("gui container") }
   let(:opts) { {:gui => {:container => gui_container}} }
 

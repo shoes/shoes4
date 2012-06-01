@@ -1,9 +1,9 @@
 require 'swt_shoes/spec_helper'
 
-describe SwtShoes::Shape do
+describe Shoes::Swt::Shape do
 
   class ShapeShoeLaces
-    include SwtShoes::Shape
+    include Shoes::Swt::Shape
     attr_accessor :gui_container
     attr_reader :gui_element
     attr_reader :blk
@@ -27,7 +27,7 @@ describe SwtShoes::Shape do
 
     it "uses Swt and not White Shoes" do
       ancestors = subject.class.ancestors.map(&:name)
-      ancestors.should include('SwtShoes::Shape')
+      ancestors.should include('Shoes::Swt::Shape')
       ancestors.should_not include('WhiteShoes::Shape')
       subject
     end

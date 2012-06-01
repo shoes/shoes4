@@ -4,7 +4,7 @@
     include_package 'org.eclipse.swt'
     include_package 'org.eclipse.swt.widgets'
   end
-  display = Swt.display
+  display = ::Swt.display
   shell = Shell.new display
   shell.setSize 300, 300
   shell.open

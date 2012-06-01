@@ -10,19 +10,19 @@ def window(*a, &b)
   Shoes.app(*a, &b)
 end
 
-require 'swt_shoes/element_methods'
-require 'swt_shoes/animation'
-require 'swt_shoes/app'
-#require 'swt_shoes/window'
-require 'swt_shoes/flow'
-require 'swt_shoes/button'
-require 'swt_shoes/line'
-require 'swt_shoes/oval'
-require 'swt_shoes/shape'
-require 'swt_shoes/color'
-require 'swt_shoes/sound'
+require 'shoes/swt/element_methods'
+require 'shoes/swt/animation'
+require 'shoes/swt/app'
+#require 'shoes/swt/window'
+require 'shoes/swt/flow'
+require 'shoes/swt/button'
+require 'shoes/swt/line'
+require 'shoes/swt/oval'
+require 'shoes/swt/shape'
+require 'shoes/swt/color'
+require 'shoes/swt/sound'
 
-module SwtShoes
+module Shoes::Swt
   module Shoes
     def self.app(opts={}, &blk)
       Shoes::App.new(opts, &blk)
@@ -34,7 +34,7 @@ module SwtShoes
     end
 
     def self.display
-      Swt::Widgets::Display.getCurrent
+      ::Swt::Widgets::Display.getCurrent
     end
   end
 end

@@ -3,7 +3,8 @@
 require 'white_shoes/element_methods'
 
 
-module SwtShoes
+module Shoes
+  module Swt
     module ElementMethods
 
       #def stack(opts={}, &blk)
@@ -12,7 +13,7 @@ module SwtShoes
       #end
 
       #def flow(opts = {}, &blk)
-      #  swt_flow = SwtShoes::Shoes::Flow.new(container, opts, &blk)
+      #  swt_flow = Shoes::Swt::Shoes::Flow.new(container, opts, &blk)
       #end
 
       #
@@ -64,7 +65,7 @@ module SwtShoes
           paint_callback: lambda do |event, shape|
             #return if hidden?
             gc = event.gc
-            gc.set_antialias Swt::SWT::ON
+            gc.set_antialias ::Swt::SWT::ON
             gc.set_line_width shape.style[:strokewidth]
             gc.setForeground(shape.style[:stroke].to_native)
             gc.draw_oval(shape.left, shape.top, shape.width, shape.height)
@@ -80,10 +81,11 @@ module SwtShoes
         super(*opts, args)
       end
     end
+  end
 end
 
 module Shoes
   class App
-    include SwtShoes::ElementMethods
+    include Shoes::Swt::ElementMethods
   end
 end

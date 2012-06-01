@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe SwtShoes::Color do
+describe Shoes::Swt::Color do
   subject { Shoes::COLORS[:salmon].to_native }
 
   its(:class) { should eq(Java::OrgEclipseSwtGraphics::Color) }

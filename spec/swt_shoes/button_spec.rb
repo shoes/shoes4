@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 #require 'support/shared_examples_for_common_elements_spec'
 
-describe SwtShoes::Button do
+describe Shoes::Swt::Button do
 
   #it_should_behave_like "A Common Element"
 
@@ -10,7 +10,7 @@ describe SwtShoes::Button do
     attr_accessor :gui_container, :gui_element, :text, :height, :width, :margin, :click_event_lambda
     attr_accessor :app
 
-    # because SwtShoes::Button#move calls super :(
+    # because Shoes::Swt::Button#move calls super :(
     def move(left, top)
       # no-op
     end

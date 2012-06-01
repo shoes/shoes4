@@ -1,13 +1,13 @@
 require "swt_shoes/spec_helper"
 
-describe SwtShoes::App do
+describe Shoes::Swt::App do
 
   let(:mock_shell) { mock(:swt_shell,
                      :setSize => true, :setText => true,
                      :addListener => true, :setLayout => true) }
   before :each do
-    Swt::Widgets::Shell.stub(:new) { mock_shell }
-    Swt.stub(:event_loop)
+    ::Swt::Widgets::Shell.stub(:new) { mock_shell }
+    ::Swt.stub(:event_loop)
   end
 
   describe Shoes::App do
@@ -22,9 +22,9 @@ describe SwtShoes::App do
 
     context "Shoes::App ancestors" do
       subject { Shoes::App.ancestors }
-      it { should include(SwtShoes::ElementMethods) }
-      it "uses SwtShoes::ElementMethods before Shoes::ElementMethods" do
-        framework_index = subject.index(SwtShoes::ElementMethods)
+      it { should include(Shoes::Swt::ElementMethods) }
+      it "uses Shoes::Swt::ElementMethods before Shoes::ElementMethods" do
+        framework_index = subject.index(Shoes::Swt::ElementMethods)
         shoes_index = subject.index(Shoes::ElementMethods)
         framework_index.should be < shoes_index
       end

@@ -8,7 +8,7 @@ ENV['log_level'] = 'debug'
 
 require 'shoes'
 require 'shoes/configuration'
-Shoes.configuration.framework = 'swt_shoes'
+Shoes.configuration.framework = 'shoes/swt'
 
 require ARGV[0]
 

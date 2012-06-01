@@ -6,13 +6,11 @@ describe "Basic Element Methods" do
   class ElementMethodsShoeLaces
     attr_accessor :gui_container
     include Shoes::ElementMethods
-    include SwtShoes::ElementMethods
+    include Shoes::Swt::ElementMethods
     def initialize
       @style = {}
     end
   end
-
-  Shoes.configuration.framework = 'swt_shoes'
 
   let(:gui_container) { double('gui_container') }
   let(:app) {

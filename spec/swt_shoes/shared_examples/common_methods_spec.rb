@@ -1,7 +1,7 @@
 # Requires gui_element
 shared_examples_for "movable object with disposable gui element" do
   before :each do
-    Swt::Widgets::Composite.stub(:new) { double("composite").as_null_object }
+    ::Swt::Widgets::Composite.stub(:new) { double("composite").as_null_object }
   end
 
   it "disposes its gui element" do
