@@ -1,4 +1,3 @@
-
 shoes4
 ======
 
@@ -24,7 +23,6 @@ Hacking
 
 4. You're ready to go!
 
-
 Hacking (on Windows)
 ---------------------
 
@@ -32,22 +30,17 @@ Hacking (on Windows)
 
         C:\tmp> git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org)
+2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org) (Windows Executable)
 
-- download and install JRuby 1.6.7 Windows Executable
-
-3. Set up your local environment
+3. Set up your local environment (refer to <https://github.com/oneclick/rubyinstaller/wiki/Development-Kit> if you have issues building native gems)
 
         C:\tmp>cd shoes4
         C:\tmp\shoes4>jruby --1.9 -S gem install json -v '1.6.1'
         C:\tmp\shoes4>jruby --1.9 -S gem install bundler
         C:\tmp\shoes4>jruby --1.9 -S bundle install
-        
-        Refer to https://github.com/oneclick/rubyinstaller/wiki/Development-Kit if you have issues building native gems.
 
 4. You're ready to go!
 
-   
 Running Specs
 -------------
 
