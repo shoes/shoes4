@@ -1,6 +1,5 @@
 #!/usr/bin/env jruby --1.9 -J-XstartOnFirstThread --debug
 require 'rubygems'
-require 'ruby-debug'
 
 $:<< "lib"
 
