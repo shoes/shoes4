@@ -18,15 +18,16 @@ module Shoes
     attr_accessor :elements, :gui_container
     attr_accessor :opts, :blk
 
-    attr_accessor :width, :height, :title
+    attr_accessor :width, :height, :title, :resizable
 
     def initialize(opts={}, &blk)
       opts = default_options.merge(opts)
 
-      self.width  = opts[:width]
-      self.height = opts[:height]
-      self.title  = opts[:title]
-      self.opts   = opts
+      self.width      = opts[:width]
+      self.height     = opts[:height]
+      self.title      = opts[:title]
+      self.resizable  = opts[:resizable]
+      self.opts       = opts
 
       @app = self
       @style = default_styles
@@ -42,7 +43,8 @@ module Shoes
       {
         :width  => 600,
         :height => 500,
-        :title  => "Shoooes!"
+        :title  => "Shoooes!",
+        :resizable => true
       }
     end
 

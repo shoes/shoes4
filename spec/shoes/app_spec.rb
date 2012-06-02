@@ -12,6 +12,7 @@ describe Shoes::App do
       app.should respond_to :width
       app.should respond_to :height
       app.should respond_to :title
+      app.should respond_to :resizable
       #app.blk.should == input_blk
     end
 
@@ -23,16 +24,18 @@ describe Shoes::App do
       app.width.should == 600
       app.height.should == 500
       app.title.should == 'Shoooes!'
+      app.resizable.should be_true
     end
+
     it "should set accessors from opts" do
       input_blk = Proc.new {}
-      args = {:width => 1, :height => 2, :title => "Shoes::App Spec"}
+      args = {:width => 1, :height => 2, :title => "Shoes::App Spec", :resizable => false}
       Shoes::App.any_instance.stub(:flow)
       app = Shoes::App.new args, &input_blk
       app.width.should == 1
       app.height.should == 2
       app.title.should == "Shoes::App Spec"
-
+      app.resizable.should be_false
     end
 
     it "initializes style hash" do

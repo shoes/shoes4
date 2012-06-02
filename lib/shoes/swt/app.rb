@@ -11,7 +11,7 @@ module Shoes
     module App
 
       def gui_init
-        self.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, ::Swt::SWT::CLOSE)
+        self.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         layout = ::Swt::Layout::RowLayout.new
         container.setLayout(layout)
 
@@ -39,6 +39,13 @@ module Shoes
           ::Swt.display.dispose
           Shoes.logger.debug "::Swt.display disposed"
         }
+      end
+
+      def main_window_style
+        style  = ::Swt::SWT::CLOSE
+        style |= ::Swt::SWT::RESIZE if opts[:resizable]
+
+        style
       end
     end
   end
