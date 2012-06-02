@@ -42,6 +42,8 @@ Hacking (on Windows)
         C:\tmp\shoes4>jruby --1.9 -S gem install json -v '1.6.1'
         C:\tmp\shoes4>jruby --1.9 -S gem install bundler
         C:\tmp\shoes4>jruby --1.9 -S bundle install
+        
+        Refer to https://github.com/oneclick/rubyinstaller/wiki/Development-Kit if you have issues building native gems.
 
 4. You're ready to go!
 
