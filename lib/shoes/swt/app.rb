@@ -11,12 +11,15 @@ module Shoes
     module App
 
       def gui_init
-        self.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
+        self.gui_container = container = 
+          ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         layout = ::Swt::Layout::RowLayout.new
         container.setLayout(layout)
 
         opts = self.opts
 
+        container.setBackground(
+          ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WHITE))
         container.setSize(self.width, self.height)
         container.setText(self.title)
 
