@@ -30,8 +30,7 @@ module Shoes
       end
 
       # GUI
-      @gui_opts = @style.delete(:gui)
-      gui_init
+      @gui = Shoes.configuration.backend_class(self).new(self, @style.delete(:gui))
     end
   end
 end
