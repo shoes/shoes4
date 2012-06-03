@@ -32,7 +32,7 @@ Hacking (on Windows)
 
 2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org) (Windows Executable)
 
-3. Set up your local environment (refer to <https://github.com/oneclick/rubyinstaller/wiki/Development-Kit> if you have issues building native gems)
+3. Set up your local environment
 
         C:\tmp>cd shoes4
         C:\tmp\shoes4>jruby --1.9 -S gem install json -v '1.6.1'
@@ -40,6 +40,8 @@ Hacking (on Windows)
         C:\tmp\shoes4>jruby --1.9 -S bundle install
 
 4. You're ready to go!
+
+Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
 
 Running Specs
 -------------
