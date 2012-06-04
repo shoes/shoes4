@@ -34,6 +34,12 @@ module Shoes
         Shoes.logger.debug "::Swt.display disposed... exiting Shoes::App.new"
       end
 
+      def background(*bg)
+        return @background if bg.empty?
+        self.gui_container.setBackground(COLORS[bg[0]].to_native)
+        @background = bg[0]
+      end
+
       private
       def main_window_on_close
         lambda {

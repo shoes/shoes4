@@ -18,7 +18,8 @@ module Shoes
     attr_accessor :elements, :gui_container
     attr_accessor :opts, :blk
 
-    attr_accessor :width, :height, :title, :resizable, :background
+    attr_accessor :width, :height, :title, :resizable
+    attr_writer   :background
 
     def initialize(opts={}, &blk)
       opts = default_options.merge(opts)
@@ -56,5 +57,6 @@ module Shoes
         :strokewidth => 1
       }
     end
+
   end
 end
