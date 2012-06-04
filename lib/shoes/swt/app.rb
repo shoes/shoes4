@@ -19,7 +19,7 @@ module Shoes
         opts = self.opts
 
         c = COLORS[self.background]
-        color = Java::OrgEclipseSwtGraphics::Color.new(
+        color = org.eclipse.swt.graphics.Color.new(
           ::Swt.display, c.red, c.green, c.blue)
         container.setBackground(color)
 
