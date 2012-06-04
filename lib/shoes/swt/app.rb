@@ -18,8 +18,11 @@ module Shoes
 
         opts = self.opts
 
-        container.setBackground(
-          ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WHITE))
+        c = COLORS[self.background]
+        color = Java::OrgEclipseSwtGraphics::Color.new(
+          ::Swt.display, c.red, c.green, c.blue)
+        container.setBackground(color)
+
         container.setSize(self.width, self.height)
         container.setText(self.title)
 
