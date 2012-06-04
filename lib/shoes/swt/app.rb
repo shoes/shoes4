@@ -18,11 +18,7 @@ module Shoes
 
         opts = self.opts
 
-        c = COLORS[self.background]
-        color = org.eclipse.swt.graphics.Color.new(
-          ::Swt.display, c.red, c.green, c.blue)
-        container.setBackground(color)
-
+        container.setBackground(COLORS[self.background].to_native)
         container.setSize(self.width, self.height)
         container.setText(self.title)
 
