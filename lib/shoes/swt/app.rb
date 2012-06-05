@@ -36,7 +36,6 @@ module Shoes
       def background(*opts)
         return @background if opts.empty?
         if opts.size == 1
-          puts "only one argument"
           self.gui_container.setBackground(opts[0].to_native)
           @background = opts[0]
         else
@@ -73,32 +72,28 @@ module Shoes
         end
 
         def paintControl(e)
-          x        = 0 
-          y        = 0
+          x      = 0 
+          y      = 0
           width  = e.width
           height = e.height
 
           width  = options[:width]  if options.has_key? :width
           height = options[:height] if options.has_key? :height
 
-          # top
           if options.has_key? :top
             y = options[:top]
             height -= options[:top]
           end
 
-          # bottom
           if options.has_key? :bottom
             height -= options[:bottom]
           end
 
-          # left
           if options.has_key? :left
             x += options[:left]
             width -= options[:left]
           end
 
-          # right
           if options.has_key? :right
             width -= options[:right]
           end
