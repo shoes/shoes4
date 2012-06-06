@@ -47,7 +47,7 @@ module Shoes
         :height => 500,
         :title  => "Shoooes!",
         :resizable  => true,
-        :background => white
+        :background => :white
       }
     end
 

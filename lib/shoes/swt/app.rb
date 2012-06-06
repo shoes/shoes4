@@ -18,7 +18,7 @@ module Shoes
 
         opts = self.opts
 
-        container.setBackground(background.to_native)
+        container.setBackground(COLORS[self.background].to_native)
         container.setSize(self.width, self.height)
         container.setText(self.title)
 
@@ -36,7 +36,7 @@ module Shoes
       def background(*opts)
         return @background if opts.empty?
         if opts.size == 1
-          self.gui_container.setBackground(opts[0].to_native)
+          self.gui_container.setBackground(COLORS[opts[0]].to_native)
           @background = opts[0]
         else
           self.gui_container.addPaintListener(BackgroundPainter.new(opts, self))
@@ -68,7 +68,7 @@ module Shoes
         def initialize(*opts, app)
           @app = app
           self.options = opts[0][1]         
-          self.color   = opts[0][0]
+          self.color   = COLORS[opts[0][0]].to_native
         end
 
         def paintControl(e)
@@ -98,7 +98,7 @@ module Shoes
             width -= options[:right]
           end
 
-          e.gc.setBackground(self.color.to_native) 
+          e.gc.setBackground(self.color) 
           e.gc.fillRectangle(x, y, width, height)
         end
       end
