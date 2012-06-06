@@ -7,4 +7,5 @@ case "${MACHTYPE:-}" in
 esac
 
 jruby --1.9 ${swt_opt:-} -rrubygems -Ilib -rshoes -rshoes/configuration -e \
-  "Shoes.configuration.framework = 'shoes/swt'; require '$1';"
+  "Shoes.configuration.framework = 'shoes/swt';
+Shoes.configuration.backend = :swt; require '$1';"
