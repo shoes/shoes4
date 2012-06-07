@@ -18,6 +18,17 @@ shared_examples_for "object with stroke" do
   specify "defaults to black" do
     subject.stroke.should eq(Shoes::COLORS.fetch :black)
   end
+
+  describe "strokewidth" do
+    specify "defaults to 1" do
+      subject.strokewidth.should eq(1)
+    end
+
+    specify "sets" do
+      subject.strokewidth = 2
+      subject.strokewidth.should eq(2)
+    end
+  end
 end
 
 shared_examples_for "object with fill" do

@@ -1,12 +1,14 @@
 require 'shoes/common_methods'
-require 'shoes/common/paint'
+require 'shoes/common/fill'
+require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/line'
 
 module Shoes
   class Shape
     include Shoes::CommonMethods
-    include Shoes::Common::Paint
+    include Shoes::Common::Fill
+    include Shoes::Common::Stroke
     include Shoes::Common::Style
 
     attr_reader :blk
@@ -19,16 +21,14 @@ module Shoes
     # Implementation frameworks should pass in any required arguments
     # through the +opts+ hash.
     def initialize(opts = {}, blk = nil)
-      @style = Shoes::Common::Paint::DEFAULTS.merge(opts)
-
+      @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @blk = blk
 
       # Component shapes
       @components = []
 
       # GUI
-      @gui_opts = @style.delete(:gui)
-      gui_init
+      @gui = Shoes.configuration.backend_for(self, @style.delete(:gui))
 
       instance_eval &@blk unless @blk.nil?
     end
@@ -60,6 +60,9 @@ module Shoes
     # Moves the shape
     #
     # Moves each component so bounds calculations still work.
+    # @param [Integer] left The new left value
+    # @param [Integer] top The new top value
+    # @return [Shoes::Shape] This shape
     def move(left, top)
       relative_left = offset(self.left, left)
       relative_top = offset(self.top, top)
@@ -69,12 +72,39 @@ module Shoes
         c.move(c_left + relative_left, c_top + relative_top)
       end
       @left, @top, @right, @bottom = left, top, nil, nil
+      @gui.move(@left, @top)
+      self
     end
 
-    # Gives the relative offset of the new position from original position
+    # Draws a line from the current position to the given point
     #
-    # Returns a value that should be added to the current position in order to
-    # move to the new position.
+    # @param [Integer] x The new point's x-value
+    # @param [Integer] y The new point's y-value
+    # @return [Shoes::Shape] This shape
+    def line_to(x, y)
+      @components << ::Shoes::Line.new(@x, @y, x, y, @style)
+      @gui.line_to(x, y)
+      self
+    end
+
+    # Moves the drawing "pen" to the given point
+    #
+    # @param [Integer] x The new point's x-value
+    # @param [Integer] y The new point's y-value
+    # @return [Shoes::Shape] self This shape
+    def move_to(x, y)
+      @x, @y = x, y
+      @gui.move_to(x, y)
+      self
+    end
+
+    # Gives the relative offset of the new position from original position.
+    # This calculation is for a single coordinate value, e.g. an x or a y.
+    #
+    # @param [Integer] original The original position
+    # @param [Integer] new The new position
+    # @return [Integer] A value that should be added to the current position in order to
+    #   move to the new position.
     def offset(original, new)
       relative = (new - original).abs
       relative = -relative if new < original

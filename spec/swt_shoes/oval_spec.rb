@@ -3,24 +3,11 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Oval do
   let(:gui_container) { double("gui container") }
   let(:opts) { {:container => gui_container} }
-  let(:fill) { Shoes::COLORS[:papayawhip] }
-  let(:stroke) { Shoes::COLORS[:honeydew] }
-  let(:style) { {:strokewidth => 3} }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) { 
-    double("dsl object", 
-      :fill => fill,
-      :stroke => stroke,
-      :style => style,
-      :left => left,
-      :top => top,
-      :width => width,
-      :height => height).as_null_object
-                      
-            }
+  let(:dsl) { double("dsl object").as_null_object }
 
   subject {
     Shoes::Swt::Oval.new(dsl, opts)
@@ -37,6 +24,10 @@ describe Shoes::Swt::Oval do
     before :each do
       event.stub(:gc) { gc }
       gui_container.should_receive(:add_paint_listener)
+      dsl.stub(:left) { left }
+      dsl.stub(:top) { top }
+      dsl.stub(:width) { width }
+      dsl.stub(:height) { height }
     end
 
     specify "fills oval" do

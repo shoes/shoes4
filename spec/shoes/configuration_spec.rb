@@ -34,4 +34,13 @@ describe Shoes::Configuration do
       end
     end
   end
+
+  describe "#backend_for" do
+    let(:dsl_object) { double("dsl object", :class => Shoes::Shape) }
+    let(:args) { double("args") }
+
+    it "returns shape backend object" do
+      Shoes.configuration.backend_for(dsl_object, args).should be_instance_of(Shoes::Mock::Shape)
+    end
+  end
 end

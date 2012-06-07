@@ -50,9 +50,26 @@ module Shoes
         raise ArgumentError, "Unknown backend: #{backend}"
       end
 
+      # Finds the appropriate backend class for the given Shoes object
+      #
+      # @param [Object] shoes_object A Shoes object
+      # @return [Object] An appropriate backend class
+      # @example
+      #   Shoes.configuration.backend_class(shoes_button) # => Shoes::Swt::Button
       def backend_class(shoes_object)
         class_name = shoes_object.class.name.split("::").last
         self.backend.const_get(class_name)
+      end
+
+      # Creates an appropriate backend object
+      #
+      # @param [Object] shoes_object A Shoes object
+      # @param *args The arguments for the backend object
+      # @return [Object] An appropriate backend object
+      # @example
+      #   Shoes.configuration.backend_for(button, args) # => <Shoes::Swt::Button:0x12345678>
+      def backend_for(shoes_object, *args)
+        backend_class(shoes_object).new(shoes_object, *args)
       end
 
       def logger=(value)

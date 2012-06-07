@@ -1,11 +1,12 @@
 require 'shoes/common_methods'
-require 'shoes/common/paint'
+require 'shoes/common/fill'
+require 'shoes/common/stroke'
 require 'shoes/common/style'
 
 module Shoes
   class Line
     include Shoes::CommonMethods
-    include Shoes::Common::Paint
+    include Shoes::Common::Stroke
     include Shoes::Common::Style
 
     def initialize(x1, y1, x2, y2, opts = {})
@@ -14,11 +15,10 @@ module Shoes
       @width = (x1 - x2).abs
       @height = (y1 - y2).abs
 
-      @style = Shoes::Common::Paint::DEFAULTS.merge(opts)
+      @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
 
       # GUI
-      @gui_opts = @style.delete(:gui)
-      gui_init
+      @gui = Shoes.configuration.backend_for(self, @style.delete(:gui))
     end
   end
 end
