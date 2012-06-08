@@ -67,6 +67,18 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
 **Note:** For Windows, `C:\tmp\shoes4>bin\swt-shoooes samples\simple-sound.rb`
 
+Want to contribute?
+-------------------
+That's awesome, thank you! 
+
+You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoes4/issues).
+
+Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. 
+
+With all you do, please make sure to write specs as shoes4 is developped TDD-style (see the `Running Specs` section above). So make sure that you don't break any tests  :-)
+
+If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build shoes4!
+
 Build Status
 ------------
 
