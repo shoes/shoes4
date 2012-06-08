@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 $:<< '../lib'
 
 require 'rspec'
