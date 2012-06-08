@@ -31,4 +31,5 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency "yard"
   s.add_development_dependency "redcarpet", "~>1.0" # For YARD markdown
+  s.add_development_dependency "simplecov"
 end
