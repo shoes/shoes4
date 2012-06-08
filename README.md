@@ -1,4 +1,4 @@
-shoes4
+shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=master)](http://travis-ci.org/shoes/shoes4)
 ======
 
 Shoes 4 : the next version of Shoes
@@ -78,12 +78,4 @@ Also there is a list of samples that already work at samples/README, along with 
 With all you do, please make sure to write specs as shoes4 is developped TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build shoes4!
-
-Build Status
-------------
-
-[![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=master)](http://travis-ci.org/shoes/shoes4)
-
-
-
 
