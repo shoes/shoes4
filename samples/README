@@ -2,6 +2,6 @@ Here's a list of the samples in this directory that work. Please
 add to this list as you implement features!
 
 simple-animate.rb
-simple-move.rb
+simple-move.rb (works but looks a bit weird on Linux, see issue #59)
 simple-sound.rb
 simple-stripes.rb

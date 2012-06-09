@@ -9,13 +9,67 @@ module Shoes
         @logger_instance = nil
       end
 
+      # @return [String] The require string for the framework class
+      # @todo Should be the class itself
       attr_reader :framework
+
+      # Set the backend framework
+      #
+      # @param [String] value The require for the backend
+      # @return [String] The require for the backend
+      # @example
+      #   Shoes.configuration.framework = 'shoes/swt'
+      # @todo This should receive :swt, :swing, etc. instead of
+      #   'shoes/swt', 'shoes/swing', etc.
+      # @todo Merge into #backend
       def framework=(value)
         @framework = value
         require value
+        @framework
       end
+
       def framework_class
         constant(@framework.camelcase)
+      end
+
+      def backend
+        @backend
+      end
+
+      # The Shoes backend to use. Can only be set once.
+      #
+      # @param [Symbol] backend The backend's name
+      # @return [Module] The backend's root module
+      # @example
+      #   Shoes::Configuration.backend = :swt # => Shoes::Swt
+      #   Shoes.backend = :swt # => Shoes::Swt
+      def backend=(backend)
+        require "shoes/#{backend.to_s.downcase}"
+        @backend ||= Shoes.const_get(backend.to_s.capitalize)
+      rescue LoadError
+        raise ArgumentError, "Unknown backend: #{backend}"
+      end
+
+      # Finds the appropriate backend class for the given Shoes object
+      #
+      # @param [Object] shoes_object A Shoes object
+      # @return [Object] An appropriate backend class
+      # @example
+      #   Shoes.configuration.backend_class(shoes_button) # => Shoes::Swt::Button
+      def backend_class(shoes_object)
+        class_name = shoes_object.class.name.split("::").last
+        self.backend.const_get(class_name)
+      end
+
+      # Creates an appropriate backend object
+      #
+      # @param [Object] shoes_object A Shoes object
+      # @param *args The arguments for the backend object
+      # @return [Object] An appropriate backend object
+      # @example
+      #   Shoes.configuration.backend_for(button, args) # => <Shoes::Swt::Button:0x12345678>
+      def backend_for(shoes_object, *args)
+        backend_class(shoes_object).new(shoes_object, *args)
       end
 
       def logger=(value)

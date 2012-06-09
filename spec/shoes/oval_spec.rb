@@ -1,6 +1,13 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Oval do
+  let(:backend_class) { double "backend class" }
+  let(:backend) { double "backend" }
+  before {
+    Shoes.configuration.stub(:backend_class) { backend_class }
+    backend_class.should_receive(:new) { backend }
+  }
+
   describe "basic" do
     subject { Shoes::Oval.new(20, 30, 100, 200) }
     it_behaves_like "object with stroke"
