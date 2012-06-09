@@ -119,6 +119,7 @@ module Shoes
     #         left, top, width, height, radius, center
     def oval(*opts)
       oval_style = opts.last.class == Hash ? opts.pop : {}
+      oval_style[:app] = self
       Shoes::Oval.new(*opts, style.merge(oval_style))
     end
 

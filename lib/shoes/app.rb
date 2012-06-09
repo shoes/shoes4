@@ -32,11 +32,11 @@ module Shoes
       @app = self
       @style = default_styles
 
-      gui_init
+      @gui = Shoes.configuration.backend::App.new @app
 
       instance_eval &blk if blk
 
-      gui_open
+      @gui.open
     end
 
     def default_options
