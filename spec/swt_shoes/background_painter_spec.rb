@@ -32,6 +32,11 @@ def test_set_y(expected, options)
   painter.set_y(paintEvent, height).should eq expected
 end
 
+def test_calculate_coordinates(expected, options)
+  painter = create_painter(options)
+  painter.calculate_coords(paintEvent).should eq expected
+end
+
 describe Shoes::Swt::BackgroundPainter do
 
   describe "calculating coordines" do
@@ -126,6 +131,30 @@ describe Shoes::Swt::BackgroundPainter do
       it "sets y to 0 if nothing is supplied" do
         test_set_y(0, {})
       end
+    end
+    
+    describe "calculate_coords" do
+      it "sets the values correctly with basic values supplied" do
+        options = {left: 30, width: 70, top: 20, height: 85}
+        test_calculate_coordinates({x:      options[:left],
+                                    width:  options[:width],
+                                    y:      options[:top],
+                                    height: options[:height]},
+                                    options)
+      end
+      
+      it "sets the values correctly with more complex values" do
+        options = {left: 30, right: 45, top: 70, bottom: 15}
+        width = APP_WIDTH - (options[:right] + options[:left])
+        height = APP_HEIGHT - (options[:bottom] + options[:top])
+        test_calculate_coordinates({x:      options[:left],
+                                    width:  width,
+                                    y:      options[:top],
+                                    height: height},
+                                    options)
+                                     
+      end
+    
     end
     
   end
