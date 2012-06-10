@@ -1,6 +1,5 @@
-# FIXME: shoes/animation and shoes/sound require java. They shouldn't.
-#require 'shoes/animation'
-#require 'shoes/sound'
+require 'shoes/animation'
+require 'shoes/sound'
 require 'shoes/button'
 require 'shoes/color'
 require 'shoes/flow'

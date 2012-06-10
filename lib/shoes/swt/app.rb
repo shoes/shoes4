@@ -33,7 +33,7 @@ module Shoes
 
       private
       def main_window_on_close
-        lambda {
+        lambda { |event|
           Shoes.logger.debug "main_window on_close block begin... disposing ::Swt.display"
           ::Swt.display.dispose
           Shoes.logger.debug "::Swt.display disposed"
