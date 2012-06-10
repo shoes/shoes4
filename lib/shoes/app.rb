@@ -19,7 +19,7 @@ module Shoes
     attr_accessor :opts, :blk
 
     attr_accessor :width, :height, :title, :resizable
-    attr_writer   :background
+    attr_writer   :background, :width, :height
 
     def initialize(opts={}, &blk)
       opts = default_options.merge(opts)
@@ -56,6 +56,15 @@ module Shoes
         :stroke      => Shoes::COLORS[:black],
         :strokewidth => 1
       }
+    end
+
+    # If background is called without any options this
+    # will simply return it's value. Otherwise it will
+    # interpret the call as the user wanting to set the
+    # background, in which case it will call gui_background
+    def background(*opts)
+      return @background if opts.empty?
+      gui_background opts
     end
 
   end
