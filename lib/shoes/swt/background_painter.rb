@@ -13,6 +13,7 @@ module Shoes
           @app = app
           self.options = opts[0][1]         
           self.color   = opts[0][0]
+          self.color = options[:fill] if options.has_key? :fill
         end
 
         def paintControl(e)
@@ -27,6 +28,11 @@ module Shoes
           y      = 0
           width  = e.width
           height = e.height
+
+          if options.has_key? :radius
+            width  = 2*options[:radius]
+            height = width
+          end
 
           width  = options[:width]  if options.has_key? :width
           height = options[:height] if options.has_key? :height
