@@ -13,7 +13,7 @@ module Shoes
           @app = app
           self.options = opts[0][1]         
           self.color   = opts[0][0]
-          self.color = options[:fill] if options.has_key? :fill
+          self.color   = options[:fill] if options.has_key? :fill
         end
 
         def paintControl(e)
