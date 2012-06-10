@@ -80,7 +80,7 @@ module Shoes
 
         def set_x
           x = 0
-          x += options[:left] if options.has_key(:left)
+          x += options[:left] if options.has_key?(:left)
           x
         end
 
