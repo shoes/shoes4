@@ -4,7 +4,7 @@ module Shoes
       private
       # BackgroundPainter paints and repaints Shoes.app's background(s).
       # It is only used if the user supplies any parameters other than the color,
-      # such as :width or :height.
+      # such as , :right, :left, :width or :height.
       class BackgroundPainter
         include org.eclipse.swt.events.PaintListener
         attr_accessor :options, :color
@@ -16,18 +16,18 @@ module Shoes
           self.color = options[:fill] if options.has_key? :fill
         end
 
-        def paintControl(e)
-          coords = calculate_coords e
-          e.gc.setBackground(color.to_native) 
-          e.gc.fillRectangle(coords[:x], coords[:y], coords[:width], coords[:height])
+        def paintControl(paintEvent)
+          coords = calculate_coords paintEvent
+          paintEvent.gc.setBackground(color.to_native)
+          paintEvent.gc.fillRectangle(coords[:x], coords[:y], coords[:width], coords[:height])
         end
 
-        def calculate_coords(e)
+        def calculate_coords(paintEvent)
           coords = Hash.new
           x      = 0 
           y      = 0
-          width  = e.width
-          height = e.height
+          width  = paintEvent.width
+          height = paintEvent.height
 
           if options.has_key? :radius
             width  = 2*options[:radius]
