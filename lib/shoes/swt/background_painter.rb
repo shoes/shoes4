@@ -22,8 +22,6 @@ module Shoes
 
       def calculate_coords(paintEvent)
         coords = Hash.new
-        puts paintEvent.width
-        puts paintEvent.height
 
         coords[:width] = set_width(paintEvent)
         coords[:height] = set_height(paintEvent)
