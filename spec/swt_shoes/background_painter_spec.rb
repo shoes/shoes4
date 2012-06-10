@@ -14,6 +14,12 @@ def test_set_width(expected, options)
   painter.set_width(paintEvent).should eq expected
 end
 
+# For the given options we expect set_heidht to return expected
+def test_set_height(expected, options)
+  painter = create_painter(options)
+  painter.set_height(paintEvent).should eq expected
+end
+
 describe Shoes::Swt::BackgroundPainter do
 
   describe "calculating coordines" do
@@ -22,8 +28,8 @@ describe Shoes::Swt::BackgroundPainter do
       paintEvent.stub(height: APP_HEIGHT, width: APP_WIDTH)
       paintEvent
     end
+    
     describe "set_width" do
-
       it "sets the width to options[:width] if supplied" do
         test_set_width(50, width: 50)
       end
@@ -49,7 +55,30 @@ describe Shoes::Swt::BackgroundPainter do
       it "sets the width to the app width if no width parameters are supplied" do
         test_set_width(APP_WIDTH, {})
       end
-
     end
+    
+    describe "set_height" do
+      it "sets height to height if supplied" do
+        test_set_height(50, height: 50)
+      end
+      
+      it "sets height to twice the radius if supplied" do
+        test_set_height(2 * 40, radius: 40)
+      end
+      
+      it "sets height corectly if bottom and top are supplied" do
+        test_set_height(APP_HEIGHT - ( 30 + 50), bottom: 30, top: 50)
+      end
+      
+      it "doesn't use bottom and top if heifht is specified" do
+        test_set_height(150, bottom: 30, top: 25, height: 150)
+      end
+      
+      it "Sets height to the app height if no options are supplied" do
+        test_set_height(APP_HEIGHT, {})
+      end
+    
+    end
+    
   end
 end

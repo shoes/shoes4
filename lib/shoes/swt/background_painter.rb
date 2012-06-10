@@ -51,7 +51,7 @@ module Shoes
         elsif options.has_key? :radius
           2*options[:radius]
         elsif options.has_key?(:top) && options.has_key?(:bottom)
-          options[:top] - options[:bottom]
+          paintEvent.height - (options[:top] + options[:bottom])
         else
           paintEvent.height
         end
