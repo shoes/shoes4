@@ -1,8 +1,13 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
-  let(:gui_container) { double("gui container") }
-  let(:opts) { {:container => gui_container} }
+  let(:gui_container) {double("gui container")}
+  let(:app) do 
+    app = double "app"
+    app.stub(gui_container: gui_container)
+    app
+  end
+  let(:opts) { {app: app} }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
