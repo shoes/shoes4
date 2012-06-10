@@ -24,36 +24,75 @@ module Shoes
 
         def calculate_coords(paintEvent)
           coords = Hash.new
-          x      = 0 
-          y      = 0
-          width  = paintEvent.width
-          height = paintEvent.height
 
-          if options.has_key? :radius
-            width  = 2*options[:radius]
-            height = width
-          end
+          coords[:width] = set_width(paintEvent)
+          coords[:height] = set_height(paintEvent, coords[:width])
+          coords[:y] = set_y
+          coords[:x] = set_x
 
-          width  = options[:width]  if options.has_key? :width
-          height = options[:height] if options.has_key? :height
-
-          if options.has_key? :top
-            y       = options[:top]
-            height -= options[:top]
-          end
-          if options.has_key? :bottom
-            height -= options[:bottom]
-          end
-          if options.has_key? :left
-            x     += options[:left]
-            width -= options[:left]
-          end
-          if options.has_key? :right
-            width -= options[:right]
-          end
-          coords[:x]=x; coords[:y]=y; coords[:width]=width; coords[:height]=height
           coords
         end
+
+        def set_width(paintEvent)
+          width = set_initial_width(paintEvent)
+          width = adjust_width(width)
+          width
+        end
+
+        def set_initial_width(paintEvent)
+          if options.has_key? :width
+            width = options[:width]
+          else
+            width = paintEvent.width
+            width = 2*options[:radius] if options.has_key? :radius
+          end
+          width
+        end
+
+        def adjust_width(width)
+          width -= options[:left] if options.has_key? :left
+          width -= options[:right] if options.has_key? :right
+          width
+        end
+
+        def set_height(paintEvent, width)
+          height = set_initial_height(paintEvent, width)
+          height = adjust_height(height)
+          height
+        end
+
+        def set_initial_height(paintEvent, width)
+          if options.has_key? :height
+            height = options[:height]
+          elsif options.has_key? :radius
+            height = width
+          else
+            height = paintEvent.height
+          end
+          height
+        end
+
+        def adjust_height(height)
+          height -= options[:bottom] if options.has_key? :bottom
+          height -= options[:top] if options.has_key? :top
+          height
+        end
+
+        def set_x
+          x = 0
+          x += options[:left] if options.has_key(:left)
+          x
+        end
+
+        def set_y
+          if options.has_key? :top
+            y = options[:top]
+          else
+            y = 0
+          end
+          y
+        end
+
       end
     end
   end
