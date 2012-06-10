@@ -8,24 +8,23 @@ module Shoes
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]
     #
-    module App
+    class App
 
-      def gui_init
-        self.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
+      def initialize app
+        @app = app
+        @app.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         layout = ::Swt::Layout::RowLayout.new
         container.setLayout(layout)
 
-        opts = self.opts
-
-        container.setSize(self.width, self.height)
-        container.setText(self.title)
+        container.setSize(app.width, app.height)
+        container.setText(app.title)
 
         container.addListener(::Swt::SWT::Close, main_window_on_close)
       end
 
 
-      def gui_open
-        self.gui_container.open
+      def open
+        @app.gui_container.open
 
         ::Swt.event_loop { ::Swt.display.isDisposed }
 
@@ -43,7 +42,7 @@ module Shoes
 
       def main_window_style
         style  = ::Swt::SWT::CLOSE
-        style |= ::Swt::SWT::RESIZE if opts[:resizable]
+        style |= ::Swt::SWT::RESIZE if @app.opts[:resizable]
 
         style
       end
@@ -51,9 +50,4 @@ module Shoes
   end
 end
 
-module Shoes
-  class App
-    include Shoes::Swt::App
-  end
-end
 
