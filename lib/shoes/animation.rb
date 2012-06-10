@@ -1,31 +1,47 @@
-require 'shoes/timer_base'
-#require 'runnable_block'
-
 module Shoes
-  class Animation < TimerBase
+  class Animation
 
     # Creates a new Animation.
     #
-    # @overload initialize(gui_container, framerate, &blk)
-    #   @param [Object] gui_container The gui element that is the parent of this animation
-    #   @param [Integer] framerate The framerate (frames per second).
-    #     Defaults to 24
-    #   @param [Proc] blk A block of code to be executed for each
-    #     animation frame
-    # @overload initialize(gui_container, opts, &blk)
-    #   @param gui_container The gui element that is the parent of this animation
+    # @overload initialize(opts, &blk)
     #   @param [Hash] opts An options hash
     #   @param [Proc] blk A block of code to be executed for each
     #     animation frame
     #   @option opts [Integer] :framerate (24) The framerate (frames per second)
-    def initialize gui_container, *opts, &blk
-      @current_frame = 0
-      @style = opts.last.class == Hash ? opts.pop : {}
-      @style[:framerate] = opts.first if opts.length == 1
+    def initialize opts, blk
+      @style = opts
       @framerate = @style[:framerate] || 24
-      super gui_container, @style, &blk
+      @app = opts[:app]
+      @blk = blk
+      @current_frame = 0
+      @stopped = false
+      @gui = Shoes.configuration.backend_for(self, @app, @blk)
     end
 
+    attr_reader :current_frame
     attr_reader :framerate
+
+    def start
+      @stopped = false
+    end
+
+    def stop
+      @stopped = true
+    end
+
+    def stopped?
+      @stopped
+    end
+
+    def toggle
+     @stopped = !@stopped
+    end
+
+    # Increments the current frame by 1
+    #
+    # @return [Integer] The new current frame
+    def increment_frame
+      @current_frame += 1
+    end
   end
 end

@@ -69,7 +69,7 @@ module Shoes
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
       opts.merge! :app => @app
-      animation = Shoes::Animation.new(gui_container, opts, &blk)
+      Shoes::Animation.new(opts, blk)
     end
 
     # similar controls as Shoes::Video (#video)
