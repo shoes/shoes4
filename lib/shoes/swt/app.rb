@@ -43,7 +43,7 @@ module Shoes
           @app.gui_container.setBackground(opts[0].to_native)
           @app.background = opts[0]
         else
-          self.gui_container.addPaintListener(BackgroundPainter.new(opts, self))
+          @app.gui_container.addPaintListener(BackgroundPainter.new(opts, @app))
         end
       end
 
