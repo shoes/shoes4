@@ -20,6 +20,18 @@ def test_set_height(expected, options)
   painter.set_height(paintEvent).should eq expected
 end
 
+def test_set_x(expected, options)
+  painter = create_painter(options)
+  width = painter.set_width(paintEvent)
+  painter.set_x(paintEvent, width).should eq expected
+end
+
+def test_set_y(expected, options)
+  painter = create_painter(options)
+  height = painter.set_height(paintEvent)
+  painter.set_y(paintEvent, height).should eq expected
+end
+
 describe Shoes::Swt::BackgroundPainter do
 
   describe "calculating coordines" do
@@ -78,6 +90,42 @@ describe Shoes::Swt::BackgroundPainter do
         test_set_height(APP_HEIGHT, {})
       end
     
+    end
+    
+    describe "set_x" do
+      it "sets x to :left if supplied" do
+        test_set_x(25, left: 25)
+      end
+      
+      it "sets x to 0 when just right is supplied" do
+        test_set_x(0, right: 70)
+      end
+      
+      it "sets x accordingly if right and width are supplied" do
+        test_set_x(APP_WIDTH - (50 + 30), width: 50, right: 30)
+      end
+      
+      it "sets x to 0 if nothing is supplied" do
+        test_set_x(0, {})
+      end
+    end
+    
+    describe "set_y" do
+      it "sets y to :top if supplied" do
+        test_set_y(35, top: 35)
+      end
+      
+      it "sets y to 0 when just :bottom is supplied" do
+        test_set_y(0, bottom: 55)
+      end
+      
+      it "sets y accordingly if bottom and height are supplied" do
+        test_set_y(APP_HEIGHT - (75 + 100), height: 75, bottom: 100)
+      end
+      
+      it "sets y to 0 if nothing is supplied" do
+        test_set_y(0, {})
+      end
     end
     
   end

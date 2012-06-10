@@ -60,7 +60,9 @@ module Shoes
       def set_x(paintEvent, width)
         if options.has_key? :left
           options[:left]
-        elsif options.has_key? :right
+        # if width is != paintEvent.width then it was altered in some way and we
+        # have to adjust. Otherwise, 0 is a valid answer.
+        elsif options.has_key?(:right) && (width != paintEvent.width) 
           paintEvent.width - (width + options[:right])
         else
           0
@@ -70,7 +72,8 @@ module Shoes
       def set_y(paintEvent, height)
         if options.has_key? :top
           options[:top]
-        elsif options.has_key? :bottom
+        # height is != the paintEvent.height then it was altered and we need to adjust
+        elsif options.has_key?(:bottom) && (height != paintEvent.height)
           paintEvent.height - (height + options[:bottom])
         else
           0
