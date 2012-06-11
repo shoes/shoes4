@@ -5,7 +5,8 @@ describe Shoes::Swt::App do
   let(:mock_shell) { mock(:swt_shell,
                      :setSize => true, :setText => true,
                      :addListener => true, :setLayout => true, 
-                     :setBackground => true, :open => true) }
+                     :setBackground => true, :open => true,
+                     :set_image => true) }
 
   before :each do
     ::Swt::Widgets::Shell.stub(:new) { mock_shell }
