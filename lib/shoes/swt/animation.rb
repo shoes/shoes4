@@ -7,10 +7,12 @@ module Shoes
         # Wrap the animation block so we can count frames.
         # Note that the task re-calls itself on each run.
         task = Proc.new do
-          @blk.call(@current_frame)
-          @current_frame += 1
-          @app.gui_container.redraw
-          ::Swt.display.timer_exec (2000 / @framerate), task
+          unless @app.gui_container.disposed?
+            @blk.call(@current_frame)
+            @current_frame += 1
+            @app.gui_container.redraw
+            ::Swt.display.timer_exec (2000 / @framerate), task
+          end
         end
         ::Swt.display.timer_exec (2000 / @framerate), task
       end
