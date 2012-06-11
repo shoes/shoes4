@@ -3,7 +3,6 @@ require 'shoes/swt/background_painter'
 
 module Shoes
   module Swt
-
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]
     #
@@ -15,6 +14,7 @@ module Shoes
         @app = app
         @app.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         layout = ::Swt::Layout::RowLayout.new
+        container.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
         container.setLayout(layout)
 
         container.setSize(app.width, app.height)
