@@ -6,6 +6,7 @@ require 'shoes/flow'
 require 'shoes/line'
 require 'shoes/oval'
 require 'shoes/shape'
+require 'shoes/text_block'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -159,6 +160,42 @@ module Shoes
     # Returns the updated style
     def style(new_styles = {})
       @style.merge! new_styles
+    end
+
+    # Text blocks
+    def banner(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Banner.new(self.gui_container, text, opts)
+    end
+
+    def title(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Title.new(self.gui_container, text, opts)
+    end
+
+    def subtitle(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Subtitle.new(self.gui_container, text, opts)
+    end
+
+    def tagline(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Tagline.new(self.gui_container, text, opts)
+    end
+
+    def caption(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Caption.new(self.gui_container, text, opts)
+    end
+
+    def para(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Para.new(self.gui_container, text, opts)
+    end
+
+    def inscription(text, opts={})
+      opts.merge! :app => @app
+      para = Shoes::Inscription.new(self.gui_container, text, opts)
     end
   end
 end
