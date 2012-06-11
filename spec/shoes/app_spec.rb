@@ -95,4 +95,21 @@ describe Shoes::App do
       app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
     end
   end
+
+  describe "background" do
+    subject     { Shoes::App.new }
+    let(:white) { Shoes::COLORS[:white] }
+    let(:blue)  { Shoes::COLORS[:blue] }
+    
+    it "should set the default background color to white" do
+      subject.background.should == white
+    end
+
+    it "should allow users to set the background from args" do
+      input_blk = Proc.new {}
+      args = { :background => blue }
+      app = Shoes::App.new args, &input_blk
+      app.background.should == blue
+    end
+  end
 end
