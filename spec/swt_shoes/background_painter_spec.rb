@@ -11,39 +11,39 @@ end
 # For the given options we expect set_width to return expected
 def test_set_width(expected, options)
   painter = create_painter(options)
-  painter.set_width(paintEvent).should eq expected
+  painter.set_width(paint_event).should eq expected
 end
 
 # For the given options we expect set_heidht to return expected
 def test_set_height(expected, options)
   painter = create_painter(options)
-  painter.set_height(paintEvent).should eq expected
+  painter.set_height(paint_event).should eq expected
 end
 
 def test_set_x(expected, options)
   painter = create_painter(options)
-  width = painter.set_width(paintEvent)
-  painter.set_x(paintEvent, width).should eq expected
+  width = painter.set_width(paint_event)
+  painter.set_x(paint_event, width).should eq expected
 end
 
 def test_set_y(expected, options)
   painter = create_painter(options)
-  height = painter.set_height(paintEvent)
-  painter.set_y(paintEvent, height).should eq expected
+  height = painter.set_height(paint_event)
+  painter.set_y(paint_event, height).should eq expected
 end
 
 def test_calculate_coordinates(expected, options)
   painter = create_painter(options)
-  painter.calculate_coords(paintEvent).should eq expected
+  painter.calculate_coords(paint_event).should eq expected
 end
 
 describe Shoes::Swt::BackgroundPainter do
 
   describe "calculating coordines" do
-    let(:paintEvent) do
-      paintEvent = double "paintEvent"
-      paintEvent.stub(height: APP_HEIGHT, width: APP_WIDTH)
-      paintEvent
+    let(:paint_event) do
+      paint_event = double "paint_event"
+      paint_event.stub(height: APP_HEIGHT, width: APP_WIDTH)
+      paint_event
     end
     
     describe "set_width" do
