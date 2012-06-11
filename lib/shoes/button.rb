@@ -19,5 +19,8 @@ module Shoes
       gui_button_init
     end
 
+    def focus
+      gui_button_focus
+    end
   end
 end

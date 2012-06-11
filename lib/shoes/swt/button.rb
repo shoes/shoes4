@@ -13,6 +13,10 @@ module Shoes
         button.pack
       end
 
+      def gui_button_focus
+        self.gui_element.set_focus
+      end
+
       def move(left, top)
         super(left, top)
         unless gui_element.disposed?
