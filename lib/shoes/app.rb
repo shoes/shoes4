@@ -35,11 +35,11 @@ module Shoes
       @app = self
       @style = default_styles
 
-      gui_init
+      @gui = Shoes.configuration.backend::App.new @app
 
       instance_eval &blk if blk
 
-      gui_open
+      @gui.open
     end
 
     def default_options
@@ -65,7 +65,7 @@ module Shoes
     # background, in which case it will call gui_background
     def background(*opts)
       return @background if opts.empty?
-      gui_background opts
+      @gui.gui_background opts
     end
 
   end

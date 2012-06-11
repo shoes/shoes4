@@ -6,31 +6,33 @@ module Shoes
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]
     #
-    module App
-      def gui_init
-        self.gui_container = container = 
-          ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
+    class App
+
+      attr_reader :background
+
+      def initialize app
+        @app = app
+        @app.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         layout = ::Swt::Layout::RowLayout.new
         container.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
         container.setLayout(layout)
 
-        opts = self.opts
-
-        container.setBackground(background.to_native)
-        container.setSize(self.width, self.height)
-        container.setText(self.title)
+        container.setSize(app.width, app.height)
+        container.setText(app.title)
+        gui_background [@app.background]
 
         container.addListener(::Swt::SWT::Close, main_window_on_close)
       end
 
-      def gui_open
-        self.gui_container.open
+
+      def open
+        @app.gui_container.open
+
         ::Swt.event_loop { ::Swt.display.isDisposed }
 
         Shoes.logger.debug "::Swt.display disposed... exiting Shoes::App.new"
       end
 
-      private
       # gui_background will set the background to the
       # value passed to it through opts.
       # It will accept either a Shoes::Color object or
@@ -38,15 +40,16 @@ module Shoes
       # options.
       def gui_background(opts)
         if opts.size == 1
-          self.gui_container.setBackground(opts[0].to_native)
-          @background = opts[0]
+          @app.gui_container.setBackground(opts[0].to_native)
+          @app.background = opts[0]
         else
-          self.gui_container.addPaintListener(BackgroundPainter.new(opts, self))
+          @app.gui_container.addPaintListener(BackgroundPainter.new(opts, @app))
         end
       end
 
+      private
       def main_window_on_close
-        lambda {
+        lambda { |event|
           Shoes.logger.debug "main_window on_close block begin... disposing ::Swt.display"
           ::Swt.display.dispose
           Shoes.logger.debug "::Swt.display disposed"
@@ -55,7 +58,7 @@ module Shoes
 
       def main_window_style
         style  = ::Swt::SWT::CLOSE
-        style |= ::Swt::SWT::RESIZE if opts[:resizable]
+        style |= ::Swt::SWT::RESIZE if @app.opts[:resizable]
 
         style
       end
@@ -63,9 +66,4 @@ module Shoes
   end
 end
 
-module Shoes
-  class App
-    include Shoes::Swt::App
-  end
-end
 
