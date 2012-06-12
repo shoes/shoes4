@@ -1,59 +1,69 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Flow do
+  let(:dsl) { double('dsl') }
+  let(:real) { double('real') }
+  let(:parent_real) { double('parent_real') }
+  let(:parent) { double('parent', :real => parent_real) }
+  subject { Shoes::Swt::Flow.new(dsl, parent) }
 
-  class FlowShoeLaces
-    include Shoes::Swt::Flow
-    attr_accessor :parent_gui_container, :gui_container, :opts, :width, :height, :margin
-  end
-
-  let(:parent_gui_container) { ::Swt.display }
-  let(:mock_slot) { mock(:slot) }
-  let(:shoelace) {
-    shoelace = FlowShoeLaces.new
-    shoelace.parent_gui_container = parent_gui_container
-    shoelace
-  }
-
-  describe "gui_flow_init" do
-
+  describe "#initialize" do
     before do
-      ::Swt::Widgets::Composite.should_receive(:new).with(parent_gui_container, anything).and_return mock_slot
-    end
-    it "should create a composite and set accessor" do
-      mock_slot.stub(:setLayout)
-      shoelace.gui_flow_init
-      shoelace.gui_container.should == mock_slot
-    end
-
-    it "should use a RowLayout" do
-      mock_slot.should_receive(:setLayout).with(an_instance_of(Swt::Layout::RowLayout))
-      shoelace.gui_flow_init
+      ::Swt::Widgets::Composite.should_receive(:new).with(parent_real, anything).and_return(real)
+      real.stub(:setLayout)
+      dsl.stub(:margin)
+      dsl.stub(:width)
+      dsl.stub(:height)
     end
 
-    it "should set height and width" do
-      mock_slot.stub(:setLayout)
-      shoelace.width = 111
-      shoelace.height = 129
-      mock_slot.should_receive(:setSize).with(111, 129)
-      shoelace.gui_flow_init
+    it "creates a composite and set accessor" do
+      subject.real.should be(real)
     end
 
-    it "should set margins" do
-      mock_slot.stub(:setLayout)
-      shoelace.margin = 131
-      mock_layout = mock(:layout)
-      ::Swt::Layout::RowLayout.should_receive(:new).and_return mock_layout
-      mock_layout.should_receive(:marginTop=).with 131
-      mock_layout.should_receive(:marginRight=).with 131
-      mock_layout.should_receive(:marginBottom=).with 131
-      mock_layout.should_receive(:marginLeft=).with 131
-      shoelace.gui_flow_init
+    it "uses a RowLayout" do
+      real.should_receive(:setLayout).with(an_instance_of(::Swt::Layout::RowLayout))
+      subject
+    end
 
+    context "when dsl has height and width" do
+      before :each do
+        dsl.stub(:width) { 111 }
+        dsl.stub(:height) { 129 }
+      end
+
+      it "sets height and width" do
+        real.should_receive(:setSize).with(111, 129)
+        subject
+      end
+    end
+
+    context "when dsl does not have height and width" do
+      it "doesn't set height and width" do
+        real.should_not_receive(:setSize)
+        subject
+      end
+    end
+
+    context "dsl has margin" do
+      let(:mock_layout) { double(:layout) }
+      let(:margin) { 131 }
+
+      before :each do
+        dsl.stub(:margin) { margin }
+        ::Swt::Layout::RowLayout.should_receive(:new).and_return mock_layout
+      end
+
+      it "sets margins" do
+        mock_layout.should_receive(:marginTop=).with margin
+        mock_layout.should_receive(:marginRight=).with margin
+        mock_layout.should_receive(:marginBottom=).with margin
+        mock_layout.should_receive(:marginLeft=).with margin
+        subject
+      end
     end
   end
 
-  describe "git_flow_add_to_parent" do
+  describe "#add_to_parent" do
     #it "should add gui_container to parent_gui_container" do
     #  gui_container = mock(:gui_container)
     #  shoelace.gui_container = gui_container

@@ -24,7 +24,7 @@ module Shoes
 
     def flow(opts = {}, &blk)
       opts.merge! :app => @app
-      swt_flow = Shoes::Flow.new(self, self.gui.real, opts, blk)
+      swt_flow = Shoes::Flow.new(self, opts, blk)
     end
 
 

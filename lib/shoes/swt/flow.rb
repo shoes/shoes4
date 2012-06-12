@@ -3,36 +3,35 @@ module Shoes
   # flow takes these options
   #   :margin - integer - add this many pixels to all 4 sides of the layout
 
-    module Flow
+    class Flow
 
-      def gui_flow_init
-        self.gui = container = ::Swt::Widgets::Composite.new(self.parent_gui_container, ::Swt::SWT::NO_BACKGROUND)
+      # An Swt backend for Shoes::Flow
+      #
+      # @param [Shoes::Flow] dsl The Shoes::Flow to provide gui for
+      # @param [Swt::Widgets::Composite] parent The parent gui element
+      def initialize(dsl, parent)
+        @dsl = dsl
+        @parent = parent
+        @real = ::Swt::Widgets::Composite.new(@parent.real, ::Swt::SWT::NO_BACKGROUND).tap do |composite|
+          # RowLayout is horizontal by default, wrapping by default
+          layout = ::Swt::Layout::RowLayout.new
 
-        # RowLayout is horizontal by default, wrapping by default
-        layout = ::Swt::Layout::RowLayout.new
+          # set the margins
+          set_margin(layout)
 
-        # set the margins
-        set_margin(layout)
+          if @dsl.width && @dsl.height
+            composite.setSize(@dsl.width, @dsl.height)
+          end
 
-        if self.width && self.height
-          container.setSize(self.width, self.height)
+          composite.setLayout(layout)
         end
-
-        container.setLayout(layout)
       end
 
-      # Please remove when converted to class :)
-      def real
-        self.gui
-      end
-
-      def gui_flow_add_to_parent
-        #self.parent_gui_container.add(self.gui_container)
-      end
+      attr_reader :real
 
       # Add this many pixels to margins on layout
       def set_margin(layout)
-        if margin_pixels = self.margin
+        if margin_pixels = @dsl.margin
           layout.marginTop = margin_pixels
           layout.marginRight = margin_pixels
           layout.marginBottom = margin_pixels
@@ -42,11 +41,3 @@ module Shoes
     end
   end
 end
-
-
-module Shoes
-  class Flow
-    include Shoes::Swt::Flow
-  end
-end
-
