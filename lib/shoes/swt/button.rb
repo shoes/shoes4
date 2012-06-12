@@ -1,20 +1,25 @@
 module Shoes
   module Swt
-    module Button
+    class Button
 
-      def gui_button_init
-      # Create a button on the specified _shell_
-      #def initialize(container, text = 'Button', opts = {}, &blk)
-        self.gui_element = button = ::Swt::Widgets::Button.new(self.gui_container, ::Swt::SWT::PUSH)
-        button.setText(self.text)
-        #@native_widget.setBounds(10, 10, 150, 30)
-
-        button.addSelectionListener(self.click_event_lambda) if click_event_lambda
-        button.pack
+      # Create a button
+      #
+      # @param [Shoes::Button] dsl The Shoes DSL button this represents
+      # @param [::Swt::Widgets::Composite] parent The parent element of this button
+      # @param [Proc] blk The block of code to call when this button is activated
+      def initialize(dsl, parent, blk)
+        @dsl = dsl
+        @parent = parent
+        @blk = blk
+        @real ::Swt::Widgets::Button.new(@parent, ::Swt::SWT::PUSH).tap do |button|
+          button.setText(@dsl.text)
+          button.addSelectionListener(@blk) if @blk
+          button.pack
+        end
       end
 
-      def gui_button_focus
-        self.gui_element.set_focus
+      def focus
+        @real.set_focus
       end
 
       def move(left, top)
@@ -42,11 +47,5 @@ module Shoes
         end
       end
     end
-  end
-end
-
-module Shoes
-  class Button
-    include Shoes::Swt::Button
   end
 end
