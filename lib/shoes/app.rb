@@ -16,7 +16,8 @@ module Shoes
   class App
     include Shoes::ElementMethods
 
-    attr_accessor :elements, :gui_container
+    attr_reader :gui
+    attr_accessor :elements
     attr_accessor :opts, :blk
 
     attr_accessor :width, :height, :title, :resizable
@@ -65,7 +66,8 @@ module Shoes
     # background, in which case it will call gui_background
     def background(*opts)
       return @background if opts.empty?
-      @gui.gui_background opts
+      @background = opts[0] if opts.size == 1
+      @gui.background opts
     end
 
   end

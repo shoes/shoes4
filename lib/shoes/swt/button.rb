@@ -11,7 +11,7 @@ module Shoes
         @dsl = dsl
         @parent = parent
         @blk = blk
-        @real ::Swt::Widgets::Button.new(@parent, ::Swt::SWT::PUSH).tap do |button|
+        @real = ::Swt::Widgets::Button.new(@parent.real, ::Swt::SWT::PUSH).tap do |button|
           button.setText(@dsl.text)
           button.addSelectionListener(@blk) if @blk
           button.pack

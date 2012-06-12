@@ -3,12 +3,14 @@ module Shoes
 
     include Shoes::ElementMethods
     
-    attr_accessor :parent_container, :parent_gui_container, :gui_container
+    attr_accessor :parent_container, :parent_gui_container, :gui
     attr_accessor :blk
     attr_accessor :width, :height, :margin
 
 
     def initialize(parent_container, parent_gui_container, opts={}, blk = nil)
+      puts "parent_container: #{parent_container}"
+      puts "parent.gui_container: #{parent_gui_container}"
       self.parent_container = parent_container
       self.parent_gui_container = parent_gui_container
 
