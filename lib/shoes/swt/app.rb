@@ -57,7 +57,7 @@ module Shoes
       end
 
       def main_window_style
-        style  = ::Swt::SWT::CLOSE
+        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX
         style |= ::Swt::SWT::RESIZE if @app.opts[:resizable]
 
         style
