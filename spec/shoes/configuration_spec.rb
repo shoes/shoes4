@@ -8,7 +8,7 @@ describe Shoes::Configuration do
       before { Shoes.configuration.logger = :ruby }
 
       it "uses the Ruby logger" do
-        Shoes.logger.should be_an_instance_of(Shoes::Logger::Ruby)
+        Shoes.logger.instance_of?(Shoes::Logger::Ruby).should == true
       end
     end
 
@@ -16,7 +16,7 @@ describe Shoes::Configuration do
       before { Shoes.configuration.logger = :log4j }
 
       it "uses Log4j" do
-        Shoes.logger.should be_an_instance_of(Shoes::Logger::Log4j)
+        Shoes.logger.instance_of?(Shoes::Logger::Log4j).should == true
       end
     end
   end
