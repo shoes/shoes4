@@ -183,7 +183,6 @@ describe "Basic Element Methods" do
 
     end
   end
-
   #it "Should return 0 for left for button_one" do
   #  @gui.elements['button_one'].left.should be 0
   #end
