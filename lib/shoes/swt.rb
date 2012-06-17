@@ -23,6 +23,7 @@ require 'shoes/swt/oval'
 require 'shoes/swt/shape'
 require 'shoes/swt/color'
 require 'shoes/swt/sound'
+require 'shoes/swt/text_block'
 
 module Shoes::Swt
   module Shoes
