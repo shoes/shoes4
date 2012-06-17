@@ -27,7 +27,7 @@ module Shoes
     end
 
     def replace(string)
-      text = string
+      self.text = string
     end
   end
 
