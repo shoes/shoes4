@@ -1,17 +1,6 @@
 require 'shoes/spec_helper'
 
-describe "Basic Element Methods" do
-  class ElementMethodsShoeLaces
-    attr_accessor :gui_container
-    attr_reader :style
-    include Shoes::ElementMethods
-    def initialize
-      @style = {}
-    end
-  end
-
-  Shoes.configuration.framework = 'white_shoes'
-
+shared_examples_for "object with element methods" do
   before(:all) do
     #@gui = Shoes.app do
     #
