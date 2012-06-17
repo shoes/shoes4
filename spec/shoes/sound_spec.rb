@@ -1,4 +1,6 @@
 require 'shoes/spec_helper'
+# To be removed when Sound is converted from module to class
+require 'white_shoes'
 
 describe Shoes::Sound do
   let(:gui_container) { double("gui container") }
