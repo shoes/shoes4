@@ -3,10 +3,10 @@ module Shoes
   # flow takes these options
   #   :margin - integer - add this many pixels to all 4 sides of the layout
 
+    # An Swt backend for Shoes::Flow
     class Flow
+      include Common::Container
 
-      # An Swt backend for Shoes::Flow
-      #
       # @param [Shoes::Flow] dsl The Shoes::Flow to provide gui for
       # @param [Swt::Widgets::Composite] parent The parent gui element
       def initialize(dsl, parent)

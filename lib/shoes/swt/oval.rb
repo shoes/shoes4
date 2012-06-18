@@ -25,7 +25,7 @@ module Shoes
             gc.set_line_width self.strokewidth
             gc.draw_oval(@dsl.left, @dsl.top, @dsl.width, @dsl.height)
           end
-          @container.real.add_paint_listener(@paint_callback)
+          @container.add_paint_listener(@paint_callback)
         end
       end
 

@@ -4,7 +4,7 @@ require 'swt_shoes/spec_helper'
 #        We should run the same specs instead of duplicating.
 describe "Basic Element Methods" do
   class ElementMethodsShoeLaces
-    attr_accessor :gui_container
+    attr_accessor :gui
     include Shoes::ElementMethods
     include Shoes::Swt::ElementMethods
     def initialize
@@ -15,7 +15,7 @@ describe "Basic Element Methods" do
   let(:gui_container) { double('gui_container') }
   let(:app) {
     ElementMethodsShoeLaces.new.tap { |a|
-      a.gui_container = gui_container
+      a.gui = gui_container
     }
   }
 
