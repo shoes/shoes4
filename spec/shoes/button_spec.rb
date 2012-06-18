@@ -10,6 +10,7 @@ describe Shoes::Button do
   subject { Shoes::Button.new(parent, "text", input_opts, input_block) }
 
   it_behaves_like "movable object"
+  it_behaves_like "movable object with gui"
 
   describe "initialize" do
     it "should set accessors" do

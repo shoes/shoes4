@@ -1,13 +1,9 @@
 module Shoes
   module Mock
     class Shape
-      def initialize(a,b)
-      end
-      
-      def line_to(x, y)
-      end
+      include Shoes::Mock::CommonMethods
 
-      def move(left, top)
+      def line_to(x, y)
       end
 
       def move_to(x, y)

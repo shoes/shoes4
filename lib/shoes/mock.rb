@@ -1,3 +1,4 @@
+require 'shoes/mock/common_methods'
 require 'shoes/mock/animation'
 require 'shoes/mock/button'
 require 'shoes/mock/flow'

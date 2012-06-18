@@ -82,6 +82,7 @@ module Shoes
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
       @left, @top = left, top
+      @gui.move(left, top) if @gui
     end
 
     # displace(left: a number, top: a number) » self

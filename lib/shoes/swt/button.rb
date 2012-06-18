@@ -23,8 +23,7 @@ module Shoes
       end
 
       def move(left, top)
-        super(left, top)
-        unless gui_element.disposed?
+        unless @real.disposed?
           # If this element is part of a layout, we need to pop it into its own
           # composite layer before moving it, so the rest of of the elements in
           # the layout can reflow.
