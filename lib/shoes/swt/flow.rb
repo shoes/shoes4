@@ -6,6 +6,7 @@ module Shoes
     # An Swt backend for Shoes::Flow
     class Flow
       include Common::Container
+      include Common::Child
 
       # @param [Shoes::Flow] dsl The Shoes::Flow to provide gui for
       # @param [Swt::Widgets::Composite] parent The parent gui element
@@ -28,6 +29,7 @@ module Shoes
       end
 
       attr_reader :real
+      attr_reader :parent
 
       # Add this many pixels to margins on layout
       def set_margin(layout)

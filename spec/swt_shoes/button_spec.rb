@@ -1,35 +1,30 @@
 require 'swt_shoes/spec_helper'
 
-#require 'support/shared_examples_for_common_elements_spec'
-
 describe Shoes::Swt::Button do
+  let(:text) { "TEXT" }
+  let(:dsl) { double('dsl', :text => text) }
+  let(:parent) { double('parent') }
+  let(:block) { double('block') }
+  let(:real) { double('real').as_null_object }
 
-  #it_should_behave_like "A Common Element"
+  subject { Shoes::Swt::Button.new dsl, parent, block }
 
-  class ButtonShoeLaces
-    attr_accessor :gui_container, :gui_element, :text, :height, :width, :margin, :click_event_lambda
-    attr_accessor :app
-
-    # because Shoes::Swt::Button#move calls super :(
-    def move(left, top)
-      # no-op
-    end
+  before :each do
+    parent.stub(:real)
+    ::Swt::Widgets::Button.stub(:new) { real }
   end
 
-  let(:gui_container) { double("gui container", :get_layout => true) }
-  let(:gui_element) { double("gui element") }
-  let(:app_gui_container) { double("app gui container") }
-  let(:app) { double("app", :gui_container => app_gui_container) }
-  let(:shoelace) {
-    shoelace = ButtonShoeLaces.new
-    shoelace.extend described_class
-    shoelace.gui_container = gui_container
-    shoelace.gui_element = gui_element
-    shoelace.app = app
-    shoelace
-  }
+  it_behaves_like "movable object with disposable real element"
 
-  subject { shoelace }
+  describe "#initialize" do
+    it "sets text on real element" do
+      real.should_receive(:setText).with(text)
+      subject
+    end
 
-  it_behaves_like "movable object with disposable gui element"
+    it "passes block to real element" do
+      real.should_receive(:addSelectionListener).with(block)
+      subject
+    end
+  end
 end

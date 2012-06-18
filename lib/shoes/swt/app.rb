@@ -46,6 +46,11 @@ module Shoes
         end
       end
 
+      # @return [Shoes::Swt::App] Self
+      def app
+        self
+      end
+
       private
       def main_window_on_close
         lambda { |event|

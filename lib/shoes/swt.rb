@@ -12,6 +12,7 @@ end
 
 require 'shoes/swt/common/fill'
 require 'shoes/swt/common/stroke'
+require 'shoes/swt/common/child'
 require 'shoes/swt/common/container'
 require 'shoes/swt/element_methods'
 require 'shoes/swt/animation'

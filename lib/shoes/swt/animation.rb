@@ -14,10 +14,7 @@ module Shoes
         # Wrap the animation block so we can count frames.
         # Note that the task re-calls itself on each run.
         @task = Proc.new do
-          puts "in @task"
           unless @app.real.disposed?
-            puts "in disposed?"
-            puts @blk
             @blk.call(@dsl.current_frame)
             @dsl.increment_frame
             @app.real.redraw
