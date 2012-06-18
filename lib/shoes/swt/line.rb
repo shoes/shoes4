@@ -18,7 +18,7 @@ module Shoes
             gc.draw_line(dsl.left, dsl.top, dsl.right, dsl.bottom)
           end
           @paint_callback = opts[:paint_callback] || default_paint_callback
-          @container.add_paint_listener(@paint_callback)
+          @container.real.add_paint_listener(@paint_callback)
         end
       end
 
