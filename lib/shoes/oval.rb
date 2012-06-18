@@ -32,8 +32,7 @@ module Shoes
       end
 
       # GUI
-      @style.delete(:gui)
-      @gui = Shoes.configuration.backend_for(self, @style)
+      @gui = Shoes.configuration.backend_for(self, @style.delete(:gui))
     end
   end
 end

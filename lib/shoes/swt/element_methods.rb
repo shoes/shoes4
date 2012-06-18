@@ -54,14 +54,14 @@ module Shoes
       #
       def line(*opts)
         args = opts.last.class == Hash ? opts.pop : {}
-        args[:gui] = {container: self.gui_container}
+        args[:gui] = {container: self.gui}
         super(*opts, args)
       end
 
       def oval(*opts)
         args = opts.last.class == Hash ? opts.pop : {}
         args[:gui] = {
-          container: self.gui_container,
+          container: self.gui,
           paint_callback: lambda do |event, shape|
             #return if hidden?
             gc = event.gc
@@ -77,7 +77,7 @@ module Shoes
       # FIXME: same as #line
       def shape(*opts)
         args = opts.last.class == Hash ? opts.pop : {}
-        args[:gui] = {container: self.gui_container}
+        args[:gui] = {container: self.gui}
         super(*opts, args)
       end
     end
