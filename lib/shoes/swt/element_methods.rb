@@ -1,8 +1,3 @@
-#require 'shoes/framework_adapters/swt_shoes/flow'
-
-require 'white_shoes/element_methods'
-
-
 module Shoes
   module Swt
     module ElementMethods
