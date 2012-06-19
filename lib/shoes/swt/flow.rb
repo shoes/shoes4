@@ -13,12 +13,14 @@ module Shoes
       def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
-        @real = ::Swt::Widgets::Composite.new(@parent.real, ::Swt::SWT::NO_BACKGROUND).tap do |composite|
+        @real = ::Swt::Widgets::Composite.new(@parent.real, ::Swt::SWT::NONE).tap do |composite|
           # RowLayout is horizontal by default, wrapping by default
           layout = ::Swt::Layout::RowLayout.new
 
           # set the margins
           set_margin(layout)
+
+          composite.background = ::Shoes::COLORS[:lavender].to_native
 
           if @dsl.width && @dsl.height
             composite.setSize(@dsl.width, @dsl.height)
