@@ -11,7 +11,7 @@ require 'support/vorbisspi1.0.3.jar'
 
 module Shoes
   module Swt
-    module Sound
+    class Sound
       JFile = java.io.File
       import java.io.BufferedInputStream
       import javax.sound.sampled
@@ -19,13 +19,15 @@ module Shoes
 
       BufferSize = 4096
 
-      attr_accessor :mixer_channel, :audio_input_stream, :audio_format
-
-      def gui_sound_init
-        # noop for java.sound.SourceDataLine implementation
+      def initialize(dsl, filepath)
+        @dsl = dsl
+        @filepath = filepath
       end
 
-      def gui_sound_play
+      attr_accessor :mixer_channel, :audio_input_stream, :audio_format
+      attr_reader :filepath
+
+      def play
         Thread.new do
           begin
             sound_file = JFile.new(self.filepath)
@@ -111,12 +113,5 @@ module Shoes
         res
       end
     end
-  end
-end
-
-
-module Shoes
-  class Sound
-    include Shoes::Swt::Sound
   end
 end
