@@ -9,29 +9,6 @@ module Shoes
         @logger_instance = nil
       end
 
-      # @return [String] The require string for the framework class
-      # @todo Should be the class itself
-      attr_reader :framework
-
-      # Set the backend framework
-      #
-      # @param [String] value The require for the backend
-      # @return [String] The require for the backend
-      # @example
-      #   Shoes.configuration.framework = 'shoes/swt'
-      # @todo This should receive :swt, :swing, etc. instead of
-      #   'shoes/swt', 'shoes/swing', etc.
-      # @todo Merge into #backend
-      def framework=(value)
-        @framework = value
-        require value
-        @framework
-      end
-
-      def framework_class
-        constant(@framework.camelcase)
-      end
-
       def backend
         @backend
       end
