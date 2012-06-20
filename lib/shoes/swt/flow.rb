@@ -20,8 +20,6 @@ module Shoes
           # set the margins
           set_margin(layout)
 
-          composite.background = ::Shoes::COLORS[:lavender].to_native
-
           if @dsl.width && @dsl.height
             composite.setSize(@dsl.width, @dsl.height)
           end
