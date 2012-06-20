@@ -47,7 +47,7 @@ module Shoes
       {
         :width  => 600,
         :height => 500,
-        :title  => "Shoooes!",
+        :title  => "Shoes 4",
         :resizable  => true,
         :background => white
       }

@@ -22,7 +22,7 @@ describe Shoes::App do
       app = Shoes::App.new args, &input_blk
       app.width.should == 600
       app.height.should == 500
-      app.title.should == 'Shoooes!'
+      app.title.should == 'Shoes 4'
       app.resizable.should be_true
     end
 
