@@ -40,11 +40,11 @@ module Shoes
             old_parent_real = @parent_real
             app_real = app.real
             new_parent_real = ::Swt::Widgets::Shell.new(app_real, ::Swt::SWT::NO_TRIM)
-# new_parent_real = ::Swt::Widgets::Composite.new(app_real, ::Swt::SWT::NO_BACKGROUND)
-            
-#            new_parent_real.set_region(@real.region)
+            # new_parent_real = ::Swt::Widgets::Composite.new(app_real, ::Swt::SWT::NO_BACKGROUND)
+            # new_parent_real.set_region(@real.region)
+            new_parent_real.alpha = 100
             new_parent_real.set_bounds(@real.bounds)
-            app_location = app_real.location          
+            app_location = app_real.location
             new_parent_real.set_location(app_location.x + left, app_location.y + top)
             new_parent_real.layout = nil
             @real.dispose
@@ -55,19 +55,26 @@ module Shoes
             end
             # new_parent_real.set_bounds(0, 0, app_real.size.x, app_real.size.y)
             new_parent_real.move_above(old_parent_real)
+            new_parent_real.add_paint_listener do |e|
+              gc = e.gc
+              gc.alpha = 255
+              gc.drawRectangle @real.bounds
+              @real.redraw
+              gc.alpha = 0
+            end
             # This is the Swt parent. In the DSL, the parent hasn't changed.
             @parent_real = new_parent_real
             old_parent_real.layout
             old_parent_real.pack
-# old_parent_real.redraw
-# @real.set_location left, top
-            @real.set_location 0, 0 
+            # old_parent_real.redraw
+            # @real.set_location left, top
+            @real.set_location 0, 0
             @real.redraw
             @parent_real.open
           else
             absolute_x = app.real.location.x + left
             absolute_y = app.real.location.y + top
-            @parent_real.set_location absolute_x, absolute_y 
+            @parent_real.set_location absolute_x, absolute_y
             @parent_real.redraw
           end
         end
