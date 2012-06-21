@@ -1,6 +1,7 @@
 require 'shoes/common_methods'
 
 module Shoes
+  DEFAULT_TEXTBLOCK_FONT = ["Arial"]
   class Text_block
     include Shoes::CommonMethods
 
@@ -51,8 +52,8 @@ module Shoes
       ffamily = type.gsub(style_regex,'').gsub(/\d+(px)?/,'').split(',').
         map { |x| x.strip.gsub(/["]/,'') }
 
-      if not style_only
-        font_family = ["Arial"]
+      unless style_only
+        font_family = DEFAULT_TEXTBLOCK_FONT
         font_family = ffamily unless (ffamily.size == 1 and ffamily[0] == "") or ffamily.size == 0
         font_size = type.scan(fsize_regex).first.to_i unless type.scan(fsize_regex).empty?
       end
@@ -80,7 +81,7 @@ module Shoes
           # not sure how this is done under swt
         end
       elsif opts.has_key? :hidden
-        # hide the element
+        gui_hidden opts[:hidden]
       elsif opts.has_key? :leading
         # need to look up if this is possible
         # with styledtext

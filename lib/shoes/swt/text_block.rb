@@ -1,7 +1,6 @@
 module Shoes
   module Swt
     module Text_block
-      DEFAULT_TEXTBLOCK_FONT = ["Arial"]
 
       def gui_textblock_init
         self.gui_element = st = ::Swt::Custom::StyledText.new(self.gui_container, 
@@ -9,7 +8,7 @@ module Shoes
 
         st.set_editable false
         st.set_caret nil 
-               
+
         gui_set_font        
         gui_update_text
       end
@@ -35,6 +34,10 @@ module Shoes
         styled_text.set_font swt_font
       end
 
+      def gui_hidden(hidden)
+        self.gui_element.visible = (not hidden)
+      end
+
       def move(left, top)
         super left, top
         unless gui_element.disposed?
@@ -48,7 +51,7 @@ module Shoes
               ::Swt::SWT::PUSH).tap do |text_block|
               text_block.set_text @text
               text_block.pack 
-              # todo more..
+              # todo more...
             end
             self.gui_container.set_bounds(0, 0, @app.gui_container.size.x, 
               @app.gui_container.size.y)

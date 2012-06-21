@@ -149,5 +149,17 @@ describe Shoes::Text_block do
         sub({:emphasis => 'italic'})
       end
     end
+
+    describe "hidden" do
+      it "should hide the control when it receives :hidden" do
+        tb.any_instance.should_receive(:gui_hidden).with(true)
+        sub({:hidden => true})
+      end
+      
+      it "should not hide the control when it receives :hidden => false" do
+        tb.any_instance.should_receive(:gui_hidden).with(false)
+        sub({:hidden => false})
+      end
+    end
   end
 end
