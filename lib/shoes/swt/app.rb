@@ -16,6 +16,7 @@ module Shoes
         layout = ::Swt::Layout::RowLayout.new
         container.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
         container.setLayout(layout)
+        container.background_mode = ::Swt::SWT::INHERIT_DEFAULT
 
         container.setSize(app.width, app.height)
         container.setText(app.title)
