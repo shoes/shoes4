@@ -1,15 +1,19 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Flow do
-    
 
   describe "initialize" do
+    let(:parent) { double("parent") }
+
+    before :each do
+      parent.should_receive(:gui)
+    end
+
     it "should set accessors" do
       input_block = Proc.new {}
       input_opts = {:width => 131, :height => 137, :margin => 143}
-      flow = Shoes::Flow.new("parent_container", "parent_gui_container", input_opts, input_block)
-      flow.parent_container.should == "parent_container"
-      flow.parent_gui_container.should == "parent_gui_container"
+      flow = Shoes::Flow.new(parent, input_opts, input_block)
+      flow.parent.should == parent
       flow.width.should == 131
       flow.height.should == 137
       flow.margin.should == 143

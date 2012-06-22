@@ -7,26 +7,25 @@ module Shoes
     # The default window is a [flow]
     #
     class App
-
-      attr_reader :background
-
-      def initialize app
-        @app = app
-        @app.gui_container = container = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
-        layout = ::Swt::Layout::RowLayout.new
-        container.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
-        container.setLayout(layout)
-
-        container.setSize(app.width, app.height)
-        container.setText(app.title)
-        gui_background [@app.background]
-
-        container.addListener(::Swt::SWT::Close, main_window_on_close)
+      include Common::Container
+      def initialize dsl
+        @dsl = dsl
+        @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
+          layout = ::Swt::Layout::RowLayout.new
+          shell.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
+          shell.setLayout(layout)
+          shell.setSize(@dsl.width, @dsl.height)
+          shell.setText(@dsl.title)
+          shell.addListener(::Swt::SWT::Close, main_window_on_close)
+        end
+        background Array(@dsl.background)
       end
 
+      attr_reader :background
+      attr_reader :real
 
       def open
-        @app.gui_container.open
+        @real.open
 
         ::Swt.event_loop { ::Swt.display.isDisposed }
 
@@ -38,13 +37,18 @@ module Shoes
       # It will accept either a Shoes::Color object or
       # a Shoes::Color object along with some additional
       # options.
-      def gui_background(opts)
+      def background(opts)
+        # Duplicates logic in Shoes::App
         if opts.size == 1
-          @app.gui_container.setBackground(opts[0].to_native)
-          @app.background = opts[0]
+          @real.setBackground(opts[0].to_native)
         else
-          @app.gui_container.addPaintListener(BackgroundPainter.new(opts, @app))
+          @real.addPaintListener(BackgroundPainter.new(opts, @dsl))
         end
+      end
+
+      # @return [Shoes::Swt::App] Self
+      def app
+        self
       end
 
       private
@@ -58,8 +62,7 @@ module Shoes
 
       def main_window_style
         style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX
-        style |= ::Swt::SWT::RESIZE if @app.opts[:resizable]
-
+        style |= ::Swt::SWT::RESIZE if @dsl.opts[:resizable]
         style
       end
     end

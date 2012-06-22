@@ -1,22 +1,24 @@
 module Shoes
   class Sound
-    def initialize(gui_container, filepath, opts={}, &blk)
-      self.gui_container = gui_container
-      self.filepath = filepath
+    def initialize(parent, filepath, opts={}, &blk)
+      @parent = parent
+      @filepath = filepath
 
       #self.blk = blk
 
-      gui_sound_init
+      @gui = Shoes.configuration.backend_for(self, filepath)
 
       #instance_eval &blk unless blk.nil?
 
     end
 
-    attr_accessor :gui_container
-    attr_accessor :filepath, :blk
+    attr_reader :gui
+    attr_reader :filepath
+    attr_reader :blk
+    attr_reader :parent
 
     def play
-      gui_sound_play
+      @gui.play
     end
   end
 end

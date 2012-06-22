@@ -1,17 +1,6 @@
 require 'shoes/spec_helper'
 
-describe "Basic Element Methods" do
-  class ElementMethodsShoeLaces
-    attr_accessor :gui_container
-    attr_reader :style
-    include Shoes::ElementMethods
-    def initialize
-      @style = {}
-    end
-  end
-
-  Shoes.configuration.framework = 'white_shoes'
-
+shared_examples_for "object with element methods" do
   before(:all) do
     #@gui = Shoes.app do
     #
@@ -24,14 +13,13 @@ describe "Basic Element Methods" do
   end
 
   describe "flow" do
-    it "should use self, gui_container, opts, blk" do
+    it "should use self, opts, blk" do
       subject = ElementMethodsShoeLaces.new
-      subject.gui_container = "gui_container"
       blk = Proc.new {}
       opts = mock(:hash)
       opts.should_receive(:merge!).and_return(opts)
       Shoes::Flow.should_receive(:new).
-        with(subject, "gui_container", opts, blk)
+        with(subject, opts, blk)
       subject.flow opts, &blk
     end
   end

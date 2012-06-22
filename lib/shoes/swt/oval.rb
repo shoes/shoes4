@@ -15,7 +15,7 @@ module Shoes
       def initialize(dsl, opts = nil)
         @dsl = dsl
         if opts
-          @container = opts[:app].gui_container
+          @container = opts[:container]
           @paint_callback = lambda do |event|
             gc = event.gc
             gc.set_antialias ::Swt::SWT::ON

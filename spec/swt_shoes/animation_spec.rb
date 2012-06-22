@@ -2,10 +2,10 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Animation do
   let(:dsl) { double('dsl').as_null_object }
-  let(:app) { double 'app', :gui_container => gui_container }
+  let(:app) { double 'app', :real => app_real }
   let(:block) { double 'block' }
   let(:display) { ::Swt.display }
-  let(:gui_container) { double('gui_container').as_null_object }
+  let(:app_real) { double('app_real').as_null_object }
   subject { Shoes::Swt::Animation.new dsl, app, block }
 
   before :each do
@@ -27,7 +27,7 @@ describe Shoes::Swt::Animation do
     let(:task) { subject.task }
 
     before :each do
-      gui_container.stub(:disposed?) { false }
+      app_real.stub(:disposed?) { false }
       block.stub(:call)
     end
 
@@ -42,7 +42,7 @@ describe Shoes::Swt::Animation do
     end
 
     it "triggers redraw" do
-      gui_container.should_receive(:redraw)
+      app_real.should_receive(:redraw)
       task.call
     end
 

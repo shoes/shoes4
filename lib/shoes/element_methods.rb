@@ -24,13 +24,13 @@ module Shoes
 
     def flow(opts = {}, &blk)
       opts.merge! :app => @app
-      swt_flow = Shoes::Flow.new(self, self.gui_container, opts, blk)
+      swt_flow = Shoes::Flow.new(self, opts, blk)
     end
 
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      button = Shoes::Button.new(self.gui_container, text, opts, blk)
+      button = Shoes::Button.new(self, text, opts, blk)
       #@elements[button.to_s] = button
       #button
     end
@@ -74,7 +74,7 @@ module Shoes
 
     # similar controls as Shoes::Video (#video)
     def sound(soundfile, opts = {}, &blk)
-      playable_sound = Shoes::Sound.new(gui_container, soundfile, opts, &blk)
+      playable_sound = Shoes::Sound.new(self.gui, soundfile, opts, &blk)
     end
 
     #

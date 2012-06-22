@@ -4,23 +4,24 @@ module Shoes
   class Button
     include Shoes::CommonMethods
 
-    attr_accessor :gui_container, :click_event_lambda
-    attr_accessor :gui_element
-    attr_accessor :text
-
-    def initialize(gui_container, text = 'Button', opts={}, click_event_lambda = nil)
-      self.gui_container = gui_container
-      self.click_event_lambda = click_event_lambda
-      self.text = text
+    def initialize(parent, text = 'Button', opts = {}, blk = nil)
+      @parent = parent
+      @text = text
+      @blk = blk
       @app = opts[:app]
       @height = opts[:height]
       @width = opts[:width]
 
-      gui_button_init
+      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
     end
 
+    attr_reader :parent
+    attr_reader :blk
+    attr_reader :gui
+    attr_accessor :text
+
     def focus
-      gui_button_focus
+      @gui.focus
     end
   end
 end
