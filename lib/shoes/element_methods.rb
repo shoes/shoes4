@@ -6,6 +6,7 @@ require 'shoes/flow'
 require 'shoes/line'
 require 'shoes/oval'
 require 'shoes/shape'
+require 'shoes/list_box'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -21,6 +22,11 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
+
+    def list_box(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::List_box.new(self, opts, blk)
+    end
 
     def flow(opts = {}, &blk)
       opts.merge! :app => @app

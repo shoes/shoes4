@@ -25,6 +25,7 @@ require 'shoes/swt/oval'
 require 'shoes/swt/shape'
 require 'shoes/swt/color'
 require 'shoes/swt/sound'
+require 'shoes/swt/list_box'
 
 module Shoes::Swt
   module Shoes
