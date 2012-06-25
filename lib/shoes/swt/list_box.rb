@@ -2,27 +2,34 @@
 
 module Shoes
   module Swt
-    module List_box
-      def gui_list_box_init
-        @gui_element = ::Swt::Widgets::Combo.new(@parent.gui.real,
+    class List_box
+      include Common::Child
+
+      # Create a list box
+      #
+      # @param [Shoes::Button] dsl The Shoes DSL button this represents
+      # @param [::Swt::Widgets::Composite] parent The parent element of this button
+      # @param [Proc] blk The block of code to call when this button is activated
+      def initialize(dsl, parent, blk)
+        @dsl = dsl
+        @parent = parent
+        @blk = blk
+        @real = ::Swt::Widgets::Combo.new(@parent.real,
           ::Swt::SWT::READ_ONLY)
       end
 
-      def gui_update_items(values)
-        @gui_element.items = values
-        @gui_element.text  = values.first
+      def update_items(values)
+        @real.items = values
       end
 
+      # Returns the current selection or nil if nothing
+      # has been selected
       def text
-        v=@gui_element.text
+        v=@real.text
         v == "" ? nil : v
       end
     end
   end
 end
 
-module Shoes
-  class List_box
-    include Shoes::Swt::List_box
-  end
-end
+
