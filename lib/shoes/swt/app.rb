@@ -11,21 +11,34 @@ module Shoes
       def initialize dsl
         @dsl = dsl
         @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
-          layout = ::Swt::Layout::RowLayout.new
           shell.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
-          shell.setLayout(layout)
-          shell.setSize(@dsl.width, @dsl.height)
           shell.setText(@dsl.title)
           shell.addListener(::Swt::SWT::Close, main_window_on_close)
         end
         background Array(@dsl.background)
+        @shell = @real
+        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
+        @real.setSize(@dsl.width, @dsl.height)
+        @real.setLayout ::Swt::Layout::RowLayout.new
+        
+        @dx = @dy = 0
+        s = self
+        cl = ::Swt::ControlListener.new
+        class << cl; self end.
+        instance_eval do
+          define_method(:controlResized){|e| s.real.setSize s.shell.getSize.x - s.dx, s.shell.getSize.y - s.dy}
+          define_method(:controlMoved){|e|}
+        end
+        @shell.addControlListener cl
       end
 
       attr_reader :background
-      attr_reader :real
+      attr_reader :real, :shell, :dx, :dy
 
       def open
-        @real.open
+        @shell.pack
+        @shell.open
+        @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
 
         ::Swt.event_loop { ::Swt.display.isDisposed }
 
