@@ -2,34 +2,44 @@ require 'shoes/spec_helper'
 require 'shoes/text_block'
 
 describe Shoes::Text_block do
-  subject { Shoes::Text_block.new("gui_container", "Hello, world!", 99, {}) }
- 
+  let(:mock_gui) { mock(:set_font, :update_text, :hidden, :new) }
+  let(:mock_parent) { mock(:gui => "mock gui") }
+  subject { Shoes::Text_block.new(mock_parent, "Hello, world!", 99, {}, nil) }
+
   before :each do
-    Shoes::Text_block.any_instance.stub(:gui_textblock_init)
-    Shoes::Text_block.any_instance.stub(:gui_update_text)
+#    Shoes::Text_block.any_instance.stub(:gui) { mock_gui }
+     #Shoes::Mock::Text_block.any_instance.stub(:new)
+#    Shoes::Text_block.any_instance.stub(:gui_update_text)
   end
 
   describe "initialize" do
     it "should have the proper accessors" do
-      subject.should respond_to :text
-      subject.should respond_to :replace
-      subject.should respond_to :contents
+      s = subject
+      s.should respond_to :contents
+      s.should respond_to :replace
+      s.should respond_to :text
+      s.should respond_to :text=
+      s.should respond_to :to_s
     end
 
     it "should set accessors" do
-      subject.gui_container.should == "gui_container"
-      subject.text.should == "Hello, world!"
-      subject.font_size.should == 99
+      s = subject
+      s.text.should eql "Hello, world!"
+      s.to_s.should eql "Hello, world!"
+      s.contents.should eql "Hello, world!"
+      s.font_size.should eql 99
     end
 
     it "should allow replace() to change the text" do
-      subject.replace "good bye!"
-      subject.text.should == "good bye!"
+      s = subject
+      s.replace "good bye!"
+      s.text.should == "good bye!"
     end
 
     it "should allow text= to change the text" do
-      subject.text = "good bye!"
-      subject.text.should == "good bye!"
+      s = subject
+      s.text = "good bye!"
+      s.text.should == "good bye!"
     end
 
     it "should return the text when to_s is called" do
@@ -42,48 +52,12 @@ describe Shoes::Text_block do
     end
   end
 
-  describe "font size" do
-    it "should set banner to 48 pixels" do
-      Shoes::Banner.any_instance.stub(:gui_textblock_init)
-      Shoes::Banner.new(nil, "hello", {}).font_size.should == 48
-    end
-
-    it "should set title to 38 pixels" do
-      Shoes::Title.any_instance.stub(:gui_textblock_init)
-      Shoes::Title.new(nil, "hello", {}).font_size.should == 34
-    end
-
-    it "should set subtitle to 26 pixels" do
-      Shoes::Subtitle.any_instance.stub(:gui_textblock_init)
-      Shoes::Subtitle.new(nil, "hello", {}).font_size.should == 26
-    end
-
-    it "should set tagline to 18 pixels" do
-      Shoes::Tagline.any_instance.stub(:gui_textblock_init)
-      Shoes::Tagline.new(nil, "hello", {}).font_size.should == 18
-    end
-
-    it "should set caption to 14 pixels" do
-      Shoes::Caption.any_instance.stub(:gui_textblock_init)
-      Shoes::Caption.new(nil, "hello", {}).font_size.should == 14
-    end
-
-    it "should set para to 12 pixels" do
-      Shoes::Para.any_instance.stub(:gui_textblock_init)
-      Shoes::Para.new(nil, "hello", {}).font_size.should == 12
-    end
-
-    it "should set inscription to 10 pixels" do
-      Shoes::Inscription.any_instance.stub(:gui_textblock_init)
-      Shoes::Inscription.new(nil, "hello", {}).font_size.should == 10
-    end
-  end
-
   describe "font styles" do
-    tb = Shoes::Text_block
+    tb = Shoes::Mock::Text_block
 
     def sub(opts)
-      Shoes::Text_block.new("gui_container", "yo", 1337, opts)
+      opts.merge! :app => "app"
+      Shoes::Text_block.new(mock_parent, "Hello, world!", 99, opts, nil)
     end
 
     describe "set_font" do
@@ -98,66 +72,66 @@ describe Shoes::Text_block do
       end
 
       it "should set the corrent font family when using :family" do
-        tb.any_instance.should_receive(:gui_set_font).with(["Times New Roman"], anything, anything)
+        tb.any_instance.should_receive(:set_font).with(["Times New Roman"], anything, anything)
         sub({:family => 'Times New Roman'})
       end
 
       it "should set the correct font family when using :font" do
-        tb.any_instance.should_receive(:gui_set_font).with(["Times New Roman"], anything, anything)
+        tb.any_instance.should_receive(:set_font).with(["Times New Roman"], anything, anything)
         sub({:font => 'Times New Roman'})
       end
 
       it "should default to arial if the font family is missing" do
-        tb.any_instance.should_receive(:gui_set_font).with(["Arial"], anything, anything)
+        tb.any_instance.should_receive(:set_font).with(["Arial"], anything, anything)
         sub({:font => 'none 12px'})
       end
 
       it "should allow us to set the font size" do
-        tb.any_instance.should_receive(:gui_set_font).with(anything, anything, 88)
+        tb.any_instance.should_receive(:set_font).with(anything, anything, 88)
         sub({:font => '"Times New Roman", Arial bold 88px'})
       end
 
       it "should allow us to set style options" do
-        tb.any_instance.should_receive(:gui_set_font).with(anything, [:bold, :none], anything)
+        tb.any_instance.should_receive(:set_font).with(anything, [:bold, :none], anything)
         sub({:font => '"Times New Roman", Arial bold none 88'})
       end
 
       it "should react correctly if the font-string is empty" do
-        tb.any_instance.should_receive(:gui_set_font).with(["Arial"], [], nil)
+        tb.any_instance.should_receive(:set_font).with(["Arial"], [], nil)
         sub({:font => ''})
       end
     end
 
     describe "emphasis" do
       it "should handle normal correctly" do
-        tb.any_instance.should_receive(:gui_set_font).with(anything, [:normal], nil)
+        tb.any_instance.should_receive(:set_font).with(anything, [:normal], nil)
         sub({:emphasis => 'normal'})
       end
 
       it "should handle oblique correctly" do
-        tb.any_instance.should_receive(:gui_set_font).with(anything, [:oblique], nil)
+        tb.any_instance.should_receive(:set_font).with(anything, [:oblique], nil)
         sub({:emphasis => 'oblique'})
       end
 
       it "should handle italic correctly" do
-        tb.any_instance.should_receive(:gui_set_font).with(anything, [:italic], nil)
+        tb.any_instance.should_receive(:set_font).with(anything, [:italic], nil)
         sub({:emphasis => 'italic'})
       end
 
       it "shouldn't change the font-family" do
-        tb.any_instance.should_receive(:gui_set_font).with(nil, [:italic], anything)
+        tb.any_instance.should_receive(:set_font).with(nil, [:italic], anything)
         sub({:emphasis => 'italic'})
       end
     end
 
     describe "hidden" do
       it "should hide the control when it receives :hidden" do
-        tb.any_instance.should_receive(:gui_hidden).with(true)
+        tb.any_instance.should_receive(:hidden).with(true)
         sub({:hidden => true})
       end
-      
+
       it "should not hide the control when it receives :hidden => false" do
-        tb.any_instance.should_receive(:gui_hidden).with(false)
+        tb.any_instance.should_receive(:hidden).with(false)
         sub({:hidden => false})
       end
     end

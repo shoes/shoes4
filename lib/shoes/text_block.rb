@@ -5,42 +5,51 @@ module Shoes
   class Text_block
     include Shoes::CommonMethods
 
-    attr_accessor :gui_container, :gui_element
-    attr_reader   :text, :font_size
-    alias_method  :to_s, :text
-    alias_method  :contents, :text
+    attr_reader  :gui, :blk, :parent, :text
+    attr_accessor :font_size
+    alias_method :to_s, :text
+    alias_method :contents, :text
 
-    def initialize(gui_container, text, font_size, opts={})
-      self.gui_container = gui_container
-
-      @text = text
-      @font_size = font_size
+    def initialize(parent, text="", font_size=5, opts = {}, blk = nil)
+      @parent = parent
+      @blk = blk
       @app = opts[:app]
+      @font_size = font_size
+      @text = text
 
-      gui_textblock_init
+      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
       handle_opts opts
+    end
+
+    def font_size=(size)
+      @font_size = size
+      @gui.set_font unless @gui.nil?
     end
 
     def text=(string)
       @text = string
-      gui_update_text
+      @gui.update_text
     end
 
     def replace(string)
       self.text = string
     end
 
+    def font_size_no_update=(size)
+      @font_size = size
+    end
+
     private
 
     # Takes the form "[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]"
-    # where FAMILY-LIST is a comma separated list of 
-    # families optionally terminated by a comma, 
-    # STYLE_OPTIONS is a whitespace separated list of words 
-    # where each WORD describes one of style, variant, 
-    # weight, stretch, or gravity, and SIZE is a decimal 
-    # number (size in points) or optionally followed by the 
-    # unit modifier "px" for absolute size. Any one of the 
-    # options may be absent. If FAMILY-LIST is absent, then 
+    # where FAMILY-LIST is a comma separated list of
+    # families optionally terminated by a comma,
+    # STYLE_OPTIONS is a whitespace separated list of words
+    # where each WORD describes one of style, variant,
+    # weight, stretch, or gravity, and SIZE is a decimal
+    # number (size in points) or optionally followed by the
+    # unit modifier "px" for absolute size. Any one of the
+    # options may be absent. If FAMILY-LIST is absent, then
     # the default font family (Arial) will be used.
 
     # font_family only specifies what value it should
@@ -59,7 +68,8 @@ module Shoes
       end
       style_options = type.scan(style_regex).map { |x| x.to_sym }
 
-      gui_set_font font_family, style_options, font_size
+      p "shose.."
+      @gui.set_font font_family, style_options, font_size
     end
 
     # TODO: Remove most of these (the unused ones)
@@ -81,7 +91,7 @@ module Shoes
           # not sure how this is done under swt
         end
       elsif opts.has_key? :hidden
-        gui_hidden opts[:hidden]
+        @gui.hidden opts[:hidden]
       elsif opts.has_key? :leading
         # need to look up if this is possible
         # with styledtext
@@ -90,7 +100,7 @@ module Shoes
         # look it up.
       elsif opts.has_key? :stretch
         # not sure how to implement this
-        
+
       # I think that the following styles
       # have to be done by "manually" painting
       # on the object. It is currently impossible
@@ -122,63 +132,16 @@ module Shoes
         when "none"
           puts "not underlined"
         when "single"
-          puts "single underline" 
-        when "double" 
+          puts "single underline"
+        when "double"
           puts "double underline"
-        when "low" 
+        when "low"
           # not sure what this is
         when "error"
         end
       elsif opts.has_key? :wrap
         # think this is related to layouts
       end
-    end
-  end
-
-  # Text block types
-  # I was thinking about just accepting different font_sizes
-  # and using Text_blocks in element_methods.rb, but this
-  # is a bit easier to test and it's more obvious where
-  # the font sizes are specified
-  class Banner < Text_block
-    def initialize(gui_container, text, opts={})
-      super(gui_container, text, 48, opts)
-    end
-  end
-
-  class Title < Text_block
-    def initialize(gui_container, text, opts)
-      super gui_container, text, 34, opts
-    end
-  end
-
-  class Subtitle < Text_block
-    def initialize(gui_container, text, opts)
-      super gui_container, text, 26, opts
-    end
-  end
-
-  class Tagline < Text_block
-    def initialize(gui_container, text, opts)
-      super gui_container, text, 18, opts
-    end
-  end
-
-  class Caption < Text_block
-    def initialize(gui_container, text, opts)
-      super gui_container, text, 14, opts
-    end
-  end
-
-  class Para < Text_block
-    def initialize(gui_container, text, opts)
-      super gui_container, text, 12, opts
-    end
-  end
-
-  class Inscription < Text_block
-    def initialize(gui_container, text, opts)
-      super gui_container, text, 10, opts
     end
   end
 end

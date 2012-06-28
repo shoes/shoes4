@@ -16,10 +16,11 @@ module Shoes
   class App
     include Shoes::ElementMethods
 
-    attr_accessor :elements, :gui_container
+    attr_reader :gui, :shell
+    attr_accessor :elements
     attr_accessor :opts, :blk
 
-    attr_accessor :width, :height, :title, :resizable
+    attr_accessor :width, :height, :resizable, :app_title
     attr_writer   :background, :width, :height
 
     def initialize(opts={}, &blk)
@@ -27,7 +28,7 @@ module Shoes
 
       self.width      = opts[:width]
       self.height     = opts[:height]
-      self.title      = opts[:title]
+      self.app_title  = opts[:title]
       self.resizable  = opts[:resizable]
       self.background = opts[:background]
       self.opts       = opts
@@ -46,7 +47,7 @@ module Shoes
       {
         :width  => 600,
         :height => 500,
-        :title  => "Shoooes!",
+        :title  => "Shoes 4",
         :resizable  => true,
         :background => white
       }
@@ -65,8 +66,8 @@ module Shoes
     # background, in which case it will call gui_background
     def background(*opts)
       return @background if opts.empty?
-      @gui.gui_background opts
+      @background = opts[0] if opts.size == 1
+      @gui.background opts
     end
-
   end
 end

@@ -1,17 +1,6 @@
 require 'shoes/spec_helper'
 
-describe "Basic Element Methods" do
-  class ElementMethodsShoeLaces
-    attr_accessor :gui_container
-    attr_reader :style
-    include Shoes::ElementMethods
-    def initialize
-      @style = {}
-    end
-  end
-
-  Shoes.configuration.framework = 'white_shoes'
-
+shared_examples_for "object with element methods" do
   before(:all) do
     #@gui = Shoes.app do
     #
@@ -23,15 +12,51 @@ describe "Basic Element Methods" do
     #end
   end
 
+  describe "text block" do
+    it "shold set banner font size to 48" do
+      subject = ElementMethodsShoeLaces.new.banner("hello!")
+      subject.font_size.should eql 48
+    end
+
+    it "shold set title font size to 38" do
+      subject = ElementMethodsShoeLaces.new.title("hello!")
+      subject.font_size.should eql 38
+    end
+
+    it "shold set subtitle font size to 26" do
+      subject = ElementMethodsShoeLaces.new.subtitle("hello!")
+      subject.font_size.should eql 26
+    end
+
+    it "shold set tagline font size to 18" do
+      subject = ElementMethodsShoeLaces.new.tagline("hello!")
+      subject.font_size.should eql 18
+    end
+
+    it "shold set caption font size to 14" do
+      subject = ElementMethodsShoeLaces.new.caption("hello!")
+      subject.font_size.should eql 14
+    end
+
+    it "shold set para font size to 12" do
+      subject = ElementMethodsShoeLaces.new.para("hello!")
+      subject.font_size.should eql 12
+    end
+
+    it "shold set inscription font size to 10" do
+      subject = ElementMethodsShoeLaces.new.inscription("hello!")
+      subject.font_size.should eql 10
+    end
+  end
+
   describe "flow" do
-    it "should use self, gui_container, opts, blk" do
+    it "should use self, opts, blk" do
       subject = ElementMethodsShoeLaces.new
-      subject.gui_container = "gui_container"
       blk = Proc.new {}
       opts = mock(:hash)
       opts.should_receive(:merge!).and_return(opts)
       Shoes::Flow.should_receive(:new).
-        with(subject, "gui_container", opts, blk)
+        with(subject, opts, blk)
       subject.flow opts, &blk
     end
   end
@@ -222,8 +247,8 @@ describe "Basic Element Methods" do
   #  @gui.elements['button_one'].toggle
   #  @gui.elements['button_one'].to_java.isVisible.should be true
   #end
-  
-  
+
+
   #after(:all) do
   #  @gui.frame.dispose()
   #end

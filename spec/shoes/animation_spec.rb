@@ -31,9 +31,15 @@ shared_examples_for Shoes::Animation do
 end
 
 describe Shoes::Animation do
-  let(:opts) { Hash.new }
+  let(:app) { double('app') }
+  let(:app_gui) { double('app gui') }
+  let(:opts) { {:app => app} }
   let(:block) { double('block') }
   subject { Shoes::Animation.new opts, block }
+
+  before :each do
+    app.should_receive(:gui) { app_gui }
+  end
 
   it_behaves_like Shoes::Animation
 
@@ -48,7 +54,7 @@ describe Shoes::Animation do
   it { should_not be_stopped }
 
   describe "with framerate" do
-    let(:opts) { {:framerate => 36} }
+    let(:opts) { {:framerate => 36, :app => app} }
 
     it "sets framerate" do
       subject.framerate.should eq(36)

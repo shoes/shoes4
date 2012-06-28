@@ -1,19 +1,18 @@
 require 'shoes/spec_helper'
 
 describe Shoes::App do
+  let(:input_blk) { Proc.new {} }
+  let(:opts) { Hash.new }
+  subject { Shoes::App.new(opts, &input_blk) }
 
   describe "initialize" do
-
     it "should set accessors from constructor args" do
-      input_blk = Proc.new {}
-      args = {:args => true}
       Shoes::App.any_instance.stub(:flow)
-      app = Shoes::App.new args, &input_blk
-      app.should respond_to :width
-      app.should respond_to :height
-      app.should respond_to :title
-      app.should respond_to :resizable
-      #app.blk.should == input_blk
+      subject.should respond_to :width
+      subject.should respond_to :height
+      subject.should respond_to :title
+      subject.should respond_to :resizable
+      #subject.blk.should == input_blk
     end
 
     it "should set default accessor values" do
@@ -23,7 +22,7 @@ describe Shoes::App do
       app = Shoes::App.new args, &input_blk
       app.width.should == 600
       app.height.should == 500
-      app.title.should == 'Shoooes!'
+      app.app_title.should == 'Shoes 4'
       app.resizable.should be_true
     end
 
@@ -34,7 +33,7 @@ describe Shoes::App do
       app = Shoes::App.new args, &input_blk
       app.width.should == 1
       app.height.should == 2
-      app.title.should == "Shoes::App Spec"
+      app.app_title.should == "Shoes::App Spec"
       app.resizable.should be_false
     end
 
@@ -100,7 +99,7 @@ describe Shoes::App do
     subject     { Shoes::App.new }
     let(:white) { Shoes::COLORS[:white] }
     let(:blue)  { Shoes::COLORS[:blue] }
-    
+
     it "should set the default background color to white" do
       subject.background.should == white
     end

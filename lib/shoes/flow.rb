@@ -1,30 +1,25 @@
 module Shoes
   class Flow
-
     include Shoes::ElementMethods
-    
-    attr_accessor :parent_container, :parent_gui_container, :gui_container
-    attr_accessor :blk
+
+    attr_reader :parent, :gui
+    attr_reader :blk
     attr_accessor :width, :height, :margin
 
 
-    def initialize(parent_container, parent_gui_container, opts={}, blk = nil)
-      self.parent_container = parent_container
-      self.parent_gui_container = parent_gui_container
+    def initialize(parent, opts={}, blk = nil)
+      @parent = parent
 
       self.width = opts[:width]
       self.height = opts[:height]
       self.margin = opts[:margin]
       @app = opts[:app]
 
-      self.blk = blk
+      @blk = blk
 
-      gui_flow_init
+      @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
       instance_eval &blk unless blk.nil?
-
-      gui_flow_add_to_parent
-
     end
   end
 end

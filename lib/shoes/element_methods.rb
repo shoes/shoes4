@@ -7,6 +7,7 @@ require 'shoes/line'
 require 'shoes/oval'
 require 'shoes/shape'
 require 'shoes/text_block'
+require 'shoes/list_box'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -23,15 +24,20 @@ module Shoes
     #  layout(tstack, &blk)
     #end
 
+    def list_box(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::List_box.new(self, opts, blk)
+    end
+
     def flow(opts = {}, &blk)
       opts.merge! :app => @app
-      swt_flow = Shoes::Flow.new(self, self.gui_container, opts, blk)
+      swt_flow = Shoes::Flow.new(self, opts, blk)
     end
 
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      button = Shoes::Button.new(self.gui_container, text, opts, blk)
+      button = Shoes::Button.new(self, text, opts, blk)
       #@elements[button.to_s] = button
       #button
     end
@@ -75,7 +81,7 @@ module Shoes
 
     # similar controls as Shoes::Video (#video)
     def sound(soundfile, opts = {}, &blk)
-      playable_sound = Shoes::Sound.new(gui_container, soundfile, opts, &blk)
+      playable_sound = Shoes::Sound.new(self.gui, soundfile, opts, &blk)
     end
 
     #
@@ -164,39 +170,40 @@ module Shoes
     end
 
     # Text blocks
-    def banner(text, opts={})
+    def banner(text, opts={}, &blk)
       opts.merge! :app => @app
-      para = Shoes::Banner.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 48, opts, blk)
     end
 
-    def title(text, opts={})
+    def title(text, opts={}, &blk)
       opts.merge! :app => @app
-      para = Shoes::Title.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 26, opts, blk) #34
     end
 
-    def subtitle(text, opts={})
+    def subtitle(text, opts={}, &blk)
       opts.merge! :app => @app
-      para = Shoes::Subtitle.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 26, opts, blk)
     end
 
-    def tagline(text, opts={})
+    def tagline(text, opts={}, &blk)
       opts.merge! :app => @app
-      para = Shoes::Tagline.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 18, opts, blk)
     end
 
-    def caption(text, opts={})
+    def caption(text, opts={}, &blk)
       opts.merge! :app => @app
-      para = Shoes::Caption.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 14, opts, blk)
     end
 
-    def para(text, opts={})
+    def para(text, opts={}, &blk)
+      puts "davor"
       opts.merge! :app => @app
-      para = Shoes::Para.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 12, opts, blk)
     end
 
-    def inscription(text, opts={})
+    def inscription(text, opts={}, &blk)
       opts.merge! :app => @app
-      para = Shoes::Inscription.new(self.gui_container, text, opts)
+      Shoes::Text_block.new(self, text, 10, opts, blk)
     end
   end
 end

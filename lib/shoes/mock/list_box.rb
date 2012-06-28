@@ -1,12 +1,9 @@
 module Shoes
   module Mock
-    class Shape
+    class List_box
       include Shoes::Mock::CommonMethods
 
-      def line_to(x, y)
-      end
-
-      def move_to(x, y)
+      def update_items(v)
       end
     end
   end

@@ -10,12 +10,14 @@ def window(*a, &b)
   Shoes.app(*a, &b)
 end
 
+require 'shoes/swt/common/fill'
+require 'shoes/swt/common/stroke'
+require 'shoes/swt/common/child'
+require 'shoes/swt/common/container'
 require 'shoes/swt/element_methods'
 require 'shoes/swt/animation'
 require 'shoes/swt/app'
 #require 'shoes/swt/window'
-require 'shoes/swt/common/fill'
-require 'shoes/swt/common/stroke'
 require 'shoes/swt/flow'
 require 'shoes/swt/button'
 require 'shoes/swt/line'
@@ -24,6 +26,7 @@ require 'shoes/swt/shape'
 require 'shoes/swt/color'
 require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
+require 'shoes/swt/list_box'
 
 module Shoes::Swt
   module Shoes

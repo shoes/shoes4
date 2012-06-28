@@ -1,8 +1,7 @@
 module Shoes
   module Mock
     class Line
-        def initialize(a,b)
-        end
+      include Shoes::Mock::CommonMethods
     end
   end
 end
