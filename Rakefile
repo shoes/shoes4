@@ -1,6 +1,11 @@
 require 'rake'
+require 'rake/clean'
 require 'rubygems/package_task'
 require 'rspec/core/rake_task'
+
+PACKAGE_DIR = 'pkg'
+
+CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage']
 
 require 'jruby'
 JRuby.runtime.instance_config.runRubyInProcess = false
@@ -101,5 +106,5 @@ end
 
 spec = Gem::Specification.load('shoes.gemspec')
 Gem::PackageTask.new(spec) do |gem|
-  gem.package_dir = 'pkg'
+  gem.package_dir = PACKAGE_DIR
 end
