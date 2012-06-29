@@ -19,12 +19,11 @@ module Shoes
       # @return [Module] The backend's root module
       # @example
       #   Shoes::Configuration.backend = :swt # => Shoes::Swt
-      #   Shoes.backend = :swt # => Shoes::Swt
       def backend=(backend)
         require "shoes/#{backend.to_s.downcase}"
         @backend ||= Shoes.const_get(backend.to_s.capitalize)
-      rescue LoadError
-        raise ArgumentError, "Unknown backend: #{backend}"
+      rescue LoadError => e
+        raise LoadError, "Couldn't load backend '#{backend}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
       end
 
       # Finds the appropriate backend class for the given Shoes object

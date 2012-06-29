@@ -1,5 +1,5 @@
-require 'rubygems'
 require 'rake'
+require 'rubygems/package_task'
 require 'rspec/core/rake_task'
 
 require 'jruby'
@@ -97,4 +97,9 @@ rescue LoadError
   task :yard do
     abort 'YARD is not available. Try: gem install yard'
   end
+end
+
+spec = Gem::Specification.load('shoes.gemspec')
+Gem::PackageTask.new(spec) do |gem|
+  gem.package_dir = 'pkg'
 end

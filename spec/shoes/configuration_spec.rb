@@ -23,7 +23,7 @@ describe Shoes::Configuration do
 
   describe "backend" do
     it "raises ArgumentError on bad input" do
-      lambda { Shoes.configuration.backend = :bogus }.should raise_error(ArgumentError)
+      lambda { Shoes.configuration.backend = :bogus }.should raise_error(LoadError)
     end
 
     describe ":mock" do
