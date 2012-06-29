@@ -1,5 +1,3 @@
-#swt
-
 module Shoes
   module Swt
     class List_box

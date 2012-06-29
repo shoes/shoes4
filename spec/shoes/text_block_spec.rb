@@ -6,12 +6,6 @@ describe Shoes::Text_block do
   let(:mock_parent) { mock(:gui => "mock gui") }
   subject { Shoes::Text_block.new(mock_parent, "Hello, world!", 99, {}, nil) }
 
-  before :each do
-#    Shoes::Text_block.any_instance.stub(:gui) { mock_gui }
-     #Shoes::Mock::Text_block.any_instance.stub(:new)
-#    Shoes::Text_block.any_instance.stub(:gui_update_text)
-  end
-
   describe "initialize" do
     it "should have the proper accessors" do
       s = subject

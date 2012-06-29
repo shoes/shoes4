@@ -8,6 +8,7 @@ require 'shoes/oval'
 require 'shoes/shape'
 require 'shoes/text_block'
 require 'shoes/list_box'
+require 'shoes/radio'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -23,6 +24,11 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
+
+    def radio(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::Radio.new(self, opts, blk)
+    end
 
     def list_box(opts = {}, &blk)
       opts.merge! :app => @app
@@ -196,7 +202,6 @@ module Shoes
     end
 
     def para(text, opts={}, &blk)
-      puts "davor"
       opts.merge! :app => @app
       Shoes::Text_block.new(self, text, 12, opts, blk)
     end
