@@ -25,14 +25,19 @@ module Shoes
     #  layout(tstack, &blk)
     #end
 
+    def check(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::Check.new self, opts, blk
+    end
+
     def radio(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Radio.new(self, opts, blk)
+      Shoes::Radio.new self, opts, blk
     end
 
     def list_box(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::List_box.new(self, opts, blk)
+      Shoes::List_box.new self, opts, blk
     end
 
     def flow(opts = {}, &blk)
@@ -102,19 +107,6 @@ module Shoes
     #  @elements[eline.identifier] = eline
     #  eline
     #end
-    #
-    #def text_box(opts={})
-    #  tbox = Text_box.new(@current_panel, opts)
-    #  @elements[tbox.identifier] = tbox
-    #  tbox
-    #end
-    #
-    #def check(opts={}, &blk)
-    #  cbox = Check.new(@current_panel, opts)
-    #  @elements[cbox.identifier] = cbox
-    #  cbox
-    #end
-    #
 
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})

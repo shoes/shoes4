@@ -1,13 +1,13 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Radio do
+describe Shoes::Swt::Check do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl') }
   let(:parent) { double('parent') }
   let(:block) { double('block') }
   let(:real) { double('real').as_null_object }
 
-  subject { Shoes::Swt::Radio.new dsl, parent, block }
+  subject { Shoes::Swt::Check.new dsl, parent, block }
 
   before :each do
     parent.stub(:real)
