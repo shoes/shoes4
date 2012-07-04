@@ -166,41 +166,51 @@ module Shoes
     def style(new_styles = {})
       @style.merge! new_styles
     end
-
+    
     # Text blocks
+    # normally constants belong to the top, I put them here because they are
+    # only used here.
+    BANNER_FONT_SIZE      = 48
+    TITLE_FONT_SIZE       = 34
+    SUBTITLE_FONT_SIZE    = 26
+    TAGLINE_FONT_SIZE     = 18
+    CAPTION_FONT_SIZE     = 14
+    PARA_FONT_SIZE        = 12
+    INSCRIPTION_FONT_SIZE = 10
+
     def banner(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 48, opts, blk)
+      Shoes::Text_block.new(self, text, BANNER_FONT_SIZE, opts, blk)
     end
 
     def title(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 26, opts, blk) #34
+      Shoes::Text_block.new(self, text, TITLE_FONT_SIZE, opts, blk)
     end
 
     def subtitle(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 26, opts, blk)
+      Shoes::Text_block.new(self, text, SUBTITLE_FONT_SIZE, opts, blk)
     end
 
     def tagline(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 18, opts, blk)
+      Shoes::Text_block.new(self, text, TAGLINE_FONT_SIZE, opts, blk)
     end
 
     def caption(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 14, opts, blk)
+      Shoes::Text_block.new(self, text, CAPTION_FONT_SIZE, opts, blk)
     end
 
     def para(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 12, opts, blk)
+      Shoes::Text_block.new(self, text, PARA_FONT_SIZE, opts, blk)
     end
 
     def inscription(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, 10, opts, blk)
+      Shoes::Text_block.new(self, text, INSCRIPTION_FONT_SIZE, opts, blk)
     end
   end
 end
