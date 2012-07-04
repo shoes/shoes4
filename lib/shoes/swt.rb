@@ -28,6 +28,7 @@ require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
 require 'shoes/swt/list_box'
 require 'shoes/swt/radio'
+require 'shoes/swt/check'
 
 module Shoes::Swt
   module Shoes
