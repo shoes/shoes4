@@ -9,6 +9,7 @@ require 'shoes/shape'
 require 'shoes/text_block'
 require 'shoes/list_box'
 require 'shoes/radio'
+require 'shoes/progress'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -24,6 +25,11 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
+
+    def progress(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::Progress.new self, opts, blk
+    end
 
     def check(opts = {}, &blk)
       opts.merge! :app => @app
@@ -42,15 +48,13 @@ module Shoes
 
     def flow(opts = {}, &blk)
       opts.merge! :app => @app
-      swt_flow = Shoes::Flow.new(self, opts, blk)
+      Shoes::Flow.new self, opts, blk
     end
 
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      button = Shoes::Button.new(self, text, opts, blk)
-      #@elements[button.to_s] = button
-      #button
+      Shoes::Button.new self, text, opts, blk
     end
 
     # Creates an animation that runs the given block of code.
@@ -87,12 +91,12 @@ module Shoes
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
       opts.merge! :app => @app
-      Shoes::Animation.new(opts, blk)
+      Shoes::Animation.new opts, blk
     end
 
     # similar controls as Shoes::Video (#video)
     def sound(soundfile, opts = {}, &blk)
-      playable_sound = Shoes::Sound.new(self.gui, soundfile, opts, &blk)
+      Shoes::Sound.new self.gui, soundfile, opts, &blk
     end
 
     #
@@ -110,7 +114,7 @@ module Shoes
 
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})
-      Shoes::Line.new(x1, y1, x2, y2, style.merge(opts))
+      Shoes::Line.new x1, y1, x2, y2, style.merge(opts)
     end
 
     # Draws an oval at (left, top) with either
@@ -166,7 +170,7 @@ module Shoes
     def style(new_styles = {})
       @style.merge! new_styles
     end
-    
+
     # Text blocks
     # normally constants belong to the top, I put them here because they are
     # only used here.

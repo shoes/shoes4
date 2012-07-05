@@ -10,6 +10,7 @@ end
 
 require 'shoes/version'
 require 'shoes/app'
+require 'shoes/progress'
 #require 'shoes/native'
 #require 'shoes/element_methods'
 require 'shoes/animation'
