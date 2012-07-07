@@ -26,6 +26,10 @@ module Shoes
         v=@real.text
         v == "" ? nil : v
       end
+
+      def choose(item)
+        @real.text = item
+      end
     end
   end
 end

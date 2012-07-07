@@ -22,5 +22,9 @@ module Shoes
     def text
       @gui.text
     end
+
+    def choose(item)
+      @gui.choose item
+    end
   end
 end

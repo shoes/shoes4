@@ -16,4 +16,14 @@ describe Shoes::List_box do
     lb.items = ["Pie", "Apple", "Pig"]
     lb.items.should eq ["Pie", "Apple", "Pig"]
   end
+
+  it "should allow us to choose an option" do
+    subject.should respond_to :choose
+  end
+
+  it "should call @gui.choose when we choose something" do
+    Shoes::Mock::List_box.any_instance.
+        should_receive(:choose).with "Wine"
+    subject.choose "Wine"
+  end
 end
