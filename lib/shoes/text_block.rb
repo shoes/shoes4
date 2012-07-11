@@ -2,7 +2,8 @@ require 'shoes/common_methods'
 
 module Shoes
   DEFAULT_TEXTBLOCK_FONT = ["Arial"]
-  class Text_block
+
+  class TextBlock
     include Shoes::CommonMethods
 
     attr_reader  :gui, :blk, :parent, :text

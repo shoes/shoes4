@@ -1,6 +1,6 @@
 module Shoes
   module Swt
-    class Text_block
+    class TextBlock
       include Common::Child
 
       # Create a list box
@@ -14,8 +14,8 @@ module Shoes
         @blk = blk
         @real = st = ::Swt::Custom::StyledText.new(@parent.real,
           ::Swt::SWT::WRAP)
-        st.set_editable false
-        st.set_caret nil
+        st.editable = false
+        st.caret = nil
         self.set_font
         self.update_text
       end

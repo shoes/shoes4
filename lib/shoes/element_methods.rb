@@ -10,6 +10,7 @@ require 'shoes/text_block'
 require 'shoes/list_box'
 require 'shoes/radio'
 require 'shoes/progress'
+require 'shoes/edit_line'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -25,6 +26,11 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
+
+    def edit_line(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::EditLine.new self, opts, blk
+    end
 
     def progress(opts = {}, &blk)
       opts.merge! :app => @app
@@ -106,11 +112,6 @@ module Shoes
     #  image
     #end
     #
-    #def edit_line(opts={})
-    #  eline = Edit_line.new(@current_panel, opts)
-    #  @elements[eline.identifier] = eline
-    #  eline
-    #end
 
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})
@@ -184,37 +185,37 @@ module Shoes
 
     def banner(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, BANNER_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, BANNER_FONT_SIZE, opts, blk)
     end
 
     def title(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, TITLE_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, TITLE_FONT_SIZE, opts, blk)
     end
 
     def subtitle(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, SUBTITLE_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, SUBTITLE_FONT_SIZE, opts, blk)
     end
 
     def tagline(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, TAGLINE_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, TAGLINE_FONT_SIZE, opts, blk)
     end
 
     def caption(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, CAPTION_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, CAPTION_FONT_SIZE, opts, blk)
     end
 
     def para(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, PARA_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, PARA_FONT_SIZE, opts, blk)
     end
 
     def inscription(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Text_block.new(self, text, INSCRIPTION_FONT_SIZE, opts, blk)
+      Shoes::TextBlock.new(self, text, INSCRIPTION_FONT_SIZE, opts, blk)
     end
   end
 end

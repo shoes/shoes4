@@ -30,6 +30,7 @@ require 'shoes/swt/text_block'
 require 'shoes/swt/list_box'
 require 'shoes/swt/radio'
 require 'shoes/swt/check'
+require 'shoes/swt/edit_line'
 
 module Shoes::Swt
   module Shoes

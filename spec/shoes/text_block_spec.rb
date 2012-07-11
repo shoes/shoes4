@@ -1,20 +1,18 @@
 require 'shoes/spec_helper'
 require 'shoes/text_block'
 
-describe Shoes::Text_block do
+describe Shoes::TextBlock do
   let(:mock_gui) { mock(:set_font, :update_text, :hidden, :new) }
   let(:mock_parent) { mock(:gui => "mock gui") }
-  subject { Shoes::Text_block.new(mock_parent, "Hello, world!", 99, {}, nil) }
+  subject { Shoes::TextBlock.new(mock_parent, "Hello, world!", 99, {}, nil) }
 
   describe "initialize" do
-    it "should have the proper accessors" do
-      s = subject
-      s.should respond_to :contents
-      s.should respond_to :replace
-      s.should respond_to :text
-      s.should respond_to :text=
-      s.should respond_to :to_s
-    end
+
+    it { should respond_to :contents }
+    it { should respond_to :replace }
+    it { should respond_to :text }
+    it { should respond_to :text= }
+    it { should respond_to :to_s }
 
     it "should set accessors" do
       s = subject
@@ -37,21 +35,21 @@ describe Shoes::Text_block do
     end
 
     it "should return the text when to_s is called" do
-      subject.to_s.should == "Hello, world!"
+      subject.to_s.should eql "Hello, world!"
     end
 
     it "should list all of the strings and styled text \
         objects when contents() is called" do
-      subject.contents.should == "Hello, world!"
+      subject.contents.should eql "Hello, world!"
     end
   end
 
   describe "font styles" do
-    tb = Shoes::Mock::Text_block
+    tb = Shoes::Mock::TextBlock
 
     def sub(opts)
       opts.merge! :app => "app"
-      Shoes::Text_block.new(mock_parent, "Hello, world!", 99, opts, nil)
+      Shoes::TextBlock.new(mock_parent, "Hello, world!", 99, opts, nil)
     end
 
     describe "set_font" do

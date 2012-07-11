@@ -1,6 +1,6 @@
 module Shoes
   module Mock
-    class Text_block
+    class TextBlock
       include Shoes::Mock::CommonMethods
 
       def initialize(*opts)
