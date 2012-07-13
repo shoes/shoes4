@@ -6,6 +6,7 @@ module Shoes
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]
     #
+
     class App
       include Common::Container
       def initialize dsl
@@ -18,7 +19,7 @@ module Shoes
         end
         background Array(@dsl.background)
         @shell = @real
-        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
+        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::INHERIT_DEFAULT)
         @real.setSize(@dsl.width, @dsl.height)
         @real.setLayout ::Swt::Layout::RowLayout.new
 
