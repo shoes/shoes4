@@ -1,17 +1,16 @@
 require 'shoes/animation'
-require 'shoes/background'
+require 'shoes/sound'
 require 'shoes/button'
 require 'shoes/color'
-require 'shoes/edit_line'
 require 'shoes/flow'
 require 'shoes/line'
-require 'shoes/list_box'
 require 'shoes/oval'
-require 'shoes/progress'
-require 'shoes/radio'
 require 'shoes/shape'
-require 'shoes/sound'
 require 'shoes/text_block'
+require 'shoes/list_box'
+require 'shoes/radio'
+require 'shoes/progress'
+require 'shoes/edit_line'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -27,11 +26,6 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
-
-    def background(color, opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Background.new self, color, opts, blk
-    end
 
     def edit_line(opts = {}, &blk)
       opts.merge! :app => @app
