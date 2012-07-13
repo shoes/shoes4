@@ -21,8 +21,6 @@ module Shoes
 
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
-
-      @gui.background = color
     end
 
     # paint_event needs to have .width and .height

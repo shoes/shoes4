@@ -14,7 +14,7 @@ describe Shoes::Swt::Background do
     dsl.stub(:color).and_return(Shoes::COLORS[:red])
   end
 
-  it { responds_to :Background= }
+  it { respond_to :background= }
 
   let(:paint_event) do
     paint_event = double "paint_event"

@@ -18,6 +18,7 @@ end
 require 'shoes/animation'
 require 'shoes/app'
 require 'shoes/background'
+require 'shoes/border'
 require 'shoes/button'
 require 'shoes/check'
 require 'shoes/configuration'

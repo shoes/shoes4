@@ -11,9 +11,8 @@ module Shoes
         @blk = blk
 
         @real = parent.real
-
         if dsl.opts.size == 0
-          background = dsl.color.to_native
+          background = dsl.color
         else
           @real.addPaintListener(BgPainter.new(@dsl, self))
         end
