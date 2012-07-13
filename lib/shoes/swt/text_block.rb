@@ -16,6 +16,7 @@ module Shoes
           ::Swt::SWT::WRAP)
         st.editable = false
         st.caret = nil
+        st.background_mode = ::Swt::SWT::INHERIT_DEFAULT
         self.set_font
         self.update_text
       end

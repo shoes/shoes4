@@ -1,5 +1,4 @@
 require 'swt'
-require 'shoes/swt/background_painter'
 
 module Shoes
   module Swt
@@ -17,7 +16,6 @@ module Shoes
           shell.addListener(::Swt::SWT::Close, main_window_on_close)
           shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
         end
-        background Array(@dsl.background)
         @shell = @real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::INHERIT_DEFAULT)
         @real.setSize(@dsl.width, @dsl.height)
@@ -34,7 +32,6 @@ module Shoes
         @shell.addControlListener cl
       end
 
-      attr_reader :background
       attr_reader :real, :shell, :dx, :dy
 
       def open
@@ -45,20 +42,6 @@ module Shoes
         ::Swt.event_loop { ::Swt.display.isDisposed }
 
         Shoes.logger.debug "::Swt.display disposed... exiting Shoes::App.new"
-      end
-
-      # gui_background will set the background to the
-      # value passed to it through opts.
-      # It will accept either a Shoes::Color object or
-      # a Shoes::Color object along with some additional
-      # options.
-      def background(opts)
-        # Duplicates logic in Shoes::App
-        if opts.size == 1
-          @real.setBackground(opts[0].to_native)
-        else
-          @real.addPaintListener(BackgroundPainter.new(opts, @dsl))
-        end
       end
 
       # @return [Shoes::Swt::App] Self
