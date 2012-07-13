@@ -9,7 +9,7 @@ describe Shoes::Swt::App do
   let(:mock_shell) { mock(:swt_shell,
                      :setSize => true, :setText => true, :getSize => MockPoint.new,
                      :addListener => true, :setLayout => true,
-                     :setBackground => true, :open => true, :pack => true,
+                     :open => true, :pack => true,
                      :addControlListener => true,
                      :set_image => true, :background_mode= => true) }
 
@@ -28,27 +28,6 @@ describe Shoes::Swt::App do
     subject     { Shoes::App.new }
     let(:white) { Shoes::COLORS[:white] }
     let(:blue)  { Shoes::COLORS[:blue]  }
-
-    context "shell" do
-      it "receives open" do
-        mock_shell.should_receive(:open)
-        subject
-      end
-
-      it "receives setBackground" do
-        mock_shell.should_receive :setBackground
-        subject
-      end
-    end
-
-    context "Shoes::App background" do
-      it "allows users to set the background from a block" do
-        input_blk = Proc.new { background blue }
-        args = { }
-        app = Shoes::App.new args, &input_blk
-        app.background.should == blue
-      end
-    end
 
     context "Shoes::App ancestors" do
       subject { Shoes::App.ancestors }

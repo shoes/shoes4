@@ -9,6 +9,7 @@ module Shoes
 
     class App
       include Common::Container
+
       def initialize dsl
         @dsl = dsl
         @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
