@@ -21,7 +21,7 @@ module Shoes
     attr_accessor :opts, :blk
 
     attr_accessor :width, :height, :resizable, :app_title
-    attr_writer   :background, :width, :height
+    attr_writer   :width, :height
 
     def initialize(opts={}, &blk)
       opts = default_options.merge(opts)
@@ -38,9 +38,16 @@ module Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
+      Background.new self, default_options[:background]
+
       instance_eval &blk if blk
 
       @gui.open
+    end
+
+    # hack. todo: fix this
+    def background=(value)
+      Background.new self, value
     end
 
     def default_options
