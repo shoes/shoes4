@@ -9,10 +9,10 @@ module Shoes
         @dsl = dsl
         @parent = parent
         @blk = blk
-
         @real = parent.real
+
         if dsl.opts.size == 0
-          background = dsl.color
+          self.background = dsl.color
         else
           @real.addPaintListener(BgPainter.new(@dsl, self))
         end

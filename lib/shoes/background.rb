@@ -19,7 +19,6 @@ module Shoes
       @color = color
       @color = opts[:fill] if opts.has_key? :fill
 
-
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
     end
 
@@ -86,6 +85,5 @@ module Shoes
         0
       end
     end
-
   end
 end
