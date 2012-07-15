@@ -11,13 +11,13 @@ shared_examples_for "movable object with disposable real element" do
     let(:app) { double('app').as_null_object }
 
     before :each do
+      real.should_receive(:disposed?) { false }
       parent_real.should_receive(:get_layout) { true }
       parent_real.should_receive(:layout)
       parent.stub(:app) { app }
     end
 
     it "disposes real element" do
-      real.should_receive(:disposed?) { false }
       real.should_receive(:dispose)
       subject.move(300, 200)
     end
@@ -25,11 +25,11 @@ shared_examples_for "movable object with disposable real element" do
 
   context "parent doesn't have layout" do
     before :each do
+      real.should_receive(:disposed?) { false }
       parent_real.should_receive(:get_layout) { false }
     end
 
     it "doesn't dispose real element" do
-      real.should_receive(:disposed?)
       real.should_not_receive(:dispose)
       subject.move(300, 200)
     end

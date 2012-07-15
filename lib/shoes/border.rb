@@ -1,4 +1,5 @@
 require 'shoes/common_methods'
+require 'shoes/color'
 
 module Shoes
   class Border
@@ -19,18 +20,42 @@ module Shoes
 
       @color = color
 
-      Shoes::Background.new(parent, color, middle_box_coords, nil)
+      Shoes::Background.new(parent, color, bottom_coords)
+      Shoes::Background.new(parent, color, top_coords)
+      Shoes::Background.new(parent, color, left_coords)
+      Shoes::Background.new(parent, color, right_coords)
     end
 
-    # Returns a hash containing left, right top and bottom
-    def middle_box_coords()
-      coords = Hash.new
-      coords[:app] = @app
-      coords[:bottom] = @strokewidth
-      coords[:top] = @strokewidth
-      coords[:left] = @strokewidth
-      coords[:right] = @strokewidth
-      coords
+    def left_coords
+      opts = Hash.new
+      opts[:app] = @app
+      opts[:width] = @strokewidth
+      opts[:left] = 0
+      opts
     end
- end
+
+    def right_coords
+      opts = Hash.new
+      opts[:app] = @app
+      opts[:width] = @strokewidth
+      opts[:right] = 0
+      opts
+    end
+
+    def top_coords
+      opts = Hash.new
+      opts[:app] = @app
+      opts[:height] = @strokewidth
+      opts[:top] = 0
+      opts
+    end
+
+    def bottom_coords
+      opts = Hash.new
+      opts[:app] = @app
+      opts[:bottom] = 0
+      opts[:top] = @app.height - @strokewidth
+      opts
+    end
+  end
 end
