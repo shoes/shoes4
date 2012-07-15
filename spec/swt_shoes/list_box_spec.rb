@@ -22,4 +22,13 @@ describe Shoes::Swt::List_box do
     real.should_receive(:items=).with(["hello"])
     subject.update_items(["hello"])
   end
+
+  it "should respond to choose" do
+    subject.should respond_to :choose
+  end
+
+  it "should call text= when choosing" do
+    real.should_receive(:text=).with "Bacon"
+    subject.choose "Bacon"
+  end
 end

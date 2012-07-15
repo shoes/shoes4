@@ -1,9 +1,10 @@
 require 'shoes/common_methods'
 
 module Shoes
-  class List_box
+  class EditLine
     include Shoes::CommonMethods
-    attr_reader :items, :gui, :blk, :parent
+
+    attr_reader :gui, :blk, :parent, :text
 
     def initialize(parent, opts = {}, blk = nil)
       @parent = parent
@@ -11,20 +12,14 @@ module Shoes
       @app = opts[:app]
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
-      self.items = opts.has_key?(:items) ? opts[:items] : [""]
     end
 
-    def items=(values)
-      @items = values
-      @gui.update_items values
+    def focus
+      @gui.focus
     end
 
-    def text
-      @gui.text
-    end
-
-    def choose(item)
-      @gui.choose item
+    def text=(value)
+      @gui.text = value
     end
   end
 end

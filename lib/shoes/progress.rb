@@ -1,9 +1,11 @@
 require 'shoes/common_methods'
 
 module Shoes
-  class List_box
+  class Progress
     include Shoes::CommonMethods
-    attr_reader :items, :gui, :blk, :parent
+
+    attr_reader :parent, :blk, :gui
+    attr_reader :fraction
 
     def initialize(parent, opts = {}, blk = nil)
       @parent = parent
@@ -11,20 +13,13 @@ module Shoes
       @app = opts[:app]
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
-      self.items = opts.has_key?(:items) ? opts[:items] : [""]
+
+      @fraction = 0.0
     end
 
-    def items=(values)
-      @items = values
-      @gui.update_items values
-    end
-
-    def text
-      @gui.text
-    end
-
-    def choose(item)
-      @gui.choose item
+    def fraction=(value)
+      @fraction = value
+      @gui.set_fraction = value
     end
   end
 end

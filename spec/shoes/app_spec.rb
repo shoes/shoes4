@@ -22,7 +22,7 @@ describe Shoes::App do
       app = Shoes::App.new args, &input_blk
       app.width.should == 600
       app.height.should == 500
-      app.title.should == 'Shoes 4'
+      app.app_title.should == 'Shoes 4'
       app.resizable.should be_true
     end
 
@@ -33,7 +33,7 @@ describe Shoes::App do
       app = Shoes::App.new args, &input_blk
       app.width.should == 1
       app.height.should == 2
-      app.title.should == "Shoes::App Spec"
+      app.app_title.should == "Shoes::App Spec"
       app.resizable.should be_false
     end
 
@@ -92,23 +92,6 @@ describe Shoes::App do
 
       # .. but does not affect app2
       app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
-    end
-  end
-
-  describe "background" do
-    subject     { Shoes::App.new }
-    let(:white) { Shoes::COLORS[:white] }
-    let(:blue)  { Shoes::COLORS[:blue] }
-    
-    it "should set the default background color to white" do
-      subject.background.should == white
-    end
-
-    it "should allow users to set the background from args" do
-      input_blk = Proc.new {}
-      args = { :background => blue }
-      app = Shoes::App.new args, &input_blk
-      app.background.should == blue
     end
   end
 end

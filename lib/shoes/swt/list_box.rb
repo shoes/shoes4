@@ -1,5 +1,3 @@
-#swt
-
 module Shoes
   module Swt
     class List_box
@@ -7,7 +5,7 @@ module Shoes
 
       # Create a list box
       #
-      # @param [Shoes::Button] dsl The Shoes DSL button this represents
+      # @param [Shoes::List_obx] dsl The Shoes DSL list box this represents
       # @param [::Swt::Widgets::Composite] parent The parent element of this button
       # @param [Proc] blk The block of code to call when this button is activated
       def initialize(dsl, parent, blk)
@@ -27,6 +25,10 @@ module Shoes
       def text
         v=@real.text
         v == "" ? nil : v
+      end
+
+      def choose(item)
+        @real.text = item
       end
     end
   end

@@ -2,27 +2,31 @@ require 'shoes/swt/swt_button'
 
 module Shoes
   module Swt
-    class Button < SwtButton
+    class Check < SwtButton
       include Common::Child
 
-      # The Swt parent object
+      # The swt parent object
       attr_reader :parent
 
-      # Create a button
+      # Create a check box
       #
-      # @param [Shoes::Button] dsl The Shoes DSL button this represents
+      # @param [Shoes::Button] dsl The Shoes DSL check box this represents
       # @param [::Swt::Widgets::Composite] parent The parent element of this button
       # @param [Proc] blk The block of code to call when this button is activated
       def initialize(dsl, parent, blk)
-        super(dsl, parent, ::Swt::SWT::PUSH, blk)
-        @real.set_text @dsl.text
+        super(dsl, parent, ::Swt::SWT::CHECK, blk)
+      end
+
+      def checked?
+        @real.get_selection
+      end
+
+      def checked=(bool)
+        @real.set_selection bool
       end
 
       def move(left, top)
-        swt_move(left, top) do |button|
-          button.set_text @dsl.text
-          button.add_selection_listener(@blk) if @blk
-        end
+        swt_move(left, top)
       end
     end
   end

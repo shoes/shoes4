@@ -16,27 +16,27 @@ module Shoes
   class App
     include Shoes::ElementMethods
 
-    attr_reader :gui
+    attr_reader :gui, :shell
     attr_accessor :elements
     attr_accessor :opts, :blk
 
-    attr_accessor :width, :height, :title, :resizable
-    attr_writer   :background, :width, :height
+    attr_accessor :width, :height, :resizable, :app_title
+    attr_writer   :width, :height
 
     def initialize(opts={}, &blk)
       opts = default_options.merge(opts)
 
       self.width      = opts[:width]
       self.height     = opts[:height]
-      self.title      = opts[:title]
+      self.app_title  = opts[:title]
       self.resizable  = opts[:resizable]
-      self.background = opts[:background]
       self.opts       = opts
 
       @app = self
       @style = default_styles
 
       @gui = Shoes.configuration.backend::App.new @app
+      Shoes::Background.new self, default_options[:background]
 
       instance_eval &blk if blk
 
@@ -59,16 +59,5 @@ module Shoes
         :strokewidth => 1
       }
     end
-
-    # If background is called without any options this
-    # will simply return it's value. Otherwise it will
-    # interpret the call as the user wanting to set the
-    # background, in which case it will call gui_background
-    def background(*opts)
-      return @background if opts.empty?
-      @background = opts[0] if opts.size == 1
-      @gui.background opts
-    end
-
   end
 end

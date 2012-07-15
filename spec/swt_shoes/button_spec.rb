@@ -18,7 +18,7 @@ describe Shoes::Swt::Button do
 
   describe "#initialize" do
     it "sets text on real element" do
-      real.should_receive(:setText).with(text)
+      real.should_receive(:set_text).with(text)
       subject
     end
 

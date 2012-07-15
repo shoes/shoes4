@@ -1,9 +1,12 @@
 require 'shoes/common_methods'
 
 module Shoes
-  class List_box
+  class Check
     include Shoes::CommonMethods
-    attr_reader :items, :gui, :blk, :parent
+
+    attr_reader :parent
+    attr_reader :blk
+    attr_reader :gui
 
     def initialize(parent, opts = {}, blk = nil)
       @parent = parent
@@ -11,20 +14,18 @@ module Shoes
       @app = opts[:app]
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
-      self.items = opts.has_key?(:items) ? opts[:items] : [""]
     end
 
-    def items=(values)
-      @items = values
-      @gui.update_items values
+    def checked?
+      @gui.checked?
     end
 
-    def text
-      @gui.text
+    def checked=(value)
+      @gui.checked = value
     end
 
-    def choose(item)
-      @gui.choose item
+    def focus
+      @gui.focus
     end
   end
 end
