@@ -44,6 +44,11 @@ module Shoes
       Shoes::EditLine.new self, opts, blk
     end
 
+    def edit_box(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::EditBox.new self, opts, blk
+    end
+
     def progress(opts = {}, &blk)
       opts.merge! :app => @app
       Shoes::Progress.new self, opts, blk

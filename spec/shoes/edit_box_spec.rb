@@ -5,7 +5,7 @@ describe Shoes::EditLine do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }
   let(:parent) { double("parent").as_null_object }
-  subject { Shoes::EditLine.new(parent, input_opts, input_block) }
+  subject { Shoes::EditBox.new(parent, input_opts, input_block) }
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
