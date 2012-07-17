@@ -3,8 +3,6 @@ script: "rake spec:all"
 rvm: jruby
 notifications:
   irc: "irc.freenode.org#shoes"
-  email:
-    - peter.fitzgibbons@gmail.com
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
