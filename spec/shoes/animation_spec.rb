@@ -3,7 +3,7 @@ require 'shoes/spec_helper'
 shared_examples_for Shoes::Animation do
   it "should start" do
     subject.start
-    subject.should_not be_stopped
+    subject.should be_stopped
   end
 
   it "should stop" do
