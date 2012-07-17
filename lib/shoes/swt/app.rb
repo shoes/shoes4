@@ -20,20 +20,24 @@ module Shoes
         @shell = @real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::INHERIT_DEFAULT)
         @real.setSize(@dsl.width, @dsl.height)
-        @real.setLayout ::Swt::Layout::RowLayout.new
+        @real.setLayout ShoesLayout.new
 
         @dx = @dy = 0
         s = self
         cl = ::Swt::ControlListener.new
         class << cl; self end.
         instance_eval do
-          define_method(:controlResized){|e| s.real.setSize s.shell.getSize.x - s.dx, s.shell.getSize.y - s.dy}
+          define_method :controlResized do |e|
+            w, h = s.shell.getSize.x - s.dx, s.shell.getSize.y - s.dy
+            s.real.setSize w, h
+            s.dsl.top_slot.width, s.dsl.top_slot.height = w, h
+          end
           define_method(:controlMoved){|e|}
         end
         @shell.addControlListener cl
       end
 
-      attr_reader :real, :shell, :dx, :dy
+      attr_reader :dsl, :real, :shell, :dx, :dy
 
       def open
         @shell.pack
