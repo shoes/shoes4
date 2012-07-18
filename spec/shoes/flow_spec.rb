@@ -12,7 +12,7 @@ describe Shoes::Flow do
     it "should set accessors" do
       input_block = Proc.new {}
       input_opts = {:width => 131, :height => 137, :margin => 143}
-      flow = Shoes::Flow.new(parent, input_opts, input_block)
+      flow = Shoes::Flow.new(parent, input_opts, &input_block)
       flow.parent.should == parent
       flow.width.should == 131
       flow.height.should == 137

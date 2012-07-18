@@ -16,7 +16,7 @@ module Shoes
   class App
     include Shoes::ElementMethods
 
-    attr_reader :gui, :shell
+    attr_reader :gui, :shell, :top_slot, :contents
     attr_accessor :elements
     attr_accessor :opts, :blk
 
@@ -34,11 +34,12 @@ module Shoes
 
       @app = self
       @style = default_styles
+      @contents = []
 
       @gui = Shoes.configuration.backend::App.new @app
       Shoes::Background.new self, default_options[:background]
 
-      instance_eval &blk if blk
+      @top_slot = Flow.new self, {left: 0, top: 0, width: @width, height: @height}, &blk if blk
 
       @gui.open
     end

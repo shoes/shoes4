@@ -3,7 +3,7 @@ require 'shoes/background'
 require 'shoes/border'
 require 'shoes/button'
 require 'shoes/color'
-require 'shoes/flow'
+require 'shoes/slot'
 require 'shoes/line'
 require 'shoes/oval'
 require 'shoes/shape'
@@ -71,13 +71,17 @@ module Shoes
 
     def flow(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Flow.new self, opts, blk
+      Shoes::Flow.new self, opts, &blk
     end
 
+    def stack(opts = {}, &blk)
+      opts.merge! :app => @app
+      Shoes::Stack.new self, opts, &blk
+    end
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Button.new self, text, opts, blk
+      Shoes::Button.new self, text, opts, &blk
     end
 
     # Creates an animation that runs the given block of code.

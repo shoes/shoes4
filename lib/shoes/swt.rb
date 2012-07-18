@@ -4,6 +4,9 @@ require 'swt'
 module Swt
   include_package 'org.eclipse.swt.graphics'
   include_package 'org.eclipse.swt.events'
+  module Widgets
+    import org.eclipse.swt.widgets.Layout
+  end
 end
 
 def window(*a, &b)
@@ -15,6 +18,7 @@ require 'shoes/swt/common/stroke'
 require 'shoes/swt/element_methods'
 require 'shoes/swt/common/child'
 require 'shoes/swt/common/container'
+require 'shoes/swt/layout'
 require 'shoes/swt/app'
 
 # require 'shoes/swt/window'
@@ -27,7 +31,7 @@ require 'shoes/swt/color'
 require 'shoes/swt/color'
 require 'shoes/swt/edit_box'
 require 'shoes/swt/edit_line'
-require 'shoes/swt/flow'
+require 'shoes/swt/slot'
 require 'shoes/swt/line'
 require 'shoes/swt/list_box'
 require 'shoes/swt/oval'

@@ -6,7 +6,7 @@ module Shoes
       include Common::Child
 
       # The Swt parent object
-      attr_reader :parent
+      attr_reader :parent, :real
 
       # Create a button
       #
@@ -16,6 +16,10 @@ module Shoes
       def initialize(dsl, parent, blk)
         super(dsl, parent, ::Swt::SWT::PUSH, blk)
         @real.set_text @dsl.text
+        @real.pack
+        size = @real.getSize
+        @dsl.width, @dsl.height = size.x, size.y
+        parent.dsl.contents << @dsl
       end
 
       def move(left, top)

@@ -53,14 +53,7 @@ module Shoes
     # method will return 50.
     #
     # Also see the width method for an example and some other comments.
-    def height
-      @height
-    end
-
-    # This is the width of the Element. (Pixels)
-    def width
-      @width
-    end
+    attr_accessor :width, :height
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
@@ -90,6 +83,23 @@ module Shoes
     def displace(left, top)
       gui_container.setLocation(bounds.x + left, bounds.y + top)
       #@swt_composite.pack
+    end
+
+    def positioning x, y, max
+      if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
+        x = @right ? parent.left + parent.width - @width - @right : x
+        y = max.top
+        @left, @top = x, y
+        @gui.real.setLocation x, y
+        max = self if max.height < @height
+      else
+        x = @right ? parent.left + parent.width - @width - @right : parent.left
+        y = max.top + max.height
+        @left, @top = x, y
+        @gui.real.setLocation x, y
+        max = self
+      end
+      max
     end
 
     private
