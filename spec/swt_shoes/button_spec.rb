@@ -11,6 +11,9 @@ describe Shoes::Swt::Button do
 
   before :each do
     parent.stub(:real)
+    parent.stub(:dsl){mock(contents: [])}
+    dsl.stub(:width=)
+    dsl.stub(:height=)
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
