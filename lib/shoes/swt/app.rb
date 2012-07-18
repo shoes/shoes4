@@ -29,8 +29,8 @@ module Shoes
         instance_eval do
           define_method :controlResized do |e|
             w, h = s.shell.getSize.x - s.dx, s.shell.getSize.y - s.dy
-            s.real.setSize w, h
             s.dsl.top_slot.width, s.dsl.top_slot.height = w, h
+            s.real.setSize w, h
           end
           define_method(:controlMoved){|e|}
         end
