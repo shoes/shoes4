@@ -20,8 +20,10 @@ module Shoes
             gc = event.gc
             gc.set_antialias ::Swt::SWT::ON
             gc.set_background self.fill
+            gc.setAlpha @dsl.fill.alpha
             gc.fill_oval(@dsl.left, @dsl.top, @dsl.width, @dsl.height)
             gc.set_foreground self.stroke
+            gc.setAlpha @dsl.stroke.alpha
             gc.set_line_width self.strokewidth
             gc.draw_oval(@dsl.left, @dsl.top, @dsl.width, @dsl.height)
           end
