@@ -14,7 +14,7 @@ module Shoes
       def initialize(dsl, opts = nil)
         @dsl = dsl
         if opts
-          @container = opts[:container]
+          @container = opts[:app].gui.real
           @element = opts[:element] || ::Swt::Path.new(::Swt.display)
           @paint_callback = lambda do |event|
             gc = event.gc

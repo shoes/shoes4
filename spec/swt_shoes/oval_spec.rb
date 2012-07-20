@@ -1,8 +1,10 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
-  let(:gui_container) { double("gui_container") }
-  let(:opts) { {:container => gui_container} }
+  let(:gui_container_real) { double("gui container real") }
+  let(:gui_container) { double("gui container", real: gui_container_real) }
+  let(:container) { double("container", gui: gui_container)  }
+  let(:opts) { {:app => container} }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
@@ -23,7 +25,7 @@ describe Shoes::Swt::Oval do
 
     before :each do
       event.stub(:gc) { gc }
-      gui_container.should_receive(:add_paint_listener)
+      gui_container_real.should_receive(:add_paint_listener)
       dsl.stub(:left) { left }
       dsl.stub(:top) { top }
       dsl.stub(:width) { width }

@@ -12,7 +12,8 @@ describe "Basic Element Methods" do
     end
   end
 
-  let(:gui_container) { double('gui_container') }
+  let(:gui_container_real) { double('gui_container_real') }
+  let(:gui_container) { double('gui_container', real: gui_container_real) }
   let(:app) {
     ElementMethodsShoeLaces.new.tap { |a|
       a.gui = gui_container
@@ -21,7 +22,7 @@ describe "Basic Element Methods" do
 
   describe "line" do
     specify "creates a Shoes::Line" do
-      gui_container.should_receive(:add_paint_listener)
+      gui_container_real.should_receive(:add_paint_listener)
       app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
     end
   end
@@ -44,7 +45,7 @@ describe "Basic Element Methods" do
     }
 
     specify "create a Shoes::Shape" do
-      gui_container.should_receive(:add_paint_listener)
+      2.times{gui_container_real.should_receive(:add_paint_listener)}
       subject.should be_an_instance_of(Shoes::Shape)
     end
   end

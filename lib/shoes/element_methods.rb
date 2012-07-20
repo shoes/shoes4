@@ -136,6 +136,7 @@ module Shoes
 
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})
+      opts[:app] = self
       Shoes::Line.new x1, y1, x2, y2, style.merge(opts)
     end
 
@@ -155,6 +156,7 @@ module Shoes
 
     # Creates a new Shoes::Shape object
     def shape(shape_style={}, &blk)
+      shape_style[:app] = self
       Shoes::Shape.new(style.merge(shape_style), blk)
     end
 

@@ -18,7 +18,8 @@ module Shoes
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
 
       # GUI
-      @gui = Shoes.configuration.backend_for(self, @style.delete(:gui))
+      @style.delete(:gui)
+      @gui = Shoes.configuration.backend_for(self, @style)
     end
   end
 end

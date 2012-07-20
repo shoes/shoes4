@@ -28,7 +28,8 @@ module Shoes
       @components = []
 
       # GUI
-      @gui = Shoes.configuration.backend_for(self, @style.delete(:gui))
+      @style.delete(:gui)
+      @gui = Shoes.configuration.backend_for(self, @style)
 
       instance_eval &@blk unless @blk.nil?
     end

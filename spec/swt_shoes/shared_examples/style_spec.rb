@@ -21,7 +21,7 @@ shared_examples_for "Swt object with stroke" do
 
     before :each do
       event.stub(:gc) { gc }
-      gui_container.should_receive(:add_paint_listener)
+      gui_container_real.should_receive(:add_paint_listener)
       dsl.stub(:stroke) { stroke }
       dsl.stub(:strokewidth) { strokewidth }
     end
@@ -52,7 +52,7 @@ shared_examples_for "Swt object with fill" do
 
     before :each do
       event.stub(:gc) { gc }
-      gui_container.should_receive(:add_paint_listener)
+      gui_container_real.should_receive(:add_paint_listener)
       dsl.stub(:fill) { fill }
     end
 

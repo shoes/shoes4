@@ -1,16 +1,18 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Shape do
-  let(:gui_container) { double('gui container') }
+  let(:gui_container_real) { double("gui container real") }
+  let(:gui_container) { double("gui container", real: gui_container_real) }
+  let(:container) { double("container", gui: gui_container)  }
   let(:gui_element) { double('gui element') }
-  let(:args_with_element) { {container: gui_container, element: gui_element} }
-  let(:args_without_element) { {container: gui_container} }
+  let(:args_with_element) { {app: container, element: gui_element} }
+  let(:args_without_element) { {app: container} }
 
   let(:dsl) { double('dsl').as_null_object }
 
   shared_examples_for "Swt::Shape" do
     before :each do
-      gui_container.should_receive(:add_paint_listener)
+      gui_container_real.should_receive(:add_paint_listener)
     end
     let(:ancestors) { subject.class.ancestors.map(&:name) }
 
@@ -25,7 +27,7 @@ describe Shoes::Swt::Shape do
     end
 
     it "sets container" do
-      subject.container.should be(gui_container)
+      subject.container.should be(gui_container_real)
     end
 
     its(:dsl) { should be(dsl) }
@@ -44,7 +46,7 @@ describe Shoes::Swt::Shape do
 
     describe "#initialize" do
       before :each do
-        gui_container.should_receive(:add_paint_listener)
+        gui_container_real.should_receive(:add_paint_listener)
       end
 
       it "should not set current point on gui element" do

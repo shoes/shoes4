@@ -9,7 +9,7 @@ module Shoes
 
     def initialize parent, opts={}, &blk
       @parent = parent
-      @contents = []
+      @contents, @style = [], {}
 
       %w[app left top width height margin margin_left margin_top].each do |v|
         instance_variable_set "@#{v}", opts[v.to_sym]
