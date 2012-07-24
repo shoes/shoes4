@@ -39,7 +39,7 @@ module Shoes
       @gui = Shoes.configuration.backend::App.new @app
       Shoes::Background.new self, default_options[:background]
 
-      @top_slot = Flow.new self, {left: 0, top: 0, width: @width, height: @height}, &blk if blk
+      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &blk if blk
 
       @gui.open
     end
