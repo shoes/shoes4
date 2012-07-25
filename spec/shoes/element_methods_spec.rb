@@ -47,40 +47,36 @@ describe "text_block" do
 end
 
 
-shared_examples_for "object with element methods" do
-  before(:all) do
-    #@gui = Shoes.app do
-    #
-    #
-    #    button :text => "Change to Hello", :id => 'button_one'
-    #
-    #    button :text => 'Change to Goodbye', :id => 'button_two'
-    #
-    #end
+describe "object with element methods" do
+  subject { ElementMethodsShoeLaces.new }
+
+  describe "arc" do
+    it "creates a Shoes::Arc" do
+      pending "arc implementation"
+      arc = subject.arc
+      raise "ARC FAILURE"
+      arc.should be_an_instance_of(Shoes::Arc)
+    end
   end
 
   describe "flow" do
-    it "should use self, opts, blk" do
-      subject = ElementMethodsShoeLaces.new
+    it "creates a Shoes::Flow" do
       blk = Proc.new {}
-      opts = mock(:hash)
-      opts.should_receive(:merge!).and_return(opts)
-      Shoes::Flow.should_receive(:new).
-        with(subject, opts, blk)
-      subject.flow opts, &blk
+      opts = Hash.new
+      flow = subject.flow opts, &blk
+      flow.should be_an_instance_of(Shoes::Flow)
     end
   end
 
   describe "line" do
-    it "makes a Shoes::Line" do
-      Shoes::Line.should_receive(:new)
-      ElementMethodsShoeLaces.new.line(10, 15, 20, 30)
+    it "creates a Shoes::Line" do
+      subject.line(10, 15, 20, 30).should be_an_instance_of(Shoes::Line)
     end
   end
 
   describe "oval" do
-    it "produces a Shoes::Oval" do
-      ElementMethodsShoeLaces.new.oval(10, 50, 250).should be_an_instance_of(Shoes::Oval)
+    it "creates a Shoes::Oval" do
+      subject.oval(10, 50, 250).should be_an_instance_of(Shoes::Oval)
     end
   end
 
@@ -191,33 +187,6 @@ shared_examples_for "object with element methods" do
     end
   end
 
-  describe "animate" do
-    let(:app) { ElementMethodsShoeLaces.new }
-
-    shared_examples_for "basic" do
-      it { should be_an_instance_of(Shoes::Animation) }
-    end
-
-    shared_examples_for "10fps" do
-      its(:framerate) { should eq(10) }
-    end
-
-    context "defaults" do
-      subject { app.animate {} }
-      it_behaves_like "basic"
-      its(:framerate) { should eq(24) }
-    end
-
-    context "with numeric argument" do
-      subject { app.animate(10) {} }
-      it_behaves_like "basic"
-      it_behaves_like "10fps"
-    end
-
-    context "with hash argument" do
-
-    end
-  end
 
   #it "Should return 0 for left for button_one" do
   #  @gui.elements['button_one'].left.should be 0

@@ -5,6 +5,8 @@ describe Shoes::App do
   let(:opts) { Hash.new }
   subject { Shoes::App.new(opts, &input_blk) }
 
+  it_behaves_like "dsl container"
+
   describe "initialize" do
     it "should set accessors from constructor args" do
       Shoes::App.any_instance.stub(:flow)

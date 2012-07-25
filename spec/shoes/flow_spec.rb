@@ -1,23 +1,36 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Flow do
+  let(:parent) { double("parent") }
+  let(:input_block) { Proc.new {} }
+  let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
+  subject { Shoes::Flow.new(parent, input_opts, &input_block) }
+
+  describe "dsl" do
+    # dsl methods require :app
+    let(:app) { double("app") }
+    let(:app_gui) { double("app gui") }
+    let(:input_opts) { {:app => app} }
+
+    before :each do
+      app.stub(:gui) { app_gui }
+      parent.should_receive(:gui)
+    end
+
+    it_behaves_like "dsl container"
+  end
 
   describe "initialize" do
-    let(:parent) { double("parent") }
-
     before :each do
       parent.should_receive(:gui)
     end
 
     it "should set accessors" do
-      input_block = Proc.new {}
-      input_opts = {:width => 131, :height => 137, :margin => 143}
-      flow = Shoes::Flow.new(parent, input_opts, &input_block)
-      flow.parent.should == parent
-      flow.width.should == 131
-      flow.height.should == 137
-      flow.margin.should == 143
-      flow.blk.should == input_block
+      subject.parent.should == parent
+      subject.width.should == 131
+      subject.height.should == 137
+      subject.margin.should == 143
+      subject.blk.should == input_block
     end
   end
   #let(:display) { SWT::Widgets::Display.getDefault }
