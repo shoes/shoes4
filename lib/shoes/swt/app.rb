@@ -16,9 +16,10 @@ module Shoes
           shell.setText(@dsl.app_title)
           shell.addListener(::Swt::SWT::Close, main_window_on_close)
           shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
+          shell.setBackground @dsl.default_options[:background].to_native
         end
         @shell = @real
-        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::INHERIT_DEFAULT)
+        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
         @real.setSize(@dsl.width, @dsl.height)
         @real.setLayout ShoesLayout.new
 
