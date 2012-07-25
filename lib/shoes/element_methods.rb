@@ -3,16 +3,17 @@ require 'shoes/background'
 require 'shoes/border'
 require 'shoes/button'
 require 'shoes/color'
-require 'shoes/slot'
-require 'shoes/line'
-require 'shoes/oval'
-require 'shoes/shape'
-require 'shoes/text_block'
-require 'shoes/list_box'
-require 'shoes/radio'
-require 'shoes/progress'
 require 'shoes/edit_line'
+require 'shoes/image'
+require 'shoes/line'
+require 'shoes/list_box'
+require 'shoes/oval'
+require 'shoes/progress'
+require 'shoes/radio'
+require 'shoes/shape'
+require 'shoes/slot'
 require 'shoes/sound'
+require 'shoes/text_block'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -28,6 +29,11 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
+
+    def image(path, opts={}, &blk)
+      opts.merge! app: @app
+      Shoes::Image.new self, path, opts, blk
+    end
 
     def border(color, opts = {}, &blk)
       opts.merge! app: @app
@@ -125,14 +131,6 @@ module Shoes
     def sound(soundfile, opts = {}, &blk)
       Shoes::Sound.new self.gui, soundfile, opts, &blk
     end
-
-    #
-    #def image(path, opts={})
-    #  image = Image.new(path, @current_panel, opts)
-    #  @elements[image.identifier] = image
-    #  image
-    #end
-    #
 
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})

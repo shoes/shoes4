@@ -32,16 +32,16 @@ require 'shoes/swt/color'
 require 'shoes/swt/color'
 require 'shoes/swt/edit_box'
 require 'shoes/swt/edit_line'
-require 'shoes/swt/slot'
+require 'shoes/swt/image'
 require 'shoes/swt/line'
 require 'shoes/swt/list_box'
 require 'shoes/swt/oval'
 require 'shoes/swt/progress'
 require 'shoes/swt/radio'
 require 'shoes/swt/shape'
+require 'shoes/swt/slot'
 require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
-
 
 module Shoes::Swt
   module Shoes
