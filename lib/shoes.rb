@@ -1,6 +1,10 @@
 require 'rubygems'
 
 module Shoes
+  PI = Math::PI
+  TWO_PI = 2 * PI
+  HALF_PI = 0.5 * PI
+
   class << self
     def logger
       Shoes.configuration.logger_instance
