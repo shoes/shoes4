@@ -10,16 +10,7 @@ module Shoes
         @parent = parent
         @blk = blk
         @real = parent.real
-
-        if dsl.opts.size == 0
-          self.background = dsl.color
-        else
-          @real.addPaintListener(BgPainter.new(@dsl, self))
-        end
-      end
-
-      def background=(color)
-        @real.background = color.to_native
+        @real.addPaintListener(BgPainter.new(@dsl, @parent.dsl))
       end
 
       private
@@ -31,11 +22,11 @@ module Shoes
         end
 
         def paintControl(paint_event)
-          @parent.background = @dsl.default
-          coords = @dsl.coords paint_event
+          @dsl.width = @dsl.opts[:width] ? @dsl.opts[:width] : @parent.width
+          @dsl.height = @dsl.opts[:height] ? @dsl.opts[:height] : @parent.height
           paint_event.gc.setBackground (@dsl.color.to_native)
-          paint_event.gc.fillRectangle(coords[:x], coords[:y],
-            coords[:width], coords[:height])
+          paint_event.gc.fillRoundRectangle(@parent.left, @parent.top, 
+            @dsl.width, @dsl.height, @dsl.curve*2, @dsl.curve*2)
         end
       end
     end
