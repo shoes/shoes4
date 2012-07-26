@@ -31,4 +31,26 @@ shared_examples "dsl container" do |container|
       end
     end
   end
+
+  describe "flow" do
+    it "creates a Shoes::Flow" do
+      blk = Proc.new {}
+      opts = Hash.new
+      flow = subject.flow opts, &blk
+      flow.should be_an_instance_of(Shoes::Flow)
+    end
+  end
+
+  describe "line" do
+    it "creates a Shoes::Line" do
+      subject.line(10, 15, 20, 30).should be_an_instance_of(Shoes::Line)
+    end
+  end
+
+  describe "oval" do
+    it "creates a Shoes::Oval" do
+      subject.oval(10, 50, 250).should be_an_instance_of(Shoes::Oval)
+    end
+  end
+
 end
