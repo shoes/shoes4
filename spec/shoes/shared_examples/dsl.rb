@@ -53,4 +53,42 @@ shared_examples "dsl container" do |container|
     end
   end
 
+  describe "rgb" do
+    let(:red) { 100 }
+    let(:green) { 149 }
+    let(:blue) { 237 }
+    let(:alpha) { 133 } # cornflower
+    let(:app) { ElementMethodsShoeLaces.new }
+
+    it "sends args to Shoes::Color" do
+      Shoes::Color.should_receive(:new).with(red, green, blue, alpha)
+      app.rgb(red, green, blue, alpha)
+    end
+
+    it "defaults to opaque" do
+      Shoes::Color.should_receive(:new).with(red, green, blue, Shoes::Color::OPAQUE)
+      app.rgb(red, green, blue)
+    end
+  end
+
+  describe "shape" do
+    let(:app) { ElementMethodsShoeLaces.new }
+    subject {
+      app.shape {
+        move_to 400, 300
+        line_to 400, 200
+        line_to 100, 100
+        line_to 400, 300
+      }
+    }
+
+    it { should be_an_instance_of(Shoes::Shape) }
+
+    it "receives style from app" do
+      green = Shoes::COLORS.fetch :green
+      app.style[:stroke] = green
+      subject.stroke.should eq(green)
+    end
+  end
+
 end

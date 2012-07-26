@@ -9,12 +9,11 @@ describe Shoes::Flow do
   describe "dsl" do
     # dsl methods require :app
     let(:app) { double("app") }
-    let(:app_gui) { double("app gui") }
     let(:input_opts) { {:app => app} }
 
     before :each do
-      app.stub(:gui) { app_gui }
-      parent.should_receive(:gui)
+      parent.stub(:gui)
+      app.stub(:gui)
     end
 
     it_behaves_like "dsl container"
