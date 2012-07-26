@@ -87,7 +87,7 @@ module Shoes
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Button.new self, text, opts, &blk
+      Shoes::Button.new self, text, opts, blk
     end
 
     # Creates an animation that runs the given block of code.
