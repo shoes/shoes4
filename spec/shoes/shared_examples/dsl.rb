@@ -91,4 +91,27 @@ shared_examples "dsl container" do |container|
     end
   end
 
+  describe "stroke" do
+    let(:color) { Shoes::COLORS.fetch :tomato }
+
+    specify "returns a color" do
+      subject.stroke(color).class.should eq(Shoes::Color)
+    end
+
+    # This works differently on the subject than on a normal element
+    specify "sets on receiver" do
+      subject.stroke color
+      subject.style[:stroke].should eq(color)
+    end
+
+    specify "subjectlies to subsequently created objects" do
+      subject.stroke color
+      Shoes::Oval.should_receive(:new).with do |*args|
+        style = args.pop
+        style[:stroke].should eq(color)
+      end
+      subject.oval(10, 10, 100, 100)
+    end
+  end
+
 end
