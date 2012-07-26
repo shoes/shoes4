@@ -32,6 +32,29 @@ shared_examples "dsl container" do |container|
     end
   end
 
+  describe "fill" do
+    let(:color) { Shoes::COLORS.fetch :tomato }
+
+    specify "returns a color" do
+      subject.fill(color).class.should eq(Shoes::Color)
+    end
+
+    # This works differently on a container than on a normal element
+    specify "sets on receiver" do
+      subject.fill color
+      subject.style[:fill].should eq(color)
+    end
+
+    specify "applies to subsequently created objects" do
+      subject.fill color
+      Shoes::Oval.should_receive(:new).with do |*args|
+        style = args.pop
+        style[:fill].should eq(color)
+      end
+      subject.oval(10, 10, 100, 100)
+    end
+  end
+
   describe "flow" do
     it "creates a Shoes::Flow" do
       blk = Proc.new {}
@@ -98,17 +121,37 @@ shared_examples "dsl container" do |container|
       subject.stroke(color).class.should eq(Shoes::Color)
     end
 
-    # This works differently on the subject than on a normal element
+    # This works differently on a container than on a normal element
     specify "sets on receiver" do
       subject.stroke color
       subject.style[:stroke].should eq(color)
     end
 
-    specify "subjectlies to subsequently created objects" do
+    specify "applies to subsequently created objects" do
       subject.stroke color
       Shoes::Oval.should_receive(:new).with do |*args|
         style = args.pop
         style[:stroke].should eq(color)
+      end
+      subject.oval(10, 10, 100, 100)
+    end
+  end
+
+  describe "strokewidth" do
+    specify "returns a number" do
+      subject.strokewidth(4).should eq(4)
+    end
+
+    specify "sets on receiver" do
+      subject.strokewidth 4
+      subject.style[:strokewidth].should eq(4)
+    end
+
+    specify "applies to subsequently created objects" do
+      subject.strokewidth 6
+      Shoes::Oval.should_receive(:new).with do |*args|
+        style = args.pop
+        style[:strokewidth].should eq(6)
       end
       subject.oval(10, 10, 100, 100)
     end

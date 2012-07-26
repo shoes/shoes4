@@ -59,52 +59,6 @@ describe "object with element methods" do
     end
   end
 
-  describe "strokewidth" do
-    let(:app) { ElementMethodsShoeLaces.new }
-    specify "returns a number" do
-      app.strokewidth(4).should eq(4)
-    end
-
-    specify "sets on receiver" do
-      app.strokewidth 4
-      app.style[:strokewidth].should eq(4)
-    end
-
-    specify "applies to subsequently created objects" do
-      app.strokewidth 6
-      Shoes::Oval.should_receive(:new).with do |*args|
-        style = args.pop
-        style[:strokewidth].should eq(6)
-      end
-      app.oval(10, 10, 100, 100)
-    end
-  end
-
-  describe "fill" do
-    let(:app) { ElementMethodsShoeLaces.new }
-    let(:color) { Shoes::COLORS.fetch :tomato }
-
-    specify "returns a color" do
-      app.fill(color).class.should eq(Shoes::Color)
-    end
-
-    # This works differently on the app than on a normal element
-    specify "sets on receiver" do
-      app.fill color
-      app.style[:fill].should eq(color)
-    end
-
-    specify "applies to subsequently created objects" do
-      app.fill color
-      Shoes::Oval.should_receive(:new).with do |*args|
-        style = args.pop
-        style[:fill].should eq(color)
-      end
-      app.oval(10, 10, 100, 100)
-    end
-  end
-
-
   #it "Should return 0 for left for button_one" do
   #  @gui.elements['button_one'].left.should be 0
   #end
