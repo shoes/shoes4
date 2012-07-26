@@ -1,6 +1,8 @@
 module Shoes
   module Swt
     class SwtButton
+      # The Swt parent object
+      attr_reader :parent, :real
 
       def initialize(dsl, parent, type, blk)
         @dsl = dsl
@@ -8,10 +10,15 @@ module Shoes
         @blk = blk
 
         @type = type
-        @real = ::Swt::Widgets::Button.new(@parent.real, @type).tap do |button|
-          button.addSelectionListener(@blk) if @blk
-          button.pack
-        end
+        @real = ::Swt::Widgets::Button.new(@parent.real, @type)
+        @real.addSelectionListener(@blk) if @blk
+
+        yield(@real) if block_given?
+
+        @real.pack
+        size = @real.getSize
+        @dsl.width, @dsl.height = size.x, size.y
+        parent.dsl.contents << @dsl
       end
 
       def focus

@@ -5,21 +5,15 @@ module Shoes
     class Button < SwtButton
       include Common::Child
 
-      # The Swt parent object
-      attr_reader :parent, :real
-
       # Create a button
       #
       # @param [Shoes::Button] dsl The Shoes DSL button this represents
       # @param [::Swt::Widgets::Composite] parent The parent element of this button
       # @param [Proc] blk The block of code to call when this button is activated
       def initialize(dsl, parent, blk)
-        super(dsl, parent, ::Swt::SWT::PUSH, blk)
-        @real.set_text @dsl.text
-        @real.pack
-        size = @real.getSize
-        @dsl.width, @dsl.height = size.x, size.y
-        parent.dsl.contents << @dsl
+        super(dsl, parent, ::Swt::SWT::PUSH, blk) do |button|
+          button.set_text @dsl.text
+        end
       end
 
       def move(left, top)
