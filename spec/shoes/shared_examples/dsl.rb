@@ -1,7 +1,5 @@
-# Must pass the container object in the shared examples call.
-#
-#   it_behaves_like "dsl container", container_object
-shared_examples "dsl container" do |container|
+# Shared examples for app, flow, stack
+shared_examples "dsl container" do
   describe "animate" do
     context "defaults" do
       let(:animation) { subject.animate {} }
@@ -29,6 +27,14 @@ shared_examples "dsl container" do |container|
       specify "sets framerate" do
         animation.framerate.should eq(17)
       end
+    end
+  end
+
+  describe "arc" do
+    it "creates a Shoes::Arc" do
+      pending "arc implementation"
+      arc = subject.arc
+      arc.should be_an_instance_of(Shoes::Arc)
     end
   end
 
@@ -81,23 +87,21 @@ shared_examples "dsl container" do |container|
     let(:green) { 149 }
     let(:blue) { 237 }
     let(:alpha) { 133 } # cornflower
-    let(:app) { ElementMethodsShoeLaces.new }
 
     it "sends args to Shoes::Color" do
       Shoes::Color.should_receive(:new).with(red, green, blue, alpha)
-      app.rgb(red, green, blue, alpha)
+      subject.rgb(red, green, blue, alpha)
     end
 
     it "defaults to opaque" do
       Shoes::Color.should_receive(:new).with(red, green, blue, Shoes::Color::OPAQUE)
-      app.rgb(red, green, blue)
+      subject.rgb(red, green, blue)
     end
   end
 
   describe "shape" do
-    let(:app) { ElementMethodsShoeLaces.new }
-    subject {
-      app.shape {
+    let(:shape) {
+      subject.shape {
         move_to 400, 300
         line_to 400, 200
         line_to 100, 100
@@ -105,12 +109,14 @@ shared_examples "dsl container" do |container|
       }
     }
 
-    it { should be_an_instance_of(Shoes::Shape) }
+    specify "creates a Shoes::Shape" do
+      shape.should be_an_instance_of(Shoes::Shape)
+    end
 
     it "receives style from app" do
       green = Shoes::COLORS.fetch :green
-      app.style[:stroke] = green
-      subject.stroke.should eq(green)
+      subject.style[:stroke] = green
+      shape.stroke.should eq(green)
     end
   end
 
@@ -157,4 +163,40 @@ shared_examples "dsl container" do |container|
     end
   end
 
+  describe "text_block" do
+    it "should set banner font size to 48" do
+      text_block = subject.banner("hello!")
+      text_block.font_size.should eql 48
+    end
+
+    it "should set title font size to 34" do
+      text_block = subject.title("hello!")
+      text_block.font_size.should eql 34
+    end
+
+    it "should set subtitle font size to 26" do
+      text_block = subject.subtitle("hello!")
+      text_block.font_size.should eql 26
+    end
+
+    it "should set tagline font size to 18" do
+      text_block = subject.tagline("hello!")
+      text_block.font_size.should eql 18
+    end
+
+    it "should set caption font size to 14" do
+      text_block = subject.caption("hello!")
+      text_block.font_size.should eql 14
+    end
+
+    it "should set para font size to 12" do
+      text_block = subject.para("hello!")
+      text_block.font_size.should eql 12
+    end
+
+    it "should set inscription font size to 10" do
+      text_block = subject.inscription("hello!")
+      text_block.font_size.should eql 10
+    end
+  end
 end
