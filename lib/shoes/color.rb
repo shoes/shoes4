@@ -19,12 +19,6 @@ module Shoes
 
     attr_reader :red, :green, :blue, :alpha
 
-    # In Red Shoes, returns a new color object with these rgb values,
-    # like a shortcut for Shoes::Color.new
-    def rgb(red, green, blue, alpha = OPAQUE)
-      Shoes::Color.new(red, green, blue, alpha)
-    end
-
     def light?
       @red + @green + @blue > 510 # 0xaa * 3
     end

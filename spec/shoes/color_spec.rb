@@ -152,24 +152,6 @@ describe Shoes::Color do
       end
     end
   end
-
-  describe "rgb" do
-    let(:color) { Shoes::Color.new(135, 206, 235) } # skyblue
-    let(:new_color) { color.rgb(135, 206, 235) }
-
-    it "returns a new Shoes::Color object" do
-      new_color.should_not equal(color)
-      new_color.should eq(color)
-    end
-
-    it "accepts alpha" do
-      color.rgb(135, 206, 235, 40).alpha.should eq(40)
-    end
-
-    it "allows alpha to be omitted" do
-      new_color.alpha.should eq(255)
-    end
-  end
 end
 
 describe "Shoes built-in colors" do
