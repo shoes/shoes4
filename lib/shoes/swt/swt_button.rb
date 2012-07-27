@@ -25,29 +25,9 @@ module Shoes
         @real.set_focus
       end
 
-      private
-      def swt_move(left, top, &block)
+      def move(left, top)
         unless @real.disposed?
-          # If this element is part of a layout, we need to pop it into its own
-          # composite layer before moving it, so the rest of of the elements in
-          # the layout can reflow.
-          if @parent.real.get_layout
-            old_parent_real = @parent.real
-            app_real = app.real
-            new_composite = ::Swt::Widgets::Composite.new(app_real,
-              ::Swt::SWT::NO_BACKGROUND)
-            @real.dispose
-            new_composite.set_layout nil
-            @real = ::Swt::Widgets::Button.new(new_composite, @type).tap do |button|
-              yield button unless block.nil?
-              button.pack
-            end
-            new_composite.set_bounds(0, 0, app_real.size.x, app_real.size.y)
-            new_composite.move_above(old_parent_real)
-            old_parent_real.layout
-          end
           @real.set_location left, top
-          @real.redraw
         end
       end
     end

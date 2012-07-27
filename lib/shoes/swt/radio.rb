@@ -27,10 +27,6 @@ module Shoes
       def checked=(bool)
         @real.set_selection bool
       end
-
-      def move(left, top)
-        swt_move(left, top)
-      end
     end
   end
 end

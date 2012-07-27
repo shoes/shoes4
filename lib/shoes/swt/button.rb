@@ -15,13 +15,6 @@ module Shoes
           button.set_text @dsl.text
         end
       end
-
-      def move(left, top)
-        swt_move(left, top) do |button|
-          button.set_text @dsl.text
-          button.add_selection_listener(@blk) if @blk
-        end
-      end
     end
   end
 end

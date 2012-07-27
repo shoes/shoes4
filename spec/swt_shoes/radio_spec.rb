@@ -3,17 +3,20 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Radio do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', :width= => true, :height= => true) }
-  let(:parent) { double('parent', real: true, dsl: mock(contents: []) ) }
+  let(:parent) { double('parent') }
   let(:block) { double('block') }
   let(:real) { double('real').as_null_object }
 
   subject { Shoes::Swt::Radio.new dsl, parent, block }
 
   before :each do
+    parent.stub(:real)
+    parent.stub(:real)
+    parent.stub(:dsl) { mock(contents: []) }
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
-  it_behaves_like "movable object with disposable real element"
+  pending "movable object with disposable real element"
 
   it "calls get_selection when checked? is called" do
     real.should_receive :get_selection
