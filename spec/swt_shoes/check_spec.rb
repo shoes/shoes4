@@ -2,17 +2,14 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Check do
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', :width= => true, :height= => true) }
-  let(:parent) { double('parent') }
+  let(:dsl) { double('dsl', :width= => true, :height= => true, contents: []) }
+  let(:parent) { double('parent', real: true, dsl: mock(contents: []) ) }
   let(:block) { double('block') }
   let(:real) { double('real').as_null_object }
 
   subject { Shoes::Swt::Check.new dsl, parent, block }
 
   before :each do
-    parent.stub(:real)
-    parent.stub(:real)
-    parent.stub(:dsl) { mock(contents: []) }
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
