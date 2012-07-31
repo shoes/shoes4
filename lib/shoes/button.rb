@@ -13,6 +13,7 @@ module Shoes
       @width = opts[:width]
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @parent.add_child self
     end
 
     attr_reader :parent

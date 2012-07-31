@@ -22,6 +22,10 @@ module Shoes
       instance_eval &blk if blk
     end
 
+    def add_child(element)
+      gui.dsl.contents << element
+    end
+
     def positioning x, y, max
       @init_width = @width if @width.is_a? Float
       @width = (parent.width * @init_width).to_i if @init_width

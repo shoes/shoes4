@@ -1,6 +1,11 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Line do
+  before :each do
+    Shoes::Mock::Line.any_instance.stub(:real) { mock( size:
+      mock(x: 90, y: 45) ) }
+  end
+
   describe "basic" do
     subject { Shoes::Line.new(20, 23, 300, 430) }
     it_behaves_like "object with stroke"

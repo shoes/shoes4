@@ -16,9 +16,6 @@ module Shoes
         yield(@real) if block_given?
 
         @real.pack
-        size = @real.getSize
-        @dsl.width, @dsl.height = size.x, size.y
-        parent.dsl.contents << @dsl
       end
 
       def focus

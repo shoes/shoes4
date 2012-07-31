@@ -6,13 +6,19 @@ describe Shoes::Button do
 
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
-  let(:parent) { double("parent").as_null_object }
+  let(:parent) { double("parent", real: nil, gui: nil, add_child: nil ) }
+
   subject { Shoes::Button.new(parent, "text", input_opts, input_block) }
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
 
   describe "initialize" do
+    before :each do
+      Shoes::Mock::Button.any_instance.stub(:real) { mock( size:
+        mock(x: 131, y: 137) ) }
+    end
+
     it "should set accessors" do
       button = subject
       button.parent.should == parent

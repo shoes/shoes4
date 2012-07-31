@@ -31,13 +31,13 @@ module Shoes
     # This is the position of the right side of the Element,
     # measured from the *left* side of the Slot.  (pixels)
     def right
-      @left + @width
+      @left + width
     end
 
     # This is the position of the bottom of the Element,
     # measured from the *top* of the Slot.  (pixels)
     def bottom
-      @top + @height
+      @top + height
     end
 
     # Gets you the pixel position of the left edge of the element.
@@ -53,7 +53,13 @@ module Shoes
     # method will return 50.
     #
     # Also see the width method for an example and some other comments.
-    attr_accessor :width, :height
+    def width
+      @gui.respond_to?('real') ? @gui.real.size.x : @width
+    end
+
+    def height
+      @gui.respond_to?('real') ? @gui.real.size.y : @height
+    end
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
@@ -86,14 +92,14 @@ module Shoes
     end
 
     def positioning x, y, max
-      if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
-        x = @right ? parent.left + parent.width - @width - @right : x
+      if parent.is_a?(Flow) and x + width <= parent.left + parent.width
+        x = @right ? parent.left + parent.width - width - @right : x
         y = max.top
         @left, @top = x, y
         move x, y
-        max = self if max.height < @height
+        max = self if max.height < height
       else
-        x = @right ? parent.left + parent.width - @width - @right : parent.left
+        x = @right ? parent.left + parent.width - width - @right : parent.left
         y = max.top + max.height
         @left, @top = x, y
         move x, y

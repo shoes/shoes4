@@ -1,6 +1,14 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Shape do
+  before :each do
+    module Shoes
+      class Line
+        attr_reader :width, :height
+      end
+    end
+  end
+
   it_behaves_like "object with stroke"
   it_behaves_like "object with style"
   it_behaves_like "movable object"

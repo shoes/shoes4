@@ -1,6 +1,11 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Oval do
+  before :each do
+    Shoes::Mock::Oval.any_instance.stub(:real) { mock( size:
+      mock(x: 100, y: 100) ) }
+  end
+
   describe "basic" do
     subject { Shoes::Oval.new(20, 30, 100, 200) }
     it_behaves_like "object with stroke"
@@ -9,6 +14,11 @@ describe Shoes::Oval do
   end
 
   context "(eccentric)" do
+    before :each do
+      Shoes::Mock::Oval.any_instance.stub(:real) { mock( size:
+        mock(x: 100, y: 200) ) }
+    end
+
     subject { Shoes::Oval.new(20, 30, 100, 200) }
 
     it { should be_instance_of(Shoes::Oval) }
