@@ -1,9 +1,10 @@
 module Shoes
   module Swt
     class Oval
-      include Shoes::Swt::Common::Fill
-      include Shoes::Swt::Common::Stroke
-      include Shoes::Swt::Common::Move
+      include Common::Fill
+      include Common::Stroke
+      include Common::Move
+      include Common::Resource
 
       # opts must be provided if this shape is responsible for
       # drawing itself. If this shape is part of another shape, then
@@ -21,6 +22,7 @@ module Shoes
           @container = opts[:app].gui.real
           @paint_callback = lambda do |event|
             gc = event.gc
+            gcs_reset gc
             gc.set_antialias ::Swt::SWT::ON
             gc.set_background self.fill
             gc.setAlpha @fill.alpha

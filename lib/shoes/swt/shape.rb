@@ -2,8 +2,9 @@ module Shoes
   module Swt
     # The Swt implementation of a Shoes::Shape
     class Shape
-      include Shoes::Swt::Common::Fill
-      include Shoes::Swt::Common::Stroke
+      include Common::Fill
+      include Common::Stroke
+      include Common::Resource
 
       # Creates a new Shoes::Swt::Shape
       #
@@ -18,6 +19,7 @@ module Shoes
           @element = opts[:element] || ::Swt::Path.new(::Swt.display)
           @paint_callback = lambda do |event|
             gc = event.gc
+            gcs_reset gc
             @transform = ::Swt::Transform.new(::Swt.display) unless @transform
             gc.setTransform(@transform)
             gc.set_background self.fill

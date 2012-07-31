@@ -1,7 +1,8 @@
 module Shoes
   module Swt
     class Line
-      include Shoes::Swt::Common::Stroke
+      include Common::Stroke
+      include Common::Resource
 
       # @param [Hash] opts Options
       #   Must be provided if this shape is responsible for
@@ -12,6 +13,7 @@ module Shoes
           @container = opts[:app].gui.real
           default_paint_callback = lambda do |event|
             gc = event.gc
+            gcs_reset gc
             gc.set_antialias ::Swt::SWT::ON
             gc.set_foreground self.stroke
             gc.set_line_width self.strokewidth

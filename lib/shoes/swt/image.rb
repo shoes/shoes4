@@ -3,6 +3,7 @@ module Shoes
     class Image
       include Common::Child
       include Common::Move
+      include Common::Resource
 
       attr_reader :parent, :real, :dsl, :container, :paint_callback
 
@@ -21,6 +22,7 @@ module Shoes
         
         @paint_callback = lambda do |event|
           gc = event.gc
+          gcs_reset gc
           gc.drawImage @real, @left, @top
         end
         @container.add_paint_listener(@paint_callback)
