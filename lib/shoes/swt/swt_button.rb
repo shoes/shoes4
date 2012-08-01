@@ -27,6 +27,7 @@ module Shoes
           @real.set_location left, top
         end
       end
+
     end
   end
 end
