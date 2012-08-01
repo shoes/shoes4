@@ -6,7 +6,7 @@ module Shoes
       include Common::Child
 
       # The Swt parent object
-      attr_reader :parent
+      attr_reader :parent, :real
 
       def initialize(dsl, parent, blk)
         @dsl = dsl
@@ -17,11 +17,20 @@ module Shoes
                                                 ::Swt::SWT::SMOOTH)
         @real.minimum = 0
         @real.maximum = 100
+
+        @real.pack
       end
 
       def fraction=(value)
         @real.selection = (value*100).to_i
       end
+
+      def move(left, top)
+        unless @real.disposed?
+          @real.set_location left, top
+        end
+      end
+
     end
   end
 end

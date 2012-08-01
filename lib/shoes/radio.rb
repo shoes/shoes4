@@ -11,6 +11,7 @@ module Shoes
       @app = opts[:app]
       @checked = false
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @parent.add_child self
     end
 
     def checked?

@@ -13,6 +13,7 @@ module Shoes
       @app = opts[:app]
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @parent.add_child self
 
       @fraction = 0.0
     end

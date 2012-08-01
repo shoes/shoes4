@@ -14,6 +14,8 @@ describe Shoes::Swt::Progress do
     ::Swt::Widgets::ProgressBar.stub(:new) { real }
   end
 
+  pending "movable object with disposable real element"
+
   it "should have a method called fraction=" do
     subject.should respond_to :fraction=
   end
