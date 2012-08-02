@@ -44,7 +44,7 @@ describe Shoes::Button do
       end
 
       specify "returns self" do
-        subject.positioning(0, 0, max).should be(subject)
+        subject.positioning(x, y, max).should be(subject)
       end
     end
 
@@ -64,12 +64,25 @@ describe Shoes::Button do
         (x + subject.width).should be < (parent.left + parent.width)
       end
 
+      describe "element has @right" do
+      end
+
+      describe "element has nil @right" do
+        specify "left == x" do
+          subject.positioning(x, y, max)
+          subject.left.should eq(x)
+        end
+      end
+
       describe "height branch" do
         context "max height < height" do
           specify "max.height < height" do
             max.height.should be < subject.height
           end
 
+          specify "returns self" do
+            subject.positioning(x, y, max).should be(subject)
+          end
         end
 
         context "max.height > height" do
