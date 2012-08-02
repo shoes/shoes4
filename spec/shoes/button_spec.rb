@@ -68,9 +68,16 @@ describe Shoes::Button do
       end
 
       describe "element has nil @right" do
-        specify "left == x" do
+        before :each do
           subject.positioning(x, y, max)
+        end
+
+        specify "left == x" do
           subject.left.should eq(x)
+        end
+
+        specify "top == y" do
+          subject.top.should eq(max.top)
         end
       end
 
