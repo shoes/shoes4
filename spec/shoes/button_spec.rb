@@ -28,4 +28,21 @@ describe Shoes::Button do
       button.height.should == 137
     end
   end
+
+  describe "positioning" do
+    let(:max) { double("max", :top => 100, :height => 55) }
+
+    before :each do
+      parent.stub(:left) { 0 }
+    end
+
+    specify "returns self" do
+      subject.positioning(0, 0, max).should be(subject)
+    end
+
+    specify "returns self" do
+      subject.positioning(300, 300, max).should be(42)
+    end
+  end
+
 end
