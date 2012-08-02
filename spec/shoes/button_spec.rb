@@ -74,6 +74,10 @@ describe Shoes::Button do
 
         context "max.height > height" do
           let(:max) { double("max", :top => 100, :height => 200) }
+
+          specify "max.height > height" do
+            max.height.should be > subject.height
+          end
         end
       end
     end
