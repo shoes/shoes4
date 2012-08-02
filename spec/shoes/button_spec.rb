@@ -36,13 +36,24 @@ describe Shoes::Button do
       parent.stub(:left) { 0 }
     end
 
-    specify "returns self" do
-      subject.positioning(0, 0, max).should be(subject)
+    context "parent is not a flow" do
+      specify "parent is a flow" do
+        subject.parent.is_a?(Shoes::Flow).should be_false
+      end
+
+      specify "returns self" do
+        subject.positioning(0, 0, max).should be(subject)
+      end
     end
 
-    specify "returns self" do
-      subject.positioning(300, 300, max).should be(42)
+    context "parent is a flow" do
+      before :each do
+        parent.stub(:is_a?) { true }
+      end
+
+      specify "parent is a flow" do
+        subject.parent.is_a?(Shoes::Flow).should be_true
+      end
     end
   end
-
 end
