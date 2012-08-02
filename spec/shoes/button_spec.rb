@@ -78,6 +78,10 @@ describe Shoes::Button do
           specify "max.height > height" do
             max.height.should be > subject.height
           end
+
+          specify "returns max" do
+            subject.positioning(x, y, max).should be(max)
+          end
         end
       end
     end
