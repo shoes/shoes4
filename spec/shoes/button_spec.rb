@@ -65,6 +65,15 @@ describe Shoes::Button do
       end
 
       describe "element has @right" do
+        let(:calculated_x) { 10 }
+        before :each do
+          subject.should_receive(:move).with(calculated_x, max.top)
+          subject.positioning(x, y, max)
+        end
+
+        specify "left position is measured from right edge of parent" do
+          subject.left.should eq(10)
+        end
       end
 
       describe "element has nil @right" do
@@ -77,9 +86,6 @@ describe Shoes::Button do
           subject.left.should eq(x)
         end
 
-        specify "top == y" do
-          subject.top.should eq(max.top)
-        end
       end
 
       describe "height branch" do
