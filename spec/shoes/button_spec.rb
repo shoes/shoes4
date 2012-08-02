@@ -69,6 +69,7 @@ describe Shoes::Button do
 
       describe "element has nil @right" do
         before :each do
+          subject.should_receive(:move).with(x, max.top)
           subject.positioning(x, y, max)
         end
 
