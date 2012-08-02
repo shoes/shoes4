@@ -31,13 +31,15 @@ describe Shoes::Button do
 
   describe "positioning" do
     let(:max) { double("max", :top => 100, :height => 55) }
+    let(:x) { 40 }
+    let(:y) { 80 }
 
     before :each do
       parent.stub(:left) { 0 }
     end
 
-    context "parent is not a flow" do
-      specify "parent is a flow" do
+    context "second branch" do
+      specify "parent is not a flow" do
         subject.parent.is_a?(Shoes::Flow).should be_false
       end
 
@@ -46,13 +48,33 @@ describe Shoes::Button do
       end
     end
 
-    context "parent is a flow" do
+    context "first branch" do
+      let(:x) { 10 }
+
       before :each do
         parent.stub(:is_a?) { true }
+        parent.stub(:width) { 300 }
       end
 
       specify "parent is a flow" do
         subject.parent.is_a?(Shoes::Flow).should be_true
+      end
+
+      specify "element fits" do
+        (x + subject.width).should be < (parent.left + parent.width)
+      end
+
+      describe "height branch" do
+        context "max height < height" do
+          specify "max.height < height" do
+            max.height.should be < subject.height
+          end
+
+        end
+
+        context "max.height > height" do
+          let(:max) { double("max", :top => 100, :height => 200) }
+        end
       end
     end
   end
