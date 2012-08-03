@@ -161,6 +161,15 @@ describe Shoes::Button do
           subject.should_receive(:move).with(final_x, max.top)
           subject.positioning(x, y, max)
         end
+
+        context "short parent" do
+          it_behaves_like "tall element"
+        end
+
+        context "tall parent" do
+          include_context "tall parent"
+          it_behaves_like "short element"
+        end
       end
 
       context "element has nil @right" do
