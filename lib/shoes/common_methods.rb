@@ -101,14 +101,14 @@ module Shoes
         y = max.top + max.height
         max = self
       end
-      x = @right ? right_align_position(parent.left, parent.width, width, @right) : left_align_position
+      x = @right ? right_align_position(parent, self, @right) : left_align_position
       move x, y
       max
     end
 
     private
-    def right_align_position(parent_left, parent_width, element_width, element_right)
-      parent_left + parent_width - element_width - element_right
+    def right_align_position(parent, element, margin)
+      parent.left + parent.width - element.width - margin
     end
 
     def fits_without_wrapping?(x, element, parent)
