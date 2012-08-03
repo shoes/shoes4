@@ -54,11 +54,11 @@ module Shoes
     #
     # Also see the width method for an example and some other comments.
     def width
-      @gui.respond_to?('real') ? @gui.real.size.x : @width
+      @gui.width
     end
 
     def height
-      @gui.respond_to?('real') ? @gui.real.size.y : @height
+      @gui.height
     end
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.

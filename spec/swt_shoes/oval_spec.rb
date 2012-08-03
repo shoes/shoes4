@@ -4,11 +4,11 @@ describe Shoes::Swt::Oval do
   let(:gui_container_real) { double("gui container real") }
   let(:gui_container) { double("gui container", real: gui_container_real) }
   let(:container) { double("container", gui: gui_container)  }
-  let(:opts) { {:app => container} }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
+  let(:opts) { { app: container, left: left, top: top, width: width, height: height} }
   let(:dsl) { double("dsl object").as_null_object }
 
   subject {

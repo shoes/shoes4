@@ -16,7 +16,12 @@ module Shoes
       # @todo Figure out what is the `@real` object here
       def initialize(dsl, opts = nil)
         @dsl = dsl
-        @left, @top, @width, @height = @dsl.left, @dsl.top, @dsl.width, @dsl.height
+
+        @left   = opts[:left]
+        @top    = opts[:top]
+        @width  = opts[:width]
+        @height = opts[:height]
+
         @fill, @stroke = @dsl.fill, @dsl.stroke
         if opts
           @container = opts[:app].gui.real
@@ -39,6 +44,7 @@ module Shoes
       attr_reader :dsl
       attr_reader :container
       attr_reader :paint_callback
+      attr_accessor :width, :height, :left, :top
     end
   end
 end

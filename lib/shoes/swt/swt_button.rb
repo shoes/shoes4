@@ -18,6 +18,22 @@ module Shoes
         @real.pack
       end
 
+      def width=(value)
+        # TODO
+      end
+
+      def width
+        @real.size.x
+      end
+
+      def height=(value)
+        # TODO
+      end
+
+      def height
+        @real.size.y
+      end
+
       def focus
         @real.set_focus
       end

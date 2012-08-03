@@ -9,6 +9,12 @@ module Shoes
       #   drawing itself. Omit if this shape is part of another shape.
       def initialize(dsl, opts = nil)
         @dsl = dsl
+
+        @left = opts[:left]
+        @top = opts[:top]
+        @width = opts[:width]
+        @height = opts[:height]
+
         if opts
           @container = opts[:app].gui.real
           default_paint_callback = lambda do |event|
@@ -27,6 +33,7 @@ module Shoes
       attr_reader :dsl
       attr_reader :container, :element
       attr_reader :paint_callback
+      attr_reader :width, :height
     end
   end
 end

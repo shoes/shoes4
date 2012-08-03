@@ -9,10 +9,12 @@ module Shoes
       @text = text
       @blk = blk
       @app = opts[:app]
-      @height = opts[:height]
-      @width = opts[:width]
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+
+      @gui.height = opts[:height]
+      @gui.width  = opts[:width]
+
       @parent.add_child self
     end
 

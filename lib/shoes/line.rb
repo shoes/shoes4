@@ -19,7 +19,13 @@ module Shoes
 
       # GUI
       @style.delete(:gui)
-      @gui = Shoes.configuration.backend_for(self, @style)
+      values = @style.clone
+      values[:left]   = @left
+      values[:top]    = @top
+      values[:width]  = @width
+      values[:height] = @height
+
+      @gui = Shoes.configuration.backend_for(self, values)
     end
   end
 end

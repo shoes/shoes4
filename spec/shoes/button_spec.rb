@@ -14,11 +14,6 @@ describe Shoes::Button do
   it_behaves_like "movable object with gui"
 
   describe "initialize" do
-    before :each do
-      Shoes::Mock::Button.any_instance.stub(:real) { mock( size:
-        mock(x: 131, y: 137) ) }
-    end
-
     it "should set accessors" do
       button = subject
       button.parent.should == parent
