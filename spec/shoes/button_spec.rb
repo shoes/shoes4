@@ -43,6 +43,10 @@ describe Shoes::Button do
         subject.positioning(x, y, max).should be(subject)
       end
 
+      specify "top == max.top + max.height" do
+        subject.positioning(x, y, max)
+        subject.top.should eq(155)
+      end
     end
 
     context "parent is not a flow" do
