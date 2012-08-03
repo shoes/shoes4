@@ -101,7 +101,6 @@ module Shoes
         y = max.top + max.height
         max = self
       end
-      @left, @top = x, y
       move x, y
       max
     end
