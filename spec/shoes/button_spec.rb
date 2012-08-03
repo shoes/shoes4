@@ -53,6 +53,17 @@ describe Shoes::Button do
       it_behaves_like "element goes below"
     end
 
+    context "parent is a flow, but element doesn't fit" do
+      before :each do
+        parent.stub(:is_a?) { true }
+        parent.stub(:width) { 150 }
+        subject.parent.is_a?(Shoes::Flow).should be_true
+        element_fits?(x, subject.width, parent.left, parent.width)
+      end
+
+      it_behaves_like "element goes below"
+    end
+
     context "parent is a flow and element fits" do
       let(:x) { 10 }
 
@@ -60,7 +71,7 @@ describe Shoes::Button do
         parent.stub(:is_a?) { true }
         parent.stub(:width) { 300 }
         subject.parent.is_a?(Shoes::Flow).should be_true
-        (x + subject.width).should be < (parent.left + parent.width)
+        element_fits?(x, subject.width, parent.left, parent.width).should be_true
       end
 
       describe "element has @right" do
@@ -122,3 +133,8 @@ describe Shoes::Button do
     end
   end
 end
+
+def element_fits?(element_left, element_width, parent_left, parent_width)
+  element_left + element_width <= parent_left + parent_width
+end
+
