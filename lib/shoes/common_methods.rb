@@ -93,11 +93,11 @@ module Shoes
 
     def positioning x, y, max
       if parent.is_a?(Flow) and x + width <= parent.left + parent.width
-        x = @right ? parent.left + parent.width - width - @right : x
+        x = @right ? right_position(parent.left, parent.width, width, @right) : x
         y = max.top
         max = self if max.height < height
       else
-        x = @right ? parent.left + parent.width - width - @right : parent.left
+        x = @right ? right_position(parent.left, parent.width, width, @right) : parent.left
         y = max.top + max.height
         max = self
       end
@@ -106,6 +106,10 @@ module Shoes
     end
 
     private
+    def right_position(parent_left, parent_width, element_width, element_right)
+      parent_left + parent_width - element_width - element_right
+    end
+
     def bounds
       gui_container ||= gui_container.getBounds
     end
