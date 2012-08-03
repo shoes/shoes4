@@ -38,14 +38,19 @@ describe Shoes::Button do
       parent.stub(:left) { 0 }
     end
 
+    shared_examples "element goes below" do
+      specify "returns self" do
+        subject.positioning(x, y, max).should be(subject)
+      end
+
+    end
+
     context "parent is not a flow" do
       before :each do
         subject.parent.is_a?(Shoes::Flow).should be_false
       end
 
-      specify "returns self" do
-        subject.positioning(x, y, max).should be(subject)
-      end
+      it_behaves_like "element goes below"
     end
 
     context "parent is a flow and element fits" do
@@ -87,7 +92,7 @@ describe Shoes::Button do
         end
 
         specify "top == max.top" do
-          subject.top.should eq(42)
+          subject.top.should eq(100)
         end
       end
 
