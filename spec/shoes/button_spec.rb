@@ -61,9 +61,29 @@ describe Shoes::Button do
       end
     end
 
+    shared_examples_for "right-aligned" do
+      specify "subject receives :move" do
+        subject.should_receive(:move).with(0, 42)
+        subject.positioning(x, y, max)
+      end
+
+      specify "element positioned from parent's right" do
+
+      end
+    end
+
+    shared_context "@right" do
+      let(:final_x) { 134 }
+      before :each do
+        # Ugly, but not implemented (no other way to set the ivar)
+        subject.instance_variable_set(:@right, 35)
+      end
+    end
+
     context "parent is not a flow" do
       before :each do
         subject.parent.is_a?(Shoes::Flow).should be_false
+        parent.stub(:width) { 300 }
       end
 
       context "@right is nil" do
@@ -71,7 +91,8 @@ describe Shoes::Button do
         it_behaves_like "left-aligned"
       end
 
-      context "@right is not nil" do
+      context "@right defined" do
+        include_context "@right"
         it_behaves_like "element goes below"
       end
 
@@ -98,20 +119,21 @@ describe Shoes::Button do
         element_fits?(x, subject.width, parent.left, parent.width).should be_true
       end
 
-      describe "element has @right" do
-        let(:final_x) { 134 }
-        before :each do
-          # Ugly, but not implemented (no other way to set the ivar)
-          subject.instance_variable_set(:@right, 35)
+      describe "@right defined" do
+        include_context "@right"
+
+        specify "receives :move" do
           subject.should_receive(:move).with(final_x, max.top)
           subject.positioning(x, y, max)
         end
 
         specify "left position is measured from right edge of parent" do
+          subject.positioning(x, y, max)
           subject.left.should eq(final_x)
         end
 
         specify "top == max.top" do
+          subject.positioning(x, y, max)
           subject.top.should eq(100)
         end
       end
