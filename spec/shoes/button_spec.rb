@@ -61,7 +61,7 @@ describe Shoes::Button do
       describe "element has @right" do
         let(:final_x) { 134 }
         before :each do
-          # FIXME: UGLY, but not implemented (no other way to set the ivar)
+          # Ugly, but not implemented (no other way to set the ivar)
           subject.instance_variable_set(:@right, 35)
           subject.should_receive(:move).with(final_x, max.top)
           subject.positioning(x, y, max)
