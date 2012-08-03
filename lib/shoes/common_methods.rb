@@ -95,16 +95,14 @@ module Shoes
       if parent.is_a?(Flow) and x + width <= parent.left + parent.width
         x = @right ? parent.left + parent.width - width - @right : x
         y = max.top
-        @left, @top = x, y
-        move x, y
         max = self if max.height < height
       else
         x = @right ? parent.left + parent.width - width - @right : parent.left
         y = max.top + max.height
-        @left, @top = x, y
-        move x, y
         max = self
       end
+      @left, @top = x, y
+      move x, y
       max
     end
 
