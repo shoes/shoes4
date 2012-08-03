@@ -70,6 +70,10 @@ describe Shoes::Button do
         specify "left position is measured from right edge of parent" do
           subject.left.should eq(final_x)
         end
+
+        specify "top == max.top" do
+          subject.top.should eq(100)
+        end
       end
 
       describe "element has nil @right" do
@@ -82,6 +86,9 @@ describe Shoes::Button do
           subject.left.should eq(x)
         end
 
+        specify "top == max.top" do
+          subject.top.should eq(42)
+        end
       end
 
       describe "height branch" do
