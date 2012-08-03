@@ -24,19 +24,7 @@ module Shoes
         @real.setLayout ShoesLayout.new
 
         @dx = @dy = 0
-        s = self
-        cl = ::Swt::ControlListener.new
-        class << cl; self end.
-        instance_eval do
-          define_method :controlResized do |e|
-            w, h = s.shell.getSize.x - s.dx, s.shell.getSize.y - s.dy
-            (s.dsl.top_slot.width, s.dsl.top_slot.height = w, h) if @not_the_first_time
-            @not_the_first_time = true
-            s.real.setSize w, h
-          end
-          define_method(:controlMoved){|e|}
-        end
-        @shell.addControlListener cl
+        @shell.addControlListener ShellControlListener.new(self)
       end
 
       attr_reader :dsl, :real, :shell, :dx, :dy
@@ -71,7 +59,25 @@ module Shoes
         style
       end
     end
+
+    class ShellControlListener
+      def initialize(app)
+        @app = app
+        super()
+      end
+
+      def controlResized(e)
+        shell = e.widget
+        w, h = shell.getSize.x - @app.dx, shell.getSize.y - @app.dy
+        (@app.dsl.top_slot.width, @app.dsl.top_slot.height = w, h) if @not_the_first_time
+        @not_the_first_time = true
+        @app.real.setSize w, h
+      end
+
+      def controlMoved(e)
+      end
+    end
+
   end
 end
-
 
