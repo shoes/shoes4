@@ -14,7 +14,7 @@ describe Shoes::Swt::EditBox do
     ::Swt::Widgets::Text.stub(:text=) { real }
   end
 
-  pending "movable object with disposable real element"
+  it_behaves_like "movable element"
 
   describe "#initialize" do
     it "sets text on real element" do

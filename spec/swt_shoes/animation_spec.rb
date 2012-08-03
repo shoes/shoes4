@@ -47,7 +47,6 @@ describe Shoes::Swt::Animation do
     end
 
     it "counts frames" do
-      #pending "this feature works in an app, but not in this spec. Need some creativity."
       dsl.should_receive(:increment_frame)
       task.call
     end

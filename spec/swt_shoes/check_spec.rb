@@ -13,7 +13,7 @@ describe Shoes::Swt::Check do
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
-  pending "movable object with disposable real element"
+  it_behaves_like "movable element"
 
   it "calls get_selection when checked? is called" do
     real.should_receive :get_selection

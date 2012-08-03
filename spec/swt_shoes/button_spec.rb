@@ -17,7 +17,7 @@ describe Shoes::Swt::Button do
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
-  pending "movable object with disposable real element"
+  it_behaves_like "movable element", 140, 300
 
   describe "#initialize" do
     it "sets text on real element" do
