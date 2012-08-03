@@ -49,12 +49,32 @@ describe Shoes::Button do
       end
     end
 
+    shared_examples_for "left-aligned" do
+      specify "subject receives :move" do
+        subject.should_receive(:move).with(0, 155)
+        subject.positioning(x, y, max)
+      end
+
+      specify "left == parent.left" do
+        subject.positioning(x, y, max)
+        subject.left.should eq(0)
+      end
+    end
+
     context "parent is not a flow" do
       before :each do
         subject.parent.is_a?(Shoes::Flow).should be_false
       end
 
-      it_behaves_like "element goes below"
+      context "@right is nil" do
+        it_behaves_like "element goes below"
+        it_behaves_like "left-aligned"
+      end
+
+      context "@right is not nil" do
+        it_behaves_like "element goes below"
+      end
+
     end
 
     context "parent is a flow, but element doesn't fit" do
