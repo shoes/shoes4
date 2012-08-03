@@ -92,7 +92,7 @@ module Shoes
     end
 
     def positioning x, y, max
-      if parent.is_a?(Flow) and fits_without_wrapping?(x, self, parent)
+      if parent.is_a?(Flow) and fits_without_wrapping?(self, parent, x)
         left_align_position = x
         y = max.top
         max = self if max.height < height
@@ -101,17 +101,17 @@ module Shoes
         y = max.top + max.height
         max = self
       end
-      x = @right ? right_align_position(parent, self, @right) : left_align_position
+      x = @right ? right_align_position(self, parent, @right) : left_align_position
       move x, y
       max
     end
 
     private
-    def right_align_position(parent, element, margin)
+    def right_align_position(element, parent, margin)
       parent.left + parent.width - element.width - margin
     end
 
-    def fits_without_wrapping?(x, element, parent)
+    def fits_without_wrapping?(element, parent, x)
       x + element.width <= parent.left + parent.width
     end
 
