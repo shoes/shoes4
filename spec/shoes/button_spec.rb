@@ -38,7 +38,7 @@ describe Shoes::Button do
       parent.stub(:left) { 0 }
     end
 
-    shared_examples "element goes below" do
+    shared_examples "stacked" do
       specify "returns self" do
         subject.positioning(x, y, max).should be(subject)
       end
@@ -62,13 +62,36 @@ describe Shoes::Button do
     end
 
     shared_examples_for "right-aligned" do
-      specify "subject receives :move" do
-        subject.should_receive(:move).with(0, 42)
+      specify "left position is measured from right edge of parent" do
         subject.positioning(x, y, max)
+        subject.left.should eq(final_x)
+      end
+    end
+
+    shared_examples_for "flowed" do
+      specify "top == max.top" do
+        subject.positioning(x, y, max)
+        subject.top.should eq(100)
+      end
+    end
+
+    shared_examples "tall element" do
+      specify "element taller than max" do
+        max.height.should be < subject.height
       end
 
-      specify "element positioned from parent's right" do
+      specify "returns self" do
+        subject.positioning(x, y, max).should be(subject)
+      end
+    end
 
+    shared_examples "short element" do
+      specify "max.height > subject.height" do
+        max.height.should be > subject.height
+      end
+
+      specify "returns max" do
+        subject.positioning(x, y, max).should be(max)
       end
     end
 
@@ -80,6 +103,10 @@ describe Shoes::Button do
       end
     end
 
+    shared_context "tall parent" do
+      let(:max) { double("max", :top => 100, :height => 200) }
+    end
+
     context "parent is not a flow" do
       before :each do
         subject.parent.is_a?(Shoes::Flow).should be_false
@@ -87,15 +114,20 @@ describe Shoes::Button do
       end
 
       context "@right is nil" do
-        it_behaves_like "element goes below"
+        it_behaves_like "stacked"
         it_behaves_like "left-aligned"
       end
 
       context "@right defined" do
         include_context "@right"
-        it_behaves_like "element goes below"
-      end
+        it_behaves_like "stacked"
+        it_behaves_like "right-aligned"
 
+        specify "subject receives :move" do
+          subject.should_receive(:move).with(134, 155)
+          subject.positioning(x, y, max)
+        end
+      end
     end
 
     context "parent is a flow, but element doesn't fit" do
@@ -106,7 +138,7 @@ describe Shoes::Button do
         element_fits?(x, subject.width, parent.left, parent.width)
       end
 
-      it_behaves_like "element goes below"
+      it_behaves_like "stacked"
     end
 
     context "parent is a flow and element fits" do
@@ -119,61 +151,38 @@ describe Shoes::Button do
         element_fits?(x, subject.width, parent.left, parent.width).should be_true
       end
 
-      describe "@right defined" do
+      context "@right defined" do
         include_context "@right"
+
+        it_behaves_like "right-aligned"
+        it_behaves_like "flowed"
 
         specify "receives :move" do
           subject.should_receive(:move).with(final_x, max.top)
           subject.positioning(x, y, max)
         end
-
-        specify "left position is measured from right edge of parent" do
-          subject.positioning(x, y, max)
-          subject.left.should eq(final_x)
-        end
-
-        specify "top == max.top" do
-          subject.positioning(x, y, max)
-          subject.top.should eq(100)
-        end
       end
 
-      describe "element has nil @right" do
-        before :each do
+      context "element has nil @right" do
+        it_behaves_like "flowed"
+
+        specify "receives :move" do
           subject.should_receive(:move).with(x, max.top)
           subject.positioning(x, y, max)
         end
 
         specify "left == x" do
+          subject.positioning(x, y, max)
           subject.left.should eq(x)
         end
 
-        specify "top == max.top" do
-          subject.top.should eq(100)
-        end
-      end
-
-      describe "height branch" do
-        context "max height < height" do
-          before :each do
-            max.height.should be < subject.height
-          end
-
-          specify "returns self" do
-            subject.positioning(x, y, max).should be(subject)
-          end
+        context "short parent" do
+          it_behaves_like "tall element"
         end
 
-        context "max.height > height" do
-          let(:max) { double("max", :top => 100, :height => 200) }
-
-          before :each do
-            max.height.should be > subject.height
-          end
-
-          specify "returns max" do
-            subject.positioning(x, y, max).should be(max)
-          end
+        context "tall parent" do
+          include_context "tall parent"
+          it_behaves_like "short element"
         end
       end
     end
