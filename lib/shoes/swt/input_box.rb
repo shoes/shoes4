@@ -28,6 +28,14 @@ module Shoes
         end
       end
 
+      def width
+        @real.size.x
+      end
+
+      def height
+        @real.size.y
+      end
+
     end
   end
 end
