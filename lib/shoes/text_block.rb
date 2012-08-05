@@ -20,6 +20,7 @@ module Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
       handle_opts opts
+      @parent.add_child self
     end
 
     def font_size=(size)

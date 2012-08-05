@@ -43,6 +43,10 @@ module Shoes
       @gui.open
     end
 
+    def add_child(child)
+      @top_slot.add_child child
+    end
+
     def default_options
       {
         :width  => 600,

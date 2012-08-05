@@ -18,6 +18,21 @@ module Shoes
         st.caret = nil
         self.set_font
         self.update_text
+        @real.pack
+      end
+
+      def width
+        @real.size.x
+      end
+
+      def height
+        @real.size.y
+      end
+
+      def move(left, top)
+        unless @real.disposed?
+          @real.set_location left, top
+        end
       end
 
       def update_text

@@ -3,7 +3,7 @@ require 'shoes/text_block'
 
 describe Shoes::TextBlock do
   let(:mock_gui) { mock(:set_font, :update_text, :hidden, :new) }
-  let(:mock_parent) { mock(:gui => "mock gui") }
+  let(:mock_parent) { mock(:gui => "mock gui", :add_child => "ok") }
   subject { Shoes::TextBlock.new(mock_parent, "Hello, world!", 99, {}, nil) }
 
   describe "initialize" do
