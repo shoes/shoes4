@@ -20,8 +20,6 @@ describe Shoes::Swt::Image do
   subject {
     ::Swt::Graphics::Image.stub(:new) { mock_image}
     dsl.stub(:file_path)
-    dsl.stub(:width=)
-    dsl.stub(:height=)
     Shoes::Swt::Image.new(dsl, parent, blk)
   }
 
