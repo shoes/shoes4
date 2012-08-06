@@ -20,7 +20,7 @@ module Shoes
 
     def fraction=(value)
       @fraction = value
-      @gui.set_fraction = value
+      @gui.fraction = value
     end
   end
 end

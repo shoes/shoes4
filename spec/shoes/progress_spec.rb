@@ -11,4 +11,11 @@ describe Shoes::Progress do
     s.should respond_to :fraction
     s.should respond_to :fraction=
   end
+
+  it "should be able to set the fraction" do
+    s = subject
+    s.gui.should_receive(:fraction=).with(0.5)
+    s.fraction = 0.5
+    s.fraction.should eql 0.5
+  end
 end
