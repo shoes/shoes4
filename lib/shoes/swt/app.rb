@@ -19,6 +19,7 @@ module Shoes
           shell.setBackground @dsl.default_options[:background].to_native
         end
         @shell = @real
+
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
         @real.setSize(@dsl.width, @dsl.height)
         @real.setLayout ShoesLayout.new
@@ -63,14 +64,20 @@ module Shoes
     class ShellControlListener
       def initialize(app)
         @app = app
+        @times_run = 0
         super()
       end
 
       def controlResized(e)
         shell = e.widget
         w, h = shell.getSize.x - @app.dx, shell.getSize.y - @app.dy
-        (@app.dsl.top_slot.width, @app.dsl.top_slot.height = w, h) if @not_the_first_time
-        @not_the_first_time = true
+
+        # will break background element if it's run the first two times
+        if @times_run > 1
+          (@app.dsl.top_slot.width, @app.dsl.top_slot.height = w, h)
+        else
+          @times_run += 1
+        end
         @app.real.setSize w, h
       end
 
