@@ -32,4 +32,11 @@ describe Shoes::Flow do
       subject.blk.should == input_block
     end
   end
+
+  it "should set default values" do
+    parent.stub(:gui)
+    f = Shoes::Flow.new(parent)
+    f.width.should == 1.0
+    f.height.should == 0
+  end
 end
