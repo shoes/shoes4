@@ -25,6 +25,7 @@ require 'shoes/swt/app'
 
 # require 'shoes/swt/window'
 require 'shoes/swt/animation'
+require 'shoes/swt/arc'
 require 'shoes/swt/background'
 require 'shoes/swt/border'
 require 'shoes/swt/button'
