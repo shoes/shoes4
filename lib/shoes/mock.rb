@@ -2,6 +2,7 @@ require 'shoes/mock/common_methods'
 
 require 'shoes/mock/animation'
 require 'shoes/mock/app'
+require 'shoes/mock/arc'
 require 'shoes/mock/background'
 require 'shoes/mock/border'
 require 'shoes/mock/button'
