@@ -2,6 +2,9 @@ describe Shoes::Arc do
   context "basic" do
     subject { Shoes::Arc.new(13, 44, 200, 300, 0, Shoes::TWO_PI) }
 
+    it_behaves_like "object with stroke"
+    it_behaves_like "object with fill"
+
     it "is a Shoes::Arc" do
       subject.class.should be(Shoes::Arc)
     end
