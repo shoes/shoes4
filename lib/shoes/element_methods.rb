@@ -132,6 +132,11 @@ module Shoes
       Shoes::Sound.new self.gui, soundfile, opts, &blk
     end
 
+    # Draws an arc
+    def arc()
+      Shoes::Arc.new
+    end
+
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})
       opts[:app] = self

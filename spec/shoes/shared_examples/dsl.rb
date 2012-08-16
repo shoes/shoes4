@@ -32,7 +32,7 @@ shared_examples "dsl container" do
 
   describe "arc" do
     it "creates a Shoes::Arc" do
-      pending "arc implementation"
+      #pending "arc implementation"
       arc = subject.arc
       arc.should be_an_instance_of(Shoes::Arc)
     end
