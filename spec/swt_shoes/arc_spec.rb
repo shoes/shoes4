@@ -12,17 +12,36 @@ describe Shoes::Swt::Arc do
     Shoes::Swt::Arc.new(dsl, opts)
   }
 
-  describe "paint callback" do
+  it_behaves_like "paintable"
+
+  describe "painter" do
     include_context "paintable context"
 
-    it_behaves_like "paintable"
+    let(:shape) { double("shape") }
+    let(:fill_color) { double("fill color", :alpha => 160) }
+    let(:stroke_color) { double("stroke color", :alpha => 40) }
+    subject { Shoes::Swt::Arc::Painter.new(shape) }
 
-    specify "fills arc" do
-      pending "swt arc implementation"
+    before :each do
+      shape.should_receive(:fill).and_return(fill_color)
+      shape.should_receive(:stroke).and_return(stroke_color)
+      shape.should_receive(:strokewidth)
+      shape.should_receive(:left).twice
+      shape.should_receive(:top).twice
+      shape.should_receive(:width).twice
+      shape.should_receive(:height).twice
+      shape.should_receive(:angle1).twice
+      shape.should_receive(:angle2).twice
+    end
+
+    specify "fills shape" do
+      gc.should_receive(:fill_arc)
+      subject.paint_control(event)
     end
 
     specify "draws arc" do
-      pending "swt arc implementation"
+      gc.should_receive(:draw_arc)
+      subject.paint_control(event)
     end
   end
 end

@@ -1,11 +1,8 @@
 shared_examples_for "paintable" do
   it "registers for painting" do
     # Transitioning from gui_container_real to app_real
-    gui_container_real = nil unless gui_container_real
-    container = gui_container_real || app_real
-    container.should_receive(:add_paint_listener) do |callback|
-      callback.should be_lambda
-    end
+    container = defined?(gui_container_real) ? gui_container_real : app_real
+    container.should_receive(:add_paint_listener)
     subject
   end
 end
