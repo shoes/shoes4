@@ -44,4 +44,23 @@ describe Shoes::Swt::Arc do
       subject.paint_control(event)
     end
   end
+
+  describe "alpha" do
+    let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
+    let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
+
+    before :each do
+      app_real.should_receive(:add_paint_listener)
+    end
+
+    specify "fill delegates to dsl" do
+      dsl.should_receive(:fill) { fill_color }
+      subject.fill_alpha.should eq(70)
+    end
+
+    specify "stroke delegates to dsl" do
+      dsl.should_receive(:stroke) { stroke_color }
+      subject.stroke_alpha.should eq(110)
+    end
+  end
 end

@@ -36,7 +36,7 @@ module Shoes
       end
 
       def stroke_alpha
-        dsl.fill_alpha
+        dsl.stroke.alpha
       end
 
       private
