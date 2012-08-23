@@ -12,7 +12,7 @@ module Shoes
       @style = default_style.merge(opts)
 
       #GUI
-      gui_opts = {:width => width, :height => height, :app => opts[:app].gui}
+      gui_opts = {:left => left, :top => top, :width => width, :height => height, :app => opts[:app].gui}
       @gui = Shoes.configuration.backend_for(self, gui_opts)
     end
 

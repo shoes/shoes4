@@ -54,11 +54,11 @@ module Shoes
         end
 
         def fill(gc)
-          gc.fill_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+          gc.fill_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
         end
 
         def draw(gc)
-          gc.draw_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+          gc.draw_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
         end
 
         def paint_control(event)
@@ -66,12 +66,25 @@ module Shoes
           gcs_reset gc
           gc.set_antialias ::Swt::SWT::ON
           gc.set_background @obj.fill
-          gc.setAlpha @obj.fill_alpha
+          gc.set_alpha @obj.fill_alpha
           fill gc
           gc.set_foreground @obj.stroke
-          gc.setAlpha @obj.stroke_alpha
+          gc.set_alpha @obj.stroke_alpha
           gc.set_line_width @obj.strokewidth
           draw gc
+        end
+
+        private
+        def translated_left
+          translated_coord(@obj.left, @obj.width)
+        end
+
+        def translated_top
+          translated_coord(@obj.top, @obj.height)
+        end
+
+        def translated_coord(coord, size)
+          Integer(coord - size * 0.5)
         end
       end
     end

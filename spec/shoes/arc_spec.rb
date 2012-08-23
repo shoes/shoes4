@@ -19,5 +19,11 @@ describe Shoes::Arc do
     its(:height) { should eq(300) }
     its(:angle1) { should eq(0) }
     its(:angle2) { should eq(Shoes::TWO_PI) }
+
+    it "passes required values to backend" do
+      gui_opts = {:left => 13, :top => 44, :width => 200, :height => 300, :angle1 => 0, :angle2 => Shoes::TWO_PI}
+      Shoes::Mock::Arc.should_receive(:new)#.with(gui_opts)
+      subject
+    end
   end
 end

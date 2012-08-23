@@ -51,7 +51,6 @@ describe Shoes::Swt::Arc do
     include_context "paintable context"
 
     let(:shape) { double("shape") }
-    #let(:shape) { Shoes::Swt::Arc.new(dsl, opts) }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     before :each do
@@ -60,10 +59,10 @@ describe Shoes::Swt::Arc do
       shape.should_receive(:stroke)
       shape.should_receive(:stroke_alpha)
       shape.should_receive(:strokewidth)
-      shape.should_receive(:left).twice
-      shape.should_receive(:top).twice
-      shape.should_receive(:width).twice
-      shape.should_receive(:height).twice
+      shape.should_receive(:left).twice { left }
+      shape.should_receive(:top).twice { top }
+      shape.should_receive(:width).exactly(4).times { width }
+      shape.should_receive(:height).exactly(4).times { height}
       shape.should_receive(:angle1).twice { angle1 }
       shape.should_receive(:angle2).twice { angle2 }
     end
@@ -76,6 +75,16 @@ describe Shoes::Swt::Arc do
     specify "draws arc" do
       gc.should_receive(:draw_arc)
       subject.paint_control(event)
+    end
+
+    # Swt wants the upper left corner of the rectangle containing the arc. Shoes
+    # uses (left, top) as the *center* of the rectangle containing the arc. Also,
+    # Swt measures the arc counterclockwise, while Shoes measures it clockwise.
+    specify "translates DSL values for Swt" do
+      args = [-50, 0, width, height, angle1, -angle2]
+      gc.should_receive(:fill_arc).with(*args)
+      gc.should_receive(:draw_arc).with(*args)
+      subject.paint_control(gc)
     end
   end
 
