@@ -24,11 +24,19 @@ module Shoes
       attr_reader :dsl
 
       def angle1
-        radians_to_degrees @dsl.angle1
+        radians_to_degrees dsl.angle1
       end
 
       def angle2
-        radians_to_degrees @dsl.angle2
+        radians_to_degrees dsl.angle2
+      end
+
+      def fill_alpha
+        dsl.fill.alpha
+      end
+
+      def stroke_alpha
+        dsl.fill_alpha
       end
 
       private
@@ -56,13 +64,11 @@ module Shoes
           gc = event.gc
           gcs_reset gc
           gc.set_antialias ::Swt::SWT::ON
-          fill_color = @obj.fill
-          gc.set_background fill_color
-          gc.setAlpha fill_color.alpha
+          gc.set_background @obj.fill
+          gc.setAlpha @obj.fill_alpha
           fill gc
-          stroke_color = @obj.stroke
-          gc.set_foreground stroke_color
-          gc.setAlpha stroke_color.alpha
+          gc.set_foreground @obj.stroke
+          gc.setAlpha @obj.stroke_alpha
           gc.set_line_width @obj.strokewidth
           draw gc
         end

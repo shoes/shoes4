@@ -17,6 +17,7 @@ module Shoes
     include Shoes::ElementMethods
 
     attr_reader :gui, :shell, :top_slot, :contents
+    attr_reader :app
     attr_accessor :elements
     attr_accessor :opts, :blk
 

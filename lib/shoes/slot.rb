@@ -3,6 +3,7 @@ module Shoes
     include Shoes::ElementMethods
 
     attr_reader :parent, :gui, :contents
+    attr_reader :app
     attr_reader :blk
     attr_accessor :width, :height, :left, :top, :margin, :margin_left, :margin_right, :margin_top
 

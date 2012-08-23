@@ -6,13 +6,15 @@ module Shoes
     include Common::Style
 
     def initialize(left, top, width, height, angle1, angle2, opts = {})
+      p opts[:app].inspect
+      p opts[:app].gui.inspect
       @left, @top = left, top
       #@angle1, @angle2 = angle1, angle2
       default_style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS)
       @style = default_style.merge(opts)
 
       #GUI
-      gui_opts = {:width => width, :height => height}
+      gui_opts = {:width => width, :height => height, :app => opts[:app].gui}
       @gui = Shoes.configuration.backend_for(self, gui_opts)
     end
   end

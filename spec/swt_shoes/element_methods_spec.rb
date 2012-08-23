@@ -20,6 +20,18 @@ describe "Basic Element Methods" do
     }
   }
 
+
+  describe "arc" do
+    before :each do
+      app.stub(:app) { app }
+    end
+
+    specify "creates a Shoes::Arc" do
+      gui_container_real.should_receive(:add_paint_listener)
+      app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
+    end
+  end
+
   describe "line" do
     specify "creates a Shoes::Line" do
       gui_container_real.should_receive(:add_paint_listener)

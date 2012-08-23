@@ -76,7 +76,7 @@ module Shoes
     end
 
     def flow(opts = {}, &blk)
-      opts.merge! :app => @app
+      opts.merge! :app => app
       Shoes::Flow.new self, opts, &blk
     end
 
@@ -134,7 +134,7 @@ module Shoes
 
     # Draws an arc
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      opts.merge! :app => @app
+      opts.merge! :app => app
       Shoes::Arc.new(left, top, width, height, angle1, angle2, opts)
     end
 

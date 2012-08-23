@@ -18,13 +18,13 @@ describe Shoes::Swt::Arc do
     include_context "paintable context"
 
     let(:shape) { double("shape") }
-    let(:fill_color) { double("fill color", :alpha => 160) }
-    let(:stroke_color) { double("stroke color", :alpha => 40) }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     before :each do
-      shape.should_receive(:fill).and_return(fill_color)
-      shape.should_receive(:stroke).and_return(stroke_color)
+      shape.should_receive(:fill)
+      shape.should_receive(:fill_alpha)
+      shape.should_receive(:stroke)
+      shape.should_receive(:stroke_alpha)
       shape.should_receive(:strokewidth)
       shape.should_receive(:left).twice
       shape.should_receive(:top).twice
