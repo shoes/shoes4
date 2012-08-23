@@ -42,7 +42,7 @@ module Shoes
 
       private
       def radians_to_degrees(radians)
-        radians * 180 / Shoes::PI
+        radians * 180 / ::Shoes::PI
       end
 
       public
@@ -54,11 +54,11 @@ module Shoes
         end
 
         def fill(gc)
-          gc.fill_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2)
+          gc.fill_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
         end
 
         def draw(gc)
-          gc.draw_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2)
+          gc.draw_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
         end
 
         def paint_control(event)
