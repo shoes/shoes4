@@ -8,7 +8,7 @@ describe Shoes::Swt::Arc do
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
   let(:opts) { { app: app, left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2} }
-  let(:dsl) { double("dsl object", :angle1 => angle1, :angle2 => angle2) }
+  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2) }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
@@ -26,12 +26,12 @@ describe Shoes::Swt::Arc do
     its(:width) { should eq(width) }
     its(:height) { should eq(height) }
 
-    specify "fill delegates to dsl" do
+    specify "fill alpha delegates to dsl" do
       dsl.should_receive(:fill) { fill_color }
       subject.fill_alpha.should eq(70)
     end
 
-    specify "stroke delegates to dsl" do
+    specify "stroke alpha delegates to dsl" do
       dsl.should_receive(:stroke) { stroke_color }
       subject.stroke_alpha.should eq(110)
     end
@@ -87,5 +87,4 @@ describe Shoes::Swt::Arc do
       subject.paint_control(gc)
     end
   end
-
 end

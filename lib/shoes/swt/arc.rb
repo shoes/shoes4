@@ -8,9 +8,6 @@ module Shoes
       #       Shoes::App. It's preferable to pass a Shoes::Swt::App because it maintains the
       #       separation between layers. If this attempt is successful, other shapes should
       #       follow suit (Line, Oval, Shape)
-      # @note This class uses the private #fill_shape and #draw_shape methods. These should be
-      #       the only difference in shape-drawing. Other classes should follow suit, and use a 
-      #       common paint_callback lambda.
       def initialize(dsl, opts)
         @dsl = dsl
         @left = opts[:left]
