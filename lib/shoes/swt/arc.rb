@@ -22,6 +22,7 @@ module Shoes
       end
 
       attr_reader :dsl
+      attr_reader :left, :top, :width, :height
 
       def angle1
         radians_to_degrees dsl.angle1
