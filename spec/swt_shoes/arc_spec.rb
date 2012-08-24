@@ -16,7 +16,7 @@ describe Shoes::Swt::Arc do
     Shoes::Swt::Arc.new(dsl, opts)
   }
 
-  describe "#initialize" do
+  describe "basics" do
     before :each do
       app_real.should_receive(:add_paint_listener)
     end
@@ -48,15 +48,19 @@ describe Shoes::Swt::Arc do
   it_behaves_like "paintable"
 
   describe "painter" do
-    include_context "painter context"
+    include_context "paintable context"
+    include_context "minimal painter context"
 
-    let(:shape) { double("shape") }
+    let(:shape) { double("shape").as_null_object }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     before :each do
-      shape.should_receive(:angle1).twice { angle1 }
-      shape.should_receive(:angle2).twice { angle2 }
+      shape.stub(:angle1) { angle1 }
+      shape.stub(:angle2) { angle2 }
     end
+
+    it_behaves_like "swt stroke"
+    it_behaves_like "swt fill"
 
     specify "fills arc" do
       gc.should_receive(:fill_arc)

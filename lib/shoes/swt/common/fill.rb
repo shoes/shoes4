@@ -11,6 +11,14 @@ module Shoes
         def fill
           dsl.fill.to_native
         end
+
+        # This object's fill alpha value
+        #
+        # @return [Integer] The alpha value of this object's fill color (0-255)
+        def fill_alpha
+          dsl.fill.alpha
+        end
+
       end
     end
   end

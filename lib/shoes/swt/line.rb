@@ -17,23 +17,33 @@ module Shoes
 
         if opts
           @container = opts[:app].gui.real
-          default_paint_callback = lambda do |event|
-            gc = event.gc
-            gcs_reset gc
-            gc.set_antialias ::Swt::SWT::ON
-            gc.set_foreground self.stroke
-            gc.set_line_width self.strokewidth
-            gc.draw_line(dsl.left, dsl.top, dsl.right, dsl.bottom)
-          end
-          @paint_callback = opts[:paint_callback] || default_paint_callback
-          @container.add_paint_listener(@paint_callback)
+          @painter = opts[:paint_callback] || Painter.new(self)
+          @container.add_paint_listener(@painter)
         end
       end
 
       attr_reader :dsl
       attr_reader :container, :element
       attr_reader :paint_callback
-      attr_reader :width, :height
+      attr_reader :top, :left, :width, :height
+
+      def right
+        left + width
+      end
+
+      def bottom
+        top + height
+      end
+
+      class Painter < Common::Painter
+        def draw(gc)
+          gc.draw_line(@obj.left, @obj.top, @obj.right, @obj.bottom)
+        end
+
+        # Don't do fill setup
+        def fill_setup(gc)
+        end
+      end
     end
   end
 end

@@ -29,14 +29,6 @@ module Shoes
         radians_to_degrees dsl.angle2
       end
 
-      def fill_alpha
-        dsl.fill.alpha
-      end
-
-      def stroke_alpha
-        dsl.stroke.alpha
-      end
-
       private
       def radians_to_degrees(radians)
         radians * 180 / ::Shoes::PI

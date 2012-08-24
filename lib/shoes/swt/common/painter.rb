@@ -12,21 +12,31 @@ module Shoes
           gc = event.gc
           gcs_reset gc
           gc.set_antialias ::Swt::SWT::ON
-          gc.set_background @obj.fill
-          gc.set_alpha @obj.fill_alpha
+          fill_setup gc
           fill gc
-          gc.set_foreground @obj.stroke
-          gc.set_alpha @obj.stroke_alpha
-          gc.set_line_width @obj.strokewidth
+          draw_setup gc
           draw gc
         end
 
-        def fill(gc)
-          raise "Must be implemented by subclass"
+        # Override in subclass if not using fill
+        def fill_setup(gc)
+          gc.set_background @obj.fill
+          gc.set_alpha @obj.fill_alpha
         end
 
+        # Implement in subclass
+        def fill(gc)
+        end
+
+        # Override in subclass if not using draw
+        def draw_setup(gc)
+          gc.set_foreground @obj.stroke
+          gc.set_alpha @obj.stroke_alpha
+          gc.set_line_width @obj.strokewidth
+        end
+
+        # Implement in subclass
         def draw(gc)
-          raise "Must be implemented by subclass"
         end
       end
     end
