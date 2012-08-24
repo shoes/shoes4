@@ -4,7 +4,6 @@ module Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Move
-      include Common::Resource
 
       # opts must be provided if this shape is responsible for
       # drawing itself. If this shape is part of another shape, then
@@ -25,19 +24,7 @@ module Shoes
         @fill, @stroke = @dsl.fill, @dsl.stroke
         if opts
           @container = opts[:app].gui.real
-          @paint_callback = lambda do |event|
-            gc = event.gc
-            gcs_reset gc
-            gc.set_antialias ::Swt::SWT::ON
-            gc.set_background self.fill
-            gc.setAlpha @fill.alpha
-            gc.fill_oval(@left, @top, @width, @height)
-            gc.set_foreground self.stroke
-            gc.setAlpha @stroke.alpha
-            gc.set_line_width self.strokewidth
-            gc.draw_oval(@left, @top, @width, @height)
-          end
-          @container.add_paint_listener(@paint_callback)
+          @container.add_paint_listener Painter.new(self)
         end
       end
 
@@ -45,6 +32,16 @@ module Shoes
       attr_reader :container
       attr_reader :paint_callback
       attr_accessor :width, :height, :left, :top
+
+      class Painter < Common::Painter
+        def fill(gc)
+          gc.fill_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+        end
+
+        def draw(gc)
+          gc.draw_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+        end
+      end
     end
   end
 end

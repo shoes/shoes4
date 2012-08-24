@@ -16,30 +16,27 @@ describe Shoes::Swt::Oval do
   }
 
   it_behaves_like "paintable"
-  it_behaves_like "Swt object with stroke"
-  it_behaves_like "Swt object with fill"
 
-  describe "paint callback" do
-    let(:event) { double("event") }
-    let(:gc) { double("gc").as_null_object }
+  describe "painter" do
+    include_context "paintable context"
+    include_context "minimal painter context"
 
-    before :each do
-      event.stub(:gc) { gc }
-      gui_container_real.should_receive(:add_paint_listener)
-      dsl.stub(:left) { left }
-      dsl.stub(:top) { top }
-      dsl.stub(:width) { width }
-      dsl.stub(:height) { height }
-    end
+    let(:shape) { double("shape").as_null_object }
+    subject { Shoes::Swt::Oval::Painter.new(shape) }
+
+    #it_behaves_like "Swt object with fill"
+    #it_behaves_like "Swt object with stroke"
+    it_behaves_like "swt fill"
+    it_behaves_like "swt stroke"
 
     specify "fills oval" do
       gc.should_receive(:fill_oval).with(left, top, width, height)
-      subject.paint_callback.call(event)
+      subject.paint_control(event)
     end
 
     specify "draws oval" do
       gc.should_receive(:draw_oval).with(left, top, width, height)
-      subject.paint_callback.call(event)
+      subject.paint_control(event)
     end
   end
 end

@@ -48,26 +48,17 @@ describe Shoes::Swt::Arc do
   it_behaves_like "paintable"
 
   describe "painter" do
-    include_context "paintable context"
+    include_context "painter context"
 
     let(:shape) { double("shape") }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     before :each do
-      shape.should_receive(:fill)
-      shape.should_receive(:fill_alpha)
-      shape.should_receive(:stroke)
-      shape.should_receive(:stroke_alpha)
-      shape.should_receive(:strokewidth)
-      shape.should_receive(:left).twice { left }
-      shape.should_receive(:top).twice { top }
-      shape.should_receive(:width).exactly(4).times { width }
-      shape.should_receive(:height).exactly(4).times { height}
       shape.should_receive(:angle1).twice { angle1 }
       shape.should_receive(:angle2).twice { angle2 }
     end
 
-    specify "fills shape" do
+    specify "fills arc" do
       gc.should_receive(:fill_arc)
       subject.paint_control(event)
     end

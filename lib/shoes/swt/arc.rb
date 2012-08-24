@@ -43,32 +43,13 @@ module Shoes
       end
 
       public
-      class Painter
-        include Common::Resource
-
-        def initialize(obj)
-          @obj = obj
-        end
-
+      class Painter < Common::Painter
         def fill(gc)
           gc.fill_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
         end
 
         def draw(gc)
           gc.draw_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
-        end
-
-        def paint_control(event)
-          gc = event.gc
-          gcs_reset gc
-          gc.set_antialias ::Swt::SWT::ON
-          gc.set_background @obj.fill
-          gc.set_alpha @obj.fill_alpha
-          fill gc
-          gc.set_foreground @obj.stroke
-          gc.set_alpha @obj.stroke_alpha
-          gc.set_line_width @obj.strokewidth
-          draw gc
         end
 
         private
