@@ -16,38 +16,30 @@ module Shoes
 
     # Creates a new Shoes::Shape
     #
-    # This is a composite shape, which has one or more components.
-    #
-    # Implementation frameworks should pass in any required arguments
-    # through the +opts+ hash.
     def initialize(opts = {}, blk = nil)
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @blk = blk
 
-      # Component shapes
-      @components = []
-
       # GUI
-      @style.delete(:gui)
       @gui = Shoes.configuration.backend_for(self, @style)
 
       instance_eval &@blk unless @blk.nil?
     end
 
     def left
-      @left || @components.map(&:left).min || 0
+      @left || 0
     end
 
     def top
-      @top || @components.map(&:top).min || 0
+      @top || 0
     end
 
     def right
-      @right || @components.map { |c| c.left + c.width }.max || left
+      @right || left
     end
 
     def bottom
-      @bottom || @components.map { |c| c.top + c.height }.max || top
+      @bottom || top
     end
 
     def width
@@ -60,19 +52,14 @@ module Shoes
 
     # Moves the shape
     #
-    # Moves each component so bounds calculations still work.
     # @param [Integer] left The new left value
     # @param [Integer] top The new top value
     # @return [Shoes::Shape] This shape
     def move(left, top)
-      relative_left = offset(self.left, left)
-      relative_top = offset(self.top, top)
-      @components.each do |c|
-        c_left = c.left
-        c_top = c.top
-        c.move(c_left + relative_left, c_top + relative_top)
-      end
-      @left, @top, @right, @bottom = left, top, nil, nil
+      @right += offset(@left, left) if @right
+      @bottom += offset(@top, top) if @bottom
+      @left = left
+      @top = top
       @gui.move(@left, @top)
       self
     end
@@ -83,7 +70,8 @@ module Shoes
     # @param [Integer] y The new point's y-value
     # @return [Shoes::Shape] This shape
     def line_to(x, y)
-      @components << ::Shoes::Line.new(@x, @y, x, y, @style)
+      update_bounds(@x, @y, x, y)
+      @x, @y = x, y
       @gui.line_to(x, y)
       self
     end
@@ -99,6 +87,7 @@ module Shoes
       self
     end
 
+    private
     # Gives the relative offset of the new position from original position.
     # This calculation is for a single coordinate value, e.g. an x or a y.
     #
@@ -107,9 +96,30 @@ module Shoes
     # @return [Integer] A value that should be added to the current position in order to
     #   move to the new position.
     def offset(original, new)
+      return 0 unless original && new
       relative = (new - original).abs
       relative = -relative if new < original
       relative
+    end
+
+    # Updates the bounds of this shape to include the rectangle described by
+    # (x1, y1) and (x2, y2)
+    #
+    # @param [Integer] x The x-value of the coordinate
+    # @param [Integer] y The y-value of the coordinate
+    # @return nil
+    def update_bounds(x1, y1, x2, y2)
+      xs = [x1, x2]
+      ys = [y1, y2]
+      x_min = xs.min
+      x_max = xs.max
+      y_min = ys.min
+      y_max = ys.max
+      @left = x_min unless @left && x_min > @left
+      @top = y_min unless @top && y_min > @top
+      @right = x_max unless @right && x_max < @right
+      @bottom = y_max unless @bottom && y_max < @bottom
+      nil
     end
   end
 end

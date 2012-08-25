@@ -4,7 +4,6 @@ module Shoes
     class Shape
       include Common::Fill
       include Common::Stroke
-      include Common::Resource
 
       # Creates a new Shoes::Swt::Shape
       #
@@ -17,20 +16,7 @@ module Shoes
         if opts
           @container = opts[:app].gui.real
           @element = opts[:element] || ::Swt::Path.new(::Swt.display)
-          @paint_callback = lambda do |event|
-            gc = event.gc
-            gcs_reset gc
-            @transform = ::Swt::Transform.new(::Swt.display) unless @transform
-            gc.setTransform(@transform)
-            gc.set_background self.fill
-            gc.fill_path(@element)
-            gc.set_antialias ::Swt::SWT::ON
-            gc.set_foreground self.stroke
-            gc.set_line_width self.strokewidth
-            gc.draw_path(@element)
-            @transform.dispose
-          end
-          @container.add_paint_listener(@paint_callback)
+          @container.add_paint_listener Painter.new(self)
         end
       end
 
@@ -49,6 +35,27 @@ module Shoes
       def move(left, top)
         @transform = ::Swt::Transform.new(::Swt.display)
         @transform.translate(left, top)
+      end
+
+      def transform
+        @transform ||= ::Swt::Transform.new(::Swt.display)
+      end
+
+      class Painter < Common::Painter
+        include Common::Resource
+
+        def paint_control(event)
+          gc = event.gc
+          gcs_reset gc
+          gc.setTransform(@obj.transform)
+          gc.set_background @obj.fill
+          gc.fill_path(@obj.element)
+          gc.set_antialias ::Swt::SWT::ON
+          gc.set_foreground @obj.stroke
+          gc.set_line_width @obj.strokewidth
+          gc.draw_path(@obj.element)
+          @obj.transform.dispose
+        end
       end
     end
   end

@@ -57,7 +57,7 @@ describe "Basic Element Methods" do
     }
 
     specify "create a Shoes::Shape" do
-      2.times{gui_container_real.should_receive(:add_paint_listener)}
+      gui_container_real.should_receive(:add_paint_listener)
       subject.should be_an_instance_of(Shoes::Shape)
     end
   end

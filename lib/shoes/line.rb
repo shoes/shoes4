@@ -18,7 +18,6 @@ module Shoes
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
 
       # GUI
-      @style.delete(:gui)
       values = @style.clone
       values[:left]   = @left
       values[:top]    = @top

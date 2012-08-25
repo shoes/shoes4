@@ -9,6 +9,8 @@ describe Shoes::Shape do
     end
   end
 
+  subject { Shoes::Shape.new {} }
+
   it_behaves_like "object with stroke"
   it_behaves_like "object with style"
   it_behaves_like "movable object"

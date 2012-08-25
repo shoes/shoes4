@@ -37,12 +37,14 @@ describe Shoes::Swt::Shape do
     subject { Shoes::Swt::Shape.new dsl, args_with_element }
 
     it_behaves_like "Swt::Shape"
+    it_behaves_like "paintable"
   end
 
   context "with gui container only" do
     subject { Shoes::Swt::Shape.new dsl, args_without_element }
 
     it_behaves_like "Swt::Shape"
+    it_behaves_like "paintable"
 
     describe "#initialize" do
       before :each do
@@ -56,17 +58,24 @@ describe Shoes::Swt::Shape do
     end
   end
 
-  context "basic" do
-    subject {
-      Shoes::Swt::Shape.new(dsl, args_without_element) {
-        move_to 150, 150
-        line_to 300, 300
-        line_to 0, 300
-        line to 150, 350
-      }
-    }
+  context "painter" do
+    include_context "paintable context"
+    include_context "minimal painter context"
 
-    it_behaves_like "Swt object with stroke"
-    it_behaves_like "Swt object with fill"
+    let(:shape) { double("shape").as_null_object }
+    subject { Shoes::Swt::Shape::Painter.new(shape) }
+    #subject {
+      #Shoes::Swt::Shape.new(dsl, args_without_element) {
+        #move_to 150, 150
+        #line_to 300, 300
+        #line_to 0, 300
+        #line to 150, 350
+      #}
+    #}
+
+    #it_behaves_like "Swt object with stroke"
+    #it_behaves_like "Swt object with fill"
+    it_behaves_like "swt stroke"
+    it_behaves_like "swt fill"
   end
 end
