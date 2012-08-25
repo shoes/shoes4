@@ -1,13 +1,6 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Shape do
-  before :each do
-    module Shoes
-      class Line
-        attr_reader :width, :height
-      end
-    end
-  end
 
   subject { Shoes::Shape.new {} }
 
