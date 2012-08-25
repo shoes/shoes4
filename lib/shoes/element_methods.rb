@@ -140,7 +140,7 @@ module Shoes
 
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})
-      opts[:app] = self
+      opts.merge! :app => app
       Shoes::Line.new x1, y1, x2, y2, style.merge(opts)
     end
 
@@ -154,7 +154,7 @@ module Shoes
     #         left, top, width, height, radius, center
     def oval(*opts)
       oval_style = opts.last.class == Hash ? opts.pop : {}
-      oval_style[:app] = self
+      oval_style.merge! :app => app
       Shoes::Oval.new(*opts, style.merge(oval_style))
     end
 

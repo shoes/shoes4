@@ -32,15 +32,13 @@ module Shoes
       end
 
       # GUI
-      @style.delete(:gui)
+      gui_opts = @style.merge(:app => @style[:app].gui)
+      gui_opts[:left]   = @left
+      gui_opts[:top]    = @top
+      gui_opts[:width]  = @width
+      gui_opts[:height] = @height
 
-      values = @style.clone
-      values[:left]   = @left
-      values[:top]    = @top
-      values[:width]  = @width
-      values[:height] = @height
-
-      @gui = Shoes.configuration.backend_for(self, values)
+      @gui = Shoes.configuration.backend_for(self, gui_opts)
     end
   end
 end

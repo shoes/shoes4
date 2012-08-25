@@ -1,13 +1,17 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Line do
+  let(:gui) { double('gui') }
+  let(:app) { double('app', :gui => gui) }
+  let(:opts) { {:app => app} }
+
   before :each do
     Shoes::Mock::Line.any_instance.stub(:real) { mock( size:
       mock(x: 90, y: 45) ) }
   end
 
   describe "basic" do
-    subject { Shoes::Line.new(20, 23, 300, 430) }
+    subject { Shoes::Line.new(20, 23, 300, 430, opts) }
     it_behaves_like "object with stroke"
     it_behaves_like "movable object"
   end
@@ -21,22 +25,22 @@ describe Shoes::Line do
   end
 
   context "created left-to-right, top-to-bottom" do
-    subject { Shoes::Line.new(10, 15, 100, 60) }
+    subject { Shoes::Line.new(10, 15, 100, 60, opts) }
     it_behaves_like "basic line"
   end
 
   context "specified right-to-left, top-to-bottom" do
-    subject { Shoes::Line.new(100, 15, 10, 60) }
+    subject { Shoes::Line.new(100, 15, 10, 60, opts) }
     it_behaves_like "basic line"
   end
 
   context "specified right-to-left, bottom-to-top" do
-    subject { Shoes::Line.new(100, 60, 10, 15) }
+    subject { Shoes::Line.new(100, 60, 10, 15, opts) }
     it_behaves_like "basic line"
   end
 
   context "specified left-to-right, bottom-to-top" do
-    subject { Shoes::Line.new(10, 60, 100, 15) }
+    subject { Shoes::Line.new(10, 60, 100, 15, opts) }
     it_behaves_like "basic line"
   end
 end

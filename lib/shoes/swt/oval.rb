@@ -22,9 +22,10 @@ module Shoes
         @height = opts[:height]
 
         @fill, @stroke = @dsl.fill, @dsl.stroke
+        @app = opts[:app]
         if opts
-          @container = opts[:app].gui.real
-          @container.add_paint_listener Painter.new(self)
+          @painter = Painter.new(self)
+          @app.add_paint_listener @painter
         end
       end
 

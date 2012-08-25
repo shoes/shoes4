@@ -35,19 +35,27 @@ describe "Basic Element Methods" do
   end
 
   describe "line" do
+    before :each do
+      app.stub(:app) { app }
+      app.stub(:gui) { app_real }
+    end
+
     specify "creates a Shoes::Line" do
-      gui_container_real.should_receive(:add_paint_listener)
+      app_real.should_receive(:add_paint_listener)
       app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
     end
   end
 
   describe "oval" do
-    # The oval object
-    subject { app.oval(30, 20, 100, 200) }
-    context "Swt-specific" do
+    before :each do
+      app.stub(:app) { app }
+      app.stub(:gui) { app_real }
     end
 
-    it_behaves_like "paintable"
+    specify "creates a Shoes::Oval" do
+      app_real.should_receive(:add_paint_listener)
+      app.oval(30, 20, 100, 200).should be_an_instance_of(Shoes::Oval)
+    end
   end
 
   describe "shape" do

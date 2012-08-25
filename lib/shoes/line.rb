@@ -23,6 +23,7 @@ module Shoes
       values[:top]    = @top
       values[:width]  = @width
       values[:height] = @height
+      values[:app]    = opts[:app].gui
 
       @gui = Shoes.configuration.backend_for(self, values)
     end

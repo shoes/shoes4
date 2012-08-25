@@ -15,10 +15,10 @@ module Shoes
         @width = opts[:width]
         @height = opts[:height]
 
+        @app = opts[:app]
         if opts
-          @container = opts[:app].gui.real
           @painter = opts[:paint_callback] || Painter.new(self)
-          @container.add_paint_listener(@painter)
+          @app.add_paint_listener(@painter)
         end
       end
 
