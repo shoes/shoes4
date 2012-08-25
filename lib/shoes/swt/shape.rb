@@ -13,10 +13,11 @@ module Shoes
       #   for drawing itself), `opts` should be omitted
       def initialize(dsl, opts = nil)
         @dsl = dsl
+        @app = opts[:app]
         if opts
-          @container = opts[:app].gui.real
           @element = opts[:element] || ::Swt::Path.new(::Swt.display)
-          @container.add_paint_listener Painter.new(self)
+          @painter = Painter.new(self)
+          @app.add_paint_listener @painter
         end
       end
 

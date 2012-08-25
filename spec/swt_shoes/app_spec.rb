@@ -11,25 +11,41 @@ describe Shoes::Swt::App do
                      :addListener => true, :setLayout => true,
                      :open => true, :pack => true,
                      :addControlListener => true,
-                     :set_image => true, :background_mode= => true) }
+                     :set_image => true, :background_mode= => true,
+                     :setBackground => true) }
 
-  let(:mock_composite) { mock(:swt_composite,
+  let(:mock_real) { mock(:swt_real,
                      :setBackground => true,
                      :setSize => true, :setLayout => true,
                      :background_mode= => true) }
 
+  let(:mock_dsl) { mock(:shoes_app,
+                     :opts => Shoes::App.new.opts,
+                     :app_title => "Test") }
+
+  subject { Shoes::Swt::App.new(mock_dsl) }
+
   before :each do
     ::Swt::Widgets::Shell.stub(:new) { mock_shell }
     ::Swt.stub(:event_loop)
-    ::Swt::Widgets::Composite.stub(:new) { mock_composite }
+    ::Swt::Widgets::Composite.stub(:new) { mock_real }
+  end
+
+  describe "basic" do
+    before :each do
+      mock_dsl.should_receive(:width)
+      mock_dsl.should_receive(:height)
+    end
+
+    it "adds paint listener" do
+      painter = double("painter")
+      mock_real.should_receive(:add_paint_listener).with(painter)
+      subject.add_paint_listener painter
+    end
   end
 
   describe Shoes::App do
-    subject     { Shoes::App.new }
-    let(:white) { Shoes::COLORS[:white] }
-    let(:blue)  { Shoes::COLORS[:blue]  }
-
-    context "Shoes::App ancestors" do
+    context "ancestors" do
       subject { Shoes::App.ancestors }
 
       it { should include(Shoes::Swt::ElementMethods) }

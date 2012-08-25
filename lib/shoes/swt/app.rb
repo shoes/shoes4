@@ -16,7 +16,7 @@ module Shoes
           shell.setText(@dsl.app_title)
           shell.addListener(::Swt::SWT::Close, main_window_on_close)
           shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
-          shell.setBackground @dsl.default_options[:background].to_native
+          shell.setBackground @dsl.opts[:background].to_native
         end
         @shell = @real
 

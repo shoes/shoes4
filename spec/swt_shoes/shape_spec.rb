@@ -1,19 +1,18 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Shape do
-  let(:gui_container_real) { double("gui container real") }
-  let(:gui_container) { double("gui container", real: gui_container_real) }
-  let(:container) { double("container", gui: gui_container)  }
+  let(:app) { double("app") }
   let(:gui_element) { double('gui element') }
-  let(:args_with_element) { {app: container, element: gui_element} }
-  let(:args_without_element) { {app: container} }
+  let(:args_with_element) { {app: app, element: gui_element} }
+  let(:args_without_element) { {app: app} }
 
   let(:dsl) { double('dsl').as_null_object }
 
   shared_examples_for "Swt::Shape" do
     before :each do
-      gui_container_real.should_receive(:add_paint_listener)
+      app.should_receive(:add_paint_listener)
     end
+
     let(:ancestors) { subject.class.ancestors.map(&:name) }
 
     it "uses Shoes::Swt" do
@@ -26,21 +25,17 @@ describe Shoes::Swt::Shape do
       subject
     end
 
-    it "sets container" do
-      subject.container.should be(gui_container_real)
-    end
-
     its(:dsl) { should be(dsl) }
   end
 
-  context "with gui container and gui element" do
+  context "with app and gui element" do
     subject { Shoes::Swt::Shape.new dsl, args_with_element }
 
     it_behaves_like "Swt::Shape"
     it_behaves_like "paintable"
   end
 
-  context "with gui container only" do
+  context "with app only" do
     subject { Shoes::Swt::Shape.new dsl, args_without_element }
 
     it_behaves_like "Swt::Shape"
@@ -48,7 +43,7 @@ describe Shoes::Swt::Shape do
 
     describe "#initialize" do
       before :each do
-        gui_container_real.should_receive(:add_paint_listener)
+        app.should_receive(:add_paint_listener)
       end
 
       it "should not set current point on gui element" do
