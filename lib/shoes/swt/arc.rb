@@ -14,8 +14,9 @@ module Shoes
         @top = opts[:top]
         @width = opts[:width]
         @height = opts[:height]
-        @container = opts[:app].real
-        @container.add_paint_listener Painter.new(self)
+        @app = opts[:app]
+        @painter = Painter.new(self)
+        @app.add_paint_listener @painter
       end
 
       attr_reader :dsl

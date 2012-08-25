@@ -14,6 +14,7 @@ describe "Basic Element Methods" do
 
   let(:gui_container_real) { double('gui_container_real') }
   let(:gui_container) { double('gui_container', real: gui_container_real) }
+  let(:app_real) { double('app_real') }
   let(:app) {
     ElementMethodsShoeLaces.new.tap { |a|
       a.gui = gui_container
@@ -24,10 +25,11 @@ describe "Basic Element Methods" do
   describe "arc" do
     before :each do
       app.stub(:app) { app }
+      app.stub(:gui) { app_real }
     end
 
     specify "creates a Shoes::Arc" do
-      gui_container_real.should_receive(:add_paint_listener)
+      app_real.should_receive(:add_paint_listener)
       app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
     end
   end

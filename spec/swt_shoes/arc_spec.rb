@@ -1,6 +1,5 @@
 describe Shoes::Swt::Arc do
-  let(:app_real) { double("app real") }
-  let(:app) { double("app", real: app_real) }
+  let(:app) { double("app") }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
@@ -18,7 +17,7 @@ describe Shoes::Swt::Arc do
 
   describe "basics" do
     before :each do
-      app_real.should_receive(:add_paint_listener)
+      app.should_receive(:add_paint_listener)
     end
 
     its(:left) { should eq(left) }
