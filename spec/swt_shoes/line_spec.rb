@@ -30,20 +30,17 @@ describe Shoes::Swt::Line do
   end
 
   it_behaves_like "paintable"
-  #it_behaves_like "Swt object with stroke"
 
   describe "painter" do
-    include_context "paintable context"
-    include_context "minimal painter context"
+    include_context "painter context"
 
-    let(:shape) { double("shape").as_null_object }
     let(:left) { 25 }
     let(:top) { 77 }
     let(:width) { 130 }
     let(:height) { 400 }
     subject { Shoes::Swt::Line::Painter.new(shape) }
 
-    it_behaves_like "swt stroke"
+    it_behaves_like "stroke painter"
 
     specify "draws line" do
       gc.should_receive(:draw_line)

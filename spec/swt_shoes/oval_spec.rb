@@ -18,16 +18,12 @@ describe Shoes::Swt::Oval do
   it_behaves_like "paintable"
 
   describe "painter" do
-    include_context "paintable context"
-    include_context "minimal painter context"
+    include_context "painter context"
 
-    let(:shape) { double("shape").as_null_object }
     subject { Shoes::Swt::Oval::Painter.new(shape) }
 
-    #it_behaves_like "Swt object with fill"
-    #it_behaves_like "Swt object with stroke"
-    it_behaves_like "swt fill"
-    it_behaves_like "swt stroke"
+    it_behaves_like "fill painter"
+    it_behaves_like "stroke painter"
 
     specify "fills oval" do
       gc.should_receive(:fill_oval).with(left, top, width, height)

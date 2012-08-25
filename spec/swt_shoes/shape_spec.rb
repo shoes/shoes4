@@ -58,24 +58,22 @@ describe Shoes::Swt::Shape do
     end
   end
 
-  context "painter" do
-    include_context "paintable context"
-    include_context "minimal painter context"
+  describe "painter" do
+    include_context "painter context"
 
-    let(:shape) { double("shape").as_null_object }
     subject { Shoes::Swt::Shape::Painter.new(shape) }
-    #subject {
-      #Shoes::Swt::Shape.new(dsl, args_without_element) {
-        #move_to 150, 150
-        #line_to 300, 300
-        #line_to 0, 300
-        #line to 150, 350
-      #}
-    #}
 
-    #it_behaves_like "Swt object with stroke"
-    #it_behaves_like "Swt object with fill"
-    it_behaves_like "swt stroke"
-    it_behaves_like "swt fill"
+    it_behaves_like "stroke painter"
+    it_behaves_like "fill painter"
+
+    it "fills path" do
+      gc.should_receive(:fill_path)
+      subject.paint_control(event)
+    end
+
+    it "draws path" do
+      gc.should_receive(:draw_path)
+      subject.paint_control(event)
+    end
   end
 end

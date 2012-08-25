@@ -48,10 +48,8 @@ describe Shoes::Swt::Arc do
   it_behaves_like "paintable"
 
   describe "painter" do
-    include_context "paintable context"
-    include_context "minimal painter context"
+    include_context "painter context"
 
-    let(:shape) { double("shape").as_null_object }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     before :each do
@@ -59,8 +57,8 @@ describe Shoes::Swt::Arc do
       shape.stub(:angle2) { angle2 }
     end
 
-    it_behaves_like "swt stroke"
-    it_behaves_like "swt fill"
+    it_behaves_like "stroke painter"
+    it_behaves_like "fill painter"
 
     specify "fills arc" do
       gc.should_receive(:fill_arc)
