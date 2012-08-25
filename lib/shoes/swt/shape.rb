@@ -14,11 +14,9 @@ module Shoes
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @app = opts[:app]
-        if opts
-          @element = opts[:element] || ::Swt::Path.new(::Swt.display)
-          @painter = Painter.new(self)
-          @app.add_paint_listener @painter
-        end
+        @element = ::Swt::Path.new(::Swt.display)
+        @painter = Painter.new(self)
+        @app.add_paint_listener @painter
       end
 
       attr_reader :dsl

@@ -17,16 +17,6 @@ describe Shoes::Swt::Line do
     its(:dsl) { should be(dsl) }
   end
 
-  context "Swt-specific" do
-    let(:paint_callback) { double("paint callback") }
-    let(:opts) { {:app => app, :paint_callback => paint_callback} }
-
-    it "uses passed-in paint callback if present" do
-      app.should_receive(:add_paint_listener).with(paint_callback)
-      subject
-    end
-  end
-
   it_behaves_like "paintable"
 
   describe "painter" do

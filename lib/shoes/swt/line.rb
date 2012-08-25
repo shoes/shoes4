@@ -16,10 +16,8 @@ module Shoes
         @height = opts[:height]
 
         @app = opts[:app]
-        if opts
-          @painter = opts[:paint_callback] || Painter.new(self)
-          @app.add_paint_listener(@painter)
-        end
+        @painter = Painter.new(self)
+        @app.add_paint_listener(@painter)
       end
 
       attr_reader :dsl

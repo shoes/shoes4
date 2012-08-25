@@ -23,10 +23,8 @@ module Shoes
 
         @fill, @stroke = @dsl.fill, @dsl.stroke
         @app = opts[:app]
-        if opts
-          @painter = Painter.new(self)
-          @app.add_paint_listener @painter
-        end
+        @painter = Painter.new(self)
+        @app.add_paint_listener @painter
       end
 
       attr_reader :dsl
