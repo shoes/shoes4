@@ -1,8 +1,8 @@
 describe Shoes::Arc do
-  context "basic" do
-    let(:app_gui) { double("gui") }
-    let(:app) { double("app", :gui => app_gui) }
+  let(:app_gui) { double("gui") }
+  let(:app) { double("app", :gui => app_gui) }
 
+  context "basic" do
     subject { Shoes::Arc.new(app, 13, 44, 200, 300, 0, Shoes::TWO_PI) }
 
     it_behaves_like "object with stroke"
@@ -19,10 +19,22 @@ describe Shoes::Arc do
     its(:angle1) { should eq(0) }
     its(:angle2) { should eq(Shoes::TWO_PI) }
 
+    specify "defaults to chord fill" do
+      subject.wedge?.should be_false
+    end
+
     it "passes required values to backend" do
       gui_opts = {:left => 13, :top => 44, :width => 200, :height => 300, :angle1 => 0, :angle2 => Shoes::TWO_PI}
       Shoes::Mock::Arc.should_receive(:new).with(subject, app_gui, gui_opts)
       subject
+    end
+  end
+
+  context "wedge" do
+    subject { Shoes::Arc.new(app, 13, 44, 200, 300, 0, Shoes::TWO_PI, :wedge => true) }
+
+    specify "accepts :wedge => true" do
+      subject.wedge?.should be_true
     end
   end
 end

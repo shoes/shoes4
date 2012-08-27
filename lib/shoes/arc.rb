@@ -9,6 +9,7 @@ module Shoes
       @app = app
       @left, @top = left, top
       @angle1, @angle2 = angle1, angle2
+      @wedge = opts[:wedge] || false
       default_style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS)
       @style = default_style.merge(opts)
 
@@ -19,5 +20,11 @@ module Shoes
 
     attr_reader :app
     attr_reader :angle1, :angle2
+
+    # @return [Boolean] if fill should be a wedge shape, rather than a chord
+    #   Defaults to false
+    def wedge?
+      true unless @wedge == false
+    end
   end
 end
