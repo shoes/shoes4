@@ -20,7 +20,7 @@ describe Shoes::Arc do
     its(:angle2) { should eq(Shoes::TWO_PI) }
 
     specify "defaults to chord fill" do
-      subject.wedge?.should be_false
+      subject.should_not be_wedge
     end
 
     it "passes required values to backend" do
@@ -34,7 +34,7 @@ describe Shoes::Arc do
     subject { Shoes::Arc.new(app, 13, 44, 200, 300, 0, Shoes::TWO_PI, :wedge => true) }
 
     specify "accepts :wedge => true" do
-      subject.wedge?.should be_true
+      subject.should be_wedge
     end
   end
 end

@@ -1,3 +1,39 @@
+shared_context "style context" do
+  let(:fill_color) { Shoes::COLORS.fetch(:tomato) }
+  let(:stroke_color) { Shoes::COLORS.fetch(:chartreuse) }
+
+  before :each do
+    subject.fill fill_color
+    subject.stroke stroke_color
+  end
+end
+
+# Specs behavior for "global" fill
+#
+# @example
+#   Shoes.app do
+#     fill tomato
+#     arc 400, 200, 200, 300, 0, Shoes::HALF_PI
+#   end
+#
+# In these specs, subject is Shoes::App, element is created element (e.g. Shoes::Arc)
+shared_examples_for "persistent fill" do
+  include_context "style context"
+
+  specify "passes to element" do
+    element.fill.should eq(fill_color)
+  end
+end
+
+shared_examples_for "persistent stroke" do
+  include_context "style context"
+
+  specify "passes to element" do
+    element.stroke.should eq(stroke_color)
+  end
+end
+
+
 # Shared examples for app, flow, stack
 shared_examples "dsl container" do
   describe "animate" do
@@ -31,9 +67,18 @@ shared_examples "dsl container" do
   end
 
   describe "arc" do
-    it "creates a Shoes::Arc" do
-      arc = subject.arc(13, 44, 200, 300, 0, Shoes::TWO_PI)
+    let(:arc) { subject.arc(13, 44, 200, 300, 0, Shoes::TWO_PI) }
+
+    specify "creates a Shoes::Arc" do
       arc.should be_an_instance_of(Shoes::Arc)
+    end
+
+    it_behaves_like "persistent fill" do
+      let(:element) { arc }
+    end
+
+    it_behaves_like "persistent stroke" do
+      let(:element) { arc }
     end
   end
 
