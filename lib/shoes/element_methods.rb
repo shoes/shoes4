@@ -134,8 +134,7 @@ module Shoes
 
     # Draws an arc
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      opts.merge! :app => app
-      Shoes::Arc.new(left, top, width, height, angle1, angle2, opts)
+      Shoes::Arc.new(app, left, top, width, height, angle1, angle2, opts)
     end
 
     # Draws a line from (x1,y1) to (x2,y2)

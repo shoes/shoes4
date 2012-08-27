@@ -1,11 +1,14 @@
 describe Shoes::Configuration do
-  describe "#backend" do
-    describe ":swt" do
-      before { Shoes.configuration.backend = :swt }
+  context ":swt" do
+    before :each do
+      Shoes.configuration.backend = :swt
+    end
 
+    describe "#backend" do
       it "sets backend" do
         Shoes.configuration.backend.should == Shoes::Swt
       end
     end
+
   end
 end

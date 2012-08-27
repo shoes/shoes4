@@ -48,6 +48,11 @@ module Shoes
         backend_class(shoes_object).new(shoes_object, *args)
       end
 
+      # Experimental replacement for #backend_for
+      def backend_with_app_for(shoes_object, *args)
+        backend_class(shoes_object).new(shoes_object, shoes_object.app.gui, *args)
+      end
+
       def logger=(value)
         @logger = value
         @logger_instance = nil
@@ -66,4 +71,8 @@ end
 
 def Shoes.configuration
   Shoes::Configuration
+end
+
+def Shoes.backend_for(shoes_object, *args)
+  Shoes::Configuration.backend_with_app_for(shoes_object, *args)
 end

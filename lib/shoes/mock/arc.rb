@@ -1,7 +1,7 @@
 module Shoes
   module Mock
     class Arc
-      def initialize(dsl, opts)
+      def initialize(dsl, app, opts)
         @width = opts[:width]
         @height = opts[:height]
       end
