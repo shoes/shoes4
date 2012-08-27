@@ -42,6 +42,11 @@ describe Shoes::Swt::Arc do
     specify "converts angle2 to degrees" do
       subject.angle2.should eq(90.0)
     end
+
+    specify "delegates #wedge? to dsl object" do
+      dsl.should_receive(:wedge?) { false }
+      subject.should_not be_wedge
+    end
   end
 
   it_behaves_like "paintable"
@@ -60,8 +65,12 @@ describe Shoes::Swt::Arc do
     it_behaves_like "fill painter"
 
     context "normal fill style" do
-      specify "fills arc" do
-        gc.should_receive(:fill_arc)
+      before :each do
+        shape.stub(:wedge?) { false }
+      end
+
+      specify "fills arc using path" do
+        gc.should_receive(:fill_path)
         subject.paint_control(event)
       end
 
@@ -74,8 +83,10 @@ describe Shoes::Swt::Arc do
       # uses (left, top) as the *center* of the rectangle containing the arc. Also,
       # Swt measures the arc counterclockwise, while Shoes measures it clockwise.
       specify "translates DSL values for Swt" do
+        path = double('path')
+        ::Swt::Path.stub(:new) { path }
         args = [-50, 0, width, height, angle1, -angle2]
-        gc.should_receive(:fill_arc).with(*args)
+        path.should_receive(:add_arc).with(*args)
         gc.should_receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end

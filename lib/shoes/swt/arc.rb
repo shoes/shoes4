@@ -30,6 +30,10 @@ module Shoes
         radians_to_degrees dsl.angle2
       end
 
+      def wedge?
+        @dsl.wedge?
+      end
+
       private
       def radians_to_degrees(radians)
         radians * 180 / ::Shoes::PI
@@ -38,7 +42,13 @@ module Shoes
       public
       class Painter < Common::Painter
         def fill(gc)
-          gc.fill_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+          if (@obj.wedge?)
+            gc.fill_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+          else
+            path = ::Swt::Path.new(::Swt.display)
+            path.add_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+            gc.fill_path(path)
+          end
         end
 
         def draw(gc)
