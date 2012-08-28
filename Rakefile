@@ -44,7 +44,10 @@ def jruby_rspec(files, args)
 end
 
 def spec_opts_from_args(args)
-  opts = args[:module] ? "-e ::#{args[:module]}" : ""
+  opts = []
+  opts << "-e ::#{args[:module]}" if args[:module]
+  opts += Array(args[:require]).map {|lib| "-r#{lib}"}
+  opts.join ' '
 end
 
 task :default => :spec
@@ -77,7 +80,8 @@ namespace :spec do
   task "swt", [:module] do |t, args|
     argh = args.to_hash
     argh[:swt] = true
-    files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
+    argh[:require] = 'swt_shoes/spec_helper'
+    files = (Dir['spec/swt_shoes/*_spec.rb'] + Dir['spec/shoes/*_spec.rb']).join ' '
     jruby_rspec(files, argh)
   end
 
