@@ -6,13 +6,13 @@ describe Shoes::Swt::Arc do
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:opts) { { app: app, left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2} }
+  let(:opts) { {left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2} }
   let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2) }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
   subject {
-    Shoes::Swt::Arc.new(dsl, opts)
+    Shoes::Swt::Arc.new(dsl, app, opts)
   }
 
   describe "basics" do

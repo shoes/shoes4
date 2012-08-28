@@ -4,17 +4,17 @@ module Shoes
       include Common::Fill
       include Common::Stroke
 
-      # @note This class expects opts[:app] to be a Shoes::Swt::App. Other shapes expect a
-      #       Shoes::App. It's preferable to pass a Shoes::Swt::App because it maintains the
-      #       separation between layers. If this attempt is successful, other shapes should
-      #       follow suit (Line, Oval, Shape)
-      def initialize(dsl, opts)
+      # Creates a new Shoes::Swt::Arc
+      #
+      # @param [Shoes::Arc] dsl The DSL object represented by this implementation
+      # @parem [Shoes::Swt::App] app The implementation object of the Shoes app
+      def initialize(dsl, app, opts)
         @dsl = dsl
+        @app = app
         @left = opts[:left]
         @top = opts[:top]
         @width = opts[:width]
         @height = opts[:height]
-        @app = opts[:app]
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
