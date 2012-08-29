@@ -4,9 +4,11 @@ describe Shoes::Swt::Line do
   let(:app) { double('app') }
   let(:opts) { {:app => app} }
   let(:dsl) { double('dsl').as_null_object }
+  let(:point_a) { Shoes::Point.new(10, 100) }
+  let(:point_b) { Shoes::Point.new(300, 10) }
 
   subject {
-    Shoes::Swt::Line.new(dsl, opts)
+    Shoes::Swt::Line.new(dsl, point_a, point_b, opts)
   }
 
   context "#initialize" do
@@ -34,5 +36,6 @@ describe Shoes::Swt::Line do
       gc.should_receive(:draw_line)
       subject.paint_control(event)
     end
+
   end
 end

@@ -2,16 +2,16 @@ module Shoes
   module Swt
     class Line
       include Common::Stroke
-      include Common::Resource
 
+      # @param [Shoes::Line] dsl The Shoes::Line implemented by this object
+      # @param [Shoes::Point] point_a One endpoint of the line
+      # @param [Shoes::Point] point_b The other endpoint of the line
       # @param [Hash] opts Options
-      #   Must be provided if this shape is responsible for
-      #   drawing itself. Omit if this shape is part of another shape.
-      def initialize(dsl, opts = nil)
+      def initialize(dsl, point_a, point_b, opts = {})
         @dsl = dsl
 
-        @left = opts[:left]
-        @top = opts[:top]
+        @point_a = point_a
+        @point_b = point_b
         @width = opts[:width]
         @height = opts[:height]
 
@@ -21,21 +21,13 @@ module Shoes
       end
 
       attr_reader :dsl
-      attr_reader :container, :element
-      attr_reader :paint_callback
-      attr_reader :top, :left, :width, :height
-
-      def right
-        left + width
-      end
-
-      def bottom
-        top + height
-      end
+      attr_reader :point_a, :point_b
+      attr_reader :width, :height
 
       class Painter < Common::Painter
         def draw(gc)
-          gc.draw_line(@obj.left, @obj.top, @obj.right, @obj.bottom)
+          point_a, point_b = @obj.point_a, @obj.point_b
+          gc.draw_line(point_a.x, point_a.y, point_b.x, point_b.y)
         end
 
         # Don't do fill setup

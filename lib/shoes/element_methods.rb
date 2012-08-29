@@ -140,7 +140,7 @@ module Shoes
     # Draws a line from (x1,y1) to (x2,y2)
     def line(x1, y1, x2, y2, opts = {})
       opts.merge! :app => app
-      Shoes::Line.new x1, y1, x2, y2, style.merge(opts)
+      Shoes::Line.new Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
     end
 
     # Draws an oval at (left, top) with either
