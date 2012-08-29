@@ -3,14 +3,12 @@ module Shoes
     class Oval
       include Shoes::Mock::CommonMethods
 
-      attr_accessor :width, :height
-
-      def initialize(dsl, opts = nil)
-        @left = opts[:left]
-        @top = opts[:top]
-        @width = opts[:width]
-        @height = opts[:height]
+      def initialize(dsl, app, left, top, width, height, opts = {})
+        @dsl, @app = dsl, app
+        @left, @top, @width, @height = left, top, width, height
       end
+
+      attr_reader :left, :top, :width, :height
     end
   end
 end

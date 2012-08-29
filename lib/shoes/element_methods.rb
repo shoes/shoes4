@@ -152,9 +152,36 @@ module Shoes
     #       where styles is a hash with any or all of these keys:
     #         left, top, width, height, radius, center
     def oval(*opts)
+      defaults = {:left => 0, :top => 0, :width => 0, :height => 0, :radius => 0, :center => false}
       oval_style = opts.last.class == Hash ? opts.pop : {}
-      oval_style.merge! :app => app
-      Shoes::Oval.new(*opts, style.merge(oval_style))
+      case opts.length
+        when 3
+          left, top, radius = opts
+          width = height = radius * 2
+        when 4
+          left, top, width, height = opts
+        when 0
+          left = oval_style[:left]
+          top = oval_style[:top]
+          width = oval_style[:width] || 0
+          height = oval_style[:height] || 0
+          radius = oval_style[:radius] || 0
+          width = oval_style[:radius] * 2 if width.zero?
+          height = width if height.zero?
+        else
+          message = <<EOS
+Wrong number of arguments. Must be one of:
+  - oval(left, top, radius)
+  - oval(left, top, width, height)
+  - oval(styles)
+EOS
+          raise ArgumentError, message
+      end
+      if oval_style[:center]
+        left -= width / 2 if width > 0
+        top -= height / 2 if height > 0
+      end
+      Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style))
     end
 
     # Creates a new Shoes::Shape object

@@ -10,26 +10,22 @@ module Shoes
       # opts should be empty
       #
       # @param [Shoes::Oval] dsl The dsl object to provide gui for
+      # @param [Shoes::Swt::App app The app
       # @param [Hash] opts Options
-      # @todo This (mostly) duplicates Shoes::Swt::Line#gui_init
-      # @todo Figure out what is the `@real` object here
-      def initialize(dsl, opts = nil)
+      def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl = dsl
+        @app = app
+        @left = left
+        @top = top
+        @width = width
+        @height = height
 
-        @left   = opts[:left]
-        @top    = opts[:top]
-        @width  = opts[:width]
-        @height = opts[:height]
-
-        @fill, @stroke = @dsl.fill, @dsl.stroke
-        @app = opts[:app]
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
 
       attr_reader :dsl
-      attr_reader :container
-      attr_reader :paint_callback
+      attr_reader :painter
       attr_accessor :width, :height, :left, :top
 
       class Painter < Common::Painter

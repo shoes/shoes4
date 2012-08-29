@@ -6,11 +6,10 @@ describe Shoes::Swt::Oval do
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:opts) { { app: app, left: left, top: top, width: width, height: height} }
   let(:dsl) { double("dsl object").as_null_object }
 
   subject {
-    Shoes::Swt::Oval.new(dsl, opts)
+    Shoes::Swt::Oval.new(dsl, app, left, top, width, height)
   }
 
   it_behaves_like "paintable"

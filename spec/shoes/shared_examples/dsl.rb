@@ -33,6 +33,19 @@ shared_examples_for "persistent stroke" do
   end
 end
 
+shared_examples_for "circle" do
+  specify "makes a Shoes::Oval" do
+    circle.should be_instance_of(Shoes::Oval)
+  end
+
+  specify "sets proper dimensions" do
+    circle.top.should eq(30)
+    circle.left.should eq(20)
+    circle.width.should eq(100)
+    circle.height.should eq(100)
+  end
+end
+
 
 # Shared examples for app, flow, stack
 shared_examples "dsl container" do
@@ -123,6 +136,61 @@ shared_examples "dsl container" do
   describe "oval" do
     it "creates a Shoes::Oval" do
       subject.oval(10, 50, 250).should be_an_instance_of(Shoes::Oval)
+    end
+
+    context "(eccentric)" do
+      let(:oval) { subject.oval(20, 30, 100, 200) }
+
+      specify "makes a Shoes::Oval" do
+        oval.should be_instance_of(Shoes::Oval)
+      end
+
+      specify "sets proper dimensions" do
+        oval.top.should eq(30)
+        oval.left.should eq(20)
+        oval.width.should eq(100)
+        oval.height.should eq(200)
+      end
+    end
+
+    context "(circle) created with explicit arguments:" do
+      context "width and height" do
+        it_behaves_like "circle" do
+          let(:circle) { subject.oval(20, 30, 100, 100) }
+        end
+      end
+
+      context "radius" do
+        it_behaves_like "circle" do
+          let(:circle) { subject.oval(20, 30, 50) }
+        end
+      end
+    end
+
+    context "(circle) created with style hash:" do
+      context "left, top, height, width" do
+        it_behaves_like "circle" do
+          let(:circle) { subject.oval(left: 20, top: 30, width: 100, height: 100) }
+        end
+      end
+
+      context "left, top, height, width, center: false" do
+        it_behaves_like "circle" do
+          let(:circle) { subject.oval(left: 20, top: 30, width: 100, height: 100, center: false) }
+        end
+      end
+
+      context "left, top, radius" do
+        it_behaves_like "circle" do
+          let(:circle) { subject.oval(left: 20, top: 30, radius: 50) }
+        end
+      end
+
+      context "left, top, width, height, center: true" do
+        it_behaves_like "circle" do
+          let(:circle) { subject.oval(left: 70, top: 80, width: 100, height: 100, center: true) }
+        end
+      end
     end
   end
 
