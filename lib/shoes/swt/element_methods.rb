@@ -53,22 +53,6 @@ module Shoes
         super(*opts, args)
       end
 
-      def oval(*opts)
-        args = opts.last.class == Hash ? opts.pop : {}
-        args[:gui] = {
-          container: self.gui,
-          paint_callback: lambda do |event, shape|
-            #return if hidden?
-            gc = event.gc
-            gc.set_antialias ::Swt::SWT::ON
-            gc.set_line_width shape.style[:strokewidth]
-            gc.setForeground(shape.style[:stroke].to_native)
-            gc.draw_oval(shape.left, shape.top, shape.width, shape.height)
-          end
-        }
-        super(*opts, args)
-      end
-
       # FIXME: same as #line
       def shape(*opts)
         args = opts.last.class == Hash ? opts.pop : {}
