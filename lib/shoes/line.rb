@@ -9,9 +9,11 @@ module Shoes
     include Shoes::Common::Stroke
     include Shoes::Common::Style
 
-    def initialize(point_a, point_b, opts = {})
+    def initialize(app, point_a, point_b, opts = {})
       @point_a = point_a
       @point_b = point_b
+      @app = app
+
       @left = point_a.x < point_b.x ? point_a.x : point_b.x
       @top = point_a.y < point_b.y ? point_a.y : point_b.y
       @width = (point_a.x - point_b.x).abs
@@ -23,9 +25,10 @@ module Shoes
       gui_opts = @style.clone
       gui_opts[:width] = @width
       gui_opts[:height] = @height
-      gui_opts[:app]    = opts[:app].gui
 
-      @gui = Shoes.configuration.backend_for(self, @point_a, @point_b, gui_opts)
+      @gui = Shoes.backend_for(self, @point_a, @point_b, gui_opts)
     end
+
+    attr_reader :app
   end
 end

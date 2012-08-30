@@ -46,14 +46,7 @@ module Shoes
       #  @elements[cbox.identifier] = cbox
       #  cbox
       #end
-      #
-      def line(*opts)
-        args = opts.last.class == Hash ? opts.pop : {}
-        args[:gui] = {container: self.gui}
-        super(*opts, args)
-      end
 
-      # FIXME: same as #line
       def shape(*opts)
         args = opts.last.class == Hash ? opts.pop : {}
         args[:gui] = {container: self.gui}

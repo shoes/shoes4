@@ -137,10 +137,15 @@ module Shoes
       Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(opts))
     end
 
-    # Draws a line from (x1,y1) to (x2,y2)
+    # Draws a line from point A (x1,y1) to point B (x2,y2)
+    #
+    # @param [Integer] x1 The x-value of point A
+    # @param [Integer] y1 The y-value of point A
+    # @param [Integer] x2 The x-value of point B
+    # @param [Integer] y2 The y-value of point B
+    # @param [Hash] opts Style options
     def line(x1, y1, x2, y2, opts = {})
-      opts.merge! :app => app
-      Shoes::Line.new Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
+      Shoes::Line.new app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
     end
 
     # Draws an oval at (left, top) with either

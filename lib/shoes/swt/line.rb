@@ -7,20 +7,20 @@ module Shoes
       # @param [Shoes::Point] point_a One endpoint of the line
       # @param [Shoes::Point] point_b The other endpoint of the line
       # @param [Hash] opts Options
-      def initialize(dsl, point_a, point_b, opts = {})
+      def initialize(dsl, app, point_a, point_b, opts = {})
         @dsl = dsl
-
+        @app = app
         @point_a = point_a
         @point_b = point_b
+
         @width = opts[:width]
         @height = opts[:height]
 
-        @app = opts[:app]
         @painter = Painter.new(self)
         @app.add_paint_listener(@painter)
       end
 
-      attr_reader :dsl
+      attr_reader :dsl, :app
       attr_reader :point_a, :point_b
       attr_reader :width, :height
 

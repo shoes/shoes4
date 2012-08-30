@@ -3,8 +3,9 @@ module Shoes
     class Line
       include Shoes::Mock::CommonMethods
 
-      def initialize(dsl, point_a, point_b, opts = {})
+      def initialize(dsl, app, point_a, point_b, opts = {})
         @dsl = dsl
+        @app = app
         @point_a = point_a
         @point_b = point_b
         @width = opts[:width]
