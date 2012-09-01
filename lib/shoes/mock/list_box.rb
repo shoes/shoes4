@@ -1,6 +1,6 @@
 module Shoes
   module Mock
-    class List_box
+    class ListBox
       include Shoes::Mock::CommonMethods
 
       def update_items(v)

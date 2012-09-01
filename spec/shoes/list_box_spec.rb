@@ -1,7 +1,7 @@
 require 'shoes/spec_helper'
 
-describe Shoes::List_box do
-  subject { Shoes::List_box.new(parent,
+describe Shoes::ListBox do
+  subject { Shoes::ListBox.new(parent,
     input_opts, input_block) }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { { :items => ["Wine", "Vodka", "Water"] } }
@@ -22,7 +22,7 @@ describe Shoes::List_box do
   end
 
   it "should call @gui.choose when we choose something" do
-    Shoes::Mock::List_box.any_instance.
+    Shoes::Mock::ListBox.any_instance.
         should_receive(:choose).with "Wine"
     subject.choose "Wine"
   end

@@ -72,7 +72,7 @@ module Shoes
 
     def list_box(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::List_box.new self, opts, blk
+      Shoes::ListBox.new self, opts, blk
     end
 
     def flow(opts = {}, &blk)
