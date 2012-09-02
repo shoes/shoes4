@@ -20,7 +20,7 @@ module Shoes
       end
 
       attr_reader :dsl, :app
-      attr_reader :element
+      attr_reader :element, :transform
       attr_reader :painter
 
       def line_to(x, y)
@@ -43,17 +43,12 @@ module Shoes
       class Painter < Common::Painter
         include Common::Resource
 
-        def paint_control(event)
-          gc = event.gc
-          gcs_reset gc
-          gc.setTransform(@obj.transform)
-          gc.set_background @obj.fill
+        def fill(gc)
           gc.fill_path(@obj.element)
-          gc.set_antialias ::Swt::SWT::ON
-          gc.set_foreground @obj.stroke
-          gc.set_line_width @obj.strokewidth
+        end
+
+        def draw(gc)
           gc.draw_path(@obj.element)
-          @obj.transform.dispose
         end
       end
     end

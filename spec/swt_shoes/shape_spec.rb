@@ -53,15 +53,18 @@ describe Shoes::Swt::Shape do
       transform.should_receive(:translate).with(20, 30)
       subject.move 20, 30
     end
+
   end
 
   describe "painter" do
     include_context "painter context"
 
+    let(:shape) { Shoes::Swt::Shape.new(dsl, app) }
     subject { Shoes::Swt::Shape::Painter.new(shape) }
 
     it_behaves_like "stroke painter"
     it_behaves_like "fill painter"
+    it_behaves_like "movable painter"
 
     it "fills path" do
       gc.should_receive(:fill_path)

@@ -25,6 +25,7 @@ module Shoes
       end
 
       attr_reader :dsl
+      attr_reader :transform
       attr_reader :painter
       attr_accessor :width, :height, :left, :top
 

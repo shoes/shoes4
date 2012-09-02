@@ -13,6 +13,22 @@ shared_context "painter context" do
   end
 end
 
+shared_examples_for "movable painter" do
+  describe "when moved" do
+    let(:transform) { double("transform").as_null_object }
+
+    before :each do
+      ::Swt::Transform.stub(:new) { transform }
+      shape.move(20, 30)
+    end
+
+    it "applies transform" do
+      gc.should_receive(:set_transform).with(transform)
+      subject.paint_control(event)
+    end
+  end
+end
+
 shared_examples_for "stroke painter" do
   it "sets stroke color" do
     stroke = Shoes::COLORS[:honeydew].to_native

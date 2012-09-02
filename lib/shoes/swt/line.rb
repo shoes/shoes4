@@ -23,6 +23,7 @@ module Shoes
       attr_reader :dsl, :app
       attr_reader :point_a, :point_b
       attr_reader :width, :height
+      attr_reader :transform
 
       class Painter < Common::Painter
         def draw(gc)

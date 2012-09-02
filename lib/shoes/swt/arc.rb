@@ -20,6 +20,7 @@ module Shoes
       end
 
       attr_reader :dsl
+      attr_reader :transform
       attr_reader :left, :top, :width, :height
 
       def angle1
