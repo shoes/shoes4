@@ -5,7 +5,7 @@ require 'swt_shoes/spec_helper'
 describe "Basic Element Methods" do
   class ElementMethodsShoeLaces
     include Shoes::ElementMethods
-    include Shoes::Swt::ElementMethods
+
     def initialize(gui)
       @gui = gui
       @app = self

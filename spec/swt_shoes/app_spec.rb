@@ -43,18 +43,4 @@ describe Shoes::Swt::App do
       subject.add_paint_listener painter
     end
   end
-
-  describe Shoes::App do
-    context "ancestors" do
-      subject { Shoes::App.ancestors }
-
-      it { should include(Shoes::Swt::ElementMethods) }
-
-      it "uses Shoes::Swt::ElementMethods before Shoes::ElementMethods" do
-        framework_index = subject.index(Shoes::Swt::ElementMethods)
-        shoes_index = subject.index(Shoes::ElementMethods)
-        framework_index.should be < shoes_index
-      end
-    end
-  end
 end
