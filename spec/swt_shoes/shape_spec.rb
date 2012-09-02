@@ -2,11 +2,8 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Shape do
   let(:app) { double("app", add_paint_listener: true) }
-  let(:gui_element) { double('gui element') }
-  let(:args_with_element) { {app: app, element: gui_element} }
-  let(:args_without_element) { {app: app} }
-
   let(:dsl) { double('dsl').as_null_object }
+  subject { Shoes::Swt::Shape.new dsl, app }
 
   shared_examples_for "Swt::Shape" do
     let(:ancestors) { subject.class.ancestors.map(&:name) }
@@ -24,24 +21,37 @@ describe Shoes::Swt::Shape do
     its(:dsl) { should be(dsl) }
   end
 
-  context "with app and gui element" do
-    subject { Shoes::Swt::Shape.new dsl, app, args_with_element }
+  it_behaves_like "Swt::Shape"
+  it_behaves_like "paintable"
 
-    it_behaves_like "Swt::Shape"
-    it_behaves_like "paintable"
+  describe "Swt element" do
+    let(:element) { double("element") }
+
+    before :each do
+      ::Swt::Path.stub(:new) { element }
+    end
+
+    it "delegates #move_to" do
+      element.should_receive(:move_to).with(20, 30)
+      subject.move_to 20, 30
+    end
+
+    it "delegates #line_to" do
+      element.should_receive(:line_to).with(20, 30)
+      subject.line_to 20, 30
+    end
   end
 
-  context "with app only" do
-    subject { Shoes::Swt::Shape.new dsl, app, args_without_element }
+  describe "moving" do
+    let(:transform) { double("transform") }
 
-    it_behaves_like "Swt::Shape"
-    it_behaves_like "paintable"
+    before :each do
+      ::Swt::Transform.stub(:new) { transform }
+    end
 
-    describe "#initialize" do
-      it "should not set current point on gui element" do
-        gui_element.should_not_receive(:move_to)
-        subject
-      end
+    it "delegates #move" do
+      transform.should_receive(:translate).with(20, 30)
+      subject.move 20, 30
     end
   end
 
