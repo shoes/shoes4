@@ -47,11 +47,11 @@ module Shoes
       #  cbox
       #end
 
-      def shape(*opts)
-        args = opts.last.class == Hash ? opts.pop : {}
-        args[:gui] = {container: self.gui}
-        super(*opts, args)
-      end
+      #def shape(*opts)
+        #args = opts.last.class == Hash ? opts.pop : {}
+        #args[:gui] = {container: self.gui}
+        #super(*opts, args)
+      #end
     end
   end
 end

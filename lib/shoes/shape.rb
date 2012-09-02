@@ -11,20 +11,21 @@ module Shoes
     include Shoes::Common::Stroke
     include Shoes::Common::Style
 
-    attr_reader :blk
-    attr_reader :x, :y
-
     # Creates a new Shoes::Shape
     #
-    def initialize(opts = {}, blk = nil)
+    def initialize(app, opts = {}, blk = nil)
+      @app = app
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @blk = blk
 
       # GUI
-      @gui = Shoes.configuration.backend_for(self, @style)
+      @gui = Shoes.backend_for(self, @style)
 
       instance_eval &@blk unless @blk.nil?
     end
+
+    attr_reader :app, :blk
+    attr_reader :x, :y
 
     def left
       @left || 0

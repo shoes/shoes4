@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Shape do
-  let(:app) { double("app") }
+  let(:app) { double("app", add_paint_listener: true) }
   let(:gui_element) { double('gui element') }
   let(:args_with_element) { {app: app, element: gui_element} }
   let(:args_without_element) { {app: app} }
@@ -9,10 +9,6 @@ describe Shoes::Swt::Shape do
   let(:dsl) { double('dsl').as_null_object }
 
   shared_examples_for "Swt::Shape" do
-    before :each do
-      app.should_receive(:add_paint_listener)
-    end
-
     let(:ancestors) { subject.class.ancestors.map(&:name) }
 
     it "uses Shoes::Swt" do
@@ -29,23 +25,19 @@ describe Shoes::Swt::Shape do
   end
 
   context "with app and gui element" do
-    subject { Shoes::Swt::Shape.new dsl, args_with_element }
+    subject { Shoes::Swt::Shape.new dsl, app, args_with_element }
 
     it_behaves_like "Swt::Shape"
     it_behaves_like "paintable"
   end
 
   context "with app only" do
-    subject { Shoes::Swt::Shape.new dsl, args_without_element }
+    subject { Shoes::Swt::Shape.new dsl, app, args_without_element }
 
     it_behaves_like "Swt::Shape"
     it_behaves_like "paintable"
 
     describe "#initialize" do
-      before :each do
-        app.should_receive(:add_paint_listener)
-      end
-
       it "should not set current point on gui element" do
         gui_element.should_not_receive(:move_to)
         subject

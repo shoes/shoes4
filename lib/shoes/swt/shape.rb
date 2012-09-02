@@ -11,17 +11,17 @@ module Shoes
       # @param [Hash] opts Initialization options
       #   If this shape is part of another shape (i.e. it is not responsible
       #   for drawing itself), `opts` should be omitted
-      def initialize(dsl, opts = nil)
+      def initialize(dsl, app, opts = {})
         @dsl = dsl
-        @app = opts[:app]
+        @app = app
         @element = ::Swt::Path.new(::Swt.display)
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
 
-      attr_reader :dsl
-      attr_reader :container, :element
-      attr_reader :paint_callback
+      attr_reader :dsl, :app
+      attr_reader :element
+      attr_reader :painter
 
       def line_to(x, y)
         @element.line_to(x, y)

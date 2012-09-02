@@ -4,56 +4,40 @@ require 'swt_shoes/spec_helper'
 #        We should run the same specs instead of duplicating.
 describe "Basic Element Methods" do
   class ElementMethodsShoeLaces
-    attr_accessor :gui
     include Shoes::ElementMethods
     include Shoes::Swt::ElementMethods
-    def initialize
+    def initialize(gui)
+      @gui = gui
+      @app = self
       @style = {}
     end
+
+    attr_reader :gui, :app
   end
 
-  let(:gui_container_real) { double('gui_container_real') }
-  let(:gui_container) { double('gui_container', real: gui_container_real) }
-  let(:app_real) { double('app_real') }
-  let(:app) {
-    ElementMethodsShoeLaces.new.tap { |a|
-      a.gui = gui_container
-    }
-  }
+  # Doubles for a Shoes::Swt::App
+  let(:app_gui) { double('app_gui') }
 
+  # Doubles for a Shoes::App
+  let(:app) { ElementMethodsShoeLaces.new app_gui }
 
   describe "arc" do
-    before :each do
-      app.stub(:app) { app }
-      app.stub(:gui) { app_real }
-    end
-
     specify "creates a Shoes::Arc" do
-      app_real.should_receive(:add_paint_listener)
+      app_gui.should_receive(:add_paint_listener)
       app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
     end
   end
 
   describe "line" do
-    before :each do
-      app.stub(:app) { app }
-      app.stub(:gui) { app_real }
-    end
-
     specify "creates a Shoes::Line" do
-      app_real.should_receive(:add_paint_listener)
+      app_gui.should_receive(:add_paint_listener)
       app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
     end
   end
 
   describe "oval" do
-    before :each do
-      app.stub(:app) { app }
-      app.stub(:gui) { app_real }
-    end
-
     specify "creates a Shoes::Oval" do
-      app_real.should_receive(:add_paint_listener)
+      app_gui.should_receive(:add_paint_listener)
       app.oval(30, 20, 100, 200).should be_an_instance_of(Shoes::Oval)
     end
   end
@@ -67,9 +51,8 @@ describe "Basic Element Methods" do
     }
 
     specify "create a Shoes::Shape" do
-      app.should_receive(:add_paint_listener)
+      app_gui.should_receive(:add_paint_listener)
       subject.should be_an_instance_of(Shoes::Shape)
     end
   end
-
 end

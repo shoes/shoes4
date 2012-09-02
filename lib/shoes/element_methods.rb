@@ -190,9 +190,8 @@ EOS
     end
 
     # Creates a new Shoes::Shape object
-    def shape(shape_style={}, &blk)
-      shape_style[:app] = self
-      Shoes::Shape.new(style.merge(shape_style), blk)
+    def shape(shape_style = {}, &blk)
+      Shoes::Shape.new(app, style.merge(shape_style), blk)
     end
 
     # Creates a new Shoes::Color object

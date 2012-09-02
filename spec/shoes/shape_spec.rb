@@ -2,7 +2,9 @@ require 'shoes/spec_helper'
 
 describe Shoes::Shape do
 
-  subject { Shoes::Shape.new {} }
+  let(:app_gui) { double("app gui") }
+  let(:app) { double("app", :gui => app_gui) }
+  subject { Shoes::Shape.new(app) {} }
 
   it_behaves_like "object with stroke"
   it_behaves_like "object with style"
@@ -20,7 +22,7 @@ describe Shoes::Shape do
         line_to xs.first, ys.first
       }
     }
-    subject { Shoes::Shape.new Hash.new, draw }
+    subject { Shoes::Shape.new app, Hash.new, draw }
 
     its(:left) { should eq(130) }
     its(:top) { should eq(100) }
