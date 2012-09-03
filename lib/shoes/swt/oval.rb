@@ -5,13 +5,9 @@ module Shoes
       include Common::Stroke
       include Common::Move
 
-      # opts must be provided if this shape is responsible for
-      # drawing itself. If this shape is part of another shape, then
-      # opts should be empty
-      #
-      # @param [Shoes::Oval] dsl The dsl object to provide gui for
-      # @param [Shoes::Swt::App app The app
-      # @param [Hash] opts Options
+      # @param [Shoes::Oval] dsl the dsl object to provide gui for
+      # @param [Shoes::Swt::App] app the app
+      # @param [Hash] opts options
       def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl = dsl
         @app = app
