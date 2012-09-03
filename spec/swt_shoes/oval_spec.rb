@@ -1,7 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
-  let(:app) { double('app', real: true) }
+  let(:container) { double('container', disposed?: false) }
+  let(:app) { double('app', real: container, add_paint_listener: true) }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
@@ -13,6 +14,7 @@ describe Shoes::Swt::Oval do
   }
 
   it_behaves_like "paintable"
+  it_behaves_like "movable shape", 10, 20
 
   describe "painter" do
     include_context "painter context"
