@@ -148,36 +148,49 @@ module Shoes
       Shoes::Line.new app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
     end
 
-    # Draws an oval at (left, top) with either
+    # Creates an oval at (left, top)
     #
-    # Signatures:
-    #   - oval(left, top, radius)
-    #   - oval(left, top, width, height)
-    #   - oval(styles)
-    #       where styles is a hash with any or all of these keys:
-    #         left, top, width, height, radius, center
+    # @overload oval(left, top, diameter)
+    #   Creates a circle at (left, top), with the given diameter
+    #   @param [Integer] left the x-coordinate of the top-left corner
+    #   @param [Integer] top the y-coordinate of the top-left corner
+    #   @param [Integer] diameter the diameter
+    # @overload oval(left, top, width, height)
+    #   Creates an oval at (left, top), with the given width and height
+    #   @param [Integer] left the x-coordinate of the top-left corner
+    #   @param [Integer] top the y-coordinate of the top-left corner
+    #   @param [Integer] width the width
+    #   @param [Integer] height the height
+    # @overload oval(styles)
+    #   Creates an oval using values from the styles Hash.
+    #   @param [Hash] styles
+    #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
+    #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    #   @option styles [Integer] width (0) the width
+    #   @option styles [Integer] height (0) the height
+    #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts)
-      defaults = {:left => 0, :top => 0, :width => 0, :height => 0, :radius => 0, :center => false}
       oval_style = opts.last.class == Hash ? opts.pop : {}
       case opts.length
         when 3
-          left, top, radius = opts
-          width = height = radius * 2
+          left, top, diameter = opts
+          width = height = diameter
         when 4
           left, top, width, height = opts
         when 0
-          left = oval_style[:left]
-          top = oval_style[:top]
+          left = oval_style[:left] || 0
+          top = oval_style[:top] || 0
           width = oval_style[:width] || 0
           height = oval_style[:height] || 0
-          radius = oval_style[:radius] || 0
-          width = oval_style[:radius] * 2 if width.zero?
+          radius = oval_style[:diameter] || 0
+          width = oval_style[:diameter] if width.zero?
           height = width if height.zero?
         else
           message = <<EOS
 Wrong number of arguments. Must be one of:
-  - oval(left, top, radius)
-  - oval(left, top, width, height)
+  - oval(left, top, diameter, [opts])
+  - oval(left, top, width, height, [opts])
   - oval(styles)
 EOS
           raise ArgumentError, message

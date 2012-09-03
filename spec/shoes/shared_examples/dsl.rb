@@ -163,7 +163,7 @@ shared_examples "dsl container" do
       subject.oval(10, 50, 250).should be_an_instance_of(Shoes::Oval)
     end
 
-    context "(eccentric)" do
+    context "eccentric, from explicit arguments" do
       let(:oval) { subject.oval(20, 30, 100, 200) }
 
       specify "makes a Shoes::Oval" do
@@ -178,21 +178,21 @@ shared_examples "dsl container" do
       end
     end
 
-    context "(circle) created with explicit arguments:" do
+    context "circle, from explicit arguments:" do
       context "width and height" do
         it_behaves_like "circle" do
           let(:circle) { subject.oval(20, 30, 100, 100) }
         end
       end
 
-      context "radius" do
+      context "diameter" do
         it_behaves_like "circle" do
-          let(:circle) { subject.oval(20, 30, 50) }
+          let(:circle) { subject.oval(20, 30, 100) }
         end
       end
     end
 
-    context "(circle) created with style hash:" do
+    context "circle, from style hash" do
       context "left, top, height, width" do
         it_behaves_like "circle" do
           let(:circle) { subject.oval(left: 20, top: 30, width: 100, height: 100) }
@@ -205,9 +205,9 @@ shared_examples "dsl container" do
         end
       end
 
-      context "left, top, radius" do
+      context "left, top, diameter" do
         it_behaves_like "circle" do
-          let(:circle) { subject.oval(left: 20, top: 30, radius: 50) }
+          let(:circle) { subject.oval(left: 20, top: 30, diameter: 100) }
         end
       end
 
