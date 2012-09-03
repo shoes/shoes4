@@ -1,7 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Rect do
-  let(:app) { double('app', :add_paint_listener => true) }
+  let(:container) { double('container', :disposed? => false) }
+  let(:app) { double('app', :real => container, :add_paint_listener => true) }
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
@@ -23,6 +24,7 @@ describe Shoes::Swt::Rect do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "movable shape", 10, 20
 
   describe "painter" do
     include_context "painter context"

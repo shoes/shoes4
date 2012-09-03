@@ -3,6 +3,7 @@ module Shoes
     class Rect
       include Common::Fill
       include Common::Stroke
+      include Common::Move
 
       def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl = dsl
@@ -13,6 +14,9 @@ module Shoes
         @height = height
         @opts = opts
         @corners = opts[:corners] || 0
+
+        # Move
+        @container = @app.real
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
