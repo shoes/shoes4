@@ -15,6 +15,7 @@ module Shoes
       def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl = dsl
         @app = app
+        @container = @app.real
         @left = left
         @top = top
         @width = width
