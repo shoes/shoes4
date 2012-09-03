@@ -46,6 +46,31 @@ shared_examples_for "circle" do
   end
 end
 
+shared_examples_for "square" do
+  specify "makes a Shoes::Rect" do
+    rect.should be_an_instance_of(Shoes::Rect)
+  end
+
+  specify "sets proper dimensions" do
+    rect.left.should eq(40)
+    rect.top.should eq(30)
+    rect.width.should eq(200)
+    rect.height.should eq(200)
+  end
+end
+
+shared_examples_for "rect" do
+  specify "makes a Shoes::Rect" do
+    rect.should be_an_instance_of(Shoes::Rect)
+  end
+
+  specify "sets proper dimensions" do
+    rect.left.should eq(40)
+    rect.top.should eq(30)
+    rect.width.should eq(200)
+    rect.height.should eq(100)
+  end
+end
 
 # Shared examples for app, flow, stack
 shared_examples "dsl container" do
@@ -190,6 +215,68 @@ shared_examples "dsl container" do
         it_behaves_like "circle" do
           let(:circle) { subject.oval(left: 70, top: 80, width: 100, height: 100, center: true) }
         end
+      end
+    end
+  end
+
+  describe "rect" do
+    context "unequal sides, from explicit arguments" do
+      let(:rect) { subject.rect 40, 30, 200, 100 }
+
+      it_behaves_like "rect"
+
+      specify "defaults to corner radius of 0" do
+        rect.corners.should eq(0)
+      end
+    end
+
+    context "unequal sides, round corners, from explicit arguments" do
+      let(:rect) { subject.rect 40, 30, 200, 100, 12 }
+
+      it_behaves_like "rect"
+
+      specify "sets corner radius" do
+        rect.corners.should eq(12)
+      end
+    end
+
+    context "unequal sides, from style hash" do
+      let(:rect) { subject.rect :left => 40, :top => 30, :width => 200, :height => 100 }
+
+      it_behaves_like "rect"
+
+      specify "defaults to corner radius of 0" do
+        rect.corners.should eq(0)
+      end
+    end
+
+    context "unequal sides, rounded corners, from style hash" do
+      let(:rect) { subject.rect :left => 40, :top => 30, :width => 200, :height => 100, :corners => 12 }
+
+      it_behaves_like "rect"
+
+      specify "sets corner radius" do
+        rect.corners.should eq(12)
+      end
+    end
+
+    context "square, from explicit arguments" do
+      let(:rect) { subject.rect 40, 30, 200 }
+
+      it_behaves_like "square"
+
+      specify "defaults to corner radius of 0" do
+        rect.corners.should eq(0)
+      end
+    end
+
+    context "square, from style hash" do
+      let(:rect) { subject.rect :left => 40, :top => 30, :width => 200 }
+
+      it_behaves_like "square"
+
+      specify "defaults to corner radius of 0" do
+        rect.corners.should eq(0)
       end
     end
   end

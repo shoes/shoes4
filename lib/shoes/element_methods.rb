@@ -189,6 +189,59 @@ EOS
       Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style))
     end
 
+    # Creates a rectangle
+    #
+    # @overload rect(left, top, side, styles)
+    #   Creates a square at (left, top), with sides of the given length
+    #   @param [Integer] left the x-coordinate of the top-left corner
+    #   @param [Integer] top the y-coordinate of the top-left corner
+    #   @param [Integer] side the length of a side
+    # @overload rect(left, top, width, height, rounded = 0, styles)
+    #   Creates a rectangle at (left, top), with the given width and height
+    #   @param [Integer] left the x-coordinate of the top-left corner
+    #   @param [Integer] top the y-coordinate of the top-left corner
+    #   @param [Integer] width the width
+    #   @param [Integer] height the height
+    # @overload rect(styles)
+    #   Creates a rectangle using values from the styles Hash.
+    #   @param [Hash] styles
+    #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
+    #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    #   @option styles [Integer] width (0) the width
+    #   @option styles [Integer] height (0) the height
+    #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
+    def rect(*args)
+      opts = args.last.class == Hash ? args.pop : {}
+      case args.length
+      when 3
+        left, top, width = args
+        height = width
+        opts[:corners] = 0
+      when 4
+        left, top, width, height = args
+        opts[:corners] = 0
+      when 5
+        left, top, width, height, opts[:corners] = args
+      when 0
+        left = opts[:left] || 0
+        top = opts[:top] || 0
+        width = opts[:width] || 0
+        height = opts[:height] || width
+        opts[:corners] ||= 0
+      else
+        message = <<EOS
+Wrong number of arguments. Must be one of:
+  - rect(left, top, side, [opts])
+  - rect(left, top, width, height, [opts])
+  - rect(left, top, width, height, corners, [opts])
+  - rect(styles)
+EOS
+        raise ArgumentError, message
+      end
+      Shoes::Rect.new app, left, top, width, height, style.merge(opts)
+    end
+
     # Creates a new Shoes::Shape object
     def shape(shape_style = {}, &blk)
       Shoes::Shape.new(app, style.merge(shape_style), blk)
