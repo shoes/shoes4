@@ -16,7 +16,7 @@ describe "Basic Element Methods" do
   end
 
   # Doubles for a Shoes::Swt::App
-  let(:app_gui) { double('app_gui') }
+  let(:app_gui) { double('app_gui', real: true) }
 
   # Doubles for a Shoes::App
   let(:app) { ElementMethodsShoeLaces.new app_gui }

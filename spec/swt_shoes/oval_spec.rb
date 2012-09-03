@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
-  let(:app) { double('app') }
+  let(:app) { double('app', real: true) }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
