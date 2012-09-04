@@ -4,8 +4,9 @@ module Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Move
+      include Common::Clickable
 
-      def initialize(dsl, app, left, top, width, height, opts = {})
+      def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
         @dsl = dsl
         @app = app
         @left = left
@@ -20,6 +21,7 @@ module Shoes
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
+        clickable dsl, blk
       end
 
       attr_reader :dsl

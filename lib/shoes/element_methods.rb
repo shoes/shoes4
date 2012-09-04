@@ -170,7 +170,7 @@ module Shoes
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
-    def oval(*opts)
+    def oval(*opts, &blk)
       oval_style = opts.last.class == Hash ? opts.pop : {}
       case opts.length
         when 3
@@ -199,7 +199,7 @@ EOS
         left -= width / 2 if width > 0
         top -= height / 2 if height > 0
       end
-      Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style))
+      Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style), &blk)
     end
 
     # Creates a rectangle
@@ -224,7 +224,7 @@ EOS
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
-    def rect(*args)
+    def rect(*args, &blk)
       opts = args.last.class == Hash ? args.pop : {}
       case args.length
       when 3
@@ -252,7 +252,7 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      Shoes::Rect.new app, left, top, width, height, style.merge(opts)
+      Shoes::Rect.new app, left, top, width, height, style.merge(opts), &blk
     end
 
     # Creates a new Shoes::Shape object

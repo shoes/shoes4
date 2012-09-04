@@ -10,7 +10,7 @@ module Shoes
     include Shoes::Common::Stroke
     include Shoes::Common::Style
 
-    def initialize(app, left, top, width, height, opts = {})
+    def initialize(app, left, top, width, height, opts = {}, &blk)
       @app = app
       @left = left
       @top = top
@@ -19,7 +19,7 @@ module Shoes
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
 
       # GUI
-      @gui = Shoes.backend_for(self, left, top, width, height)
+      @gui = Shoes.backend_for(self, left, top, width, height, &blk)
     end
 
     attr_reader :app

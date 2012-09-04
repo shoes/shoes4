@@ -5,6 +5,7 @@ module Swt
   include_package 'org.eclipse.swt.graphics'
   include_package 'org.eclipse.swt.events'
   module Widgets
+    import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
   end
 end
@@ -20,6 +21,7 @@ require 'shoes/swt/common/child'
 require 'shoes/swt/common/container'
 require 'shoes/swt/common/resource'
 require 'shoes/swt/common/painter'
+require 'shoes/swt/common/clickable'
 require 'shoes/swt/layout'
 require 'shoes/swt/app'
 

@@ -5,7 +5,7 @@ module Shoes
     include Common::Fill
     include Common::Stroke
 
-    def initialize(app, left, top, width, height, opts = {})
+    def initialize(app, left, top, width, height, opts = {}, &blk)
       @app = app
       @left = left
       @top = top
@@ -14,7 +14,7 @@ module Shoes
       @corners = opts[:corners] || 0
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
 
-      @gui = Shoes.backend_for(self, left, top, width, height, opts)
+      @gui = Shoes.backend_for(self, left, top, width, height, opts, &blk)
     end
 
     attr_reader :app

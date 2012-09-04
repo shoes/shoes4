@@ -4,11 +4,12 @@ module Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Move
+      include Common::Clickable
 
       # @param [Shoes::Oval] dsl the dsl object to provide gui for
       # @param [Shoes::Swt::App] app the app
       # @param [Hash] opts options
-      def initialize(dsl, app, left, top, width, height, opts = {})
+      def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
         @dsl = dsl
         @app = app
         @container = @app.real
@@ -19,6 +20,7 @@ module Shoes
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
+        clickable dsl, blk
       end
 
       attr_reader :dsl
