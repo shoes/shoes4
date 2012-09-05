@@ -3,14 +3,6 @@
 shared_context "painter context" do
   let(:event) { double("event", :gc => gc) }
   let(:gc) { double("gc").as_null_object }
-  let(:shape) { double("shape").as_null_object }
-
-  before :each do
-    shape.stub(:left) { left }
-    shape.stub(:top) { top }
-    shape.stub(:width) { width }
-    shape.stub(:height) { height }
-  end
 end
 
 shared_examples_for "movable painter" do

@@ -19,6 +19,7 @@ describe Shoes::Swt::Oval do
   describe "painter" do
     include_context "painter context"
 
+    let(:shape) { Shoes::Swt::Oval.new(dsl, app, left, top, width, height) }
     subject { Shoes::Swt::Oval::Painter.new(shape) }
 
     it_behaves_like "fill painter"

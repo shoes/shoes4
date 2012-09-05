@@ -1,5 +1,5 @@
 describe Shoes::Swt::Arc do
-  let(:app) { double("app") }
+  let(:app) { double("app", add_paint_listener: true) }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
@@ -7,7 +7,7 @@ describe Shoes::Swt::Arc do
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
   let(:opts) { {left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2} }
-  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2) }
+  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
@@ -53,13 +53,8 @@ describe Shoes::Swt::Arc do
 
   describe "painter" do
     include_context "painter context"
-
+    let(:shape) { Shoes::Swt::Arc.new(dsl, app, opts) }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
-
-    before :each do
-      shape.stub(:angle1) { angle1 }
-      shape.stub(:angle2) { angle2 }
-    end
 
     it_behaves_like "stroke painter"
     it_behaves_like "fill painter"
@@ -85,7 +80,7 @@ describe Shoes::Swt::Arc do
       specify "translates DSL values for Swt" do
         path = double('path')
         ::Swt::Path.stub(:new) { path }
-        args = [-50, 0, width, height, angle1, -angle2]
+        args = [-50, 0, width, height, 180.0, -90.0]
         path.should_receive(:add_arc).with(*args)
         gc.should_receive(:draw_arc).with(*args)
         subject.paint_control(gc)
@@ -94,7 +89,7 @@ describe Shoes::Swt::Arc do
 
     context "wedge" do
       before :each do
-        shape.stub(:wedge) { true }
+        shape.stub(:wedge?) { true }
       end
 
       specify "fills arc" do
@@ -108,7 +103,7 @@ describe Shoes::Swt::Arc do
       end
 
       specify "translates DSL values for Swt" do
-        args = [-50, 0, width, height, angle1, -angle2]
+        args = [-50, 0, width, height, 180, -90.0]
         gc.should_receive(:fill_arc).with(*args)
         gc.should_receive(:draw_arc).with(*args)
         subject.paint_control(gc)
