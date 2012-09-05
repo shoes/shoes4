@@ -5,3 +5,6 @@ simple-animate.rb
 simple-move.rb (works but looks a bit weird on Linux, see issue #59)
 simple-sound.rb
 simple-stripes.rb
+
+sample1.rb
+

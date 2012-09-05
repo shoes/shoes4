@@ -16,21 +16,15 @@ module Shoes
         @task = Proc.new do
           unless @app.real.disposed?
             @blk.call(@dsl.current_frame)
-            @dsl.increment_frame
+            @dsl.increment_frame unless @dsl.stopped?
             @app.real.redraw
-            ::Swt.display.timer_exec(2000 / @dsl.framerate, @task)
+            ::Swt.display.timer_exec(2000 / @dsl.framerate, @task) unless @dsl.removed?
           end
         end
         ::Swt.display.timer_exec(2000 / @dsl.framerate, @task)
       end
 
       attr_reader :task
-
-      #def stop
-      #end
-
-      #def start
-      #end
     end
   end
 end
