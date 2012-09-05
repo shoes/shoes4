@@ -16,4 +16,5 @@ describe Shoes::Rect do
   it_behaves_like "basic rect"
   it_behaves_like "object with fill"
   it_behaves_like "object with stroke"
+  it_behaves_like "movable object"
 end

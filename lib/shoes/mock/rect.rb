@@ -1,6 +1,8 @@
 module Shoes
   module Mock
     class Rect
+      include CommonMethods
+
       def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl, @app = dsl, app
         @left, @top, @width, @height = left, top, width, height
