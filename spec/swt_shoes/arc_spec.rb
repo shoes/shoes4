@@ -24,16 +24,6 @@ describe Shoes::Swt::Arc do
     its(:width) { should eq(width) }
     its(:height) { should eq(height) }
 
-    specify "fill alpha delegates to dsl" do
-      dsl.should_receive(:fill) { fill_color }
-      subject.fill_alpha.should eq(70)
-    end
-
-    specify "stroke alpha delegates to dsl" do
-      dsl.should_receive(:stroke) { stroke_color }
-      subject.stroke_alpha.should eq(110)
-    end
-
     specify "converts angle1 to degrees" do
       subject.angle1.should eq(180.0)
     end
@@ -87,7 +77,7 @@ describe Shoes::Swt::Arc do
       end
     end
 
-    context "wedge" do
+    context "wedge fill style" do
       before :each do
         shape.stub(:wedge?) { true }
       end
