@@ -14,8 +14,7 @@ module Shoes
       @style = default_style.merge(opts)
 
       #GUI
-      gui_opts = {:left => left, :top => top, :width => width, :height => height}
-      @gui = Shoes.backend_for(self, gui_opts)
+      @gui = Shoes.backend_for(self, left, top, width, height, opts)
     end
 
     attr_reader :app

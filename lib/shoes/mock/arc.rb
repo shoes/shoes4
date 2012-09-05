@@ -1,9 +1,9 @@
 module Shoes
   module Mock
     class Arc
-      def initialize(dsl, app, opts)
-        @width = opts[:width]
-        @height = opts[:height]
+      def initialize(dsl, app, left, top, width, height, opts = {})
+        @dsl, @app = dsl, app
+        @left, @top, @width, @height = left, top, width, height
       end
 
       attr_reader :width, :height

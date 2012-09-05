@@ -8,13 +8,9 @@ module Shoes
       #
       # @param [Shoes::Arc] dsl The DSL object represented by this implementation
       # @parem [Shoes::Swt::App] app The implementation object of the Shoes app
-      def initialize(dsl, app, opts)
-        @dsl = dsl
-        @app = app
-        @left = opts[:left]
-        @top = opts[:top]
-        @width = opts[:width]
-        @height = opts[:height]
+      def initialize(dsl, app, left, top, width, height, opts = {})
+        @dsl, @app = dsl, app
+        @left, @top, @width, @height = left, top, width, height
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
