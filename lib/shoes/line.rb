@@ -10,19 +10,14 @@ module Shoes
     include Shoes::Common::Style
 
     def initialize(app, point_a, point_b, opts = {})
-      @point_a = point_a
-      @point_b = point_b
       @app = app
-
-      @left = [point_a.x, point_b.x].min
-      @top = [point_a.y, point_b.y].min
 
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
 
       # GUI
       gui_opts = @style.clone
 
-      @gui = Shoes.backend_for(self, @point_a, @point_b, gui_opts)
+      @gui = Shoes.backend_for(self, point_a, point_b, gui_opts)
     end
 
     attr_reader :app

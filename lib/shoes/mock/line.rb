@@ -4,10 +4,8 @@ module Shoes
       include Shoes::Mock::CommonMethods
 
       def initialize(dsl, app, point_a, point_b, opts = {})
-        @dsl = dsl
-        @app = app
-        @point_a = point_a
-        @point_b = point_b
+        @dsl, @app = dsl, app
+        @point_a, @point_b = point_a, point_b
         @left = [point_a.x, point_b.x].min
         @top = [point_a.y, point_b.y].min
         @width = (point_a.x - point_b.x).abs

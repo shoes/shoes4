@@ -9,8 +9,7 @@ module Shoes
       # @param [Shoes::Point] point_b The other endpoint of the line
       # @param [Hash] opts Options
       def initialize(dsl, app, point_a, point_b, opts = {})
-        @dsl = dsl
-        @app = app
+        @dsl, @app = dsl, app
 
         # Move
         @container = @app.real
