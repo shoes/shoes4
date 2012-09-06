@@ -14,21 +14,29 @@ module Shoes
       @point_b = point_b
       @app = app
 
-      @left = point_a.x < point_b.x ? point_a.x : point_b.x
-      @top = point_a.y < point_b.y ? point_a.y : point_b.y
-      @width = (point_a.x - point_b.x).abs
-      @height = (point_a.y - point_b.y).abs
+      @left = [point_a.x, point_b.x].min
+      @top = [point_a.y, point_b.y].min
 
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
 
       # GUI
       gui_opts = @style.clone
-      gui_opts[:width] = @width
-      gui_opts[:height] = @height
 
       @gui = Shoes.backend_for(self, @point_a, @point_b, gui_opts)
     end
 
     attr_reader :app
+
+    def move(x, y)
+      @gui.move x, y
+    end
+
+    def left
+      @gui.left
+    end
+
+    def top
+      @gui.top
+    end
   end
 end

@@ -24,7 +24,7 @@ end
 
 shared_examples_for "movable shape" do |x, y|
   it "redraws container" do
-    container.should_receive(:redraw).twice
+    container.should_receive(:redraw).at_least(2).times
     subject.move x, y
   end
 

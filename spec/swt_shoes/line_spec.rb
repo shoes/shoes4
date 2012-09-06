@@ -1,7 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Line do
-  let(:app) { double('app', :add_paint_listener => true) }
+  let(:container) { double('container', :disposed? => false).as_null_object }
+  let(:app) { double('app', :real => container, :add_paint_listener => true) }
   let(:dsl) { double('dsl').as_null_object }
   let(:point_a) { Shoes::Point.new(10, 100) }
   let(:point_b) { Shoes::Point.new(300, 10) }
@@ -21,6 +22,7 @@ describe Shoes::Swt::Line do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "movable shape", 42, 52
 
   describe "painter" do
     include_context "painter context"
@@ -31,7 +33,8 @@ describe Shoes::Swt::Line do
     it_behaves_like "stroke painter"
 
     specify "draws line" do
-      gc.should_receive(:draw_line).with(10, 100, 300, 10)
+      # coords as if drawn in box at (0,0)
+      gc.should_receive(:draw_line).with(0, 90, 290, 0)
       subject.paint_control(event)
     end
   end
