@@ -16,17 +16,16 @@ module Shoes
 
         # Represent the enclosing box of the line as starting at (0,0), then
         # apply a transform translation to draw it in the proper place.
-        left = [point_a.x, point_b.x].min
-        top = [point_a.y, point_b.y].min
-        @point_a = ::Shoes::Point.new(point_a.x - left, point_a.y - top)
-        @point_b = ::Shoes::Point.new(point_b.x - left, point_b.y - top)
-        @width = (point_a.x - point_b.x).abs
-        @height = (point_a.y - point_b.y).abs
+        @left = point_a.left(point_b)
+        @top = point_a.top(point_b)
+        @width = point_a.width(point_b)
+        @height = point_a.height(point_b)
+        @point_a = point_a.to(-@left, -@top)
+        @point_b = point_b.to(-@left, -@top)
         @transform = ::Swt::Transform.new(::Swt.display)
         # Array to hold transform elements
         @te = Java::float[6].new
-        @left, @top = left, top
-        move left, top
+        move @left, @top
 
         @painter = Painter.new(self)
         @app.add_paint_listener(@painter)

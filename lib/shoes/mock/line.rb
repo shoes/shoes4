@@ -6,10 +6,10 @@ module Shoes
       def initialize(dsl, app, point_a, point_b, opts = {})
         @dsl, @app = dsl, app
         @point_a, @point_b = point_a, point_b
-        @left = [point_a.x, point_b.x].min
-        @top = [point_a.y, point_b.y].min
-        @width = (point_a.x - point_b.x).abs
-        @height = (point_a.y - point_b.y).abs
+        @left = point_a.left(point_b)
+        @top = point_a.top(point_b)
+        @width = point_a.width(point_b)
+        @height = point_a.height(point_b)
       end
 
       attr_reader :point_a, :point_b
