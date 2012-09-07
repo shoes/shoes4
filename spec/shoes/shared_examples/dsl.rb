@@ -285,7 +285,7 @@ shared_examples "dsl container" do
     let(:red) { 100 }
     let(:green) { 149 }
     let(:blue) { 237 }
-    let(:alpha) { 133 } # cornflower
+    let(:alpha) { 133 } # cornflowerblue
 
     it "sends args to Shoes::Color" do
       Shoes::Color.should_receive(:new).with(red, green, blue, alpha)
@@ -295,6 +295,16 @@ shared_examples "dsl container" do
     it "defaults to opaque" do
       Shoes::Color.should_receive(:new).with(red, green, blue, Shoes::Color::OPAQUE)
       subject.rgb(red, green, blue)
+    end
+
+    describe "named color method" do
+      specify "produces correct color" do
+        subject.cornflowerblue.should eq(Shoes::Color.new red, green, blue)
+      end
+
+      specify "accepts alpha arg" do
+        subject.cornflowerblue(alpha).should eq(Shoes::Color.new red, green, blue, alpha)
+      end
     end
   end
 

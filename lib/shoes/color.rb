@@ -201,7 +201,14 @@ module Shoes
 
     colors.each do |c, r, g, b|
       Shoes::COLORS[c] = Shoes::Color.new(r, g, b)
-      define_method(c) { Shoes::COLORS.fetch(c) }
+      define_method(c) do |alpha = nil|
+        color = Shoes::COLORS.fetch(c)
+        if alpha
+          Shoes::Color.new(color.red, color.green, color.blue, alpha)
+        else
+          color
+        end
+      end
     end
   end
 end
