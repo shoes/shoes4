@@ -5,6 +5,7 @@ module Swt
   include_package 'org.eclipse.swt.graphics'
   include_package 'org.eclipse.swt.events'
   module Widgets
+    import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
   end
 end
@@ -16,11 +17,12 @@ end
 require 'shoes/swt/common/fill'
 require 'shoes/swt/common/stroke'
 require 'shoes/swt/common/move'
-require 'shoes/swt/element_methods'
 require 'shoes/swt/common/child'
 require 'shoes/swt/common/container'
 require 'shoes/swt/common/resource'
 require 'shoes/swt/common/painter'
+require 'shoes/swt/common/clickable'
+require 'shoes/swt/alert'
 require 'shoes/swt/layout'
 require 'shoes/swt/app'
 
@@ -40,6 +42,7 @@ require 'shoes/swt/list_box'
 require 'shoes/swt/oval'
 require 'shoes/swt/progress'
 require 'shoes/swt/radio'
+require 'shoes/swt/rect'
 require 'shoes/swt/shape'
 require 'shoes/swt/slot'
 require 'shoes/swt/sound'

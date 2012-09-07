@@ -1,18 +1,17 @@
 describe Shoes::Swt::Arc do
-  let(:app) { double("app") }
+  let(:app) { double("app", add_paint_listener: true) }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:opts) { { app: app, left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2} }
-  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2) }
+  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
   subject {
-    Shoes::Swt::Arc.new(dsl, opts)
+    Shoes::Swt::Arc.new(dsl, app, left, top, width, height)
   }
 
   describe "basics" do
@@ -25,22 +24,17 @@ describe Shoes::Swt::Arc do
     its(:width) { should eq(width) }
     its(:height) { should eq(height) }
 
-    specify "fill alpha delegates to dsl" do
-      dsl.should_receive(:fill) { fill_color }
-      subject.fill_alpha.should eq(70)
-    end
-
-    specify "stroke alpha delegates to dsl" do
-      dsl.should_receive(:stroke) { stroke_color }
-      subject.stroke_alpha.should eq(110)
-    end
-
     specify "converts angle1 to degrees" do
       subject.angle1.should eq(180.0)
     end
 
     specify "converts angle2 to degrees" do
       subject.angle2.should eq(90.0)
+    end
+
+    specify "delegates #wedge? to dsl object" do
+      dsl.should_receive(:wedge?) { false }
+      subject.should_not be_wedge
     end
   end
 
@@ -49,34 +43,61 @@ describe Shoes::Swt::Arc do
   describe "painter" do
     include_context "painter context"
 
+    let(:shape) { Shoes::Swt::Arc.new(dsl, app, left, top, width, height) }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
-
-    before :each do
-      shape.stub(:angle1) { angle1 }
-      shape.stub(:angle2) { angle2 }
-    end
 
     it_behaves_like "stroke painter"
     it_behaves_like "fill painter"
 
-    specify "fills arc" do
-      gc.should_receive(:fill_arc)
-      subject.paint_control(event)
+    context "normal fill style" do
+      before :each do
+        shape.stub(:wedge?) { false }
+      end
+
+      specify "fills arc using path" do
+        gc.should_receive(:fill_path)
+        subject.paint_control(event)
+      end
+
+      specify "draws arc" do
+        gc.should_receive(:draw_arc)
+        subject.paint_control(event)
+      end
+
+      # Swt wants the upper left corner of the rectangle containing the arc. Shoes
+      # uses (left, top) as the *center* of the rectangle containing the arc. Also,
+      # Swt measures the arc counterclockwise, while Shoes measures it clockwise.
+      specify "translates DSL values for Swt" do
+        path = double('path')
+        ::Swt::Path.stub(:new) { path }
+        args = [-50, 0, width, height, 180.0, -90.0]
+        path.should_receive(:add_arc).with(*args)
+        gc.should_receive(:draw_arc).with(*args)
+        subject.paint_control(gc)
+      end
     end
 
-    specify "draws arc" do
-      gc.should_receive(:draw_arc)
-      subject.paint_control(event)
-    end
+    context "wedge fill style" do
+      before :each do
+        shape.stub(:wedge?) { true }
+      end
 
-    # Swt wants the upper left corner of the rectangle containing the arc. Shoes
-    # uses (left, top) as the *center* of the rectangle containing the arc. Also,
-    # Swt measures the arc counterclockwise, while Shoes measures it clockwise.
-    specify "translates DSL values for Swt" do
-      args = [-50, 0, width, height, angle1, -angle2]
-      gc.should_receive(:fill_arc).with(*args)
-      gc.should_receive(:draw_arc).with(*args)
-      subject.paint_control(gc)
+      specify "fills arc" do
+        gc.should_receive(:fill_arc)
+        subject.paint_control(event)
+      end
+
+      specify "draws arc" do
+        gc.should_receive(:draw_arc)
+        subject.paint_control(event)
+      end
+
+      specify "translates DSL values for Swt" do
+        args = [-50, 0, width, height, 180, -90.0]
+        gc.should_receive(:fill_arc).with(*args)
+        gc.should_receive(:draw_arc).with(*args)
+        subject.paint_control(gc)
+      end
     end
   end
 end

@@ -38,6 +38,14 @@ module Shoes
      @stopped = !@stopped
     end
 
+    def remove
+      @removed = true
+    end
+    
+    def removed?
+      @removed
+    end
+
     # Increments the current frame by 1
     #
     # @return [Integer] The new current frame

@@ -12,6 +12,7 @@ module Shoes
           gc = event.gc
           gcs_reset gc
           gc.set_antialias ::Swt::SWT::ON
+          gc.set_transform(@obj.transform)
           fill_setup gc
           fill gc
           draw_setup gc

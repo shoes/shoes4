@@ -1,6 +1,6 @@
 require "shoes/spec_helper"
 
-describe Shoes::EditLine do
+describe Shoes::EditBox do
 
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }

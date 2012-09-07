@@ -5,6 +5,8 @@ module Shoes
     class EditBox < InputBox
 
       def initialize(dsl, parent, blk)
+        dsl.opts[:width] ||= 200
+        dsl.opts[:height] ||= 100
         super(dsl, parent, blk,
           ::Swt::SWT::MULTI  |
           ::Swt::SWT::BORDER |

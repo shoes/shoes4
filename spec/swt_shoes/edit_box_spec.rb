@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::EditBox do
-  let(:dsl) { double('dsl') }
+  let(:dsl) { double('dsl', opts: {}) }
   let(:parent) { double('parent') }
   let(:block) { double('block') }
   let(:real) { double('real').as_null_object }

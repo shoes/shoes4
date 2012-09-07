@@ -3,15 +3,20 @@ module Shoes
     class Line
       include Shoes::Mock::CommonMethods
 
-      attr_accessor :width, :height
+      def initialize(dsl, app, point_a, point_b, opts = {})
+        @dsl, @app = dsl, app
+        @point_a, @point_b = point_a, point_b
+        @left = point_a.left(point_b)
+        @top = point_a.top(point_b)
+        @width = point_a.width(point_b)
+        @height = point_a.height(point_b)
+      end
 
-      def initialize(dsl, opts = nil)
-        @dsl = dsl
+      attr_reader :point_a, :point_b
+      attr_reader :left, :top, :width, :height
 
-        @left = opts[:left]
-        @top = opts[:top]
-        @width = opts[:width]
-        @height = opts[:height]
+      def move(x, y)
+        @left, @top = x, y
       end
     end
   end

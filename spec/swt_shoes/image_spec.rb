@@ -11,11 +11,13 @@ describe Shoes::Swt::Image do
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", contents: []) }
   let(:parent) { double("parent", real: true, dsl: parent_dsl) }
-  let(:dsl) { double("dsl object", left: left, top: top)}
+  let(:dsl) { double("dsl object", left: left, top: top, app: app)}
   let(:left) { 100 }
   let(:top) { 200 }
-  let(:mock_image) { mock(:swt_image, getImageData: MockSize.new) }
+  let(:mock_image) { mock(:swt_image, getImageData: MockSize.new, addListener: true) }
   let(:real) { mock_image }
+  let(:gui) { double("gui", real: real) }
+  let(:app) { double("app", gui: gui) }
 
   subject {
     ::Swt::Graphics::Image.stub(:new) { mock_image}

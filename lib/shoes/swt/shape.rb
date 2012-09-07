@@ -11,17 +11,17 @@ module Shoes
       # @param [Hash] opts Initialization options
       #   If this shape is part of another shape (i.e. it is not responsible
       #   for drawing itself), `opts` should be omitted
-      def initialize(dsl, opts = nil)
+      def initialize(dsl, app, opts = {})
         @dsl = dsl
-        @app = opts[:app]
+        @app = app
         @element = ::Swt::Path.new(::Swt.display)
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
 
-      attr_reader :dsl
-      attr_reader :container, :element
-      attr_reader :paint_callback
+      attr_reader :dsl, :app
+      attr_reader :element, :transform
+      attr_reader :painter
 
       def line_to(x, y)
         @element.line_to(x, y)
@@ -43,17 +43,12 @@ module Shoes
       class Painter < Common::Painter
         include Common::Resource
 
-        def paint_control(event)
-          gc = event.gc
-          gcs_reset gc
-          gc.setTransform(@obj.transform)
-          gc.set_background @obj.fill
+        def fill(gc)
           gc.fill_path(@obj.element)
-          gc.set_antialias ::Swt::SWT::ON
-          gc.set_foreground @obj.stroke
-          gc.set_line_width @obj.strokewidth
+        end
+
+        def draw(gc)
           gc.draw_path(@obj.element)
-          @obj.transform.dispose
         end
       end
     end

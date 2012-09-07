@@ -5,17 +5,25 @@ module Shoes
     include Common::Stroke
     include Common::Style
 
-    def initialize(left, top, width, height, angle1, angle2, opts = {})
+    def initialize(app, left, top, width, height, angle1, angle2, opts = {})
+      @app = app
       @left, @top = left, top
       @angle1, @angle2 = angle1, angle2
+      @wedge = opts[:wedge] || false
       default_style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS)
       @style = default_style.merge(opts)
 
       #GUI
-      gui_opts = {:left => left, :top => top, :width => width, :height => height, :app => opts[:app].gui}
-      @gui = Shoes.configuration.backend_for(self, gui_opts)
+      @gui = Shoes.backend_for(self, left, top, width, height, opts)
     end
 
+    attr_reader :app
     attr_reader :angle1, :angle2
+
+    # @return [Boolean] if fill should be a wedge shape, rather than a chord
+    #   Defaults to false
+    def wedge?
+      true unless @wedge == false
+    end
   end
 end

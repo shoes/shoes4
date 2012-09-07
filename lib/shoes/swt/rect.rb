@@ -1,22 +1,23 @@
 module Shoes
   module Swt
-    class Oval
+    class Rect
       include Common::Fill
       include Common::Stroke
       include Common::Move
       include Common::Clickable
 
-      # @param [Shoes::Oval] dsl the dsl object to provide gui for
-      # @param [Shoes::Swt::App] app the app
-      # @param [Hash] opts options
       def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
         @dsl = dsl
         @app = app
-        @container = @app.real
         @left = left
         @top = top
         @width = width
         @height = height
+        @opts = opts
+        @corners = opts[:corners] || 0
+
+        # Move
+        @container = @app.real
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
@@ -26,15 +27,18 @@ module Shoes
       attr_reader :dsl
       attr_reader :transform
       attr_reader :painter
-      attr_accessor :width, :height, :left, :top
+      attr_reader :left, :top, :width, :height
+      attr_reader :corners
 
       class Painter < Common::Painter
+        include Common::Resource
+
         def fill(gc)
-          gc.fill_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+          gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners, @obj.corners)
         end
 
         def draw(gc)
-          gc.draw_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+          gc.draw_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners, @obj.corners)
         end
       end
     end

@@ -21,3 +21,17 @@ shared_examples "movable element" do |left, top|
     end
   end
 end
+
+shared_examples_for "movable shape" do |x, y|
+  it "redraws container" do
+    container.should_receive(:redraw).at_least(2).times
+    subject.move x, y
+  end
+
+  it "moves" do
+    container.stub(:redraw)
+    subject.move x, y
+    subject.left.should eq(x)
+    subject.top.should eq(y)
+  end
+end

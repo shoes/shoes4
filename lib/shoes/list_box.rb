@@ -1,17 +1,19 @@
 require 'shoes/common_methods'
 
 module Shoes
-  class List_box
+  class ListBox
     include Shoes::CommonMethods
-    attr_reader :items, :gui, :blk, :parent
+    attr_reader :items, :gui, :blk, :parent, :opts
 
     def initialize(parent, opts = {}, blk = nil)
       @parent = parent
       @blk = blk
       @app = opts[:app]
+      @opts = opts
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
       self.items = opts.has_key?(:items) ? opts[:items] : [""]
+      @parent.add_child self
     end
 
     def items=(values)

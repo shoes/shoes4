@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Animation do
-  let(:dsl) { double('dsl').as_null_object }
+  let(:dsl) { double('dsl', :stopped? => false, :removed? => false)}
   let(:app) { double 'app', :real => app_real }
   let(:block) { double 'block' }
   let(:display) { ::Swt.display }
@@ -11,6 +11,8 @@ describe Shoes::Swt::Animation do
   before :each do
     display.stub(:timer_exec)
     dsl.stub(:framerate) { 10 }
+    dsl.stub(:current_frame)
+    dsl.stub(:increment_frame)
   end
 
   it "triggers an Swt timer" do

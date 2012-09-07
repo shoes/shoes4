@@ -16,9 +16,8 @@ module Shoes
       @opts = opts
       @app = opts[:app]
 
-      @color = color
-      @color = opts[:fill] if opts.has_key? :fill
-      @curve = opts[:curve] ? opts[:curve] : 0
+      @color = opts.has_key?(:fill) ? opts[:fill] : color
+      @curve = opts[:curve] ? opts[:curve] : 0 # || 0
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
     end

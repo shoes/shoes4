@@ -3,22 +3,48 @@
 shared_context "painter context" do
   let(:event) { double("event", :gc => gc) }
   let(:gc) { double("gc").as_null_object }
-  let(:shape) { double("shape").as_null_object }
+  let(:fill) { Shoes::COLORS[:chartreuse].to_native }
+  let(:stroke) { Shoes::COLORS[:papayawhip].to_native }
+  let(:fill_alpha) { 70 }
+  let(:stroke_alpha) { 110 }
 
   before :each do
-    shape.stub(:left) { left }
-    shape.stub(:top) { top }
-    shape.stub(:width) { width }
-    shape.stub(:height) { height }
+    shape.stub(:fill) { fill }
+    shape.stub(:fill_alpha) { fill_alpha }
+    shape.stub(:stroke) { stroke }
+    shape.stub(:stroke_alpha) { stroke_alpha }
+  end
+end
+
+
+shared_examples_for "movable painter" do
+  describe "when moved" do
+    let(:transform) { double("transform").as_null_object }
+
+    before :each do
+      ::Swt::Transform.stub(:new) { transform }
+      shape.move(20, 30)
+    end
+
+    it "applies transform" do
+      gc.should_receive(:set_transform).with(transform)
+      subject.paint_control(event)
+    end
   end
 end
 
 shared_examples_for "stroke painter" do
-  it "sets stroke color" do
-    stroke = Shoes::COLORS[:honeydew].to_native
-    shape.stub(:stroke) { stroke }
-    gc.should_receive(:set_foreground).with(stroke)
-    subject.paint_control(event)
+  describe "sets stroke" do
+    specify "color" do
+      gc.should_receive(:set_foreground).with(stroke)
+      subject.paint_control(event)
+    end
+
+    specify "alpha" do
+      gc.stub(:set_alpha)
+      gc.should_receive(:set_alpha).with(stroke_alpha)
+      subject.paint_control(event)
+    end
   end
 
   it "sets strokewidth" do
@@ -34,10 +60,17 @@ shared_examples_for "stroke painter" do
 end
 
 shared_examples_for "fill painter" do
-  it "sets fill color" do
-    fill = Shoes::COLORS[:chartreuse].to_native
-    shape.stub(:fill) { fill }
-    gc.should_receive(:set_background).with(fill)
-    subject.paint_control(event)
+  describe "sets fill" do
+    specify "color" do
+      gc.should_receive(:set_background).with(fill)
+      subject.paint_control(event)
+    end
+
+    specify "alpha" do
+      # Once for stroke, once for fill
+      gc.stub(:set_alpha)
+      gc.should_receive(:set_alpha).with(fill_alpha)
+      subject.paint_control(event)
+    end
   end
 end

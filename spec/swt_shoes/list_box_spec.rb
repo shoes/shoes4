@@ -1,13 +1,13 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::List_box do
+describe Shoes::Swt::ListBox do
   let(:items) { ["Pie", "Apple", "Sand"] }
-  let(:dsl) { double('dsl', :items => items) }
+  let(:dsl) { double('dsl', items: items, opts: {}) }
   let(:parent) { double('parent') }
   let(:block) { double('block') }
-  let(:real) { mock(:text => "")  }
+  let(:real) { mock(text: "", setSize: true, addSelectionListener: true) }
 
-  subject { Shoes::Swt::List_box.new dsl, parent, block }
+  subject { Shoes::Swt::ListBox.new dsl, parent, block }
 
   before :each do
     parent.stub(:real)

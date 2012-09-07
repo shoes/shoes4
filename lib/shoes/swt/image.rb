@@ -4,13 +4,13 @@ module Shoes
       include Common::Child
       include Common::Move
       include Common::Resource
+      include Common::Clickable
 
       attr_reader :parent, :real, :dsl, :container, :paint_callback, :width, :height
 
       def initialize(dsl, parent, blk)
         @dsl = dsl
         @parent = parent
-        @blk = blk
         @left, @top = @dsl.left, @dsl.top
         @container = @parent.real
 
@@ -25,6 +25,8 @@ module Shoes
           gc.drawImage @real, @left, @top
         end
         @container.add_paint_listener(@paint_callback)
+        
+        clickable dsl, blk
       end
     end
   end

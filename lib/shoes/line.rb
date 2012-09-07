@@ -9,23 +9,29 @@ module Shoes
     include Shoes::Common::Stroke
     include Shoes::Common::Style
 
-    def initialize(x1, y1, x2, y2, opts = {})
-      @left = x1 < x2 ? x1 : x2
-      @top = y1 < y2 ? y1 : y2
-      @width = (x1 - x2).abs
-      @height = (y1 - y2).abs
+    def initialize(app, point_a, point_b, opts = {})
+      @app = app
 
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
 
       # GUI
-      values = @style.clone
-      values[:left]   = @left
-      values[:top]    = @top
-      values[:width]  = @width
-      values[:height] = @height
-      values[:app]    = opts[:app].gui
+      gui_opts = @style.clone
 
-      @gui = Shoes.configuration.backend_for(self, values)
+      @gui = Shoes.backend_for(self, point_a, point_b, gui_opts)
+    end
+
+    attr_reader :app
+
+    def move(x, y)
+      @gui.move x, y
+    end
+
+    def left
+      @gui.left
+    end
+
+    def top
+      @gui.top
     end
   end
 end
