@@ -7,7 +7,7 @@ end
 
 
 module Shoes
-  SHOES_ICON = 'static/shoes-icon.png'
+  SHOES_ICON = File.join(File.dirname(__FILE__), '..', '..', 'static', 'shoes-icon.png')
 
   def self.app(opts={}, &blk)
     Shoes::App.new(opts, &blk)
