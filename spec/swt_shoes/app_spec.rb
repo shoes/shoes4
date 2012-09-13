@@ -15,6 +15,7 @@ describe Shoes::Swt::App do
                      :setBackground => true) }
 
   let(:mock_real) { mock(:swt_real,
+                     :addMouseMoveListener => true, :addMouseListener => true, 
                      :setBackground => true,
                      :setSize => true, :setLayout => true,
                      :background_mode= => true) }

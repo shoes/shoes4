@@ -340,5 +340,9 @@ EOS
       opts.merge! :app => @app
       Shoes::TextBlock.new(self, text, INSCRIPTION_FONT_SIZE, opts, blk)
     end
+    
+    def mouse
+      [@app.mouse_button, @app.mouse_pos[0], @app.mouse_pos[1]]
+    end
   end
 end

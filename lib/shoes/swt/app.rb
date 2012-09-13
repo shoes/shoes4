@@ -26,6 +26,8 @@ module Shoes
 
         @dx = @dy = 0
         @shell.addControlListener ShellControlListener.new(self)
+        @real.addMouseMoveListener MouseMoveListener.new(self)
+        @real.addMouseListener MouseListener.new(self)
       end
 
       attr_reader :dsl, :real, :shell, :dx, :dy
@@ -65,7 +67,6 @@ module Shoes
       def initialize(app)
         @app = app
         @times_run = 0
-        super()
       end
 
       def controlResized(e)
@@ -85,6 +86,31 @@ module Shoes
       end
     end
 
+    class MouseMoveListener
+      def initialize app
+        @app = app
+      end
+      def mouseMove(e)
+        @app.dsl.mouse_pos = [e.x, e.y]
+      end
+    end
+    
+    class MouseListener
+      def initialize app
+        @app = app
+      end
+      def mouseDown(e)
+        @app.dsl.mouse_button = e.button
+        @app.dsl.mouse_pos = [e.x, e.y]
+      end
+      def mouseUp(e)
+        @app.dsl.mouse_button = 0
+        @app.dsl.mouse_pos = [e.x, e.y]
+      end
+      def mouseDoubleClick(e)
+        # do nothing
+      end
+    end
   end
 end
 
