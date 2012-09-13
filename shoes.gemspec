@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   #s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "facets"
   s.add_dependency "log4jruby"
   s.add_dependency "swt"
 
