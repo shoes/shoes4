@@ -308,37 +308,37 @@ EOS
 
     def banner(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, BANNER_FONT_SIZE, opts, blk)
+      Shoes::Banner.new(self, text, BANNER_FONT_SIZE, opts)
     end
 
     def title(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, TITLE_FONT_SIZE, opts, blk)
+      Shoes::Title.new(self, text, TITLE_FONT_SIZE, opts)
     end
 
     def subtitle(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, SUBTITLE_FONT_SIZE, opts, blk)
+      Shoes::Subtitle.new(self, text, SUBTITLE_FONT_SIZE, opts)
     end
 
     def tagline(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, TAGLINE_FONT_SIZE, opts, blk)
+      Shoes::Tagline.new(self, text, TAGLINE_FONT_SIZE, opts)
     end
 
     def caption(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, CAPTION_FONT_SIZE, opts, blk)
+      Shoes::Caption.new(self, text, CAPTION_FONT_SIZE, opts)
     end
 
     def para(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, PARA_FONT_SIZE, opts, blk)
+      Shoes::Para.new(self, text, PARA_FONT_SIZE, opts)
     end
 
     def inscription(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::TextBlock.new(self, text, INSCRIPTION_FONT_SIZE, opts, blk)
+      Shoes::Inscription.new(self, text, INSCRIPTION_FONT_SIZE, opts)
     end
     
     def mouse
