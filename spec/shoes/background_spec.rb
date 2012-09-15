@@ -1,24 +1,20 @@
-require 'shoes/spec_helper'
+shared_examples_for "basic background" do
+  it "retains app" do
+    subject.app.should eq(app)
+  end
+
+  it "creates gui object" do
+    subject.gui.should_not be_nil
+  end
+end
 
 describe Shoes::Background do
-  let(:app_width) { 400 }
-  let(:app_height) { 200 }
-  let(:white) { Shoes::COLORS[:white] }
+  let(:parent) { double("parent") }
   let(:blue)  { Shoes::COLORS[:blue] }
-  let(:paint_event) do
-    paint_event = double "paint_event"
-    paint_event.stub(height: app_height, width: app_width)
-    paint_event
-  end
-  let(:input_block) { Proc.new {} }
-  let(:input_opts) { { height: 30 } }
-  let(:parent) { double("parent").as_null_object }
-  subject { Shoes::Background.new(parent, blue,
-                                  input_opts, input_block) }
+  let(:app_gui) { double("app_gui") }
+  let(:app) { double("app", :gui => app_gui) }
+  let(:opts){ {app: app, color: blue} }
+  subject { Shoes::Background.new(parent, blue, opts) }
 
-  it { should respond_to :fill }
-
-  it "should set the color" do
-    subject.color.should eql blue
-  end
+  it_behaves_like "basic background"
 end

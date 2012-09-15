@@ -1,6 +1,3 @@
-require 'facets/kernel/constant'
-require 'facets/string'
-
 module Shoes
   class Configuration
     class << self

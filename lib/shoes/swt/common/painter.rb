@@ -39,6 +39,11 @@ module Shoes
         # Implement in subclass
         def draw(gc)
         end
+        
+        def set_width_and_height
+          @obj.width = @obj.opts[:width] || @obj.dsl.parent.width
+          @obj.height = @obj.opts[:height] || @obj.dsl.parent.height
+        end
       end
     end
   end

@@ -7,7 +7,7 @@ end
 
 
 module Shoes
-  SHOES_ICON = 'static/shoes-icon.png'
+  SHOES_ICON = File.join(File.dirname(__FILE__), '..', '..', 'static', 'shoes-icon.png')
 
   def self.app(opts={}, &blk)
     Shoes::App.new(opts, &blk)
@@ -20,6 +20,7 @@ module Shoes
     attr_reader :app
     attr_accessor :elements
     attr_accessor :opts, :blk
+    attr_accessor :mouse_button, :mouse_pos
 
     attr_accessor :width, :height, :resizable, :app_title
     attr_writer   :width, :height
@@ -36,6 +37,7 @@ module Shoes
       @app = self
       @style = default_styles
       @contents = []
+      @mouse_button, @mouse_pos = 0, [0, 0]
 
       @gui = Shoes.configuration.backend::App.new @app
 

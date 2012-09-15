@@ -1,25 +1,32 @@
 require 'shoes/common_methods'
-require 'shoes/color'
+require 'shoes/common/fill'
+require 'shoes/common/stroke'
+require 'shoes/common/style'
 
 module Shoes
   class Background
-    include Shoes::CommonMethods
-
-    attr_reader :parent, :blk, :gui
-    attr_reader :color, :opts, :curve
-    attr_accessor :width, :height
-    alias :fill :color
+    include CommonMethods
+    include Common::Style
+    include Common::Fill
+    include Common::Stroke
 
     def initialize(parent, color, opts = {}, blk = nil)
       @parent = parent
-      @blk = blk
-      @opts = opts
       @app = opts[:app]
+      @left = opts[:left] || 0
+      @top = opts[:top] || 0
+      @width = opts[:width] || 0
+      @height = opts[:height] || 0
+      @corners = opts[:curve] || 0
+      opts[:fill] = color
+      @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
 
-      @color = opts.has_key?(:fill) ? opts[:fill] : color
-      @curve = opts[:curve] ? opts[:curve] : 0 # || 0
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @gui = Shoes.backend_for(self, left, top, width, height, opts, &blk)
     end
+
+    attr_reader :app
+    attr_reader :gui, :parent
+    attr_reader :corners
+    attr_accessor :width, :height
   end
 end
