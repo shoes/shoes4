@@ -1,6 +1,6 @@
 module Shoes
   module Swt
-    class TextBlock
+    class WordElement
       include Common::Child
 
       # Create a list box

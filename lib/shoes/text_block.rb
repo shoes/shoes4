@@ -4,6 +4,14 @@ module Shoes
   DEFAULT_TEXTBLOCK_FONT = ["Arial"]
 
   class TextBlock
+    def initialize(parent, text="", font_size=5, opts = {}, blk = nil)
+      text.words.each do |word|
+        WordElement.new(parent, word+" ", font_size, opts, blk)
+      end
+    end
+  end
+
+  class WordElement
     include Shoes::CommonMethods
 
     attr_reader  :gui, :blk, :parent, :text
