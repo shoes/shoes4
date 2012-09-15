@@ -5,6 +5,7 @@ Shoes.configuration.backend = :swt
 
 RSpec.configure do |config|
   config.before(:each) do
+    Shoes.logger.level = :error
     Swt.stub(:event_loop)
     Swt::Widgets::Shell.any_instance.stub(:open)
   end
