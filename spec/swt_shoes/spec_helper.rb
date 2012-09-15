@@ -6,6 +6,7 @@ Shoes.configuration.backend = :swt
 RSpec.configure do |config|
   config.before(:each) do
     Swt.stub(:event_loop)
+    Swt::Widgets::Shell.any_instance.stub(:open)
   end
 end
 

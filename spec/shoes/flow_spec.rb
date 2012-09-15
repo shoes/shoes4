@@ -1,20 +1,21 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Flow do
-  let(:parent) { double("parent") }
+  let(:app) { parent }
+  let(:parent) { Shoes::App.new }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
   subject { Shoes::Flow.new(parent, input_opts, &input_block) }
 
   describe "dsl" do
     # dsl methods require :app
-    let(:app) { double("app") }
+    #let(:app) { double("app") }
     let(:input_opts) { {:app => app} }
 
-    before :each do
-      parent.stub(:gui)
-      app.stub(:gui)
-    end
+    #before :each do
+      #parent.stub(:gui)
+      #app.stub(:gui)
+    #end
 
     it_behaves_like "dsl container"
   end
@@ -34,7 +35,7 @@ describe Shoes::Flow do
   end
 
   it "should set default values" do
-    parent.stub(:gui)
+    #parent.stub(:gui)
     f = Shoes::Flow.new(parent)
     f.width.should == 1.0
     f.height.should == 0

@@ -1,8 +1,8 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Oval do
-  let(:app_gui) { double('app gui') }
-  let(:app) { double('app', gui: app_gui) }
+  #let(:app_gui) { app.gui }
+  let(:app) { Shoes::App.new }
 
   before :each do
     Shoes::Mock::Oval.any_instance.stub(:real) { mock( size:

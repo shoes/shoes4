@@ -39,7 +39,8 @@ module Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
-      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &blk if blk
+      block ||= blk
+      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &block
 
       @gui.open
     end
