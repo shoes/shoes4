@@ -22,35 +22,22 @@ describe Shoes::Configuration do
   end
 
   describe "backend" do
-    let(:dsl_object) { double("dsl object", :class => Shoes::Shape) }
-    let(:args) { double("args") }
+    let(:app) { Shoes::App.new }
+    let(:args) { Hash.new }
+    let(:dsl_object) { Shoes::Shape.new app, args }
 
     it "raises ArgumentError on bad input" do
       lambda { Shoes.configuration.backend = :bogus }.should raise_error(LoadError)
     end
 
-    describe ":mock" do
-      before { Shoes.configuration.backend = :mock }
-
-      it "sets backend to Shoes::Mock" do
-        Shoes.configuration.backend.should eq(Shoes::Mock)
-      end
-    end
-    specify "#backend_for returns shape backend object" do
-      Shoes.configuration.backend_for(dsl_object, args).should be_instance_of(Shoes::Mock::Shape)
-    end
-
     describe "#backend_with_app_for" do
-      let(:app) { double('app', :gui => app_gui) }
-      let(:app_gui) { double('app_gui') }
-
-      before :each do
-        dsl_object.stub(:app) { app }
+      it "passes app.gui to backend" do
+        Shoes.configuration.backend::Shape.should_receive(:new).with(dsl_object, app.gui, args)
+        dsl_object
       end
 
-      it "passes app.gui to backend" do
-        Shoes::Mock::Shape.should_receive(:new).with(dsl_object, app_gui, args)
-        Shoes.configuration.backend_with_app_for(dsl_object, args)
+      specify "returns shape backend object" do
+        Shoes.configuration.backend_with_app_for(dsl_object, args).should be_instance_of(Shoes.configuration.backend::Shape)
       end
     end
   end
