@@ -4,7 +4,8 @@ describe Shoes::EditBox do
 
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }
-  let(:parent) { double("parent").as_null_object }
+  let(:app) { Shoes::App.new }
+  let(:parent) { Shoes::Flow.new app }
   subject { Shoes::EditBox.new(parent, input_opts, input_block) }
 
   it_behaves_like "movable object"
