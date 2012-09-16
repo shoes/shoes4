@@ -1,7 +1,6 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Oval do
-  #let(:app_gui) { app.gui }
   let(:app) { Shoes::App.new }
 
   before :each do
