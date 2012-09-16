@@ -7,7 +7,5 @@ describe Shoes::Check do
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app }
 
-  it { should respond_to :checked= }
-  it { should respond_to :checked? }
-  it { should respond_to :focus }
+  it_behaves_like "checkable"
 end
