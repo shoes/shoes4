@@ -2,9 +2,11 @@ require 'shoes/spec_helper'
 require 'shoes/text_block'
 
 describe Shoes::TextBlock do
-  let(:mock_gui) { mock(:set_font, :update_text, :hidden, :new) }
-  let(:mock_parent) { mock(:gui => "mock gui", :add_child => "ok") }
-  subject { Shoes::TextBlock.new(mock_parent, "Hello, world!", 99, {}, nil) }
+  #let(:mock_gui) { mock(:set_font, :update_text, :hidden, :new) }
+  let(:app) { Shoes::App.new }
+  let(:parent) { Shoes::Flow.new(app) }
+  #let(:mock_parent) { mock(:gui => "mock gui", :add_child => "ok") }
+  subject { Shoes::TextBlock.new(parent, "Hello, world!", 99, {}, nil) }
 
   describe "initialize" do
 
@@ -45,11 +47,11 @@ describe Shoes::TextBlock do
   end
 
   describe "font styles" do
-    tb = Shoes::Mock::TextBlock
+    tb = Shoes.configuration.backend::TextBlock
 
     def sub(opts)
       opts.merge! :app => "app"
-      Shoes::TextBlock.new(mock_parent, "Hello, world!", 99, opts, nil)
+      Shoes::TextBlock.new(parent, "Hello, world!", 99, opts, nil)
     end
 
     describe "set_font" do
