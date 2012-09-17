@@ -47,6 +47,8 @@ def spec_opts_from_args(args)
   opts = []
   opts << "-e ::#{args[:module]}" if args[:module]
   opts += Array(args[:require]).map {|lib| "-r#{lib}"}
+  opts += args[:excludes].map { |tag| "--tag ~#{tag}:true" } if args[:excludes]
+  opts += args[:includes].map { |tag| "--tag #{tag}:true" } if args[:includes]
   opts.join ' '
 end
 
@@ -81,6 +83,7 @@ namespace :spec do
     argh = args.to_hash
     argh[:swt] = true
     argh[:require] = 'swt_shoes/spec_helper'
+    argh[:excludes] = [:no_swt]
     files = (Dir['spec/swt_shoes/*_spec.rb'] + Dir['spec/shoes/*_spec.rb']).join ' '
     jruby_rspec(files, argh)
   end
