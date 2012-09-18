@@ -9,7 +9,6 @@ module Shoes
 
     def initialize(parent, text, font_size, opts = {})
       @parent = parent
-      @app = opts[:app]
       @font = 'sans'
       @font_size = font_size
       @text = text
@@ -21,7 +20,11 @@ module Shoes
       end
       @parent.add_child self
     end
-    
+
+    def app
+      @parent.app
+    end
+
     def positioning x, y, max
       unless @fixed
         @width = (@left.to_i + @parent.width <= @app.width) ? @parent.width : @app.width - @left.to_i
