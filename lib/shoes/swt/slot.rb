@@ -1,11 +1,13 @@
 module Shoes
   module Swt
     class Slot
+      include Common::Container
+
       def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
         @real = parent.real
-        @real.getLayout.top_slot ||= self.dsl
+        self.top_slot = dsl
         @contents = []
         @parent.dsl.contents << @dsl
       end

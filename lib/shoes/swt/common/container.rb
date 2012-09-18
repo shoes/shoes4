@@ -10,6 +10,13 @@ module Shoes
         def add_paint_listener(painter)
           @real.add_paint_listener painter
         end
+
+        # Sets top slot to use for layout. Delegates to `@real`
+        #
+        # @param [Shoes::Slot] the dsl-layer top slot
+        def top_slot=(slot)
+          @real.get_layout.top_slot ||= slot
+        end
       end
     end
   end

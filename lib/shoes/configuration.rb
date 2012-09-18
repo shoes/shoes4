@@ -10,6 +10,10 @@ module Shoes
         @backend
       end
 
+      def backend_name
+        @backend_name
+      end
+
       # The Shoes backend to use. Can only be set once.
       #
       # @param [Symbol] backend The backend's name
@@ -19,6 +23,7 @@ module Shoes
       def backend=(backend)
         require "shoes/#{backend.to_s.downcase}"
         @backend ||= Shoes.const_get(backend.to_s.capitalize)
+        @backend_name ||= backend
       rescue LoadError => e
         raise LoadError, "Couldn't load backend '#{backend}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
       end
