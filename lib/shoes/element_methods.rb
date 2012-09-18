@@ -13,6 +13,7 @@ require 'shoes/radio'
 require 'shoes/shape'
 require 'shoes/slot'
 require 'shoes/sound'
+require 'shoes/text'
 require 'shoes/text_block'
 
 module Shoes
@@ -306,39 +307,40 @@ EOS
     PARA_FONT_SIZE        = 12
     INSCRIPTION_FONT_SIZE = 10
 
-    def banner(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Banner.new(self, text, BANNER_FONT_SIZE, opts)
+    %w[banner title subtitle tagline caption para inscription].each do |m|
+      define_method m do |*text|
+        opts = text.last.class == Hash ? text.pop : {}
+        styles = get_styles text
+        opts[:text_styles] = styles unless styles.empty?
+        text = text.map(&:to_s).join
+        opts.merge! app: @app
+        eval "Shoes::#{m.capitalize}.new(self, text, #{m.upcase}_FONT_SIZE, opts)"
+      end
     end
-
-    def title(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Title.new(self, text, TITLE_FONT_SIZE, opts)
+    
+    def get_styles msg, styles=[], spoint=0
+      msg.each do |e|
+        if e.is_a? Shoes::Text
+          epoint = spoint + e.to_s.length - 1
+          styles << [e, spoint..epoint]
+          get_styles e.str, styles, spoint
+        end
+        spoint += e.to_s.length
+      end
+      styles
     end
-
-    def subtitle(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Subtitle.new(self, text, SUBTITLE_FONT_SIZE, opts)
+    
+    [:code, :del, :em, :ins, :strong, :sub, :sup].each do |m|
+      define_method m do |*str|
+        Shoes::Text.new m, str
+      end
     end
-
-    def tagline(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Tagline.new(self, text, TAGLINE_FONT_SIZE, opts)
-    end
-
-    def caption(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Caption.new(self, text, CAPTION_FONT_SIZE, opts)
-    end
-
-    def para(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Para.new(self, text, PARA_FONT_SIZE, opts)
-    end
-
-    def inscription(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Inscription.new(self, text, INSCRIPTION_FONT_SIZE, opts)
+    
+    [:bg, :fg].each do |m|
+      define_method m do |*str|
+        color = str.pop
+        Shoes::Text.new m, str, color
+      end
     end
     
     def mouse
