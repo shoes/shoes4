@@ -6,26 +6,30 @@ module Shoes
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @container = opts[:app].gui.real
-        @container.add_paint_listener(TbPainter.new(@dsl, opts))
+        @container.add_paint_listener( TbPainter.new(@dsl, opts) )
+      end
+
+      def redraw
+        @container.redraw
       end
 
       def move x, y
         @left, @top, @width, @height = @dsl.left, @dsl.top, @dsl.width, @dsl.height
         super
       end
-      
+
       def get_height
         tl, font = set_styles
         tl.setWidth @dsl.width
         tl.getBounds(0, @dsl.text.length - 1).height.tap{font.dispose}
       end
-      
+
       def get_size
         tl, font = set_styles
         gb = tl.getBounds(0, @dsl.text.length - 1).tap{font.dispose}
         return gb.width, gb.height
       end
-      
+
       def set_styles
         tl = ::Swt::TextLayout.new Shoes.display
         tl.setText @dsl.text
@@ -54,7 +58,7 @@ module Shoes
           @tl.setWidth @dsl.width
           @tl.draw gc, @dsl.left, @dsl.top
         end
-        
+
         def set_styles
           @tl.setJustify @opts[:justify]
           @tl.setSpacing(@opts[:leading] || 4)
@@ -69,7 +73,7 @@ module Shoes
           style = ::Swt::TextStyle.new font, fgc, bgc
           @tl.setStyle style, 0, @dsl.text.length - 1
           @gcs << font
-          
+
           @opts[:text_styles].each do |st|
             font, ft, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
             nested_styles(@opts[:text_styles], st).each do |e|
@@ -77,7 +81,7 @@ module Shoes
               when :strong
                 ft = ft | ::Swt::SWT::BOLD
               when :em
-                ft = ft | ::Swt::SWT::ITALIC 
+                ft = ft | ::Swt::SWT::ITALIC
               when :fg
                 fg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
               when :bg
@@ -106,7 +110,7 @@ module Shoes
             @gcs << ft
           end if @opts[:text_styles]
         end
-        
+
         def nested_styles styles, st
           styles.map do |e|
             (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
@@ -114,7 +118,7 @@ module Shoes
         end
       end
     end
-    
+
     class Banner < TextBlock; end
     class Title < TextBlock; end
     class Subtitle < TextBlock; end

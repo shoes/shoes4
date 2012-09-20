@@ -5,7 +5,7 @@ module Shoes
 
       def initialize(*opts); end
       def get_size(*opts); end
-
+      def redraw(*opts); end
     end
 
     class Banner < TextBlock; end
