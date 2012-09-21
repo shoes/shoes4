@@ -52,6 +52,16 @@ def spec_opts_from_args(args)
   opts.join ' '
 end
 
+def swt_args(args)
+  args = args.to_hash
+  args[:swt] = true
+  args[:require] = 'swt_shoes/spec_helper'
+  # Adjust includes/excludes appropriately
+  # args[:includes] = [:swt]
+  args[:excludes] = [:no_swt]
+  args
+end
+
 task :default => :spec
 
 desc "Run All Specs"
@@ -77,15 +87,32 @@ namespace :spec do
     Rake::Task["spec:swt"].invoke(args[:module])
   end
 
-  desc "Specs for SWT Framework 
-  Limit the examples to specific :modules : "
-  task "swt", [:module] do |t, args|
-    argh = args.to_hash
-    argh[:swt] = true
-    argh[:require] = 'swt_shoes/spec_helper'
-    argh[:excludes] = [:no_swt]
-    files = (Dir['spec/swt_shoes/*_spec.rb'] + Dir['spec/shoes/*_spec.rb']).join ' '
-    jruby_rspec(files, argh)
+  task :swt, [:module] do |t, args|
+    Rake::Task['spec:swt:all'].invoke(args[:module])
+  end
+
+  namespace :swt do
+    desc "Run all specs with SWT backend
+    Limit the examples to specific :modules : "
+    task :all, [:module] do |t, args|
+      argh = swt_args(args)
+      files = (Dir['spec/swt_shoes/*_spec.rb'] + Dir['spec/shoes/*_spec.rb']).join ' '
+      jruby_rspec(files, argh)
+    end
+
+    desc "Run isolated Swt backend specs"
+    task :isolation, [:module] do |t, args|
+      argh = swt_args(args)
+      files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
+      jruby_rspec(files, argh)
+    end
+
+    desc "Run integration specs with Swt backend"
+    task :integration, [:module] do |t, args|
+      argh = swt_args(args)
+      files = Dir['spec/shoes/*_spec.rb'].join ' '
+      jruby_rspec(files, argh)
+    end
   end
 
   desc "Specs for base Shoes libraries 
