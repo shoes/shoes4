@@ -9,10 +9,9 @@ shared_examples_for "basic background" do
 end
 
 describe Shoes::Background do
-  let(:parent) { double("parent") }
+  let(:parent) { Shoes::Flow.new(app) }
   let(:blue)  { Shoes::COLORS[:blue] }
-  let(:app_gui) { double("app_gui") }
-  let(:app) { double("app", :gui => app_gui) }
+  let(:app) { Shoes::App.new }
   let(:opts){ {app: app, color: blue} }
   subject { Shoes::Background.new(parent, blue, opts) }
 

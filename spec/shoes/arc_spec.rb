@@ -1,6 +1,5 @@
 describe Shoes::Arc do
-  let(:app_gui) { double("gui") }
-  let(:app) { double("app", :gui => app_gui) }
+  let(:app) { Shoes::App.new }
 
   context "basic" do
     subject { Shoes::Arc.new(app, 13, 44, 200, 300, 0, Shoes::TWO_PI) }
@@ -25,7 +24,7 @@ describe Shoes::Arc do
 
     it "passes required values to backend" do
       gui_opts = {:left => 13, :top => 44, :width => 200, :height => 300, :angle1 => 0, :angle2 => Shoes::TWO_PI}
-      Shoes::Mock::Arc.should_receive(:new).with(subject, app_gui, gui_opts)
+      Shoes.configuration.backend::Arc.should_receive(:new).with(subject, app.gui, gui_opts)
       subject
     end
   end

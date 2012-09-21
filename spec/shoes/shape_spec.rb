@@ -1,9 +1,7 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Shape do
-
-  let(:app_gui) { double("app gui") }
-  let(:app) { double("app", :gui => app_gui) }
+  let(:app) { Shoes::App.new }
   subject { Shoes::Shape.new(app) {} }
 
   it_behaves_like "object with stroke"

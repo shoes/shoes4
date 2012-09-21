@@ -9,7 +9,6 @@ module Shoes
 
     def initialize(parent, text, font_size, opts = {})
       @parent = parent
-      @app = opts[:app]
       @font = 'sans'
       @font_size = font_size
       @text = text
@@ -22,6 +21,11 @@ module Shoes
       @parent.add_child self
     end
 
+    def app
+      @parent.app
+    end
+
+
     # It might be possible to leave the redraw
     # function blank for non-SWT versions of Shoes
     def text=(value)
@@ -31,7 +35,7 @@ module Shoes
 
     def positioning x, y, max
       unless @fixed
-        @width = (@left.to_i + @parent.width <= @app.width) ? @parent.width : @app.width - @left.to_i
+        @width = (@left.to_i + @parent.width <= app.width) ? @parent.width : app.width - @left.to_i
         @height = @gui.get_height
       end
       super

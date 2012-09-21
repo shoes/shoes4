@@ -9,8 +9,7 @@ shared_examples_for "basic rect" do
 end
 
 describe Shoes::Rect do
-  let(:app_gui) { double("app_gui") }
-  let(:app) { double("app", :gui => app_gui) }
+  let(:app) { Shoes::App.new }
   subject { Shoes::Rect.new(app, 44, 66, 111, 333) }
 
   it_behaves_like "basic rect"

@@ -4,18 +4,21 @@ describe Shoes::Progress do
   subject { Shoes::Progress.new(parent, input_opts, input_block) }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }
-  let(:parent) { double("parent").as_null_object }
+  let(:app) { Shoes::App.new }
+  let(:parent) { Shoes::Flow.new app}
 
-  it "should respond to the right methods" do
-    s = subject
-    s.should respond_to :fraction
-    s.should respond_to :fraction=
-  end
+  it { should respond_to :fraction }
+  it { should respond_to :fraction= }
 
-  it "should be able to set the fraction" do
-    s = subject
-    s.gui.should_receive(:fraction=).with(0.5)
-    s.fraction = 0.5
-    s.fraction.should eql 0.5
+  context "setting fraction" do
+    it "sets on gui" do
+      subject.gui.should_receive(:fraction=).with(0.5)
+      subject.fraction = 0.5
+    end
+
+    it "sets on self" do
+      subject.fraction = 0.5
+      subject.fraction.should eq 0.5
+    end
   end
 end
