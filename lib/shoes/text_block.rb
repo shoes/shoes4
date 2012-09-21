@@ -27,7 +27,7 @@ module Shoes
 
     def positioning x, y, max
       unless @fixed
-        @width = (@left.to_i + @parent.width <= @app.width) ? @parent.width : @app.width - @left.to_i
+        @width = (@left.to_i + @parent.width <= app.width) ? @parent.width : app.width - @left.to_i
         @height = @gui.get_height
       end
       super

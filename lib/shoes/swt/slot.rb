@@ -6,6 +6,7 @@ module Shoes
       def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
+        @app = parent.app
         @real = parent.real
         self.top_slot = dsl
         @contents = []

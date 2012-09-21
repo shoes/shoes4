@@ -5,7 +5,7 @@ describe Shoes::Swt::Flow do
   let(:real) { double('real') }
   let(:parent_real) { double('parent_real', :get_layout => "ok") }
   let(:parent_dsl) { double(contents: []) }
-  let(:parent) { double('parent', real: parent_real, dsl: parent_dsl, :top_slot => :ok) }
+  let(:parent) { double('parent', real: parent_real, dsl: parent_dsl, app: "app", :top_slot => "top slot") }
   subject { Shoes::Swt::Flow.new(dsl, parent) }
 
   describe "#initialize" do

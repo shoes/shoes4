@@ -5,7 +5,8 @@ module Shoes
 
       def initialize(dsl, opts = nil)
         @dsl = dsl
-        @dsl.app.gui.add_paint_listener(TbPainter.new(@dsl, opts))
+        @container = @dsl.app.gui.real
+        @container.add_paint_listener(TbPainter.new(@dsl, opts))
       end
 
       def move x, y
