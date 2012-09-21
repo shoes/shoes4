@@ -25,6 +25,14 @@ module Shoes
       @parent.app
     end
 
+
+    # It might be possible to leave the redraw
+    # function blank for non-SWT versions of Shoes
+    def text=(value)
+      @text = value
+      @gui.redraw
+    end
+
     def positioning x, y, max
       unless @fixed
         @width = (@left.to_i + @parent.width <= app.width) ? @parent.width : app.width - @left.to_i
@@ -33,7 +41,7 @@ module Shoes
       super
     end
   end
-  
+
   class Banner < TextBlock; end
   class Title < TextBlock; end
   class Subtitle < TextBlock; end
