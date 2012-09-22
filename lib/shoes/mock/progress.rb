@@ -3,7 +3,7 @@ module Shoes
     class Progress
       include Shoes::Mock::CommonMethods
 
-      def set_fraction(*opts)
+      def fraction=(fraction)
       end
     end
   end

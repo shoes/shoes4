@@ -1,14 +1,12 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock do
-  let(:real) { double('real', add_paint_listener: true, disposed?: false) }
-  let(:gui) { double('gui', real: real) }
-  let(:app) { double('app', gui: gui) }
-  let(:opts) { {app: app, justify: true, leading: 10} }
-  let(:dsl) { double('dsl', text: 'hello world', width: 200).as_null_object }
-  let(:container) { app.gui.real }
-  let(:gui_container_real) { container }
-
+  let(:opts) { {justify: true, leading: 10} }
+  let(:font) { ::Swt::Graphics::Font.new }
+  let(:parent) { Shoes::Flow.new Shoes::App.new }
+  let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world", opts: opts, left: 0, top: 10, width: 200, height: 180, font: "font", font_size: 16) }
+  let(:app) { parent.app.gui.real }
+  let(:container) { app }
   subject {
     Shoes::Swt::TextBlock.new(dsl, opts)
   }
@@ -20,7 +18,7 @@ describe Shoes::Swt::TextBlock do
   it_behaves_like "paintable"
   it_behaves_like "movable shape", 10, 20
 
-  it "should be able to redraw the container" do
+  it "redraws the container" do
     container.should_receive(:redraw)
     subject.redraw
   end
@@ -33,7 +31,7 @@ describe Shoes::Swt::TextBlock do
 
     before :each do
       ::Swt::TextLayout.stub(:new) { tl }
-      ::Swt::Font.stub(:new)
+      #::Swt::Font.stub(:new) 
     end
 
     it "sets text" do

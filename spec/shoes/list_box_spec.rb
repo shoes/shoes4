@@ -5,7 +5,8 @@ describe Shoes::ListBox do
     input_opts, input_block) }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { { :items => ["Wine", "Vodka", "Water"] } }
-  let(:parent) { double("parent").as_null_object }
+  let(:app) { Shoes::App.new }
+  let(:parent) { Shoes::Flow.new app}
 
   it "should contain the correct items" do
     subject.items.should eq ["Wine", "Vodka", "Water"]
@@ -22,7 +23,7 @@ describe Shoes::ListBox do
   end
 
   it "should call @gui.choose when we choose something" do
-    Shoes::Mock::ListBox.any_instance.
+    Shoes.configuration.backend::ListBox.any_instance.
         should_receive(:choose).with "Wine"
     subject.choose "Wine"
   end

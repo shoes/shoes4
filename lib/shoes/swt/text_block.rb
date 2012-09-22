@@ -5,8 +5,8 @@ module Shoes
 
       def initialize(dsl, opts = nil)
         @dsl = dsl
-        @container = opts[:app].gui.real
-        @container.add_paint_listener( TbPainter.new(@dsl, opts) )
+        @container = @dsl.app.gui.real
+        @container.add_paint_listener(TbPainter.new(@dsl, opts))
       end
 
       def redraw

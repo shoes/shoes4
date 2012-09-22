@@ -1,8 +1,9 @@
 require 'shoes/spec_helper'
 
 describe Shoes::TextBlock do
-  let(:mock_parent) { mock(gui: "mock gui", add_child: true) }
-  subject { Shoes::TextBlock.new(mock_parent, "Hello, world!", 99, {}) }
+  let(:app) { Shoes::App.new }
+  let(:parent) { Shoes::Flow.new app, {app: app} }
+  subject { Shoes::TextBlock.new(parent, "Hello, world!", 99, {}) }
 
   describe "initialize" do
     it "creates gui object" do
@@ -21,8 +22,8 @@ describe Shoes::TextBlock do
       s.text.should eql "Goodbye Cruel World"
     end
 
-    it "should call redraw when changing text" do
-      Shoes::Mock::TextBlock.any_instance.should_receive :redraw
+    it "calls redraw when changing text" do
+      Shoes.configuration.backend::TextBlock.any_instance.should_receive :redraw
       subject.text = "Goodbye Cruel World"
     end
   end

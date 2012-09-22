@@ -1,7 +1,7 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Line do
-  let(:app_gui) { double('app gui') }
+  let(:app_gui) { double('app gui').as_null_object }
   let(:app) { double('app', :gui => app_gui) }
   let(:opts) { {:app => app} }
 

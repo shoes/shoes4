@@ -8,11 +8,10 @@ shared_examples_for "basic border" do
   end
 end
 
-describe Shoes::Rect do
+describe Shoes::Border do
   let(:parent) { double("parent") }
   let(:blue)  { Shoes::COLORS[:blue] }
-  let(:app_gui) { double("app_gui") }
-  let(:app) { double("app", :gui => app_gui) }
+  let(:app) { Shoes::App.new }
   let(:opts){ {app: app} }
   subject { Shoes::Border.new(parent, blue, opts) }
 
