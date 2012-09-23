@@ -1,14 +1,8 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Line do
-  let(:app_gui) { double('app gui').as_null_object }
-  let(:app) { double('app', :gui => app_gui) }
-  let(:opts) { {:app => app} }
-
-  before :each do
-    Shoes::Mock::Line.any_instance.stub(:real) { mock( size:
-      mock(x: 90, y: 45) ) }
-  end
+  let(:app) { Shoes::App.new }
+  let(:opts) { Hash.new }
 
   describe "basic" do
     subject { Shoes::Line.new(app, Shoes::Point.new(20, 23), Shoes::Point.new(300, 430), opts) }
