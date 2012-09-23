@@ -1,11 +1,12 @@
-$:<< '../lib'
+SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
+$LOAD_PATH << File.join('../lib', SHOESSPEC_ROOT)
 
 require 'rspec'
 
 require 'pry'
 require 'shoes'
 
-Dir["./spec/support/**/*.rb"].each {|f| require f}
+Dir["#{SHOESSPEC_ROOT}/support/**/*.rb"].each {|f| require f}
 
 # Guards for running or not running specs. Specs in the guarded block only
 # run if the guard conditions are met.
