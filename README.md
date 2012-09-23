@@ -46,16 +46,33 @@ Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wi
 Running Specs
 -------------
 
-Shoes 4 is developed in a TDD style. You should be running the specs :)
+Shoes 4 is developed in a TDD style. You should be writing and running the specs :)
+
+There are two kinds of Shoes 4 specs:
+
+1. **Integration specs:** These specify the functionality of the Shoes
+   DSL. They can be run with any compatible Shoes backend. Shoes 4 comes
+   with a mock backend and an Swt backend that can run the integration
+   specs.
+
+2. **Isolation specs:** These specify the internal behavior of a Shoes
+   backend, in isolation from the DSL. Shoes 4 comes with an isolation spec
+   suite for the Swt backend.
 
 There are rake tasks for running specs. Some examples:
 
-    $ rake spec                # Run all the specs
-    $ rake spec:shoes          # Run the specs for the Shoes DSL
-    $ rake spec:swt            # Run the specs for the Swt implementation
-    $ rake spec[Shape]         # Run all the specs for Shape
-    $ rake spec:shoes[Shape]   # Run just the DSL specs for Shape
-
+    $ rake spec                      # Run the whole spec suite
+    $ rake spec:shoes                # Run integration specs using the mock backend
+    $ rake spec:swt                  # Run integration specs using the Swt backend, plus Swt backend unit tests
+    $ rake spec:swt:isolation        # Run isolation specs for the Swt backend
+    $ rake spec:swt:integration      # Run integration specs using the Swt backend
+    $ rake spec[Shape]               # Run the whole Shape spec suite
+    $ rake spec:shoes[Shape]         # Run integration specs for Shape using the mock backend
+    $ rake spec:swt[Shape]           # Run integration and isolation specs for Shape, using the Swt backend
+    $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
+    
+    When passed a class/module name as an argument, each of these commands
+    (like the other spec commands) will run only those specs that mention
 **Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
     
 Running a Shoes App
@@ -75,7 +92,9 @@ You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoe
 
 Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. 
 
-With all you do, please make sure to write specs as shoes4 is developped TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
+With all you do, please make sure to write specs as Shoes 4 is developped TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
-If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build shoes4!
+If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
+
+
 
