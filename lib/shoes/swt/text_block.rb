@@ -55,8 +55,10 @@ module Shoes
           gcs_reset gc
           @tl.setText @dsl.text
           set_styles
-          @tl.setWidth @dsl.width
-          @tl.draw gc, @dsl.left, @dsl.top
+          if @dsl.width
+            @tl.setWidth @dsl.width
+            @tl.draw gc, @dsl.left.to_i, @dsl.top.to_i
+          end
         end
 
         def set_styles
