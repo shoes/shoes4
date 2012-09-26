@@ -96,4 +96,10 @@ describe Shoes::App do
       app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
     end
   end
+
+  describe "#quit" do
+    it "quits" do 
+      subject.quit
+    end
+  end
 end

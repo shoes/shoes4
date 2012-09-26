@@ -4,7 +4,10 @@ module Shoes
       def initialize(*opts)
       end
 
-      def open
+      def open 
+      end
+
+      def quit
       end
     end
   end

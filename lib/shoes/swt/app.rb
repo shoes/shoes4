@@ -37,9 +37,11 @@ module Shoes
         @shell.open
         @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
 
-        ::Swt.event_loop { ::Swt.display.isDisposed }
+        ::Swt.event_loop { @shell.disposed? }
+      end
 
-        Shoes.logger.debug "::Swt.display disposed... exiting Shoes::App.new"
+      def quit
+        @shell.dispose
       end
 
       # @return [Shoes::Swt::App] Self
