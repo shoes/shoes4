@@ -47,6 +47,10 @@ module Shoes
       @gui.open
     end
 
+    def quit
+      @gui.quit
+    end
+
     def add_child(child)
       @top_slot.add_child child
     end
