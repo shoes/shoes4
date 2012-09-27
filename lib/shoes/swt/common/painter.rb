@@ -13,16 +13,17 @@ module Shoes
           gcs_reset gc
           gc.set_antialias ::Swt::SWT::ON
           gc.set_transform(@obj.transform)
-          fill_setup gc
-          fill gc
-          draw_setup gc
-          draw gc
+          fill gc if fill_setup gc
+          draw gc if draw_setup gc
         end
 
         # Override in subclass if not using fill
         def fill_setup(gc)
-          gc.set_background @obj.fill
-          gc.set_alpha @obj.fill_alpha
+          if @obj.fill
+            gc.set_background @obj.fill
+            gc.set_alpha @obj.fill_alpha
+            true
+          end
         end
 
         # Implement in subclass
@@ -31,9 +32,12 @@ module Shoes
 
         # Override in subclass if not using draw
         def draw_setup(gc)
-          gc.set_foreground @obj.stroke
-          gc.set_alpha @obj.stroke_alpha
-          gc.set_line_width @obj.strokewidth
+          if @obj.stroke
+            gc.set_foreground @obj.stroke
+            gc.set_alpha @obj.stroke_alpha
+            gc.set_line_width @obj.strokewidth
+            true
+          end
         end
 
         # Implement in subclass
