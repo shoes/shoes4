@@ -14,11 +14,12 @@ module Shoes
         @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
           shell.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
           shell.setText(@dsl.app_title)
-          shell.addListener(::Swt::SWT::Close, main_window_on_close)
           shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
           shell.setBackground @dsl.opts[:background].to_native
         end
         @shell = @real
+
+        ::Shoes::Swt.register self
 
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
         @real.setSize(@dsl.width, @dsl.height)
@@ -26,6 +27,7 @@ module Shoes
 
         @dx = @dy = 0
         @shell.addControlListener ShellControlListener.new(self)
+        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
         @real.addMouseMoveListener MouseMoveListener.new(self)
         @real.addMouseListener MouseListener.new(self)
       end
@@ -37,7 +39,7 @@ module Shoes
         @shell.open
         @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
 
-        ::Swt.event_loop { @shell.disposed? }
+        ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
 
       def quit
@@ -47,6 +49,14 @@ module Shoes
       # @return [Shoes::Swt::App] Self
       def app
         self
+      end
+
+      def disposed?
+        @shell.disposed?
+      end
+
+      def main_app?
+        ::Shoes::Swt.main_app.equal? self
       end
 
       private
