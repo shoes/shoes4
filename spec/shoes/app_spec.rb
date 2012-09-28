@@ -43,6 +43,19 @@ describe Shoes::App do
       style = Shoes::App.new.style
       style.class.should eq(Hash)
     end
+
+    context "when registering" do
+      before :each do
+        Shoes.unregister_all
+      end
+
+      it "registers" do
+        old_apps_length = Shoes.apps.length
+        subject
+        Shoes.apps.length.should eq(old_apps_length + 1)
+        Shoes.apps.include?(subject).should be_true
+      end
+    end
   end
 
   # This behavior is different from Red Shoes. Red Shoes doesn't expose
@@ -100,6 +113,49 @@ describe Shoes::App do
   describe "#quit" do
     it "quits" do 
       subject.quit
+    end
+  end
+end
+
+describe "App registry" do
+  subject { Shoes.apps }
+
+  before :each do
+    Shoes.unregister_all
+  end
+
+  it "only exposes a copy" do
+    subject << double("app")
+    Shoes.apps.length.should eq(0)
+  end
+
+  context "with no apps" do
+    it { should be_empty }
+  end
+
+  context "with one app" do
+    let(:app) { double('app') }
+    before :each do
+      Shoes.register(app)
+    end
+
+    its(:length) { should eq(1) }
+    it "marks first app as main app" do
+      Shoes.main_app.should be(app)
+    end
+  end
+
+  context "with two apps" do
+    let(:app_1) { double("app 1") }
+    let(:app_2) { double("app 2") }
+
+    before :each do
+      [app_1, app_2].each { |a| Shoes.register(a) }
+    end
+
+    its(:length) { should eq(2) }
+    it "marks first app as main app" do
+      Shoes.main_app.should be(app_1)
     end
   end
 end

@@ -3,15 +3,21 @@ module Shoes
     module Registration
       def apps
         @apps ||= []
+        @apps.dup
       end
 
       def register(app)
         register_main_app app
-        apps << app
+        apps && @apps << app
       end
 
       def unregister(app)
-        apps.delete app
+        apps && @apps.delete(app)
+      end
+
+      def unregister_all
+        @main_app = nil
+        @apps = []
       end
 
       def main_app
