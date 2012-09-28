@@ -8,7 +8,7 @@ describe Shoes::App do
   it_behaves_like "dsl container"
 
   describe "initialize" do
-    it "should set accessors from constructor args" do
+    it "should set accessors from constructor args", :qt do
       Shoes::App.any_instance.stub(:flow)
       subject.should respond_to :width
       subject.should respond_to :height
@@ -17,7 +17,7 @@ describe Shoes::App do
       #subject.blk.should == input_blk
     end
 
-    it "should set default accessor values" do
+    it "should set default accessor values", :qt do
       input_blk = Proc.new {}
       args = {}
       Shoes::App.any_instance.stub(:flow)
@@ -28,7 +28,7 @@ describe Shoes::App do
       app.resizable.should be_true
     end
 
-    it "should set accessors from opts" do
+    it "should set accessors from opts", :qt do
       input_blk = Proc.new {}
       args = {:width => 1, :height => 2, :title => "Shoes::App Spec", :resizable => false}
       Shoes::App.any_instance.stub(:flow)
@@ -39,7 +39,7 @@ describe Shoes::App do
       app.resizable.should be_false
     end
 
-    it "initializes style hash" do
+    it "initializes style hash", :qt do
       style = Shoes::App.new.style
       style.class.should eq(Hash)
     end
