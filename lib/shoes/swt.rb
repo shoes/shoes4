@@ -49,6 +49,8 @@ require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
 
 module Shoes::Swt
+  extend ::Shoes::Common::Registration
+
   module Shoes
     def self.app(opts={}, &blk)
       Shoes::App.new(opts, &blk)
@@ -64,5 +66,4 @@ module Shoes::Swt
     end
   end
 end
-
 
