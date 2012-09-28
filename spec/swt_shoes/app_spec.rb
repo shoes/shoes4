@@ -13,8 +13,6 @@ describe Shoes::Swt::App do
     it "registers" do
       old_apps_length = Shoes::Swt.apps.length
       subject
-      #puts subject
-      puts "apps: #{Shoes::Swt.apps.inspect}"
       Shoes::Swt.apps.length.should eq(old_apps_length + 1)
       Shoes::Swt.apps.include?(subject).should be_true
     end
