@@ -1,11 +1,15 @@
 require 'rubygems'
+require 'shoes/common/registration'
 
 module Shoes
   PI = Math::PI
   TWO_PI = 2 * PI
   HALF_PI = 0.5 * PI
 
+  extend ::Shoes::Common::Registration
+
   class << self
+
     def logger
       Shoes.configuration.logger_instance
     end

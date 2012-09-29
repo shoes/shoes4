@@ -44,10 +44,12 @@ module Shoes
       block ||= blk
       @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &block
 
+      Shoes.register self
       @gui.open
     end
 
     def quit
+      Shoes.unregister self
       @gui.quit
     end
 
