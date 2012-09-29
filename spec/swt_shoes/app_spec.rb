@@ -17,4 +17,14 @@ describe Shoes::Swt::App do
       Shoes::Swt.apps.include?(subject).should be_true
     end
   end
+
+  context "when running on a mac" do
+    let(:the_display) { ::Swt::Widgets::Display }
+
+    it "should set the menubar title" do
+      the_display.should_receive(:app_name=).with('mock')
+      subject
+    end
+  end
+
 end

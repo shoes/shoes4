@@ -11,7 +11,7 @@ module Shoes
 
       def initialize dsl
         @dsl = dsl
-        ::Swt::Widgets::Display.setAppName(@dsl.app_title)
+        ::Swt::Widgets::Display.app_name = @dsl.app_title
         @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
           shell.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
           shell.setText(@dsl.app_title)
@@ -107,7 +107,7 @@ module Shoes
         @app.dsl.mouse_pos = [e.x, e.y]
       end
     end
-    
+
     class MouseListener
       def initialize app
         @app = app
