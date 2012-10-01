@@ -12,19 +12,25 @@ module Shoes
       @font = 'sans'
       @font_size = font_size
       @text = text
+      @left = opts[:left]
+      @top = opts[:top]
 
       @gui = Shoes.configuration.backend_for(self, opts)
       if text.split.length == 1
         @width, @height = @gui.get_size
         @fixed = true
       end
-      @parent.add_child self
+      @left && @top ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
     end
 
     def app
       @parent.app
     end
 
+    def move left, top
+      set_size left, top
+      super
+    end
 
     # It might be possible to leave the redraw
     # function blank for non-SWT versions of Shoes
@@ -34,11 +40,13 @@ module Shoes
     end
 
     def positioning x, y, max
-      unless @fixed
-        @width = (@left.to_i + @parent.width <= app.width) ? @parent.width : app.width - @left.to_i
-        @height = @gui.get_height
-      end
+      set_size @left.to_i, @left.to_i unless @fixed
       super
+    end
+    
+    def set_size left, top
+      @width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
+      @height = @gui.get_height
     end
   end
 

@@ -1,8 +1,6 @@
 module Shoes
   module Swt
     class TextBlock
-      include Common::Move
-
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @container = @dsl.app.gui.real
@@ -14,8 +12,8 @@ module Shoes
       end
 
       def move x, y
-        @left, @top, @width, @height = @dsl.left, @dsl.top, @dsl.width, @dsl.height
-        super
+        redraw unless @container.disposed?
+        @left, @top, @width, @height = x, y, @dsl.width, @dsl.height
       end
 
       def get_height

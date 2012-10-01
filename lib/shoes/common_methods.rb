@@ -80,8 +80,8 @@ module Shoes
     # Moves an element to a specific pixel position. The element is still in the slot,
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
-      @left, @top = left, top
       @gui.move(left, top) if @gui
+      @left, @top = left, top
     end
 
     # displace(left: a number, top: a number) » self

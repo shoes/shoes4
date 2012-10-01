@@ -16,6 +16,7 @@ module Shoes
 
         @real = ::Swt::Widgets::Text.new(@parent.real, text_options)
         @real.setSize dsl.opts[:width], dsl.opts[:height]
+        @real.setText dsl.opts[:text].to_s
         @real.addModifyListener{|e| blk[@dsl]} if blk
       end
 
