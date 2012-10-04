@@ -4,7 +4,7 @@ describe Shoes::Swt::Button do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', :text => text) }
   let(:parent) { double('parent') }
-  let(:block) { double('block') }
+  let(:block) { proc{} }
   let(:real) { double('real').as_null_object }
 
   subject { Shoes::Swt::Button.new dsl, parent, block }
@@ -26,7 +26,7 @@ describe Shoes::Swt::Button do
     end
 
     it "passes block to real element" do
-      real.should_receive(:addSelectionListener).with(block)
+      real.should_receive(:addSelectionListener).with(&block)
       subject
     end
   end

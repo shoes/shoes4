@@ -11,7 +11,7 @@ module Shoes
 
         @type = type
         @real = ::Swt::Widgets::Button.new(@parent.real, @type)
-        @real.addSelectionListener(@blk) if @blk
+        @real.addSelectionListener{|e| @blk[@dsl]} if @blk
 
         yield(@real) if block_given?
 
