@@ -9,7 +9,7 @@ shared_examples_for "basic background" do
 end
 
 describe Shoes::Background do
-  let(:parent) { Shoes::Flow.new(app) }
+  let(:parent) { Shoes::Flow.new(app, app: app) }
   let(:blue)  { Shoes::COLORS[:blue] }
   let(:app) { Shoes::App.new }
   let(:opts){ {app: app, color: blue} }

@@ -6,7 +6,7 @@ describe Shoes::ListBox do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { { :items => ["Wine", "Vodka", "Water"] } }
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app}
+  let(:parent) { Shoes::Flow.new app, app: app}
 
   it "should contain the correct items" do
     subject.items.should eq ["Wine", "Vodka", "Water"]

@@ -5,7 +5,7 @@ describe Shoes::Radio do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { Hash.new }
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app }
+  let(:parent) { Shoes::Flow.new app, app: app }
 
   it_behaves_like "checkable"
 

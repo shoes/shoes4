@@ -21,7 +21,8 @@ module Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
-      instance_eval &blk if blk
+      @app.current_slot = self
+      @app.instance_eval &blk if blk
     end
 
     def app

@@ -3,9 +3,10 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::TextBlock do
   let(:opts) { {justify: true, leading: 10} }
   let(:font) { ::Swt::Graphics::Font.new }
-  let(:parent) { Shoes::Flow.new Shoes::App.new }
+  let(:parent) { Shoes::Flow.new app_real, app: app_real }
   let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world", opts: opts, left: 0, top: 10, width: 200, height: 180, font: "font", font_size: 16) }
   let(:app) { parent.app.gui.real }
+  let(:app_real) { Shoes::App.new }
   let(:container) { app }
   subject {
     Shoes::Swt::TextBlock.new(dsl, opts)

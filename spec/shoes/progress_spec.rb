@@ -5,7 +5,7 @@ describe Shoes::Progress do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app}
+  let(:parent) { Shoes::Flow.new app, app: app}
 
   it { should respond_to :fraction }
   it { should respond_to :fraction= }

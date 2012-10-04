@@ -4,13 +4,14 @@ describe Shoes::Flow do
   let(:app) { parent }
   let(:parent) { Shoes::App.new }
   let(:input_block) { Proc.new {} }
-  let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
+  let(:input_opts) { {:width => 131, :height => 137, :margin => 143, :app => app} }
   subject { Shoes::Flow.new(parent, input_opts, &input_block) }
 
   describe "dsl" do
     # dsl methods require :app
     let(:input_opts) { {:app => app} }
 
+    subject { Shoes::Flow.new(parent, input_opts, &input_block).app }
     it_behaves_like "dsl container"
   end
 
@@ -32,7 +33,7 @@ describe Shoes::Flow do
   end
 
   it "sets default values" do
-    f = Shoes::Flow.new(parent)
+    f = Shoes::Flow.new(parent, app: parent)
     f.width.should == 1.0
     f.height.should == 0
   end

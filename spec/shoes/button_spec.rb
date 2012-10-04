@@ -7,7 +7,7 @@ describe Shoes::Button do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
   let(:grandparent) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new grandparent }
+  let(:parent) { Shoes::Flow.new grandparent, app: grandparent }
 
   subject { Shoes::Button.new(parent, "text", input_opts, input_block) }
 
@@ -104,7 +104,7 @@ describe Shoes::Button do
     end
 
     context "parent is not a flow" do
-      let(:parent) { Shoes::Stack.new grandparent }
+      let(:parent) { Shoes::Stack.new grandparent, app: grandparent }
 
       before :each do
         subject.parent.is_a?(Shoes::Flow).should be_false

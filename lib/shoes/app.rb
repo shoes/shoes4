@@ -18,7 +18,7 @@ module Shoes
 
     attr_reader :gui, :shell, :top_slot, :contents
     attr_reader :app
-    attr_accessor :elements
+    attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
     attr_accessor :mouse_button, :mouse_pos
 
@@ -41,8 +41,7 @@ module Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
-      block ||= blk
-      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &block
+      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &blk
 
       Shoes.register self
       @gui.open

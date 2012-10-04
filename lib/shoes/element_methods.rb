@@ -33,62 +33,62 @@ module Shoes
 
     def image(path, opts={}, &blk)
       opts.merge! app: @app
-      Shoes::Image.new self, path, opts, blk
+      Shoes::Image.new @current_slot, path, opts, blk
     end
 
     def border(color, opts = {}, &blk)
       opts.merge! app: @app
-      Shoes::Border.new self, color, opts, blk
+      Shoes::Border.new @current_slot, color, opts, blk
     end
 
     def background(color, opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Background.new self, color, opts, blk
+      Shoes::Background.new @current_slot, color, opts, blk
     end
 
     def edit_line(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::EditLine.new self, opts, blk
+      Shoes::EditLine.new @current_slot, opts, blk
     end
 
     def edit_box(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::EditBox.new self, opts, blk
+      Shoes::EditBox.new @current_slot, opts, blk
     end
 
     def progress(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Progress.new self, opts, blk
+      Shoes::Progress.new @current_slot, opts, blk
     end
 
     def check(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Check.new self, opts, blk
+      Shoes::Check.new @current_slot, opts, blk
     end
 
     def radio(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Radio.new self, opts, blk
+      Shoes::Radio.new @current_slot, opts, blk
     end
 
     def list_box(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::ListBox.new self, opts, blk
+      Shoes::ListBox.new @current_slot, opts, blk
     end
 
     def flow(opts = {}, &blk)
       opts.merge! :app => app
-      Shoes::Flow.new self, opts, &blk
+      Shoes::Flow.new @current_slot, opts, &blk
     end
 
     def stack(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Stack.new self, opts, &blk
+      Shoes::Stack.new @current_slot, opts, &blk
     end
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Button.new self, text, opts, blk
+      Shoes::Button.new @current_slot, text, opts, blk
     end
 
     # Creates an animation that runs the given block of code.
@@ -314,7 +314,7 @@ EOS
         opts[:text_styles] = styles unless styles.empty?
         text = text.map(&:to_s).join
         opts.merge! app: @app
-        eval "Shoes::#{m.capitalize}.new(self, text, #{m.upcase}_FONT_SIZE, opts)"
+        eval "Shoes::#{m.capitalize}.new(@current_slot, text, #{m.upcase}_FONT_SIZE, opts)"
       end
     end
     
