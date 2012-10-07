@@ -28,7 +28,7 @@ module Shoes
     end
 
     def move left, top
-      set_size left, top
+      set_size left, top unless @fixed
       super
     end
 
