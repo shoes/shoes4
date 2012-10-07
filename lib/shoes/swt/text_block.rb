@@ -3,6 +3,7 @@ module Shoes
     class TextBlock
       def initialize(dsl, opts = nil)
         @dsl = dsl
+        @opts = opts
         @container = @dsl.app.gui.real
         @container.add_paint_listener(TbPainter.new(@dsl, opts))
       end
@@ -31,6 +32,7 @@ module Shoes
       def set_styles
         tl = ::Swt::TextLayout.new Shoes.display
         tl.setText @dsl.text
+        tl.setSpacing(@opts[:leading] || 4)
         font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
         tl.setStyle style, 0, @dsl.text.length - 1

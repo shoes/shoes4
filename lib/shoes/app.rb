@@ -22,7 +22,7 @@ module Shoes
     attr_accessor :opts, :blk
     attr_accessor :mouse_button, :mouse_pos
 
-    attr_accessor :width, :height, :resizable, :app_title
+    attr_accessor :resizable, :app_title
     attr_writer   :width, :height
 
     def initialize(opts={}, &blk)
@@ -45,6 +45,14 @@ module Shoes
 
       Shoes.register self
       @gui.open
+    end
+
+    def width
+      @top_slot ? @top_slot.width : @width
+    end
+
+    def height
+      @top_slot ? @top_slot.height : @height
     end
 
     def quit
