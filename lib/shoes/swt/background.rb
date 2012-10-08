@@ -21,14 +21,14 @@ module Shoes
       attr_reader :dsl
       attr_reader :transform
       attr_reader :painter
-      attr_reader :left, :top, :opts
+      attr_reader :opts
       attr_reader :corners
-      attr_accessor :width, :height
+      attr_accessor :left, :top, :width, :height
 
       class Painter < Common::Painter
         include Common::Resource
         def fill(gc)
-          set_width_and_height
+          set_position_and_size
           gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners, @obj.corners)
         end
 

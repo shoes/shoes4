@@ -23,6 +23,7 @@ module Shoes
 
       @app.current_slot = self
       @app.instance_eval &blk if blk
+      @app.current_slot = parent
     end
 
     def app

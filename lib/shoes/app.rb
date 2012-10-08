@@ -55,6 +55,9 @@ module Shoes
       @top_slot ? @top_slot.height : @height
     end
 
+    def left; 0 end
+    def top; 0 end
+
     def quit
       Shoes.unregister self
       @gui.quit
