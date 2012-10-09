@@ -70,7 +70,8 @@ module Shoes
             else ::Swt::SWT::LEFT
             end
           font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
-          fgc = @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) : nil
+          fgc = @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) : 
+            ::Swt::Color.new(Shoes.display, 0, 0, 0)
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
           @tl.setStyle style, 0, @dsl.text.length - 1
