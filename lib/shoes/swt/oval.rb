@@ -34,7 +34,8 @@ module Shoes
         end
 
         def draw(gc)
-          gc.draw_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+          sw = gc.get_line_width
+          gc.draw_oval(@obj.left+sw/2, @obj.top+sw/2, @obj.width-sw, @obj.height-sw)
         end
       end
     end

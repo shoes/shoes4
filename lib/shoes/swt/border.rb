@@ -33,7 +33,8 @@ module Shoes
 
         def draw(gc)
           set_position_and_size
-          gc.draw_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners, @obj.corners)
+          sw = gc.get_line_width
+          gc.draw_round_rectangle(@obj.left+sw/2, @obj.top+sw/2, @obj.width-sw, @obj.height-sw, @obj.corners*2, @obj.corners*2)
         end
       end
     end

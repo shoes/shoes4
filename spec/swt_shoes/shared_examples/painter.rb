@@ -2,11 +2,12 @@
 
 shared_context "painter context" do
   let(:event) { double("event", :gc => gc) }
-  let(:gc) { double("gc").as_null_object }
+  let(:gc) { double("gc", :get_line_width => sw).as_null_object }
   let(:fill) { Shoes::COLORS[:chartreuse].to_native }
   let(:stroke) { Shoes::COLORS[:papayawhip].to_native }
   let(:fill_alpha) { 70 }
   let(:stroke_alpha) { 110 }
+  let(:sw) { 10 }
 
   before :each do
     shape.stub(:fill) { fill }

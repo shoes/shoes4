@@ -31,7 +31,7 @@ describe Shoes::Swt::Oval do
     end
 
     specify "draws oval" do
-      gc.should_receive(:draw_oval).with(left, top, width, height)
+      gc.should_receive(:draw_oval).with(left+sw/2, top+sw/2, width-sw, height-sw)
       subject.paint_control(event)
     end
   end
