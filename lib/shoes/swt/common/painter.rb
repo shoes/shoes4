@@ -32,7 +32,7 @@ module Shoes
 
         # Override in subclass if not using draw
         def draw_setup(gc)
-          if @obj.stroke
+          if @obj.stroke and @obj.strokewidth > 0
             gc.set_foreground @obj.stroke
             gc.set_alpha @obj.stroke_alpha
             gc.set_line_width @obj.strokewidth

@@ -143,6 +143,13 @@ shared_examples "dsl container" do
     end
   end
 
+  describe "nofill" do
+    specify "sets nil" do
+      subject.nofill
+      subject.style[:fill].should eq(nil)
+    end
+  end
+
   describe "flow" do
     it "creates a Shoes::Flow" do
       blk = Proc.new {}
@@ -349,6 +356,13 @@ shared_examples "dsl container" do
         style[:stroke].should eq(color)
       end
       subject.oval(10, 10, 100, 100)
+    end
+  end
+
+  describe "nostroke" do
+    specify "sets nil" do
+      subject.nostroke
+      subject.style[:stroke].should eq(nil)
     end
   end
 

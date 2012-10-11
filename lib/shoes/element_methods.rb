@@ -274,6 +274,10 @@ EOS
     def stroke(color)
       @style[:stroke] = color
     end
+    
+    def nostroke
+      @style[:stroke] = nil
+    end
 
     # Sets the stroke width, in pixels
     def strokewidth(width)
@@ -287,6 +291,10 @@ EOS
     # color - a Shoes::Color
     def fill(color)
       @style[:fill] = color
+    end
+    
+    def nofill
+      @style[:fill] = nil
     end
 
     # Adds style, or just returns current style if no argument

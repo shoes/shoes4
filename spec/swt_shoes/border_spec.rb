@@ -7,7 +7,7 @@ describe Shoes::Swt::Border do
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: true) }
+  let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: 1) }
   let(:parent) { double("parent", width: width, height: height, left: left, top: top) }
 
   subject {
