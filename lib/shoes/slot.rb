@@ -17,6 +17,7 @@ module Shoes
 
       @width ||= 1.0
       @height ||= 0
+      @init_height = @height
       @blk = blk
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
@@ -45,6 +46,13 @@ module Shoes
         @left, @top = parent.left, max.top + max.height
         @height = contents_alignment self
         max = self
+      end
+      case @init_height
+      when 0
+      when Float
+        max.height = @height = (parent.height * @init_height).to_i
+      else
+        max.height = @height = @init_height
       end
       max
     end
