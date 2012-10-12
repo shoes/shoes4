@@ -105,6 +105,7 @@ module Shoes
       end
       def mouseMove(e)
         @app.dsl.mouse_pos = [e.x, e.y]
+        @app.dsl.mouse_motion.each{|blk| blk[e.x, e.y]}
       end
     end
 

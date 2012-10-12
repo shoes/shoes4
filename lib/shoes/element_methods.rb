@@ -354,5 +354,9 @@ EOS
     def mouse
       [@app.mouse_button, @app.mouse_pos[0], @app.mouse_pos[1]]
     end
+    
+    def motion &blk
+      @app.mouse_motion << blk
+    end
   end
 end

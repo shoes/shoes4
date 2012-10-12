@@ -17,7 +17,7 @@ module Shoes
     include Shoes::ElementMethods
 
     attr_reader :gui, :shell, :top_slot, :contents
-    attr_reader :app
+    attr_reader :app, :mouse_motion
     attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
     attr_accessor :mouse_button, :mouse_pos
@@ -37,6 +37,7 @@ module Shoes
       @app = self
       @style = default_styles
       @contents = []
+      @mouse_motion = []
       @mouse_button, @mouse_pos = 0, [0, 0]
 
       @gui = Shoes.configuration.backend::App.new @app
