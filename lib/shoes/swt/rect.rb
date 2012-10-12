@@ -14,7 +14,7 @@ module Shoes
         @width = width
         @height = height
         @opts = opts
-        @corners = opts[:corners] || 0
+        @corners = opts[:curve] || 0
 
         # Move
         @container = @app.real

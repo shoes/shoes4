@@ -11,7 +11,7 @@ module Shoes
       @top = top
       @width = width
       @height = height
-      @corners = opts[:corners] || 0
+      @corners = opts[:curve] || 0
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
 
       @gui = Shoes.backend_for(self, left, top, width, height, opts, &blk)

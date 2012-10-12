@@ -30,7 +30,7 @@ describe Shoes::Swt::Rect do
     include_context "painter context"
 
     let(:corners) { 0 }
-    let(:shape) { Shoes::Swt::Rect.new dsl, app, left, top, width, height, :corners => corners }
+    let(:shape) { Shoes::Swt::Rect.new dsl, app, left, top, width, height, :curve => corners }
     subject { Shoes::Swt::Rect::Painter.new shape }
 
     it_behaves_like "fill painter"

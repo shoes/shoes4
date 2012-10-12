@@ -258,7 +258,7 @@ shared_examples "dsl container" do
     end
 
     context "unequal sides, rounded corners, from style hash" do
-      let(:rect) { subject.rect :left => 40, :top => 30, :width => 200, :height => 100, :corners => 12 }
+      let(:rect) { subject.rect :left => 40, :top => 30, :width => 200, :height => 100, :curve => 12 }
 
       it_behaves_like "rect"
 

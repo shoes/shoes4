@@ -231,24 +231,24 @@ EOS
       when 3
         left, top, width = args
         height = width
-        opts[:corners] = 0
+        opts[:curve] ||= 0
       when 4
         left, top, width, height = args
-        opts[:corners] = 0
+        opts[:curve] ||= 0
       when 5
-        left, top, width, height, opts[:corners] = args
+        left, top, width, height, opts[:curve] = args
       when 0
         left = opts[:left] || 0
         top = opts[:top] || 0
         width = opts[:width] || 0
         height = opts[:height] || width
-        opts[:corners] ||= 0
+        opts[:curve] ||= 0
       else
         message = <<EOS
 Wrong number of arguments. Must be one of:
   - rect(left, top, side, [opts])
   - rect(left, top, width, height, [opts])
-  - rect(left, top, width, height, corners, [opts])
+  - rect(left, top, width, height, curve, [opts])
   - rect(styles)
 EOS
         raise ArgumentError, message
