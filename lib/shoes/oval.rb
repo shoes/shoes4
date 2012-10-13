@@ -2,6 +2,7 @@ require 'shoes/common_methods'
 require 'shoes/common/fill'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
+require 'shoes/common/clickable'
 
 module Shoes
   class Oval
@@ -9,6 +10,7 @@ module Shoes
     include Shoes::Common::Fill
     include Shoes::Common::Stroke
     include Shoes::Common::Style
+    include Shoes::Common::Clickable
 
     def initialize(app, left, top, width, height, opts = {}, &blk)
       @app = app

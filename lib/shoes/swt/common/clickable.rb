@@ -16,6 +16,14 @@ module Shoes
             s.app.gui.real.addListener ::Swt::SWT::MouseUp, ln if flag == :release
           end
         end
+        
+        def click &blk
+          clickable dsl, blk, :click
+        end
+    
+        def release &blk
+          clickable dsl, blk, :release
+        end
       end
     end
   end
