@@ -29,7 +29,7 @@ module Shoes
         include Common::Resource
         def fill(gc)
           set_position_and_size
-          gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners, @obj.corners)
+          gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners*2, @obj.corners*2)
         end
 
         def draw(gc)
