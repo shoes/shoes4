@@ -31,7 +31,7 @@ Shoes.app width: 400, height: 400 do
 
     @ball.move nx, ny
     @you.move mouse[1] - (75 / 2), @you.top
-    @comp.move(@comp.left + 10, @comp.top)  if @comp.left + 75 < @ball.left
-    @comp.move(@comp.left - 10, @comp.top)  if @ball.left + 20 < @comp.left
+    @comp.left += 10  if @comp.left + 75 < @ball.left
+    @comp.left -= 10  if @ball.left + 20 < @comp.left
   end
 end

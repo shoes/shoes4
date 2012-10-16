@@ -27,7 +27,7 @@ module Shoes
       attr_reader :dsl
       attr_reader :transform
       attr_reader :painter
-      attr_reader :left, :top, :width, :height
+      attr_accessor :left, :top, :width, :height
       attr_reader :corners
 
       class Painter < Common::Painter

@@ -5,6 +5,7 @@ module Shoes
       end
 
       def move(left, top)
+        @left, @top = left, top
       end
     end
   end

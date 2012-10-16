@@ -21,11 +21,10 @@ module Shoes
     def initialize(opts={})
       @identifier = opts[:id]
     end
-
-    # This is the position of the Element from the top
-    # of the Slot.  (pixels)
-    def top
-      @top
+    
+    %w[top left width height].each do |e|
+      eval "def #{e}; @gui.#{e} rescue @#{e} end"
+      eval "def #{e}=(v); @gui.#{e} = v end"
     end
 
     # This is the position of the right side of the Element,
@@ -38,27 +37,6 @@ module Shoes
     # measured from the *top* of the Slot.  (pixels)
     def bottom
       @top + height
-    end
-
-    # Gets you the pixel position of the left edge of the element.
-    def left
-      @left
-    end
-
-    # The vertical screen size of the element in pixels.  In the case of images,
-    # this is not the full size of the image.  This is the height of the element
-    # as it is shown right now.
-    #
-    # If you have a 150x150 pixel image and you set the width to 50 pixels, this
-    # method will return 50.
-    #
-    # Also see the width method for an example and some other comments.
-    def width
-      @gui.width
-    end
-
-    def height
-      @gui.height
     end
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
