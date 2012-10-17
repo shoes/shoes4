@@ -11,7 +11,7 @@ describe Shoes::Swt::Image do
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", contents: []) }
   let(:parent) { double("parent", real: true, dsl: parent_dsl) }
-  let(:dsl) { double("dsl object", left: left, top: top, app: app)}
+  let(:dsl) { double("dsl object", left: left, top: top, app: app, hided: false)}
   let(:left) { 100 }
   let(:top) { 200 }
   let(:mock_image) { mock(:swt_image, getImageData: MockSize.new, addListener: true) }

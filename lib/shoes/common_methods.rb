@@ -41,23 +41,32 @@ module Shoes
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
-
+      @hided = false
+      toggle
     end
 
     # Reveals the element, if it is hidden. See also #hide and #toggle.
     def show
-
+      @hided = true
+      toggle
     end
 
     # Hides an element if it is shown. Or shows the element, if it is hidden.
     # See also #hide and #show.
     def toggle
-
+      @hided = !@hided
+      @gui.toggle
+      self
     end
 
     # Moves an element to a specific pixel position. The element is still in the slot,
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
+      @parent.contents.delete self if @parent
+      _move left, top
+    end
+    
+    def _move left, top
       @gui.move(left, top) if @gui
       @left, @top = left, top
     end
@@ -80,7 +89,7 @@ module Shoes
         max = self
       end
       x = @right ? right_align_position(self, parent, @right) : left_align_position
-      move x, y
+      _move x, y
       max
     end
 

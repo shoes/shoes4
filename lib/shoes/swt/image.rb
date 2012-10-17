@@ -5,6 +5,7 @@ module Shoes
       include Common::Move
       include Common::Resource
       include Common::Clickable
+      include Common::Toggle
 
       attr_reader :parent, :real, :dsl, :container, :paint_callback, :width, :height
 
@@ -22,7 +23,7 @@ module Shoes
         @paint_callback = lambda do |event|
           gc = event.gc
           gcs_reset gc
-          gc.drawImage @real, @left, @top
+          gc.drawImage @real, @left, @top unless @dsl.hided
         end
         @container.add_paint_listener(@paint_callback)
         
