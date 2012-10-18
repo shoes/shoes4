@@ -17,16 +17,16 @@ module Shoes
 
         @real = ::Swt::Graphics::Image.new(::Swt.display, @dsl.file_path)
         @width, @height = @real.getImageData.width, @real.getImageData.height
-        
+
         parent.dsl.contents << @dsl
-        
+
         @paint_callback = lambda do |event|
           gc = event.gc
           gcs_reset gc
-          gc.drawImage @real, @left, @top unless @dsl.hided
+          gc.drawImage @real, @left, @top unless @dsl.hidden
         end
         @container.add_paint_listener(@paint_callback)
-        
+
         clickable dsl, blk
       end
     end

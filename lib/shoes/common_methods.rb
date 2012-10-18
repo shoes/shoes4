@@ -21,7 +21,7 @@ module Shoes
     def initialize(opts={})
       @identifier = opts[:id]
     end
-    
+
     %w[top left width height].each do |e|
       eval "def #{e}; @gui.#{e} rescue @#{e} end"
       eval "def #{e}=(v); @gui.#{e} = v end"
@@ -41,20 +41,20 @@ module Shoes
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
-      @hided = false
+      @hidden = false
       toggle
     end
 
     # Reveals the element, if it is hidden. See also #hide and #toggle.
     def show
-      @hided = true
+      @hidden = true
       toggle
     end
 
     # Hides an element if it is shown. Or shows the element, if it is hidden.
     # See also #hide and #show.
     def toggle
-      @hided = !@hided
+      @hidden = !@hidden
       @gui.toggle
       self
     end
@@ -65,7 +65,7 @@ module Shoes
       @parent.contents.delete self if @parent
       _move left, top
     end
-    
+
     def _move left, top
       @gui.move(left, top) if @gui
       @left, @top = left, top

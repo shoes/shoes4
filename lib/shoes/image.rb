@@ -4,7 +4,7 @@ module Shoes
   class Image
     include Shoes::CommonMethods
 
-    attr_reader :parent, :blk, :gui, :app, :hided
+    attr_reader :parent, :blk, :gui, :app, :hidden
     attr_reader :file_path
 
     def initialize(parent, file_path, opts = {}, blk = nil)
