@@ -24,6 +24,6 @@ module Shoes
       @gui = Shoes.backend_for(self, left, top, width, height, &blk)
     end
 
-    attr_reader :app
+    attr_reader :app, :hidden
   end
 end

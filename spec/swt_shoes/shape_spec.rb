@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Shape do
   let(:app) { double("app", add_paint_listener: true) }
-  let(:dsl) { double('dsl').as_null_object }
+  let(:dsl) { double('dsl', hidden: false).as_null_object }
   subject { Shoes::Swt::Shape.new dsl, app }
 
   shared_examples_for "Swt::Shape" do

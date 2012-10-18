@@ -7,7 +7,7 @@ describe Shoes::Swt::Rect do
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) { double("dsl object").as_null_object }
+  let(:dsl) { double("dsl object", hidden: false).as_null_object }
 
   subject {
     Shoes::Swt::Rect.new dsl, app, left, top, width, height

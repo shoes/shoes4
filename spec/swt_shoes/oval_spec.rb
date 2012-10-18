@@ -7,7 +7,7 @@ describe Shoes::Swt::Oval do
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) { double("dsl object").as_null_object }
+  let(:dsl) { double("dsl object", hidden: false).as_null_object }
 
   subject {
     Shoes::Swt::Oval.new(dsl, app, left, top, width, height)

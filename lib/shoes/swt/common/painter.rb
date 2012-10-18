@@ -11,10 +11,12 @@ module Shoes
         def paint_control(event)
           gc = event.gc
           gcs_reset gc
-          gc.set_antialias ::Swt::SWT::ON
-          gc.set_transform(@obj.transform)
-          fill gc if fill_setup gc
-          draw gc if draw_setup gc
+          unless @obj.dsl.hidden
+            gc.set_antialias ::Swt::SWT::ON
+            gc.set_transform(@obj.transform)
+            fill gc if fill_setup gc
+            draw gc if draw_setup gc
+          end
         end
 
         # Override in subclass if not using fill

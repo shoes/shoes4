@@ -6,7 +6,7 @@ describe Shoes::Swt::Arc do
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2).as_null_object }
+  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2, hidden: false).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 

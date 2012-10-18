@@ -3,7 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Line do
   let(:container) { double('container', :disposed? => false).as_null_object }
   let(:app) { double('app', :real => container, :add_paint_listener => true) }
-  let(:dsl) { double('dsl').as_null_object }
+  let(:dsl) { double('dsl', hidden: false).as_null_object }
   let(:point_a) { Shoes::Point.new(10, 100) }
   let(:point_b) { Shoes::Point.new(300, 10) }
 
