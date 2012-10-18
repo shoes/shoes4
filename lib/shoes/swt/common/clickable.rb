@@ -8,8 +8,10 @@ module Shoes
             class << ln; self end.
             instance_eval do
               define_method :handleEvent do |e|
-                mb, mx, my = e.button, e.x, e.y
-                blk[mb, mx, my] if s.left <= mx and mx <= s.left + s.width and s.top <= my and my <= s.top + s.height
+                unless s.hidden
+                  mb, mx, my = e.button, e.x, e.y
+                  blk[mb, mx, my] if s.left <= mx and mx <= s.left + s.width and s.top <= my and my <= s.top + s.height
+                end
               end
             end
             s.app.gui.real.addListener ::Swt::SWT::MouseDown, ln if flag == :click
