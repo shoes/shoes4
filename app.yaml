@@ -1,0 +1,60 @@
+# app.yaml
+
+# -----------------------------------------------------------------------------
+# This is a sample configuration file for a Shoes app. Edit at will.
+# -----------------------------------------------------------------------------
+
+# The app's full name, intended for humans. This will be the name of the thing
+# you double-click.
+name: Shoes App
+
+# A short version of the name, simplified for under-the-hood use. Defaults to
+# lowercased name, with non-word characters removed.
+shortname: shoesapp
+
+# Files to ignore when bundling the app. Should be an array.
+ignore:
+  - 'vendor'
+  - 'lib'
+  - 'static'
+  - '*.app'
+  - 'spec'
+
+# How to run the app
+run: bin/hello_from_warbler
+
+# -----------------------------------------------------------------------------
+# The following options are new in Shoes 4. They don't work in Shoes 3.
+# -----------------------------------------------------------------------------
+
+# Installed gems to bundle with the app
+gems:
+
+# -----------------------------------------------------------------------------
+# The following options are only available for Shoes 3. They won't work (yet)
+# in Shoes 4.
+# -----------------------------------------------------------------------------
+
+# The app's version number
+version: 0.0.1
+
+# The name of this release
+release: Mindfully
+
+# App icons for various platforms
+icons:
+  osx: images/Shoes.icns
+  gtk: path/to/app.png
+  win32: path/to/App.ico
+
+# Artwork for a DMG
+dmg:
+  ds_store: path/to/.DS_Store
+  background: path/to/background.png
+
+# The command to clone the app using git. Note that the prefix included here is
+# an in-package prefix, so unless you know what the inside of your package
+# looks like, this is not a recommended option. This sample is for a Shoes 3 app
+# and WILL NOT WORK on Shoes 4
+#clone: git checkout-index --prefix=dist/app/ -a
+
