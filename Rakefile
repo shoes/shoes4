@@ -5,7 +5,7 @@ require 'rspec/core/rake_task'
 
 PACKAGE_DIR = 'pkg'
 
-CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage']
+CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage', "spec/test_app/#{PACKAGE_DIR}"]
 
 require 'jruby'
 JRuby.runtime.instance_config.runRubyInProcess = false
