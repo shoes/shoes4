@@ -33,7 +33,7 @@ module Shoes
             jar.apply @config
             path = dir.relative_path_from(working_dir).join(filename).to_s
             jar.create path
-            path
+            File.expand_path path
           end
         end
 

@@ -19,6 +19,8 @@ describe Shoes::Swt::Package::Jar do
 
     let(:jar_name) { 'sweet-nebulae.jar' }
     let(:output_file) { Pathname.new(output_dir.join jar_name) }
+    let(:config) { Shoes::Package::Configuration.load(config_filename) }
+    subject { Shoes::Swt::Package::Jar.new(config) }
 
     it "creates a .jar" do
       output_file.should exist
