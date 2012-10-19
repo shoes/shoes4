@@ -1,0 +1,3 @@
+Shoes.app do
+  banner "Hello world"
+end

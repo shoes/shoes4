@@ -1,5 +1,9 @@
 require 'java'
+# TODO: Remove when merged upstream (v0.14?)
+require 'swt/full-monkeypatch'
 require 'swt'
+# TODO: Remove when merged upstream (v0.14?)
+require 'swt/jar-loader-monkeypatch'
 
 module Swt
   include_package 'org.eclipse.swt.graphics'
