@@ -83,6 +83,43 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
 **Note:** For Windows, `C:\tmp\shoes4>bin\swt-shoooes samples\simple-sound.rb`
 
+Packaging a Shoes App
+---------------------
+
+Packaging is just a baby, so be gentle.
+
+If this is your first time running the packager, you'll want to `bundle install` to pull in a couple of additional gems.
+
+In order to package an app, you need to have the Shoes gem installed in your environment.
+
+    $ rake gem
+    $ gem install pkg/shoes-4.0.0.pre1
+
+Now, you can package an app. But first, looky here:
+
+- The packager will include ***everything*** in the directory of your shoes script and below, unless you tell it not to.
+- The packager will probably not work properly if it detects a `.gemspec` or a `Gemfile`. It uses Warbler, which always looks for those files. If you run the specs, you may notice some warnings like this:
+
+> warning: Bundler `path' components are not currently supported.
+> The `shoes-4.0.0.pre1' component was not bundled.
+> Your application may fail to boot!
+
+That's Warbler talking. Actually, we sneak the Shoes gem in anyway, but don't tell.
+
+Okay, now for real. The simplest thing is to put your script in a directory by itself and then
+
+    $ bin/shoes -p swt:app path/to/directory-of/your-shoes-app.rb
+
+If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/wasnotrice/shoes4/blob/pkg/app.yaml) for more details. When you have an `app.yaml` file right next to your script, you have three options:
+
+    $ bin/shoes -p swt:app path/to/directory-of/your-shoes-app.rb
+    $ bin/shoes -p swt:app path/to/directory-of/app.yaml
+    $ bin/shoes -p swt:app path/to/directory-of
+
+The packager will find your instructions using any of those commands. Find out more at `bin/shoes --help`.
+
+Oh, and you can also just run your Shoes apps with `bin/shoes`.
+
 Want to contribute?
 -------------------
 That's awesome, thank you! 
