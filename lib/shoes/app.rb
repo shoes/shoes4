@@ -1,5 +1,7 @@
 require 'shoes/element_methods'
 require 'shoes/color'
+require 'tmpdir'
+require 'fileutils'
 
 def window(*a, &b)
   Shoes.app(*a, &b)
@@ -7,7 +9,17 @@ end
 
 
 module Shoes
-  SHOES_ICON = File.join(File.dirname(__FILE__), '..', '..', 'static', 'shoes-icon.png')
+  shoes_icon = File.expand_path("../../../static/shoes-icon.png", __FILE__)
+  if shoes_icon.include? 'shoesapp.jar!'
+    SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png')
+    open SHOES_ICON, 'wb' do |fw|
+      open shoes_icon, 'rb' do |fr|
+        fw.write fr.read
+      end
+    end
+  else
+    SHOES_ICON = shoes_icon
+  end
 
   def self.app(opts={}, &blk)
     Shoes::App.new(opts, &blk)
