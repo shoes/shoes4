@@ -1,9 +1,11 @@
 module Shoes
   module Mock
     class Slot
-      def dsl
-        dsl = Struct.new(:contents).new([])
+      def initialize dsl, parent
+        @dsl, @parent = dsl, parent
       end
+
+      attr_reader :dsl
     end
 
     class Stack < Slot; end
