@@ -31,14 +31,16 @@ module Shoes
           Dir.chdir working_dir do
             jar = Warbler::Jar.new
             jar.apply @config
-            path = dir.relative_path_from(working_dir).join(filename).to_s
+            package_dir = dir.relative_path_from(working_dir)
+            package_dir.mkpath
+            path = package_dir.join(filename).to_s
             jar.create path
             File.expand_path path
           end
         end
 
         def default_dir
-          'pkg'
+          working_dir.join 'pkg'
         end
 
         def filename
