@@ -64,7 +64,10 @@ module Shoes
           # Can't find any 'app.yaml', so assume we just want to wrap
           # this file. If it exists, load default options. If not, let
           # the filesystem raise an error.
-          default_options = {run: pathname.basename.to_s}.to_yaml
+          default_options = {
+            run: pathname.basename.to_s,
+            name: pathname.basename(pathname.extname).to_s.gsub(/\W/, '-')
+          }.to_yaml
           options = pathname.exist? ? default_options : pathname
           file = dummy_file.new(options)
           dir = pathname.parent

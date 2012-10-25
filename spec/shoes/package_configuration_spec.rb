@@ -139,6 +139,14 @@ describe Shoes::Package::Configuration do
       it_behaves_like "config with path"
     end
 
+    context "with a path that exists, but no 'app.yaml'" do
+      let(:path) { config_filename.parent.join('bin/hello_world') }
+      subject { Shoes::Package::Configuration.load(path) }
+
+      its(:name) { should eq('hello_world') }
+      its(:shortname) { should eq('hello_world') }
+    end
+
     context "when the file doesn't exist" do
       it "blows up" do
         lambda { Shoes::Package::Configuration.load('some/bogus/path') }.should raise_error
