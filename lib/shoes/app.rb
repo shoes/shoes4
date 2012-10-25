@@ -10,7 +10,7 @@ end
 
 module Shoes
   shoes_icon = File.expand_path("../../../static/shoes-icon.png", __FILE__)
-  if shoes_icon.include? 'shoesapp.jar!'
+  if shoes_icon.include? '.jar!'
     SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png')
     open SHOES_ICON, 'wb' do |fw|
       open shoes_icon, 'rb' do |fr|
