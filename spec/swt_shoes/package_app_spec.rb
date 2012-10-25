@@ -44,8 +44,11 @@ describe Shoes::Swt::Package::App do
       launcher.should exist
     end
 
-    it "makes launcher executable" do
-      #launcher.should be_executable
+    # Windows can't test this
+    platform_is_not :windows do
+      it "makes launcher executable" do
+        launcher.should be_executable
+      end
     end
 
     it "deletes generic icon" do

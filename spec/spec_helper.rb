@@ -51,6 +51,42 @@ module Guard
   def backend_is(backend)
     yield if Shoes.configuration.backend_name == backend && block_given?
   end
+
+  # Runs specs only if platform matches
+  #
+  # @example
+  # platform_is :windows do
+  #   it "does something only on windows" do
+  #     # specification
+  #   end
+  # end
+  def platform_is(platform)
+    yield if self.send "platform_is_#{platform.to_s}"
+  end
+
+  # Runs specs only if platform does not match
+  #
+  # @example
+  # platform_is_not :windows do
+  #   it "does something only on posix systems" do
+  #     # specification
+  #   end
+  # end
+  def platform_is_not(platform)
+    yield unless self.send "platform_is_#{platform.to_s}"
+  end
+
+  def platform_is_windows
+    return RbConfig::CONFIG['host_os'] =~ /windows|mswin/i
+  end
+
+  def platform_is_linux
+    return RbConfig::CONFIG['host_os'] =~ /linux/i
+  end
+
+  def platform_is_osx
+    return RbConfig::CONFIG['host_os'] =~ /darwin/i
+  end
 end
 
 include Guard
