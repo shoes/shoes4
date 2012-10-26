@@ -358,5 +358,10 @@ EOS
     def motion &blk
       @app.mouse_motion << blk
     end
+    
+    def keypress &blk
+      opts = {:app => @app}
+      Shoes::Keypress.new opts, &blk
+    end
   end
 end
