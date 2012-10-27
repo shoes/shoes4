@@ -274,7 +274,7 @@ EOS
     def stroke(color)
       @style[:stroke] = color
     end
-    
+
     def nostroke
       @style[:stroke] = nil
     end
@@ -292,7 +292,7 @@ EOS
     def fill(color)
       @style[:fill] = color
     end
-    
+
     def nofill
       @style[:fill] = nil
     end
@@ -325,7 +325,7 @@ EOS
         eval "Shoes::#{m.capitalize}.new(@current_slot, text, #{m.upcase}_FONT_SIZE, opts)"
       end
     end
-    
+
     def get_styles msg, styles=[], spoint=0
       msg.each do |e|
         if e.is_a? Shoes::Text
@@ -337,28 +337,28 @@ EOS
       end
       styles
     end
-    
+
     [:code, :del, :em, :ins, :strong, :sub, :sup].each do |m|
       define_method m do |*str|
         Shoes::Text.new m, str
       end
     end
-    
+
     [:bg, :fg].each do |m|
       define_method m do |*str|
         color = str.pop
         Shoes::Text.new m, str, color
       end
     end
-    
+
     def mouse
       [@app.mouse_button, @app.mouse_pos[0], @app.mouse_pos[1]]
     end
-    
+
     def motion &blk
       @app.mouse_motion << blk
     end
-    
+
     def keypress &blk
       opts = {:app => @app}
       Shoes::Keypress.new opts, &blk

@@ -27,4 +27,28 @@ describe Shoes::TextBlock do
       subject.text = "Goodbye Cruel World"
     end
   end
+
+  describe "font" do
+    it "sets the default font to Arial" do
+      subject.font.should eql "Arial"
+    end
+
+    it "should allow setting the font with :family" do
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: "Helvetica" })
+      s.font.should eql "Helvetica"
+    end
+
+    it "should allow setting the font size with :family" do
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: "Helvetica 33px" })
+      s.font.should eql "Helvetica"
+      s.font_size.should eql 33
+    end
+
+    it "should accept fonts surrounded with questionmarks when using :family" do
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: '"Comic Sans" 13px' })
+      s.font.should eql "Comic Sans"
+      s.font_size.should eql 13
+    end
+
+  end
 end
