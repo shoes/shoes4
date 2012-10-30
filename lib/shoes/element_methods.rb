@@ -350,6 +350,10 @@ EOS
         Shoes::Text.new m, str, color
       end
     end
+    
+    def link *str, &blk
+      Shoes::Link.new :link, str, &blk
+    end
 
     def mouse
       [@app.mouse_button, @app.mouse_pos[0], @app.mouse_pos[1]]

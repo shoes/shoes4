@@ -43,6 +43,7 @@ module Shoes
 
       class TbPainter
         include Common::Resource
+        include Common::Clickable
 
         def initialize(dsl, opts)
           @dsl = dsl
@@ -102,7 +103,20 @@ module Shoes
               when :code
                 font = "Lucida Console"
               when :link
-                # not yet implemented
+                cmds << "underline = true"
+                fg = ::Swt::Color.new Shoes.display, 0, 0, 255
+                spos = @tl.getLocation e[1].first, false
+                epos = @tl.getLocation e[1].last, true
+                e[0].lh = @tl.getLineBounds(0).height
+                e[0].sx, e[0].sy = @dsl.left + spos.x, @dsl.top + spos.y
+                e[0].ex, e[0].ey = @dsl.left + epos.x, @dsl.top + epos.y + e[0].lh
+                e[0].pl, e[0].pt, e[0].pw, e[0].ph = @dsl.left, @dsl.top, @dsl.width, @dsl.height
+                @dsl.links << e[0]
+                unless e[0].clickabled
+                  e[0].parent = @dsl
+                  clickable e[0], e[0].blk
+                  e[0].clickabled = true
+                end
               else
               end
             end

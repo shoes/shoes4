@@ -3,7 +3,8 @@ require 'shoes/spec_helper'
 describe Shoes::TextBlock do
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, {app: app} }
-  subject { Shoes::TextBlock.new(parent, "Hello, world!", 99, {}) }
+  let(:text_link) { Shoes::Link.new(:link, ['Hello']) }
+  subject { Shoes::TextBlock.new(parent, "#{text_link}, world!", 99, {}) }
 
   describe "initialize" do
     it "creates gui object" do

@@ -6,7 +6,7 @@ module Shoes
   class TextBlock
     include Shoes::CommonMethods
 
-    attr_reader  :gui, :parent, :text
+    attr_reader  :gui, :parent, :text, :links
     attr_accessor :font, :font_size, :width, :height, :left, :top
 
     def initialize(parent, text, font_size, opts = {})
@@ -16,6 +16,7 @@ module Shoes
       @text = text
       @left = opts[:left]
       @top = opts[:top]
+      @links = []
 
       handle_opts opts
 
