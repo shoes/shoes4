@@ -26,7 +26,7 @@ module Shoes
       attr_accessor :left, :top, :width, :height
 
       class Painter < Common::Painter
-        include Common::Resource
+
         def fill(gc)
           # do nothing
         end

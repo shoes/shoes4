@@ -32,7 +32,6 @@ module Shoes
       attr_reader :corners
 
       class Painter < Common::Painter
-        include Common::Resource
 
         def fill(gc)
           gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners*2, @obj.corners*2)

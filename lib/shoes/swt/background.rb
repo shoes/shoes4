@@ -26,7 +26,7 @@ module Shoes
       attr_accessor :left, :top, :width, :height
 
       class Painter < Common::Painter
-        include Common::Resource
+
         def fill(gc)
           set_position_and_size
           gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners*2, @obj.corners*2)

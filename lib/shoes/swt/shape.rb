@@ -41,7 +41,6 @@ module Shoes
       end
 
       class Painter < Common::Painter
-        include Common::Resource
 
         def fill(gc)
           gc.fill_path(@obj.element)
