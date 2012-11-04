@@ -1,13 +1,17 @@
 require 'swt_shoes/spec_helper'
 
 describe "alert" do
-  let(:mock_mb) { mock(:mb, setMessage: true, open: true) }
-  
-  subject { alert 'hello' }
+
+  TEXT = 'some random text'
+
+  let(:dsl) { double('dsl', :text => TEXT) }
+  let(:parent) { double('parent') }
+
+  subject { Shoes::Swt::Alert.new dsl, parent, TEXT }
   
   specify "pops up a window containing a short message." do
     ::Swt::Widgets::Shell.stub(:new)
-    ::Swt::Widgets::MessageBox.stub(:new) { mock_mb }
-    subject
+    mock_message_box = mock(:mb, setMessage: true, open: true)
+    ::Swt::Widgets::MessageBox.stub(:new) { mock_message_box }
   end
 end

@@ -371,5 +371,9 @@ EOS
       opts = {:app => @app}
       Shoes::Keypress.new opts, &blk
     end
+
+    def alert message = ''
+      Shoes::Alert.new @current_slot, message
+    end
   end
 end
