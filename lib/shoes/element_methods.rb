@@ -32,62 +32,66 @@ module Shoes
     #end
 
     def image(path, opts={}, &blk)
-      opts.merge! app: @app
+      add_app_to_options(opts)
       Shoes::Image.new @current_slot, path, opts, blk
     end
 
-    def border(color, opts = {}, &blk)
+    def add_app_to_options(opts)
       opts.merge! app: @app
+    end
+
+    def border(color, opts = {}, &blk)
+      add_app_to_options(opts)
       Shoes::Border.new @current_slot, color, opts, blk
     end
 
     def background(color, opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Background.new @current_slot, color, opts, blk
     end
 
     def edit_line(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::EditLine.new @current_slot, opts, blk
     end
 
     def edit_box(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::EditBox.new @current_slot, opts, blk
     end
 
     def progress(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Progress.new @current_slot, opts, blk
     end
 
     def check(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Check.new @current_slot, opts, blk
     end
 
     def radio(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Radio.new @current_slot, opts, blk
     end
 
     def list_box(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::ListBox.new @current_slot, opts, blk
     end
 
     def flow(opts = {}, &blk)
-      opts.merge! :app => app
+      add_app_to_options(opts)
       Shoes::Flow.new @current_slot, opts, &blk
     end
 
     def stack(opts = {}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Stack.new @current_slot, opts, &blk
     end
 
     def button(text, opts={}, &blk)
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Button.new @current_slot, text, opts, blk
     end
 
@@ -124,7 +128,7 @@ module Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      opts.merge! :app => @app
+      add_app_to_options(opts)
       Shoes::Animation.new opts, blk
     end
 
