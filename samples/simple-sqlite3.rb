@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'sqlite3'
 Shoes.app :width => 350, :height => 130 do
   db = SQLite3::Database.new "simple-sqlite3.db"
