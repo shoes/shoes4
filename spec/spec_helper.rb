@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
 $LOAD_PATH << File.join('../lib', SHOESSPEC_ROOT)
 
