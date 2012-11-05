@@ -59,6 +59,10 @@ module Shoes
       def main_app?
         ::Shoes::Swt.main_app.equal? self
       end
+      
+      def flush
+        @shell.setSize @dsl.width, @dsl.height
+      end
 
       private
       def main_window_on_close

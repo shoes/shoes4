@@ -367,5 +367,10 @@ EOS
       opts = {:app => @app}
       Shoes::Keypress.new opts, &blk
     end
+    
+    def clear
+      @contents.each &:clear
+      @contents.clear
+    end
   end
 end

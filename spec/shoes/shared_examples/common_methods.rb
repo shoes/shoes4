@@ -13,3 +13,9 @@ shared_examples_for "movable object with gui" do
   end
 end
 
+shared_examples_for "clearable object" do
+  it "clears" do
+    subject.should_receive(:clear)
+    subject.clear
+  end
+end
