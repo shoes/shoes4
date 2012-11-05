@@ -1,9 +1,11 @@
 require 'java'
 # TODO: Remove when merged upstream (v0.14?)
 require 'swt/full-monkeypatch'
-require 'swt'
 # TODO: Remove when merged upstream (v0.14?)
-require 'swt/jar-loader-monkeypatch'
+# Force-load our fixed jar_loader.rb
+$LOAD_PATH.unshift File.expand_path('../../swt', __FILE__)
+require 'jar_loader'
+require 'swt'
 
 module Swt
   include_package 'org.eclipse.swt.graphics'
