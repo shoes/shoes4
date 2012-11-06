@@ -5,6 +5,7 @@ module Shoes
     # Class is used by edit_box and edit_line
     class InputBox
       include Common::Child
+      include Common::Clear
 
       attr_reader :real
 

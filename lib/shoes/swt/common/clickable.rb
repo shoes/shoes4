@@ -5,6 +5,8 @@ module Shoes
         def clickable s, blk, flag = :click
           if blk
             ln = ::Swt::Widgets::Listener.new
+            s.ln = ln
+            s = s.dsl unless s.is_a?(::Shoes::Link) 
             class << ln; self end.
             instance_eval do
               define_method :handleEvent do |e|
@@ -22,11 +24,11 @@ module Shoes
         end
         
         def click &blk
-          clickable dsl, blk, :click
+          clickable self, blk, :click
         end
     
         def release &blk
-          clickable dsl, blk, :release
+          clickable self, blk, :release
         end
       end
     end

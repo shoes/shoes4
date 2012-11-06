@@ -18,6 +18,7 @@ describe Shoes::Swt::Button do
   end
 
   it_behaves_like "movable element", 140, 300
+  #it_behaves_like "clearable native element"
 
   describe "#initialize" do
     it "sets text on real element" do

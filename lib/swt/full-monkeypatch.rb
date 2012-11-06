@@ -2,7 +2,7 @@
 # Use only until merged upstream and new version of Swt gem is
 # released (currently at 0.13)
 module JFace
-  path = case Config::CONFIG["host_os"]
+  path = case RbConfig::CONFIG["host_os"]
     when /windows|mswin/i
       "../../../../swt-*/vendor/jface/*.jar"
     else

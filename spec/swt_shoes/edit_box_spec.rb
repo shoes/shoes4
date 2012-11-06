@@ -15,6 +15,7 @@ describe Shoes::Swt::EditBox do
   end
 
   it_behaves_like "movable element"
+  #it_behaves_like "clearable native element"
 
   describe "#initialize" do
     it "sets text on real element" do

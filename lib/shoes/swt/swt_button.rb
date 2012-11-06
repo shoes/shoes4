@@ -1,6 +1,8 @@
 module Shoes
   module Swt
     class SwtButton
+      include Common::Clear
+      
       # The Swt parent object
       attr_reader :parent, :real
 

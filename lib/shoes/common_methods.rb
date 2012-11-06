@@ -70,6 +70,12 @@ module Shoes
       @gui.move(left, top) if @gui
       @left, @top = left, top
     end
+    
+    def clear
+      @parent.contents.delete self if @parent
+      @app.gui.flush
+      @gui.clear
+    end
 
     # displace(left: a number, top: a number) » self
     # Displacing an element moves it.  But without changing the layout around it.

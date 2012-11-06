@@ -59,6 +59,10 @@ module Shoes
       def main_app?
         ::Shoes::Swt.main_app.equal? self
       end
+      
+      def flush
+        @dsl.top_slot.contents_alignment @dsl.top_slot
+      end
 
       private
       def main_window_on_close
