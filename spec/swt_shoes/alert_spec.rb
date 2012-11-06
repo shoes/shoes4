@@ -1,14 +1,10 @@
 require 'swt_shoes/spec_helper'
 
-describe "alert" do
+describe Shoes::Swt::Alert do
 
   TEXT = 'some random text'
 
-  before :each do
-    Shoes::Swt.unregister_all
-  end
-
-  let(:dsl) { double('dsl', :text => TEXT) }
+  let(:dsl) { double('dsl') }
   let(:parent) { double('parent') }
 
   subject { Shoes::Swt::Alert.new dsl, parent, TEXT }
