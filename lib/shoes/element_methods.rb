@@ -369,8 +369,8 @@ EOS
     end
     
     def clear
-      @contents.each &:clear
-      @contents.clear
+      contents = @contents.dup
+      contents.each &:clear
     end
   end
 end

@@ -21,13 +21,13 @@ module Shoes
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-        clickable dsl, blk
+        clickable self, blk
       end
 
       attr_reader :dsl
       attr_reader :transform
       attr_reader :painter
-      attr_accessor :width, :height, :left, :top
+      attr_accessor :width, :height, :left, :top, :ln
 
       class Painter < Common::Painter
         def fill(gc)
