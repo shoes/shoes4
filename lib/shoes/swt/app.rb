@@ -61,7 +61,7 @@ module Shoes
       end
       
       def flush
-        @shell.setSize @dsl.width, @dsl.height
+        @dsl.top_slot.contents_alignment @dsl.top_slot
       end
 
       private
