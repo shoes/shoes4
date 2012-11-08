@@ -1,11 +1,14 @@
 module Shoes
   module Swt
     class TextBlock
+      include Common::Clear
+      
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @opts = opts
         @container = @dsl.app.gui.real
-        @container.add_paint_listener(TbPainter.new(@dsl, opts))
+        @painter = TbPainter.new @dsl, opts
+        @container.add_paint_listener @painter
       end
 
       def redraw
@@ -37,6 +40,16 @@ module Shoes
         style = ::Swt::TextStyle.new font, nil, nil
         tl.setStyle style, 0, @dsl.text.length - 1
         return tl, font
+      end
+      
+      def clear
+        super
+        @dsl.links.each do |link|
+          ln = link.ln
+          @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
+          @container.remove_listener ::Swt::SWT::MouseUp, ln if ln
+        end
+        @dsl.links.clear
       end
 
       private

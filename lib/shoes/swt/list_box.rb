@@ -2,6 +2,7 @@ module Shoes
   module Swt
     class ListBox
       include Common::Child
+      include Common::Clear
 
       # Create a list box
       #

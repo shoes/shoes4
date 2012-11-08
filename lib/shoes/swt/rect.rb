@@ -6,6 +6,7 @@ module Shoes
       include Common::Move
       include Common::Clickable
       include Common::Toggle
+      include Common::Clear
 
       def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
         @dsl = dsl

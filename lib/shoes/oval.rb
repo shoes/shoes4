@@ -19,6 +19,7 @@ module Shoes
       @width = width
       @height = height
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
+      @app.unslotted_elements << self
 
       # GUI
       @gui = Shoes.backend_for(self, left, top, width, height, &blk)

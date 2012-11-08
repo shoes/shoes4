@@ -6,6 +6,7 @@ module Shoes
       include Common::Move
       include Common::Clickable
       include Common::Toggle
+      include Common::Clear
 
       # @param [Shoes::Oval] dsl the dsl object to provide gui for
       # @param [Shoes::Swt::App] app the app

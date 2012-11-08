@@ -63,6 +63,7 @@ module Shoes
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
       @parent.contents.delete self if @parent
+      @app.unslotted_elements.push self unless @app.unslotted_elements.include?(self)
       _move left, top
     end
 
