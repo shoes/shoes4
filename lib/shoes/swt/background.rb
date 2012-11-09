@@ -3,10 +3,12 @@ module Shoes
     class Background
       include Common::Fill
       include Common::Stroke
+      include Common::Clear
 
       def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
         @dsl = dsl
         @app = app
+        @container = @app.real
         @left = left
         @top = top
         @width = width
