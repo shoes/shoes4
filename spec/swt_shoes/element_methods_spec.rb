@@ -25,6 +25,7 @@ describe "Basic Element Methods" do
   describe "arc" do
     specify "creates a Shoes::Arc" do
       app_gui.should_receive(:add_paint_listener)
+      app.stub(:unslotted_elements){ [] }
       app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
     end
   end

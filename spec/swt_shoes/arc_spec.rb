@@ -1,5 +1,6 @@
 describe Shoes::Swt::Arc do
-  let(:app) { double("app", add_paint_listener: true) }
+  let(:container) { double('container', disposed?: false) }
+  let(:app) { double('app', real: container, add_paint_listener: true) }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
@@ -64,14 +65,14 @@ describe Shoes::Swt::Arc do
         subject.paint_control(event)
       end
 
-      # Swt wants the upper left corner of the rectangle containing the arc. Shoes
-      # uses (left, top) as the *center* of the rectangle containing the arc. Also,
       # Swt measures the arc counterclockwise, while Shoes measures it clockwise.
       specify "translates DSL values for Swt" do
         path = double('path')
         ::Swt::Path.stub(:new) { path }
-        args = [-50, 0, width, height, 180.0, -90.0]
+        args = [100, 200, width, height, 180.0, -90.0]
         path.should_receive(:add_arc).with(*args)
+        sw = 10
+        args = [100+sw/2, 200+sw/2, width-sw, height-sw, 180, -90.0]
         gc.should_receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end
@@ -93,8 +94,10 @@ describe Shoes::Swt::Arc do
       end
 
       specify "translates DSL values for Swt" do
-        args = [-50, 0, width, height, 180, -90.0]
+        args = [100, 200, width, height, 180, -90.0]
         gc.should_receive(:fill_arc).with(*args)
+        sw = 10
+        args = [100+sw/2, 200+sw/2, width-sw, height-sw, 180, -90.0]
         gc.should_receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end

@@ -3,6 +3,7 @@ module Shoes
     class Arc
       include Common::Fill
       include Common::Stroke
+      include Common::Clear
 
       # Creates a new Shoes::Swt::Arc
       #
@@ -11,6 +12,7 @@ module Shoes
       def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl, @app = dsl, app
         @left, @top, @width, @height = left, top, width, height
+        @container = @app.real
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
@@ -40,29 +42,17 @@ module Shoes
       class Painter < Common::Painter
         def fill(gc)
           if (@obj.wedge?)
-            gc.fill_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+            gc.fill_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
           else
             path = ::Swt::Path.new(::Swt.display)
-            path.add_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+            path.add_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
             gc.fill_path(path)
           end
         end
 
         def draw(gc)
-          gc.draw_arc(translated_left, translated_top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
-        end
-
-        private
-        def translated_left
-          translated_coord(@obj.left, @obj.width)
-        end
-
-        def translated_top
-          translated_coord(@obj.top, @obj.height)
-        end
-
-        def translated_coord(coord, size)
-          Integer(coord - size * 0.5)
+          sw = gc.get_line_width
+          gc.draw_arc(@obj.left+sw/2, @obj.top+sw/2, @obj.width-sw, @obj.height-sw, @obj.angle1, @obj.angle2 * -1)
         end
       end
     end
