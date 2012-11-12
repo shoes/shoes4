@@ -8,7 +8,7 @@ describe Shoes::Swt::Background do
   let(:width) { 222 }
   let(:height) { 111 }
   let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: 1, hidden: false) }
-  let(:parent) { double("parent", width: width, height: height, left: left, top: top) }
+  let(:parent) { double("parent", width: width, height: height, left: left, top: top, contents: []) }
 
   subject {
     Shoes::Swt::Background.new dsl, app, left, top, width, height

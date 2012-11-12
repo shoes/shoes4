@@ -15,6 +15,8 @@ module Shoes
         @height = height
         @opts = opts
         @corners = opts[:curve] || 0
+        
+        dsl.parent.contents << @dsl
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter

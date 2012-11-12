@@ -75,6 +75,12 @@ module Shoes
       Shoes.unregister self
       @gui.quit
     end
+    
+    def clear
+      super
+      @app.unslotted_elements.each &:clear
+      @app.unslotted_elements.clear
+    end
 
     def add_child(child)
       @top_slot.add_child child

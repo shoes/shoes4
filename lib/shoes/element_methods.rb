@@ -371,8 +371,6 @@ EOS
     def clear
       contents = @contents.dup
       contents.each &:clear
-      @app.unslotted_elements.each &:clear
-      @app.unslotted_elements.clear
     end
   end
 end

@@ -20,7 +20,6 @@ module Shoes
       @corners = opts[:curve] || 0
       opts[:fill] = color
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
-      @app.unslotted_elements << self
 
       @gui = Shoes.backend_for(self, left, top, width, height, opts, &blk)
     end
@@ -29,5 +28,9 @@ module Shoes
     attr_reader :gui, :parent
     attr_reader :corners
     attr_accessor :width, :height
+    
+    def positioning x, y, max
+      max
+    end
   end
 end
