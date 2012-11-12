@@ -72,9 +72,7 @@ module Shoes
     # @param [String] app the location of the app to run
     def execute_app(app)
       if RbConfig::CONFIG['host_os'] =~ /darwin/
-        swt = '-J-XstartOnFirstThread '
-        command = "jruby --1.9 #{swt}-rrubygems -Ilib -I#{Dir.pwd} -rshoes -rshoes/configuration -e 'Shoes.configuration.backend = :swt' -e 'load \"#{app}\"'"
-        Process.spawn(command)
+        execute_in_new_process(app) 
       else
         $LOAD_PATH.unshift(Dir.pwd)
         Shoes.configuration.backend = :swt
@@ -95,6 +93,13 @@ module Shoes
       end
 
       attr_reader :backend, :wrapper
+    end
+
+    private
+    def execute_in_new_process(app)
+      swt = '-J-XstartOnFirstThread '
+      command = "jruby --1.9 #{swt}-rrubygems -Ilib -I#{Dir.pwd} -rshoes -rshoes/configuration -e 'Shoes.configuration.backend = :swt' -e 'load \"#{app}\"'"
+      exec(command)
     end
   end
 end
