@@ -64,6 +64,7 @@ module Shoes
       slot_height, slot_top = 0, y
 
       slot.contents.each do |ele|
+        next if ele.is_a?(Shoes::Background) or ele.is_a?(Shoes::Border)
         tmp = max
         max = ele.positioning x, y, max
         x, y = ele.left + ele.width, ele.top + ele.height

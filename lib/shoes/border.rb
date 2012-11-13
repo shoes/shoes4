@@ -28,9 +28,5 @@ module Shoes
     attr_reader :gui, :parent
     attr_reader :corners
     attr_accessor :width, :height
-    
-    def positioning x, y, max
-      max
-    end
   end
 end
