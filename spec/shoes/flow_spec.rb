@@ -37,4 +37,9 @@ describe Shoes::Flow do
     f.width.should == 1.0
     f.height.should == 0
   end
+  
+  it "clears with an optional block" do
+    subject.should_receive(:clear).with(&input_block)
+    subject.clear &input_block
+  end
 end

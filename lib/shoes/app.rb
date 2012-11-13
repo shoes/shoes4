@@ -76,10 +76,15 @@ module Shoes
       @gui.quit
     end
     
-    def clear
+    def clear &blk
       super
       @app.unslotted_elements.each &:clear
       @app.unslotted_elements.clear
+
+      @contents << @top_slot
+      @current_slot = @top_slot
+      instance_eval &blk if blk
+      gui.flush
     end
 
     def add_child(child)
