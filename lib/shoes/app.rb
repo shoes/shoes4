@@ -28,7 +28,7 @@ module Shoes
   class App
     include Shoes::ElementMethods
 
-    attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements
+    attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion
     attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
@@ -54,6 +54,7 @@ module Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
+      blk = $urls[/^#{'/'}$/] unless blk
       @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &blk
 
       Shoes.register self

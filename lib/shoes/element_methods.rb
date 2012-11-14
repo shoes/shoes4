@@ -373,5 +373,9 @@ EOS
       contents.each &:clear
       @contents.clear
     end
+
+    def visit url
+      $urls.each{|k, v| clear{@location = url; v.call self, $1} if k =~ url}
+    end
   end
 end
