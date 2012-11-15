@@ -72,7 +72,7 @@ module Shoes
       @left, @top = left, top
     end
     
-    def clear
+    def remove
       @parent.contents.delete self if @parent
       @app.gui.flush
       @gui.clear
