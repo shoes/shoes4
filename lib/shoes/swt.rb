@@ -5,6 +5,7 @@ require 'swt/full-monkeypatch'
 # Force-load our fixed jar_loader.rb
 $LOAD_PATH.unshift File.expand_path('../../swt', __FILE__)
 require 'jar_loader'
+$LOAD_PATH.shift
 require 'swt'
 
 module Swt
