@@ -13,7 +13,7 @@ class PhotoFrame
     background tomato
     inscription 'Shoes 4'
     flow width: 70 # space
-    image File.join(Shoes::DIR, '../samples/loogink.png')
+    image File.join(Shoes::DIR, 'samples/loogink.png')
     para SPACE
     para SPACE, fg(strong('She is Loogink.'), white),
       '->', link(strong('Cy')){visit '/cy'}
@@ -24,7 +24,7 @@ class PhotoFrame
     background paleturquoise
     inscription 'Shoes 4'
     flow width: 70 # space
-    image File.join(Shoes::DIR, '../samples/cy.png')
+    image File.join(Shoes::DIR, 'samples/cy.png')
     para SPACE
     para SPACE, fg(strong('He is Cy.'), gray), '  ->', 
       link(strong('loogink')){visit '/loogink'}

@@ -2,7 +2,7 @@ Shoes.app width: 700, height: 600 do
   title "Shoes is a ", link("tiny"){alert "Cool!"}, " graphics toolkit. "
 
   flow width: 0.4 do
-    image File.join(Shoes::DIR, '../static/shoes-icon.png') do
+    image File.join(Shoes::DIR, 'static/shoes-icon.png') do
       alert "You're soooo quick!"
     end
   end
