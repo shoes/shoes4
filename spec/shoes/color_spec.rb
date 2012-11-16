@@ -1,6 +1,17 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Color do
+  describe ".create" do
+    let(:color) { Shoes::Color.new(40, 50, 60) }
+
+    it "accepts color" do
+      Shoes::Color.create(color).should eq(color)
+    end
+
+    it "accepts string" do
+      Shoes::Color.create("28323c").should eq(color)
+    end
+  end
 
   shared_examples_for "black" do
     its(:class) { should eq(Shoes::Color) }

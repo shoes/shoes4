@@ -4,6 +4,10 @@ module Shoes
     OPAQUE = 255
     TRANSPARENT = 0
 
+    def self.create(color)
+      color.is_a?(Color) ? color : new(color)
+    end
+
     def initialize(*args)#red, green, blue, alpha = OPAQUE)
       case args.length
       when 1
