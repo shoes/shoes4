@@ -351,7 +351,7 @@ EOS
     [:bg, :fg].each do |m|
       define_method m do |*str|
         color = str.pop
-        Shoes::Text.new m, str, color
+        Shoes::Text.new m, str, color(color)
       end
     end
     

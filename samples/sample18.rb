@@ -18,5 +18,5 @@ Shoes.app width: 700, height: 600 do
       "Really, it was made for absolute beginners. "
   end
 
-  subtitle link(strong em("There's ", fg(bg("really ", "really ", yellow), red), "nothing to it. ")){alert "Have fun!"}
+  subtitle link(strong em("There's ", fg(bg("really ", "really ", yellow), "#f00"), "nothing to it. ")){alert "Have fun!"}
 end
