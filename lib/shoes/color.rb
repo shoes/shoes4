@@ -96,7 +96,7 @@ EOS
       # Returns a 3- or 6-char hex string for valid input, or nil
       # for invalid input.
       def validate(hex)
-        match = /^#?(([0-9a-f]{3}){1,2})$/.match(hex)
+        match = /^#?(([0-9a-f]{3}){1,2})$/i.match(hex)
         match && match[1]
       end
     end

@@ -70,6 +70,18 @@ describe Shoes::Color do
       subject { Shoes::Color.new("#000") }
       it { should eq(rgb) }
     end
+
+    context "with '#FFF'" do
+      let(:rgb) { Shoes::Color.new(255, 255, 255) }
+      subject { Shoes::Color.new("#FFF") }
+      it { should eq(rgb) }
+    end
+
+    context "with '#fff'" do
+      let(:rgb) { Shoes::Color.new(255, 255, 255) }
+      subject { Shoes::Color.new("#fff") }
+      it { should eq(rgb) }
+    end
   end
 
   context "rgb" do
