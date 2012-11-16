@@ -30,6 +30,10 @@ module Shoes
     #  tstack = Stack.new(opts)
     #  layout(tstack, &blk)
     #end
+    
+    def color(c)
+      Shoes::Color.create c
+    end
 
     def image(path, opts={}, &blk)
       opts.merge! app: @app
@@ -38,7 +42,7 @@ module Shoes
 
     def border(color, opts = {}, &blk)
       opts.merge! app: @app
-      Shoes::Border.new @current_slot, color, opts, blk
+      Shoes::Border.new @current_slot, Shoes::Color.create(color), opts, blk
     end
 
     def background(color, opts = {}, &blk)
@@ -272,7 +276,7 @@ EOS
     #
     # color - a Shoes::Color
     def stroke(color)
-      @style[:stroke] = color
+      @style[:stroke] = color(color)
     end
 
     def nostroke
@@ -290,7 +294,7 @@ EOS
     #
     # color - a Shoes::Color
     def fill(color)
-      @style[:fill] = color
+      @style[:fill] = color(color)
     end
 
     def nofill

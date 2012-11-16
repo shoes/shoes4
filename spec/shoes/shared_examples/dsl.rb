@@ -141,6 +141,14 @@ shared_examples "dsl container" do
       end
       subject.oval(10, 10, 100, 100)
     end
+
+    context "with hex string" do
+      let(:color) { "#fff" }
+
+      it "sets the color" do
+        subject.fill(color).should eq(Shoes::COLORS[:white])
+      end
+    end
   end
 
   describe "nofill" do
@@ -356,6 +364,14 @@ shared_examples "dsl container" do
         style[:stroke].should eq(color)
       end
       subject.oval(10, 10, 100, 100)
+    end
+
+    context "with hex string" do
+      let(:color) { "#fff" }
+
+      it "sets the color" do
+        subject.stroke(color).should eq(Shoes::COLORS[:white])
+      end
     end
   end
 
