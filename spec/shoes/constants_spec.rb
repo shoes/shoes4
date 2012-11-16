@@ -1,3 +1,5 @@
+require "pathname"
+
 describe "Shoes constants" do
   specify "PI equals Math::PI" do
     Shoes::PI.should eq(Math::PI)
@@ -11,15 +13,26 @@ describe "Shoes constants" do
     Shoes::HALF_PI.should eq(0.5 * Math::PI)
   end
 
-  let(:shoes_rb_dir) { File.absolute_path File.join(File.dirname(__FILE__), "..", "..", "lib") }
+  describe "DIR" do
+    let(:shoes_home_dir) { Pathname.new(__FILE__).join("../../..").expand_path }
+    subject { Pathname.new Shoes::DIR }
 
-  it "is the directory where shoes.rb lives" do
-    Shoes::DIR.should eq(shoes_rb_dir)
-  end
+    it "is the shoes home directory" do
+      subject.should eq(shoes_home_dir)
+    end
 
-  it "remains constant when current directory changes" do
-    Dir.chdir ".." do
-      Shoes::DIR.should eq(shoes_rb_dir)
+    it "contains lib/shoes.rb" do
+      subject.join("lib/shoes.rb").should exist
+    end
+
+    it "contains static/shoes_icon.png" do
+      subject.join("static/shoes-icon.png").should exist
+    end
+
+    it "remains constant when current directory changes" do
+      Dir.chdir ".." do
+        subject.should eq(shoes_home_dir)
+      end
     end
   end
 end
