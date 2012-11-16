@@ -42,12 +42,12 @@ module Shoes
 
     def border(color, opts = {}, &blk)
       opts.merge! app: @app
-      Shoes::Border.new @current_slot, Shoes::Color.create(color), opts, blk
+      Shoes::Border.new @current_slot, color(color), opts, blk
     end
 
     def background(color, opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Background.new @current_slot, color, opts, blk
+      Shoes::Background.new @current_slot, color(color), opts, blk
     end
 
     def edit_line(opts = {}, &blk)

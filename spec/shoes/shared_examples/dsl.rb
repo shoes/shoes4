@@ -120,6 +120,26 @@ shared_examples "dsl container" do
     end
   end
 
+  describe "background" do
+    context "with hex string" do
+      let(:color) { "ffffff" }
+      it "sets color" do
+        border = subject.background(color)
+        border.fill.should eq(Shoes::COLORS[:white])
+      end
+    end
+  end
+
+  describe "border" do
+    context "with hex string" do
+      let(:color) { "#ffffff" }
+      it "sets color" do
+        border = subject.border(color)
+        border.stroke.should eq(Shoes::COLORS[:white])
+      end
+    end
+  end
+
   describe "fill" do
     let(:color) { Shoes::COLORS.fetch :tomato }
 
