@@ -4,6 +4,7 @@ add to this list as you implement features!
 simple-animate.rb
 simple-move.rb (works but looks a bit weird on Linux, see issue #59)
 simple-bounce.rb
+simple-oval.rb
 simple-sound.rb
 simple-stripes.rb
 
