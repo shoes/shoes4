@@ -11,7 +11,7 @@ Shoes.app do
   end
 
   x, y = self.width / 2, self.height / 2
-  size = @icon.size
+  size = [@icon.height, @icon.width]
   animate(30) do
     x += xspeed * xdir
     y += yspeed * ydir
