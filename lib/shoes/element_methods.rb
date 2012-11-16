@@ -179,18 +179,15 @@ module Shoes
       oval_style = opts.last.class == Hash ? opts.pop : {}
       case opts.length
         when 3
-          left, top, diameter = opts
-          width = height = diameter
+          left, top, width = opts
+          height = width
         when 4
           left, top, width, height = opts
         when 0
           left = oval_style[:left] || 0
           top = oval_style[:top] || 0
-          width = oval_style[:width] || 0
-          height = oval_style[:height] || 0
-          radius = oval_style[:diameter] || 0
-          width = oval_style[:diameter] if width.zero?
-          height = width if height.zero?
+          width = oval_style[:diameter] || oval_style[:width] || 0
+          height = oval_style[:height] || width 
         else
           message = <<EOS
 Wrong number of arguments. Must be one of:
