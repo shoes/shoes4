@@ -14,18 +14,16 @@ module Shoes
           unless @obj.dsl.hidden
             gc.set_antialias ::Swt::SWT::ON
             gc.set_transform(@obj.transform)
-            fill gc if fill_setup gc
-            draw gc if draw_setup gc
+            fill gc if fill_setup(gc)
+            draw gc if draw_setup(gc)
           end
         end
 
         # Override in subclass if not using fill
         def fill_setup(gc)
-          if @obj.fill
-            gc.set_background @obj.fill
-            gc.set_alpha @obj.fill_alpha
-            true
-          end
+          @obj.apply_fill(gc)#gc.set_background @obj.fill
+          #@obj.apply_fill_alpha(gc)#gc.set_alpha @obj.fill_alpha
+          true
         end
 
         # Implement in subclass

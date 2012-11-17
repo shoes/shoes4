@@ -3,7 +3,7 @@
 shared_context "painter context" do
   let(:event) { double("event", :gc => gc) }
   let(:gc) { double("gc", :get_line_width => sw).as_null_object }
-  let(:fill) { Shoes::COLORS[:chartreuse].to_native }
+  let(:fill) { Shoes::Swt::Color.new(Shoes::Color.new(11, 12, 13, fill_alpha)) }
   let(:stroke) { Shoes::COLORS[:papayawhip].to_native }
   let(:fill_alpha) { 70 }
   let(:stroke_alpha) { 110 }
@@ -63,7 +63,7 @@ end
 shared_examples_for "fill painter" do
   describe "sets fill" do
     specify "color" do
-      gc.should_receive(:set_background).with(fill)
+      gc.should_receive(:set_background).with(fill.real)
       subject.paint_control(event)
     end
 
