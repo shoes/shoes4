@@ -15,6 +15,11 @@ module Shoes
         gc.set_alpha alpha
       end
 
+      def apply_as_foreground(gc)
+        gc.set_foreground real
+        gc.set_alpha alpha
+      end
+
       # TODO: Remove
       def red; @real.red; end
       def green; @real.green; end

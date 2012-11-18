@@ -25,6 +25,12 @@ module Shoes
         def strokewidth
           dsl.strokewidth
         end
+
+
+        def apply_stroke(context)
+          stroke.apply_as_foreground(context)
+          context.set_line_width strokewidth
+        end
       end
     end
   end
