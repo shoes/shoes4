@@ -52,7 +52,9 @@ module Shoes
 
       # Experimental replacement for #backend_for
       def backend_with_app_for(shoes_object, *args, &blk)
-        backend_class(shoes_object).new(shoes_object, shoes_object.app.gui, *args, &blk)
+        klass = backend_class(shoes_object)
+        factory = klass.respond_to?(:create) ? :create : :new
+        klass.public_send(factory, shoes_object, shoes_object.app.gui, *args, &blk)
       end
 
       def logger=(value)
