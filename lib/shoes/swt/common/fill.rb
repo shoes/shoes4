@@ -20,7 +20,7 @@ module Shoes
         end
 
         def apply_fill(context)
-          fill.apply_as_background(context)
+          fill.apply_as_fill(context)
         end
       end
     end

@@ -28,7 +28,7 @@ module Shoes
 
 
         def apply_stroke(context)
-          stroke.apply_as_foreground(context)
+          stroke.apply_as_stroke(context)
           context.set_line_width strokewidth
         end
       end

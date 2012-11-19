@@ -10,12 +10,14 @@ module Shoes
 
       attr_reader :alpha, :dsl, :real
 
-      def apply_as_background(gc)
+      # @param [Swt::Graphics::GC] gc the graphics context on which to apply fill
+      def apply_as_fill(gc)
         gc.set_background real
         gc.set_alpha alpha
       end
 
-      def apply_as_foreground(gc)
+      # @param [Swt::Graphics::GC] gc the graphics context on which to apply stroke
+      def apply_as_stroke(gc)
         gc.set_foreground real
         gc.set_alpha alpha
       end
