@@ -19,10 +19,9 @@ module Shoes
           end
         end
 
-        # Override in subclass if not using fill
+        # Override in subclass and return something falsy if not using fill
         def fill_setup(gc)
-          @obj.apply_fill(gc)#gc.set_background @obj.fill
-          #@obj.apply_fill_alpha(gc)#gc.set_alpha @obj.fill_alpha
+          @obj.apply_fill(gc)
           true
         end
 
@@ -30,7 +29,7 @@ module Shoes
         def fill(gc)
         end
 
-        # Override in subclass if not using draw
+        # Override in subclass and return something falsy if not using draw
         def draw_setup(gc)
           @obj.apply_stroke(gc)
           true
@@ -39,7 +38,7 @@ module Shoes
         # Implement in subclass
         def draw(gc)
         end
-        
+
         def set_position_and_size
           @obj.left = @obj.dsl.parent.left
           @obj.top = @obj.dsl.parent.top
