@@ -9,10 +9,14 @@ module Shoes
       def initialize(color)
         @dsl = color
         @real = ::Swt::Graphics::Color.new(Shoes.display, @dsl.red, @dsl.green, @dsl.blue)
-        @alpha = color.alpha
       end
 
-      attr_reader :alpha, :dsl, :real
+      attr_reader :dsl, :real
+
+      # @return [Integer] the alpha value, from 0 (transparent) to 255 (opaque)
+      def alpha
+        @dsl.alpha
+      end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply fill
       def apply_as_fill(gc)
