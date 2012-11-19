@@ -35,6 +35,20 @@ module Shoes
       Shoes::Color.create c
     end
 
+    def pattern(*args)
+      if args.length == 1
+        arg = args.first
+        case arg
+        when String, Color
+          color(arg)
+        when Range
+          gradient(arg)
+        end
+      else
+        gradient(*args)
+      end
+    end
+
     def image(path, opts={}, &blk)
       opts.merge! app: @app
       Shoes::Image.new @current_slot, path, opts, blk
@@ -276,8 +290,23 @@ EOS
     # @overload
     # @param [String] from a hex string representing the starting color
     # @param [String] to a hex string representing the ending color
-    def gradient(from, to)
-      Shoes::Gradient.new(color(from), color(to))
+    #
+    # @overload
+    # @param [Range<Shoes::Color>] range min color to max color
+    #
+    # @overload
+    # @param [Range<String>] range min color to max color
+    def gradient(*args)
+      case args.length
+      when 1
+        range = args[0]
+        min, max = range.first, range.last
+      when 2
+        min, max = args[0], args[1]
+      else
+        raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
+      end
+      Shoes::Gradient.new(color(min), color(max))
     end
 
     # Sets the current stroke color

@@ -72,6 +72,12 @@ shared_examples_for "rect" do
   end
 end
 
+shared_examples_for "creating gradient" do
+  it "returns correct gradient" do
+    gradient.to_s.should eq("<Shoes::Gradient #ff0000->#0000ff>")
+  end
+end
+
 # Shared examples for app, flow, stack
 shared_examples "dsl container" do
   describe "animate" do
@@ -188,22 +194,74 @@ shared_examples "dsl container" do
   end
 
   describe "gradient" do
-    let(:gradient) { subject.gradient(red, blue) }
-
-    context "created with two Colors" do
+    context "with colors" do
       let(:red) { Shoes::Color.new(255, 0, 0) }
       let(:blue) { Shoes::Color.new(0, 0, 255) }
 
-      it "creates the correct gradient" do
-        gradient.to_s.should eq("<Shoes::Gradient #ff0000->#0000ff>")
+      context "two separate" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red, blue) }
+        end
       end
 
-      it "creates equivalent gradient with two strings" do
-        stringy = subject.gradient("f00", "00f")
-        gradient.should eq(stringy)
+      context "as range" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red..blue) }
+        end
       end
     end
 
+    context "with strings" do
+      let(:red) { "#f00" }
+      let(:blue) { "#00f" }
+
+      context "two separate" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red, blue) }
+        end
+      end
+
+      context "as range" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red..blue) }
+        end
+      end
+    end
+  end
+
+  describe "pattern" do
+    let(:honeydew) { Shoes::COLORS[:honeydew] }
+    let(:salmon) { Shoes::COLORS[:salmon] }
+
+    context "with single color" do
+      let(:pattern) { subject.pattern honeydew }
+      it "returns the color" do
+        pattern.should eq(honeydew)
+      end
+    end
+
+    context "with color range" do
+      let(:pattern) { subject.pattern honeydew..salmon }
+
+      it "returns a gradient" do
+        pattern.should eq(subject.gradient honeydew..salmon)
+      end
+    end
+
+    context "with single string" do
+      let(:pattern) { subject.pattern honeydew.hex }
+      it "returns the color" do
+        pattern.should eq(honeydew)
+      end
+    end
+
+    context "with string range" do
+      let(:pattern) { subject.pattern honeydew.hex..salmon.hex }
+
+      it "returns a gradient" do
+        pattern.should eq(subject.gradient honeydew..salmon)
+      end
+    end
   end
 
   describe "line" do
