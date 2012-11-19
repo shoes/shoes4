@@ -1,6 +1,10 @@
 module Shoes
   module Swt
     class Color
+      def self.create(color)
+        color ? new(color) : NullColor.new
+      end
+
       # @param [Shoes::Color] color the DSL representation of this color
       def initialize(color)
         @dsl = color
@@ -21,19 +25,13 @@ module Shoes
         gc.set_foreground real
         gc.set_alpha alpha
       end
+    end
 
-      # TODO: Remove
-      def red; @real.red; end
-      def green; @real.green; end
-      def blue; @real.blue; end
+    class NullColor
+      attr_reader :alpha, :dsl, :real
+      def apply_as_fill(gc); end
+      def apply_as_stroke(gc); end
     end
   end
 end
 
-module Shoes
-  class Color
-    def to_native
-      ::Shoes::Swt::Color.new(self)
-    end
-  end
-end
