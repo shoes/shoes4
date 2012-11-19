@@ -18,6 +18,7 @@ describe Shoes::Color do
     its(:red) { should eq(0) }
     its(:green) { should eq(0) }
     its(:blue) { should eq(0) }
+    its(:hex) { should eq("#000000") }
     it { should be_black }
     it { should_not be_white }
   end

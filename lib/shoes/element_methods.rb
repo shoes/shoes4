@@ -267,6 +267,19 @@ EOS
       Shoes::Color.new(red, green, blue, alpha)
     end
 
+    # Creates a new Shoes::Gradient
+    #
+    # @overload
+    # @param [Shoes::Color] from the starting color
+    # @param [Shoes::Color] to the ending color
+    #
+    # @overload
+    # @param [String] from a hex string representing the starting color
+    # @param [String] to a hex string representing the ending color
+    def gradient(from, to)
+      Shoes::Gradient.new(color(from), color(to))
+    end
+
     # Sets the current stroke color
     #
     # Arguments

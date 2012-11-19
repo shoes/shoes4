@@ -187,6 +187,25 @@ shared_examples "dsl container" do
     end
   end
 
+  describe "gradient" do
+    let(:gradient) { subject.gradient(red, blue) }
+
+    context "created with two Colors" do
+      let(:red) { Shoes::Color.new(255, 0, 0) }
+      let(:blue) { Shoes::Color.new(0, 0, 255) }
+
+      it "creates the correct gradient" do
+        gradient.to_s.should eq("<Shoes::Gradient #ff0000->#0000ff>")
+      end
+
+      it "creates equivalent gradient with two strings" do
+        stringy = subject.gradient("f00", "00f")
+        gradient.should eq(stringy)
+      end
+    end
+
+  end
+
   describe "line" do
     it "creates a Shoes::Line" do
       subject.line(10, 15, 20, 30).should be_an_instance_of(Shoes::Line)
