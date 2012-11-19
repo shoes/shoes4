@@ -65,6 +65,9 @@ EOS
       return @red + @green + @blue <=> other.red + other.green + other.blue
     end
 
+    # @return [String] a hex represenation of this color
+    # @example
+    #   Shoes::Color.new(255, 0, 255).hex # => "#ff00ff"
     def hex
       format "#%02x%02x%02x", @red, @green, @blue
     end
