@@ -161,11 +161,12 @@ shared_examples "dsl container" do
 
     specify "applies to subsequently created objects" do
       subject.fill color
-      Shoes::Oval.should_receive(:new).with do |*args|
-        style = args.pop
-        style[:fill].should eq(color)
-      end
-      subject.oval(10, 10, 100, 100)
+      #Shoes::Oval.should_receive(:new).with do |*args|
+        #style = args.pop
+        #style[:fill].should eq(color)
+      #end
+      oval = subject.oval(10, 10, 100, 100)
+      oval.fill.should eq(color)
     end
 
     context "with hex string" do
@@ -226,6 +227,17 @@ shared_examples "dsl container" do
           let(:gradient) { subject.gradient(red..blue) }
         end
       end
+    end
+
+    context "with gradient" do
+      it_behaves_like "creating gradient" do
+        let(:gradient_arg) { subject.gradient("#f00", "#00f") }
+        let(:gradient) { subject.gradient(gradient_arg) }
+      end
+    end
+
+    it "fails on bad input" do
+      lambda { subject.gradient(100) }.should raise_error(ArgumentError)
     end
   end
 

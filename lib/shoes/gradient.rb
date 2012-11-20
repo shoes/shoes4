@@ -4,9 +4,10 @@ module Shoes
   class Gradient
     def initialize(color1, color2, alpha = Shoes::Color::OPAQUE)
       @color1, @color2 = color1, color2
+      @alpha = alpha
     end
 
-    attr_reader :color1, :color2
+    attr_reader :alpha, :color1, :color2
 
     def to_s
       "<#{self.class} #{color1.hex}->#{color2.hex}>"

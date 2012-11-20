@@ -20,8 +20,8 @@ module Shoes
       end
 
       def apply_as_fill(gc)
-        gc.set_background color1
-        gc.set_foreground color2
+        gc.set_background color1.real
+        gc.set_foreground color2.real
         gc.set_alpha alpha
       end
 

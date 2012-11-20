@@ -9,14 +9,14 @@ module Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's fill color
         def fill
-          ::Shoes::Swt::Color.create(dsl.fill)
+          @fill ||= ::Shoes.configuration.backend_for(dsl.fill)
         end
 
         # This object's fill alpha value
         #
         # @return [Integer] The alpha value of this object's fill color (0-255)
         def fill_alpha
-          ::Shoes::Swt::Color.new(dsl.fill)
+          fill.alpha
         end
 
         def apply_fill(context)
