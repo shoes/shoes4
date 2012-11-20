@@ -26,7 +26,8 @@ module Shoes
       end
 
       def apply_as_stroke(gc)
-        # TODO: implement!
+        gc.set_foreground color1.real
+        gc.set_alpha alpha
       end
     end
   end

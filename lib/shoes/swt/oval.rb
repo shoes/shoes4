@@ -31,9 +31,13 @@ module Shoes
       attr_accessor :width, :height, :left, :top, :ln
 
       class Painter < Common::Painter
-        def fill(gc)
+        def clipping
           clipping = ::Swt::Path.new(Shoes.display)
           clipping.add_arc(@obj.left, @obj.top, @obj.width, @obj.height, 0, 360)
+          clipping
+        end
+
+        def fill(gc)
           gc.set_clipping(clipping)
           gc.fill_gradient_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, true)
         end

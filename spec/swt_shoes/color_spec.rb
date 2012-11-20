@@ -8,37 +8,6 @@ describe Shoes::Swt::Color do
   its(:class) { should eq(Shoes::Swt::Color) }
   its(:real) { should eq(Swt::Graphics::Color.new(Shoes.display, 250, 128, 114)) }
 
-  describe "#apply_as_stroke" do
-    let(:gc) { double("graphics context") }
-
-    it "sets foreground" do
-      gc.stub(:set_alpha)
-      gc.should_receive(:set_foreground)
-      subject.apply_as_stroke(gc)
-    end
-
-    it "sets alpha" do
-      gc.stub(:set_foreground)
-      gc.should_receive(:set_alpha)
-      subject.apply_as_stroke(gc)
-    end
-  end
-
-  describe "#apply_as_fill" do
-    let(:gc) { double("graphics context") }
-
-    it "sets background" do
-      gc.stub(:set_alpha)
-      gc.should_receive(:set_background)
-      subject.apply_as_fill(gc)
-    end
-
-    it "sets alpha" do
-      gc.stub(:set_background)
-      gc.should_receive(:set_alpha)
-      subject.apply_as_fill(gc)
-    end
-  end
 end
 
 describe Shoes::Swt::NullColor do
