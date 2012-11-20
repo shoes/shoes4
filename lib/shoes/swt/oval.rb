@@ -32,7 +32,10 @@ module Shoes
 
       class Painter < Common::Painter
         def fill(gc)
-          gc.fill_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+          clipping = ::Swt::Path.new(Shoes.display)
+          clipping.add_arc(@obj.left, @obj.top, @obj.width, @obj.height, 0, 360)
+          gc.set_clipping(clipping)
+          gc.fill_gradient_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, true)
         end
 
         def draw(gc)

@@ -21,6 +21,7 @@ module Shoes
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply fill
       def apply_as_fill(gc)
         gc.set_background real
+        gc.set_foreground real
         gc.set_alpha alpha
       end
 
