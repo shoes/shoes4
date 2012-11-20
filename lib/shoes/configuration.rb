@@ -36,6 +36,7 @@ module Shoes
       #   Shoes.configuration.backend_class(shoes_button) # => Shoes::Swt::Button
       def backend_class(shoes_object)
         class_name = shoes_object.class.name.split("::").last
+        raise ArgumentError, "#{shoes_object} is not a Shoes object" unless self.backend.const_defined?(class_name)
         self.backend.const_get(class_name)
       end
 
@@ -47,14 +48,17 @@ module Shoes
       # @example
       #   Shoes.configuration.backend_for(button, args) # => <Shoes::Swt::Button:0x12345678>
       def backend_for(shoes_object, *args)
-        backend_class(shoes_object).new(shoes_object, *args)
+        backend_factory(shoes_object).call(shoes_object, *args)
       end
 
       # Experimental replacement for #backend_for
       def backend_with_app_for(shoes_object, *args, &blk)
+        backend_factory(shoes_object).call(shoes_object, shoes_object.app.gui, *args, &blk)
+      end
+
+      def backend_factory(shoes_object)
         klass = backend_class(shoes_object)
-        factory = klass.respond_to?(:create) ? :create : :new
-        klass.public_send(factory, shoes_object, shoes_object.app.gui, *args, &blk)
+        klass.respond_to?(:create) ? klass.method(:create) : klass.method(:new)
       end
 
       def logger=(value)

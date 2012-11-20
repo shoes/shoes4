@@ -36,8 +36,12 @@ describe Shoes::Configuration do
         dsl_object
       end
 
-      specify "returns shape backend object" do
+      it "returns shape backend object" do
         Shoes.configuration.backend_with_app_for(dsl_object, args).should be_instance_of(Shoes.configuration.backend::Shape)
+      end
+
+      it "raises ArgumentError for a non-Shoes object" do
+        lambda { Shoes.configuration.backend_with_app_for(1..100) }.should raise_error(ArgumentError)
       end
     end
   end
