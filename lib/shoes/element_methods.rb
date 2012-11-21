@@ -258,7 +258,7 @@ EOS
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
     def rect(*args, &blk)
-      opts = args.last.class == Hash ? args.pop : {}
+      opts = pop_and_normalize_style(args)
       case args.length
       when 3
         left, top, width = args
