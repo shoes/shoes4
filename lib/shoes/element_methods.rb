@@ -77,8 +77,8 @@ module Shoes
     end
 
     def background(color, opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Background.new @current_slot, pattern(color), opts, blk
+      style = normalize_style(opts)
+      Shoes::Background.new @current_slot, pattern(color), style, blk
     end
 
     def edit_line(opts = {}, &blk)

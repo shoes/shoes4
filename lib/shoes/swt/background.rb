@@ -1,3 +1,5 @@
+require 'shoes/swt/rect'
+
 module Shoes
   module Swt
     class Background
@@ -29,11 +31,10 @@ module Shoes
       attr_reader :corners
       attr_accessor :left, :top, :width, :height
 
-      class Painter < Common::Painter
-
+      class Painter < Rect::Painter
         def fill(gc)
           set_position_and_size
-          gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners*2, @obj.corners*2)
+          super
         end
 
         def draw(gc)
