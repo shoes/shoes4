@@ -36,12 +36,17 @@ module Shoes
       class Painter < Common::Painter
         def path
           path = ::Swt::Path.new(display)
-          diameter = @obj.corners * 2
-          path.add_arc(@obj.left, @obj.top, diameter, diameter, 180, -90)
-          path.add_arc(@obj.left + @obj.width - diameter, @obj.top, diameter, diameter, 90, -90)
-          path.add_arc(@obj.left + @obj.width - diameter, @obj.top + @obj.height - diameter, diameter, diameter, 0, -90)
-          path.add_arc(@obj.left, @obj.top + @obj.height - diameter, diameter, diameter, -90, -90)
-          path.line_to(@obj.left, @obj.top + @obj.corners)
+          # Windows won't do the rounded rectangle path with a corner radius of 0
+          if @obj.corners.zero?
+            path.add_rectangle(@obj.left, @obj.top, @obj.width, @obj.height)
+          else
+            diameter = @obj.corners * 2
+            path.add_arc(@obj.left, @obj.top, diameter, diameter, 180, -90)
+            path.add_arc(@obj.left + @obj.width - diameter, @obj.top, diameter, diameter, 90, -90)
+            path.add_arc(@obj.left + @obj.width - diameter, @obj.top + @obj.height - diameter, diameter, diameter, 0, -90)
+            path.add_arc(@obj.left, @obj.top + @obj.height - diameter, diameter, diameter, -90, -90)
+            path.line_to(@obj.left, @obj.top + @obj.corners)
+          end
           path
         end
 
