@@ -39,7 +39,7 @@ module Shoes
         a = a % (Math::PI*2.0)
         cal = proc do
           l = Math.sqrt(w**2 + h**2)
-          b = Math.atan(h/w)
+          b = (h==0 and w==0) ? h/w : Math.atan(h/w)
           c = Math::PI*0.5 - a - b
           r = l * Math.cos(c.abs)
           [r * Math.cos(b+c), r * Math.sin(b+c)]
