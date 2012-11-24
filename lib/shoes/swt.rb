@@ -15,6 +15,10 @@ module Swt
     import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
   end
+  module Graphics
+    import org.eclipse.swt.graphics
+    import org.eclipse.swt.graphics.Pattern
+  end
 end
 
 def window(*a, &b)
@@ -45,6 +49,7 @@ require 'shoes/swt/check'
 require 'shoes/swt/color'
 require 'shoes/swt/edit_box'
 require 'shoes/swt/edit_line'
+require 'shoes/swt/gradient'
 require 'shoes/swt/image'
 require 'shoes/swt/keypress'
 require 'shoes/swt/line'

@@ -25,8 +25,20 @@ describe Shoes::Swt::Oval do
     it_behaves_like "fill painter"
     it_behaves_like "stroke painter"
 
-    specify "fills oval" do
-      gc.should_receive(:fill_oval).with(left, top, width, height)
+    it "creates oval clipping area" do
+      mock_path = double("path")
+      ::Swt::Path.stub(:new) { mock_path }
+      mock_path.should_receive(:add_arc).with(left, top, width, height, 0, 360)
+      subject.clipping
+    end
+
+    it "sets clipping area" do
+      gc.should_receive(:set_clipping)
+      subject.paint_control(event)
+    end
+
+    it "fills" do
+      gc.should_receive(:fill_gradient_rectangle)
       subject.paint_control(event)
     end
 

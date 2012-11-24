@@ -35,6 +35,37 @@ module Shoes
       Shoes::Color.create c
     end
 
+    def pattern(*args)
+      if args.length == 1
+        arg = args.first
+        case arg
+        when String, Shoes::Color
+          color(arg)
+        when Range, Shoes::Gradient
+          gradient(arg)
+        else
+          raise ArgumentError, "Bad pattern: #{arg.inspect}"
+        end
+      else
+        gradient(*args)
+      end
+    end
+
+    private
+    def pop_and_normalize_style(opts)
+      style = opts.last.class == Hash ? opts.pop : {}
+      normalize_style(style)
+    end
+
+    def normalize_style(orig_style)
+      normalized_style = {app: app}
+      [:fill, :stroke].each do |s|
+        normalized_style[s] = pattern(orig_style[s]) if orig_style[s]
+      end
+      orig_style.merge(normalized_style)
+    end
+
+    public
     def image(path, opts={}, &blk)
       opts.merge! app: @app
       Shoes::Image.new @current_slot, path, opts, blk
@@ -42,12 +73,12 @@ module Shoes
 
     def border(color, opts = {}, &blk)
       opts.merge! app: @app
-      Shoes::Border.new @current_slot, color(color), opts, blk
+      Shoes::Border.new @current_slot, pattern(color), opts, blk
     end
 
     def background(color, opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Background.new @current_slot, color(color), opts, blk
+      style = normalize_style(opts)
+      Shoes::Background.new @current_slot, pattern(color), style, blk
     end
 
     def edit_line(opts = {}, &blk)
@@ -176,7 +207,7 @@ module Shoes
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts, &blk)
-      oval_style = opts.last.class == Hash ? opts.pop : {}
+      oval_style = pop_and_normalize_style(opts)
       case opts.length
         when 3
           left, top, width = opts
@@ -227,7 +258,7 @@ EOS
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
     def rect(*args, &blk)
-      opts = args.last.class == Hash ? args.pop : {}
+      opts = pop_and_normalize_style(args)
       case args.length
       when 3
         left, top, width = args
@@ -267,13 +298,48 @@ EOS
       Shoes::Color.new(red, green, blue, alpha)
     end
 
+    # Creates a new Shoes::Gradient
+    #
+    # @overload
+    # @param [Shoes::Color] from the starting color
+    # @param [Shoes::Color] to the ending color
+    #
+    # @overload
+    # @param [String] from a hex string representing the starting color
+    # @param [String] to a hex string representing the ending color
+    #
+    # @overload
+    # @param [Range<Shoes::Color>] range min color to max color
+    #
+    # @overload
+    # @param [Range<String>] range min color to max color
+    def gradient(*args)
+      case args.length
+      when 1
+        arg = args[0]
+        case arg
+        when Gradient
+          min, max = arg.color1, arg.color2
+        when Range
+          min, max = arg.first, arg.last
+        else
+          raise ArgumentError, "Can't make gradient out of #{arg.inspect}"
+        end
+      when 2
+        min, max = args[0], args[1]
+      else
+        raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
+      end
+      Shoes::Gradient.new(color(min), color(max))
+    end
+
     # Sets the current stroke color
     #
     # Arguments
     #
     # color - a Shoes::Color
     def stroke(color)
-      @style[:stroke] = color(color)
+      @style[:stroke] = pattern(color)
     end
 
     def nostroke
@@ -287,11 +353,9 @@ EOS
 
     # Sets the current fill color
     #
-    # Arguments
-    #
-    # color - a Shoes::Color
-    def fill(color)
-      @style[:fill] = color(color)
+    # @param [Shoes::Color,Shoes::Gradient] pattern the pattern to set as fill
+    def fill(pattern)
+      @style[:fill] = pattern(pattern)
     end
 
     def nofill
@@ -348,7 +412,7 @@ EOS
     [:bg, :fg].each do |m|
       define_method m do |*str|
         color = str.pop
-        Shoes::Text.new m, str, color(color)
+        Shoes::Text.new m, str, pattern(color)
       end
     end
     
