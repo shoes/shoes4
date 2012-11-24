@@ -17,6 +17,7 @@ module Shoes
         @height = height
         @opts = opts
         @corners = opts[:curve] || 0
+	@angle = opts[:angle] || 0
         
         dsl.parent.contents << @dsl
 
@@ -24,7 +25,7 @@ module Shoes
         @app.add_paint_listener @painter
       end
 
-      attr_reader :dsl
+      attr_reader :dsl, :angle
       attr_reader :transform
       attr_reader :painter
       attr_reader :opts
@@ -34,6 +35,7 @@ module Shoes
       class Painter < Rect::Painter
         def fill(gc)
           set_position_and_size
+          @obj.apply_fill gc
           super
         end
 

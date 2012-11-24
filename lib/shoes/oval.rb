@@ -22,7 +22,7 @@ module Shoes
       @app.unslotted_elements << self
 
       # GUI
-      @gui = Shoes.backend_for(self, left, top, width, height, &blk)
+      @gui = Shoes.backend_for(self, left, top, width, height, opts, &blk)
     end
 
     attr_reader :app, :hidden

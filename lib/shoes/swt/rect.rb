@@ -17,6 +17,7 @@ module Shoes
         @height = height
         @opts = opts
         @corners = opts[:curve] || 0
+        @angle = opts[:angle] || 0
 
         # Move
         @container = @app.real
@@ -26,7 +27,7 @@ module Shoes
         clickable self, blk
       end
 
-      attr_reader :dsl
+      attr_reader :dsl, :angle
       attr_reader :app
       attr_reader :transform
       attr_reader :painter
@@ -51,8 +52,7 @@ module Shoes
         end
 
         def fill(gc)
-          gc.set_clipping path
-          gc.fill_gradient_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, true)
+          gc.fill_round_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, @obj.corners*2, @obj.corners*2)
         end
 
         def draw(gc)

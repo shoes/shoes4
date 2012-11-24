@@ -19,13 +19,14 @@ module Shoes
         @top = top
         @width = width
         @height = height
+        @angle = opts[:angle] || 0
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
         clickable self, blk
       end
 
-      attr_reader :dsl
+      attr_reader :dsl, :angle
       attr_reader :transform
       attr_reader :painter
       attr_accessor :width, :height, :left, :top, :ln
@@ -38,8 +39,7 @@ module Shoes
         end
 
         def fill(gc)
-          gc.set_clipping(clipping)
-          gc.fill_gradient_rectangle(@obj.left, @obj.top, @obj.width, @obj.height, true)
+          gc.fill_oval(@obj.left, @obj.top, @obj.width, @obj.height)
         end
 
         def draw(gc)
