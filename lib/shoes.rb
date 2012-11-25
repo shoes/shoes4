@@ -20,6 +20,7 @@ end
 
 require 'shoes/version'
 require 'shoes/color'
+require 'shoes/gradient'
 require 'shoes/app'
 require 'shoes/progress'
 #require 'shoes/native'
