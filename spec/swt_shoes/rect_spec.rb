@@ -39,13 +39,8 @@ describe Shoes::Swt::Rect do
     describe "square corners" do
       let(:corners) { 0 }
 
-      it "sets clipping area" do
-        gc.should_receive(:set_clipping)
-        subject.paint_control(event)
-      end
-
       it "fills rect" do
-        gc.should_receive(:fill_gradient_rectangle).with(left, top, width, height, true)
+        gc.should_receive(:fill_round_rectangle).with(left, top, width, height, corners*2, corners*2)
         subject.paint_control(event)
       end
 

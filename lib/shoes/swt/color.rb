@@ -19,9 +19,10 @@ module Shoes
       end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply fill
-      def apply_as_fill(gc)
+      # @note left, top, width, height, and angle are not used in this method, and only
+      #   exist to satisfy the Pattern interface
+      def apply_as_fill(gc, left = nil, top = nil, width = nil, height = nil, angle = nil)
         gc.set_background real
-        gc.set_foreground real
         gc.set_alpha alpha
       end
 

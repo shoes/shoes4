@@ -19,12 +19,9 @@ module Shoes
         @dsl.alpha
       end
 
-      def apply_as_fill(s, gc)
-        left, top, w, h, a = s.left, s.top, s.width, s.height, s.angle
-        color1, color2 = @dsl.color1, @dsl.color2
-        pattern = ::Swt::Pattern.new Shoes.display, *pattern_pos(left, top, w, h, -a), 
-          ::Swt::Color.new(Shoes.display, color1.red, color1.green, color1.blue), 
-          ::Swt::Color.new(Shoes.display, color2.red, color2.green, color2.blue)
+      def apply_as_fill(gc, left, top, width, height, angle = 0)
+        l, t, w, h, a = *pattern_pos(left, top, width, height, -angle)
+        pattern = ::Swt::Pattern.new Shoes.display, l, t, w, h, color1.real, color2.real
         gc.set_background_pattern pattern
       end
 

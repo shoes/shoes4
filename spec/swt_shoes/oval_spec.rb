@@ -32,13 +32,8 @@ describe Shoes::Swt::Oval do
       subject.clipping
     end
 
-    it "sets clipping area" do
-      gc.should_receive(:set_clipping)
-      subject.paint_control(event)
-    end
-
     it "fills" do
-      gc.should_receive(:fill_gradient_rectangle)
+      gc.should_receive(:fill_oval)
       subject.paint_control(event)
     end
 

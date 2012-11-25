@@ -33,14 +33,14 @@ module Shoes
       attr_accessor :left, :top, :width, :height
 
       class Painter < Rect::Painter
-        def fill(gc)
+        def fill_setup(gc)
           set_position_and_size
           @obj.apply_fill gc
-          super
+          true
         end
 
-        def draw(gc)
-          # do nothing
+        def draw_setup(gc)
+          # don't draw
         end
       end
     end

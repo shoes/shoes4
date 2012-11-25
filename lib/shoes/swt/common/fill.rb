@@ -19,8 +19,13 @@ module Shoes
           fill.alpha
         end
 
+        # @return [Integer] the angle to use when filling with a pattern
+        def angle
+          @angle || 0
+        end
+
         def apply_fill(context)
-          fill.apply_as_fill(self, context)
+          fill.apply_as_fill(context, left, top, width, height, angle)
         end
       end
     end

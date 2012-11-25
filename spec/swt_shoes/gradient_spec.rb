@@ -8,4 +8,13 @@ describe Shoes::Swt::Gradient do
   subject { Shoes::Swt::Gradient.new(dsl) }
 
   it_behaves_like "an swt pattern"
+
+   describe "#apply_as_fill" do
+    let(:gc) { double("gc") }
+
+    it "sets background" do
+      gc.should_receive(:set_background_pattern)
+      subject.apply_as_fill(gc, 10, 20, 100, 200)
+    end
+  end 
 end

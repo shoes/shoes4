@@ -32,8 +32,31 @@ module Shoes
       end
 
       def move(left, top)
-        @transform = ::Swt::Transform.new(::Swt.display)
-        @transform.translate(left, top)
+        transform.translate(left, top)
+      end
+
+      def left
+        elements = Java::float[6].new
+        transform.get_elements(elements)
+        elements[4]
+      end
+
+      def top
+        elements = Java::float[6].new
+        transform.get_elements(elements)
+        elements[5]
+      end
+
+      def width
+        bounds = Java::float[4].new
+        @element.get_bounds(bounds)
+        bounds[2]
+      end
+
+      def height
+        bounds = Java::float[4].new
+        @element.get_bounds(bounds)
+        bounds[3]
       end
 
       def transform
