@@ -17,7 +17,7 @@ describe Shoes::Swt::Rect do
     it { should be_an_instance_of(Shoes::Swt::Rect) }
     its(:dsl) { should be(dsl) }
 
-    specify "adds paint listener" do
+    it "adds paint listener" do
       app.should_receive(:add_paint_listener)
       subject
     end
@@ -39,12 +39,12 @@ describe Shoes::Swt::Rect do
     describe "square corners" do
       let(:corners) { 0 }
 
-      specify "fills rect" do
+      it "fills rect" do
         gc.should_receive(:fill_round_rectangle).with(left, top, width, height, corners*2, corners*2)
         subject.paint_control(event)
       end
 
-      specify "draws rect" do
+      it "draws rect" do
         gc.should_receive(:draw_round_rectangle).with(left+sw/2, top+sw/2, width-sw, height-sw, corners*2, corners*2)
         subject.paint_control(event)
       end
@@ -53,12 +53,7 @@ describe Shoes::Swt::Rect do
     describe "round corners" do
       let(:corners) { 13 }
 
-      specify "fills rect" do
-        gc.should_receive(:fill_round_rectangle).with(left, top, width, height, corners*2, corners*2)
-        subject.paint_control(event)
-      end
-
-      specify "draws rect" do
+      it "draws rect with rounded corners" do
         gc.should_receive(:draw_round_rectangle).with(left+sw/2, top+sw/2, width-sw, height-sw, corners*2, corners*2)
         subject.paint_control(event)
       end

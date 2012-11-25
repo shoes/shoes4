@@ -9,7 +9,7 @@ module Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's stroke color
         def stroke
-          dsl.stroke.to_native if dsl.stroke
+          ::Shoes::Swt::Color.create(dsl.stroke)
         end
 
         # This object's stroke alpha value
@@ -24,6 +24,12 @@ module Shoes
         # @return [Integer] This object's strokewidth
         def strokewidth
           dsl.strokewidth
+        end
+
+
+        def apply_stroke(context)
+          stroke.apply_as_stroke(context)
+          context.set_line_width strokewidth
         end
       end
     end

@@ -19,18 +19,25 @@ module Shoes
         @top = top
         @width = width
         @height = height
+        @angle = opts[:angle] || 0
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
         clickable self, blk
       end
 
-      attr_reader :dsl
+      attr_reader :dsl, :angle
       attr_reader :transform
       attr_reader :painter
       attr_accessor :width, :height, :left, :top, :ln
 
       class Painter < Common::Painter
+        def clipping
+          clipping = ::Swt::Path.new(Shoes.display)
+          clipping.add_arc(@obj.left, @obj.top, @obj.width, @obj.height, 0, 360)
+          clipping
+        end
+
         def fill(gc)
           gc.fill_oval(@obj.left, @obj.top, @obj.width, @obj.height)
         end

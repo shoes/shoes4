@@ -12,11 +12,12 @@ module Shoes
       def initialize dsl
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
+        @background = Color.new(@dsl.opts[:background])
         @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
-          shell.set_image ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
-          shell.setText(@dsl.app_title)
+          shell.image = ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
+          shell.text = (@dsl.app_title)
           shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
-          shell.setBackground @dsl.opts[:background].to_native
+          shell.background = @background.real
         end
         @shell = @real
 

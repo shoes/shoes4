@@ -27,6 +27,5 @@ module Shoes
     attr_reader :app, :hidden
     attr_reader :gui, :parent
     attr_reader :corners
-    attr_accessor :width, :height
   end
 end
