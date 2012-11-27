@@ -72,6 +72,12 @@ shared_examples_for "rect" do
   end
 end
 
+shared_examples_for "creating gradient" do
+  it "returns correct gradient" do
+    gradient.to_s.should eq("<Shoes::Gradient #ff0000->#0000ff>")
+  end
+end
+
 # Shared examples for app, flow, stack
 shared_examples "dsl container" do
   describe "animate" do
@@ -120,6 +126,26 @@ shared_examples "dsl container" do
     end
   end
 
+  describe "background" do
+    context "with hex string" do
+      let(:color) { "ffffff" }
+      it "sets color" do
+        border = subject.background(color)
+        border.fill.should eq(Shoes::COLORS[:white])
+      end
+    end
+  end
+
+  describe "border" do
+    context "with hex string" do
+      let(:color) { "#ffffff" }
+      it "sets color" do
+        border = subject.border(color)
+        border.stroke.should eq(Shoes::COLORS[:white])
+      end
+    end
+  end
+
   describe "fill" do
     let(:color) { Shoes::COLORS.fetch :tomato }
 
@@ -135,11 +161,20 @@ shared_examples "dsl container" do
 
     specify "applies to subsequently created objects" do
       subject.fill color
-      Shoes::Oval.should_receive(:new).with do |*args|
-        style = args.pop
-        style[:fill].should eq(color)
+      #Shoes::Oval.should_receive(:new).with do |*args|
+        #style = args.pop
+        #style[:fill].should eq(color)
+      #end
+      oval = subject.oval(10, 10, 100, 100)
+      oval.fill.should eq(color)
+    end
+
+    context "with hex string" do
+      let(:color) { "#fff" }
+
+      it "sets the color" do
+        subject.fill(color).should eq(Shoes::COLORS[:white])
       end
-      subject.oval(10, 10, 100, 100)
     end
   end
 
@@ -156,6 +191,88 @@ shared_examples "dsl container" do
       opts = Hash.new
       flow = subject.flow opts, &blk
       flow.should be_an_instance_of(Shoes::Flow)
+    end
+  end
+
+  describe "gradient" do
+    context "with colors" do
+      let(:red) { Shoes::Color.new(255, 0, 0) }
+      let(:blue) { Shoes::Color.new(0, 0, 255) }
+
+      context "two separate" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red, blue) }
+        end
+      end
+
+      context "as range" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red..blue) }
+        end
+      end
+    end
+
+    context "with strings" do
+      let(:red) { "#f00" }
+      let(:blue) { "#00f" }
+
+      context "two separate" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red, blue) }
+        end
+      end
+
+      context "as range" do
+        it_behaves_like "creating gradient" do
+          let(:gradient) { subject.gradient(red..blue) }
+        end
+      end
+    end
+
+    context "with gradient" do
+      it_behaves_like "creating gradient" do
+        let(:gradient_arg) { subject.gradient("#f00", "#00f") }
+        let(:gradient) { subject.gradient(gradient_arg) }
+      end
+    end
+
+    it "fails on bad input" do
+      lambda { subject.gradient(100) }.should raise_error(ArgumentError)
+    end
+  end
+
+  describe "pattern" do
+    let(:honeydew) { Shoes::COLORS[:honeydew] }
+    let(:salmon) { Shoes::COLORS[:salmon] }
+
+    context "with single color" do
+      let(:pattern) { subject.pattern honeydew }
+      it "returns the color" do
+        pattern.should eq(honeydew)
+      end
+    end
+
+    context "with color range" do
+      let(:pattern) { subject.pattern honeydew..salmon }
+
+      it "returns a gradient" do
+        pattern.should eq(subject.gradient honeydew..salmon)
+      end
+    end
+
+    context "with single string" do
+      let(:pattern) { subject.pattern honeydew.hex }
+      it "returns the color" do
+        pattern.should eq(honeydew)
+      end
+    end
+
+    context "with string range" do
+      let(:pattern) { subject.pattern honeydew.hex..salmon.hex }
+
+      it "returns a gradient" do
+        pattern.should eq(subject.gradient honeydew..salmon)
+      end
     end
   end
 
@@ -356,6 +473,14 @@ shared_examples "dsl container" do
         style[:stroke].should eq(color)
       end
       subject.oval(10, 10, 100, 100)
+    end
+
+    context "with hex string" do
+      let(:color) { "#fff" }
+
+      it "sets the color" do
+        subject.stroke(color).should eq(Shoes::COLORS[:white])
+      end
     end
   end
 

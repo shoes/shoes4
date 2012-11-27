@@ -6,7 +6,7 @@ module Shoes
   class TextBlock
     include Shoes::CommonMethods
 
-    attr_reader  :gui, :parent, :text, :links
+    attr_reader  :gui, :parent, :text, :links, :app
     attr_accessor :font, :font_size, :width, :height, :left, :top
 
     def initialize(parent, text, font_size, opts = {})
@@ -17,6 +17,7 @@ module Shoes
       @left = opts[:left]
       @top = opts[:top]
       @links = []
+      @app = @parent.app
 
       handle_opts opts
 
@@ -26,10 +27,6 @@ module Shoes
         @fixed = true
       end
       @left && @top ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
-    end
-
-    def app
-      @parent.app
     end
 
     def move left, top

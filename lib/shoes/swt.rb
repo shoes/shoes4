@@ -5,6 +5,7 @@ require 'swt/full-monkeypatch'
 # Force-load our fixed jar_loader.rb
 $LOAD_PATH.unshift File.expand_path('../../swt', __FILE__)
 require 'jar_loader'
+$LOAD_PATH.shift
 require 'swt'
 
 module Swt
@@ -13,6 +14,10 @@ module Swt
   module Widgets
     import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
+  end
+  module Graphics
+    import org.eclipse.swt.graphics
+    import org.eclipse.swt.graphics.Pattern
   end
 end
 
@@ -44,6 +49,7 @@ require 'shoes/swt/check'
 require 'shoes/swt/color'
 require 'shoes/swt/edit_box'
 require 'shoes/swt/edit_line'
+require 'shoes/swt/gradient'
 require 'shoes/swt/image'
 require 'shoes/swt/keypress'
 require 'shoes/swt/line'

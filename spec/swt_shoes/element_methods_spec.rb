@@ -25,6 +25,7 @@ describe "Basic Element Methods" do
   describe "arc" do
     specify "creates a Shoes::Arc" do
       app_gui.should_receive(:add_paint_listener)
+      app.stub(:unslotted_elements){ [] }
       app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
     end
   end
@@ -32,6 +33,7 @@ describe "Basic Element Methods" do
   describe "line" do
     specify "creates a Shoes::Line" do
       app_gui.should_receive(:add_paint_listener)
+      app.stub(:unslotted_elements){ [] }
       app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
     end
   end
@@ -39,6 +41,7 @@ describe "Basic Element Methods" do
   describe "oval" do
     specify "creates a Shoes::Oval" do
       app_gui.should_receive(:add_paint_listener)
+      app.stub(:unslotted_elements){ [] }
       app.oval(30, 20, 100, 200).should be_an_instance_of(Shoes::Oval)
     end
   end

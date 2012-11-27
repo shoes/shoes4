@@ -2,10 +2,8 @@
 # only until merged upstream and new version of Swt gem is released
 # (currently at 0.13)
 #
-# This must be required before 'swt'
+# This must be required after 'swt/full-monkeypatch.rb' and before 'swt'
 module Swt
-  JAR_ROOT = Gem::Specification.find_by_name('swt').gem_dir
-
   def self.jar_path
     File.join(JAR_ROOT, relative_jar_path)
   end

@@ -16,6 +16,7 @@ module Shoes
     def initialize(app, opts = {}, blk = nil)
       @app = app
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
+      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @blk = blk
 
       # GUI

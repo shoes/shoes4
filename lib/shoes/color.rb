@@ -4,17 +4,31 @@ module Shoes
     OPAQUE = 255
     TRANSPARENT = 0
 
-    def initialize(red, green, blue, alpha = OPAQUE)
-      to_rgb = lambda do |v|
-        rgb = v.is_a?(Fixnum) ? v : (255 * v).round
-        return 255 if rgb > 255
-        return 0 if rgb < 0
-        rgb
+    def self.create(color)
+      color.is_a?(Color) ? color : new(color)
+    end
+
+    def initialize(*args)#red, green, blue, alpha = OPAQUE)
+      case args.length
+      when 1
+        red, green, blue, alpha = HexConverter.new(args.first).to_rgb
+      when 3, 4
+        red, green, blue, alpha = *args
+      else
+        message = <<EOS
+Wrong number of arguments (#{args.length} for 1, 3, or 4).
+Must be one of:
+  - #{self.class}.new(hex_string)
+  - #{self.class}.new(red, green, blue)
+  - #{self.class}.new(red, green, blue, alpha)
+EOS
+        raise ArgumentError, message
       end
-      @red = to_rgb.call(red)
-      @green = to_rgb.call(green)
-      @blue = to_rgb.call(blue)
-      @alpha = to_rgb.call(alpha)
+      alpha ||= OPAQUE
+      @red = normalize_rgb(red)
+      @green = normalize_rgb(green)
+      @blue = normalize_rgb(blue)
+      @alpha = normalize_rgb(alpha)
     end
 
     attr_reader :red, :green, :blue, :alpha
@@ -49,6 +63,49 @@ module Shoes
       return @alpha <=> other.alpha if @red == other.red && @green == other.green && @blue == other.blue
       # Else use the sum of color values
       return @red + @green + @blue <=> other.red + other.green + other.blue
+    end
+
+    # @return [String] a hex represenation of this color
+    # @example
+    #   Shoes::Color.new(255, 0, 255).hex # => "#ff00ff"
+    def hex
+      format "#%02x%02x%02x", @red, @green, @blue
+    end
+
+    private
+    def normalize_rgb(value)
+      rgb = value.is_a?(Fixnum) ? value : (255 * value).round
+      return 255 if rgb > 255
+      return 0 if rgb < 0
+      rgb
+    end
+
+    class HexConverter
+      def initialize(hex)
+        @hex = validate(hex) || raise(ArgumentError, "Bad hex color: #{hex}")
+        @red, @green, @blue = hex_to_rgb(pad_if_necessary @hex)
+      end
+
+      def to_rgb
+        [@red, @green, @blue]
+      end
+
+      private
+      def hex_to_rgb(hex)
+        hex.chars.each_slice(2).map { |a| a.join.to_i(16) }
+      end
+
+      def pad_if_necessary(hex)
+        return hex unless hex.length == 3
+        hex.chars.map { |c| "#{c}#{c}" }.join
+      end
+
+      # Returns a 3- or 6-char hex string for valid input, or nil
+      # for invalid input.
+      def validate(hex)
+        match = /^#?(([0-9a-f]{3}){1,2})$/i.match(hex)
+        match && match[1]
+      end
     end
   end
 

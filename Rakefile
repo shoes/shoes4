@@ -125,6 +125,17 @@ namespace :spec do
 
 end
 
+desc "Run all working samples"
+task :samples do
+  samples_dir = "samples"
+  samples = File.read("#{samples_dir}/README").lines
+  samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}.shuffle.each do |sample|
+    puts "Running #{samples_dir}/#{sample}...quit to run next sample"
+    cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+    system "bin/#{cmd} #{samples_dir}/#{sample}"
+  end
+end
+
 begin
   require 'yard'
 

@@ -3,6 +3,7 @@ module Shoes
     class Line
       include Common::Stroke
       include Common::Move
+      include Common::Clear
 
       # @param [Shoes::Line] dsl The Shoes::Line implemented by this object
       # @param [Shoes::Point] point_a One endpoint of the line
@@ -33,7 +34,7 @@ module Shoes
 
       attr_reader :dsl, :app
       attr_reader :point_a, :point_b
-      attr_reader :left, :top, :width, :height
+      attr_reader :left, :top, :width, :height, :angle
       attr_reader :transform
 
       # @override Common::Move#move

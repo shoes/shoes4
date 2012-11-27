@@ -4,6 +4,7 @@ module Shoes
   module Swt
     class Progress
       include Common::Child
+      include Common::Clear
 
       # The Swt parent object
       attr_reader :parent, :real

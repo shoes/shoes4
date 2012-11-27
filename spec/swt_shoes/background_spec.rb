@@ -8,7 +8,7 @@ describe Shoes::Swt::Background do
   let(:width) { 222 }
   let(:height) { 111 }
   let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: 1, hidden: false) }
-  let(:parent) { double("parent", width: width, height: height, left: left, top: top) }
+  let(:parent) { double("parent", width: width, height: height, left: left, top: top, contents: []) }
 
   subject {
     Shoes::Swt::Background.new dsl, app, left, top, width, height
@@ -18,7 +18,7 @@ describe Shoes::Swt::Background do
     it { should be_an_instance_of(Shoes::Swt::Background) }
     its(:dsl) { should be(dsl) }
 
-    specify "adds paint listener" do
+    it "adds paint listener" do
       app.should_receive(:add_paint_listener)
       subject
     end
@@ -38,7 +38,7 @@ describe Shoes::Swt::Background do
     describe "square corners" do
       let(:corners) { 0 }
 
-      specify "fills rect" do
+      it "fills rect" do
         gc.should_receive(:fill_round_rectangle).with(left, top, width, height, corners*2, corners*2)
         subject.paint_control(event)
       end
@@ -47,7 +47,7 @@ describe Shoes::Swt::Background do
     describe "round corners" do
       let(:corners) { 13 }
 
-      specify "fills rect" do
+      it "fills rect" do
         gc.should_receive(:fill_round_rectangle).with(left, top, width, height, corners*2, corners*2)
         subject.paint_control(event)
       end

@@ -5,6 +5,6 @@ Shoes.app do
   flow(width: 0.5){2.times{|i| flow(width: 0.5){2.times{|j| button "Yayyyy#{j}"}}}}
   flow(width: 0.3){button 'go go go go go'}
   stack(width: 0.3){edit_line; 3.times{para 'hello'}}
-  flow(width: 0.3){image File.join(Shoes::DIR, '../static/shoes-icon.png')}
+  flow(width: 0.3){image File.join(Shoes::DIR, 'static/shoes-icon.png')}
   button 'bye bye2'
 end

@@ -6,7 +6,7 @@ module Shoes
   PI = Math::PI
   TWO_PI = 2 * PI
   HALF_PI = 0.5 * PI
-  DIR = Pathname.new(__FILE__).realpath.dirname.to_s
+  DIR = Pathname.new(__FILE__).join("../..").realpath.to_s
 
   extend ::Shoes::Common::Registration
 
@@ -20,6 +20,7 @@ end
 
 require 'shoes/version'
 require 'shoes/color'
+require 'shoes/gradient'
 require 'shoes/app'
 require 'shoes/progress'
 require 'shoes/animation'
@@ -44,4 +45,5 @@ require 'shoes/configuration'
 require 'shoes/logger'
 require 'shoes/text_block'
 require 'shoes/radio'
+require 'shoes/url'
 require 'shoes/alert'

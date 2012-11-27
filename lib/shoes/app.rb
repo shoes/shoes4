@@ -28,7 +28,7 @@ module Shoes
   class App
     include Shoes::ElementMethods
 
-    attr_reader :gui, :shell, :top_slot, :contents
+    attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion
     attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
@@ -48,12 +48,13 @@ module Shoes
 
       @app = self
       @style = default_styles
-      @contents = []
+      @contents, @unslotted_elements = [], []
       @mouse_motion = []
       @mouse_button, @mouse_pos = 0, [0, 0]
 
       @gui = Shoes.configuration.backend::App.new @app
 
+      blk = $urls[/^#{'/'}$/] unless blk
       @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &blk
 
       Shoes.register self
@@ -74,6 +75,17 @@ module Shoes
     def quit
       Shoes.unregister self
       @gui.quit
+    end
+    
+    def clear &blk
+      super
+      @app.unslotted_elements.each &:clear
+      @app.unslotted_elements.clear
+
+      @contents << @top_slot
+      @current_slot = @top_slot
+      instance_eval &blk if blk
+      gui.flush
     end
 
     def add_child(child)

@@ -1,15 +1,14 @@
 # Use File#expand_path so jars are even when bundled within a jar.
 # Use only until merged upstream and new version of Swt gem is
 # released (currently at 0.13)
-module JFace
-  path = case RbConfig::CONFIG["host_os"]
-    when /windows|mswin/i
-      "../../../../swt-*/vendor/jface/*.jar"
-    else
-      "../../../vendor/jface/*.jar"
-    end
+module Swt
+  JAR_ROOT = Gem::Specification.find_by_name('swt').gem_dir
+end
 
-  Dir[File.expand_path path, __FILE__].each do |jar_fn|
+module JFace
+  path = "vendor/jface/*.jar"
+
+  Dir[File.expand_path path, ::Swt::JAR_ROOT].each do |jar_fn|
     require jar_fn
   end
 end
