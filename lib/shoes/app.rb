@@ -1,5 +1,4 @@
 require 'shoes/element_methods'
-require 'shoes/global_methods'
 require 'shoes/color'
 require 'tmpdir'
 require 'fileutils'
@@ -28,7 +27,6 @@ module Shoes
 
   class App
     include Shoes::ElementMethods
-    include Shoes::GlobalMethods
 
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion

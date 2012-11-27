@@ -1,5 +1,7 @@
 require 'swt_shoes/spec_helper'
 
+main_object = self
+
 describe Shoes::Swt::Alert do
 
   TEXT = 'some random text'
@@ -16,4 +18,9 @@ describe Shoes::Swt::Alert do
     ::Swt::Widgets::MessageBox.stub(:new) { mock_message_box }
     subject
   end
+
+  it 'is known of by the main object' do
+    main_object.respond_to?(:alert).should be true
+  end
+
 end

@@ -445,5 +445,9 @@ EOS
       $urls.each{|k, v| clear{@location = url; v.call self, $1} if k =~ url}
     end
 
+    def alert(message = '')
+      Shoes::Alert.new @current_slot, message
+    end
+
   end
 end
