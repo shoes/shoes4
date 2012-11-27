@@ -25,9 +25,10 @@ module Shoes
         gc.set_background_pattern pattern
       end
 
-      def apply_as_stroke(gc)
-        gc.set_foreground color1.real
-        gc.set_alpha alpha
+      def apply_as_stroke(gc, left, top, width, height, angle = 0)
+        l, t, w, h, a = *pattern_pos(left, top, width, height, -angle)
+        pattern = ::Swt::Pattern.new Shoes.display, l, t, w, h, color1.real, color2.real
+        gc.set_foreground_pattern pattern
       end
 
       def pattern_pos left, top, w, h, a

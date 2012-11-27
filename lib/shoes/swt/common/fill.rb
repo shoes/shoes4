@@ -9,7 +9,7 @@ module Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's fill color
         def fill
-          @fill ||= ::Shoes.configuration.backend_for(dsl.fill)
+          @fill ||= dsl.fill ? ::Shoes.configuration.backend_for(dsl.fill) : nil
         end
 
         # This object's fill alpha value
@@ -25,7 +25,10 @@ module Shoes
         end
 
         def apply_fill(context)
-          fill.apply_as_fill(context, left, top, width, height, angle)
+          if fill
+            fill.apply_as_fill(context, left, top, width, height, angle)
+            true
+          end
         end
       end
     end

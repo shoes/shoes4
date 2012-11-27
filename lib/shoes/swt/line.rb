@@ -34,7 +34,7 @@ module Shoes
 
       attr_reader :dsl, :app
       attr_reader :point_a, :point_b
-      attr_reader :left, :top, :width, :height
+      attr_reader :left, :top, :width, :height, :angle
       attr_reader :transform
 
       # @override Common::Move#move

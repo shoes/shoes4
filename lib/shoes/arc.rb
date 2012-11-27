@@ -12,6 +12,7 @@ module Shoes
       @wedge = opts[:wedge] || false
       default_style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS)
       @style = default_style.merge(opts)
+      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @app.unslotted_elements << self
 
       #GUI

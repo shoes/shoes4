@@ -27,7 +27,7 @@ module Shoes
       end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply stroke
-      def apply_as_stroke(gc)
+      def apply_as_stroke(gc, left = nil, top = nil, width = nil, height = nil, angle = nil)
         gc.set_foreground real
         gc.set_alpha alpha
       end

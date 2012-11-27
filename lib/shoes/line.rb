@@ -13,6 +13,7 @@ module Shoes
       @app = app
 
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
+      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
 
       # GUI
       gui_opts = @style.clone

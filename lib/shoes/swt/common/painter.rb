@@ -22,7 +22,6 @@ module Shoes
         # Override in subclass and return something falsy if not using fill
         def fill_setup(gc)
           @obj.apply_fill(gc)
-          true
         end
 
         # Implement in subclass
@@ -32,7 +31,6 @@ module Shoes
         # Override in subclass and return something falsy if not using draw
         def draw_setup(gc)
           @obj.apply_stroke(gc)
-          true
         end
 
         # Implement in subclass

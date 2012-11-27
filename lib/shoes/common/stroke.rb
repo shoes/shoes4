@@ -5,8 +5,7 @@ module Shoes
     # @note Including classes must provide `#style`
     module Stroke
       DEFAULTS = {
-        :stroke => Shoes::COLORS[:black],
-        :strokewidth => 1
+        :stroke => Shoes::COLORS[:black]
       }
 
       def stroke
