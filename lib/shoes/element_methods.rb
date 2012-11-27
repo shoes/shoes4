@@ -433,11 +433,7 @@ EOS
       Shoes::Keypress.new opts, &blk
     end
 
-    def alert message = ''
-      Shoes::Alert.new @current_slot, message
-    end
-
-	def clear
+  	def clear
       contents = @contents.dup
       contents.each do |e|
         e.is_a?(Shoes::Slot) ? e.clear : e.remove
