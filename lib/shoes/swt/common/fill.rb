@@ -9,7 +9,7 @@ module Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's fill color
         def fill
-          @fill ||= dsl.fill ? ::Shoes.configuration.backend_for(dsl.fill) : nil
+          dsl.fill ? ::Shoes.configuration.backend_for(dsl.fill) : nil
         end
 
         # This object's fill alpha value
