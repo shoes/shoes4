@@ -432,8 +432,8 @@ EOS
       opts = {:app => @app}
       Shoes::Keypress.new opts, &blk
     end
-    
-    def clear
+
+  	def clear
       contents = @contents.dup
       contents.each do |e|
         e.is_a?(Shoes::Slot) ? e.clear : e.remove
@@ -444,5 +444,10 @@ EOS
     def visit url
       $urls.each{|k, v| clear{@location = url; v.call self, $1} if k =~ url}
     end
+
+    def alert(message = '')
+      Shoes::Alert.new @current_slot, message
+    end
+
   end
 end

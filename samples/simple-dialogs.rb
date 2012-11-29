@@ -3,6 +3,9 @@ Shoes.app :width => 300, :height => 150, :margin => 10 do
     @answer.replace v.inspect
   end
 
+  button "Alert" do
+    alert 'Just a simple alert'
+  end
   button "Ask" do
     answer ask("What is your name?")
   end
