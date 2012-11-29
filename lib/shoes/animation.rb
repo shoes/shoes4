@@ -11,7 +11,7 @@ module Shoes
     #   @option opts [Shoes::App] :app The current Shoes app
     def initialize opts, blk
       @style = opts
-      @framerate = @style[:framerate] || 24
+      @framerate = @style[:framerate] || 10
       @app = opts[:app]
       @blk = blk
       @current_frame = 0

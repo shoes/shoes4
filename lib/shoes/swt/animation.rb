@@ -18,10 +18,10 @@ module Shoes
             @blk.call(@dsl.current_frame)
             @dsl.increment_frame unless @dsl.stopped?
             @app.real.redraw
-            ::Swt.display.timer_exec(2000 / @dsl.framerate, @task) unless @dsl.removed?
+            ::Swt.display.timer_exec(1000 / @dsl.framerate, @task) unless @dsl.removed?
           end
         end
-        ::Swt.display.timer_exec(2000 / @dsl.framerate, @task)
+        ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
       end
 
       attr_reader :task

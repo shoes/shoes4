@@ -88,8 +88,8 @@ shared_examples "dsl container" do
         animation.should be_an_instance_of(Shoes::Animation)
       end
 
-      specify "framerate is 24" do
-        animation.framerate.should eq(24)
+      specify "framerate is 10" do
+        animation.framerate.should eq(10)
       end
     end
 

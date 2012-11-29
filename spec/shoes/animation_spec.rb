@@ -44,7 +44,7 @@ describe Shoes::Animation do
   it_behaves_like Shoes::Animation
 
   it "sets default framerate" do
-    subject.framerate.should eq(24)
+    subject.framerate.should eq(10)
   end
 
   it "sets current frame to 0" do

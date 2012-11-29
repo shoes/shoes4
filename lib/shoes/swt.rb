@@ -62,6 +62,7 @@ require 'shoes/swt/shape'
 require 'shoes/swt/slot'
 require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
+require 'shoes/swt/timer'
 
 module Shoes::Swt
   extend ::Shoes::Common::Registration

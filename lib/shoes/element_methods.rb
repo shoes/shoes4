@@ -163,6 +163,15 @@ module Shoes
       Shoes::Animation.new opts, blk
     end
 
+    def every n=1, &blk
+      animate 1.0/n, &blk
+    end
+
+    def timer n=1, &blk
+      n *= 1000
+      Timer.new @app, n, &blk
+    end
+
     # similar controls as Shoes::Video (#video)
     def sound(soundfile, opts = {}, &blk)
       Shoes::Sound.new self.gui, soundfile, opts, &blk
