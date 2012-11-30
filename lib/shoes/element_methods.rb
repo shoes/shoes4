@@ -39,8 +39,10 @@ module Shoes
       if args.length == 1
         arg = args.first
         case arg
-        when String, Shoes::Color
-          color(arg)
+        when String
+	  File.exist?(arg) ? image_pattern(arg) : color(arg)
+        when Shoes::Color
+	  color(arg)
         when Range, Shoes::Gradient
           gradient(arg)
         else
@@ -340,6 +342,10 @@ EOS
         raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
       end
       Shoes::Gradient.new(color(min), color(max))
+    end
+
+    def image_pattern path
+      Shoes::ImagePattern.new path
     end
 
     # Sets the current stroke color
