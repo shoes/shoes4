@@ -37,8 +37,12 @@ module Shoes
     # It might be possible to leave the redraw
     # function blank for non-SWT versions of Shoes
     def text=(value)
-      @text = value
+      @text = value.to_s
       @gui.redraw
+    end
+
+    def replace(value)
+      self.text = value
     end
 
     def positioning x, y, max

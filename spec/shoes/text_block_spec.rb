@@ -29,6 +29,13 @@ describe Shoes::TextBlock do
     end
   end
 
+  describe "#replace" do
+    it "replaces text" do
+      subject.replace "Goodbye Cruel World"
+      subject.text.should eq("Goodbye Cruel World")
+    end
+  end
+
   describe "font" do
     it "sets the default font to Arial" do
       subject.font.should eql "Arial"
