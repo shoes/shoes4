@@ -1,1 +1,3 @@
-puts 'a'
+def a
+  puts 'a'
+end
