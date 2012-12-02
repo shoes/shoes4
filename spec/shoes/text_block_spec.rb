@@ -29,6 +29,13 @@ describe Shoes::TextBlock do
     end
   end
 
+  describe "#to_s" do
+    it "is the same as #text" do
+      text = subject.text
+      subject.to_s.should eq(text)
+    end
+  end
+
   describe "#replace" do
     it "replaces text" do
       subject.replace "Goodbye Cruel World"

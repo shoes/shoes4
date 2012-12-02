@@ -45,6 +45,10 @@ module Shoes
       self.text = value
     end
 
+    def to_s
+      self.text
+    end
+
     def positioning x, y, max
       set_size @left.to_i, @left.to_i unless @fixed
       super
