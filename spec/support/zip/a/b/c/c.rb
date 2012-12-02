@@ -1,1 +1,3 @@
-puts 'c'
+def c
+  puts 'c'
+end
