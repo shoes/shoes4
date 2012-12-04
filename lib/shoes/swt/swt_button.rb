@@ -4,7 +4,7 @@ module Shoes
       include Common::Clear
       
       # The Swt parent object
-      attr_reader :parent, :real
+      attr_reader :parent, :real, :opts
 
       def initialize(dsl, parent, type, blk)
         @dsl = dsl
@@ -17,7 +17,11 @@ module Shoes
 
         yield(@real) if block_given?
 
-        @real.pack
+        if dsl.is_a?(::Shoes::Button) and dsl.opts[:width] and dsl.opts[:height]
+          @real.setSize dsl.opts[:width], dsl.opts[:height]
+        else
+          @real.pack
+        end
       end
 
       def width=(value)

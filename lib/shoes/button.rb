@@ -9,6 +9,7 @@ module Shoes
       @text = text
       @blk = blk
       @app = opts[:app]
+      @opts = opts
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
 
@@ -20,7 +21,7 @@ module Shoes
 
     attr_reader :parent
     attr_reader :blk
-    attr_reader :gui
+    attr_reader :gui, :opts
     attr_accessor :text
 
     def focus
