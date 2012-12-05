@@ -1,17 +1,20 @@
+require 'shoes/common/margin'
+
 module Shoes
   class Slot
     include Shoes::ElementMethods
+    include Shoes::Common::Margin
 
     attr_reader :parent, :gui, :contents
     attr_reader :blk
-    attr_accessor :width, :height, :left, :top, :margin, :margin_left, :margin_right, :margin_top
+    attr_accessor :width, :height, :left, :top
 
 
     def initialize parent, opts={}, &blk
       @parent = parent
       @contents, @style = [], {}
 
-      %w[app left top width height margin margin_left margin_top].each do |v|
+      %w[app left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
         instance_variable_set "@#{v}", opts[v.to_sym]
       end
 
@@ -19,6 +22,8 @@ module Shoes
       @height ||= 0
       @init_height = @height
       @blk = blk
+      
+      set_margin
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
@@ -46,12 +51,13 @@ module Shoes
     def positioning x, y, max
       @init_width = @width if @width.is_a? Float
       @width = (parent.width * @init_width).to_i if @init_width
+      @width -= margin_left + margin_right
       if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
-        @left, @top = x, max.top
+        @left, @top = x + parent.margin_left, max.top + parent.margin_top
         @height = contents_alignment self
         max = self if max.height < @height
       else
-        @left, @top = parent.left, max.top + max.height
+        @left, @top = parent.left + parent.margin_left, max.top + max.height + parent.margin_top
         @height = contents_alignment self
         max = self
       end

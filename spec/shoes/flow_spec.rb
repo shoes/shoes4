@@ -20,7 +20,7 @@ describe Shoes::Flow do
       subject.parent.should == parent
       subject.width.should == 131
       subject.height.should == 137
-      subject.margin.should == 143
+      subject.margin.should == [143, 143, 143, 143]
       subject.blk.should == input_block
     end
 

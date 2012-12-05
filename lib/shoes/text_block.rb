@@ -1,10 +1,12 @@
 require 'shoes/common_methods'
+require 'shoes/common/margin'
 
 module Shoes
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock
     include Shoes::CommonMethods
+    include Shoes::Common::Margin
 
     attr_reader  :gui, :parent, :text, :links, :app
     attr_accessor :font, :font_size, :width, :height, :left, :top
@@ -18,6 +20,9 @@ module Shoes
       @top = opts[:top]
       @links = []
       @app = @parent.app
+
+      @margin = opts[:margin]
+      set_margin
 
       handle_opts opts
 
@@ -50,13 +55,15 @@ module Shoes
     end
 
     def positioning x, y, max
-      set_size @left.to_i, @left.to_i unless @fixed
+      set_size @left.to_i, @top.to_i
       super
     end
 
     def set_size left, top
-      @width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
-      @height = @gui.get_height
+      unless @fixed
+        @width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
+      end
+      @height = @gui.get_height + @margin_top + @margin_bottom
     end
 
     private

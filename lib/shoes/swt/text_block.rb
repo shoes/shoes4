@@ -71,7 +71,7 @@ module Shoes
           set_styles
           if @dsl.width
             @tl.setWidth @dsl.width
-            @tl.draw gc, @dsl.left.to_i, @dsl.top.to_i
+            @tl.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
           end
         end
 
