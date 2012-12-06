@@ -1,5 +1,6 @@
 require 'shoes/element_methods'
 require 'shoes/color'
+require 'shoes/common/margin'
 require 'tmpdir'
 require 'fileutils'
 
@@ -27,6 +28,7 @@ module Shoes
 
   class App
     include Shoes::ElementMethods
+    include Shoes::Common::Margin
 
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion
@@ -51,6 +53,7 @@ module Shoes
       @contents, @unslotted_elements = [], []
       @mouse_motion = []
       @mouse_button, @mouse_pos = 0, [0, 0]
+      set_margin
 
       @gui = Shoes.configuration.backend::App.new @app
 

@@ -26,6 +26,7 @@ module Shoes
 
     def move(x, y)
       @gui.move x, y
+      self
     end
 
     def left

@@ -65,6 +65,7 @@ module Shoes
       @parent.contents.delete self if @parent
       @app.unslotted_elements.push self unless @app.unslotted_elements.include?(self)
       _move left, top
+      self
     end
 
     def _move left, top
