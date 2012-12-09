@@ -5,7 +5,7 @@ module Shoes
     include Shoes::CommonMethods
 
     attr_reader :parent, :blk, :gui, :app, :hidden
-    attr_reader :file_path
+    attr_reader :file_path, :opts
 
     def initialize(parent, file_path, opts = {}, blk = nil)
       @left = opts[:left] ? opts[:left] : 0
@@ -13,6 +13,7 @@ module Shoes
       @parent = parent
       @blk = blk
       @app = opts[:app]
+      @opts = opts
 
       @file_path = file_path
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)

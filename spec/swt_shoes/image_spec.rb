@@ -11,13 +11,15 @@ describe Shoes::Swt::Image do
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", contents: []) }
   let(:parent) { double("parent", real: real, dsl: parent_dsl) }
-  let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false)}
+  let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: {})}
   let(:left) { 100 }
   let(:top) { 200 }
   let(:mock_image) { mock(:swt_image, getImageData: MockSize.new, addListener: true, add_paint_listener: true) }
   let(:real) { mock_image }
   let(:gui) { double("gui", real: real) }
   let(:app) { double("app", gui: gui) }
+  let(:width) { 128 }
+  let(:height) { 128 }
 
   subject {
     ::Swt::Graphics::Image.stub(:new) { mock_image}
@@ -37,7 +39,7 @@ describe Shoes::Swt::Image do
     end
 
     specify "draws image" do
-      gc.should_receive(:drawImage).with(real, left, top)
+      gc.should_receive(:drawImage).with(real, 0, 0, width, height, left, top, width, height)
       subject.painter.call(event)
     end
   end

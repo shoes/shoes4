@@ -18,14 +18,16 @@ module Shoes
         @container = @parent.real
 
         @real = ::Swt::Graphics::Image.new(::Swt.display, @dsl.file_path)
-        @width, @height = @real.getImageData.width, @real.getImageData.height
+        @full_width, @full_height = @real.getImageData.width, @real.getImageData.height
+        @width = @dsl.opts[:width] || @full_width
+        @height = @dsl.opts[:height] || @full_height
 
         parent.dsl.contents << @dsl
 
         @painter = lambda do |event|
           gc = event.gc
           gcs_reset gc
-          gc.drawImage @real, @left, @top unless @dsl.hidden
+          gc.drawImage @real, 0, 0, @full_width, @full_height, @left, @top, @width, @height unless @dsl.hidden
         end
         @container.add_paint_listener(@painter)
 
