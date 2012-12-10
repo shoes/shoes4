@@ -28,7 +28,11 @@ module Shoes
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
       @app.current_slot = self
-      @app.instance_eval &blk if blk
+      begin
+        @app.instance_eval &blk if blk
+      rescue
+        $shoes_is_included.instance_eval &blk if $shoes_is_included
+      end
       @app.current_slot = parent
     end
 

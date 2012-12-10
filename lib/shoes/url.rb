@@ -1,6 +1,8 @@
 module Shoes
   $urls = {}
+  $shoes_is_included = nil
   def self.included klass
+    $shoes_is_included = klass.new
     def klass.url page, m
       klass = self
       page = /^#{page}$/
