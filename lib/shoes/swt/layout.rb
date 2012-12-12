@@ -3,7 +3,22 @@ module Shoes::Swt
     attr_accessor :top_slot
 
     def layout *args
-      contents_alignment @top_slot
+      app = @top_slot.app
+      w, h = app.width, app.height
+      scrollable_height = contents_alignment @top_slot
+      app = app.gui
+      app.real.setSize w, [scrollable_height, h].max
+      vb = app.shell.getVerticalBar
+      vb.setVisible(scrollable_height > h)
+      if scrollable_height > h
+        vb.setThumb h * h / scrollable_height
+        vb.setMaximum scrollable_height - h + vb.getThumb
+        vb.setIncrement h / 2
+      else
+        location = app.real.getLocation
+        location.y = 0
+        app.real.setLocation location
+      end
     end
 
     def contents_alignment slot

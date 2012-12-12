@@ -33,6 +33,10 @@ module Shoes
         @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
         @real.addMouseMoveListener MouseMoveListener.new(self)
         @real.addMouseListener MouseListener.new(self)
+        
+        vb = @shell.getVerticalBar
+        vb.setIncrement 10
+        vb.addSelectionListener SelectionListener.new(self, vb)
       end
 
       attr_reader :dsl, :real, :shell, :dx, :dy
@@ -76,7 +80,7 @@ module Shoes
       end
 
       def main_window_style
-        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX
+        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX | ::Swt::SWT::V_SCROLL
         style |= ::Swt::SWT::RESIZE if @dsl.opts[:resizable]
         style
       end
@@ -129,6 +133,19 @@ module Shoes
       end
       def mouseDoubleClick(e)
         # do nothing
+      end
+    end
+    
+    class SelectionListener
+      def initialize app, vb
+        @app, @vb = app, vb
+      end
+      def widgetSelected e
+        unless e.detail == ::Swt::SWT::DRAG
+          location = @app.real.getLocation
+          location.y = -@vb.getSelection
+          @app.real.setLocation location
+        end
       end
     end
   end
