@@ -46,4 +46,20 @@ describe Shoes::Swt::Confirm do
     end
   end
 
+  describe 'confirm method on the main object' do
+    it 'is known of by the main object' do
+      main_object.respond_to?(:confirm).should be true
+    end
+
+    it 'returns true when YES was clicked' do
+      create_mock_message_box_returning ::Swt::SWT::YES
+      main_object.confirm('1 + 1 = 2').should be_true
+    end
+
+    it 'returns false when NO was clicked' do
+      create_mock_message_box_returning ::Swt::SWT::NO
+      main_object.confirm('1 + 1 = 3').should be_false
+    end
+  end
+
 end

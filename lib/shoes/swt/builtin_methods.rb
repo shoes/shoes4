@@ -9,7 +9,7 @@ module Shoes
       end
 
       def confirm(message = '')
-        ::Shoes::Swt::Confirm.new message
+        ::Shoes::Swt::Confirm.new(@current_slot, message).confirmed?
       end
     end
   end
