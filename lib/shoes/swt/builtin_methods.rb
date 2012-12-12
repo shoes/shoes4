@@ -5,12 +5,11 @@ module Shoes
   module Swt
     module BuiltinMethods
       def alert(message = '')
-        ::Shoes::Swt::Alert.new message
-        nil
+        ::Shoes::Swt::Dialog.new.alert message
       end
 
       def confirm(message = '')
-        ::Shoes::Swt::Confirm.new(@current_slot, message).confirmed?
+        ::Shoes::Swt::Dialog.new.confirm message
       end
     end
   end
