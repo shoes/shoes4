@@ -465,7 +465,7 @@ EOS
     end
 
     def confirm(message = '')
-      Shoes::Confirm.new @current_slot, message
+      Shoes::Confirm.new(@current_slot, message).confirmed?
     end
 
   end

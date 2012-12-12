@@ -4,6 +4,10 @@ main_object = self
 
 describe Shoes::Swt::Alert do
 
+  before :each do
+    ::Swt::Widgets::Shell.stub(:new)
+  end
+
   TEXT = 'some random text'
 
   let(:dsl) { double('dsl') }
@@ -12,7 +16,6 @@ describe Shoes::Swt::Alert do
   subject { Shoes::Swt::Alert.new dsl, parent, TEXT }
   
   it "pops up a window containing a short message." do
-    ::Swt::Widgets::Shell.stub(:new)
     mock_message_box = mock(:mb, open: true)
     mock_message_box.should_receive(:message=).with(TEXT)
     ::Swt::Widgets::MessageBox.stub(:new) { mock_message_box }
