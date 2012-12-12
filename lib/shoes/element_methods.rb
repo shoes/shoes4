@@ -462,6 +462,7 @@ EOS
 
     def alert(message = '')
       Shoes::Alert.new @current_slot, message
+      nil
     end
 
     def confirm(message = '')

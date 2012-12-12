@@ -6,6 +6,7 @@ module Shoes
     module BuiltinMethods
       def alert(message = '')
         ::Shoes::Swt::Alert.new message
+        nil
       end
 
       def confirm(message = '')
