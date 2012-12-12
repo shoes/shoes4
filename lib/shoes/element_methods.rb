@@ -464,5 +464,9 @@ EOS
       Shoes::Alert.new @current_slot, message
     end
 
+    def confirm(message = '')
+      Shoes::Confirm.new @current_slot, message
+    end
+
   end
 end

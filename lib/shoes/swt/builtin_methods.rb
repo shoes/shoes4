@@ -7,6 +7,10 @@ module Shoes
       def alert(message = '')
         ::Shoes::Swt::Alert.new message
       end
+
+      def confirm(message = '')
+        ::Shoes::Swt::Confirm.new message
+      end
     end
   end
 end

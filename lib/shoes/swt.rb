@@ -36,6 +36,7 @@ require 'shoes/swt/common/clickable'
 require 'shoes/swt/common/toggle'
 require 'shoes/swt/common/clear'
 require 'shoes/swt/alert'
+require 'shoes/swt/confirm'
 require 'shoes/swt/layout'
 require 'shoes/swt/app'
 

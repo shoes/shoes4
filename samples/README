@@ -10,7 +10,7 @@ simple-bounce.rb
 simple-oval.rb
 simple-sound.rb
 simple-stripes.rb
-simple-alert.rb
+simple-dialogs-outside.rb
 
 sample1.rb
 sample2.rb
