@@ -1,11 +1,4 @@
 require 'java'
-# TODO: Remove when merged upstream (v0.14?)
-require 'swt/full-monkeypatch'
-# TODO: Remove when merged upstream (v0.14?)
-# Force-load our fixed jar_loader.rb
-$LOAD_PATH.unshift File.expand_path('../../swt', __FILE__)
-require 'jar_loader'
-$LOAD_PATH.shift
 require 'swt'
 
 module Swt
