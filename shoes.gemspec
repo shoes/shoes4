@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "log4jruby"
-  s.add_dependency "swt"
+  s.add_dependency "swt", "~>0.15"
 
   # Packaging
   s.add_dependency "plist"
