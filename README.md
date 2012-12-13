@@ -18,6 +18,8 @@ Hacking
 
         $ rvm install jruby
 
+**Note:** Please make sure that you either install jruby-1.7.0 or higher or you set jruby to [always run in 1.9 mode](http://stackoverflow.com/questions/4755900/how-to-make-jruby-1-6-default-to-ruby-1-9). This is required in order for shoes4 to work.
+
 3. Set up your local environment
 
         $ cd shoes4
