@@ -3,11 +3,10 @@ require 'spec/shoes/spec_helper'
 # figure out how to get rid of the alert - it stopped the running tests
 
 describe Shoes::Dialog do
-  let(:app) { double('app', gui: true) }
 
   before :each do
-    Shoes.configuration.stub(backend_for: Shoes::Mock::Dialog.new)
-    @dialog = Shoes::Dialog.new app
+    Shoes.configuration.stub(backend: Shoes::Mock)
+    @dialog = Shoes::Dialog.new
   end
 
   it 'is not nil' do

@@ -24,13 +24,10 @@ describe Shoes::Swt::Dialog do
   end
 
   before :each do
-    @dialog = Shoes::Swt::Dialog.new dsl, parent
+    @dialog = Shoes::Swt::Dialog.new
   end
 
   TEXT = 'some random text'
-
-  let(:dsl) { double('dsl') }
-  let(:parent) { double('parent') }
 
   describe 'alert' do
     it 'pops up a window containing a short message.' do

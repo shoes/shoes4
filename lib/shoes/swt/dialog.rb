@@ -5,10 +5,6 @@ module Shoes
       ALERT_STYLE   = SWT::OK | SWT::ICON_INFORMATION
       CONFIRM_STYLE = SWT::YES | SWT::NO | SWT::ICON_QUESTION
 
-      def initialize(dsl = nil, parent = nil)
-        @shell = ::Swt::Widgets::Shell.new ::Swt.display
-      end
-
       def alert(msg = '')
         open_message_box ALERT_STYLE, msg
         nil
@@ -23,7 +19,8 @@ module Shoes
 
       private
       def open_message_box(style, msg)
-        @message_box = ::Swt::Widgets::MessageBox.new @shell, style
+        shell = ::Swt::Widgets::Shell.new ::Swt.display
+        @message_box = ::Swt::Widgets::MessageBox.new shell, style
         @message_box.message = msg.to_s
         @message_box.open
       end
