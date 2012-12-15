@@ -84,3 +84,7 @@ end
 def Shoes.backend_for(shoes_object, *args, &blk)
   Shoes::Configuration.backend_with_app_for(shoes_object, *args, &blk)
 end
+
+def Shoes.backend
+  Shoes.configuration.backend
+end
