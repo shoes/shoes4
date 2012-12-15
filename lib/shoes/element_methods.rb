@@ -461,11 +461,11 @@ EOS
     end
 
     def alert(message = '')
-      Shoes::Alert.new @current_slot, message
+      Shoes::Dialog.new(@current_slot).alert message
     end
 
     def confirm(message = '')
-      Shoes::Confirm.new(@current_slot, message).confirmed?
+      Shoes::Dialog.new(@current_slot).confirm(message)
     end
 
   end
