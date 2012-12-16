@@ -37,6 +37,14 @@ Hacking
 
 3. Set up your local environment
 
+**JRuby 1.7**
+
+        C:\tmp>cd shoes4
+        C:\tmp\shoes4>jruby -S gem install bundler
+        C:\tmp\shoes4>jruby -S bundle install
+
+**JRuby 1.6**
+
         C:\tmp>cd shoes4
         C:\tmp\shoes4>jruby --1.9 -S gem install json -v '1.6.1'
         C:\tmp\shoes4>jruby --1.9 -S gem install bundler
