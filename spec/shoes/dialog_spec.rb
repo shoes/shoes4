@@ -43,11 +43,25 @@ describe Shoes::Dialog do
     end
 
     it 'knows of #confirm' do
-      main_object.respond_to?(:confirm).should be true
+      main_object.should respond_to :confirm
     end
 
     it 'knows of #confirm?' do
-      main_object.respond_to?(:confirm?).should be true
+      main_object.should respond_to :confirm?
+    end
+  end
+
+  describe 'Shoes::App' do
+    before :each do
+      @app = Shoes::App.new
+    end
+
+    it 'knows about #alert' do
+      @app.should respond_to :alert
+    end
+
+    it 'knows about #confirm' do
+      @app.should respond_to :confirm
     end
   end
 
