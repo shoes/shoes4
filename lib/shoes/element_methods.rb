@@ -26,11 +26,6 @@ module Shoes
   #     @style - a hash of styles
   module ElementMethods
 
-    #def stack(opts={}, &blk)
-    #  tstack = Stack.new(opts)
-    #  layout(tstack, &blk)
-    #end
-    
     def color(c)
       Shoes::Color.create c
     end
