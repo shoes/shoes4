@@ -1,5 +1,4 @@
 require 'swt'
-require 'lib/shoes/swt/builtin_methods'
 
 module Shoes
   module Swt

@@ -8,8 +8,6 @@ module Shoes
       def confirm(msg = '')
         true
       end
-
-      alias_method :confirm?, :confirm
     end
   end
 end

@@ -1,6 +1,6 @@
 module Shoes
   class Dialog
-    def initialize(parent = nil)
+    def initialize
       @gui = Shoes.backend::Dialog.new
     end
 
@@ -11,7 +11,5 @@ module Shoes
     def confirm(msg = '')
       @gui.confirm msg
     end
-
-    alias_method :confirm?, :confirm
   end
 end

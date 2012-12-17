@@ -29,6 +29,7 @@ module Shoes
   class App
     include Shoes::ElementMethods
     include Shoes::Common::Margin
+    include Shoes::BuiltinMethods
 
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion

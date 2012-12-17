@@ -15,8 +15,6 @@ module Shoes
         confirmed? answer_id
       end
 
-      alias_method :confirm?, :confirm
-
       private
       def open_message_box(style, msg)
         shell = ::Swt::Widgets::Shell.new ::Swt.display

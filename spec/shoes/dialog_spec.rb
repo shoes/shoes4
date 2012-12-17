@@ -2,6 +2,8 @@ require 'spec/shoes/spec_helper'
 # NOTE: This spec is sadly circumventing the integration specs since we couldn't
 # figure out how to get rid of the alert - it stopped the running tests
 
+main_object = self
+
 describe Shoes::Dialog do
 
   before :each do
@@ -23,10 +25,6 @@ describe Shoes::Dialog do
     it 'responds to it' do
       @dialog.should respond_to :confirm
     end
-
-    it 'responds to the alias #confirm?' do
-      @dialog.should respond_to :confirm?
-    end
   end
 
   describe 'nothing monkey patched on to Object' do
@@ -36,6 +34,20 @@ describe Shoes::Dialog do
 
     it 'is not monkey patched on to object' do
       Object.new.should_not respond_to :confirm
+    end
+  end
+
+  describe 'the main object' do
+    it 'knows of #alert' do
+      main_object.should respond_to :alert
+    end
+
+    it 'knows of #confirm' do
+      main_object.respond_to?(:confirm).should be true
+    end
+
+    it 'knows of #confirm?' do
+      main_object.respond_to?(:confirm?).should be true
     end
   end
 

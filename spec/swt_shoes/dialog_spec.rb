@@ -47,11 +47,6 @@ describe Shoes::Swt::Dialog do
       @dialog.confirm TEXT
     end
 
-    it 'pops up a window containing a short message with the alias confirm?.' do
-      mock_message_box_expecting_message TEXT
-      @dialog.confirm? TEXT
-    end
-
     it 'is true when YES was pressed' do
       mock_message_box_returning ::Swt::SWT::YES
       subject.confirm.should be_true
@@ -70,9 +65,6 @@ describe Shoes::Swt::Dialog do
 
   describe 'on the main object' do
     describe '#alert' do
-      it 'is known' do
-        main_object.should respond_to :alert
-      end
 
       it 'returns nil' do
         mock_message_box
@@ -81,10 +73,6 @@ describe Shoes::Swt::Dialog do
     end
 
     describe '#confirm' do
-      it 'is known' do
-        main_object.respond_to?(:confirm).should be true
-      end
-
       it 'returns true when YES was clicked' do
         mock_message_box_returning ::Swt::SWT::YES
         main_object.confirm('1 + 1 = 2').should be_true
