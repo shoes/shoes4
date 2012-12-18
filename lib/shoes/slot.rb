@@ -18,11 +18,13 @@ module Shoes
         instance_variable_set "@#{v}", opts[v.to_sym]
       end
 
+      @left ||= 0
+      @top ||= 0
       @width ||= 1.0
       @height ||= 0
       @init_height = @height
       @blk = blk
-      
+
       set_margin
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)

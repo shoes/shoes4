@@ -88,20 +88,15 @@ module Shoes
     class ShellControlListener
       def initialize(app)
         @app = app
-        @times_run = 0
       end
 
       def controlResized(e)
         shell = e.widget
-        w, h = shell.getSize.x - @app.dx, shell.getSize.y - @app.dy
-
-        # will break background element if it's run the first two times
-        if @times_run > 1
-          (@app.dsl.top_slot.width, @app.dsl.top_slot.height = w, h)
-        else
-          @times_run += 1
-        end
+        client_area = shell.getClientArea
+        w, h = client_area.width, client_area.height
+        @app.dsl.top_slot.width, @app.dsl.top_slot.height = w, h
         @app.real.setSize w, h
+        @app.real.layout
       end
 
       def controlMoved(e)

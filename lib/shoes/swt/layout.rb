@@ -3,11 +3,14 @@ module Shoes::Swt
     attr_accessor :top_slot
 
     def layout *args
+      # Note: This is a Shoes::App
       app = @top_slot.app
       w, h = app.width, app.height
       scrollable_height = contents_alignment @top_slot
+      # Note: This is a Shoes::Swt::App
       app = app.gui
-      app.real.setSize w, [scrollable_height, h].max
+      size = app.real.compute_trim 0, 0, w, [scrollable_height, h].max
+      app.real.set_size(size.width, size.height)
       vb = app.shell.getVerticalBar
       vb.setVisible(scrollable_height > h)
       if scrollable_height > h
