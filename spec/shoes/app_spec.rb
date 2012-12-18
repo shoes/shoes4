@@ -30,10 +30,10 @@ describe Shoes::App do
 
     it "should set accessors from opts", :qt do
       input_blk = Proc.new {}
-      args = {:width => 1, :height => 2, :title => "Shoes::App Spec", :resizable => false}
+      args = {:width => 90, :height => 2, :title => "Shoes::App Spec", :resizable => false}
       Shoes::App.any_instance.stub(:flow)
       app = Shoes::App.new args, &input_blk
-      app.width.should == 1
+      app.width.should == 90
       app.height.should == 2
       app.app_title.should == "Shoes::App Spec"
       app.resizable.should be_false
