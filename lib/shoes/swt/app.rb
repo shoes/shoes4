@@ -44,6 +44,7 @@ module Shoes
         @shell.pack
         @shell.open
         @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
+        @shell.setSize(@shell.getSize.x - 16, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
 
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
