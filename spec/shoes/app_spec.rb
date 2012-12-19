@@ -8,40 +8,58 @@ describe Shoes::App do
   it_behaves_like "dsl container"
 
   describe "initialize" do
-    it "should set accessors from constructor args", :qt do
-      Shoes::App.any_instance.stub(:flow)
-      subject.should respond_to :width
-      subject.should respond_to :height
-      subject.should respond_to :title
-      subject.should respond_to :resizable
-      #subject.blk.should == input_blk
-    end
+    let(:input_blk) { Proc.new {} }
+    let(:app) { Shoes::App.new args, &input_blk }
 
-    it "should set default accessor values", :qt do
-      input_blk = Proc.new {}
-      args = {}
+    before do
       Shoes::App.any_instance.stub(:flow)
-      app = Shoes::App.new args, &input_blk
-      #app.width.should == 600
-      app.height.should == 500
-      app.app_title.should == 'Shoes 4'
-      app.resizable.should be_true
-    end
-
-    it "should set accessors from opts", :qt do
-      input_blk = Proc.new {}
-      args = {:width => 90, :height => 2, :title => "Shoes::App Spec", :resizable => false}
-      Shoes::App.any_instance.stub(:flow)
-      app = Shoes::App.new args, &input_blk
-      #app.width.should == 90
-      app.height.should == 2
-      app.app_title.should == "Shoes::App Spec"
-      app.resizable.should be_false
     end
 
     it "initializes style hash", :qt do
       style = Shoes::App.new.style
       style.class.should eq(Hash)
+    end
+
+    context "defaults" do
+      let(:args) { Hash.new }
+
+      it "sets width", :qt do
+        pending "Cross-platform SWT issue, see #171"
+        app.width.should == 600
+      end
+
+      it "sets height", :qt do
+        app.height.should == 500
+      end
+
+      it "sets title", :qt do
+        app.app_title.should == 'Shoes 4'
+      end
+
+      it "is resizable", :qt do
+        app.resizable.should be_true
+      end
+    end
+
+    context "from opts" do
+      let(:args) { {:width => 90, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
+
+      it "sets width", :qt do
+        pending "Cross-platform SWT issue, see #171"
+        app.width.should == 90
+      end
+
+      it "sets height", :qt do
+        app.height.should == 2
+      end
+
+      it "sets title", :qt do
+        app.app_title.should == "Shoes::App Spec"
+      end
+
+      it "sets resizable", :qt do
+        app.resizable.should be_false
+      end
     end
 
     context "when registering" do
