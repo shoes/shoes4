@@ -9,6 +9,8 @@ module Shoes
     class App
       include Common::Container
 
+      attr_reader :dsl, :real, :shell
+
       def initialize dsl
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
@@ -17,19 +19,14 @@ module Shoes
         ::Shoes::Swt.register self
         initialize_real()
 
-        @dx = @dy = 0
-
         vb = @shell.getVerticalBar
         vb.setIncrement 10
         vb.addSelectionListener SelectionListener.new(self, vb)
       end
 
-      attr_reader :dsl, :real, :shell, :dx, :dy
-
       def open
         @shell.pack
         @shell.open
-        @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
         @shell.setSize(@shell.getSize.x - 16, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
 
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
