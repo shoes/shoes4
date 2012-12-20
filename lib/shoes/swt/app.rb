@@ -13,36 +13,24 @@ module Shoes
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background])
-        @real = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style).tap do |shell|
-          shell.image = ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
-          shell.text = (@dsl.app_title)
-          shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
-          shell.background = @background.real
-        end
-        @shell = @real
-
+        initialize_shell()
         ::Shoes::Swt.register self
+        initialize_real()
 
-        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
-        @real.setSize(@dsl.width, @dsl.height)
-        @real.setLayout ShoesLayout.new
+        @dx = @dy = 0
 
-        @shell.addControlListener ShellControlListener.new(self)
-        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
-        @real.addMouseMoveListener MouseMoveListener.new(self)
-        @real.addMouseListener MouseListener.new(self)
-        
         vb = @shell.getVerticalBar
         vb.setIncrement 10
         vb.addSelectionListener SelectionListener.new(self, vb)
       end
 
-      attr_reader :dsl, :real, :shell
+      attr_reader :dsl, :real, :shell, :dx, :dy
 
       def open
         @shell.pack
         @shell.open
-        @shell.setSize(@shell.getSize.x - @shell.getVerticalBar.getSize.x, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
+        @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
+        @shell.setSize(@shell.getSize.x - 16, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
 
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
@@ -91,6 +79,25 @@ module Shoes
         style |= ::Swt::SWT::RESIZE if @dsl.opts[:resizable]
         style
       end
+
+      def initialize_shell
+        @shell = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
+        @shell.image = ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
+        @shell.text = (@dsl.app_title)
+        @shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
+        @shell.background = @background.real
+        @shell.addControlListener ShellControlListener.new(self)
+        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
+      end
+
+      def initialize_real
+        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
+        @real.setSize(@dsl.width, @dsl.height)
+        @real.setLayout ShoesLayout.new
+        @real.addMouseMoveListener MouseMoveListener.new(self)
+        @real.addMouseListener MouseListener.new(self)
+      end
+
     end
 
     class ShellControlListener
@@ -101,9 +108,9 @@ module Shoes
       def controlResized(e)
         shell = e.widget
         client_area = shell.getClientArea
-        w, h = client_area.width, client_area.height
-        @app.dsl.top_slot.width, @app.dsl.top_slot.height = w, h
-        @app.real.setSize w, h
+        width, height = client_area.width, client_area.height
+        @app.dsl.top_slot.width, @app.dsl.top_slot.height = width, height
+        @app.real.setSize width, height
         @app.real.layout
       end
 
