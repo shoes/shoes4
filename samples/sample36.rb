@@ -22,7 +22,7 @@ class Book
   end
 
   def incident num
-    #self.scroll_top = 0
+    self.scroll_top = 0
     num = num.to_i
     stack  margin_left: 200 do
       banner "Incident", margin: [0, 10, 0, 30]

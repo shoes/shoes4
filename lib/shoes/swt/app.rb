@@ -70,6 +70,15 @@ module Shoes
         @dsl.top_slot.contents_alignment @dsl.top_slot
       end
 
+      def scroll_top
+        @real.getLocation.y
+      end
+      
+      def scroll_top=(n)
+        @real.setLocation 0, -n
+        @shell.getVerticalBar.setSelection n
+      end
+
       private
       def main_window_on_close
         lambda { |event|

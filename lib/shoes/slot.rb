@@ -55,9 +55,13 @@ module Shoes
     end
 
     def positioning x, y, max
-      @init_width = @width if @width.is_a? Float
-      @width = (parent.width * @init_width).to_i if @init_width
-      @width -= margin_left + margin_right
+      @init_width ||= @width
+      if @init_width.is_a? Float
+        @width = (parent.width * @init_width).to_i
+        @width -= margin_left + margin_right
+      else
+        @width = @init_width - margin_left - margin_right
+      end
       if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
         @left, @top = x + parent.margin_left, max.top + parent.margin_top
         @height = contents_alignment self

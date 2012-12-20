@@ -455,5 +455,13 @@ EOS
       $urls.each{|k, v| clear{@location = url; v.call self, $1} if k =~ url}
     end
 
+    def scroll_top
+      @app.gui.scroll_top
+    end
+    
+    def scroll_top=(n)
+      @app.gui.scroll_top = n
+    end
+
   end
 end
