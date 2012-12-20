@@ -1,4 +1,5 @@
 require 'swt'
+java_import org.eclipse.swt.events.ShellListener
 
 module Shoes
   module Swt
@@ -27,7 +28,7 @@ module Shoes
       def open
         @shell.pack
         @shell.open
-        @shell.setSize(@shell.getSize.x - 16, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
+        attach_event_listeners
 
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
@@ -83,14 +84,25 @@ module Shoes
         @shell.text = (@dsl.app_title)
         @shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
         @shell.background = @background.real
-        @shell.addControlListener ShellControlListener.new(self)
-        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
       end
 
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
         @real.setSize(@dsl.width, @dsl.height)
         @real.setLayout ShoesLayout.new
+      end
+
+      def attach_event_listeners
+        attach_shell_event_listeners
+        attach_real_event_listeners
+      end
+
+      def attach_shell_event_listeners
+        @shell.addControlListener ShellControlListener.new(self)
+        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
+      end
+
+      def attach_real_event_listeners
         @real.addMouseMoveListener MouseMoveListener.new(self)
         @real.addMouseListener MouseListener.new(self)
       end
@@ -103,12 +115,11 @@ module Shoes
       end
 
       def controlResized(e)
-        shell = e.widget
-        client_area = shell.getClientArea
-        width, height = client_area.width, client_area.height
-        @app.dsl.top_slot.width, @app.dsl.top_slot.height = width, height
-        @app.real.setSize width, height
-        @app.real.layout
+        unless $lock
+          shell = e.widget
+          @app.dsl.top_slot.width   = shell.getClientArea().width
+          @app.dsl.top_slot.height  = shell.getClientArea().height
+        end
       end
 
       def controlMoved(e)
@@ -154,6 +165,7 @@ module Shoes
         end
       end
     end
+
   end
 end
 
