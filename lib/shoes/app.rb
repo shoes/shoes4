@@ -31,6 +31,12 @@ module Shoes
     include Shoes::Common::Margin
     include Shoes::BuiltinMethods
 
+    DEFAULT_OPTIONS = { :width      => 600,
+                        :height     => 500,
+                        :title      => "Shoes 4",
+                        :resizable  => true,
+                        :background => Shoes::COLORS[:white] }
+
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion
     attr_accessor :elements, :current_slot
@@ -41,7 +47,7 @@ module Shoes
     attr_writer   :width, :height
 
     def initialize(opts={}, &blk)
-      opts = default_options.merge(opts)
+      opts = DEFAULT_OPTIONS.merge(opts)
 
       self.width      = opts[:width]
       self.height     = opts[:height]
@@ -96,21 +102,12 @@ module Shoes
       @top_slot.add_child child
     end
 
-    def default_options
-      {
-        :width  => 600,
-        :height => 500,
-        :title  => "Shoes 4",
-        :resizable  => true,
-        :background => white
-      }
-    end
-
     def default_styles
       {
         :stroke      => Shoes::COLORS[:black],
         :strokewidth => 1
       }
     end
+
   end
 end
