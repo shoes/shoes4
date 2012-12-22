@@ -115,11 +115,9 @@ module Shoes
       end
 
       def controlResized(e)
-        unless $lock
-          shell = e.widget
-          @app.dsl.top_slot.width   = shell.getClientArea().width
-          @app.dsl.top_slot.height  = shell.getClientArea().height
-        end
+        shell = e.widget
+        @app.dsl.top_slot.width   = shell.getClientArea().width
+        @app.dsl.top_slot.height  = shell.getClientArea().height
       end
 
       def controlMoved(e)
