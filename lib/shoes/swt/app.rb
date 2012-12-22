@@ -1,5 +1,4 @@
 require 'swt'
-java_import org.eclipse.swt.events.ShellListener
 
 module Shoes
   module Swt
@@ -17,16 +16,26 @@ module Shoes
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background])
         initialize_shell()
-        ::Shoes::Swt.register self
         initialize_real()
+        ::Shoes::Swt.register self
+
+        puts "what clienat area width should be: " + @dsl.width.to_s
+        @shell.setBounds(@shell.computeTrim(100, 100, @dsl.width, @dsl.height))
+        puts "What client area width actually is " + @shell.getClientArea.width.to_s
+        @shell.pack
+        puts "What client area width actually is " + @shell.getClientArea.width.to_s
 
         vb = @shell.getVerticalBar
-        vb.setIncrement 10
-        vb.addSelectionListener SelectionListener.new(self, vb)
+        #vb.setIncrement 10
+        #vb.addSelectionListener SelectionListener.new(self, vb)
+        #puts 'vb size x: ' + vb.getSize.x.to_s
       end
 
       def open
+        @real.layout
+        puts 'client area width: ' + @shell.getClientArea.width.to_s
         @shell.pack
+        puts 'client area width: ' + @shell.getClientArea.width.to_s
         @shell.open
         attach_event_listeners
 
@@ -73,7 +82,7 @@ module Shoes
       end
 
       def main_window_style
-        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX | ::Swt::SWT::V_SCROLL
+        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX #| ::Swt::SWT::V_SCROLL
         style |= ::Swt::SWT::RESIZE if @dsl.opts[:resizable]
         style
       end
@@ -114,10 +123,18 @@ module Shoes
         @app = app
       end
 
-      def controlResized(e)
-        shell = e.widget
-        @app.dsl.top_slot.width   = shell.getClientArea().width
-        @app.dsl.top_slot.height  = shell.getClientArea().height
+      def controlResized(event)
+        puts 'le me'
+        shell = event.widget
+        puts '!!!!!' + shell.getSize.x.to_s
+        width = shell.getClientArea().width
+        height = shell.getClientArea().height
+        puts width
+        puts height
+        @app.dsl.top_slot.width   = width
+        @app.dsl.top_slot.height  = height
+        #@app.real.setSize width, height
+        @app.real.layout
       end
 
       def controlMoved(e)
