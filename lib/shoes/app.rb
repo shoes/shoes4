@@ -83,7 +83,7 @@ module Shoes
     
     def clear &blk
       super
-      @app.unslotted_elements.each &:clear
+      @app.unslotted_elements.each &:remove
       @app.unslotted_elements.clear
 
       @contents << @top_slot
