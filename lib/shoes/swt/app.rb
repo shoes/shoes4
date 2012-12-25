@@ -27,7 +27,6 @@ module Shoes
         @real.setSize(@dsl.width, @dsl.height)
         @real.setLayout ShoesLayout.new
 
-        @dx = @dy = 0
         @shell.addControlListener ShellControlListener.new(self)
         @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
         @real.addMouseMoveListener MouseMoveListener.new(self)
@@ -38,13 +37,12 @@ module Shoes
         vb.addSelectionListener SelectionListener.new(self, vb)
       end
 
-      attr_reader :dsl, :real, :shell, :dx, :dy
+      attr_reader :dsl, :real, :shell
 
       def open
         @shell.pack
         @shell.open
-        @dx, @dy = @shell.getSize.x - @dsl.width, @shell.getSize.y - @dsl.height
-        @shell.setSize(@shell.getSize.x - 16, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
+        @shell.setSize(@shell.getSize.x - @shell.getVerticalBar.getSize.x, @shell.getSize.y) unless @shell.getVerticalBar.getVisible
 
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
