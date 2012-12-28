@@ -8,7 +8,7 @@ You see, the trivial Shoes program can be just one line:
 
 {{{
  #!ruby
- Shoes.app { button("Click me!") { alert("Good job.") } }
+ Shoes.app{button("Click me!"){alert("Good job.")}}
 }}}
 
 Shoes programs are written in a language called Ruby.  When Shoes is handed
