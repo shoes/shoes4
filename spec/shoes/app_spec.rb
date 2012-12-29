@@ -176,4 +176,14 @@ describe "App registry" do
       Shoes.main_app.should be(app_1)
     end
   end
+
+  describe "main window style" do
+    it "creates the bitmask as it should" do
+      not_resizable_app = Shoes::App.new resizable: false
+      resizable_app = Shoes::App.new resizable: true
+
+      not_resizable_app.gui.send(:main_window_style).should eq(Shoes::Swt::App::Swt::SWT::CLOSE)
+      resizable_app.gui.send(:main_window_style).should eq(Shoes::Swt::App::Swt::SWT::CLOSE | Shoes::Swt::App::Swt::SWT::RESIZE )
+    end
+  end
 end
