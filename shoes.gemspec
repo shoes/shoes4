@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.add_dependency "plist"
   s.add_dependency "warbler"
 
+  s.add_dependency "hpricot" # For manual
+
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "pry"
