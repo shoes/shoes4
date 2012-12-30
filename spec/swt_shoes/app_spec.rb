@@ -1,11 +1,18 @@
 require "swt_shoes/spec_helper"
 
 describe Shoes::Swt::App do
-  let(:opts) { {:background => Shoes::COLORS[:salmon], :resizable => false} }
-  let(:app) { double('app', :opts => opts, :width => 0, :height => 0, :app_title => 'mock') }
+  let(:opts) { {:background => Shoes::COLORS[:salmon], :resizable => true} }
+  let(:app) { double('app', :opts => opts,
+                            :width => 0,
+                            :height => 0,
+                            :app_title => 'mock') }
 
-  let(:opts_resizable) { {:background => Shoes::COLORS[:salmon], :resizable => true} }
-  let(:app_resizable) { double('app', :opts => opts_resizable, :width => 0, :height => 0, :app_title => 'mock') }
+  let(:opts_unresizable) { {:background => Shoes::COLORS[:salmon],
+                            :resizable => false} }
+  let(:app_unresizable) { double('app', :opts => opts_unresizable,
+                                        :width => 0,
+                                        :height => 0,
+                                        :app_title => 'mock') }
 
   subject { Shoes::Swt::App.new(app) }
 
@@ -32,19 +39,19 @@ describe Shoes::Swt::App do
   end
 
   context "main window style" do
-    base_bitmask =
-        Shoes::Swt::App::Swt::SWT::CLOSE |
-        Shoes::Swt::App::Swt::SWT::MIN |
-        Shoes::Swt::App::Swt::SWT::MAX |
-        Shoes::Swt::App::Swt::SWT::V_SCROLL
+    BASE_BITMASK =  Swt::SWT::CLOSE   |
+                    Swt::SWT::MIN     |
+                    Swt::SWT::MAX     |
+                    Swt::SWT::RESIZE  |
+                    Swt::SWT::V_SCROLL
 
     it "should return a bitmask that represents not being resizable" do
-      subject.send(:main_window_style).should eq(base_bitmask)
+      subject.send(:main_window_style).should eq(BASE_BITMASK)
     end
 
     it "should return a bitmask that represents being resizable" do
-      resizable = Shoes::Swt::App.new app_resizable
-      resizable.send(:main_window_style).should eq(base_bitmask | Shoes::Swt::App::Swt::SWT::RESIZE )
+      resizable = Shoes::Swt::App.new app_unresizable
+      resizable.send(:main_window_style).should eq(BASE_BITMASK & ~Swt::SWT::RESIZE )
     end
   end
 
