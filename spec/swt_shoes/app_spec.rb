@@ -45,11 +45,11 @@ describe Shoes::Swt::App do
                     Swt::SWT::RESIZE  |
                     Swt::SWT::V_SCROLL
 
-    it "should return a bitmask that represents not being resizable" do
+    it "should return a bitmask that represents being resizable" do
       subject.send(:main_window_style).should eq(BASE_BITMASK)
     end
 
-    it "should return a bitmask that represents being resizable" do
+    it "should return a bitmask that represents not being resizable" do
       resizable = Shoes::Swt::App.new app_unresizable
       resizable.send(:main_window_style).should eq(BASE_BITMASK & ~Swt::SWT::RESIZE )
     end
