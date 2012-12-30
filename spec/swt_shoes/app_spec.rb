@@ -32,13 +32,17 @@ describe Shoes::Swt::App do
   end
 
   context "main window style" do
-    it "creates the bitmask as it should" do
-      base_bitmask =
-          Shoes::Swt::App::Swt::SWT::CLOSE |
-          Shoes::Swt::App::Swt::SWT::MIN |
-          Shoes::Swt::App::Swt::SWT::MAX |
-          Shoes::Swt::App::Swt::SWT::V_SCROLL
+    base_bitmask =
+        Shoes::Swt::App::Swt::SWT::CLOSE |
+        Shoes::Swt::App::Swt::SWT::MIN |
+        Shoes::Swt::App::Swt::SWT::MAX |
+        Shoes::Swt::App::Swt::SWT::V_SCROLL
+
+    it "should return a bitmask that represents not being resizable" do
       subject.send(:main_window_style).should eq(base_bitmask)
+    end
+
+    it "should return a bitmask that represents being resizable" do
       resizable = Shoes::Swt::App.new app_resizable
       resizable.send(:main_window_style).should eq(base_bitmask | Shoes::Swt::App::Swt::SWT::RESIZE )
     end
