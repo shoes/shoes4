@@ -9,7 +9,7 @@ module Shoes
     class App
       include Common::Container
 
-      attr_reader :dsl, :real, :shell
+      attr_reader :dsl, :real, :shell, :width_error
 
       def initialize dsl
         @dsl = dsl
@@ -19,24 +19,16 @@ module Shoes
         initialize_real()
         ::Shoes::Swt.register self
 
-        puts "what clienat area width should be: " + @dsl.width.to_s
-        @shell.setBounds(@shell.computeTrim(100, 100, @dsl.width, @dsl.height))
-        puts "What client area width actually is " + @shell.getClientArea.width.to_s
-        @shell.pack
-        puts "What client area width actually is " + @shell.getClientArea.width.to_s
-
         vb = @shell.getVerticalBar
-        #vb.setIncrement 10
-        #vb.addSelectionListener SelectionListener.new(self, vb)
-        #puts 'vb size x: ' + vb.getSize.x.to_s
+        vb.setIncrement 10
+        vb.addSelectionListener SelectionListener.new(self, vb)
       end
 
       def open
         @real.layout
-        puts 'client area width: ' + @shell.getClientArea.width.to_s
         @shell.pack
-        puts 'client area width: ' + @shell.getClientArea.width.to_s
         @shell.open
+        compute_width_error
         attach_event_listeners
 
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
@@ -82,9 +74,13 @@ module Shoes
       end
 
       def main_window_style
-        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX #| ::Swt::SWT::V_SCROLL
+        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX | ::Swt::SWT::V_SCROLL
         style |= ::Swt::SWT::RESIZE if @dsl.opts[:resizable]
         style
+      end
+
+      def compute_width_error
+        @width_error = @dsl.top_slot.width - @shell.client_area.width
       end
 
       def initialize_shell
@@ -124,16 +120,12 @@ module Shoes
       end
 
       def controlResized(event)
-        puts 'le me'
         shell = event.widget
-        puts '!!!!!' + shell.getSize.x.to_s
-        width = shell.getClientArea().width
+        width = shell.getClientArea().width + @app.width_error
         height = shell.getClientArea().height
-        puts width
-        puts height
         @app.dsl.top_slot.width   = width
         @app.dsl.top_slot.height  = height
-        #@app.real.setSize width, height
+        @app.real.setSize width, height
         @app.real.layout
       end
 
