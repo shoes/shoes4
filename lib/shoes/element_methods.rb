@@ -123,11 +123,6 @@ module Shoes
       Shoes::Button.new @current_slot, text, opts, blk
     end
 
-    def para(text, opts={})
-      opts.merge! :app => @app
-      Shoes::Para.new @current_slot, text, 12, opts
-    end
-
     # Creates an animation that runs the given block of code.
     #
     # @overload animate &blk
