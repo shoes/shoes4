@@ -46,8 +46,8 @@ module Shoes
       @gui.redraw
     end
 
-    def replace(value)
-      self.text = value
+    def replace(value, *args)
+      self.text = value + (args.empty? ? '' : "" + args.join("") )
     end
 
     def to_s
