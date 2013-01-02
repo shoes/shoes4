@@ -24,16 +24,15 @@ describe Shoes::App do
       let(:args) { Hash.new }
 
       it "sets width", :qt do
-        pending "Cross-platform SWT issue, see #171"
-        app.width.should == 600
+        app.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
 
       it "sets height", :qt do
-        app.height.should == 500
+        app.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
 
       it "sets title", :qt do
-        app.app_title.should == 'Shoes 4'
+        app.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
       end
 
       it "is resizable", :qt do
@@ -45,16 +44,15 @@ describe Shoes::App do
       let(:args) { {:width => 90, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
 
       it "sets width", :qt do
-        pending "Cross-platform SWT issue, see #171"
-        app.width.should == 90
+        app.width.should == args[:width]
       end
 
       it "sets height", :qt do
-        app.height.should == 2
+        app.height.should == args[:height]
       end
 
       it "sets title", :qt do
-        app.app_title.should == "Shoes::App Spec"
+        app.app_title.should == args[:title]
       end
 
       it "sets resizable", :qt do
