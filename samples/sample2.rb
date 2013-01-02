@@ -1,4 +1,4 @@
-Shoes.app title: 'Shoes 4 Logo Icon!', width: 310, height: 420 do
+Shoes.app title: 'Shoes 4 Logo Icon!', width: 400, height: 420 do
   stack do
     path = 'static/shoes-icon.png'
     image path
