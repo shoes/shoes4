@@ -47,7 +47,12 @@ module Shoes
     end
 
     def replace(*args)
-      self.text = args.join
+      opts = args.last.class == Hash ? args.pop : {}
+      styles = get_styles args
+      opts[:args_styles] = styles unless styles.empty?
+      self.text = args.map(&:to_s).join
+      # forgive me for my sins.
+      gui.instance_eval { @painter.instance_eval { @opts[:text_styles] = styles unless styles.empty? }}
     end
 
     def to_s
@@ -88,6 +93,22 @@ module Shoes
       @font_size = fsize.first.to_i unless fsize.empty?
 
       # TODO: Style options
+    end
+
+    # this is copy-pasta from lib/shoes/element_methods
+    # we need something equivalent accessible from here.
+    # maybe the other version already is, but if so, i didn't
+    # immediately see how to access it.
+    def get_styles msg, styles=[], spoint=0
+      msg.each do |e|
+        if e.is_a? Shoes::Text
+          epoint = spoint + e.to_s.length - 1
+          styles << [e, spoint..epoint]
+          get_styles e.str, styles, spoint
+        end
+        spoint += e.to_s.length
+      end
+      styles
     end
   end
 
