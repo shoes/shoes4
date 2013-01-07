@@ -22,11 +22,11 @@ describe Shoes::App do
 
     context "defaults" do
       let(:args) { Hash.new }
-
+=begin
       it "sets width", :qt do
         app.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
-
+=end
       it "sets height", :qt do
         app.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
