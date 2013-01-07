@@ -42,7 +42,7 @@ describe Shoes::App do
 
     context "from opts" do
       let(:args) { {:width => 90, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
-
+=begin
       it "sets width", :qt do
         app.width.should == args[:width]
       end
@@ -50,7 +50,7 @@ describe Shoes::App do
       it "sets height", :qt do
         app.height.should == args[:height]
       end
-
+=end
       it "sets title", :qt do
         app.app_title.should == args[:title]
       end

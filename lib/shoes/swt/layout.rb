@@ -11,17 +11,17 @@ module Shoes::Swt
       app = app.gui
       size = app.real.compute_trim 0, 0, w, [scrollable_height, h].max
       app.real.set_size(size.width, size.height)
-      #vb = app.shell.getVerticalBar
-      #vb.setVisible(scrollable_height > h)
-      #if scrollable_height > h
-      #  vb.setThumb h * h / scrollable_height
-      #  vb.setMaximum scrollable_height - h + vb.getThumb
-      #  vb.setIncrement h / 2
-      #else
-      #  location = app.real.getLocation
-      #  location.y = 0
-      #  app.real.setLocation location
-      #end
+      vb = app.shell.getVerticalBar
+      vb.setVisible(scrollable_height > h)
+      if scrollable_height > h
+        vb.setThumb h * h / scrollable_height
+        vb.setMaximum scrollable_height - h + vb.getThumb
+        vb.setIncrement h / 2
+      else
+        location = app.real.getLocation
+        location.y = 0
+        app.real.setLocation location
+      end
     end
 
     def contents_alignment slot
