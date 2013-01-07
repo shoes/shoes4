@@ -22,11 +22,12 @@ describe Shoes::App do
 
     context "defaults" do
       let(:args) { Hash.new }
-=begin
+
       it "sets width", :qt do
+        pending "a fix for the width issue that works on other platforms than just Win7"
         app.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
-=end
+
       it "sets height", :qt do
         app.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
@@ -42,15 +43,17 @@ describe Shoes::App do
 
     context "from opts" do
       let(:args) { {:width => 90, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
-=begin
-      it "sets width", :qt do
-        app.width.should == args[:width]
+
+      pending "a fix for the width issue that works on other platforms than just Win7" do
+        it "sets width", :qt do
+          app.width.should == args[:width]
+        end
+
+        it "sets height", :qt do
+          app.height.should == args[:height]
+        end
       end
 
-      it "sets height", :qt do
-        app.height.should == args[:height]
-      end
-=end
       it "sets title", :qt do
         app.app_title.should == args[:title]
       end
@@ -127,7 +130,7 @@ describe Shoes::App do
   end
 
   describe "#quit" do
-    it "quits" do 
+    it "quits" do
       subject.quit
     end
   end
