@@ -162,7 +162,7 @@ module Shoes
         @app, @vb = app, vb
       end
       def widgetSelected e
-        unless e.detail == ::Swt::SWT::DRAG
+        if @app.shell.getVerticalBar.getVisible and e.detail != ::Swt::SWT::DRAG
           location = @app.real.getLocation
           location.y = -@vb.getSelection
           @app.real.setLocation location
