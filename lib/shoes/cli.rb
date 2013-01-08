@@ -6,15 +6,15 @@ require 'shoes/swt/package/app'
 
 module Shoes
   class CLI
-    def parse(args)
-      options = Struct.new(:packages).new
-      options.packages = []
+    def initialize
+      @packages = []
+    end
 
+    def parse!(args)
       opts = OptionParser.new do |opts|
         opts.program_name = 'shoes'
         opts.banner = <<-EOS
-  usage: #{opts.program_name} file
-     or: #{opts.program_name} [-p package] file
+Usage: #{opts.program_name} [-h] [-p package] file
         EOS
         opts.separator ''
         opts.separator 'Options:'
@@ -23,7 +23,7 @@ module Shoes
           unless package =~ /^(swt):(app|jar)$/
             abort("#{opts.program_name}: Can't package as '#{package}'. See '#{opts.program_name} --help'")
           end
-          options.packages << Package.new(package)
+          @packages << Package.new(package)
         end
         opts.separator "\nPackage types:"
         opts.separator package_types(opts)
@@ -32,7 +32,7 @@ module Shoes
       end
 
       opts.parse!(args)
-      options
+      opts
     end
 
     def package_types(opts)
@@ -53,13 +53,13 @@ module Shoes
       EOS
     end
 
-    def package(path, packages = [])
+    def package(path)
       begin
         config = Shoes::Package::Configuration.load(path)
       rescue Errno::ENOENT => e
         abort "shoes: #{e.message}"
       end
-      packages.each do |p|
+      @packages.each do |p|
         puts "Packaging #{p.backend}:#{p.wrapper}..."
         packager = Shoes::Package.new(p.backend, p.wrapper, config)
         packager.package
@@ -76,8 +76,13 @@ module Shoes
     end
 
     def run(args)
-      options = parse(args)
-      package(args.shift, options.packages) unless options.packages.empty?
+      opts = parse!(args)
+      if args.empty?
+        puts opts.banner
+        puts "Try '#{opts.program_name} --help' for more information"
+        exit(0)
+      end
+      package(args.shift) unless @packages.empty?
       execute_app(args.first) unless args.empty?
     end
 
