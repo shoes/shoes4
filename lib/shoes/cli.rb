@@ -6,15 +6,15 @@ require 'shoes/swt/package/app'
 
 module Shoes
   class CLI
-    def parse(args)
-      options = Struct.new(:packages).new
-      options.packages = []
+    def initialize
+      @packages = []
+    end
 
+    def parse!(args)
       opts = OptionParser.new do |opts|
         opts.program_name = 'shoes'
         opts.banner = <<-EOS
-  usage: #{opts.program_name} file
-     or: #{opts.program_name} [-p package] file
+Usage: #{opts.program_name} [-h] [-p package] file
         EOS
         opts.separator ''
         opts.separator 'Options:'
@@ -23,7 +23,7 @@ module Shoes
           unless package =~ /^(swt):(app|jar)$/
             abort("#{opts.program_name}: Can't package as '#{package}'. See '#{opts.program_name} --help'")
           end
-          options.packages << Package.new(package)
+          @packages << Package.new(package)
         end
         opts.separator "\nPackage types:"
         opts.separator package_types(opts)
@@ -32,7 +32,7 @@ module Shoes
       end
 
       opts.parse!(args)
-      options
+      opts
     end
 
     def package_types(opts)
@@ -53,36 +53,36 @@ module Shoes
       EOS
     end
 
-    def package(path, packages = [])
+    def package(path)
       begin
         config = Shoes::Package::Configuration.load(path)
       rescue Errno::ENOENT => e
         abort "shoes: #{e.message}"
       end
-      packages.each do |p|
+      @packages.each do |p|
         puts "Packaging #{p.backend}:#{p.wrapper}..."
         packager = Shoes::Package.new(p.backend, p.wrapper, config)
         packager.package
       end
     end
 
-    # Execute a shoes app. Spawns a new process if it's necessary to
-    # add flags to the running VM, as when using the Swt backend on OS X.
+    # Execute a shoes app.
     #
     # @param [String] app the location of the app to run
     def execute_app(app)
-      if RbConfig::CONFIG['host_os'] =~ /darwin/
-        execute_in_new_process(app) 
-      else
-        $LOAD_PATH.unshift(Dir.pwd)
-        Shoes.configuration.backend = :swt
-        load app
-      end
+      $LOAD_PATH.unshift(Dir.pwd)
+      Shoes.configuration.backend = :swt
+      load app
     end
 
     def run(args)
-      options = parse(args)
-      package(args.shift, options.packages) unless options.packages.empty?
+      opts = parse!(args)
+      if args.empty?
+        puts opts.banner
+        puts "Try '#{opts.program_name} --help' for more information"
+        exit(0)
+      end
+      package(args.shift) unless @packages.empty?
       execute_app(args.first) unless args.empty?
     end
 
@@ -93,13 +93,6 @@ module Shoes
       end
 
       attr_reader :backend, :wrapper
-    end
-
-    private
-    def execute_in_new_process(app)
-      swt = '-J-XstartOnFirstThread '
-      command = "jruby --1.9 #{swt}-rrubygems -Ilib -I#{Dir.pwd} -rshoes -rshoes/configuration -e 'Shoes.configuration.backend = :swt' -e 'load \"#{app}\"'"
-      exec(command)
     end
   end
 end

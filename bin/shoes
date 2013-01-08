@@ -1,5 +1,22 @@
-#!/usr/bin/env ruby 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'shoes/cli'
+#!/usr/bin/env sh
+case "${MACHTYPE:-}" in
+  (*darwin*)
+    swt_opt="-J-XstartOnFirstThread"
+    ;;
+esac
+include="lib"
 
-Shoes::CLI.new.run(ARGV)
+# Rewrite args as a ruby array of strings
+args="["
+while [ $# -gt 0 ]; do
+  args=$args\"${1}\"
+  shift
+  if [ $# -gt 0 ]; then
+    args=$args", "
+  fi
+done
+args=$args"]"
+
+cmd="jruby --1.9 ${swt_opt:-} -rrubygems -I$include -rshoes/cli -e 'Shoes::CLI.new.run("$args")'"
+eval $cmd
+
