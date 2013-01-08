@@ -66,18 +66,13 @@ module Shoes
       end
     end
 
-    # Execute a shoes app. Spawns a new process if it's necessary to
-    # add flags to the running VM, as when using the Swt backend on OS X.
+    # Execute a shoes app.
     #
     # @param [String] app the location of the app to run
     def execute_app(app)
-      if RbConfig::CONFIG['host_os'] =~ /darwin/
-        execute_in_new_process(app) 
-      else
-        $LOAD_PATH.unshift(Dir.pwd)
-        Shoes.configuration.backend = :swt
-        load app
-      end
+      $LOAD_PATH.unshift(Dir.pwd)
+      Shoes.configuration.backend = :swt
+      load app
     end
 
     def run(args)
@@ -93,13 +88,6 @@ module Shoes
       end
 
       attr_reader :backend, :wrapper
-    end
-
-    private
-    def execute_in_new_process(app)
-      swt = '-J-XstartOnFirstThread '
-      command = "jruby --1.9 #{swt}-rrubygems -Ilib -I#{Dir.pwd} -rshoes -rshoes/configuration -e 'Shoes.configuration.backend = :swt' -e 'load \"#{app}\"'"
-      exec(command)
     end
   end
 end
