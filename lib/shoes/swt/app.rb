@@ -41,6 +41,14 @@ module Shoes
         self
       end
 
+      def width
+        @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+      end
+
+      def height
+        @shell.client_area.height
+      end
+
       def disposed?
         @shell.disposed?
       end
@@ -87,7 +95,7 @@ module Shoes
 
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
-        @real.setSize(@dsl.width, @dsl.height)
+        @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout ShoesLayout.new
       end
 
