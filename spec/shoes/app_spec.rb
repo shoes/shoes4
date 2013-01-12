@@ -24,12 +24,10 @@ describe Shoes::App do
       let(:args) { Hash.new }
 
       it "sets width", :qt do
-        pending 'Need to modify Shoes::Mock::App'
         app.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
 
       it "sets height", :qt do
-        pending 'Need to modify Shoes::Mock::App'
         app.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
 
@@ -46,12 +44,10 @@ describe Shoes::App do
       let(:args) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
 
       it "sets width", :qt do
-	pending 'Need to modify Shoes::Mock::App'
         app.width.should == args[:width]
       end
 
       it "sets height", :qt do
-        pending 'Need to modify Shoes::Mock::App'
         app.height.should == args[:height]
       end
 

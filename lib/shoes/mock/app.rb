@@ -1,10 +1,21 @@
 module Shoes
   module Mock
     class App
-      def initialize(*opts)
+      def initialize(dsl)
+        @dsl = dsl
       end
 
-      def open 
+      # suboptimal but good enough fo now... calling the DSL lets the methods
+      # play ping pong calling each other... will think of something.
+      def width
+        @dsl.opts[:width]
+      end
+
+      def height
+        @dsl.opts[:height]
+      end
+
+      def open
       end
 
       def quit
