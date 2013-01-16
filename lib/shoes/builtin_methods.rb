@@ -12,6 +12,22 @@ module Shoes
     end
 
     alias_method :confirm?, :confirm
+    
+    def ask_open_file
+      Shoes::Dialog.new.dialog_chooser 'Open File...'
+    end
+  
+    def ask_save_file
+      Shoes::Dialog.new.dialog_chooser 'Save File...'
+    end
+
+    def ask_open_folder
+      Shoes::Dialog.new.dialog_chooser 'Open Folder...', :folder
+    end
+
+    def ask_save_folder
+      Shoes::Dialog.new.dialog_chooser 'Save Folder...', :folder
+    end
   end
 end
 

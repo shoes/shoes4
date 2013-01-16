@@ -63,6 +63,12 @@ describe Shoes::Swt::Dialog do
     end
   end
 
+  describe 'dialog_chooser' do
+    it 'responds to it' do
+      @dialog.should respond_to :dialog_chooser
+    end
+  end
+
   describe 'on the main object' do
     describe '#alert' do
 

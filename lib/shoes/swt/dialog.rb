@@ -15,6 +15,14 @@ module Shoes
         confirmed? answer_id
       end
 
+      def dialog_chooser title, folder=false
+        style = ::Swt::SWT::OPEN
+        shell = ::Swt::Widgets::Shell.new Shoes.display
+        fd = folder ? ::Swt::Widgets::DirectoryDialog.new(shell, style) : ::Swt::Widgets::FileDialog.new(shell, style)
+        fd.setText title
+        fd.open
+      end
+
       private
       def open_message_box(style, msg)
         shell = ::Swt::Widgets::Shell.new ::Swt.display

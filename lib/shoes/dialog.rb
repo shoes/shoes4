@@ -11,5 +11,9 @@ module Shoes
     def confirm(msg = '')
       @gui.confirm msg
     end
+    
+    def dialog_chooser title, folder=false
+      @gui.dialog_chooser title, folder
+    end
   end
 end
