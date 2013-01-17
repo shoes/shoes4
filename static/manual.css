@@ -30,6 +30,13 @@ a:hover {
   background: #eee;
   margin-bottom: 80px;
 }
+#manual2 {
+  float: right;
+  padding: 20px;
+  border: solid 1px #BBB;
+  background: #eee;
+  margin-bottom: 80px;
+}
 #manual li {
   margin-bottom: 8px;
 }
@@ -54,12 +61,12 @@ h4 {
   margin: 0 auto;
   padding: 10px;
 }
-div.method {
+div.divmethod {
   background: #333;
   padding: 4px;
   color: #CCC;
 }
-div.method a {
+div.divmethod a {
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -109,6 +116,16 @@ div.color {
 }
 div.color h3, div.color p {
   margin: 4px;
+}
+div.sample {
+  width: 13%;
+  float: left;
+  text-align: center;
+  padding: 6px;
+  font-size: 50%;
+}
+div.sample h3, div.sample p {
+  margin: 0px;
 }
 p.next {
   clear: both;

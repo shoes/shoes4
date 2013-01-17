@@ -89,6 +89,7 @@ class Manual
   end
 
   def show_toc
+    s = self
     stack(height: 120){}
     flow width: 0.2, margin_left: 10 do
       flow(margin_right: 20) do
@@ -97,7 +98,7 @@ class Manual
       end
       stack(height: 10){}
       para *TOC
-      para link(fg 'to_html', green){html_manual}
+      para link(fg 'to_html', green){s.html_manual}
     end
   end
 
@@ -272,14 +273,14 @@ class Manual
     return unless dir
     FileUtils.mkdir_p File.join(dir, 'static')
     FileUtils.mkdir_p File.join(dir, 'snapshots')
-    %w[rshoes-icon.png purple_shoes-icon.png shoes-manual-apps.png manual.css code_highlighter.js code_highlighter_ruby.js].
+    %w[shoes-icon.png shoes-manual-apps.png manual.css code_highlighter.js code_highlighter_ruby.js].
       each{|x| FileUtils.cp "#{DIR}/static/#{x}", "#{dir}/static"}
     Dir[File.join DIR, 'static/man-*.png'].each{|x| FileUtils.cp x, "#{dir}/static"}
     Dir[File.join DIR, 'snapshots/sample*.png'].each{|x| FileUtils.cp x, "#{dir}/snapshots"}
 
     TOC_LIST.length.times do |n|
       num, title, desc, methods = get_title_and_desc n
-      open File.join(dir, "#{TOC_LIST[n][0]}.html"), 'w' do |f|
+      open File.join(dir, "#{TOC_LIST[n][0]}.html"), 'wb:utf-8' do |f|
         f.puts mk_html(title, desc, methods, TOC_LIST[n+1], get_title_and_desc(n+1), mk_sidebar_list(num))
       end
     end
@@ -301,7 +302,7 @@ class Manual
         body do
           div.main! do
             div.manual! do
-              h2 "The Purple Shoes Manual #{VERSION}"
+              h2 "The Shoes 4 Manual #{VERSION}"
               h1 title
 
               paras = man.mk_paras desc
@@ -320,7 +321,7 @@ class Manual
                     when /\A\{COLORS\}/
                       COLORS.each do |color, v|
                         f = v.dark? ? "white" : "black"
-                        div.color(style: "background: #{color}; color: #{f}"){h3 color.to_s; p("rgb(%d, %d, %d)" % v)}
+                        div.color(style: "background: #{color}; color: #{f}"){h3 color.to_s; p("rgb(%d, %d, %d)" % [v.red, v.green, v.blue])}
                       end
                     when /\A\{SAMPLES\}/
                       man.mk_sample_names.each do |name|
@@ -360,7 +361,7 @@ class Manual
               p.next{text "Next: "; a next_title[1], href: "#{next_file[0]}.html"} if next_title
             end
             div.sidebar do
-              img src: "static/purple_shoes-icon.png"
+              img src: "static/shoes-icon.png"
               ul do
                 li{a.prime "HELP", href: "./"}
                 menu.each do |m|
