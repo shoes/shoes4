@@ -3,6 +3,7 @@ module Shoes
     class Line
       include Common::Stroke
       include Common::Move
+      include Common::Toggle
       include Common::Clear
 
       # @param [Shoes::Line] dsl The Shoes::Line implemented by this object
