@@ -9,7 +9,7 @@ module Shoes
     class App
       include Common::Container
 
-      attr_reader :dsl, :real, :shell, :width_error
+      attr_reader :dsl, :real, :shell
 
       def initialize dsl
         @dsl = dsl
@@ -19,23 +19,17 @@ module Shoes
         initialize_real()
         ::Shoes::Swt.register self
 
+        attach_event_listeners
+
         vb = @shell.getVerticalBar
         vb.setIncrement 10
         vb.addSelectionListener SelectionListener.new(self, vb)
       end
 
       def open
-        @real.layout
         @shell.pack
         @shell.open
-        compute_width_error
-        attach_event_listeners
-
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
-      end
-
-      def compute_width_error
-        @width_error = @dsl.top_slot.width - @shell.client_area.width
       end
 
       def quit
@@ -45,6 +39,14 @@ module Shoes
       # @return [Shoes::Swt::App] Self
       def app
         self
+      end
+
+      def width
+        @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+      end
+
+      def height
+        @shell.client_area.height
       end
 
       def disposed?
@@ -93,7 +95,7 @@ module Shoes
 
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
-        @real.setSize(@dsl.width, @dsl.height)
+        @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout ShoesLayout.new
       end
 
@@ -121,7 +123,7 @@ module Shoes
 
       def controlResized(event)
         shell = event.widget
-        width = shell.getClientArea().width + @app.width_error
+        width = shell.getClientArea().width
         height = shell.getClientArea().height
         @app.dsl.top_slot.width   = width
         @app.dsl.top_slot.height  = height
