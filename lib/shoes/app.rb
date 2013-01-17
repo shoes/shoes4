@@ -72,11 +72,11 @@ module Shoes
     end
 
     def width
-      @top_slot ? @top_slot.width : @width
+      @top_slot ? @gui.width : @width
     end
 
     def height
-      @top_slot ? @top_slot.height : @height
+      @top_slot ? @gui.height : @height
     end
 
     def left; 0 end
