@@ -773,14 +773,14 @@ download
 
      download "http://www.stevex.net/dump.php",
               :method => "POST", :body => "v=1.0&q=shoes" do |dump|
-       require 'hpricot'
-       @status.text = Hpricot(dump.response.body).inner_text
+       require 'nokogiri'
+       @status.text = Nokogiri::HTML(dump.response.body).inner_text
      end
    end
  end
 }}}
 
-上記の例から、ShoesはHTMLを解析するHpricotなライブラリを含んでいることが分かります。
+上記の例から、ShoesはHTMLを解析するNokogiriなライブラリを含んでいることが分かります。
 
 === location() » a string ===
 
