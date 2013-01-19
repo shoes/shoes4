@@ -1,5 +1,6 @@
 require 'hpricot'
 require 'nkf'
+require 'ext/highlighter'
 
 class Array
   def / len
@@ -28,7 +29,7 @@ class Manual
   url '/manual/(\d+)', :index
 
   include Hpricot
-  #include HH::Markup
+  include HH::Markup
 
   def index pnum = 0
     #font LANG == 'ja' ? 'MS UI Gothic' : 'Arial'
@@ -132,8 +133,7 @@ class Manual
             if _code.include? 'te-su-to'
               para fg(code('  ' + _code), maroon), NL, margin: [-10, 10, 0, 20]
             else
-              #para *highlight('  ' + _code, nil).map{|e| code e}, NL, margin: [-10, 10, 0, 20]
-              para fg(code('  ' + _code), indianred), NL, margin: [-10, 10, 0, 20]
+              para *highlight('  ' + _code, nil).map{|e| code e}, NL, margin: [-10, 10, 0, 20]
             end
           end
           para NL
