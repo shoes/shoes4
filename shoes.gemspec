@@ -18,10 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.15"
-
-  # Packaging
-  s.add_dependency "plist"
-  s.add_dependency "warbler"
+  s.add_dependency "furoshiki"
 
   s.add_dependency "nokogiri" # For converting the manual to HTML
 
