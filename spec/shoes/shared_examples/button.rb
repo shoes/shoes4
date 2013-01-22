@@ -4,7 +4,12 @@ shared_examples "checkable" do
   it { should respond_to :focus }
 end
 
-shared_examples "clickable" do
+shared_examples "buttons" do
+  it "calls set_focus when focus is called" do
+    real.should_receive :set_focus
+    subject.focus
+  end
+
   it "passes block to real element" do
     real.should_receive(:addSelectionListener).with(&block)
     subject

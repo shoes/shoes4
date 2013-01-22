@@ -13,12 +13,7 @@ describe Shoes::Swt::Check do
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
-  it_behaves_like "clickable"
+  it_behaves_like "buttons"
   it_behaves_like "movable element"
   it_behaves_like "selectable"
-
-  it "calls set_focus when focus is called" do
-    real.should_receive :set_focus
-    subject.focus
-  end
 end
