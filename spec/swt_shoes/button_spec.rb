@@ -17,17 +17,13 @@ describe Shoes::Swt::Button do
     ::Swt::Widgets::Button.stub(:new) { real }
   end
 
+  it_behaves_like "clickable"
   it_behaves_like "movable element", 140, 300
   #it_behaves_like "clearable native element"
 
   describe "#initialize" do
     it "sets text on real element" do
       real.should_receive(:set_text).with(text)
-      subject
-    end
-
-    it "passes block to real element" do
-      real.should_receive(:addSelectionListener).with(&block)
       subject
     end
   end
