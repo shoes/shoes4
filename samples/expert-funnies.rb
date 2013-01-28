@@ -1,10 +1,10 @@
-require 'hpricot'
+require 'nokogiri'
 
 class Comic
   attr_reader :rss, :title
 
   def initialize(body)
-    @rss = Hpricot.XML(body)
+    @rss = Nokogiri::XML(body)
     @title = @rss.at("//channel/title").inner_text
   end
 
