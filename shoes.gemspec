@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "plist"
   s.add_dependency "warbler"
 
-  s.add_dependency "hpricot" # For manual
+  s.add_dependency "nokogiri" # For converting the manual to HTML
 
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"

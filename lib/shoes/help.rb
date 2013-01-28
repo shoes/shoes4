@@ -1,4 +1,4 @@
-require 'hpricot'
+require 'nokogiri'
 require 'nkf'
 require 'ext/highlighter'
 
@@ -28,7 +28,6 @@ class Manual
   url '/', :index
   url '/manual/(\d+)', :index
 
-  include Hpricot
   include HH::Markup
 
   def index pnum = 0
@@ -40,19 +39,19 @@ class Manual
     table_of_contents.each{|toc| TOC << toc}
     pnum == '999' ? mk_search_page : manual( *get_title_and_desc(pnum.to_i) )
   end
-  
+
   def get_title_and_desc pnum
     chapter, section = PNUMS[pnum]
     return nil unless chapter
     if section
-      [pnum, DOCS[chapter][1][:sections][section][1][:title], 
-      DOCS[chapter][1][:sections][section][1][:description], 
+      [pnum, DOCS[chapter][1][:sections][section][1][:title],
+      DOCS[chapter][1][:sections][section][1][:description],
       DOCS[chapter][1][:sections][section][1][:methods]]
     else
       [pnum, DOCS[chapter][0], DOCS[chapter][1][:description], []]
     end
   end
-  
+
   def table_of_contents
     PNUMS.map.with_index do |e, pnum|
       chapter, section = e
@@ -72,8 +71,8 @@ class Manual
         show_page paras, true
         show_methods docs_methods
         para link('top'){visit "/manual/0"}, "  ",
-          link('prev'){visit "/manual/#{(pnum-1)%PEND}"}, "  ", 
-          link('next'){visit "/manual/#{(pnum+1)%PEND}"}, "  ", 
+          link('prev'){visit "/manual/#{(pnum-1)%PEND}"}, "  ",
+          link('next'){visit "/manual/#{(pnum+1)%PEND}"}, "  ",
           link('end'){visit "/manual/#{PEND-1}"}
       end
     end
@@ -153,7 +152,7 @@ class Manual
       end
     end
   end
-  
+
   def show_paragraph txt, intro, i, term = nil
     txt = txt.gsub("\n", ' ').gsub(/\^(.+?)\^/m, '\1').gsub(/\[\[BR\]\]/i, "\n")
     txts = txt.split(/(\[\[\S+?\]\])/m).map{|s| s.split(/(\[\[\S+? .+?\]\])/m)}.flatten
@@ -179,7 +178,7 @@ class Manual
   def mk_links txts, term = nil
     txts.map{|txt| txt.gsub(IMAGE_RE, '')}.
       map{|txt| txt =~ /\[\[(\S+?)\]\]/m ? (t = $1.split('.'); link(ins *marker(t.last, term)){visit "/manual/#{find_pnum t.first}"}) : txt}.
-      map{|txt| txt =~ /\[\[(\S+?) (.+?)\]\]/m ? (url = $1; link(ins *marker($2, term)){visit url =~ /^http/ ? url : "/manual/#{find_pnum url}"}) : 
+      map{|txt| txt =~ /\[\[(\S+?) (.+?)\]\]/m ? (url = $1; link(ins *marker($2, term)){visit url =~ /^http/ ? url : "/manual/#{find_pnum url}"}) :
       (txt.is_a?(String) ? marker(txt, term) : txt)}
   end
 
@@ -209,7 +208,7 @@ class Manual
     end
     para NL
   end
-  
+
   def sample_page
     mk_sample_names.each do |file|
       stack width: 80 do
@@ -232,7 +231,7 @@ class Manual
       [dummy_name, orig_name]
     end.sort.map &:last
   end
-  
+
   def find_pnum page
     return 999 if page == 'Search'
     TOC_LIST.each_with_index do |e, i|
@@ -256,7 +255,7 @@ class Manual
       [k, h]
     end
   end
-  
+
   def self.mk_page_numbers docs
     pnum = []
     docs.length.times do |i|
@@ -281,62 +280,63 @@ class Manual
     TOC_LIST.length.times do |n|
       num, title, desc, methods = get_title_and_desc n
       open File.join(dir, "#{TOC_LIST[n][0]}.html"), 'wb:utf-8' do |f|
-        f.puts mk_html(title, desc, methods, TOC_LIST[n+1], get_title_and_desc(n+1), mk_sidebar_list(num))
+        html = mk_html(title, desc, methods, TOC_LIST[n+1], get_title_and_desc(n+1), mk_sidebar_list(num))
+        f.puts html.force_encoding('UTF-8')
       end
     end
   end
 
   def mk_html title, desc, methods, next_file, next_title, menu
     man = self
-    Hpricot do
-      xhtml_transitional do
-        head do
-          meta :"http-equiv" => "Content-Type", "content" => "text/html; charset=utf-8"
-          title "The Shoes 4 Manual // #{title}"
-          script type: "text/javascript", src: "static/code_highlighter.js"
-          script type: "text/javascript", src: "static/code_highlighter_ruby.js"
-          style type: "text/css" do
-            text "@import 'static/manual.css';"
+    html = Nokogiri::HTML::Builder.new do |h|
+      h.html(:lang => Manual::LANG) do
+        h.head do
+          h.meta charset: 'utf-8'
+          h.title "The Shoes 4 Manual // #{title}"
+          h.script type: "text/javascript", src: "static/code_highlighter.js"
+          h.script type: "text/javascript", src: "static/code_highlighter_ruby.js"
+          h.style type: "text/css" do
+            h.text "@import 'static/manual.css';"
           end
         end
-        body do
-          div.main! do
-            div.manual! do
-              h2 "The Shoes 4 Manual #{VERSION}"
-              h1 title
+        h.body do
+          h.div.main! do
+            h.div.manual! do
+              h.h2 "The Shoes 4 Manual #{VERSION}"
+              h.h1 title
 
               paras = man.mk_paras desc
-              div.intro{text man.manual_p(paras.shift)}
+              h.div(:class => 'intro') { h << man.manual_p(paras.shift) }
 
-              html_paragraph = proc do 
+              html_paragraph = proc do
                 paras.each do |str|
                   if str =~ CODE_RE
-                    pre{code.rb $1.gsub(/^\s*?\n/, '')}
+                    h.pre{h.code(class: 'rb'){h.text $1.gsub(/^\s*?\n/, '')}}
                   else
                     cmd, str = case str
-                    when /\A==== (.+) ====/; [:h4, $1]
-                    when /\A=== (.+) ===/; [:h3, $1]
-                    when /\A== (.+) ==/; [:h2, $1]
-                    when /\A= (.+) =/; [:h1, $1]
-                    when /\A\{COLORS\}/
-                      COLORS.each do |color, v|
-                        f = v.dark? ? "white" : "black"
-                        div.color(style: "background: #{color}; color: #{f}"){h3 color.to_s; p("rgb(%d, %d, %d)" % [v.red, v.green, v.blue])}
-                      end
-                    when /\A\{SAMPLES\}/
-                      man.mk_sample_names.each do |name|
-                        name = name[0...-3]
-                        div.sample do
-                          h3 name
-                          text '<a href="snapshots/%s.png"><img src="snapshots/%s.png" alt="%s" border=0 width=50 height=50></a>' % [name, name, name]
+                      when /\A==== (.+) ====/; [:h4, $1]
+                      when /\A=== (.+) ===/; [:h3, $1]
+                      when /\A== (.+) ==/; [:h2, $1]
+                      when /\A= (.+) =/; [:h1, $1]
+                      when /\A\{COLORS\}/
+                        COLORS.each do |color, v|
+                          f = v.dark? ? "white" : "black"
+                          h.div(class: 'color', style: "background: #{color}; color: #{f}"){ h.h3 color.to_s; h.p("rgb(%d, %d, %d)" % [v.red, v.green, v.blue])}
                         end
+                      when /\A\{SAMPLES\}/
+                        man.mk_sample_names.each do |name|
+                          name = name[0...-3]
+                          h.div( :class => 'sample') do
+                            h.h3 name
+                            h.text '<a href="snapshots/%s.png"><img src="snapshots/%s.png" alt="%s" border=0 width=50 height=50></a>' % [name, name, name]
+                          end
+                        end
+                      when /\A \* (.+)/m
+                        h.ul {$1.split(/^ \* /).each{|x| h << man.manual_p(x) }} ; nil
+                      else
+                        [:p_, str]
                       end
-                    when /\A \* (.+)/m
-                      ul{$1.split(/^ \* /).each{|x| li{self << man.manual_p(x)}}}
-                    else
-                      [:p, str]
-                    end
-                    send(cmd){self << man.manual_p(str)} if cmd.is_a?(Symbol)
+                    h.send(cmd){ h << man.manual_p(str) } if cmd.is_a?(Symbol)
                   end
                 end
               end
@@ -347,31 +347,31 @@ class Manual
                 n = m.index("\u00BB")
                 n ? (sig, val = m[0...n-1], m[n-1..-1]) : (sig, val = m, nil)
                 aname = sig[/^[^(=]+=?/].gsub(/\s/, '').downcase
-                a name: aname
-                div.divmethod do
-                  a sig, href: "##{aname}"
-                  text val if val
+                h.a(name: aname)
+                h.div(class: 'divmethod') do
+                  h.a sig, href: "##{aname}"
+                  h.text val if val
                 end
-                div.desc do
+                h.div(class: 'desc') do
                   paras = man.mk_paras d
                   html_paragraph.call
                 end
               end
 
-              p.next{text "Next: "; a next_title[1], href: "#{next_file[0]}.html"} if next_title
+              h.p(class: 'next'){h.text "Next: "; h.a(href: "#{next_file[0]}.html") { h.text next_title[1] }} if next_title
             end
-            div.sidebar do
-              img src: "static/shoes-icon.png"
-              ul do
-                li{a.prime "HELP", href: "./"}
+            h.div(class: 'sidebar') do
+              h.img src: "static/shoes-icon.png"
+              h.ul do
+                h.li{h.a(class:'prime', href: "./") { h.text "HELP" }}
                 menu.each do |m|
-                  li do
+                  h.li do
                     unless m.is_a?(Array)
-                      a m, href: "#{m}.html"
-                    else
-                      ul.sub do
+                      h.a(href: "#{m}.html") {h.text m}
+                      else
+                        h.ul(class: 'sub') do
                         m.each do |sm|
-                          li{a sm, href: "#{sm}.html"}
+                          h.li{h.a(href: "#{sm}.html") {h.text sm}}
                         end
                       end
                     end
@@ -383,6 +383,8 @@ class Manual
         end
       end
     end.to_html
+
+    "<!DOCTYPE html>\n#{html}"
   end
 
   def mk_sidebar_list num
@@ -459,7 +461,7 @@ class Manual
     methods.each do |(chapter, section, docs_title, docs_method)|
       flow margin: [10, 10, 0, 5] do
         background rgb(200, 200, 200), curve: 5
-        para "#{DOCS[chapter][0]}: #{docs_title.sub('The', '').split(' ').first}: ", 
+        para "#{DOCS[chapter][0]}: #{docs_title.sub('The', '').split(' ').first}: ",
           link(docs_method[0]){@f.clear{title docs_title; s.show_methods [docs_method], term}}, NL
       end
       stack(height: 2){}
@@ -489,13 +491,13 @@ class Manual
       [txt]
     end
   end
-  
+
   def mk_deco datas
     datas = decoration(datas, /`(.+?)`/m){|s| fg code(s), rgb(255, 30, 0)}
     datas = decoration(datas, /'''(.+?)'''/m){|s| strong s}
     decoration(datas, /''(.+?)''/m){|s| em s}
   end
-  
+
   def decoration datas, re, &blk
     datas.map do |data|
       if data.is_a? String
@@ -508,7 +510,7 @@ class Manual
       else
         data
       end
-    end.flatten  
+    end.flatten
   end
 
   IMAGE_RE = /\!(\{([^}\n]+)\})?([^!\n]+\.\w+)\!/
