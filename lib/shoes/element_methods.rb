@@ -372,6 +372,11 @@ EOS
       @style[:fill] = nil
     end
 
+    # Sets the current line cap style
+    def cap line_cap
+      @style[:cap] = line_cap 
+    end
+
     # Adds style, or just returns current style if no argument
     #
     # Returns the updated style
