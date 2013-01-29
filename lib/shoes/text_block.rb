@@ -6,9 +6,10 @@ module Shoes
 
   class TextBlock
     include Shoes::CommonMethods
+    include Shoes::ElementMethods
     include Shoes::Common::Margin
 
-    attr_reader  :gui, :parent, :text, :links, :app
+    attr_reader  :gui, :parent, :text, :styles, :links, :app
     attr_accessor :font, :font_size, :width, :height, :left, :top
 
     def initialize(parent, text, font_size, opts = {})
@@ -16,6 +17,7 @@ module Shoes
       @font = DEFAULT_TEXTBLOCK_FONT
       @font_size = opts[:size] || font_size
       @text = text
+      @styles = []
       @left = opts[:left]
       @top = opts[:top]
       @links = []
@@ -48,11 +50,8 @@ module Shoes
 
     def replace(*args)
       opts = args.last.class == Hash ? args.pop : {}
-      styles = get_styles args
-      opts[:args_styles] = styles unless styles.empty?
+      @styles = get_styles args
       self.text = args.map(&:to_s).join
-      # forgive me for my sins.
-      gui.instance_eval { @painter.instance_eval { @opts[:text_styles] = styles unless styles.empty? }}
     end
 
     def to_s
@@ -93,22 +92,6 @@ module Shoes
       @font_size = fsize.first.to_i unless fsize.empty?
 
       # TODO: Style options
-    end
-
-    # this is copy-pasta from lib/shoes/element_methods
-    # we need something equivalent accessible from here.
-    # maybe the other version already is, but if so, i didn't
-    # immediately see how to access it.
-    def get_styles msg, styles=[], spoint=0
-      msg.each do |e|
-        if e.is_a? Shoes::Text
-          epoint = spoint + e.to_s.length - 1
-          styles << [e, spoint..epoint]
-          get_styles e.str, styles, spoint
-        end
-        spoint += e.to_s.length
-      end
-      styles
     end
   end
 
