@@ -9,7 +9,7 @@ module Shoes
     class App
       include Common::Container
 
-      attr_reader :dsl, :real, :shell
+      attr_reader :dsl, :real, :shell, :started
 
       def initialize dsl
         @dsl = dsl
@@ -29,6 +29,7 @@ module Shoes
       def open
         @shell.pack
         @shell.open
+        @started = true
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
 

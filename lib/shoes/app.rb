@@ -86,16 +86,24 @@ module Shoes
       Shoes.unregister self
       @gui.quit
     end
-    
-    def clear &blk
-      super
-      @app.unslotted_elements.each &:remove
-      @app.unslotted_elements.clear
 
-      @contents << @top_slot
-      @current_slot = @top_slot
-      instance_eval &blk if blk
-      gui.flush
+    def started?
+      @gui.started
+    end
+
+    def clear &blk
+      if started?
+        super
+        @app.unslotted_elements.each &:remove
+        @app.unslotted_elements.clear
+
+        @contents << @top_slot
+        @current_slot = @top_slot
+        instance_eval &blk if blk
+        gui.flush
+      else
+        instance_eval &blk if blk
+      end
     end
 
     def add_child(child)
