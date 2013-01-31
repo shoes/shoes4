@@ -37,8 +37,6 @@ module Shoes
         tl.setText @dsl.text
         tl.setSpacing(@opts[:leading] || 4)
         font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new font, nil, nil
-        tl.setStyle style, 0, @dsl.text.length - 1
         return tl, font
       end
       
@@ -91,9 +89,9 @@ module Shoes
           @tl.setStyle style, 0, @dsl.text.length - 1
           @gcs << font
 
-          @opts[:text_styles].each do |st|
+          @dsl.styles.each do |st|
             font, ft, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
-            nested_styles(@opts[:text_styles], st).each do |e|
+            nested_styles(@dsl.styles, st).each do |e|
               case e[0].style
               when :strong
                 ft = ft | ::Swt::SWT::BOLD
@@ -138,7 +136,7 @@ module Shoes
             cmds.each{|cmd| eval "style.#{cmd}"}
             @tl.setStyle style, st[1].first, st[1].last
             @gcs << ft
-          end if @opts[:text_styles]
+          end
         end
 
         def nested_styles styles, st
