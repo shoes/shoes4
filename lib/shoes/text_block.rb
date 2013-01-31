@@ -6,10 +6,9 @@ module Shoes
 
   class TextBlock
     include Shoes::CommonMethods
-    include Shoes::ElementMethods
     include Shoes::Common::Margin
 
-    attr_reader  :gui, :parent, :text, :styles, :links, :app
+    attr_reader  :gui, :parent, :text, :links, :app
     attr_accessor :font, :font_size, :width, :height, :left, :top
 
     def initialize(parent, text, font_size, opts = {})
@@ -17,7 +16,6 @@ module Shoes
       @font = DEFAULT_TEXTBLOCK_FONT
       @font_size = opts[:size] || font_size
       @text = text
-      @styles = []
       @left = opts[:left]
       @top = opts[:top]
       @links = []
@@ -41,17 +39,12 @@ module Shoes
       super
     end
 
-    # It might be possible to leave the redraw
-    # function blank for non-SWT versions of Shoes
-    def text=(value)
-      @text = value.to_s
-      @gui.redraw
+    def text=(*values)
+      @gui.replace *values[0]
     end
 
-    def replace(*args)
-      opts = args.last.class == Hash ? args.pop : {}
-      @styles = get_styles args
-      self.text = args.map(&:to_s).join
+    def replace *values
+      @gui.replace *values
     end
 
     def to_s

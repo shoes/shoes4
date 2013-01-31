@@ -22,11 +22,6 @@ describe Shoes::TextBlock do
       s.text = "Goodbye Cruel World"
       s.text.should eql "Goodbye Cruel World"
     end
-
-    it "calls redraw when changing text" do
-      Shoes.configuration.backend::TextBlock.any_instance.should_receive :redraw
-      subject.text = "Goodbye Cruel World"
-    end
   end
 
   describe "#to_s" do
@@ -40,6 +35,11 @@ describe Shoes::TextBlock do
     it "replaces text" do
       subject.replace "Goodbye Cruel World"
       subject.text.should eq("Goodbye Cruel World")
+    end
+    
+    it "allows two arguments" do
+      subject.replace "Goodbye Cruel World, ", text_link
+      subject.text.should eq("Goodbye Cruel World, Hello")
     end
   end
 

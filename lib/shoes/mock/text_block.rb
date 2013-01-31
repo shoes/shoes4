@@ -3,9 +3,14 @@ module Shoes
     class TextBlock
       include Shoes::Mock::CommonMethods
 
-      def initialize(*opts); end
+      def initialize(dsl, opts = nil)
+        @dsl = dsl
+      end
       def get_size(*opts); end
       def redraw(*opts); end
+      def replace *opts
+        @dsl.instance_variable_set :@text, opts.map(&:to_s).join
+      end
     end
 
     class Banner < TextBlock; end
