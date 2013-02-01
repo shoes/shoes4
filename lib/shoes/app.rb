@@ -30,6 +30,7 @@ module Shoes
     include Shoes::ElementMethods
     include Shoes::Common::Margin
     include Shoes::BuiltinMethods
+    include Shoes::Common::Clickable
 
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,

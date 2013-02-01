@@ -8,8 +8,10 @@ module Shoes
 
     class App
       include Common::Container
+      include Common::Clickable
 
       attr_reader :dsl, :real, :shell, :started
+      attr_accessor :ln
 
       def initialize dsl
         @dsl = dsl
