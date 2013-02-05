@@ -28,6 +28,10 @@ module Shoes
     def ask_save_folder
       Shoes::Dialog.new.dialog_chooser 'Save Folder...', :folder
     end
+
+    def ask msg
+      Shoes::Dialog.new.ask msg
+    end
   end
 end
 
