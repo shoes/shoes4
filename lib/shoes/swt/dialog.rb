@@ -27,6 +27,14 @@ module Shoes
         Swt::AskDialog.new(::Swt::Widgets::Shell.new, msg, args).open
       end
 
+      def ask_color title
+        shell = ::Swt::Widgets::Shell.new Shoes.display
+        cd = ::Swt::Widgets::ColorDialog.new shell
+        cd.setText title
+        color = cd.open
+        color ? ::Shoes::Color.new(color.red, color.green, color.blue, ::Shoes::Color::OPAQUE) : ::Shoes::Color.new(0, 0, 0, ::Shoes::Color::OPAQUE)
+      end
+
       private
       def open_message_box(style, msg)
         shell = ::Swt::Widgets::Shell.new ::Swt.display

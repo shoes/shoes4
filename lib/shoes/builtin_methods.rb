@@ -32,6 +32,10 @@ module Shoes
     def ask msg
       Shoes::Dialog.new.ask msg
     end
+
+    def ask_color title = 'Pick a color...'
+      Shoes::Dialog.new.ask_color title
+    end
   end
 end
 

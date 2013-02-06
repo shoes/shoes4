@@ -19,5 +19,9 @@ module Shoes
     def ask msg
       @gui.ask msg
     end
+
+    def ask_color title
+      @gui.ask_color title
+    end
   end
 end
