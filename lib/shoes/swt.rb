@@ -73,6 +73,9 @@ module Shoes::Swt
     def self.display
       ::Swt::Widgets::Display.getCurrent
     end
+    
+    ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
+    ::Shoes::FONTS.uniq!
   end
 end
 
