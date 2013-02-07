@@ -13,13 +13,13 @@ module Shoes
 
     def initialize(parent, text, font_size, opts = {})
       @parent = parent
-      @font = DEFAULT_TEXTBLOCK_FONT
+      @app = @parent.app
+      @font = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size = opts[:size] || font_size
       @text = text
       @left = opts[:left]
       @top = opts[:top]
       @links = []
-      @app = @parent.app
 
       @margin = opts[:margin]
       set_margin
@@ -66,8 +66,8 @@ module Shoes
     private
 
     def handle_opts(opts)
-      if opts.has_key? :family
-        parse_font_opt opts[:family]
+      if opts.has_key? :font
+        parse_font_opt opts[:font]
       end
     end
 

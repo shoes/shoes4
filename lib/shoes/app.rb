@@ -118,5 +118,8 @@ module Shoes
       }
     end
 
+    def font *family
+      family.empty? ? @font : @font = family.first
+    end
   end
 end

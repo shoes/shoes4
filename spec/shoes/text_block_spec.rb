@@ -49,18 +49,18 @@ describe Shoes::TextBlock do
     end
 
     it "should allow setting the font with :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: "Helvetica" })
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: "Helvetica" })
       s.font.should eql "Helvetica"
     end
 
     it "should allow setting the font size with :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: "Helvetica 33px" })
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: "Helvetica 33px" })
       s.font.should eql "Helvetica"
       s.font_size.should eql 33
     end
 
     it "should accept fonts surrounded with questionmarks when using :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: '"Comic Sans" 13px' })
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: '"Comic Sans" 13px' })
       s.font.should eql "Comic Sans"
       s.font_size.should eql 13
     end
