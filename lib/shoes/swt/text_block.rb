@@ -96,7 +96,7 @@ module Shoes
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
           @tl.setStyle style, 0, @dsl.text.length - 1
-          @gcs << font
+          @gcs << font << fgc << bgc
 
           @opts[:text_styles].each do |st|
             font, ft, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
