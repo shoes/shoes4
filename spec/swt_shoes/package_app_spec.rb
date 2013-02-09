@@ -95,4 +95,12 @@ describe Shoes::Swt::Package::App do
       end
     end
   end
+
+  describe "with an invalid configuration" do
+    let(:config) { Shoes::Package::Configuration.new }
+
+    it "fails to initialize" do
+      lambda { subject }.should raise_error
+    end
+  end
 end

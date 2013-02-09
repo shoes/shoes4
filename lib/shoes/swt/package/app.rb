@@ -13,6 +13,12 @@ module Shoes
         # @param [Shoes::Package::Configuration] config user configuration
         def initialize(config)
           @config = config
+
+          # We can't do anything useful without a valid config
+          unless config.valid?
+            raise ArgumentError, "Invalid configuration.\n#{config.error_message_list}"
+          end
+
           @default_package_dir = working_dir.join('pkg')
           @package_dir = default_package_dir
           root = Pathname.new(__FILE__).join('../../../../..')

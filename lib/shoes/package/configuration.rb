@@ -111,7 +111,7 @@ module Shoes
         end
 
         @working_dir = Pathname.new(working_dir)
-        @errors = {}
+        @errors = []
       end
 
       # @return [Pathname] the current working directory
@@ -127,7 +127,11 @@ module Shoes
 
       def validate
         unless @config[:run] && working_dir.join(@config[:run]).exist?
-          add_error(:run, @config[:run], "File to run must exist. Couldn't find file at #{working_dir.join(@config[:run].to_s)}")
+          add_missing_file_error(@config[:run], "Run file")
+        end
+
+        unless @config[:icons][:osx] && working_dir.join(@config[:icons][:osx]).exist?
+          add_missing_file_error(@config[:icons][:osx], "OS X icon file")
         end
       end
 
@@ -138,6 +142,10 @@ module Shoes
 
       def errors
         @errors.dup
+      end
+
+      def error_message_list
+        @errors.map {|m| "  - #{m}"}.join("\n")
       end
 
       def ==(other)
@@ -161,8 +169,13 @@ module Shoes
         config
       end
 
-      def add_error(key, value, message)
-        @errors[key] = {value: value, message: message}
+      def add_error(message)
+        @errors << message
+      end
+
+      def add_missing_file_error(value, description)
+        message = "#{description} configured as '#{value}', but couldn't find file at #{working_dir.join(value.to_s)}"
+        add_error(message)
       end
     end
   end

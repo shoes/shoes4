@@ -107,6 +107,15 @@ describe Shoes::Package::Configuration do
 
       it { should_not be_valid }
     end
+
+    context "when the osx icon doesn't exist" do
+      let(:standard_icons) { standard_config.to_hash[:icons] }
+      let(:icons) { standard_icons.merge({:osx => "path/to/non-existent/file"}) }
+      let(:options) { standard_config.to_hash.merge({:icons => icons}) }
+      subject { Shoes::Package::Configuration.new options, standard_config.working_dir }
+
+      it { should_not be_valid }
+    end
   end
 
   context "auto-loading" do

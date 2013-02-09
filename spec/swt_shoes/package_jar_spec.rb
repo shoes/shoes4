@@ -42,4 +42,13 @@ describe Shoes::Swt::Package::Jar do
     its(:default_dir) { should eq(output_dir) }
     its(:filename) { should eq(jar_name) }
   end
+
+  describe "with an invalid configuration" do
+    let(:config) { Shoes::Package::Configuration.new }
+    subject { Shoes::Swt::Package::Jar.new config }
+
+    it "fails to initialize" do
+      lambda { subject }.should raise_error
+    end
+  end
 end

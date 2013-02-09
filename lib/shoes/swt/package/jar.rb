@@ -8,6 +8,12 @@ module Shoes
         # @param [Shoes::Package::Configuration] config user configuration
         def initialize(config = nil)
           @shoes_config = config || ::Shoes::Package::Configuration.load
+
+          # We can't do anything useful without a valid config
+          unless config.valid?
+            raise ArgumentError, "Invalid configuration.\n#{config.error_message_list}"
+          end
+
           Dir.chdir working_dir do
             @config = Warbler::Config.new do |config|
               config.jar_name = @shoes_config.shortname
