@@ -19,10 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.15"
 
-  # Packaging
-  s.add_dependency "plist"
-  s.add_dependency "warbler"
-
   s.add_dependency "hpricot" # For manual
 
   s.add_development_dependency "guard"
