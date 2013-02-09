@@ -14,6 +14,7 @@ describe Shoes::Package::Configuration do
     its(:icons) { should be_an_instance_of(Hash) }
     its(:dmg) { should be_an_instance_of(Hash) }
     its(:run) { should be_nil }
+    it { should_not be_valid }
 
     describe "#icon" do
       it 'osx is nil' do
@@ -95,6 +96,13 @@ describe Shoes::Package::Configuration do
 
     its(:name) { should eq("Sugar Clouds") }
     its(:shortname) { should eq("sugarclouds") }
+  end
+
+  context "when the file to run doens't exist" do
+    let(:options) { {:run => "path/to/non-existent/file"} }
+    subject { Shoes::Package::Configuration.new options }
+
+    it { should_not be_valid }
   end
 
   context "auto-loading" do

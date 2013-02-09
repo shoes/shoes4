@@ -112,6 +112,7 @@ module Shoes
         end
 
         @working_dir = Pathname.new(working_dir)
+        @errors = {}
       end
 
       # @return [Pathname] the current working directory
@@ -119,6 +120,15 @@ module Shoes
 
       def to_hash
         @config
+      end
+
+      def valid?
+        add_error(:run, @config[:run], "File to run must exist") unless @config[:run] && File.exist?(@config[:run])
+        return errors.empty?
+      end
+
+      def errors
+        @errors.dup
       end
 
       def ==(other)
@@ -140,6 +150,10 @@ module Shoes
           config[k.to_sym] = v
         end
         config
+      end
+
+      def add_error(key, value, message)
+        @errors[key] = {value: value, message: message}
       end
     end
   end
