@@ -122,7 +122,11 @@ Okay, now for real. The simplest thing is to put your script in a directory by i
 
 You'll find your app at `path/to/directory-of/pkg/Shoes App.app`.
 
-If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/wasnotrice/shoes4/blob/pkg/app.yaml) for more details. When you have an `app.yaml` file right next to your script, you have three options:
+If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/shoes/shoes4/blob/master/app.yaml) for more details.
+
+***Note:*** *If you use an `app.yaml`, you will have to customize or comment out each option. The example is just an example ;)*
+
+When you have an `app.yaml` file right next to your script, you have three options:
 
     $ bin/shoes -p swt:app path/to/directory-of/your-shoes-app.rb
     $ bin/shoes -p swt:app path/to/directory-of/app.yaml
