@@ -99,13 +99,12 @@ module Shoes
         @config = config.inject(defaults) { |c, (k, v)| set_symbol_key c, k, v }
 
         # Ensure that we always have what we need
-        @config[:shortname] ||= @config[:name].downcase.gsub(/\W+/, '')
         [:ignore, :gems].each { |k| @config[k] = Array(@config[k]) }
         @config[:gems] << 'shoes'
 
-        # Define reader for each key
+        # Define reader for each key (#shortname defined below)
         metaclass = class << self; self; end
-        @config.keys.each do |k|
+        @config.keys.reject {|k| k == :shortname}.each do |k|
           metaclass.send(:define_method, k) do
             @config[k]
           end
@@ -118,12 +117,22 @@ module Shoes
       # @return [Pathname] the current working directory
       attr_reader :working_dir
 
+      def shortname
+        @config[:shortname] || @config[:name].downcase.gsub(/\W+/, '')
+      end
+
       def to_hash
         @config
       end
 
+      def validate
+        unless @config[:run] && working_dir.join(@config[:run]).exist?
+          add_error(:run, @config[:run], "File to run must exist. Couldn't find file at #{working_dir.join(@config[:run].to_s)}")
+        end
+      end
+
       def valid?
-        add_error(:run, @config[:run], "File to run must exist") unless @config[:run] && File.exist?(@config[:run])
+        validate
         return errors.empty?
       end
 

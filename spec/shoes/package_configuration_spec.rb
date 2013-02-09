@@ -49,7 +49,8 @@ describe Shoes::Package::Configuration do
 
   context "with options" do
     include_context 'config'
-    subject { Shoes::Package::Configuration.load(config_filename) }
+    let(:standard_config) { Shoes::Package::Configuration.load(config_filename) }
+    subject { standard_config }
 
     its(:name) { should eq('Sugar Clouds') }
     its(:shortname) { should eq('sweet-nebulae') }
@@ -58,8 +59,10 @@ describe Shoes::Package::Configuration do
     its(:gems) { should include('shoes') }
     its(:version) { should eq('0.0.1') }
     its(:release) { should eq('Mindfully') }
+    its(:run) { should eq('bin/hello_world') }
     its(:icons) { should be_an_instance_of(Hash) }
     its(:dmg) { should be_an_instance_of(Hash) }
+    it { should be_valid }
 
     describe "#icon" do
       it 'has osx' do
@@ -88,21 +91,22 @@ describe Shoes::Package::Configuration do
     it "incorporates custom features" do
       subject.custom.should eq('my custom feature')
     end
-  end
 
-  context "with name, but without explicit shortname" do
-    let(:options) { {:name => "Sugar Clouds"} }
-    subject { Shoes::Package::Configuration.new options }
+    context "including name, but without explicit shortname" do
+      let(:options) { standard_config.to_hash.merge({:name => "Sugar Clouds", :shortname => nil}) }
+      subject { Shoes::Package::Configuration.new options, standard_config.working_dir }
 
-    its(:name) { should eq("Sugar Clouds") }
-    its(:shortname) { should eq("sugarclouds") }
-  end
+      its(:name) { should eq("Sugar Clouds") }
+      its(:shortname) { should eq("sugarclouds") }
+      it { should be_valid }
+    end
 
-  context "when the file to run doens't exist" do
-    let(:options) { {:run => "path/to/non-existent/file"} }
-    subject { Shoes::Package::Configuration.new options }
+    context "when the file to run doens't exist" do
+      let(:options) { standard_config.to_hash.merge({:run => "path/to/non-existent/file"}) }
+      subject { Shoes::Package::Configuration.new options, standard_config.working_dir }
 
-    it { should_not be_valid }
+      it { should_not be_valid }
+    end
   end
 
   context "auto-loading" do
