@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Progress do
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl') }
+  let(:dsl) { double('dsl').as_null_object }
   let(:parent) { double('parent') }
   let(:block) { double('block') }
   let(:real) { double('real').as_null_object }
