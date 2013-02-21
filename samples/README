@@ -4,6 +4,8 @@
 # NOTE: Comment out anything that isn't a filename, so we can execute this list.
 #       See the `rake samples` task
 
+good-follow.rb
+
 simple-animate.rb
 simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
 simple-bounce.rb
