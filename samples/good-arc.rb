@@ -8,7 +8,7 @@ Shoes.app :width => 420, :height => 420, :resizable => false do
   nofill
 
   animate 40 do |i|
-    stage = (1...8).rand if i % 40 == 0
+    stage = rand(1...8) if i % 40 == 0
     rotation = -(HALF_PI / wide)
     clear do
       background gray(240)
