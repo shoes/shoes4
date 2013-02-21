@@ -223,7 +223,8 @@ module Shoes
         when 0
           left = oval_style[:left] || 0
           top = oval_style[:top] || 0
-          width = oval_style[:diameter] || oval_style[:width] || 0
+          width = oval_style[:diameter] || oval_style[:width] ||
+                  (oval_style[:radius] || 0) * 2
           height = oval_style[:height] || width 
         else
           message = <<EOS
