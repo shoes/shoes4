@@ -24,6 +24,7 @@ module Shoes
         @height = point_a.height(point_b)
         @point_a = point_a.to(-@left, -@top)
         @point_b = point_b.to(-@left, -@top)
+        @angle = opts[:angle] || 0
         @transform = ::Swt::Transform.new(::Swt.display)
         # Array to hold transform elements
         @te = Java::float[6].new

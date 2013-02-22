@@ -29,7 +29,8 @@ module Shoes
 
         def apply_stroke(context)
           if stroke
-            stroke.apply_as_stroke(context, left, top, width, height, angle)
+            l, t = self.is_a?(Star) ? [left-width/2.0, top-height/2.0] : [left, top]
+            stroke.apply_as_stroke(context, l, t, width, height, angle)
             context.set_line_width strokewidth
             true
           end
