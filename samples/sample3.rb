@@ -9,6 +9,6 @@ Shoes.app width: 300, height: 400 do
   stroke rgb(0, 0.6, 0.9, 0.3)
   strokewidth 1
   100.times do
-    oval left: (-30..width).rand, top: (-30..height).rand, diameter: (25..100).rand
+    oval left: rand(-30..width), top: rand(-30..height), diameter: rand(25..100)
   end
 end
