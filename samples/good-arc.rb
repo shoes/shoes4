@@ -3,23 +3,31 @@
 # http://vormplus.be/weging/an-introduction-to-processing/
 #
 Shoes.app :width => 420, :height => 420, :resizable => false do
-  stage, wide, sw, basesize, step = 0, 3.0, 1.0, 600, 60
-  stroke gray(127)
+  stage, wide, sw, basesize, step = 0, 3, 1.0, 600, 60
+  stroke white(100)
   nofill
 
   animate 40 do |i|
     stage = rand(1...8) if i % 40 == 0
-    rotation = -(HALF_PI / wide)
+    if wide.abs < 0.1
+      if stage == 6
+        wide = -0.1
+      else
+        wide = 0.1
+      end
+    end
+    rotation = -(Shoes::HALF_PI / wide)
     clear do
       background gray(240)
       10.times do |i|
         strokewidth sw * i
-        size = (basesize / 3) + ((step / 3) * i)
-        shape do
-          arc self.width / 2, self.height / 2,
-              size, size,
-              rotation * i, rotation * i + TWO_PI - HALF_PI
-        end
+        size = (basesize + step * i) / 3
+        top = (self.height - size) / 2
+        left = (self.width - size) / 2
+        arc top, left,
+          size, size,
+          rotation * i, 
+          rotation * i + Shoes::TWO_PI - Shoes::HALF_PI
       end
     end
 
@@ -29,7 +37,7 @@ Shoes.app :width => 420, :height => 420, :resizable => false do
     when 3; basesize -= 1
     when 4; basesize += 2
     when 5; sw += 0.1
-    when 6; sw -= 0.01
+    when 6; sw = [sw - 0.1, 0.1].max
     when 7; step += 2
     else    step -= 1
     end
