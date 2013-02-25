@@ -23,9 +23,9 @@ module Shoes
 
         attach_event_listeners
 
-        vb = @shell.getVerticalBar
-        vb.setIncrement 10
-        vb.addSelectionListener SelectionListener.new(self, vb)
+        vb = @shell.vertical_bar
+        vb.increment = 10
+        vb.add_selection_listener SelectionListener.new(self, vb)
       end
 
       def open
@@ -45,7 +45,11 @@ module Shoes
       end
 
       def width
-        @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+        if @shell.vertical_bar.visible 
+          @shell.client_area.width + @shell.vertical_bar.size.x
+        else
+          @shell.client_area.width
+        end
       end
 
       def height
@@ -65,12 +69,12 @@ module Shoes
       end
 
       def scroll_top
-        @real.getLocation.y
+        @real.location.y
       end
       
       def scroll_top=(n)
-        @real.setLocation 0, -n
-        @shell.getVerticalBar.setSelection n
+        @real.setLocation(0, -n)
+        @shell.vertical_bar.selection = n
       end
 
       private
@@ -99,7 +103,7 @@ module Shoes
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
-        @real.setLayout ShoesLayout.new
+        @real.layout = ShoesLayout.new
       end
 
       def attach_event_listeners
@@ -108,13 +112,13 @@ module Shoes
       end
 
       def attach_shell_event_listeners
-        @shell.addControlListener ShellControlListener.new(self)
-        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
+        @shell.add_control_listener ShellControlListener.new(self)
+        @shell.add_listener(::Swt::SWT::Close, main_window_on_close) if main_app?
       end
 
       def attach_real_event_listeners
-        @real.addMouseMoveListener MouseMoveListener.new(self)
-        @real.addMouseListener MouseListener.new(self)
+        @real.add_mouse_move_listener MouseMoveListener.new(self)
+        @real.add_mouse_listener MouseListener.new(self)
       end
 
     end
@@ -126,10 +130,10 @@ module Shoes
 
       def controlResized(event)
         shell = event.widget
-        width = shell.getClientArea().width
-        height = shell.getClientArea().height
-        @app.dsl.top_slot.width   = width
-        @app.dsl.top_slot.height  = height
+        width = shell.client_area().width
+        height = shell.client_area().height
+        @app.dsl.top_slot.width  = width
+        @app.dsl.top_slot.height = height
         @app.real.setSize width, height
         @app.real.layout
       end
@@ -170,10 +174,10 @@ module Shoes
         @app, @vb = app, vb
       end
       def widgetSelected e
-        if @app.shell.getVerticalBar.getVisible and e.detail != ::Swt::SWT::DRAG
-          location = @app.real.getLocation
-          location.y = -@vb.getSelection
-          @app.real.setLocation location
+        if @app.shell.vertical_bar.visible and e.detail != ::Swt::SWT::DRAG
+          location = @app.real.location
+          location.y = -@vb.selection
+          @app.real.location = location
         end
       end
     end
