@@ -3,6 +3,12 @@ shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=mas
 
 Shoes 4 : the next version of Shoes
 
+Still in development
+--------------------
+Hi there, thanks for checking by! Shoes4 is still in development. It doesn't support all of the shoes DSL just yet.
+But if you want to check it out, that's awesome! If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
+
+But hey, make sure to check back later, because shoes4 is the future!
 
 
 Hacking
