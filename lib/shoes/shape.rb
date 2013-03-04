@@ -25,7 +25,7 @@ module Shoes
       instance_eval &@blk unless @blk.nil?
     end
 
-    attr_reader :app, :blk
+    attr_reader :app, :blk, :hidden
     attr_reader :x, :y
 
     def left
@@ -87,6 +87,10 @@ module Shoes
       @x, @y = x, y
       @gui.move_to(x, y)
       self
+    end
+
+    def quad_to *args
+      @gui.quad_to *args
     end
 
     private

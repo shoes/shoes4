@@ -31,6 +31,10 @@ module Shoes
         @element.move_to(x, y)
       end
 
+      def quad_to *args
+        @element.quad_to *args
+      end
+
       def move(left, top)
         transform.translate(left, top)
       end

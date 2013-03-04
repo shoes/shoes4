@@ -62,6 +62,7 @@ module Shoes
       
       def flush
         @dsl.top_slot.contents_alignment @dsl.top_slot
+        @real.layout
       end
 
       def scroll_top
