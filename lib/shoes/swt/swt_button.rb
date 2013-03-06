@@ -50,6 +50,9 @@ module Shoes
         end
       end
 
+      def click &blk
+        @real.addSelectionListener{ blk[self] }
+      end
     end
   end
 end
