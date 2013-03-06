@@ -6,6 +6,8 @@ describe Shoes::App do
   subject { Shoes::App.new(opts, &input_blk) }
 
   it_behaves_like "dsl container"
+  it { should respond_to :clipboard }
+  it { should respond_to :clipboard= }
 
   describe "initialize" do
     let(:input_blk) { Proc.new {} }

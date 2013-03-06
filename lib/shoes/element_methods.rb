@@ -489,5 +489,12 @@ EOS
       @app.gui.scroll_top = n
     end
 
+    def clipboard
+      @app.gui.clipboard
+    end
+
+    def clipboard=(str)
+      @app.gui.clipboard = str
+    end
   end
 end

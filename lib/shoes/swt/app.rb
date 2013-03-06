@@ -74,6 +74,14 @@ module Shoes
         @shell.getVerticalBar.setSelection n
       end
 
+      def clipboard
+        ::Swt::Clipboard.new(Shoes.display).getContents ::Swt::TextTransfer.getInstance
+      end
+
+      def clipboard=(str)
+        ::Swt::Toolkit.getDefaultToolkit.getSystemClipboard.setContents ::Swt::StringSelection.new(str), Shoes
+      end
+
       private
       def main_window_on_close
         lambda { |event|
