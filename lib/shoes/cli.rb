@@ -1,8 +1,6 @@
 require 'optparse'
 require 'shoes'
-require 'shoes/package'
-require 'shoes/package/configuration'
-require 'shoes/swt/package/app'
+require 'furoshiki/shoes'
 
 module Shoes
   class CLI
@@ -55,13 +53,13 @@ Usage: #{opts.program_name} [-h] [-p package] file
 
     def package(path)
       begin
-        config = Shoes::Package::Configuration.load(path)
+        config = Furoshiki::Shoes::Configuration.load(path)
       rescue Errno::ENOENT => e
         abort "shoes: #{e.message}"
       end
       @packages.each do |p|
         puts "Packaging #{p.backend}:#{p.wrapper}..."
-        packager = Shoes::Package.new(p.backend, p.wrapper, config)
+        packager = Furoshiki::Shoes.new(p.backend, p.wrapper, config)
         packager.package
       end
     end

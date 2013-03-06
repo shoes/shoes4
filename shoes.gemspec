@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.15"
+  s.add_dependency "furoshiki"
 
   s.add_dependency "hpricot" # For manual
 
