@@ -5,6 +5,7 @@
 #       See the `rake samples` task
 
 good-follow.rb
+good-arc.rb
 
 simple-animate.rb
 simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
