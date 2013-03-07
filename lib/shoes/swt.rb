@@ -17,10 +17,6 @@ module Swt
   end
 end
 
-def window(*a, &b)
-  Shoes.app(*a, &b)
-end
-
 require 'shoes/swt/common/fill'
 require 'shoes/swt/common/stroke'
 require 'shoes/swt/common/move'
