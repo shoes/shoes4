@@ -7,6 +7,8 @@ describe Shoes::Flow do
   let(:input_opts) { {:width => 131, :height => 137, :margin => 143, :app => app} }
   subject { Shoes::Flow.new(parent, input_opts, &input_block) }
 
+  it_behaves_like "clickable object"
+
   describe "dsl" do
     # dsl methods require :app
     let(:input_opts) { {:app => app} }
