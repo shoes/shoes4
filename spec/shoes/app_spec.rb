@@ -133,6 +133,12 @@ describe Shoes::App do
       subject.quit
     end
   end
+  
+  describe "#started?" do
+    it "checks the window has been displayed or not" do
+      subject.started?
+    end
+  end
 end
 
 describe "App registry" do

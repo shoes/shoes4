@@ -7,6 +7,7 @@ module Shoes
   TWO_PI = 2 * PI
   HALF_PI = 0.5 * PI
   DIR = Pathname.new(__FILE__).join("../..").realpath.to_s
+  FONTS = []
 
   extend ::Shoes::Common::Registration
 
@@ -41,6 +42,7 @@ require 'shoes/line'
 require 'shoes/oval'
 require 'shoes/point'
 require 'shoes/rect'
+require 'shoes/star'
 require 'shoes/sound'
 require 'shoes/shape'
 require 'shoes/configuration'
@@ -51,3 +53,4 @@ require 'shoes/url'
 require 'shoes/timer'
 require 'shoes/dialog'
 require 'shoes/manual'
+require 'shoes/widget'

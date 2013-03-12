@@ -8,12 +8,12 @@ Shoes.app do
       title "Shoes", :weight => "bold", :size => 82
     end
   end
-  
+
   animate 10 do
     @stripes.clear do
       20.times do |i|
         strokewidth 4
-        stroke rgb((0.0..0.5).rand, (0.0..1.0).rand, (0.0..0.3).rand)
+        stroke rgb(rand(0.0..0.5), rand(0.0..1.0), rand(0.0..0.3))
         line 0, i * 5, 400, i * 8
       end
     end

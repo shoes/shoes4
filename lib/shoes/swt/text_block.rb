@@ -52,6 +52,13 @@ module Shoes
         @dsl.links.clear
       end
 
+      def replace *values
+        @dsl.instance_variable_set :@text, values.map(&:to_s).join
+        @opts[:text_styles] = @dsl.app.get_styles(values)
+        redraw
+      end
+
+
       private
 
       class TbPainter
@@ -89,7 +96,7 @@ module Shoes
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
           @tl.setStyle style, 0, @dsl.text.length - 1
-          @gcs << font
+          @gcs << font << fgc << bgc
 
           @opts[:text_styles].each do |st|
             font, ft, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
@@ -120,10 +127,11 @@ module Shoes
                 fg = ::Swt::Color.new Shoes.display, 0, 0, 255
                 spos = @tl.getLocation e[1].first, false
                 epos = @tl.getLocation e[1].last, true
+                left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
                 e[0].lh = @tl.getLineBounds(0).height
-                e[0].sx, e[0].sy = @dsl.left + spos.x, @dsl.top + spos.y
-                e[0].ex, e[0].ey = @dsl.left + epos.x, @dsl.top + epos.y + e[0].lh
-                e[0].pl, e[0].pt, e[0].pw, e[0].ph = @dsl.left, @dsl.top, @dsl.width, @dsl.height
+                e[0].sx, e[0].sy = left + spos.x, top + spos.y
+                e[0].ex, e[0].ey = left + epos.x, top + epos.y + e[0].lh
+                e[0].pl, e[0].pt, e[0].pw, e[0].ph = left, top, @dsl.width, @dsl.height
                 @dsl.links << e[0]
                 unless e[0].clickabled
                   e[0].parent = @dsl

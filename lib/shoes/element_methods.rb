@@ -223,7 +223,8 @@ module Shoes
         when 0
           left = oval_style[:left] || 0
           top = oval_style[:top] || 0
-          width = oval_style[:diameter] || oval_style[:width] || 0
+          width = oval_style[:diameter] || oval_style[:width] ||
+                  (oval_style[:radius] || 0) * 2
           height = oval_style[:height] || width 
         else
           message = <<EOS
@@ -292,6 +293,26 @@ EOS
         raise ArgumentError, message
       end
       Shoes::Rect.new app, left, top, width, height, style.merge(opts), &blk
+    end
+
+    # Creates a new Shoes::Star object
+    def star(*args, &blk)
+      opts = pop_and_normalize_style(args)
+      case args.length
+      when 2
+        left, top = args
+        points, outer, inner = 10, 100.0, 50.0
+      when 5
+        left, top, points, outer, inner = args
+      else
+        message = <<EOS
+Wrong number of arguments. Must be one of:
+  - star(left, top, [opts])
+  - star(left, top, points, outer, inner, [opts])
+EOS
+        raise ArgumentError, message
+      end
+      Shoes::Star.new(app, left, top, points, outer, inner, opts, &blk)
     end
 
     # Creates a new Shoes::Shape object
@@ -370,6 +391,11 @@ EOS
 
     def nofill
       @style[:fill] = nil
+    end
+
+    # Sets the current line cap style
+    def cap line_cap
+      @style[:cap] = line_cap 
     end
 
     # Adds style, or just returns current style if no argument

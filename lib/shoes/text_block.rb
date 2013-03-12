@@ -13,13 +13,13 @@ module Shoes
 
     def initialize(parent, text, font_size, opts = {})
       @parent = parent
-      @font = DEFAULT_TEXTBLOCK_FONT
+      @app = @parent.app
+      @font = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size = opts[:size] || font_size
       @text = text
       @left = opts[:left]
       @top = opts[:top]
       @links = []
-      @app = @parent.app
 
       @margin = opts[:margin]
       set_margin
@@ -39,15 +39,12 @@ module Shoes
       super
     end
 
-    # It might be possible to leave the redraw
-    # function blank for non-SWT versions of Shoes
-    def text=(value)
-      @text = value.to_s
-      @gui.redraw
+    def text=(*values)
+      @gui.replace *values[0]
     end
 
-    def replace(value)
-      self.text = value
+    def replace *values
+      @gui.replace *values
     end
 
     def to_s
@@ -69,8 +66,8 @@ module Shoes
     private
 
     def handle_opts(opts)
-      if opts.has_key? :family
-        parse_font_opt opts[:family]
+      if opts.has_key? :font
+        parse_font_opt opts[:font]
       end
     end
 

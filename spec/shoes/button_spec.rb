@@ -14,6 +14,9 @@ describe Shoes::Button do
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
 
+  it { should respond_to :click }
+  it { should respond_to :focus }
+
   describe "initialize" do
     it "should set accessors", :no_swt do
       button = subject

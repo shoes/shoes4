@@ -491,6 +491,13 @@ shared_examples "dsl container" do
     end
   end
 
+  describe "line cap" do
+    specify "sets " do
+      subject.cap :curve
+      subject.style[:cap].should eq(:curve)
+    end
+  end
+
   describe "strokewidth" do
     specify "returns a number" do
       subject.strokewidth(4).should eq(4)

@@ -51,6 +51,7 @@ require 'shoes/swt/oval'
 require 'shoes/swt/progress'
 require 'shoes/swt/radio'
 require 'shoes/swt/rect'
+require 'shoes/swt/star'
 require 'shoes/swt/shape'
 require 'shoes/swt/slot'
 require 'shoes/swt/sound'
@@ -73,6 +74,9 @@ module Shoes::Swt
     def self.display
       ::Swt::Widgets::Display.getCurrent
     end
+    
+    ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
+    ::Shoes::FONTS.uniq!
   end
 end
 

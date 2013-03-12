@@ -13,6 +13,8 @@ module Shoes
                 mb, mx, my = e.button, e.x, e.y
                 if s.is_a?(::Shoes::Link) #and !s.parent.hidden
                   blk[mb, mx, my] if ((s.pl..(s.pl+s.pw)).include?(mx) and (s.sy..s.ey).include?(my) and !((s.pl..s.sx).include?(mx) and (s.sy..(s.sy+s.lh)).include?(my)) and !((s.ex..(s.pl+s.pw)).include?(mx) and ((s.ey-s.lh)..s.ey).include?(my)))
+                elsif s.is_a?(::Shoes::App)
+                  blk[mb, mx, my]
                 elsif !s.is_a?(::Shoes::Link) and !s.hidden
                   blk[mb, mx, my] if s.left <= mx and mx <= s.left + s.width and s.top <= my and my <= s.top + s.height
                 end

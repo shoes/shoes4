@@ -51,6 +51,18 @@ describe Shoes::Dialog do
     end
   end
 
+  describe '#ask' do
+    it 'responds to it' do
+      @dialog.should respond_to :ask
+    end
+  end
+
+  describe '#ask_color' do
+    it 'responds to it' do
+      @dialog.should respond_to :ask_color
+    end
+  end
+
   describe 'nothing monkey patched on to Object' do
     it 'is not monkey patched on to object' do
       Object.new.should_not respond_to :alert
@@ -62,6 +74,14 @@ describe Shoes::Dialog do
 
     it 'is not monkey patched on to object' do
       Object.new.should_not respond_to :dialog_chooser
+    end
+
+    it 'is not monkey patched on to object' do
+      Object.new.should_not respond_to :ask
+    end
+
+    it 'is not monkey patched on to object' do
+      Object.new.should_not respond_to :ask_color
     end
   end
 
@@ -93,6 +113,14 @@ describe Shoes::Dialog do
     it 'knows of #ask_save_folder' do
       main_object.should respond_to :ask_save_folder
     end
+
+    it 'knows of #ask' do
+      main_object.should respond_to :ask
+    end
+
+    it 'knows of #ask' do
+      main_object.should respond_to :ask_color
+    end
   end
 
   describe 'Shoes::App' do
@@ -122,6 +150,14 @@ describe Shoes::Dialog do
 
     it 'knows about #ask_save_folder' do
       @app.should respond_to :ask_save_folder
+    end
+
+    it 'knows about #ask_save_folder' do
+      @app.should respond_to :ask
+    end
+
+    it 'knows about #ask_save_color' do
+      @app.should respond_to :ask_color
     end
   end
 

@@ -30,6 +30,7 @@ module Shoes
     include Shoes::ElementMethods
     include Shoes::Common::Margin
     include Shoes::BuiltinMethods
+    include Shoes::Common::Clickable
 
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
@@ -86,16 +87,24 @@ module Shoes
       Shoes.unregister self
       @gui.quit
     end
-    
-    def clear &blk
-      super
-      @app.unslotted_elements.each &:remove
-      @app.unslotted_elements.clear
 
-      @contents << @top_slot
-      @current_slot = @top_slot
-      instance_eval &blk if blk
-      gui.flush
+    def started?
+      @gui.started
+    end
+
+    def clear &blk
+      if started?
+        super
+        @app.unslotted_elements.each &:remove
+        @app.unslotted_elements.clear
+
+        @contents << @top_slot
+        @current_slot = @top_slot
+        instance_eval &blk if blk
+        gui.flush
+      else
+        instance_eval &blk if blk
+      end
     end
 
     def add_child(child)
@@ -109,5 +118,8 @@ module Shoes
       }
     end
 
+    def font *family
+      family.empty? ? @font : @font = family.first
+    end
   end
 end

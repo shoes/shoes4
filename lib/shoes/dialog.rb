@@ -15,5 +15,13 @@ module Shoes
     def dialog_chooser title, folder=false
       @gui.dialog_chooser title, folder
     end
+
+    def ask msg
+      @gui.ask msg
+    end
+
+    def ask_color title
+      @gui.ask_color title
+    end
   end
 end

@@ -69,6 +69,18 @@ describe Shoes::Swt::Dialog do
     end
   end
 
+  describe 'ask' do
+    it 'responds to it' do
+      @dialog.should respond_to :ask
+    end
+  end
+
+  describe 'ask_color' do
+    it 'responds to it' do
+      @dialog.should respond_to :ask_color
+    end
+  end
+
   describe 'on the main object' do
     describe '#alert' do
 

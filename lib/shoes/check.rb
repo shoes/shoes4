@@ -28,5 +28,9 @@ module Shoes
     def focus
       @gui.focus
     end
+
+    def click
+      @blk.call
+    end
   end
 end

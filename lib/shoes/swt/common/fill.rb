@@ -26,7 +26,8 @@ module Shoes
 
         def apply_fill(context)
           if fill
-            fill.apply_as_fill(context, left, top, width, height, angle)
+            l, t = self.is_a?(Star) ? [left-width/2.0, top-height/2.0] : [left, top]
+            fill.apply_as_fill(context, l, t, width, height, angle)
             true
           end
         end

@@ -7,7 +7,7 @@ describe Shoes::Swt::Background do
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: 1, hidden: false) }
+  let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: 1, hidden: false).as_null_object }
   let(:parent) { double("parent", width: width, height: height, left: left, top: top, contents: []) }
 
   subject {

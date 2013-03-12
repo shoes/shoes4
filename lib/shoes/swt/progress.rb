@@ -19,7 +19,11 @@ module Shoes
         @real.minimum = 0
         @real.maximum = 100
 
-        @real.pack
+        if dsl.opts[:width] and dsl.opts[:height]
+          @real.setSize dsl.opts[:width], dsl.opts[:height]
+        else
+          @real.pack
+        end
       end
 
       def fraction=(value)

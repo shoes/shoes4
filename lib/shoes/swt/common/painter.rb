@@ -3,6 +3,7 @@ module Shoes
     module Common
       class Painter
         include Resource
+        LINECAP = {curve: ::Swt::SWT::CAP_ROUND, rect: ::Swt::SWT::CAP_FLAT, project: ::Swt::SWT::CAP_SQUARE}
 
         def initialize(obj)
           @obj = obj
@@ -13,6 +14,7 @@ module Shoes
           gcs_reset gc
           unless @obj.dsl.hidden
             gc.set_antialias ::Swt::SWT::ON
+            gc.set_line_cap(LINECAP[@obj.dsl.style[:cap]] || LINECAP[:rect])
             gc.set_transform(@obj.transform)
             fill gc if fill_setup(gc)
             draw gc if draw_setup(gc)

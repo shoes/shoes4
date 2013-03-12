@@ -3,6 +3,12 @@ shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=mas
 
 Shoes 4 : the next version of Shoes
 
+Still in development
+--------------------
+Hi there, thanks for checking by! Shoes4 is still in development. It doesn't support all of the shoes DSL just yet.
+But if you want to check it out, that's awesome! If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
+
+But hey, make sure to check back later, because shoes4 is the future!
 
 
 Hacking
@@ -37,7 +43,7 @@ Hacking
 
 3. Set up your local environment
 
-**JRuby 1.7**
+**JRuby 1.7** (recommended)
 
         C:\tmp>cd shoes4
         C:\tmp\shoes4>jruby -S gem install bundler
@@ -122,7 +128,11 @@ Okay, now for real. The simplest thing is to put your script in a directory by i
 
 You'll find your app at `path/to/directory-of/pkg/Shoes App.app`.
 
-If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/wasnotrice/shoes4/blob/pkg/app.yaml) for more details. When you have an `app.yaml` file right next to your script, you have three options:
+If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/shoes/shoes4/blob/master/app.yaml) for more details.
+
+***Note:*** *If you use an `app.yaml`, you will have to customize or comment out each option. The example is just an example ;)*
+
+When you have an `app.yaml` file right next to your script, you have three options:
 
     $ bin/shoes -p swt:app path/to/directory-of/your-shoes-app.rb
     $ bin/shoes -p swt:app path/to/directory-of/app.yaml

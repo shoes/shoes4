@@ -22,11 +22,6 @@ describe Shoes::TextBlock do
       s.text = "Goodbye Cruel World"
       s.text.should eql "Goodbye Cruel World"
     end
-
-    it "calls redraw when changing text" do
-      Shoes.configuration.backend::TextBlock.any_instance.should_receive :redraw
-      subject.text = "Goodbye Cruel World"
-    end
   end
 
   describe "#to_s" do
@@ -41,6 +36,11 @@ describe Shoes::TextBlock do
       subject.replace "Goodbye Cruel World"
       subject.text.should eq("Goodbye Cruel World")
     end
+    
+    it "allows two arguments" do
+      subject.replace "Goodbye Cruel World, ", text_link
+      subject.text.should eq("Goodbye Cruel World, Hello")
+    end
   end
 
   describe "font" do
@@ -49,18 +49,18 @@ describe Shoes::TextBlock do
     end
 
     it "should allow setting the font with :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: "Helvetica" })
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: "Helvetica" })
       s.font.should eql "Helvetica"
     end
 
     it "should allow setting the font size with :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: "Helvetica 33px" })
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: "Helvetica 33px" })
       s.font.should eql "Helvetica"
       s.font_size.should eql 33
     end
 
     it "should accept fonts surrounded with questionmarks when using :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { family: '"Comic Sans" 13px' })
+      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: '"Comic Sans" 13px' })
       s.font.should eql "Comic Sans"
       s.font_size.should eql 13
     end

@@ -58,6 +58,11 @@ shared_examples_for "stroke painter" do
     gc.should_receive(:set_antialias).with(Swt::SWT::ON)
     subject.paint_control(event)
   end
+  
+  it "sets line cap" do
+    gc.should_receive(:set_line_cap).with(anything)
+    subject.paint_control(event)
+  end
 end
 
 shared_examples_for "fill painter" do

@@ -20,6 +20,9 @@ module Shoes
 
       def quit
       end
+      
+      def started
+      end
     end
   end
 end
