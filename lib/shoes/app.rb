@@ -4,8 +4,9 @@ require 'shoes/common/margin'
 require 'tmpdir'
 require 'fileutils'
 
-def window(*a, &b)
-  Shoes.app(*a, &b)
+def window(a={}, &b)
+  a.merge! owner: self
+  Shoes.app(a, &b)
 end
 
 
@@ -39,7 +40,7 @@ module Shoes
                         :background => Shoes::COLORS[:white] }
 
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
-    attr_reader :app, :mouse_motion
+    attr_reader :app, :mouse_motion, :owner
     attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
     attr_accessor :mouse_button, :mouse_pos
@@ -55,6 +56,15 @@ module Shoes
       self.app_title  = opts[:title]
       self.resizable  = opts[:resizable]
       self.opts       = opts
+
+      @owner = opts[:owner]
+      if @owner
+        win_title = @owner.is_a?(Shoes::App) ? @owner.app_title : nil
+        class << @owner; self end.
+        class_eval do
+          define_method(:to_s){win_title}
+        end
+      end
 
       @app = self
       @style = default_styles

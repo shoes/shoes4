@@ -28,8 +28,8 @@ module Shoes
       @gui.focus
     end
 
-    def click
-      @blk.call
+    def click &blk
+      @gui.click &blk
     end
   end
 end

@@ -4,8 +4,9 @@ module Shoes
   class Slot
     include Shoes::ElementMethods
     include Shoes::Common::Margin
+    include Shoes::Common::Clickable
 
-    attr_reader :parent, :gui, :contents
+    attr_reader :parent, :gui, :contents, :hidden
     attr_reader :blk
     attr_accessor :width, :height, :left, :top
 

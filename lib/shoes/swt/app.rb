@@ -62,6 +62,7 @@ module Shoes
       
       def flush
         @dsl.top_slot.contents_alignment @dsl.top_slot
+        @real.layout
       end
 
       def scroll_top
@@ -71,6 +72,14 @@ module Shoes
       def scroll_top=(n)
         @real.setLocation 0, -n
         @shell.getVerticalBar.setSelection n
+      end
+
+      def clipboard
+        ::Swt::Clipboard.new(Shoes.display).getContents ::Swt::TextTransfer.getInstance
+      end
+
+      def clipboard=(str)
+        ::Swt::Toolkit.getDefaultToolkit.getSystemClipboard.setContents ::Swt::StringSelection.new(str), Shoes
       end
 
       private

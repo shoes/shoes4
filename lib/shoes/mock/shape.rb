@@ -8,6 +8,9 @@ module Shoes
 
       def move_to(x, y)
       end
+
+      def quad_to(*args)
+      end
     end
   end
 end

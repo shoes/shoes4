@@ -16,6 +16,9 @@ describe Shoes::Swt::App do
 
   subject { Shoes::Swt::App.new(app) }
 
+  it { should respond_to :clipboard }
+  it { should respond_to :clipboard= }
+
   before :each do
     Shoes::Swt.unregister_all
   end
