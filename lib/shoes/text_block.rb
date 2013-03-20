@@ -8,7 +8,7 @@ module Shoes
     include Shoes::CommonMethods
     include Shoes::Common::Margin
 
-    attr_reader  :gui, :parent, :text, :links, :app
+    attr_reader  :gui, :parent, :text, :links, :app, :hidden
     attr_accessor :font, :font_size, :width, :height, :left, :top
 
     def initialize(parent, text, font_size, opts = {})

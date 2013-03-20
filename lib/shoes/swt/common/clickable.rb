@@ -7,6 +7,7 @@ module Shoes
             ln = ::Swt::Widgets::Listener.new
             s.ln = ln
             s = s.dsl unless s.is_a?(::Shoes::Link) 
+            s.app.gui.mscs << s
             class << ln; self end.
             instance_eval do
               define_method :handleEvent do |e|

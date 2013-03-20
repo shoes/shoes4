@@ -40,7 +40,7 @@ module Shoes
                         :background => Shoes::COLORS[:white] }
 
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
-    attr_reader :app, :mouse_motion, :owner
+    attr_reader :app, :mouse_motion, :owner, :hidden
     attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
     attr_accessor :mouse_button, :mouse_pos

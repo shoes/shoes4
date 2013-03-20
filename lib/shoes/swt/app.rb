@@ -11,9 +11,10 @@ module Shoes
       include Common::Clickable
 
       attr_reader :dsl, :real, :shell, :started
-      attr_accessor :ln
+      attr_accessor :ln, :mscs
 
       def initialize dsl
+        @mscs = []
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background])
@@ -154,6 +155,21 @@ module Shoes
       def mouseMove(e)
         @app.dsl.mouse_pos = [e.x, e.y]
         @app.dsl.mouse_motion.each{|blk| blk[e.x, e.y]}
+        mouse_shape_control
+      end
+      def mouse_shape_control
+        flag = false
+        mouse_x, mouse_y = @app.dsl.mouse_pos
+        @app.mscs.each do |s|
+          if s.is_a?(::Shoes::Link) and !s.parent.hidden
+            flag = true if ((s.pl..(s.pl+s.pw)).include?(mouse_x) and (s.sy..s.ey).include?(mouse_y) and !((s.pl..s.sx).include?(mouse_x) and (s.sy..(s.sy+s.lh)).include?(mouse_y)) and !((s.ex..(s.pl+s.pw)).include?(mouse_x) and ((s.ey-s.lh)..s.ey).include?(mouse_y)))
+          elsif !s.is_a?(::Shoes::Link) and !s.hidden
+            dx, dy = s.is_a?(Star) ? [s.width / 2.0, s.height / 2.0] : [0, 0]
+            flag = true if s.left - dx <= mouse_x and mouse_x <= s.left - dx + s.width and s.top - dy <= mouse_y and mouse_y <= s.top - dy + s.height
+          end
+        end
+        cursor = flag ? ::Swt::SWT::CURSOR_HAND : ::Swt::SWT::CURSOR_ARROW
+        @app.shell.setCursor  Shoes.display.getSystemCursor(cursor)
       end
     end
 
