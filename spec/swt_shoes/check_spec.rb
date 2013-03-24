@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Check do
+describe Shoes::Swt::Check, :swt do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', :width= => true, :height= => true, contents: []) }
   let(:parent) { double('parent', real: true, dsl: mock(contents: []) ) }

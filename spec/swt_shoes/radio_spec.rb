@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Radio do
+describe Shoes::Swt::Radio, :swt do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', :width= => true, :height= => true) }
   let(:parent) { double('parent', real: true, dsl: mock(contents: []) ) }

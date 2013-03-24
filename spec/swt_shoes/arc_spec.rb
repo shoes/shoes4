@@ -1,4 +1,4 @@
-describe Shoes::Swt::Arc do
+describe Shoes::Swt::Arc, :swt do
   let(:container) { double('container', disposed?: false) }
   let(:app) { double('app', real: container, add_paint_listener: true) }
   let(:left) { 100 }

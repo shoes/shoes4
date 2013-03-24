@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Button do
+describe Shoes::Swt::Button, :swt do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', :text => text) }
   let(:parent) { double('parent') }

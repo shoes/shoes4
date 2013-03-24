@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::ImagePattern do
+describe Shoes::Swt::ImagePattern, :swt do
   let(:path) { File.join Shoes::DIR, 'static/shoes-icon.png'  }
   let(:dsl) { Shoes::ImagePattern.new(path) }
 

@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Keypress do
+describe Shoes::Swt::Keypress, :swt do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
   let(:app) { Shoes::App.new(opts, &input_blk) }

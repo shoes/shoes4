@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Progress do
+describe Shoes::Swt::Progress, :swt do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl').as_null_object }
   let(:parent) { double('parent') }

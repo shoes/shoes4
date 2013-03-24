@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 main_object = self
 
-describe Shoes::Swt::Dialog do
+describe Shoes::Swt::Dialog, :swt do
 
   def mock_message_box
     create_mock_message_box mock(:mb, open: true, :message= => true)

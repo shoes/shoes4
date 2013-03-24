@@ -27,7 +27,7 @@ describe Shoes::Configuration do
     let(:dsl_object) { Shoes::Shape.new app, args }
 
     it "raises ArgumentError on bad input" do
-      lambda { Shoes.configuration.backend = :bogus }.should raise_error(LoadError)
+      lambda { Shoes.configuration.backend! :bogus }.should raise_error(LoadError)
     end
 
     describe "#backend_with_app_for" do

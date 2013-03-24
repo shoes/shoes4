@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Image do
+describe Shoes::Swt::Image, :swt do
   class MockSize
     def width; 128 end
     def height; 128 end

@@ -21,11 +21,25 @@ module Shoes
       # @example
       #   Shoes::Configuration.backend = :swt # => Shoes::Swt
       def backend=(backend)
-        require "shoes/#{backend.to_s.downcase}"
-        @backend ||= Shoes.const_get(backend.to_s.capitalize)
-        @backend_name ||= backend
+        if @backend
+          STDERR << "Shoes backend can be set only once. #{@backend} => #{backend}\n"
+        else
+          require "shoes/#{backend.to_s.downcase}"
+          @backend = Shoes.const_get(backend.to_s.capitalize)
+          @backend_name = backend
+        end
       rescue LoadError => e
         raise LoadError, "Couldn't load backend '#{backend}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
+      end
+
+      # Force the backend, this is needed for testing. (see #backend=)
+      #
+      # @param backend [Symbol] The backend's name
+      # @return [Module] The backend's root module
+      def backend!(backend)
+        @backend = nil
+        @backend_name = nil
+        self.backend = backend
       end
 
       # Finds the appropriate backend class for the given Shoes object

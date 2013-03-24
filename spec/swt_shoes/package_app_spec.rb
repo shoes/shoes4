@@ -4,7 +4,7 @@ require 'shoes/swt/package/app'
 
 include PackageHelpers
 
-describe Shoes::Swt::Package::App do
+describe Shoes::Swt::Package::App, :swt do
   include_context 'config'
   include_context 'package'
 

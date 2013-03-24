@@ -96,3 +96,18 @@ include Guard
 
 Dir["#{SHOESSPEC_ROOT}/support/**/*.rb"].each {|f| require f}
 
+module MockBackendSpec
+  def self.included(spec_group)
+    spec_group.class_eval do
+
+      let(:backend_name) { :mock }
+      let!(:backend) {  Shoes.configuration.backend! backend_name }
+
+    end
+  end
+end
+
+RSpec.configure do |config|
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.include MockBackendSpec
+end

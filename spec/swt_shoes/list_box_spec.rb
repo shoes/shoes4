@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::ListBox do
+describe Shoes::Swt::ListBox, :swt do
   let(:items) { ["Pie", "Apple", "Sand"] }
   let(:dsl) { double('dsl', items: items, opts: {}) }
   let(:parent) { double('parent') }

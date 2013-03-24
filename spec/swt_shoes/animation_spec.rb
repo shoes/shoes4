@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Animation do
+describe Shoes::Swt::Animation, :swt do
   let(:dsl) { double('dsl', :stopped? => false, :removed? => false)}
   let(:app) { double 'app', :real => app_real }
   let(:block) { double 'block' }
