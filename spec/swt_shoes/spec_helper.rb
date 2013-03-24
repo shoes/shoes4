@@ -1,7 +1,13 @@
 require "spec_helper"
 require "shoes/swt"
 
-Shoes.configuration.backend = :swt
+module SwtBackendSpec
+  def self.included(example_group)
+    example_group.class_eval do
+      let(:backend_name) { :swt }
+    end
+  end
+end
 
 RSpec.configure do |config|
   config.before(:each) do
@@ -9,7 +15,9 @@ RSpec.configure do |config|
     Swt.stub(:event_loop)
     Swt::Widgets::Shell.any_instance.stub(:open)
   end
-  config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  # Enable the Shoes::Swt backend for specs marked with :swt
+  config.include SwtBackendSpec, :swt
 end
 
 shared_examples = File.join(File.expand_path(File.dirname(__FILE__)), 'shared_examples', '**/*.rb')

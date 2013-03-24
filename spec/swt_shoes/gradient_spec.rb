@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Gradient do
+describe Shoes::Swt::Gradient, :swt do
   let(:color1) { Shoes::Color.create(Shoes::COLORS[:honeydew]) }
   let(:color2) { Shoes::Color.create(Shoes::COLORS[:salmon]) }
   let(:dsl) { Shoes::Gradient.new(color1, color2) }

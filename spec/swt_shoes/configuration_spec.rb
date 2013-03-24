@@ -1,4 +1,4 @@
-describe Shoes::Configuration do
+describe Shoes::Configuration, :swt do
   context ":swt" do
     before :each do
       Shoes.configuration.backend = :swt

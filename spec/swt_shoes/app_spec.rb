@@ -1,6 +1,6 @@
 require "swt_shoes/spec_helper"
 
-describe Shoes::Swt::App do
+describe Shoes::Swt::App, :swt do
   let(:opts) { {:background => Shoes::COLORS[:salmon], :resizable => true} }
   let(:app) { double('app', :opts => opts,
                             :width => 0,

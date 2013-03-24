@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::EditBox do
+describe Shoes::Swt::EditBox, :swt do
   let(:dsl) { double('dsl', opts: {}) }
   let(:parent) { double('parent') }
   let(:block) { double('block') }

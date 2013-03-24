@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Border do
+describe Shoes::Swt::Border, :swt do
   let(:container) { double('container', :disposed? => false) }
   let(:app) { double('app', :real => container, :add_paint_listener => true) }
   let(:left) { 55 }

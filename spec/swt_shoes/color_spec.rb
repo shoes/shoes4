@@ -1,6 +1,7 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Color do
+describe Shoes::Swt::Color, :swt do
+
   subject { Shoes::Swt::Color.create(Shoes::COLORS[:salmon]) }
 
   it_behaves_like "an swt pattern"
@@ -25,9 +26,8 @@ describe Shoes::Swt::Color do
   end
 end
 
-describe Shoes::Swt::NullColor do
+describe Shoes::Swt::NullColor, :swt do
   subject { Shoes::Swt::Color.create(nil) }
-
   it { should be_instance_of(Shoes::Swt::NullColor) }
   its(:real) { should be_nil }
   its(:dsl) { should be_nil }

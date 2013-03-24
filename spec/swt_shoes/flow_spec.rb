@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::Flow do
+describe Shoes::Swt::Flow, :swt do
   let(:dsl) { double('dsl') }
   let(:real) { double('real') }
   let(:parent_real) { double('parent_real', :get_layout => "ok") }

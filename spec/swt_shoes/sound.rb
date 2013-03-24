@@ -1,4 +1,4 @@
-describe Shoes::Swt::Sound do
+describe Shoes::Swt::Sound, :swt do
   let(:dsl) { double('dsl') }
   let(:filepath) { double('filepath') }
   subject { Shoes::Swt::Sound.new(dsl, filepath) }

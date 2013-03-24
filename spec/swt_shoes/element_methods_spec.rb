@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 # FIXME: These specs are copied from spec/shoes/element_methods_spec.rb
 #        We should run the same specs instead of duplicating.
-describe "Basic Element Methods" do
+describe "Basic Element Methods", :swt do
   class ElementMethodsShoeLaces
     include Shoes::ElementMethods
 
