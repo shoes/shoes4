@@ -3,10 +3,9 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::EditLine do
   let(:dsl) { double('dsl', opts: {secret: true}) }
   let(:parent) { double('parent') }
-  let(:block) { double('block') }
   let(:real) { double('real').as_null_object }
 
-  subject { Shoes::Swt::EditLine.new dsl, parent, block }
+  subject { Shoes::Swt::EditLine.new dsl, parent }
 
   before :each do
     parent.stub(:real)
@@ -22,6 +21,17 @@ describe Shoes::Swt::EditLine do
       real.should_receive(:text=).with("some text")
       subject.text = "some text"
     end
+
+    it "should set up a listener that delegates change events" do
+      dsl.should_receive(:call_change_listeners)
+      real.should_receive(:add_modify_listener) do |&blk|
+        blk.call()
+      end
+      subject
+    end
+  end
+
+  describe "responding to change" do
   end
 
   describe ":secret option" do

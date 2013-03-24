@@ -1,8 +1,10 @@
 require 'shoes/common_methods'
+require 'shoes/common/changeable'
 
 module Shoes
   class EditBox
     include Shoes::CommonMethods
+    include Shoes::Common::Changeable
 
     attr_reader :gui, :blk, :parent, :text, :opts
 
@@ -12,14 +14,16 @@ module Shoes
       @app = opts[:app]
       @opts = opts
 
-      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
+
+      self.change &blk if blk
     end
 
     def focus
       @gui.focus
     end
-    
+
     def text
       @gui.text
     end
