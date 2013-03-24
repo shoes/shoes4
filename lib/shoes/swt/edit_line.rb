@@ -6,10 +6,8 @@ module Shoes
       def initialize(dsl, parent, blk)
         dsl.opts[:width] ||= 200
         dsl.opts[:height] ||= 20
-        super(dsl, parent, blk,
-          ::Swt::SWT::SINGLE |
-          ::Swt::SWT::BORDER
-          )
+        styles = dsl.opts[:secret] ? ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER | ::Swt::SWT::PASSWORD : ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER
+        super(dsl, parent, blk, styles)
       end
     end
   end

@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::EditLine do
-  let(:dsl) { double('dsl', opts: {}) }
+  let(:dsl) { double('dsl', opts: {secret: true}) }
   let(:parent) { double('parent') }
   let(:block) { double('block') }
   let(:real) { double('real').as_null_object }
@@ -21,6 +21,12 @@ describe Shoes::Swt::EditLine do
     it "sets text on real element" do
       real.should_receive(:text=).with("some text")
       subject.text = "some text"
+    end
+  end
+
+  describe ":secret option" do
+    it "sets PASSWORD style" do
+      subject.real.getStyle & (::Swt::SWT::SINGLE | ::Swt::SWT::BORDER | ::Swt::SWT::PASSWORD) == ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER | ::Swt::SWT::PASSWORD
     end
   end
 end
