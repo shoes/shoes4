@@ -1,8 +1,11 @@
 require 'shoes/common_methods'
+require 'shoes/common/changeable'
 
 module Shoes
   class ListBox
     include Shoes::CommonMethods
+    include Shoes::Common::Changeable
+
     attr_reader :items, :gui, :blk, :parent, :opts
 
     def initialize(parent, opts = {}, blk = nil)
@@ -11,9 +14,11 @@ module Shoes
       @app = opts[:app]
       @opts = opts
 
-      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @gui = Shoes.configuration.backend_for(self, @parent.gui)
       self.items = opts.has_key?(:items) ? opts[:items] : [""]
       @parent.add_child self
+
+      self.change &blk if blk
     end
 
     def items=(values)

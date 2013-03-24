@@ -6,19 +6,21 @@ module Shoes
 
       # Create a list box
       #
-      # @param [Shoes::List_obx] dsl The Shoes DSL list box this represents
-      # @param [::Swt::Widgets::Composite] parent The parent element of this button
-      # @param [Proc] blk The block of code to call when this button is activated
-      def initialize(dsl, parent, blk)
+      # @param dsl    [Shoes::List_obx] The Shoes DSL list box this represents
+      # @param parent [::Swt::Widgets::Composite] The parent element of this button
+      def initialize(dsl, parent)
         dsl.opts[:width] ||= 200
         dsl.opts[:height] ||= 20
         @dsl = dsl
         @parent = parent
-        @blk = blk
-        @real = ::Swt::Widgets::Combo.new(@parent.real,
-          ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY)
-        @real.setSize dsl.opts[:width], dsl.opts[:height]
-        @real.addSelectionListener{|e| blk[@dsl]} if blk
+        @real = ::Swt::Widgets::Combo.new(
+          @parent.real,
+          ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY
+        )
+        @real.set_size dsl.opts[:width], dsl.opts[:height]
+        @real.add_selection_listener do |event|
+          @dsl.call_change_listeners
+        end
       end
 
       def update_items(values)

@@ -9,22 +9,23 @@ module Shoes
 
       attr_reader :real
 
-      def initialize(dsl, parent, blk, text_options)
-        @dsl = dsl
-        @parent = parent
-        @blk = blk
+      def initialize(dsl, parent, text_options)
+        @dsl          = dsl
+        @parent       = parent
         @text_options = text_options
 
         @real = ::Swt::Widgets::Text.new(@parent.real, text_options)
-        @real.setSize dsl.opts[:width], dsl.opts[:height]
-        @real.setText dsl.opts[:text].to_s
-        @real.addModifyListener{|e| blk[@dsl]} if blk
+        @real.set_size dsl.opts[:width], dsl.opts[:height]
+        @real.set_text dsl.opts[:text].to_s
+        @real.add_modify_listener do |event|
+          @dsl.call_change_listeners
+        end
       end
 
       def text
-        @real.text  
+        @real.text
       end
-      
+
       def text=(value)
         @real.text = value
       end
