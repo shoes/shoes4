@@ -10,6 +10,7 @@ describe Shoes::EditLine do
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
+  it_behaves_like "an element that can respond to change"
 
   it { should respond_to :focus }
   it { should respond_to :text  }

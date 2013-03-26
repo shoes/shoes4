@@ -1,13 +1,13 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::ListBox do
-  let(:items) { ["Pie", "Apple", "Sand"] }
-  let(:dsl) { double('dsl', items: items, opts: {}) }
+  let(:items)  { ["Pie", "Apple", "Sand"] }
+  let(:dsl)    { double('dsl', items: items, opts: {}) }
   let(:parent) { double('parent') }
-  let(:block) { double('block') }
-  let(:real) { mock(text: "", setSize: true, addSelectionListener: true) }
+  let(:block)  { ->(){} }
+  let(:real)   { mock(text: "", set_size: true, add_selection_listener: true) }
 
-  subject { Shoes::Swt::ListBox.new dsl, parent, block }
+  subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 
   before :each do
     parent.stub(:real)
@@ -30,5 +30,15 @@ describe Shoes::Swt::ListBox do
   it "should call text= when choosing" do
     real.should_receive(:text=).with "Bacon"
     subject.choose "Bacon"
+  end
+
+  describe "when the backend notifies us that the selection has changed" do
+    it "should call the change listeners" do
+      dsl.should_receive(:call_change_listeners)
+      real.should_receive(:add_selection_listener) do |&blk|
+        blk.call()
+      end
+      subject
+    end
   end
 end

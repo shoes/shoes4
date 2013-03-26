@@ -8,8 +8,10 @@ describe Shoes::EditBox do
   let(:parent) { Shoes::Flow.new app, app: app }
   subject { Shoes::EditBox.new(parent, input_opts, input_block) }
 
+
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
+  it_behaves_like "an element that can respond to change"
 
   it { should respond_to :focus }
   it { should respond_to :text  }
