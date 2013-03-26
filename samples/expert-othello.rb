@@ -291,10 +291,9 @@ module Othello
     }
     return false
   end
-
-  GAME = Othello::Game.new
 end
 
+GAME = Othello::Game.new
 
 Shoes.app :width => 520, :height => 600 do
   extend Othello
