@@ -16,8 +16,8 @@ module Shoes
       @gui.dialog_chooser title, folder
     end
 
-    def ask msg
-      @gui.ask msg
+    def ask msg, args
+      @gui.ask msg, args
     end
 
     def ask_color title

@@ -23,7 +23,7 @@ module Shoes
         fd.open
       end
 
-      def ask msg, args={}
+      def ask msg, args
         Swt::AskDialog.new(::Swt::Widgets::Shell.new, msg, args).open
       end
 
@@ -64,7 +64,8 @@ module Shoes
         label.setText @msg
         label.setLocation 10, 10
         label.pack
-        text = ::Swt::Widgets::Text.new @shell, ::Swt::SWT::BORDER | ::Swt::SWT::SINGLE
+        styles = @args[:secret] ? ::Swt::SWT::BORDER | ::Swt::SWT::SINGLE | ::Swt::SWT::PASSWORD : ::Swt::SWT::BORDER | ::Swt::SWT::SINGLE
+        text = ::Swt::Widgets::Text.new @shell, styles
         text.setLocation 10, 30
         text.setSize 270, 20
         b = ::Swt::Widgets::Button.new @shell, ::Swt::SWT::NULL

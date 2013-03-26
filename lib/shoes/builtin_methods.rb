@@ -29,8 +29,8 @@ module Shoes
       Shoes::Dialog.new.dialog_chooser 'Save Folder...', :folder
     end
 
-    def ask msg
-      Shoes::Dialog.new.ask msg
+    def ask msg, args={}
+      Shoes::Dialog.new.ask msg, args
     end
 
     def ask_color title = 'Pick a color...'
