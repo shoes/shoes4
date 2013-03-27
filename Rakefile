@@ -115,7 +115,7 @@ namespace :spec do
     end
   end
 
-  desc "Specs for base Shoes libraries 
+  desc "Specs for base Shoes libraries
   Limit the examples to specific :modules : "
   task "shoes", [:module] do |t, args|
     argh = args.to_hash
@@ -130,6 +130,21 @@ task :samples do
   samples_dir = "samples"
   samples = File.read("#{samples_dir}/README").lines
   samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}.shuffle.each do |sample|
+    puts "Running #{samples_dir}/#{sample}...quit to run next sample"
+    cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+    system "bin/#{cmd} #{samples_dir}/#{sample}"
+  end
+end
+
+desc "Run all non-working samples"
+task :non_samples do
+  samples_dir = "samples"
+  samples = File.read("#{samples_dir}/README").lines.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
+  non_samples = Dir[File.join(samples_dir, '*.rb')].map{|f| f.gsub(samples_dir+'/', '')} - samples
+  puts "%d Samples are not known to work" % non_samples.count
+  p non_samples
+
+  non_samples.shuffle.each do |sample|
     puts "Running #{samples_dir}/#{sample}...quit to run next sample"
     cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
     system "bin/#{cmd} #{samples_dir}/#{sample}"
