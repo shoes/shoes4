@@ -1,4 +1,25 @@
 module Shoes
+  # This is the superclass for creating custom Shoes widgets.
+  #
+  # To use, inherit from {Shoes::Widget}. You get a few magical effects:
+  #
+  # * When you inherit from {Shoes::Widget}, you get a method in your Apps to
+  #   create your widgets. The method is lower- and snake-cased. It returns
+  #   an instance of your widget class.
+  # * Your widgets delegate missing methods to their app object. This
+  #   allows you to use the Shoes DSL within your widgets.
+  #
+  # @example
+  #   class SayHello < Shoes::Widget
+  #     def initialize word
+  #       para "Hello #{word}", stroke: green, size: 80
+  #     end
+  #   end
+  #
+  #   Shoes.app do
+  #     say_hello 'Shoes'
+  #   end
+  #
   class Widget
     def self.inherited klass, &blk
       dsl_method = dsl_method_name(klass)
