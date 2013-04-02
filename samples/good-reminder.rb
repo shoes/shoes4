@@ -94,7 +94,7 @@ Shoes.app :title => "A Gentle Reminder",
 
 
   def complete_todo(item)
-    day = Time.today.to_i
+    day = Date.today
     
     if @completed.keys.include? day
       @completed[day] << item

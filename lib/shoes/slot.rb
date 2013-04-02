@@ -41,6 +41,10 @@ module Shoes
 
     def clear &blk
       super
+      eval_block blk
+    end
+
+    def eval_block blk
       @app.current_slot = self
       @app.instance_eval &blk if blk
       @app.current_slot = parent
@@ -53,6 +57,10 @@ module Shoes
 
     def add_child(element)
       gui.dsl.contents << element
+    end
+
+    def append &blk
+      eval_block blk
     end
 
     def positioning x, y, max
