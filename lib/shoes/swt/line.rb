@@ -6,7 +6,8 @@ module Shoes
       include Common::Toggle
       include Common::Clear
 
-      # @param [Shoes::Line] dsl The Shoes::Line implemented by this object
+      # @param [Shoes::Line] dsl The {Shoes::Line} implemented by this object
+      # @param [Shoes::Swt::App] app The {Swt::App} this object belongs to
       # @param [Shoes::Point] point_a One endpoint of the line
       # @param [Shoes::Point] point_b The other endpoint of the line
       # @param [Hash] opts Options
@@ -39,7 +40,6 @@ module Shoes
       attr_reader :left, :top, :width, :height, :angle
       attr_reader :transform
 
-      # @override Common::Move#move
       def move(x, y)
         unless @container.disposed?
           @container.redraw left, top, width, height, false

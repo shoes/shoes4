@@ -8,7 +8,7 @@ module Shoes
       # Creates a new Shoes::Swt::Arc
       #
       # @param [Shoes::Arc] dsl The DSL object represented by this implementation
-      # @parem [Shoes::Swt::App] app The implementation object of the Shoes app
+      # @param [Shoes::Swt::App] app The implementation object of the Shoes app
       def initialize(dsl, app, left, top, width, height, opts = {})
         @dsl, @app = dsl, app
         @left, @top, @width, @height = left, top, width, height

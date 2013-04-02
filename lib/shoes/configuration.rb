@@ -40,10 +40,9 @@ module Shoes
         self.backend.const_get(class_name)
       end
 
-      # Creates an appropriate backend object
+      # Creates an appropriate backend object, passing along additional arguments
       #
       # @param [Object] shoes_object A Shoes object
-      # @param *args The arguments for the backend object
       # @return [Object] An appropriate backend object
       # @example
       #   Shoes.configuration.backend_for(button, args) # => <Shoes::Swt::Button:0x12345678>

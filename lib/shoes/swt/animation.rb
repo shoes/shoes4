@@ -4,7 +4,7 @@ module Shoes
       # An Swt animation implementation
       #
       # @param [Shoes::Animation] dsl The Shoes DSL Animation this represents
-      # @param [Shoes::Swt::App] The Swt representation of the current app
+      # @param [Shoes::Swt::App] app The Swt representation of the current app
       # @param [Proc] blk The block of code to execute for each animation frame
       def initialize(dsl, app, blk)
         @dsl = dsl

@@ -327,19 +327,19 @@ EOS
 
     # Creates a new Shoes::Gradient
     #
-    # @overload
-    # @param [Shoes::Color] from the starting color
-    # @param [Shoes::Color] to the ending color
+    # @overload gradient(from, to)
+    #   @param [Shoes::Color] from the starting color
+    #   @param [Shoes::Color] to the ending color
     #
-    # @overload
-    # @param [String] from a hex string representing the starting color
-    # @param [String] to a hex string representing the ending color
+    # @overload gradient(from, to)
+    #   @param [String] from a hex string representing the starting color
+    #   @param [String] to a hex string representing the ending color
     #
-    # @overload
-    # @param [Range<Shoes::Color>] range min color to max color
+    # @overload gradient(range)
+    #   @param [Range<Shoes::Color>] range min color to max color
     #
-    # @overload
-    # @param [Range<String>] range min color to max color
+    # @overload gradient(range)
+    #   @param [Range<String>] range min color to max color
     def gradient(*args)
       case args.length
       when 1

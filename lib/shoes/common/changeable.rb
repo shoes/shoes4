@@ -7,7 +7,7 @@ module Shoes
     module Changeable
       # Add an extra change event listener block
       #
-      # @dsl
+      # @yield The block to execute on a change event
       def change(&blk)
         add_change_listener(blk)
       end

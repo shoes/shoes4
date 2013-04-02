@@ -111,8 +111,10 @@ module Shoes
     # Updates the bounds of this shape to include the rectangle described by
     # (x1, y1) and (x2, y2)
     #
-    # @param [Integer] x The x-value of the coordinate
-    # @param [Integer] y The y-value of the coordinate
+    # @param [Integer] x1 The x-value of the first coordinate
+    # @param [Integer] y1 The y-value of the first coordinate
+    # @param [Integer] x2 The x-value of the second coordinate
+    # @param [Integer] y2 The y-value of the second coordinate
     # @return nil
     def update_bounds(x1, y1, x2, y2)
       xs = [x1, x2]
