@@ -23,6 +23,9 @@ module Shoes
       
       def started
       end
+
+      def flush
+      end
     end
   end
 end
