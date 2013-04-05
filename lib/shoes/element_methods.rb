@@ -464,12 +464,25 @@ EOS
       @app.mouse_motion << blk
     end
 
+    def hover &blk
+      @hover_proc = blk
+      (@app.mhcs << self) unless @app.mhcs.include? self
+    end
+
+    def leave &blk
+      @leave_proc = blk
+      (@app.mhcs << self) unless @app.mhcs.include? self
+    end
+
+    attr_reader :hover_proc, :leave_proc
+    attr_accessor :hovered
+
     def keypress &blk
       opts = {:app => @app}
       Shoes::Keypress.new opts, &blk
     end
 
-  	def clear
+    def clear
       contents = @contents.dup
       contents.each do |e|
         e.is_a?(Shoes::Slot) ? e.clear : e.remove

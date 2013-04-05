@@ -8,6 +8,7 @@ describe Shoes::Flow do
   subject { Shoes::Flow.new(parent, input_opts, &input_block) }
 
   it_behaves_like "clickable object"
+  it_behaves_like "hover and leave events"
 
   describe "dsl" do
     # dsl methods require :app

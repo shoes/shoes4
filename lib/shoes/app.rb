@@ -43,7 +43,7 @@ module Shoes
     attr_reader :app, :mouse_motion, :owner, :hidden
     attr_accessor :elements, :current_slot
     attr_accessor :opts, :blk
-    attr_accessor :mouse_button, :mouse_pos
+    attr_accessor :mouse_button, :mouse_pos, :mhcs
 
     attr_accessor :resizable, :app_title
     attr_writer   :width, :height
@@ -71,6 +71,7 @@ module Shoes
       @contents, @unslotted_elements = [], []
       @mouse_motion = []
       @mouse_button, @mouse_pos = 0, [0, 0]
+      @mhcs = []
       set_margin
 
       @gui = Shoes.configuration.backend::App.new @app

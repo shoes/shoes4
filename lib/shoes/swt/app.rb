@@ -156,6 +156,8 @@ module Shoes
         @app.dsl.mouse_pos = [e.x, e.y]
         @app.dsl.mouse_motion.each{|blk| blk[e.x, e.y]}
         mouse_shape_control
+        mouse_hover_control
+        mouse_leave_control
       end
       def mouse_shape_control
         flag = false
@@ -170,6 +172,30 @@ module Shoes
         end
         cursor = flag ? ::Swt::SWT::CURSOR_HAND : ::Swt::SWT::CURSOR_ARROW
         @app.shell.setCursor  Shoes.display.getSystemCursor(cursor)
+      end
+
+      def mouse_hover_control
+        @app.dsl.mhcs.each do |e|
+          if mouse_on?(e) and !e.hovered
+            e.hovered = true
+            e.hover_proc[e] if e.hover_proc
+          end
+        end
+      end
+
+      def mouse_leave_control
+        @app.dsl.mhcs.each do |e|
+          if !mouse_on?(e) and e.hovered
+            e.hovered = false
+            e.leave_proc[e] if e.leave_proc
+          end
+        end
+      end
+  
+      def mouse_on? e
+        mb, mx, my = e.app.mouse
+        dx, dy = e.is_a?(Star) ? [e.width / 2.0, e.height / 2.0] : [0, 0]
+        e.left - dx <= mx and mx <= e.left - dx + e.width and e.top - dy <= my and my <= e.top - dy + e.height
       end
     end
 
