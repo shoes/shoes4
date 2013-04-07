@@ -83,9 +83,10 @@ module Shoes
       Shoes::EditLine.new @current_slot, opts, blk
     end
 
-    def edit_box(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::EditBox.new @current_slot, opts, blk
+    def edit_box(*args, &blk)
+      opts = extract_opts!(args)
+      text = args.first
+      Shoes::EditBox.new @current_slot, text, opts, blk
     end
 
     def progress(opts = {}, &blk)
@@ -508,6 +509,17 @@ EOS
 
     def clipboard=(str)
       @app.gui.clipboard = str
+    end
+
+    private
+
+    def extract_opts!(args)
+      opts = {}
+      if args.last.is_a?(Hash)
+        opts = args.pop
+      end
+      opts[:app] = @app
+      opts
     end
   end
 end
