@@ -509,5 +509,9 @@ EOS
     def clipboard=(str)
       @app.gui.clipboard = str
     end
+
+    def download name, args={}, &blk
+      Shoes::Download.new @app, name, args, &blk
+    end
   end
 end
