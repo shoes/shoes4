@@ -10,4 +10,13 @@ describe Shoes::Image do
     it_behaves_like "movable object"
     it_behaves_like "clearable object"
   end
+
+  describe 'accepts web URL' do
+    let(:app) { Shoes::App.new }
+    let(:parent) { double("parent").as_null_object }
+    let(:filename) { "http://is.gd/GVAGF7" }
+    let(:opts) { {app: app} }
+    subject { Shoes::Image.new(parent, filename, opts) }
+    it { subject.file_path.should eql "http://is.gd/GVAGF7" }
+  end
 end
