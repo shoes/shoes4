@@ -25,7 +25,7 @@ module Shoes
       @height ||= 0
       @init_height = @height
       @blk = blk
-
+      @margin = opts[:margin]
       set_margin
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
@@ -71,13 +71,13 @@ module Shoes
       else
         @width = @init_width - margin_left - margin_right
       end
-      if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
-        @left, @top = x + parent.margin_left, max.top + parent.margin_top
-        @height = contents_alignment self
+      if (parent.is_a?(Flow) or parent.is_a?(App)) and x + @width <= parent.left + parent.width - parent.margin_left - parent.margin_right
+        @left, @top = x + parent_margin_left, parent_margin_top
+        @height = contents_alignment(self) + parent_margin_bottom
         max = self if max.height < @height
       else
-        @left, @top = parent.left + parent.margin_left, max.top + max.height + parent.margin_top
-        @height = contents_alignment self
+        @left, @top = parent.left + parent_margin_left, max.top + max.height + parent_margin_top
+        @height = contents_alignment(self) + parent_margin_bottom
         max = self
       end
       case @init_height
@@ -88,6 +88,19 @@ module Shoes
         max.height = @height = @init_height
       end
       max
+    end
+
+    def parent_margin_left
+      parent.is_a?(Shoes::App) ? @margin_left : parent.margin_left
+    end
+    def parent_margin_right
+      parent.is_a?(Shoes::App) ? @margin_right : parent.margin_right
+    end
+    def parent_margin_top
+      parent.is_a?(Shoes::App) ? @margin_top : parent.margin_top
+    end
+    def parent_margin_bottom
+      parent.is_a?(Shoes::App) ? @margin_bottom : parent.margin_bottom
     end
 
     def contents_alignment slot
@@ -101,7 +114,9 @@ module Shoes
         tmp = max
         max = ele.positioning x, y, max
         x, y = ele.left + ele.width, ele.top + ele.height
-        unless max == tmp
+        if max == tmp
+          #slot_height = max.top + max.height - slot_top
+        else
           slot_height = max.top + max.height - slot_top
         end
       end

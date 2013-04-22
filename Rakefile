@@ -125,6 +125,27 @@ namespace :spec do
 
 end
 
+desc "Run abctest"
+task :abctest do
+  samples_dir = "samples"
+  cmd = RbConfig::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+  system "bin/#{cmd} #{samples_dir}/abctest.rb"
+end
+
+desc "Run abc-metricks"
+task :abcmetricks do
+  samples_dir = "samples"
+  cmd = RbConfig::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+  system "bin/#{cmd} #{samples_dir}/abc-metricks.rb"
+end
+
+desc "Run current sample"
+task :sample do
+  samples_dir = "samples"
+  cmd = RbConfig::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+  system "bin/#{cmd} #{samples_dir}/launcher.rb"
+end
+
 desc "Run all working samples"
 task :samples do
   samples_dir = "samples"
