@@ -144,6 +144,7 @@ Oh, and you can also just run your Shoes apps with `bin/shoes`.
 
 Want to contribute?
 -------------------
+
 That's awesome, thank you! 
 
 You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoes4/issues).
@@ -153,6 +154,4 @@ Also there is a list of samples that already work at samples/README, along with 
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
-
-
 
