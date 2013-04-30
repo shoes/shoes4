@@ -1,1 +1,6 @@
+#!/usr/bin/env bash
+
+# Force 1.9 mode and enable C-extensions for jruby
+PROJECT_JRUBY_OPTS=( --1.9 -Xcext.enabled=true )
+
 rvm --create use jruby@shoes
