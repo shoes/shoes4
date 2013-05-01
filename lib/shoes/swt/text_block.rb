@@ -95,6 +95,7 @@ module Shoes
             ::Swt::Color.new(Shoes.display, 0, 0, 0)
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
+		  style.underline = @opts[:underline] ? true : false 
           @tl.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
