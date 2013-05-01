@@ -20,11 +20,10 @@ Hacking
 
         $ git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org)
+2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/), [JRuby](http://jruby.org), and activate `after_use_jruby_opts` RVM hook.
 
         $ rvm install jruby
-
-**Note:** Please make sure that you either install jruby-1.7.0 or higher or you set jruby to [always run in 1.9 mode](http://stackoverflow.com/questions/4755900/how-to-make-jruby-1-6-default-to-ruby-1-9). This is required in order for shoes4 to work.
+        $ chmod +x ${rvm_path}/hooks/after_use_jruby_opts
 
 3. Set up your local environment
 
