@@ -1,4 +1,4 @@
-shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://codeclimate.com/github/shoes/shoes4.png)](https://codeclimate.com/github/shoes/shoes4)
+shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://codeclimate.com/github/shoes/shoes4.png)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://coveralls.io/repos/shoes/shoes4/badge.png?branch=master)](https://coveralls.io/r/shoes/shoes4)
 ======
 
 Shoes 4 : the next version of Shoes
