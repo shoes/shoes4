@@ -8,7 +8,7 @@ describe Shoes::Download do
   subject{ Shoes::Download.new app, name, args, &block }
 
   after do
-    sleep 1 until subject.finished?
+    subject.join_thread
     File.delete args[:save]
   end
 
