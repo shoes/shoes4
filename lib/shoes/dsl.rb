@@ -49,9 +49,9 @@ module Shoes
     end
 
     private
-    def pop_and_normalize_style(opts)
-      style = opts.last.class == Hash ? opts.pop : {}
-      normalize_style(style)
+
+    def pop_style(opts)
+      opts.last.class == Hash ? opts.pop : {}
     end
 
     def normalize_style(orig_style)
@@ -63,6 +63,7 @@ module Shoes
     end
 
     public
+
     def image(path, opts={}, &blk)
       opts.merge! app: @app
       Shoes::Image.new current_slot, path, opts, blk
@@ -213,7 +214,7 @@ module Shoes
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts, &blk)
-      oval_style = pop_and_normalize_style(opts)
+      oval_style = normalize_style pop_style(opts)
       case opts.length
         when 3
           left, top, width = opts
@@ -265,7 +266,7 @@ EOS
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
     def rect(*args, &blk)
-      opts = pop_and_normalize_style(args)
+      opts = normalize_style pop_style(args)
       case args.length
       when 3
         left, top, width = args
@@ -297,7 +298,7 @@ EOS
 
     # Creates a new Shoes::Star object
     def star(*args, &blk)
-      opts = pop_and_normalize_style(args)
+      opts = normalize_style pop_style(args)
       case args.length
       when 2
         left, top = args
