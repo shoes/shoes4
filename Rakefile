@@ -84,7 +84,7 @@ namespace :spec do
   "
   task "all", [:module] do |t, args|
     Rake::Task["spec:shoes"].invoke(args[:module])
-    Rake::Task["spec:swt"].invoke(args[:module])
+    Rake::Task["spec:swt:isolation"].invoke(args[:module])
   end
 
   task :swt, [:module] do |t, args|
@@ -96,6 +96,8 @@ namespace :spec do
     Limit the examples to specific :modules : "
     task :all, [:module] do |t, args|
       argh = swt_args(args)
+      # This is essentially broken, the SWT specs change global state,
+      # making the regular specs fail.
       files = (Dir['spec/swt_shoes/*_spec.rb'] + Dir['spec/shoes/*_spec.rb']).join ' '
       jruby_rspec(files, argh)
     end
