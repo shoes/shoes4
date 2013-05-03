@@ -3,8 +3,8 @@ require 'swt_shoes/spec_helper'
 # FIXME: These specs are copied from spec/shoes/element_methods_spec.rb
 #        We should run the same specs instead of duplicating.
 describe "Basic Element Methods" do
-  class ElementMethodsShoeLaces
-    include Shoes::ElementMethods
+  class DSLShoeLaces
+    include Shoes::DSL
 
     def initialize(gui)
       @gui = gui
@@ -21,7 +21,7 @@ describe "Basic Element Methods" do
   let(:dsl) { double('dsl', rotate: 0 ) }
 
   # Doubles for a Shoes::App
-  let(:app) { ElementMethodsShoeLaces.new app_gui }
+  let(:app) { DSLShoeLaces.new app_gui }
 
   describe "arc" do
     specify "creates a Shoes::Arc" do

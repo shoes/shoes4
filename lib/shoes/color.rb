@@ -112,7 +112,7 @@ EOS
   # Create all of the built-in Shoes colors
   COLORS = {}
 
-  module ElementMethods
+  module DSL
     colors = [
       [:aliceblue, 240, 248, 255],
       [:antiquewhite, 250, 235, 215],
