@@ -31,11 +31,14 @@ module Shoes
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
       @app.current_slot = self
-      begin
-        @app.instance_eval &blk if blk
-      rescue
-        $shoes_is_included.instance_eval &blk if $shoes_is_included
+      if blk
+        if Shoes::URL.shoes_included_instance
+          Shoes::URL.shoes_included_instance.instance_eval &blk
+        else
+          @app.instance_eval &blk
+        end
       end
+
       @app.current_slot = parent
     end
 

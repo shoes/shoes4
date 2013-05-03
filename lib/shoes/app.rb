@@ -76,7 +76,7 @@ module Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
-      blk = $urls[/^#{'/'}$/] unless blk
+      blk = Shoes::URL.urls[%r{^/$}] unless blk
       @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &blk
 
       Shoes.register self
