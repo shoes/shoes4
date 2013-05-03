@@ -2,7 +2,7 @@ require 'shoes/common/margin'
 
 module Shoes
   class Slot
-    include Shoes::ElementMethods
+    include Shoes::DSL
     include Shoes::Common::Margin
     include Shoes::Common::Clickable
 

@@ -1,4 +1,4 @@
-require 'shoes/element_methods'
+require 'shoes/dsl'
 require 'shoes/color'
 require 'shoes/common/margin'
 require 'tmpdir'
@@ -28,7 +28,7 @@ module Shoes
   end
 
   class App
-    include Shoes::ElementMethods
+    include Shoes::DSL
     include Shoes::Common::Margin
     include Shoes::BuiltinMethods
     include Shoes::Common::Clickable

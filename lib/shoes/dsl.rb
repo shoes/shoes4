@@ -24,7 +24,7 @@ module Shoes
   # Including classes must provide:
   #
   #     @style - a hash of styles
-  module ElementMethods
+  module DSL
 
     def color(c)
       Shoes::Color.create c
