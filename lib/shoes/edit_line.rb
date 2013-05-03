@@ -8,11 +8,11 @@ module Shoes
 
     attr_reader :gui, :blk, :parent, :text, :opts
 
-    def initialize(parent, opts = {}, blk = nil)
+    def initialize(app, parent, opts = {}, blk = nil)
+      @app = app
       @parent = parent
-      @blk = blk
-      @app = opts[:app]
       @opts = opts
+      @blk = blk
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self

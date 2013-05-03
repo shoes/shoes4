@@ -62,31 +62,35 @@ module Shoes
       orig_style.merge(normalized_style)
     end
 
+    def create(element, *args)
+      element.new( @app, current_slot, *args )
+    end
+
     public
 
+    # TODO
+    # Shoes 3 also has `image width, height` that takes
+    # a block with drawing instructions.
     def image(path, opts={}, &blk)
-      opts.merge! app: @app
-      Shoes::Image.new current_slot, path, opts, blk
+      create Shoes::Image, path, opts, blk
     end
 
     def border(color, opts = {}, &blk)
-      opts.merge! app: @app
-      Shoes::Border.new current_slot, pattern(color), opts, blk
+      create Shoes::Border, pattern(color), opts, blk
     end
 
     def background(color, opts = {}, &blk)
-      style = normalize_style(opts)
-      Shoes::Background.new current_slot, pattern(color), style, blk
+      create Shoes::Background, pattern(color), normalize_style(opts), blk
     end
 
     def edit_line(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::EditLine.new current_slot, opts, blk
+      create Shoes::EditLine, opts, blk
     end
 
-    def edit_box(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::EditBox.new current_slot, opts, blk
+    def edit_box(*args, &blk)
+      style = pop_style(args)
+      text  = args.first || ''
+      create Shoes::EditBox, text, style, blk
     end
 
     def progress(opts = {}, &blk)

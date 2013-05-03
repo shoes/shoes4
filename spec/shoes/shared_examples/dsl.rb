@@ -21,6 +21,8 @@ shared_examples "DSL container" do
     nostroke
     cap
     strokewidth
+    image
+    edit_box
   ].each do |method|
     include_examples "#{method} DSL method"
   end

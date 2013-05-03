@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Shoes
   # Methods common to Shoes gui elements.
   #
@@ -72,7 +73,7 @@ module Shoes
       @gui.move(left, top) if @gui
       @left, @top = left, top
     end
-    
+
     def remove
       @parent.contents.delete self if @parent
       @app.gui.flush

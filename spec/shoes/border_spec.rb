@@ -12,8 +12,8 @@ describe Shoes::Border do
   let(:parent) { Shoes::Flow.new(app, app: app) }
   let(:blue)  { Shoes::COLORS[:blue] }
   let(:app) { Shoes::App.new }
-  let(:opts){ {app: app} }
-  subject { Shoes::Border.new(parent, blue, opts) }
+  let(:opts){ {} }
+  subject { Shoes::Border.new(app, parent, blue, opts) }
 
   it_behaves_like "basic border"
 end
