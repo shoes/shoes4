@@ -16,8 +16,11 @@ module Shoes
             gc.set_antialias ::Swt::SWT::ON
             gc.set_line_cap(LINECAP[@obj.dsl.style[:cap]] || LINECAP[:rect])
             gc.set_transform(@obj.transform)
-            fill gc if fill_setup(gc)
-            draw gc if draw_setup(gc)
+            obj = @obj.dsl
+            set_rotate gc, @obj.angle, obj.left+obj.width/2.0, obj.top+obj.height/2.0 do
+              fill gc if fill_setup(gc)
+              draw gc if draw_setup(gc)
+            end
           end
         end
 
@@ -44,6 +47,23 @@ module Shoes
           @obj.top = @obj.dsl.parent.top
           @obj.width = @obj.opts[:width] || @obj.dsl.parent.width
           @obj.height = @obj.opts[:height] || @obj.dsl.parent.height
+        end
+
+        def set_rotate gc, angle, left, top
+          angle, left, top = angle.to_i, left.to_i, top.to_i
+          if block_given?
+            tr = ::Swt::Transform.new Shoes.display
+            reset_rotate tr, gc, angle, left, top
+            yield
+            reset_rotate tr, gc, -angle, left, top
+          end
+        end
+
+        def reset_rotate tr, gc, angle, left, top
+          tr.translate left, top
+          tr.rotate angle
+          tr.translate -left, -top
+          gc.setTransform tr
         end
       end
     end
