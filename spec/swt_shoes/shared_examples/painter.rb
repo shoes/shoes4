@@ -14,6 +14,7 @@ shared_context "painter context" do
     shape.stub(:fill_alpha) { fill_alpha }
     shape.stub(:stroke) { stroke }
     shape.stub(:stroke_alpha) { stroke_alpha }
+    subject.stub(:reset_rotate) { double("reset_rotate").as_null_object }
   end
 end
 

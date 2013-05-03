@@ -2,12 +2,12 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
   let(:container) { double('container', disposed?: false) }
-  let(:app) { double('app', real: container, add_paint_listener: true) }
+  let(:app) { double('app', real: container, add_paint_listener: true, dsl: dsl) }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) { double("dsl object", hidden: false).as_null_object }
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0).as_null_object }
 
   subject {
     Shoes::Swt::Oval.new(dsl, app, left, top, width, height)

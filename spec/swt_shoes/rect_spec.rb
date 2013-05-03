@@ -2,12 +2,12 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Rect do
   let(:container) { double('container', :disposed? => false) }
-  let(:app) { double('app', :real => container, :add_paint_listener => true) }
+  let(:app) { double('app', :real => container, :add_paint_listener => true, :dsl => dsl) }
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) { double("dsl object", hidden: false).as_null_object }
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0).as_null_object }
 
   subject {
     Shoes::Swt::Rect.new dsl, app, left, top, width, height
