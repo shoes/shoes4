@@ -236,7 +236,7 @@ describe "Shoes built-in colors" do
   end
 
   class MockApp
-    include Shoes::ElementMethods
+    include Shoes::DSL
   end
 
   subject { MockApp.new }

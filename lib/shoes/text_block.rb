@@ -13,7 +13,7 @@ module Shoes
 
     def initialize(parent, text, font_size, opts = {})
       @parent = parent
-      @app = @parent.app
+      @app = opts[:app]
       @font = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size = opts[:size] || font_size
       @text = text

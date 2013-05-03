@@ -9,14 +9,7 @@ describe Shoes::Flow do
 
   it_behaves_like "clickable object"
   it_behaves_like "hover and leave events"
-
-  describe "dsl" do
-    # dsl methods require :app
-    let(:input_opts) { {:app => app} }
-
-    subject { Shoes::Flow.new(parent, input_opts, &input_block).app }
-    it_behaves_like "dsl container"
-  end
+  it_behaves_like "Slot"
 
   describe "initialize" do
     it "sets accessors" do
@@ -40,7 +33,7 @@ describe Shoes::Flow do
     f.width.should == 1.0
     f.height.should == 0
   end
-  
+
   it "clears with an optional block" do
     subject.should_receive(:clear).with(&input_block)
     subject.clear &input_block

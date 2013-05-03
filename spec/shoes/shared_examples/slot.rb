@@ -6,11 +6,6 @@ shared_examples_for "Slot" do
     subject.append {para "foo"}
     subject.contents.size.should eq(1)
   end
-end
 
-describe Shoes::Stack do
-  let(:app) {Shoes::App.new}
-  subject {Shoes::Stack.new(app, {:app => app})}
-
-  it_behaves_like "Slot"
+  it_behaves_like "DSL container"
 end
