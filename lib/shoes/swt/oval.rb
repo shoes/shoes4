@@ -19,7 +19,7 @@ module Shoes
         @top = top
         @width = width
         @height = height
-        @angle = opts[:angle] || 0
+        @angle = opts[:angle] || app.dsl.rotate
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
