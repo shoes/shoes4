@@ -6,7 +6,8 @@ describe Shoes::EditLine do
   let(:input_opts) { {} }
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, app: app }
-  subject { Shoes::EditLine.new(app, parent, input_opts, input_block) }
+  let(:text) { 'hello' }
+  subject { Shoes::EditLine.new(app, parent, text, input_opts, input_block) }
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"

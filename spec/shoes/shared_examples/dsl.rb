@@ -23,6 +23,8 @@ shared_examples "DSL container" do
     strokewidth
     image
     edit_box
+    edit_line
+    progress
   ].each do |method|
     include_examples "#{method} DSL method"
   end

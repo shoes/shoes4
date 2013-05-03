@@ -6,9 +6,9 @@ module Shoes
     include Shoes::CommonMethods
     include Shoes::Common::Changeable
 
-    attr_reader :gui, :blk, :parent, :text, :opts
+    attr_reader :gui, :blk, :parent, :opts
 
-    def initialize(app, parent, opts = {}, blk = nil)
+    def initialize(app, parent, text, opts = {}, blk = nil)
       @app = app
       @parent = parent
       @opts = opts
@@ -16,6 +16,8 @@ module Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
+
+      self.text = text
       self.change &blk if blk
     end
 

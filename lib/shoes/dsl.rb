@@ -83,8 +83,10 @@ module Shoes
       create Shoes::Background, pattern(color), normalize_style(opts), blk
     end
 
-    def edit_line(opts = {}, &blk)
-      create Shoes::EditLine, opts, blk
+    def edit_line(*args, &blk)
+      style = pop_style(args)
+      text  = args.first || ''
+      create Shoes::EditLine, text, style, blk
     end
 
     def edit_box(*args, &blk)
@@ -94,8 +96,7 @@ module Shoes
     end
 
     def progress(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Progress.new current_slot, opts, blk
+      create Shoes::Progress, opts, blk
     end
 
     def check(opts = {}, &blk)

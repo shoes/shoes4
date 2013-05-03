@@ -13,14 +13,14 @@ end
 module Shoes
   shoes_icon = File.expand_path("../../../static/shoes-icon.png", __FILE__)
   if shoes_icon.include? '.jar!'
-    SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png')
+    SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png').freeze
     open SHOES_ICON, 'wb' do |fw|
       open shoes_icon, 'rb' do |fr|
         fw.write fr.read
       end
     end
   else
-    SHOES_ICON = shoes_icon
+    SHOES_ICON = shoes_icon.freeze
   end
 
   def self.app(opts={}, &blk)
@@ -37,7 +37,7 @@ module Shoes
                         :height     => 500,
                         :title      => "Shoes 4",
                         :resizable  => true,
-                        :background => Shoes::COLORS[:white] }
+                        :background => Shoes::COLORS[:white] }.freeze
 
     attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
     attr_reader :app, :mouse_motion, :owner, :hidden

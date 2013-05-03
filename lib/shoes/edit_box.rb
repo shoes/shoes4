@@ -15,10 +15,9 @@ module Shoes
       @blk = blk
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
-      @gui.text = text
-
       @parent.add_child self
 
+      self.text = text
       self.change &blk if blk
     end
 
