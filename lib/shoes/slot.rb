@@ -7,9 +7,8 @@ module Shoes
     include Shoes::Common::Clickable
 
     attr_reader :parent, :gui, :contents, :hidden
-    attr_reader :blk
+    attr_reader :blk, :app
     attr_accessor :width, :height, :left, :top
-
 
     def initialize parent, opts={}, &blk
       @parent = parent
@@ -39,6 +38,8 @@ module Shoes
       @app.current_slot = parent
     end
 
+    def current_slot ; @app.current_slot ; end
+
     def clear &blk
       super
       eval_block blk
@@ -49,10 +50,6 @@ module Shoes
       @app.instance_eval &blk if blk
       @app.current_slot = parent
       @app.gui.flush
-    end
-
-    def app
-      @parent.app
     end
 
     def add_child(element)

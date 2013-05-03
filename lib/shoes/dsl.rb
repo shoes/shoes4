@@ -65,62 +65,62 @@ module Shoes
     public
     def image(path, opts={}, &blk)
       opts.merge! app: @app
-      Shoes::Image.new @current_slot, path, opts, blk
+      Shoes::Image.new current_slot, path, opts, blk
     end
 
     def border(color, opts = {}, &blk)
       opts.merge! app: @app
-      Shoes::Border.new @current_slot, pattern(color), opts, blk
+      Shoes::Border.new current_slot, pattern(color), opts, blk
     end
 
     def background(color, opts = {}, &blk)
       style = normalize_style(opts)
-      Shoes::Background.new @current_slot, pattern(color), style, blk
+      Shoes::Background.new current_slot, pattern(color), style, blk
     end
 
     def edit_line(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::EditLine.new @current_slot, opts, blk
+      Shoes::EditLine.new current_slot, opts, blk
     end
 
     def edit_box(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::EditBox.new @current_slot, opts, blk
+      Shoes::EditBox.new current_slot, opts, blk
     end
 
     def progress(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Progress.new @current_slot, opts, blk
+      Shoes::Progress.new current_slot, opts, blk
     end
 
     def check(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Check.new @current_slot, opts, blk
+      Shoes::Check.new current_slot, opts, blk
     end
 
     def radio(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Radio.new @current_slot, opts, blk
+      Shoes::Radio.new current_slot, opts, blk
     end
 
     def list_box(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::ListBox.new @current_slot, opts, blk
+      Shoes::ListBox.new current_slot, opts, blk
     end
 
     def flow(opts = {}, &blk)
       opts.merge! :app => app
-      Shoes::Flow.new @current_slot, opts, &blk
+      Shoes::Flow.new current_slot, opts, &blk
     end
 
     def stack(opts = {}, &blk)
       opts.merge! :app => @app
-      Shoes::Stack.new @current_slot, opts, &blk
+      Shoes::Stack.new current_slot, opts, &blk
     end
 
     def button(text, opts={}, &blk)
       opts.merge! :app => @app
-      Shoes::Button.new @current_slot, text, opts, blk
+      Shoes::Button.new current_slot, text, opts, blk
     end
 
     # Creates an animation that runs the given block of code.
@@ -225,7 +225,7 @@ module Shoes
           top = oval_style[:top] || 0
           width = oval_style[:diameter] || oval_style[:width] ||
                   (oval_style[:radius] || 0) * 2
-          height = oval_style[:height] || width 
+          height = oval_style[:height] || width
         else
           message = <<EOS
 Wrong number of arguments. Must be one of:
@@ -395,7 +395,7 @@ EOS
 
     # Sets the current line cap style
     def cap line_cap
-      @style[:cap] = line_cap 
+      @style[:cap] = line_cap
     end
 
     # Adds style, or just returns current style if no argument
@@ -423,7 +423,7 @@ EOS
         opts[:text_styles] = styles unless styles.empty?
         text = text.map(&:to_s).join
         opts.merge! app: @app
-        eval "Shoes::#{m.capitalize}.new(@current_slot, text, #{m.upcase}_FONT_SIZE, opts)"
+        eval "Shoes::#{m.capitalize}.new(current_slot, text, #{m.upcase}_FONT_SIZE, opts)"
       end
     end
 
@@ -451,7 +451,7 @@ EOS
         Shoes::Text.new m, str, pattern(color)
       end
     end
-    
+
     def link *str, &blk
       Shoes::Link.new :link, str, &blk
     end
@@ -497,7 +497,7 @@ EOS
     def scroll_top
       @app.gui.scroll_top
     end
-    
+
     def scroll_top=(n)
       @app.gui.scroll_top = n
     end

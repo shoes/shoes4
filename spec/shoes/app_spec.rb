@@ -5,7 +5,7 @@ describe Shoes::App do
   let(:opts) { Hash.new }
   subject { Shoes::App.new(opts, &input_blk) }
 
-  it_behaves_like "dsl container"
+  it_behaves_like "DSL container"
   it { should respond_to :clipboard }
   it { should respond_to :clipboard= }
   it { should respond_to :owner }
@@ -136,7 +136,7 @@ describe Shoes::App do
       subject.quit
     end
   end
-  
+
   describe "#started?" do
     it "checks the window has been displayed or not" do
       subject.started?
