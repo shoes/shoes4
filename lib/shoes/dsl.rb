@@ -35,9 +35,9 @@ module Shoes
         arg = args.first
         case arg
         when String
-	  File.exist?(arg) ? image_pattern(arg) : color(arg)
+          File.exist?(arg) ? image_pattern(arg) : color(arg)
         when Shoes::Color
-	  color(arg)
+          color(arg)
         when Range, Shoes::Gradient
           gradient(arg)
         else
@@ -49,9 +49,9 @@ module Shoes
     end
 
     private
-    def pop_and_normalize_style(opts)
-      style = opts.last.class == Hash ? opts.pop : {}
-      normalize_style(style)
+
+    def pop_style(opts)
+      opts.last.class == Hash ? opts.pop : {}
     end
 
     def normalize_style(orig_style)
@@ -62,40 +62,45 @@ module Shoes
       orig_style.merge(normalized_style)
     end
 
+    def create(element, *args)
+      element.new( @app, current_slot, *args )
+    end
+
     public
+
+    # TODO
+    # Shoes 3 also has `image width, height` that takes
+    # a block with drawing instructions.
     def image(path, opts={}, &blk)
-      opts.merge! app: @app
-      Shoes::Image.new current_slot, path, opts, blk
+      create Shoes::Image, path, opts, blk
     end
 
     def border(color, opts = {}, &blk)
-      opts.merge! app: @app
-      Shoes::Border.new current_slot, pattern(color), opts, blk
+      create Shoes::Border, pattern(color), opts, blk
     end
 
     def background(color, opts = {}, &blk)
-      style = normalize_style(opts)
-      Shoes::Background.new current_slot, pattern(color), style, blk
+      create Shoes::Background, pattern(color), normalize_style(opts), blk
     end
 
-    def edit_line(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::EditLine.new current_slot, opts, blk
+    def edit_line(*args, &blk)
+      style = pop_style(args)
+      text  = args.first || ''
+      create Shoes::EditLine, text, style, blk
     end
 
-    def edit_box(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::EditBox.new current_slot, opts, blk
+    def edit_box(*args, &blk)
+      style = pop_style(args)
+      text  = args.first || ''
+      create Shoes::EditBox, text, style, blk
     end
 
     def progress(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Progress.new current_slot, opts, blk
+      create Shoes::Progress, opts, blk
     end
 
-    def check(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Check.new current_slot, opts, blk
+    def check(&blk)
+      create Shoes::Check, blk
     end
 
     def radio(opts = {}, &blk)
@@ -213,7 +218,7 @@ module Shoes
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts, &blk)
-      oval_style = pop_and_normalize_style(opts)
+      oval_style = normalize_style pop_style(opts)
       case opts.length
         when 3
           left, top, width = opts
@@ -265,7 +270,7 @@ EOS
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
     def rect(*args, &blk)
-      opts = pop_and_normalize_style(args)
+      opts = normalize_style pop_style(args)
       case args.length
       when 3
         left, top, width = args
@@ -297,7 +302,7 @@ EOS
 
     # Creates a new Shoes::Star object
     def star(*args, &blk)
-      opts = pop_and_normalize_style(args)
+      opts = normalize_style pop_style(args)
       case args.length
       when 2
         left, top = args

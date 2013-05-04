@@ -7,15 +7,16 @@ module Shoes
     attr_reader :parent, :blk, :gui, :app, :hidden
     attr_reader :file_path, :opts
 
-    def initialize(parent, file_path, opts = {}, blk = nil)
+    def initialize(app, parent, file_path, opts = {}, blk = nil)
+      @app = app
+      @parent = parent
+      @file_path = file_path
+      @opts = opts
+      @blk = blk
+
       @left = opts[:left] ? opts[:left] : 0
       @top = opts[:top] ? opts[:top] : 0
-      @parent = parent
-      @blk = blk
-      @app = opts[:app]
-      @opts = opts
 
-      @file_path = file_path
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
     end
   end

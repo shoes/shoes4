@@ -12,8 +12,8 @@ describe Shoes::Background do
   let(:parent) { Shoes::Flow.new(app, app: app) }
   let(:blue)  { Shoes::COLORS[:blue] }
   let(:app) { Shoes::App.new }
-  let(:opts){ {app: app, color: blue} }
-  subject { Shoes::Background.new(parent, blue, opts) }
+  let(:opts){ {color: blue} }
+  subject { Shoes::Background.new(app, parent, blue, opts) }
 
   it_behaves_like "basic background"
 end

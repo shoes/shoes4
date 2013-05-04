@@ -26,10 +26,6 @@ describe Shoes::Configuration do
     let(:args) { Hash.new }
     let(:dsl_object) { Shoes::Shape.new app, args }
 
-    it "raises ArgumentError on bad input" do
-      lambda { Shoes.configuration.backend = :bogus }.should raise_error(LoadError)
-    end
-
     describe "#backend_with_app_for" do
       it "passes app.gui to backend" do
         Shoes.configuration.backend::Shape.should_receive(:new).with(dsl_object, app.gui, args)
