@@ -1,4 +1,10 @@
-# Shared examples for Shoes::App and Shoes::Slot (flow and stack)
+# Shared examples for Shoes::App and Shoes::Slot (flow and stack).
+# If DSL methods can be called with multiple number of arguments,
+# and if they set certain defaults, then that what needs to be tested
+# here.
+# There are individual specs for the different Shoes elements, so
+# we don't need to test how they work in details. Here we just test that
+# the DSL methods construct elements correctly.
 shared_examples "DSL container" do
   let(:dsl) { subject }
 
@@ -7,24 +13,25 @@ shared_examples "DSL container" do
     arc
     background
     border
+    cap
+    check
+    edit_box
+    edit_line
     fill
-    nofill
-    oval
     flow
     gradient
-    pattern
+    image
     line
+    nofill
+    nostroke
+    oval
+    pattern
+    progress
     rect
     rgb
     shape
     stroke
-    nostroke
-    cap
     strokewidth
-    image
-    edit_box
-    edit_line
-    progress
   ].each do |method|
     include_examples "#{method} DSL method"
   end

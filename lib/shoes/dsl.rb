@@ -35,9 +35,9 @@ module Shoes
         arg = args.first
         case arg
         when String
-	  File.exist?(arg) ? image_pattern(arg) : color(arg)
+          File.exist?(arg) ? image_pattern(arg) : color(arg)
         when Shoes::Color
-	  color(arg)
+          color(arg)
         when Range, Shoes::Gradient
           gradient(arg)
         else
@@ -99,9 +99,8 @@ module Shoes
       create Shoes::Progress, opts, blk
     end
 
-    def check(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Check.new current_slot, opts, blk
+    def check(&blk)
+      create Shoes::Check, blk
     end
 
     def radio(opts = {}, &blk)
