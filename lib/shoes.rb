@@ -16,6 +16,19 @@ module Shoes
     def logger
       Shoes.configuration.logger_instance
     end
+
+    # Load the backend in memory. This does not set any configuration.
+    #
+    # @param name [String|Symbol] The name, such as :swt or :mock
+    # @return The backend
+    def load_backend(name)
+      begin
+        require "shoes/#{name.to_s.downcase}"
+        Shoes.const_get(name.to_s.capitalize)
+      rescue LoadError => e
+        raise LoadError, "Couldn't load backend Shoes::#{name.capitalize}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
+      end
+    end
   end
 end
 

@@ -7,11 +7,19 @@ module Shoes
       end
 
       def backend
-        @backend
+        @backend ||= Shoes.load_backend(backend_name)
       end
 
       def backend_name
-        @backend_name
+        @backend_name ||= ENV.fetch('SHOES_BACKEND', default_backend).to_sym
+      end
+
+      def default_backend
+        if caller.any? {|path| path =~ /rspec/}
+          :mock
+        else
+          :swt
+        end
       end
 
       # The Shoes backend to use. Can only be set once.
@@ -20,12 +28,11 @@ module Shoes
       # @return [Module] The backend's root module
       # @example
       #   Shoes::Configuration.backend = :swt # => Shoes::Swt
-      def backend=(backend)
-        require "shoes/#{backend.to_s.downcase}"
-        @backend ||= Shoes.const_get(backend.to_s.capitalize)
-        @backend_name ||= backend
-      rescue LoadError => e
-        raise LoadError, "Couldn't load backend '#{backend}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
+      def backend=(name)
+        unless @backend.nil?
+          raise "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
+        end
+        @backend_name ||= name
       end
 
       # Finds the appropriate backend class for the given Shoes object

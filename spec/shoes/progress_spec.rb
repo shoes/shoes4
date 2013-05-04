@@ -1,7 +1,7 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Progress do
-  subject { Shoes::Progress.new(parent, input_opts, input_block) }
+  subject { Shoes::Progress.new(app, parent, input_opts, input_block) }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }
   let(:app) { Shoes::App.new }

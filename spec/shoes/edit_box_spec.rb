@@ -6,8 +6,8 @@ describe Shoes::EditBox do
   let(:input_opts) { {} }
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, app: app }
-  subject { Shoes::EditBox.new(parent, input_opts, input_block) }
-
+  let(:text) {'hello'}
+  subject { Shoes::EditBox.new(app, parent, text, input_opts, input_block) }
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
