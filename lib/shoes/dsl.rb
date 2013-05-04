@@ -490,9 +490,9 @@ EOS
     end
 
     def visit url
-      Shoes::URL.urls.each do |page, action_proc| 
+      Shoes::URL.urls.each do |page, action_proc|
         if page =~ url
-	  clear do 
+	  clear do
             @location = url
             action_proc.call self, $1
           end
