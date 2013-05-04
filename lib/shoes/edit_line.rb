@@ -8,10 +8,15 @@ module Shoes
 
     attr_reader :gui, :blk, :parent, :opts
 
+    DEFAULT_STYLE = {
+      width: 200,
+      height: 100
+    }
+
     def initialize(app, parent, text, opts = {}, blk = nil)
       @app = app
       @parent = parent
-      @opts = opts
+      @opts = DEFAULT_STYLE.merge(opts)
       @blk = blk
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)

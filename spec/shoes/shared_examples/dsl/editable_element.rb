@@ -5,7 +5,7 @@ shared_examples_for "editable element" do
     let(:args) { [] }
     it { should be_instance_of klazz }
     its(:text) { should == '' }
-    its(:opts) { should == {}  }
+    its(:opts) { should == klazz::DEFAULT_STYLE  }
   end
 
   describe "with a single text argument" do
@@ -13,7 +13,7 @@ shared_examples_for "editable element" do
 
     it { should be_instance_of klazz }
     its(:text) { should == 'Hello text here' }
-    its(:opts) { should == {}  }
+    its(:opts) { should == klazz::DEFAULT_STYLE }
   end
 
   describe "with a style hash" do
