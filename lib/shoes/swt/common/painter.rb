@@ -1,5 +1,5 @@
 module Shoes
-  module Swt
+  module Swt	
     module Common
       class Painter
         include Resource
@@ -17,7 +17,13 @@ module Shoes
             gc.set_line_cap(LINECAP[@obj.dsl.style[:cap]] || LINECAP[:rect])
             gc.set_transform(@obj.transform)
             obj = @obj.dsl
-            set_rotate gc, @obj.angle, obj.left+obj.width/2.0, obj.top+obj.height/2.0 do
+            case obj
+            when ::Shoes::Oval, ::Shoes::Rect
+              set_rotate gc, @obj.angle, obj.left+obj.width/2.0, obj.top+obj.height/2.0 do
+                fill gc if fill_setup(gc)
+                draw gc if draw_setup(gc)
+              end
+            else
               fill gc if fill_setup(gc)
               draw gc if draw_setup(gc)
             end
