@@ -10,7 +10,7 @@ module Shoes
 
     DEFAULT_STYLE = {
       width: 200,
-      height: 100
+      height: 28
     }
 
     def initialize(app, parent, text, opts = {}, blk = nil)
