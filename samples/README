@@ -7,6 +7,7 @@
 good-follow.rb
 good-arc.rb
 good-clock.rb
+good-reminder.rb
 
 simple-animate.rb
 simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
