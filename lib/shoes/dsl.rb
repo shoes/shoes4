@@ -104,8 +104,7 @@ module Shoes
     end
 
     def radio(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Radio.new current_slot, opts, blk
+      create Shoes::Radio, opts, blk
     end
 
     def list_box(opts = {}, &blk)

@@ -1,7 +1,7 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Radio do
-  subject { Shoes::Radio.new(parent, input_opts, input_block) }
+  subject { Shoes::Radio.new(app, parent, input_opts, input_block) }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { Hash.new }
   let(:app) { Shoes::App.new }
