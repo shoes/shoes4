@@ -108,8 +108,7 @@ module Shoes
     end
 
     def list_box(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::ListBox.new current_slot, opts, blk
+      create Shoes::ListBox, opts, blk
     end
 
     def flow(opts = {}, &blk)

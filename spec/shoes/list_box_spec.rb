@@ -1,7 +1,7 @@
 require 'shoes/spec_helper'
 
 describe Shoes::ListBox do
-  subject           { Shoes::ListBox.new(parent, input_opts, input_block) }
+  subject           { Shoes::ListBox.new(app, parent, input_opts, input_block) }
   let(:input_block) { ->(listbox) {} }
   let(:input_opts)  { { :items => ["Wine", "Vodka", "Water"] } }
   let(:app)         { Shoes::App.new }
