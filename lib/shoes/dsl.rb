@@ -478,8 +478,7 @@ EOS
     attr_accessor :hovered
 
     def keypress &blk
-      opts = {:app => @app}
-      Shoes::Keypress.new opts, &blk
+      Shoes::Keypress.new app, opts, &blk
     end
 
     def clear
