@@ -55,7 +55,7 @@ module Shoes
     end
 
     def normalize_style(orig_style)
-      normalized_style = {app: app}
+      normalized_style = {}
       [:fill, :stroke].each do |s|
         normalized_style[s] = pattern(orig_style[s]) if orig_style[s]
       end
@@ -407,13 +407,15 @@ EOS
     # Text blocks
     # normally constants belong to the top, I put them here because they are
     # only used here.
-    BANNER_FONT_SIZE      = 48
-    TITLE_FONT_SIZE       = 34
-    SUBTITLE_FONT_SIZE    = 26
-    TAGLINE_FONT_SIZE     = 18
-    CAPTION_FONT_SIZE     = 14
-    PARA_FONT_SIZE        = 12
-    INSCRIPTION_FONT_SIZE = 10
+    FONT_SIZES = {
+      banner:       48,
+      title:        34,
+      subtitle:     26,
+      tagline:      18,
+      caption:      14,
+      para:         12,
+      inscription:  10
+    }.freeze
 
     %w[banner title subtitle tagline caption para inscription].each do |m|
       define_method m do |*text|
@@ -421,8 +423,7 @@ EOS
         styles = get_styles text
         opts[:text_styles] = styles unless styles.empty?
         text = text.map(&:to_s).join
-        opts.merge! app: @app
-        eval "Shoes::#{m.capitalize}.new(current_slot, text, #{m.upcase}_FONT_SIZE, opts)"
+        create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
       end
     end
 
