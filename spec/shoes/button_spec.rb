@@ -9,7 +9,7 @@ describe Shoes::Button do
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, app }
 
-  subject { Shoes::Button.new(parent, "text", input_opts, input_block) }
+  subject { Shoes::Button.new(app, parent, "text", input_opts, input_block) }
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
