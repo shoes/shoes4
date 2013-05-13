@@ -5,7 +5,7 @@ describe Shoes::ListBox do
   let(:input_block) { ->(listbox) {} }
   let(:input_opts)  { { :items => ["Wine", "Vodka", "Water"] } }
   let(:app)         { Shoes::App.new }
-  let(:parent)      { Shoes::Flow.new app, app: app}
+  let(:parent)      { Shoes::Flow.new app, app}
 
   it_behaves_like "an element that can respond to change"
 

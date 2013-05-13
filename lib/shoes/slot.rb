@@ -10,11 +10,12 @@ module Shoes
     attr_reader :blk, :app
     attr_accessor :width, :height, :left, :top
 
-    def initialize parent, opts={}, &blk
+    def initialize(app, parent, opts={}, &blk)
+      @app = app
       @parent = parent
       @contents, @style = [], {}
 
-      %w[app left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
+      %w[left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
         instance_variable_set "@#{v}", opts[v.to_sym]
       end
 

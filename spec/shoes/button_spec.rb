@@ -7,7 +7,7 @@ describe Shoes::Button do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app, app: app }
+  let(:parent) { Shoes::Flow.new app, app }
 
   subject { Shoes::Button.new(parent, "text", input_opts, input_block) }
 
@@ -107,7 +107,7 @@ describe Shoes::Button do
     end
 
     context "parent is not a flow" do
-      let(:parent) { Shoes::Stack.new app, app: app }
+      let(:parent) { Shoes::Stack.new app, app }
 
       before :each do
         subject.parent.is_a?(Shoes::Flow).should be_false
@@ -202,4 +202,3 @@ end
 def element_fits?(element_left, element_width, parent_left, parent_width)
   element_left + element_width <= parent_left + parent_width
 end
-

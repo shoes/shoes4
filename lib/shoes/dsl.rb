@@ -62,8 +62,8 @@ module Shoes
       orig_style.merge(normalized_style)
     end
 
-    def create(element, *args)
-      element.new( @app, current_slot, *args )
+    def create(element, *args, &blk)
+      element.new(@app, current_slot, *args, &blk)
     end
 
     public
@@ -112,13 +112,11 @@ module Shoes
     end
 
     def flow(opts = {}, &blk)
-      opts.merge! :app => app
-      Shoes::Flow.new current_slot, opts, &blk
+      create Shoes::Flow, opts, &blk
     end
 
     def stack(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Stack.new current_slot, opts, &blk
+      create Shoes::Stack, opts, &blk
     end
 
     def button(text, opts={}, &blk)

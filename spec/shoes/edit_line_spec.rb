@@ -5,7 +5,7 @@ describe Shoes::EditLine do
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {} }
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app, app: app }
+  let(:parent) { Shoes::Flow.new app, app }
   let(:text) { 'hello' }
   subject { Shoes::EditLine.new(app, parent, text, input_opts, input_block) }
 

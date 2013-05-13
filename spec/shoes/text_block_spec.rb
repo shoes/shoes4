@@ -2,7 +2,7 @@ require 'shoes/spec_helper'
 
 describe Shoes::TextBlock do
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app, {app: app} }
+  let(:parent) { Shoes::Flow.new app, app }
   let(:text_link) { Shoes::Link.new(:link, ['Hello']) }
   subject { Shoes::TextBlock.new(parent, "#{text_link}, world!", 99, {app: app}) }
 
