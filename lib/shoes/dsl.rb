@@ -156,8 +156,7 @@ module Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      opts.merge! :app => @app
-      Shoes::Animation.new opts, blk
+      Shoes::Animation.new app, opts, blk
     end
 
     def every n=1, &blk
