@@ -44,15 +44,11 @@ module Shoes
       
       def clear
         super
-        @dsl.links.each do |link|
-          ln = link.ln
-          @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
-          @container.remove_listener ::Swt::SWT::MouseUp, ln if ln
-        end
-        @dsl.links.clear
+        clear_links
       end
 
       def replace *values
+        clear_links
         @dsl.instance_variable_set :@text, values.map(&:to_s).join
         @opts[:text_styles] = @dsl.app.get_styles(values)
         redraw
@@ -60,6 +56,16 @@ module Shoes
 
 
       private
+
+      def clear_links
+        @dsl.links.each do |link|
+          @dsl.app.gui.mscs.delete link
+          ln = link.ln
+          @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
+          @container.remove_listener ::Swt::SWT::MouseUp, ln if ln
+        end
+        @dsl.links.clear
+      end
 
       class TbPainter
         include Common::Resource
