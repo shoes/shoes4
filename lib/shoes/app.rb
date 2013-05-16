@@ -72,12 +72,23 @@ module Shoes
       @mouse_motion = []
       @mouse_button, @mouse_pos = 0, [0, 0]
       @mhcs = []
-      set_margin
+
+      @margin = opts[:margin] if opts[:margin]
+      @margin_left = opts[:margin_left] if opts[:margin_left]
+      @margin_top = opts[:margin_top] if opts[:margin_top]
+      @margin_right = opts[:margin_right] if opts[:margin_right]
+      @margin_bottom = opts[:margin_bottom] if opts[:margin_bottom]
+      #set_margin
 
       @gui = Shoes.configuration.backend::App.new @app
 
       blk = $urls[/^#{'/'}$/] unless blk
-      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height}, &blk
+      @top_slot = Flow.new self, {app: @app, left: 0, top: 0, width: @width, height: @height, margin: @margin}, &blk
+#      @top_slot.margin = opts[:margin] if opts[:margin]
+#      @top_slot.margin_left = opts[:margin_left] if opts[:margin_left]
+#      @top_slot.margin_top = opts[:margin_top] if opts[:margin_top]
+#      @top_slot.margin_right = opts[:margin_right] if opts[:margin_right]
+#      @top_slot.margin_botton = opts[:margin_botton] if opts[:margin_botton]
 
       Shoes.register self
       @gui.open
