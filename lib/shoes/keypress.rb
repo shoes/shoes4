@@ -1,6 +1,6 @@
 module Shoes
   class Keypress
-    def initialize app, opts, &blk
+    def initialize(app, opts = {}, &blk)
       @app = app
       @gui = Shoes.backend_for self, &blk
     end
