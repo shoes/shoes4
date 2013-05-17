@@ -7,6 +7,11 @@ describe Shoes::Download do
   let(:args) { {:save => "nasa50th.gif"} }
   subject{ Shoes::Download.new app, name, args, &block }
 
+  after do
+    subject.join_thread
+    File.delete args[:save]
+  end
+
   it "should have started? and finished? methods" do
     subject.should respond_to :started?
     subject.should respond_to :finished?

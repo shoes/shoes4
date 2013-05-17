@@ -2,7 +2,7 @@ module Shoes
   class Download
     def initialize app, name, args, &blk
       require 'open-uri'
-      Thread.new do
+      @thread = Thread.new do
         open name,
           content_length_proc: lambda{|len| @content_length, @started = len, true},
           progress_proc: lambda{|size| @progress = size} do |sio|
@@ -17,6 +17,10 @@ module Shoes
     
     attr_reader :progress, :content_length
     
+    def join_thread
+      @thread.join
+    end
+
     def started?
       @started
     end
