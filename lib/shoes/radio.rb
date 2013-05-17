@@ -5,12 +5,17 @@ module Shoes
     include Shoes::CommonMethods
     attr_reader :gui, :blk, :parent
 
-    def initialize(parent, opts = {}, blk = nil)
-      @parent = parent
-      @blk = blk
-      @app = opts[:app]
+    # TODO according to the manual a Radio can take these options
+    # :checked
+    # :click
+    # :group
+    # :state nil|"readonly"|"disabled"
+    def initialize(app, parent, opts = {}, blk = nil)
+      @app     = app
+      @parent  = parent
+      @blk     = blk
       @checked = false
-      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @gui     = Shoes.configuration.backend_for(self, @parent.gui, blk)
       @parent.add_child self
     end
 

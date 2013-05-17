@@ -2,9 +2,9 @@ require 'shoes/spec_helper'
 
 describe Shoes::TextBlock do
   let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app, {app: app} }
+  let(:parent) { Shoes::Flow.new app, app }
   let(:text_link) { Shoes::Link.new(:link, ['Hello']) }
-  subject { Shoes::TextBlock.new(parent, "#{text_link}, world!", 99, {app: app}) }
+  subject { Shoes::TextBlock.new(app, parent, "#{text_link}, world!", 99, {app: app}) }
 
   describe "initialize" do
     it "creates gui object" do
@@ -49,18 +49,18 @@ describe Shoes::TextBlock do
     end
 
     it "should allow setting the font with :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: "Helvetica", app: app })
+      s = Shoes::TextBlock.new(app, parent, "Hello, world!", 99, { font: "Helvetica", app: app })
       s.font.should eql "Helvetica"
     end
 
     it "should allow setting the font size with :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: "Helvetica 33px", app: app })
+      s = Shoes::TextBlock.new(app, parent, "Hello, world!", 99, { font: "Helvetica 33px", app: app })
       s.font.should eql "Helvetica"
       s.font_size.should eql 33
     end
 
     it "should accept fonts surrounded with questionmarks when using :family" do
-      s = Shoes::TextBlock.new(parent, "Hello, world!", 99, { font: '"Comic Sans" 13px', app: app })
+      s = Shoes::TextBlock.new(app, parent, "Hello, world!", 99, { font: '"Comic Sans" 13px', app: app })
       s.font.should eql "Comic Sans"
       s.font_size.should eql 13
     end

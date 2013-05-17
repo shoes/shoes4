@@ -33,9 +33,9 @@ end
 describe Shoes::Animation do
   let(:app) { double('app') }
   let(:app_gui) { double('app gui') }
-  let(:opts) { {:app => app} }
+  let(:opts) { {} }
   let(:block) { double('block') }
-  subject { Shoes::Animation.new opts, block }
+  subject { Shoes::Animation.new( app, opts, block ) }
 
   before :each do
     app.should_receive(:gui) { app_gui }

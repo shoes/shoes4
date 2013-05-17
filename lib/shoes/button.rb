@@ -4,12 +4,12 @@ module Shoes
   class Button
     include Shoes::CommonMethods
 
-    def initialize(parent, text = 'Button', opts = {}, blk = nil)
+    def initialize(app, parent, text = 'Button', opts = {}, blk = nil)
+      @app    = app
       @parent = parent
-      @text = text
-      @blk = blk
-      @app = opts[:app]
-      @opts = opts
+      @text   = text
+      @opts   = opts
+      @blk    = blk
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
 

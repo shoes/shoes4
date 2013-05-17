@@ -1,11 +1,11 @@
 require 'shoes/spec_helper'
 
 describe Shoes::ListBox do
-  subject           { Shoes::ListBox.new(parent, input_opts, input_block) }
+  subject           { Shoes::ListBox.new(app, parent, input_opts, input_block) }
   let(:input_block) { ->(listbox) {} }
   let(:input_opts)  { { :items => ["Wine", "Vodka", "Water"] } }
   let(:app)         { Shoes::App.new }
-  let(:parent)      { Shoes::Flow.new app, app: app}
+  let(:parent)      { Shoes::Flow.new app, app}
 
   it_behaves_like "an element that can respond to change"
 

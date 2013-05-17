@@ -55,15 +55,15 @@ module Shoes
     end
 
     def normalize_style(orig_style)
-      normalized_style = {app: app}
+      normalized_style = {}
       [:fill, :stroke].each do |s|
         normalized_style[s] = pattern(orig_style[s]) if orig_style[s]
       end
       orig_style.merge(normalized_style)
     end
 
-    def create(element, *args)
-      element.new( @app, current_slot, *args )
+    def create(element, *args, &blk)
+      element.new(@app, current_slot, *args, &blk)
     end
 
     public
@@ -104,28 +104,23 @@ module Shoes
     end
 
     def radio(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Radio.new current_slot, opts, blk
+      create Shoes::Radio, opts, blk
     end
 
     def list_box(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::ListBox.new current_slot, opts, blk
+      create Shoes::ListBox, opts, blk
     end
 
     def flow(opts = {}, &blk)
-      opts.merge! :app => app
-      Shoes::Flow.new current_slot, opts, &blk
+      create Shoes::Flow, opts, &blk
     end
 
     def stack(opts = {}, &blk)
-      opts.merge! :app => @app
-      Shoes::Stack.new current_slot, opts, &blk
+      create Shoes::Stack, opts, &blk
     end
 
     def button(text, opts={}, &blk)
-      opts.merge! :app => @app
-      Shoes::Button.new current_slot, text, opts, blk
+      create Shoes::Button, text, opts, blk
     end
 
     # Creates an animation that runs the given block of code.
@@ -161,8 +156,7 @@ module Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      opts.merge! :app => @app
-      Shoes::Animation.new opts, blk
+      Shoes::Animation.new app, opts, blk
     end
 
     def every n=1, &blk
@@ -413,13 +407,15 @@ EOS
     # Text blocks
     # normally constants belong to the top, I put them here because they are
     # only used here.
-    BANNER_FONT_SIZE      = 48
-    TITLE_FONT_SIZE       = 34
-    SUBTITLE_FONT_SIZE    = 26
-    TAGLINE_FONT_SIZE     = 18
-    CAPTION_FONT_SIZE     = 14
-    PARA_FONT_SIZE        = 12
-    INSCRIPTION_FONT_SIZE = 10
+    FONT_SIZES = {
+      banner:       48,
+      title:        34,
+      subtitle:     26,
+      tagline:      18,
+      caption:      14,
+      para:         12,
+      inscription:  10
+    }.freeze
 
     %w[banner title subtitle tagline caption para inscription].each do |m|
       define_method m do |*text|
@@ -427,8 +423,7 @@ EOS
         styles = get_styles text
         opts[:text_styles] = styles unless styles.empty?
         text = text.map(&:to_s).join
-        opts.merge! app: @app
-        eval "Shoes::#{m.capitalize}.new(current_slot, text, #{m.upcase}_FONT_SIZE, opts)"
+        create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
       end
     end
 
@@ -483,8 +478,7 @@ EOS
     attr_accessor :hovered
 
     def keypress &blk
-      opts = {:app => @app}
-      Shoes::Keypress.new opts, &blk
+      Shoes::Keypress.new app, opts, &blk
     end
 
     def clear
