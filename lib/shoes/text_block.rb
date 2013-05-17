@@ -11,9 +11,9 @@ module Shoes
     attr_reader  :gui, :parent, :text, :links, :app, :hidden
     attr_accessor :font, :font_size, :width, :height, :left, :top
 
-    def initialize(parent, text, font_size, opts = {})
+    def initialize(app, parent, text, font_size, opts = {})
       @parent = parent
-      @app = opts[:app]
+      @app = app
       @font = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size = opts[:size] || font_size
       @text = text

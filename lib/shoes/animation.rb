@@ -9,10 +9,10 @@ module Shoes
     #     animation frame
     #   @option opts [Integer] :framerate (24) The framerate (frames per second)
     #   @option opts [Shoes::App] :app The current Shoes app
-    def initialize opts, blk
+    def initialize app, opts, blk
       @style = opts
       @framerate = @style[:framerate] || 10
-      @app = opts[:app]
+      @app = app
       @blk = blk
       @current_frame = 0
       @stopped = false
@@ -41,7 +41,7 @@ module Shoes
     def remove
       @removed = true
     end
-    
+
     def removed?
       @removed
     end

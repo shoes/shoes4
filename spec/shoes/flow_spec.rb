@@ -5,7 +5,7 @@ describe Shoes::Flow do
   let(:parent) { Shoes::App.new }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { {:width => 131, :height => 137, :margin => 143, :app => app} }
-  subject { Shoes::Flow.new(parent, input_opts, &input_block) }
+  subject { Shoes::Flow.new(app, parent, input_opts, &input_block) }
 
   it_behaves_like "clickable object"
   it_behaves_like "hover and leave events"
@@ -29,7 +29,7 @@ describe Shoes::Flow do
   end
 
   it "sets default values" do
-    f = Shoes::Flow.new(parent, app: parent)
+    f = Shoes::Flow.new(app, parent)
     f.width.should == 1.0
     f.height.should == 0
   end
