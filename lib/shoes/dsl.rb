@@ -490,7 +490,14 @@ EOS
     end
 
     def visit url
-      $urls.each{|k, v| clear{@location = url; v.call self, $1} if k =~ url}
+      Shoes::URL.urls.each do |page, action_proc|
+        if page =~ url
+	  clear do
+            @location = url
+            action_proc.call self, $1
+          end
+        end
+      end
     end
 
     def scroll_top
