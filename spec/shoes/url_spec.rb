@@ -33,9 +33,4 @@ describe 'Shoes.url' do
     subject
   end
 
-  # it "should be able to visit urls" do
-  #   klazz.any_instance.should_receive(:path)
-  #   subject.visit_path   
-  # end
-
 end
