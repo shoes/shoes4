@@ -32,10 +32,10 @@ module Shoes
 
       @app.current_slot = self
       if blk
-        if Shoes::URL.shoes_included_instance
-          Shoes::URL.shoes_included_instance.instance_eval &blk
-        else
+        begin
           @app.instance_eval &blk
+        rescue NoMethodError
+          Shoes::URL.shoes_included_instance.instance_eval &blk
         end
       end
 
