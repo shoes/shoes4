@@ -34,7 +34,7 @@ module Shoes
       if blk
         begin
           @app.instance_eval &blk
-        rescue NoMethodError
+        rescue NoMethodError, NameError
           Shoes::URL.shoes_included_instance.instance_eval &blk
         end
       end
