@@ -519,5 +519,9 @@ EOS
     def download name, args={}, &blk
       Shoes::Download.new @app, name, args, &blk
     end
+
+    def append
+      @contents << yield
+    end
   end
 end
