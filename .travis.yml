@@ -12,6 +12,7 @@ notifications:
       - ashbbb@gmail.com
       - james@jamesrgifford.com
       - peter.fitzgibbons@gmail.com
+      - fism88@gmail.com
     on_success: change # [always|never|change] # default: change
     on_failure: change # [always|never|change] # default: always
 before_script:
