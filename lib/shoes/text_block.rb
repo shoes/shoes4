@@ -20,6 +20,8 @@ module Shoes
       @left = opts[:left]
       @top = opts[:top]
       @links = []
+      opts[:stroke] = Shoes::Color.new(opts[:stroke]) if opts[:stroke].is_a?(String)
+      opts[:fill] = Shoes::Color.new(opts[:fill]) if opts[:fill].is_a?(String)
 
       @margin = opts[:margin]
       set_margin

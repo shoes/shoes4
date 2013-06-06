@@ -5,6 +5,7 @@ module Shoes
 
       def initialize(dsl, opts = nil)
         @dsl = dsl
+        @opts = opts
       end
       def get_size(*opts); end
       def redraw(*opts); end
