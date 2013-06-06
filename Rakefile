@@ -151,6 +151,18 @@ task :non_samples do
   end
 end
 
+desc "Create list of non-working samples"
+task :list_non_samples do
+  samples_dir = "samples"
+  samples = File.read("#{samples_dir}/README").lines.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
+  non_samples = Dir[File.join(samples_dir, '*.rb')].map{|f| f.gsub(samples_dir+'/', '')} - samples
+  File.open("#{samples_dir}/non_working_samples", 'w') do |f|
+    non_samples.each do |non_sample|
+      f.puts non_sample
+    end
+  end
+end
+
 begin
   require 'yard'
 
