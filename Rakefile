@@ -72,6 +72,12 @@ def non_samples
    Dir[File.join(SAMPLES_DIR, '*.rb')].map{|f| f.gsub(SAMPLES_DIR+'/', '')} - working_samples
 end
 
+def run_sample(sample_name)
+  puts "Running #{SAMPLES_DIR}/#{sample_name}...quit to run next sample"
+  cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+  system "bin/#{cmd} #{SAMPLES_DIR}/#{sample_name}"
+end
+
 task :default => :spec
 
 desc "Run All Specs"
@@ -137,22 +143,15 @@ end
 
 desc "Run all working samples"
 task :samples do
-  working_samples.shuffle.each do |sample|
-    puts "Running #{SAMPLES_DIR}/#{sample}...quit to run next sample"
-    cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
-    system "bin/#{cmd} #{SAMPLES_DIR}/#{sample}"
-  end
+  working_samples.shuffle.each{|sample| run_sample(sample)}
 end
 
 desc "Run all non-working samples"
 task :non_samples do
-  puts "%d Samples are not known to work" % non_samples.count
+  non_working_samples = non_samples
+  puts "%d Samples are not known to work" % non_working_samples.count
 
-  non_samples.shuffle.each do |sample|
-    puts "Running #{SAMPLES_DIR}/#{sample}...quit to run next sample"
-    cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
-    system "bin/#{cmd} #{SAMPLES_DIR}/#{sample}"
-  end
+  non_working_samples.shuffle.each{|sample| run_sample(sample)}
 end
 
 desc "Create list of non-working samples"
@@ -160,9 +159,7 @@ task :list_non_samples do
   non_working_samples = non_samples
 
   puts "There are #{non_working_samples.size} samples marked as not working."
-  non_working_samples.each do |non_sample|
-    puts non_sample
-  end
+  non_working_samples.each{|non_sample| puts non_sample}
 end
 
 begin
