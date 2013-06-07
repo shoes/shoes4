@@ -99,6 +99,12 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
 **Note:** For Windows, `C:\tmp\shoes4>bin\swt-shoooes samples\simple-sound.rb`
 
+Want to see what shoes can do?
+------------------------------
+
+You can run `rake samples` and random samples we believe are working will be run until you quit with Ctr + C. Some of them are really simple, while others are more complex or even games!
+If you notice any issue with those samples please [let us know](https://github.com/shoes/shoes4/issues/new)!
+
 Packaging a Shoes App
 ---------------------
 
@@ -149,7 +155,9 @@ That's awesome, thank you!
 
 You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoes4/issues).
 
-Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. 
+Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run.
+
+In order to do so you can run `rake non_samples` to run a random sample we think does not work. If you just want to list the non working samples you can also run `rake list_non_samples`.
 
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
