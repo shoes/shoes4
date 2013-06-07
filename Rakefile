@@ -13,7 +13,7 @@ JRuby.runtime.instance_config.runRubyInProcess = false
 
 # thanks Dan Lucraft!
 def jruby_run(cmd, swt = false)
-  opts = "-J-XstartOnFirstThread" if swt && Config::CONFIG["host_os"] =~ /darwin/
+  opts = "-J-XstartOnFirstThread" if swt && RbConfig::CONFIG["host_os"] =~ /darwin/
 
   # see https://github.com/jruby/jruby/wiki/FAQs
   # "How can I increase the heap/memory size when launching a sub-JRuby?"
@@ -74,7 +74,7 @@ end
 
 def run_sample(sample_name)
   puts "Running #{SAMPLES_DIR}/#{sample_name}...quit to run next sample"
-  cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
+  cmd = RbConfig::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
   system "bin/#{cmd} #{SAMPLES_DIR}/#{sample_name}"
 end
 
