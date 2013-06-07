@@ -157,10 +157,11 @@ end
 
 desc "Create list of non-working samples"
 task :list_non_samples do
-  File.open("#{SAMPLES_DIR}/non_working_samples", 'w') do |f|
-    non_samples.each do |non_sample|
-      f.puts non_sample
-    end
+  non_working_samples = non_samples
+
+  puts "There are #{non_working_samples.size} samples marked as not working."
+  non_working_samples.each do |non_sample|
+    puts non_sample
   end
 end
 
