@@ -4,6 +4,7 @@ require 'rubygems/package_task'
 require 'rspec/core/rake_task'
 
 PACKAGE_DIR = 'pkg'
+SAMPLES_DIR = "samples"
 
 CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage', "spec/test_app/#{PACKAGE_DIR}"]
 
@@ -60,6 +61,15 @@ def swt_args(args)
   # args[:includes] = [:swt]
   args[:excludes] = [:no_swt]
   args
+end
+
+def working_samples
+  samples = File.read("#{SAMPLES_DIR}/README").lines
+  samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
+end
+
+def non_samples
+   Dir[File.join(SAMPLES_DIR, '*.rb')].map{|f| f.gsub(SAMPLES_DIR+'/', '')} - working_samples
 end
 
 task :default => :spec
@@ -127,36 +137,27 @@ end
 
 desc "Run all working samples"
 task :samples do
-  samples_dir = "samples"
-  samples = File.read("#{samples_dir}/README").lines
-  samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}.shuffle.each do |sample|
-    puts "Running #{samples_dir}/#{sample}...quit to run next sample"
+  working_samples.shuffle.each do |sample|
+    puts "Running #{SAMPLES_DIR}/#{sample}...quit to run next sample"
     cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
-    system "bin/#{cmd} #{samples_dir}/#{sample}"
+    system "bin/#{cmd} #{SAMPLES_DIR}/#{sample}"
   end
 end
 
 desc "Run all non-working samples"
 task :non_samples do
-  samples_dir = "samples"
-  samples = File.read("#{samples_dir}/README").lines.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
-  non_samples = Dir[File.join(samples_dir, '*.rb')].map{|f| f.gsub(samples_dir+'/', '')} - samples
   puts "%d Samples are not known to work" % non_samples.count
-  p non_samples
 
   non_samples.shuffle.each do |sample|
-    puts "Running #{samples_dir}/#{sample}...quit to run next sample"
+    puts "Running #{SAMPLES_DIR}/#{sample}...quit to run next sample"
     cmd = Config::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
-    system "bin/#{cmd} #{samples_dir}/#{sample}"
+    system "bin/#{cmd} #{SAMPLES_DIR}/#{sample}"
   end
 end
 
 desc "Create list of non-working samples"
 task :list_non_samples do
-  samples_dir = "samples"
-  samples = File.read("#{samples_dir}/README").lines.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
-  non_samples = Dir[File.join(samples_dir, '*.rb')].map{|f| f.gsub(samples_dir+'/', '')} - samples
-  File.open("#{samples_dir}/non_working_samples", 'w') do |f|
+  File.open("#{SAMPLES_DIR}/non_working_samples", 'w') do |f|
     non_samples.each do |non_sample|
       f.puts non_sample
     end
