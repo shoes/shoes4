@@ -50,6 +50,10 @@ module Shoes
       def replace *values
         clear_links
         @dsl.instance_variable_set :@text, values.map(&:to_s).join
+        if @dsl.text.length > 1
+          @dsl.fixed = (@dsl.text.split.length == 1)
+          @dsl.width, @dsl.height = get_size
+        end
         @opts[:text_styles] = @dsl.app.get_styles(values)
         redraw
       end

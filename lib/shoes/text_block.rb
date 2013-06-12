@@ -9,7 +9,7 @@ module Shoes
     include Shoes::Common::Margin
 
     attr_reader  :gui, :parent, :text, :links, :app, :hidden
-    attr_accessor :font, :font_size, :width, :height, :left, :top
+    attr_accessor :font, :font_size, :width, :height, :left, :top, :fixed
 
     def initialize(app, parent, text, font_size, opts = {})
       @parent = parent

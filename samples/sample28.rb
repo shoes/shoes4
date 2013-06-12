@@ -2,7 +2,7 @@ Shoes.app :title => 'Snake Game v0.1' do
   background black
 
   def game_start
-    @score = para fg('Score:       ', white)
+    @score = para 'Score:', stroke: white
     @pos = {:up => [0, -10], :down => [0, 10], :left => [-10, 0], :right => [10, 0]}
     @rx, @ry = proc{20 + 10*rand(56)}, proc{40 + 10*rand(44)}
 
