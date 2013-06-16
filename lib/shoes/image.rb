@@ -19,5 +19,14 @@ module Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
     end
+
+    def path
+      @file_path
+    end
+
+    def path=(path)
+      @file_path = path
+      @gui.update_image
+    end
   end
 end
