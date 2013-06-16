@@ -89,6 +89,16 @@ module Shoes
           if @dsl.width
             @tl.setWidth @dsl.width
             @tl.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
+            if @dsl.cursor
+	      h = @tl.getLineBounds(0).height
+              @dsl.textcursor ||= @dsl.app.line(0, 0, 0, h, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
+              n = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
+              n = 0 if n < 0
+              pos = @tl.getLocation n, true
+              @dsl.textcursor.move(@dsl.left + pos.x, @dsl.top + pos.y).show
+	    else
+              (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
+	    end
           end
         end
 
