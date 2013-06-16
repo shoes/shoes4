@@ -5,8 +5,13 @@ describe Shoes::Image do
     let(:app) { Shoes::App.new }
     let(:parent) { double("parent").as_null_object }
     let(:filename) { File.expand_path "../../../static/shoes-icon.png", __FILE__ }
+    let(:updated_filename) { File.expand_path "../../../static/shoes-icon-brown.png", __FILE__ }
     subject { Shoes::Image.new(app, parent, filename) }
     it { should be_instance_of(Shoes::Image) }
+    it "should update image path" do
+      subject.path = updated_filename
+      subject.path.should eql updated_filename
+    end
     it_behaves_like "movable object"
     it_behaves_like "clearable object"
   end
