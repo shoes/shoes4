@@ -39,15 +39,11 @@ module Shoes
             key += "control_"
           end
 
-          if shift?(event)
-            key += "shift_"
-          end
-
           if alt?(event)
             key += "alt_"
           end
 
-          key += KEY_NAMES[event.keyCode] || event.character.chr.downcase
+          key += KEY_NAMES[event.keyCode] || event.character.chr
           @blk.call key.to_sym
 
         else
