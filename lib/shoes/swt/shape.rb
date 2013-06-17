@@ -35,6 +35,10 @@ module Shoes
         @element.quad_to *args
       end
 
+      def curve_to *args
+        @element.cubic_to *args
+      end
+
       def move(left, top)
         transform.translate(left, top)
       end

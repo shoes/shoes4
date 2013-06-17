@@ -93,6 +93,10 @@ module Shoes
       @gui.quad_to *args
     end
 
+    def curve_to *args
+      @gui.curve_to *args
+    end
+
     private
     # Gives the relative offset of the new position from original position.
     # This calculation is for a single coordinate value, e.g. an x or a y.

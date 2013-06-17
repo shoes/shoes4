@@ -15,6 +15,7 @@ require 'shoes/slot'
 require 'shoes/sound'
 require 'shoes/text'
 require 'shoes/text_block'
+require 'shoes/curve'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
