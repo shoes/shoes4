@@ -4,6 +4,10 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::ShoesKeyListener do
 
+  CTRL = ::Swt::SWT::CTRL
+  ALT = ::Swt::SWT::ALT
+  SHIFT = ::Swt::SWT::SHIFT
+
   def test_character_press(character, state_modifier = 0, result_char = character)
     block.should_receive(:call).with(result_char)
     event = stub  character: character.ord,
@@ -12,8 +16,9 @@ describe Shoes::Swt::ShoesKeyListener do
     subject.key_pressed(event)
   end
 
+
   def test_alt_character_press(character, state_mask_modifier = 0)
-    state_modifier = ::Swt::SWT::ALT | state_mask_modifier
+    state_modifier = ALT | state_mask_modifier
     result = ('alt_' + character).to_sym
     test_character_press(character, state_modifier, result)
   end
@@ -33,7 +38,7 @@ describe Shoes::Swt::ShoesKeyListener do
 
   describe 'works with shift key pressed such as' do
     def test_shift_character_press(character)
-      state_modifier = ::Swt::SWT::SHIFT
+      state_modifier = SHIFT
       test_character_press(character, state_modifier)
     end
 
@@ -58,7 +63,7 @@ describe Shoes::Swt::ShoesKeyListener do
 
   describe 'works with shift combined with alt yielding capital letters' do
     def test_alt_shift_character_press(character)
-      test_alt_character_press(character, ::Swt::SWT::SHIFT)
+      test_alt_character_press(character, SHIFT)
     end
 
     it ':alt_A' do
@@ -67,6 +72,38 @@ describe Shoes::Swt::ShoesKeyListener do
 
     it ':alt_Z' do
       test_alt_shift_character_press 'Z'
+    end
+  end
+
+  describe 'only modifier keys yield nothing' do
+    def test_receive_nothing_with_modifier(modifier)
+      block.should_not_receive :call
+      event = stub stateMask: modifier, keyCode: nil, character: 0
+      subject.key_pressed(event)
+    end
+
+    it 'shift' do
+      test_receive_nothing_with_modifier SHIFT
+    end
+
+    it 'alt' do
+      test_receive_nothing_with_modifier ALT
+    end
+
+    it 'control' do
+      test_receive_nothing_with_modifier CTRL
+    end
+
+    it 'shift + ctrl' do
+      test_receive_nothing_with_modifier SHIFT | CTRL
+    end
+
+    it 'ctrl + alt' do
+      test_receive_nothing_with_modifier CTRL | ALT
+    end
+
+    it 'shift + ctrl + alt' do
+      test_receive_nothing_with_modifier CTRL | SHIFT | ALT
     end
   end
 

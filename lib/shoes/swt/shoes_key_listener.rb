@@ -20,37 +20,18 @@ module Shoes
       KEY_NAMES[::Swt::SWT::DEL] = "delete"
       KEY_NAMES[::Swt::SWT::CR] = "\n"
 
-      #Modifier keys
-      %w[CTRL SHIFT ALT CAPS_LOCK].each do |key|
-        KEY_NAMES[eval("::Swt::SWT::#{key}")] = ""
-      end
-
       def initialize(blk)
         @blk = blk
       end
 
       # NOTE: state_mask and key_code error for me so the java version is used
       def key_pressed(event)
-        #Shift-only doesn't count as a modifier
-        if other_modifier_keys_than_shift_pressed?(event)
-          key = ""
-
-          if control?(event)
-            key += "control_"
-          end
-
-          if alt?(event)
-            key += "alt_"
-          end
-
-          key += KEY_NAMES[event.keyCode] || event.character.chr
-          @blk.call key.to_sym
-
-        else
-          key = KEY_NAMES[event.keyCode].to_sym if KEY_NAMES[event.keyCode]
-          key ||= event.character.chr
-          @blk.call key
-        end
+        key = ''
+        key += 'control_' if control?(event)
+        key += "alt_" if alt?(event)
+        key += KEY_NAMES[event.keyCode] || event.character.chr
+        key = key.to_sym if other_modifier_keys_than_shift_pressed? event
+        @blk.call key if normal_key_pressed?(event)
       end
 
       def key_released(event)
@@ -65,12 +46,12 @@ module Shoes
         (event.stateMask & ::Swt::SWT::ALT) == ::Swt::SWT::ALT
       end
 
-      def shift?(event)
-        (event.stateMask & ::Swt::SWT::SHIFT) == ::Swt::SWT::SHIFT
-      end
-
       def control?(event)
         (event.stateMask & ::Swt::SWT::CTRL) == ::Swt::SWT::CTRL
+      end
+
+      def normal_key_pressed?(event)
+        KEY_NAMES[event.keyCode] || event.character != 0
       end
     end
   end
