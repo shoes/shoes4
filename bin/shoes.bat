@@ -1,1 +1,1 @@
-call jruby --1.9 -e "$LOAD_PATH.unshift File.expand_path('../lib', __FILE__); require 'shoes/cli'; Shoes::CLI.new.run('%3'.empty? ? ['%2', '%1', '%2'] : ['%3', '%1', '%2', '%3'])"
+call jruby --1.9 -e "$:<< 'lib'; require 'shoes'; require 'shoes/configuration'; Shoes.configuration.backend = :swt; require '%1' "
