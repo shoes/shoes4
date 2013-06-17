@@ -1,6 +1,5 @@
+# encoding: UTF-8
 require 'swt_shoes/spec_helper'
-
-
 
 describe Shoes::Swt::ShoesKeyListener do
 
@@ -33,6 +32,10 @@ describe Shoes::Swt::ShoesKeyListener do
     it '"1"' do
       test_character_press '1'
     end
+
+    it '"$"' do
+      test_character_press '$'
+    end
   end
 
   describe 'works with shift key pressed such as' do
@@ -61,12 +64,12 @@ describe Shoes::Swt::ShoesKeyListener do
   end
 
   describe 'works with the ctrl key pressed such as' do
-    def test_ctrl_character_press(character)
+    def test_ctrl_character_press(character, modifier = 0)
       result_char = ('control_' + character).to_sym
       block.should_receive(:call).with(result_char)
       event = stub  character: 'something weird like \x00',
-                    stateMask: CTRL,
-                    keyCode: character.ord
+                    stateMask: CTRL | modifier,
+                    keyCode: character.downcase.ord
       subject.key_pressed(event)
     end
 
@@ -76,6 +79,16 @@ describe Shoes::Swt::ShoesKeyListener do
 
     it 'ctrl_z' do
       test_ctrl_character_press 'z'
+    end
+
+    describe 'and if we add the shift key' do
+      it ':ctrl_A' do
+        test_ctrl_character_press 'A', SHIFT
+      end
+
+      it ':ctrl_Z' do
+        test_ctrl_character_press 'Z', SHIFT
+      end
     end
   end
 
@@ -128,7 +141,6 @@ describe Shoes::Swt::ShoesKeyListener do
   describe 'special keys' do
 
     ARROW_LEFT = ::Swt::SWT::ARROW_LEFT
-
 
     def special_key_test(code, expected, modifier = 0)
       block.should_receive(:call).with(expected)
