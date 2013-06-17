@@ -29,7 +29,12 @@ module Shoes
         key = ''
         key += 'control_' if control?(event)
         key += "alt_" if alt?(event)
-        key += KEY_NAMES[event.keyCode] || event.character.chr
+        if control?(event)
+          # see: http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fswt%2Fevents%2FKeyListener.html
+          key += event.keyCode.chr if event.keyCode
+        else
+          key += KEY_NAMES[event.keyCode] || event.character.chr
+        end
         key = key.to_sym if other_modifier_keys_than_shift_pressed? event
         @blk.call key if normal_key_pressed?(event)
       end

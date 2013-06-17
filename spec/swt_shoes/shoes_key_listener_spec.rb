@@ -61,6 +61,25 @@ describe Shoes::Swt::ShoesKeyListener do
     end
   end
 
+  describe 'works with the ctrl key pressed such as' do
+    def test_ctrl_character_press(character)
+      result_char = ('control_' + character).to_sym
+      block.should_receive(:call).with(result_char)
+      event = stub  character: 'something weird like \x00',
+                    stateMask: CTRL,
+                    keyCode: character.ord
+      subject.key_pressed(event)
+    end
+
+    it ':ctrl_a' do
+      test_ctrl_character_press 'a'
+    end
+
+    it 'ctrl_z' do
+      test_ctrl_character_press 'z'
+    end
+  end
+
   describe 'works with shift combined with alt yielding capital letters' do
     def test_alt_shift_character_press(character)
       test_alt_character_press(character, SHIFT)
