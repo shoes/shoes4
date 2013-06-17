@@ -8,14 +8,14 @@ describe Shoes::Swt::Keypress do
   let(:block) { proc{} }
   subject { Shoes::Swt::Keypress.new dsl, app, &block}
 
-  context "#initialize" do
-    specify "adds key listener" do
+  describe "#initialize" do
+    it "adds key listener" do
       app.shell.should_receive(:addKeyListener)
       subject
     end
   end
 
-  specify 'Swt::SWT::CR is "\n"' do
+  it 'Swt::SWT::CR is "\n"' do
     Shoes::Swt::Keypress::KEY_NAMES[::Swt::SWT::CR].should eq("\n")
   end
 end
