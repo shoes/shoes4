@@ -95,9 +95,9 @@ describe Shoes::Swt::ShoesKeyListener do
   end
 
   describe 'only modifier keys yield nothing' do
-    def test_receive_nothing_with_modifier(modifier)
+    def test_receive_nothing_with_modifier(modifier, keyCode = nil)
       block.should_not_receive :call
-      event = stub stateMask: modifier, keyCode: nil, character: 0
+      event = stub stateMask: modifier, keyCode: keyCode, character: 0
       subject.key_pressed(event)
     end
 
@@ -124,11 +124,57 @@ describe Shoes::Swt::ShoesKeyListener do
     it 'shift + ctrl + alt' do
       test_receive_nothing_with_modifier CTRL | SHIFT | ALT
     end
+
+    it 'can handle it when the key code is present with ctrl + alt' do
+      test_receive_nothing_with_modifier CTRL | ALT, CTRL
+    end
   end
 
-  describe 'key aliases' do
-    it 'Swt::SWT::CR is "\n"' do
-      Shoes::Swt::ShoesKeyListener::KEY_NAMES[::Swt::SWT::CR].should eq("\n")
+  describe 'special keys' do
+
+    ARROW_LEFT = ::Swt::SWT::ARROW_LEFT
+
+
+    def special_key_test(code, expected, modifier = 0)
+      block.should_receive(:call).with(expected)
+      event = stub stateMask: modifier,
+                   keyCode: code,
+                   character: 0
+      subject.key_pressed(event)
+    end
+
+    it '"\n"' do
+      special_key_test(::Swt::SWT::CR, "\n")
+    end
+
+    it '<-- (left)' do
+      special_key_test ARROW_LEFT, 'left'
+    end
+
+    it 'F1' do
+      special_key_test ::Swt::SWT::F1, 'f1'
+    end
+
+    it 'TAB' do
+      special_key_test ::Swt::SWT::TAB, 'tab'
+    end
+
+    it 'delete' do
+      special_key_test ::Swt::SWT::DEL, 'delete'
+    end
+
+    describe 'with modifier' do
+      it ':alt_left' do
+        special_key_test ARROW_LEFT, :alt_left, ALT
+      end
+
+      it 'control_left' do
+        special_key_test ARROW_LEFT, :control_left, CTRL
+      end
+
+      it 'control_alt_left' do
+        special_key_test ARROW_LEFT, :control_alt_left, ALT | CTRL
+      end
     end
   end
 

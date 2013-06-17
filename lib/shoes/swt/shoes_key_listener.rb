@@ -15,28 +15,30 @@ module Shoes
       end
 
       KEY_NAMES[::Swt::SWT::DEL] = "delete"
-      KEY_NAMES[::Swt::SWT::BS] = "backspace"
+      KEY_NAMES[::Swt::SWT::BS]  = "backspace"
       KEY_NAMES[::Swt::SWT::ESC] = "escape"
-      KEY_NAMES[::Swt::SWT::DEL] = "delete"
-      KEY_NAMES[::Swt::SWT::CR] = "\n"
+      KEY_NAMES[::Swt::SWT::CR]  = "\n"
+
+      # modifier keys
+      %w[CTRL SHIFT ALT CAPS_LOCK].each do |key|
+        KEY_NAMES[eval("::Swt::SWT::#{key}")] = ""
+      end
 
       def initialize(blk)
-        @blk = blk
+        @block = blk
       end
 
       # NOTE: state_mask and key_code error for me so the java version is used
       def key_pressed(event)
+        p event.keyCode
+        p KEY_NAMES[event.keyCode]
+        p event.character
         key = ''
         key += 'control_' if control?(event)
         key += "alt_" if alt?(event)
-        if control?(event)
-          # see: http://help.eclipse.org/indigo/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fswt%2Fevents%2FKeyListener.html
-          key += event.keyCode.chr if event.keyCode
-        else
-          key += KEY_NAMES[event.keyCode] || event.character.chr
-        end
+        key = add_character_to_key(event, key)
         key = key.to_sym if other_modifier_keys_than_shift_pressed? event
-        @blk.call key if normal_key_pressed?(event)
+        @block.call key if normal_key_pressed?(event)
       end
 
       def key_released(event)
@@ -55,8 +57,24 @@ module Shoes
         (event.stateMask & ::Swt::SWT::CTRL) == ::Swt::SWT::CTRL
       end
 
+      def add_character_to_key(event, key)
+        return key if KEY_NAMES[event.keyCode] == ''
+        if special_key_pressed?(event)
+          key += KEY_NAMES[event.keyCode]
+        elsif control?(event)
+          key += event.keyCode.chr if event.keyCode
+        else
+          key += event.character.chr
+        end
+        key
+      end
+
+      def special_key_pressed?(event)
+        (KEY_NAMES[event.keyCode] && KEY_NAMES[event.keyCode] != '')
+      end
+
       def normal_key_pressed?(event)
-        KEY_NAMES[event.keyCode] || event.character != 0
+        special_key_pressed?(event) || event.character != 0
       end
     end
   end
