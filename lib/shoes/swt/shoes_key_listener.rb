@@ -29,20 +29,21 @@ module Shoes
         @blk = blk
       end
 
+      # NOTE: state_mask and key_code error for me so the java version is used
       def key_pressed(event)
         #Shift-only doesn't count as a modifier
-        if(event.stateMask & (::Swt::SWT::MODIFIER_MASK ^ ::Swt::SWT::SHIFT)) != 0
+        if other_modifier_keys_than_shift_pressed?(event)
           key = ""
 
-          if (event.stateMask & ::Swt::SWT::CTRL) == ::Swt::SWT::CTRL
+          if control?(event)
             key += "control_"
           end
 
-          if (event.stateMask & ::Swt::SWT::SHIFT) == ::Swt::SWT::SHIFT
+          if shift?(event)
             key += "shift_"
           end
 
-          if (event.stateMask & ::Swt::SWT::ALT) == ::Swt::SWT::ALT
+          if alt?(event)
             key += "alt_"
           end
 
@@ -57,6 +58,23 @@ module Shoes
       end
 
       def key_released(event)
+      end
+
+      private
+      def other_modifier_keys_than_shift_pressed?(event)
+        (event.stateMask & (::Swt::SWT::MODIFIER_MASK ^ ::Swt::SWT::SHIFT)) != 0
+      end
+
+      def alt?(event)
+        (event.stateMask & ::Swt::SWT::ALT) == ::Swt::SWT::ALT
+      end
+
+      def shift?(event)
+        (event.stateMask & ::Swt::SWT::SHIFT) == ::Swt::SWT::SHIFT
+      end
+
+      def control?(event)
+        (event.stateMask & ::Swt::SWT::CTRL) == ::Swt::SWT::CTRL
       end
     end
   end
