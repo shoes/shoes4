@@ -5,7 +5,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Keypress do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
-  let(:app) { Shoes::App.new(opts, &input_blk) }
+  let(:app) { stub shell: stub() }
   let(:dsl) { double('dsl') }
   let(:block) { proc{ |key| key} }
   subject { Shoes::Swt::Keypress.new dsl, app, &block}
