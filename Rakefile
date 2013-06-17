@@ -74,8 +74,7 @@ end
 
 def run_sample(sample_name)
   puts "Running #{SAMPLES_DIR}/#{sample_name}...quit to run next sample"
-  cmd = RbConfig::CONFIG["host_os"] =~ /mswin/ ? 'swt-shoooes' : 'shoes'
-  system "bin/#{cmd} #{SAMPLES_DIR}/#{sample_name}"
+  system "bin/shoes #{SAMPLES_DIR}/#{sample_name}"
 end
 
 task :default => :spec

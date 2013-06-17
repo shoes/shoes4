@@ -95,9 +95,14 @@ Running a Shoes App
 
 Shoes 4 comes with a command-line app runner. Just pass it the filename of your Shoes app.
 
-    $ bin/swt-shoooes samples/simple-sound.rb
+    $ bin/shoes samples/simple-sound.rb
 
-**Note:** For Windows, `C:\tmp\shoes4>bin\swt-shoooes samples\simple-sound.rb`
+**Note:** For Windows, `C:\tmp\shoes4>bin\shoes samples\simple-sound.rb`
+
+There is also a simple ruby starter script which you may use as follows:
+
+```
+bin/ruby-shoes samples/simple-sound.rb
 
 Want to see what shoes can do?
 ------------------------------
