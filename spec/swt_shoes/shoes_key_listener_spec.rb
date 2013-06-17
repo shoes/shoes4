@@ -12,10 +12,9 @@ describe Shoes::Swt::ShoesKeyListener do
     block.should_receive(:call).with(result_char)
     event = stub  character: character.ord,
                   stateMask: 0 | state_modifier,
-                  keyCode: nil
+                  keyCode: character.downcase.ord
     subject.key_pressed(event)
   end
-
 
   def test_alt_character_press(character, state_mask_modifier = 0)
     state_modifier = ALT | state_mask_modifier
@@ -95,9 +94,9 @@ describe Shoes::Swt::ShoesKeyListener do
   end
 
   describe 'only modifier keys yield nothing' do
-    def test_receive_nothing_with_modifier(modifier, keyCode = nil)
+    def test_receive_nothing_with_modifier(modifier, last_key_press = modifier)
       block.should_not_receive :call
-      event = stub stateMask: modifier, keyCode: keyCode, character: 0
+      event = stub stateMask: modifier, keyCode: last_key_press, character: 0
       subject.key_pressed(event)
     end
 
@@ -114,19 +113,15 @@ describe Shoes::Swt::ShoesKeyListener do
     end
 
     it 'shift + ctrl' do
-      test_receive_nothing_with_modifier SHIFT | CTRL
+      test_receive_nothing_with_modifier SHIFT | CTRL, SHIFT
     end
 
     it 'ctrl + alt' do
-      test_receive_nothing_with_modifier CTRL | ALT
+      test_receive_nothing_with_modifier CTRL | ALT, CTRL
     end
 
     it 'shift + ctrl + alt' do
-      test_receive_nothing_with_modifier CTRL | SHIFT | ALT
-    end
-
-    it 'can handle it when the key code is present with ctrl + alt' do
-      test_receive_nothing_with_modifier CTRL | ALT, CTRL
+      test_receive_nothing_with_modifier CTRL | SHIFT | ALT, ALT
     end
   end
 
@@ -168,12 +163,22 @@ describe Shoes::Swt::ShoesKeyListener do
         special_key_test ARROW_LEFT, :alt_left, ALT
       end
 
-      it 'control_left' do
+      it ':control_left' do
         special_key_test ARROW_LEFT, :control_left, CTRL
       end
 
-      it 'control_alt_left' do
-        special_key_test ARROW_LEFT, :control_alt_left, ALT | CTRL
+      it ':shift_left' do
+        special_key_test ARROW_LEFT, :shift_left, SHIFT
+      end
+
+      it ':control_alt_home' do
+        special_key_test ::Swt::SWT::HOME, :control_alt_home, ALT | CTRL
+      end
+
+      it ':control_shift_home' do
+        special_key_test ::Swt::SWT::HOME,
+                         :control_shift_alt_home,
+                         ALT | CTRL | SHIFT
       end
     end
   end
