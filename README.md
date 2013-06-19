@@ -103,6 +103,7 @@ There is also a simple ruby starter script which you may use as follows:
 
 ```
 bin/ruby-shoes samples/simple-sound.rb
+```
 
 Want to see what shoes can do?
 ------------------------------
