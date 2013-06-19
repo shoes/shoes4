@@ -32,9 +32,9 @@ module Shoes
       def key_pressed(event)
         modifiers = modifier_keys(event)
         character = character_key(event)
-        shoes_key_string = modifiers + character
-        shoes_key_string = shoes_key_string.to_sym unless modifiers.empty?
-        @block.call shoes_key_string unless character.empty?
+        key_string = modifiers + character
+        key_string = key_string.to_sym if should_be_symbol?(event, modifiers)
+        @block.call key_string unless character.empty?
       end
 
       def key_released(event)
@@ -50,19 +50,19 @@ module Shoes
       end
 
       def alt?(event)
-        modifier_key?(event, ::Swt::SWT::ALT)
+        is_this_modifier_key?(event, ::Swt::SWT::ALT)
       end
 
-      def modifier_key?(event, key)
+      def is_this_modifier_key?(event, key)
         (event.stateMask & key) == key
       end
 
       def shift?(event)
-        modifier_key?(event, ::Swt::SWT::SHIFT)
+        is_this_modifier_key?(event, ::Swt::SWT::SHIFT)
       end
 
       def control?(event)
-        modifier_key?(event, ::Swt::SWT::CTRL)
+        is_this_modifier_key?(event, ::Swt::SWT::CTRL)
       end
 
       def character_key(event)
@@ -91,6 +91,14 @@ module Shoes
 
       def current_key_is_modifier?(event)
         MODIFIER_KEYS.include? event.keyCode
+      end
+
+      def should_be_symbol?(event, modifiers)
+        !modifiers.empty? || (special_key?(event) && !enter?(event))
+      end
+
+      def enter?(event)
+        event.keyCode == ::Swt::SWT::CR
       end
     end
   end

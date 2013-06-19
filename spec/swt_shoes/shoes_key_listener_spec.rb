@@ -154,20 +154,20 @@ describe Shoes::Swt::ShoesKeyListener do
       special_key_test(::Swt::SWT::CR, "\n")
     end
 
-    it '<-- (left)' do
-      special_key_test ARROW_LEFT, 'left'
+    it ':left' do
+      special_key_test ARROW_LEFT, :left
     end
 
-    it 'F1' do
-      special_key_test ::Swt::SWT::F1, 'f1'
+    it ':f1' do
+      special_key_test ::Swt::SWT::F1, :f1
     end
 
-    it 'TAB' do
-      special_key_test ::Swt::SWT::TAB, 'tab'
+    it ':tab' do
+      special_key_test ::Swt::SWT::TAB, :tab
     end
 
-    it 'delete' do
-      special_key_test ::Swt::SWT::DEL, 'delete'
+    it ':delete' do
+      special_key_test ::Swt::SWT::DEL, :delete
     end
 
     describe 'with modifier' do
