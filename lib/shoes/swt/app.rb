@@ -80,7 +80,7 @@ module Shoes
       end
 
       def clipboard=(str)
-        ::Swt::Toolkit.getDefaultToolkit.getSystemClipboard.setContents ::Swt::StringSelection.new(str), Shoes
+#        ::Swt::Toolkit.getDefaultToolkit.getSystemClipboard.setContents ::Swt::StringSelection.new(str), Shoes
       end
 
       private
