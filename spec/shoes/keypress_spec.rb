@@ -9,4 +9,5 @@ describe Shoes::Keypress do
   it "should clear" do
     subject.should respond_to :clear
   end
+
 end
