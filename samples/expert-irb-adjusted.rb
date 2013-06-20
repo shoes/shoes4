@@ -69,7 +69,7 @@ Shoes.app do
     stack :width => 1.0, :height => 50 do
       para "Interactive Ruby ready.", :fill => white, :stroke => red
     end
-    @console = para *@str, :font => "Lucida Console", :stroke => "#dfa", :size => 12
+    @console = para *@str, :font => "Lucida Console", :stroke => "#dfa"
     @console.cursor = -1
   end
   keypress do |k|
@@ -90,19 +90,18 @@ Shoes.app do
           "#{CURSOR} "]
         @cmd = ""
       end
-    when "\b"
-      @cmd.slice!(-1)
-    when "\t"
-      @cmd += "  "
-    when "\x11" #ctrl_q
-      exit
-    when "\x03" #ctrl_c
-      self.clipboard = @cmd
-    when "\x16" #ctrl_v
-      @cmd += self.clipboard
-    when 'SHIFT', 'CTRL', 'ALT'
-    else
+    when String
       @cmd += k
+    when :backspace
+      @cmd.slice!(-1)
+    when :tab
+      @cmd += "  "
+    when :alt_q
+      exit
+    when :alt_c
+      self.clipboard = @cmd
+    when :alt_v
+      @cmd += self.clipboard
     end
     @console.replace *(@str + [@cmd])
     gui.flush

@@ -16,6 +16,10 @@ simple-sound.rb
 simple-stripes.rb
 simple-dialogs-outside.rb
 
+expert-irb-adjusted.rb
+expert-pong-adjusted.rb
+expert-tankspank-adjusted.rb
+
 sample1.rb
 sample2.rb
 sample3.rb

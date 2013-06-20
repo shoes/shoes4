@@ -28,7 +28,7 @@ Shoes.app :title => 'Snake Game v0.1' do
       @score.text = "Score: #{@snake.length * 10}"
       brick? @snake[0]
     end
-    keypress{|k| k = k[6..-1].to_s.downcase.to_sym; dir = k if @pos.keys.include? k}
+    keypress{|k| dir = k if @pos.keys.include? k}
   end
 
   def go k
