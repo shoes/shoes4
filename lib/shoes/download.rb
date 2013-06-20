@@ -11,7 +11,7 @@ module Shoes
         end
       end
       a = app.animate 10 do
-        (a.stop; blk[@sio]) if @finished
+        (a.remove; blk[@sio]) if @finished
       end if blk
     end
     
