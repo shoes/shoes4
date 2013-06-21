@@ -76,7 +76,7 @@ Shoes.app :title => "A Gentle Reminder",
       @completed.keys.sort.reverse.each { |day|
         stack do
           background lightgrey
-          para strong(Time.at(day).strftime('%B %d, %Y')), :stroke => white
+          para strong(day.strftime('%B %d, %Y')), :stroke => white
         end
 
         stack do
@@ -95,7 +95,7 @@ Shoes.app :title => "A Gentle Reminder",
 
   def complete_todo(item)
     day = Date.today
-    
+
     if @completed.keys.include? day
       @completed[day] << item
     else
