@@ -23,7 +23,7 @@ module Shoes
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-        clickable self, blk
+        clickable blk if blk
       end
 
       attr_reader :dsl, :angle

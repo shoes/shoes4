@@ -10,7 +10,7 @@ describe Shoes::Swt::Image do
   let(:container) { parent.real }
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", contents: []) }
-  let(:parent) { double("parent", real: real, dsl: parent_dsl) }
+  let(:parent) { double("parent", real: real, dsl: parent_dsl, app: app) }
   let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: {})}
   let(:left) { 100 }
   let(:top) { 200 }

@@ -21,25 +21,25 @@ module Shoes
       end
 
       def get_height
-        tl, font = set_styles
-        tl.setWidth @dsl.width
-        tl.getBounds(0, @dsl.text.length - 1).height.tap{font.dispose}
+        text_layout, font = set_styles
+        text_layout.setWidth @dsl.width
+        text_layout.getBounds(0, @dsl.text.length - 1).height.tap{font.dispose}
       end
 
       def get_size
-        tl, font = set_styles
-        gb = tl.getBounds(0, @dsl.text.length - 1).tap{font.dispose}
+        text_layout, font = set_styles
+        gb = text_layout.getBounds(0, @dsl.text.length - 1).tap{font.dispose}
         return gb.width, gb.height
       end
 
       def set_styles
-        tl = ::Swt::TextLayout.new Shoes.display
-        tl.setText @dsl.text
-        tl.setSpacing(@opts[:leading] || 4)
+        text_layout = ::Swt::TextLayout.new Shoes.display
+        text_layout.setText @dsl.text
+        text_layout.setSpacing(@opts[:leading] || 4)
         font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
-        tl.setStyle style, 0, @dsl.text.length - 1
-        return tl, font
+        text_layout.setStyle style, 0, @dsl.text.length - 1
+        return text_layout, font
       end
       
       def clear
@@ -78,23 +78,23 @@ module Shoes
         def initialize(dsl, opts)
           @dsl = dsl
           @opts = opts
-          @tl = ::Swt::TextLayout.new Shoes.display
+          @text_layout = ::Swt::TextLayout.new Shoes.display
         end
 
         def paintControl(paint_event)
           gc = paint_event.gc
           gcs_reset gc
-          @tl.setText @dsl.text
+          @text_layout.setText @dsl.text
           set_styles
           if @dsl.width
-            @tl.setWidth @dsl.width
-            @tl.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
+            @text_layout.setWidth @dsl.width
+            @text_layout.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
             if @dsl.cursor
-	      h = @tl.getLineBounds(0).height
+	      h = @text_layout.getLineBounds(0).height
               @dsl.textcursor ||= @dsl.app.line(0, 0, 0, h, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
               n = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
               n = 0 if n < 0
-              pos = @tl.getLocation n, true
+              pos = @text_layout.getLocation n, true
               @dsl.textcursor.move(@dsl.left + pos.x, @dsl.top + pos.y).show
 	    else
               (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
@@ -103,9 +103,9 @@ module Shoes
         end
 
         def set_styles
-          @tl.setJustify @opts[:justify]
-          @tl.setSpacing(@opts[:leading] || 4)
-          @tl.setAlignment case @opts[:align]
+          @text_layout.setJustify @opts[:justify]
+          @text_layout.setSpacing(@opts[:leading] || 4)
+          @text_layout.setAlignment case @opts[:align]
             when 'center'; ::Swt::SWT::CENTER
             when 'right'; ::Swt::SWT::RIGHT
             else ::Swt::SWT::LEFT
@@ -115,7 +115,7 @@ module Shoes
             ::Swt::Color.new(Shoes.display, 0, 0, 0)
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
-          @tl.setStyle style, 0, @dsl.text.length - 1
+          @text_layout.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
           @opts[:text_styles].each do |st|
@@ -145,10 +145,10 @@ module Shoes
               when :link
                 cmds << "underline = true"
                 fg = ::Swt::Color.new Shoes.display, 0, 0, 255
-                spos = @tl.getLocation e[1].first, false
-                epos = @tl.getLocation e[1].last, true
+                spos = @text_layout.getLocation e[1].first, false
+                epos = @text_layout.getLocation e[1].last, true
                 left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
-                e[0].lh = @tl.getLineBounds(0).height
+                e[0].lh = @text_layout.getLineBounds(0).height
                 e[0].sx, e[0].sy = left + spos.x, top + spos.y
                 e[0].ex, e[0].ey = left + epos.x, top + epos.y + e[0].lh
                 e[0].pl, e[0].pt, e[0].pw, e[0].ph = left, top, @dsl.width, @dsl.height
@@ -164,7 +164,7 @@ module Shoes
             ft = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, ft
             style = ::Swt::TextStyle.new ft, fg, bg
             cmds.each{|cmd| eval "style.#{cmd}"}
-            @tl.setStyle style, st[1].first, st[1].last
+            @text_layout.setStyle style, st[1].first, st[1].last
             @gcs << ft
           end if @opts[:text_styles]
         end

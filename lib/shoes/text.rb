@@ -18,5 +18,9 @@ module Shoes
     end
     attr_reader :blk
     attr_accessor :ln, :lh, :sx, :sy, :ex, :ey, :pl, :pt, :pw, :ph, :clickabled, :parent
+    
+    def in_bounds?(x, y)
+      ((pl..(pl+pw)).include?(x) and (sy..ey).include?(y) and !((pl..sx).include?(x) and (sy..(sy+lh)).include?(y)) and !((ex..(pl+pw)).include?(x) and ((ey-lh)..ey).include?(y)))
+    end
   end
 end

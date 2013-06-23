@@ -27,7 +27,7 @@ module Shoes
         end
         @container.add_paint_listener(@painter)
 
-        clickable self, blk
+        clickable blk if blk
       end
 
       def load_image(name)

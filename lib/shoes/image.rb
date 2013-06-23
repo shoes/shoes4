@@ -2,7 +2,7 @@ require 'shoes/common_methods'
 
 module Shoes
   class Image
-    include Shoes::CommonMethods
+    include CommonMethods
 
     attr_reader :parent, :blk, :gui, :app, :hidden
     attr_reader :file_path, :opts
