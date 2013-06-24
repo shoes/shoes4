@@ -5,7 +5,6 @@ module Swt
   include_package 'org.eclipse.swt.graphics'
   include_package 'org.eclipse.swt.events'
   include_package 'org.eclipse.swt.dnd'
-  import java.awt.datatransfer.StringSelection
   module Widgets
     import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
