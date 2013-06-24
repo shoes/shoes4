@@ -29,6 +29,7 @@ describe Shoes::Swt::Image do
 
   it_behaves_like "paintable"
   it_behaves_like "clearable"
+  it_behaves_like 'clickable backend'
 
   describe "paint callback" do
     let(:event) { double("event", gc: gc) }
