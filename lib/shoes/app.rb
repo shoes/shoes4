@@ -129,17 +129,6 @@ module Shoes
       }
     end
 
-    # font method takes family array assigns first from family array if not empty else returns font
-    #OS X stores fonts in /System/Library/Fonts/
-    #Windows stores fonts in /Windows/Fonts/
-    #Linux use fc-match @font to find path to font
-    #can check RUBY_PLATFORM
-    #/mingw/
-    #/darwin/
-    def font *family
-      family.empty? ? @font : @font = family.first
-    end
-
     def rotate angle=nil
       angle ? @rotate = angle : @rotate ||= 0
     end

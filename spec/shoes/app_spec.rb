@@ -142,22 +142,6 @@ describe Shoes::App do
       subject.started?
     end
   end
-
-  describe "#font" do
-    it "should load a true type font from a file"do
-      subject.font "Helvetica"
-      pending "not implemented yet"
-    end
-
-    it "should return an array of the font names found in the file upon success" do
-      pending "not implemented yet"
-    end
-
-    it "should return nil upon failure" do
-      pending "I think this could do better than returning nil"
-    end
-
-  end
 end
 
 describe "App registry" do
