@@ -68,9 +68,6 @@ module Shoes
 
     public
 
-    # TODO
-    # Shoes 3 also has `image width, height` that takes
-    # a block with drawing instructions.
     def image(path, opts={}, &blk)
       create Shoes::Image, path, opts, blk
     end
