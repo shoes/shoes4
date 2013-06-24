@@ -35,7 +35,6 @@ module Shoes
         begin
           @app.instance_eval &blk
         rescue NameError => error
-          puts 'Ooopsie encountered error: ' + error.to_s
           if Shoes::URL.shoes_included_instance
             Shoes::URL.shoes_included_instance.instance_eval &blk
           else
