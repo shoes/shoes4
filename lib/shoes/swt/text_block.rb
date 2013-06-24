@@ -63,7 +63,7 @@ module Shoes
 
       def clear_links
         @dsl.links.each do |link|
-          @dsl.app.gui.mscs.delete link
+          @dsl.app.gui.clickable_elements.delete link
           ln = link.ln
           @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
           @container.remove_listener ::Swt::SWT::MouseUp, ln if ln

@@ -41,13 +41,21 @@ module Shoes
     end
 
     def in_bounds?(x, y)
-      !hidden and left <= x and x <= right and top <= y and y <= bottom
+      visible? and left <= x and x <= right and top <= y and y <= bottom
     end
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
       @hidden = false
       toggle
+    end
+
+    def hidden?
+      @hidden
+    end
+
+    def visible?
+      !hidden?
     end
 
     # Reveals the element, if it is hidden. See also #hide and #toggle.

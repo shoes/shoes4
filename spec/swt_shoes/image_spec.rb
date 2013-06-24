@@ -16,7 +16,7 @@ describe Shoes::Swt::Image do
   let(:top) { 200 }
   let(:mock_image) { mock(:swt_image, getImageData: MockSize.new, addListener: true, add_paint_listener: true) }
   let(:real) { mock_image }
-  let(:gui) { double("gui", real: real, mscs: []) }
+  let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app) { double("app", gui: gui) }
   let(:width) { 128 }
   let(:height) { 128 }
