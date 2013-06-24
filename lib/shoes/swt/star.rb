@@ -28,7 +28,7 @@ module Shoes
       attr_reader :dsl, :angle
       attr_reader :transform
       attr_reader :painter
-      attr_accessor :width, :height, :left, :top, :points, :outer, :inner, :ln
+      attr_accessor :width, :height, :left, :top, :points, :outer, :inner
 
       class Painter < Common::Painter
         def fill(gc)

@@ -11,7 +11,6 @@ module Shoes
       include Common::Clickable
 
       attr_reader :dsl, :real, :shell, :started, :clickable_elements
-      attr_accessor :ln
 
       def initialize dsl
         @clickable_elements = []

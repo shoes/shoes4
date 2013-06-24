@@ -3,6 +3,8 @@ module Shoes
     module Common
       module Clickable
 
+        attr_accessor :click_listener
+
         # object = self is there for compatibility reasons for now
         # it's for link (defined in text.rb) and the listener is added in the
         # swt/text_block.rb ... moving it around would be too hard now
@@ -26,7 +28,7 @@ module Shoes
             dsl_object = object
           end
           listener = ClickListener.new(dsl_object, block)
-          object.ln = listener
+          object.click_listener = listener
           app_gui = dsl_object.app.gui
           app_gui.add_clickable_element dsl_object
           app_gui.real.addListener event, listener
