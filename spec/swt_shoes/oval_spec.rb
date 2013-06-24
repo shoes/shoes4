@@ -15,6 +15,7 @@ describe Shoes::Swt::Oval do
 
   it_behaves_like "paintable"
   it_behaves_like "movable shape", 10, 20
+  it_behaves_like 'clickable backend'
 
   describe "painter" do
     include_context "painter context"

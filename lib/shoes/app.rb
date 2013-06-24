@@ -136,5 +136,9 @@ module Shoes
     def rotate angle=nil
       angle ? @rotate = angle : @rotate ||= 0
     end
+
+    def in_bounds?(x, y)
+      true
+    end
   end
 end
