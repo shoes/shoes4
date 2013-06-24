@@ -27,7 +27,9 @@ module Shoes
           end
           listener = ClickListener.new(dsl_object, block)
           object.ln = listener
-          dsl_object.app.gui.real.addListener event, listener
+          app_gui = dsl_object.app.gui
+          app_gui.mscs << dsl_object
+          app_gui.real.addListener event, listener
         end
 
 
