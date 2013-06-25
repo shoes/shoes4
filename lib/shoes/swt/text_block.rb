@@ -2,7 +2,7 @@ module Shoes
   module Swt
     class TextBlock
       include Common::Clear
-      
+
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @opts = opts
@@ -75,6 +75,12 @@ module Shoes
         include Common::Resource
         include Common::Clickable
 
+        UNDERLINE_STYLES = {
+          "single" => 0,
+          "double" => 1,
+          "error" => 2,
+        }
+
         def initialize(dsl, opts)
           @dsl = dsl
           @opts = opts
@@ -115,6 +121,8 @@ module Shoes
             ::Swt::Color.new(Shoes.display, 0, 0, 0)
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
+          style.underline = @opts[:underline].nil? || @opts[:underline] == "none" ? false : true
+          style.underlineStyle = UNDERLINE_STYLES[@opts[:underline]] unless @opts[:underline].nil? || @opts[:underline] == "none"
           @tl.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
