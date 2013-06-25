@@ -1,17 +1,48 @@
 module Shoes
+  FONT_DIR = DIR + "/fonts/"
+
   class Font
+    FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
     attr_reader :path
-    def initialize(path = '')
-      @path = path
-      find_fonts
+
+    def self.fonts_from_dir(path)
+      Dir.glob(path + "*." + FONT_TYPES)
     end
 
-    def find_fonts
+    def self.system_font_dir
+      ''
+    end
+
+    def self.add_font_names_to_fonts_constant
+      Shoes::FONTS << fonts_from_dir(FONT_DIR)
+      Shoes::FONTS << fonts_from_dir(system_font_dir)
+    end
+
+    def self.parse_font_name_from_path(path)
+      return Pathname.new(path).basename.to_s
+    end
+
+    def initialize(path = '')
+      @path = path
+      Shoes::Font.add_font_names_to_fonts_constant if Shoes::FONTS == []
+      @found = find_font
+    end
+
+    def find_font
+      return false unless available?
       in_folder?
+    end
+
+    def available?
+      FONTS.include? @path
     end
 
     def in_folder?
       false
+    end
+
+    def found?
+      @found
     end
 
     def font_name
@@ -24,6 +55,12 @@ end
 
 __END__
 
+# FONTS constant -
+# get all files from fonts folder and add names to FONTS array
+# this should also include all fonts available to you from the local platform
+# get all files from system font folder and add names to FONTS array
+#
+#
 # according to PragTob this method is used to load fonts
 # and it should receive a path to the font that needs to be loaded
 # this font should probably be copied into the fonts folder
