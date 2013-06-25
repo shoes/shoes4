@@ -1,3 +1,5 @@
+require 'swt_shoes/spec_helper'
+
 describe Shoes::Configuration do
   context ":swt" do
     describe "#backend" do
