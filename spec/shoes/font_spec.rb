@@ -18,10 +18,16 @@ describe Shoes::Font do
   end
 
   describe 'fonts_from_dir' do
-    it 'returns an array of font names from the path passed in' do
+    it 'returns an array of font paths from the dir passed in' do
       cool = Shoes::FONT_DIR + "Coolvetica.ttf"
       lacu = Shoes::FONT_DIR + "Lacuna.ttf"
       Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should == [cool, lacu]
+    end
+  end
+
+  describe 'system_font_dir' do
+    it 'returns the path to the systems font directory' do
+      RbConfig::CONFIG['host_os'].should == "darwin"
     end
   end
 

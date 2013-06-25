@@ -10,6 +10,11 @@ module Shoes
     end
 
     def self.system_font_dir
+      case RbConfig::CONFIG['host_os']
+        when "darwin" #do mac stuff
+        when "linux" #do penguin stuff
+        when "mingw" #RD /S /Q C:\ j/k
+      end
       ''
     end
 
@@ -19,7 +24,7 @@ module Shoes
     end
 
     def self.parse_font_name_from_path(path)
-      return Pathname.new(path).basename.to_s
+      return Pathname.new(path).basename.to_s[0...-4]
     end
 
     def initialize(path = '')
