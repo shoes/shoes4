@@ -1,8 +1,17 @@
 module Shoes
   class Font
+    attr_reader :path
     def initialize(path = '')
       @path = path
+      find_fonts
+    end
 
+    def find_fonts
+      in_folder?
+    end
+
+    def in_folder?
+      false
     end
 
     def font_name
