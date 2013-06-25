@@ -10,13 +10,13 @@ describe Shoes::Swt::Image do
   let(:container) { parent.real }
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", contents: []) }
-  let(:parent) { double("parent", real: real, dsl: parent_dsl) }
+  let(:parent) { double("parent", real: real, dsl: parent_dsl, app: app) }
   let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: {})}
   let(:left) { 100 }
   let(:top) { 200 }
   let(:mock_image) { mock(:swt_image, getImageData: MockSize.new, addListener: true, add_paint_listener: true) }
   let(:real) { mock_image }
-  let(:gui) { double("gui", real: real, mscs: []) }
+  let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app) { double("app", gui: gui) }
   let(:width) { 128 }
   let(:height) { 128 }
@@ -29,6 +29,7 @@ describe Shoes::Swt::Image do
 
   it_behaves_like "paintable"
   it_behaves_like "clearable"
+  it_behaves_like 'clickable backend'
 
   describe "paint callback" do
     let(:event) { double("event", gc: gc) }

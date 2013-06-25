@@ -23,13 +23,13 @@ module Shoes
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-        clickable self, blk
+        clickable blk if blk
       end
 
       attr_reader :dsl, :angle
       attr_reader :transform
       attr_reader :painter
-      attr_accessor :width, :height, :left, :top, :ln
+      attr_accessor :width, :height, :left, :top
 
       class Painter < Common::Painter
         def clipping
