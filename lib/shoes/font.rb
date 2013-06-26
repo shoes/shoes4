@@ -6,11 +6,11 @@ module Shoes
     attr_reader :path
 
     def self.fonts_from_dir(path)
-      font_names = []
+      font_names_and_paths = {}
       Dir.glob(path + "*." + FONT_TYPES).each do |font_file|
-        font_names << parse_font_name_from_path(font_file)
+        font_names_and_paths[parse_font_name_from_path(font_file)] = font_file
       end
-      font_names
+      font_names_and_paths
     end
 
     def self.system_font_dirs
@@ -27,9 +27,9 @@ module Shoes
     end
 
     def self.add_font_names_to_fonts_constant
-      Shoes::FONTS << fonts_from_dir(FONT_DIR)
+      Shoes::FONTS << fonts_from_dir(FONT_DIR).keys
       system_font_dirs.each do |dir|
-        Shoes::FONTS << fonts_from_dir(dir)
+        Shoes::FONTS << fonts_from_dir(dir).keys
       end
       Shoes::FONTS.flatten!
     end
@@ -59,7 +59,15 @@ module Shoes
     end
 
     def load_font_from_system
+      fonts_hash = {}
+      Shoes::Font.system_font_dirs.each do |dir|
+        fonts_hash.merge!(Shoes::Font.fonts_from_dir(dir))
+      end
       false
+    end
+
+    def copy_file_to_font_folder(file_path)
+
     end
 
     def found?

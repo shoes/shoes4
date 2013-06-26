@@ -19,7 +19,7 @@ describe Shoes::Font do
 
   describe 'fonts_from_dir' do
     it 'returns an array of font paths from the dir passed in' do
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should == ["Coolvetica", "Lacuna"]
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).keys.should == ["Coolvetica", "Lacuna"]
     end
   end
 
@@ -62,7 +62,7 @@ describe Shoes::Font do
     end
 
     it 'returns false if font is not in Shoes::FONTS array' do
-      @lost_font = Shoes::Font.new("Knights Who Say Ni")
+      @lost_font = Shoes::Font.new("Knights Who Say Not Here")
       @lost_font.available?.should == false
     end
   end
@@ -79,7 +79,25 @@ describe Shoes::Font do
   end
 
   describe '#load_font_from_system' do
-    it '' do
+    it 'returns false if it fails to load the font' do
+      Shoes::FONTS << "Knights Who Say Ni"
+      @lost_font = Shoes::Font.new("Knights Who Say Ni")
+      @lost_font.found?.should == false
+    end
+
+    it 'copies file from system to font dir' do
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == false
+      @new_font = Shoes::Font.new("Arial Black")
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == true
+    end
+  end
+
+  describe "#copy_file_to_font_folder" do
+    it 'copies file from path passed in to the font dir' do
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == false
+      @blank_font = Shoes::Font.new("")
+      @blank_font.copy_file_to_font_folder("/Library/Fonts/Arial Black.ttf")
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == true
 
     end
   end
