@@ -8,7 +8,7 @@ module Shoes
     def self.fonts_from_dir(path)
       font_names_and_paths = {}
       Dir.glob(path + "*." + FONT_TYPES).each do |font_file|
-        font_names_and_paths[parse_font_name_from_path(font_file)] = font_file
+        font_names_and_paths[remove_file_ext(parse_filename_from_path(font_file))] = font_file
       end
       font_names_and_paths
     end
@@ -34,8 +34,12 @@ module Shoes
       Shoes::FONTS.flatten!
     end
 
-    def self.parse_font_name_from_path(path)
-      Pathname.new(path).basename.to_s[0...-4]
+    def self.parse_filename_from_path(file_path)
+      Pathname.new(file_path).basename.to_s
+    end
+
+    def self.remove_file_ext(file_name)
+      file_name[0...-4]
     end
 
     def initialize(path = '')
@@ -63,7 +67,10 @@ module Shoes
       Shoes::Font.system_font_dirs.each do |dir|
         fonts_hash.merge!(Shoes::Font.fonts_from_dir(dir))
       end
-      false
+      font_dir = Shoes::FONT_DIR
+      new_file_path = font_dir + @path
+      FileUtils.cp(fonts_hash[@path], font_dir)
+      FileUtils.cmp(fonts_hash[@path], new_file_path)
     end
 
     def copy_file_to_font_folder(file_path)

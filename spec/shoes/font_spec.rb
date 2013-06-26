@@ -29,10 +29,10 @@ describe Shoes::Font do
     end
   end
 
-  describe 'parse_font_name_from_path' do
+  describe 'parse_filename_from_path' do
     it 'returns name of file without extension' do
       path = Shoes::FONT_DIR + "Coolvetica.ttf"
-      Shoes::Font.parse_font_name_from_path(path).should == "Coolvetica"
+      Shoes::Font.parse_filename_from_path(path).should == "Coolvetica"
     end
   end
 
@@ -49,6 +49,7 @@ describe Shoes::Font do
     end
 
     it 'calls load_font_from_system if it is available and not in the font folder' do
+      #needs better isolation here
       @system_font = Shoes::Font.new("Impact")
       @system_font.should_receive :load_font_from_system
       @system_font.find_font
