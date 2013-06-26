@@ -68,6 +68,7 @@ module Shoes
       Shoes::Font.system_font_dirs.each do |dir|
         fonts_hash.merge!(Shoes::Font.fonts_from_dir(dir))
       end
+      #maybe bug here if this returns nil ??
       copy_file_to_font_folder(fonts_hash[@path])
     end
 

@@ -6,7 +6,6 @@ describe Shoes::Font do
 
   before :each do
     Shoes.configuration.stub(backend: Shoes::Mock)
-    @font = Shoes::Font.new("Helvetica")
   end
 
   after :each do
@@ -16,10 +15,12 @@ describe Shoes::Font do
   end
 
   it 'is not nil' do
+    @font = Shoes::Font.new("Helvetica")
     @font.should_not be_nil
   end
 
   it 'saves path passed in to path attribute' do
+    @font = Shoes::Font.new("Helvetica")
     @font.path.should == "Helvetica"
   end
 
@@ -44,12 +45,14 @@ describe Shoes::Font do
 
   describe '#find_font' do
     it 'checks if the font is currently available' do
+      @font = Shoes::Font.new("Helvetica")
       @font.should_receive :available?
       @font.find_font
     end
 
     it 'checks if available font is in font folder' do
       Shoes::FONTS << "Helvetica"
+      @font = Shoes::Font.new("Helvetica")
       @font.should_receive :in_folder?
       @font.find_font
     end
@@ -76,6 +79,7 @@ describe Shoes::Font do
 
   describe '#in_folder?' do
     it 'returns false if font is not in folder' do
+      @font = Shoes::Font.new("Helvetica")
       @font.in_folder?.should == false
     end
 
