@@ -47,6 +47,12 @@ describe Shoes::Font do
       @font.should_receive :in_folder?
       @font.find_font
     end
+
+    it 'calls load_font_from_system if it is available and not in the font folder' do
+      @system_font = Shoes::Font.new("Impact")
+      @system_font.should_receive :load_font_from_system
+      @system_font.find_font
+    end
   end
 
   describe '#available?' do
@@ -71,4 +77,16 @@ describe Shoes::Font do
       @in_folder_font.in_folder?.should == true
     end
   end
+
+  describe '#load_font_from_system' do
+    it '' do
+
+    end
+  end
 end
+
+
+
+
+
+

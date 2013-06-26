@@ -46,7 +46,8 @@ module Shoes
 
     def find_font
       return false unless available?
-      in_folder?
+      return true if in_folder?
+      load_font_from_system
     end
 
     def available?
@@ -55,6 +56,10 @@ module Shoes
 
     def in_folder?
       Shoes::Font.fonts_from_dir(FONT_DIR).include? @path
+    end
+
+    def load_font_from_system
+      false
     end
 
     def found?
