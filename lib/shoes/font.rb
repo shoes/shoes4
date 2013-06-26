@@ -6,25 +6,36 @@ module Shoes
     attr_reader :path
 
     def self.fonts_from_dir(path)
-      Dir.glob(path + "*." + FONT_TYPES)
+      font_names = []
+      Dir.glob(path + "*." + FONT_TYPES).each do |font_file|
+        font_names << parse_font_name_from_path(font_file)
+      end
+      font_names
     end
 
-    def self.system_font_dir
+    def self.system_font_dirs
       case RbConfig::CONFIG['host_os']
-        when "darwin" #do mac stuff
-        when "linux" #do penguin stuff
-        when "mingw" #RD /S /Q C:\ j/k
+        # these may need to be "darwin*" and "linux*" etc
+        when "darwin"
+          return ["/System/Library/Fonts/", "/Library/Fonts/" ]
+        when "linux" "linux-gnu"
+          return ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
+        when "mswin" "windows"
+          return ["/Windows/Fonts/"]
       end
       ''
     end
 
     def self.add_font_names_to_fonts_constant
       Shoes::FONTS << fonts_from_dir(FONT_DIR)
-      Shoes::FONTS << fonts_from_dir(system_font_dir)
+      system_font_dirs.each do |dir|
+        Shoes::FONTS << fonts_from_dir(dir)
+      end
+      Shoes::FONTS.flatten!
     end
 
     def self.parse_font_name_from_path(path)
-      return Pathname.new(path).basename.to_s[0...-4]
+      Pathname.new(path).basename.to_s[0...-4]
     end
 
     def initialize(path = '')
@@ -43,7 +54,7 @@ module Shoes
     end
 
     def in_folder?
-      false
+      Shoes::Font.fonts_from_dir(FONT_DIR).include? @path
     end
 
     def found?

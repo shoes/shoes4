@@ -19,15 +19,13 @@ describe Shoes::Font do
 
   describe 'fonts_from_dir' do
     it 'returns an array of font paths from the dir passed in' do
-      cool = Shoes::FONT_DIR + "Coolvetica.ttf"
-      lacu = Shoes::FONT_DIR + "Lacuna.ttf"
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should == [cool, lacu]
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should == ["Coolvetica", "Lacuna"]
     end
   end
 
-  describe 'system_font_dir' do
+  describe 'system_font_dirs' do
     it 'returns the path to the systems font directory' do
-      RbConfig::CONFIG['host_os'].should == "darwin"
+      Shoes::Font.system_font_dirs.should == ["/System/Library/Fonts/", "/Library/Fonts/" ]
     end
   end
 
@@ -48,6 +46,18 @@ describe Shoes::Font do
       Shoes::FONTS << "Helvetica"
       @font.should_receive :in_folder?
       @font.find_font
+    end
+  end
+
+  describe '#available?' do
+    it 'returns true if font is in Shoes::FONTS array' do
+      @cool_font = Shoes::Font.new("Coolvetica")
+      @cool_font.available?.should == true
+    end
+
+    it 'returns false if font is not in Shoes::FONTS array' do
+      @lost_font = Shoes::Font.new("Knights Who Say Ni")
+      @lost_font.available?.should == false
     end
   end
 
