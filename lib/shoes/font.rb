@@ -4,6 +4,7 @@ module Shoes
   class Font
     FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
     attr_reader :path
+    # TODO-refactor this to have better names for methods and variables
 
     def self.fonts_from_dir(path)
       font_names_and_paths = {}
@@ -23,6 +24,7 @@ module Shoes
         when "mswin" "windows"
           return ["/Windows/Fonts/"]
       end
+      # TODO- this should probably have a default
       ''
     end
 
@@ -36,7 +38,7 @@ module Shoes
     end
 
     def self.parse_filename_from_path(file_path)
-      #cant dup NilClass error ! wtf?!?!?
+      # TODO-put this method back together again
       name = Pathname.new(file_path)
       basename = name.basename
       basenamestring = basename.to_s
@@ -47,6 +49,8 @@ module Shoes
     end
 
     def initialize(path = '')
+      # TODO-need to work on return value from what is called in builins
+      # TODO-check for font name or path here
       @path = path
       Shoes::Font.add_font_names_to_fonts_constant
       @found = find_font
@@ -66,6 +70,7 @@ module Shoes
       Shoes::Font.fonts_from_dir(FONT_DIR).include? @path
     end
 
+    # TODO-refactor to pull something out of this it is too big
     def load_font_from_system
       fonts_hash = {}
       Shoes::Font.system_font_dirs.each do |dir|
@@ -73,10 +78,10 @@ module Shoes
         #puts fonts.inspect
         fonts_hash.merge!(fonts)
       end
-      #maybe bug here if fonts_hash[@path] returns nil ??
       copy_file_to_font_folder(fonts_hash.fetch(@path))
     end
 
+    # TODO-do something with comp value that is returned
     def copy_file_to_font_folder(file_path)
       new_file_path = Shoes::FONT_DIR + Shoes::Font.parse_filename_from_path(file_path)
       FileUtils.cp(file_path, Shoes::FONT_DIR)
@@ -87,6 +92,7 @@ module Shoes
       @found
     end
 
+    #TODO-Do something about this so it integrates with other test
     def font_name
       return @font_name unless @path == ''
       DEFAULT_TEXTBLOCK_FONT
@@ -96,7 +102,6 @@ end
 
 
 __END__
-
 # FONTS constant -
 # get all files from fonts folder and add names to FONTS array
 # this should also include all fonts available to you from the local platform
