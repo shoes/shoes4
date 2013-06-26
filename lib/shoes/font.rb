@@ -35,6 +35,7 @@ module Shoes
     end
 
     def self.parse_filename_from_path(file_path)
+      #cant dup NilClass error ! wtf?!?!?
       Pathname.new(file_path).basename.to_s
     end
 
@@ -67,14 +68,13 @@ module Shoes
       Shoes::Font.system_font_dirs.each do |dir|
         fonts_hash.merge!(Shoes::Font.fonts_from_dir(dir))
       end
-      font_dir = Shoes::FONT_DIR
-      new_file_path = font_dir + @path
-      FileUtils.cp(fonts_hash[@path], font_dir)
-      FileUtils.cmp(fonts_hash[@path], new_file_path)
+      copy_file_to_font_folder(fonts_hash[@path])
     end
 
     def copy_file_to_font_folder(file_path)
-
+      new_file_path = Shoes::FONT_DIR + Shoes::Font.parse_filename_from_path(file_path)
+      FileUtils.cp(file_path, Shoes::FONT_DIR)
+      FileUtils.cmp(file_path, new_file_path)
     end
 
     def found?

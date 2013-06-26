@@ -9,6 +9,12 @@ describe Shoes::Font do
     @font = Shoes::Font.new("Helvetica")
   end
 
+  after :each do
+    FileUtils.remove_file(Shoes::FONT_DIR + "Tahoma.ttf", :force => true)
+    FileUtils.remove_file(Shoes::FONT_DIR + "Impact.ttf", :force => true)
+    FileUtils.remove_file(Shoes::FONT_DIR + "Arial Black.ttf", :force => true)
+  end
+
   it 'is not nil' do
     @font.should_not be_nil
   end
@@ -18,7 +24,7 @@ describe Shoes::Font do
   end
 
   describe 'fonts_from_dir' do
-    it 'returns an array of font paths from the dir passed in' do
+    it 'returns an array of font names from the dir passed in' do
       Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).keys.should == ["Coolvetica", "Lacuna"]
     end
   end
@@ -30,9 +36,9 @@ describe Shoes::Font do
   end
 
   describe 'parse_filename_from_path' do
-    it 'returns name of file without extension' do
+    it 'returns name of file with extension' do
       path = Shoes::FONT_DIR + "Coolvetica.ttf"
-      Shoes::Font.parse_filename_from_path(path).should == "Coolvetica"
+      Shoes::Font.parse_filename_from_path(path).should == "Coolvetica.ttf"
     end
   end
 
@@ -95,10 +101,10 @@ describe Shoes::Font do
 
   describe "#copy_file_to_font_folder" do
     it 'copies file from path passed in to the font dir' do
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == false
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Tahoma").should == false
       @blank_font = Shoes::Font.new("")
-      @blank_font.copy_file_to_font_folder("/Library/Fonts/Arial Black.ttf")
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == true
+      @blank_font.copy_file_to_font_folder("/Library/Fonts/Tahoma.ttf")
+      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Tahoma").should == true
 
     end
   end
