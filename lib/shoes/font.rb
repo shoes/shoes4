@@ -27,6 +27,7 @@ module Shoes
     end
 
     def self.add_font_names_to_fonts_constant
+      Shoes::FONTS.clear
       Shoes::FONTS << fonts_from_dir(FONT_DIR).keys
       system_font_dirs.each do |dir|
         Shoes::FONTS << fonts_from_dir(dir).keys
@@ -36,7 +37,9 @@ module Shoes
 
     def self.parse_filename_from_path(file_path)
       #cant dup NilClass error ! wtf?!?!?
-      Pathname.new(file_path).basename.to_s
+      name = Pathname.new(file_path)
+      basename = name.basename
+      basenamestring = basename.to_s
     end
 
     def self.remove_file_ext(file_name)
@@ -45,7 +48,7 @@ module Shoes
 
     def initialize(path = '')
       @path = path
-      Shoes::Font.add_font_names_to_fonts_constant if Shoes::FONTS == []
+      Shoes::Font.add_font_names_to_fonts_constant
       @found = find_font
     end
 
@@ -66,10 +69,12 @@ module Shoes
     def load_font_from_system
       fonts_hash = {}
       Shoes::Font.system_font_dirs.each do |dir|
-        fonts_hash.merge!(Shoes::Font.fonts_from_dir(dir))
+        fonts = Shoes::Font.fonts_from_dir(dir)
+        #puts fonts.inspect
+        fonts_hash.merge!(fonts)
       end
-      #maybe bug here if this returns nil ??
-      copy_file_to_font_folder(fonts_hash[@path])
+      #maybe bug here if fonts_hash[@path] returns nil ??
+      copy_file_to_font_folder(fonts_hash.fetch(@path))
     end
 
     def copy_file_to_font_folder(file_path)
