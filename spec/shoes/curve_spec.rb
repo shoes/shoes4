@@ -7,9 +7,7 @@ describe Shoes::Curve do
   end
 
   describe "basic" do
-    subject { Shoes::Curve.new( app, 20, 30, 100, 200, 50, 50 ) }
+    subject { Shoes::Curve.new( app, Shoes::Point.new(20, 30), Shoes::Point.new(100, 200), Shoes::Point.new(50, 50) ) }
     it_behaves_like "object with stroke"
-    it_behaves_like "movable object"
-
   end
 end

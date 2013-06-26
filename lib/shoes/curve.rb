@@ -9,14 +9,11 @@ module Shoes
     include Shoes::Common::Stroke
     include Shoes::Common::Style
 
-    def initialize(app, x1, y1, x2, y2, x3, y3, opts = {}, &blk)
+    def initialize(app, p1, p2, p3, opts = {}, &blk)
       @app = app
-      @x1 = x1
-      @y1 = y1
-      @x2 = x2
-      @y2 = y2
-      @x3 = x3
-      @y3 = y3
+      @p1 = p1
+      @p2 = p2
+      @p3 = p3
 
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
@@ -25,10 +22,14 @@ module Shoes
       gui_opts = @style.clone
       @app.unslotted_elements << self
 
-      @gui = Shoes.backend_for(self, x1, y1, x2, y2, x3, y3, gui_opts)
+      @gui = Shoes.backend_for(self, p1, p2, p3, gui_opts)
     end
 
     attr_reader :app, :hidden
 
+    def move(x, y)
+      @gui.move x, y
+      self
+    end
   end
 end
