@@ -122,7 +122,7 @@ module Shoes
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
           style.underline = @opts[:underline].nil? || @opts[:underline] == "none" ? false : true
-          style.underlineStyle = UNDERLINE_STYLES[@opts[:underline]] unless @opts[:underline].nil? || @opts[:underline] == "none"
+          style.underlineStyle = UNDERLINE_STYLES[@opts[:underline]]
           @tl.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
