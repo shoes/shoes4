@@ -37,7 +37,7 @@ describe Shoes::Font do
   describe 'parse_filename_from_path' do
     it 'returns name of file with extension' do
       path = Shoes::FONT_DIR + "Coolvetica.ttf"
-      Shoes::Font.parse_filename_from_path(path).should == "Coolvetica.ttf"
+      parse_filename_from_path(path).should == "Coolvetica.ttf"
     end
   end
 
