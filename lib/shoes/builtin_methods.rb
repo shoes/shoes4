@@ -37,9 +37,8 @@ module Shoes
       Shoes::Dialog.new.ask_color title
     end
 
-    # TODO-this need to call right and still return corectly now
-    def font(path = '')
-      Shoes::Font.new(path).font_name
+    def font(path)
+      Shoes::Font.new(path).load_font
     end
   end
 end

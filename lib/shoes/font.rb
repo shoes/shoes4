@@ -14,7 +14,6 @@ module Shoes
       font_names_and_paths
     end
 
-      # TODO- this should have a default
     def self.system_font_dirs
       case RbConfig::CONFIG['host_os']
         when "darwin"
@@ -42,13 +41,13 @@ module Shoes
     end
 
     def self.remove_file_ext(file_name)
-      file_name[0...-4]
+      file_name[0...file_name.rindex('.')]
     end
 
       # TODO-check for font name or path here this assumes good input
     def initialize(path = '')
       @path = path
-      Shoes::Font.add_font_names_to_fonts_constant
+      self.class.add_font_names_to_fonts_constant
       @found = find_font
     end
 
@@ -63,21 +62,21 @@ module Shoes
     end
 
     def in_folder?
-      Shoes::Font.fonts_from_dir(FONT_DIR).include? @path
+      self.class.fonts_from_dir(FONT_DIR).include? @path
     end
 
     # TODO-refactor to pull something out of this it is too big
     def load_font_from_system
       fonts_hash = {}
-      Shoes::Font.system_font_dirs.each do |dir|
-        fonts = Shoes::Font.fonts_from_dir(dir)
+      self.class.system_font_dirs.each do |dir|
+        fonts = self.class.fonts_from_dir(dir)
         fonts_hash.merge!(fonts)
       end
       copy_file_to_font_folder(fonts_hash.fetch(@path))
     end
 
     def copy_file_to_font_folder(file_path)
-      new_file_path = Shoes::FONT_DIR + Shoes::Font.parse_filename_from_path(file_path)
+      new_file_path = Shoes::FONT_DIR + self.class.parse_filename_from_path(file_path)
       FileUtils.cp(file_path, Shoes::FONT_DIR)
       FileUtils.cmp(file_path, new_file_path)
     end

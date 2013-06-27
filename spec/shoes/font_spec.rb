@@ -5,7 +5,6 @@ main_object = self
 describe Shoes::Font do
 
   before :each do
-    Shoes.configuration.stub(backend: Shoes::Mock)
     @font = Shoes::Font.new("Helvetica")
   end
 
