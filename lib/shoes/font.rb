@@ -17,15 +17,15 @@ module Shoes
       # TODO- this should have a default
     def self.system_font_dirs
       case RbConfig::CONFIG['host_os']
-        # these may need to be "darwin*" and "linux*" or something
         when "darwin"
           return ["/System/Library/Fonts/", "/Library/Fonts/" ]
-        when "linux" "linux-gnu"
+        when "linux", "linux-gnu"
           return ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
-        when "mswin" "windows"
+        when "mswin", "windows", "mingw"
           return ["/Windows/Fonts/"]
+        else
+          raise RuntimeError, "Undetermined Host OS"
       end
-      ''
     end
 
     def self.add_font_names_to_fonts_constant
