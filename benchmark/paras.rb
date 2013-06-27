@@ -8,18 +8,18 @@ Shoes.app do
     Benchmark.bm do |benchmark|
       benchmark.report '100' do
         create_paras 100
-        gui.flush
       end
 
+      # this already hangs on shoes 3
       benchmark.report '1000' do
         create_paras 1000
-        gui.flush
       end
     end
   end
 
   def create_paras(count)
     count.times do para LOREM_IPSUM end
+    gui.flush if respond_to? :gui
   end
 
   button 'start benchmarking' do
