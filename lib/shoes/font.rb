@@ -4,7 +4,7 @@ module Shoes
     # TODO-refactor this to have better names for methods and variables
   class Font
     FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
-    attr_reader :path
+    attr_reader :path, :font_name
 
     def self.fonts_from_dir(path)
       font_names_and_paths = {}
@@ -41,7 +41,7 @@ module Shoes
     end
 
     def self.remove_file_ext(file_name)
-      file_name[0...file_name.rindex('.')]
+      file_name.chomp(File.extname(file_name))
     end
 
       # TODO-check for font name or path here this assumes good input
@@ -87,7 +87,7 @@ module Shoes
 
       # TODO-need to work on return value from what is called in builtins
       # TODO-needs to pass tests in textblock spec still after refactor
-    def font_name
+    def load_font
       return @font_name unless @path == ''
       DEFAULT_TEXTBLOCK_FONT
     end
