@@ -1,6 +1,5 @@
 require 'optparse'
 require 'shoes'
-require 'furoshiki/shoes'
 
 module Shoes
   class CLI
@@ -53,6 +52,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
 
     def package(path)
       begin
+        require 'furoshiki/shoes'
         config = Furoshiki::Shoes::Configuration.load(path)
       rescue Errno::ENOENT => e
         abort "shoes: #{e.message}"
