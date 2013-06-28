@@ -17,12 +17,46 @@ Shoes.app do
     end
   end
 
+  def benchmark_paras_stacks_flows
+    Benchmark.bm do |benchmark|
+      benchmark.report '100' do
+        create_stack_flows 100
+      end
+
+      benchmark.report '500' do
+        create_stack_flows 500
+      end
+    end
+  end
+
+  def create_stack_flows(count)
+    count.times do
+      stack do
+        flow do
+          para LOREM_IPSUM
+        end
+        flow do
+          para LOREM_IPSUM
+        end
+      end
+    end
+    flush_gui
+  end
+
   def create_paras(count)
     count.times do para LOREM_IPSUM end
+    flush_gui
+  end
+
+  def flush_gui
     gui.flush if respond_to? :gui
   end
 
-  button 'start benchmarking' do
+  button 'benchmark paras' do
     benchmark_paras
+  end
+
+  button 'benchmark paras with some stacks and flows' do
+    benchmark_paras_stacks_flows
   end
 end
