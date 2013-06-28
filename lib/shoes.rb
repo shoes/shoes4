@@ -29,7 +29,7 @@ module Shoes
     # @param block [Proc] The block that describes the gems that are needed
     # @deprecated
     def setup(&block)
-      $stderr.puts "WARN: The Shoes.setup method is no longer used, you need to install gems yourself." +
+      $stderr.puts "WARN: The Shoes.setup method is deprecated, you need to install gems yourself." +
                    "You can do this using the 'gem install' command or bundler and a Gemfile."
       DeprecatedShoesGemSetup.new.instance_eval(&block)
     end
