@@ -5,13 +5,7 @@ main_object = self
 describe Shoes::Font do
 
   before :each do
-    @font = Shoes::Font.new("Helvetica")
-  end
-
-  after :each do
-    FileUtils.remove_file(Shoes::FONT_DIR + "Tahoma.ttf", :force => true)
-    FileUtils.remove_file(Shoes::FONT_DIR + "Impact.ttf", :force => true)
-    FileUtils.remove_file(Shoes::FONT_DIR + "Arial Black.ttf", :force => true)
+    @font = Shoes::Font.new("/Library/Fonts/Arial.ttf")
   end
 
   it 'is not nil' do
@@ -19,84 +13,51 @@ describe Shoes::Font do
   end
 
   it 'saves path passed in to path attribute' do
-    @font.path.should == "Helvetica"
+    @font.path.should == "/Library/Fonts/Arial.ttf"
   end
 
-  describe 'fonts_from_dir' do
+  describe '#fonts_from_dir' do
     it 'returns a hash of font names and paths from the dir passed in' do
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should be_a(Hash)
+      @font.fonts_from_dir(Shoes::FONT_DIR).should be_a(Array)
+    end
+
+    it 'returns the names of the fonts in the directory' do
+      @font.fonts_from_dir(Shoes::FONT_DIR).should == ["Coolvetica", "Lacuna"]
     end
   end
 
-  describe 'system_font_dirs' do
+  describe '#system_font_dirs' do
     it 'returns the path to the systems font directory' do
-      #Shoes::Font.system_font_dirs.should == ["/System/Library/Fonts/", "/Library/Fonts/" ]
+      case RbConfig::CONFIG['host_os']
+        when "darwin"
+          @font.system_font_dirs.should == ["/System/Library/Fonts/", "/Library/Fonts/" ]
+        when "linux", "linux-gnu"
+          @font.system_font_dirs.should == ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
+        when "mswin", "windows", "mingw"
+          @font.system_font_dirs.should == ["/Windows/Fonts/"]
+        else
+          raise RuntimeError, "Undetermined Host OS"
+      end
     end
   end
 
-  describe 'parse_filename_from_path' do
+  describe '#parse_filename_from_path' do
     it 'returns name of file with extension' do
-      path = Shoes::FONT_DIR + "Coolvetica.ttf"
-      parse_filename_from_path(path).should == "Coolvetica.ttf"
+      path = "/Library/Fonts/Coolvetica.ttf"
+      @font.parse_filename_from_path(path).should == "Coolvetica.ttf"
     end
   end
 
-  describe '#find_font' do
-    it 'checks if the font is currently available' do
-      @font.should_receive :available?
-      @font.find_font
-    end
-
-    it 'checks if available font is in font folder' do
-      pending "need to reimplement after changes"
-    end
+  describe '#remove_file_ext' do
+    pending "fill this out"
   end
 
-  describe '#available?' do
-    it 'returns true if font is in Shoes::FONTS array' do
-      @cool_font = Shoes::Font.new("Coolvetica")
-      @cool_font.available?.should == true
-    end
-
-    it 'returns false if font is not in Shoes::FONTS array' do
-      @lost_font = Shoes::Font.new("Knights Who Say Not Here")
-      @lost_font.available?.should == false
-    end
+  describe '#add_font_names_to_fonts_constant' do
+    pending "fill this out"
   end
 
-  describe '#in_folder?' do
-    it 'returns false if font is not in folder' do
-      @font.in_folder?.should == false
-    end
-
-    it 'returns true if font is allready in folder' do
-      @in_folder_font = Shoes::Font.new("Coolvetica")
-      @in_folder_font.in_folder?.should == true
-    end
-  end
-
-  describe '#load_font_from_system' do
-    it 'returns false if it fails to load the font' do
-      Shoes::FONTS << "Knights Who Say Ni"
-      @lost_font = Shoes::Font.new("Knights Who Say Ni")
-      @lost_font.found?.should == false
-    end
-
-    it 'copies file from system to font dir' do
-      #Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == false
-      #@new_font = Shoes::Font.new("Arial Black")
-      #Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Arial Black").should == true
-    end
-  end
-
-  describe "#copy_file_to_font_folder" do
-    it 'copies file from path passed in to the font dir' do
-      #Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Tahoma").should == false
-      #@blank_font = Shoes::Font.new("")
-      #@blank_font.copy_file_to_font_folder("/Library/Fonts/Tahoma.ttf")
-      #Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).include?("Tahoma").should == true
-
-    end
+  describe "#load_font" do
+    pending "fill this out"
   end
 end
 

@@ -4,12 +4,14 @@ module Shoes
     # TODO-refactor this to have better names for methods and variables
   class Font
     FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
-    attr_reader :font_path, :font_name
+    attr_reader :path, :name
+    @@loaded_fonts = {}
 
       # TODO-check for font name or path here this assumes good input
-    def initialize(font_path)
-      @font_path = font_path
-      @font_name = remove_file_ext(parse_filename_from_path(@font_path))
+    def initialize(path)
+      @path = path
+      @name = remove_file_ext(parse_filename_from_path(@path))
+      @@loaded_fonts[@name] = @path
       add_font_names_to_fonts_constant
     end
 
@@ -22,11 +24,11 @@ module Shoes
     end
 
     def fonts_from_dir(path)
-      font_names_and_paths = {}
+      font_names = []
       Dir.glob(path + "*." + FONT_TYPES).each do |font_file|
-        font_names_and_paths[remove_file_ext(parse_filename_from_path(font_file))] = font_file
+        font_names << remove_file_ext(parse_filename_from_path(font_file))
       end
-      font_names_and_paths
+      font_names
     end
 
     def system_font_dirs
@@ -44,23 +46,17 @@ module Shoes
 
     def add_font_names_to_fonts_constant
       Shoes::FONTS.clear
-      Shoes::FONTS << fonts_from_dir(FONT_DIR).keys
+      Shoes::FONTS << fonts_from_dir(FONT_DIR)
+      Shoes::FONTS << @@loaded_fonts.keys
       system_font_dirs.each do |dir|
-        Shoes::FONTS << fonts_from_dir(dir).keys
+        Shoes::FONTS << fonts_from_dir(dir)
       end
       Shoes::FONTS.flatten!
     end
 
     def load_font
-      return @font_name unless @path == ''
+      return @name unless @path == ''
       DEFAULT_TEXTBLOCK_FONT
     end
   end
 end
-
-__END__
-take a path in
-grab the font name from the path
-store font name and path in hash
-update FONTS with newly loaded font name
-
