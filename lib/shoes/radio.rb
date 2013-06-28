@@ -1,6 +1,6 @@
 require 'shoes/common_methods'
 
-module Shoes
+class Shoes
   class Radio
     include Shoes::CommonMethods
     attr_reader :gui, :blk, :parent

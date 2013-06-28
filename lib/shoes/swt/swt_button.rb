@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     class SwtButton
       include Common::Clear

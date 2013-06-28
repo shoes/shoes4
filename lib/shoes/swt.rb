@@ -61,25 +61,27 @@ require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
 require 'shoes/swt/timer'
 
-module Shoes::Swt
-  extend ::Shoes::Common::Registration
+class Shoes
+  module Swt
+    extend ::Shoes::Common::Registration
 
-  module Shoes
-    def self.app(opts={}, &blk)
-      Shoes::App.new(opts, &blk)
-      Shoes.logger.debug "Exiting Shoes.app"
-    end
+    module Shoes
+      def self.app(opts={}, &blk)
+        Shoes::App.new(opts, &blk)
+        Shoes.logger.debug "Exiting Shoes.app"
+      end
 
-    def self.logger
-      ::Shoes.logger
-    end
+      def self.logger
+        ::Shoes.logger
+      end
 
-    def self.display
-      ::Swt::Widgets::Display.getCurrent
+      def self.display
+        ::Swt::Widgets::Display.getCurrent
+      end
+
+      ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
+      ::Shoes::FONTS.uniq!
     end
-    
-    ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
-    ::Shoes::FONTS.uniq!
   end
 end
 

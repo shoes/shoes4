@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Common
     module Clickable
       def click &blk

@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Timer
     def initialize app, n=1000, &blk
       @app, @n, @blk = app, n, blk

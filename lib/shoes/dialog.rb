@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Dialog
     def initialize
       @gui = Shoes.backend::Dialog.new

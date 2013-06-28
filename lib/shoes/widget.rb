@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   # This is the superclass for creating custom Shoes widgets.
   #
   # To use, inherit from {Shoes::Widget}. You get a few magical effects:

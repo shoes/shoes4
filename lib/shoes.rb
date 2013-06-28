@@ -2,7 +2,7 @@ require 'rubygems'
 require 'pathname'
 require 'shoes/common/registration'
 
-module Shoes
+class Shoes
   PI = Math::PI
   TWO_PI = 2 * PI
   HALF_PI = 0.5 * PI

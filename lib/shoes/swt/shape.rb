@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     # The Swt implementation of a Shoes::Shape
     class Shape

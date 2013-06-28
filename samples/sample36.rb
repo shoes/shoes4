@@ -1,7 +1,6 @@
 require 'yaml'
 
-class Book
-  include Shoes
+class Book < Shoes
   url '/', :index
   url '/incidents/(\d+)', :incident
 

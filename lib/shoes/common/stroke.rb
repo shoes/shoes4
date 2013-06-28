@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Common
     # Methods for objects with stroke
     #
