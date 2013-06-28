@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class ImagePattern
     def initialize path
       @path = path

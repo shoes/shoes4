@@ -16,7 +16,7 @@ require 'shoes/sound'
 require 'shoes/text'
 require 'shoes/text_block'
 
-module Shoes
+class Shoes
   # Methods for creating and manipulating Shoes elements
   #
   # Requirements

@@ -1,6 +1,6 @@
 require 'swt'
 
-module Shoes
+class Shoes
   module Swt
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]

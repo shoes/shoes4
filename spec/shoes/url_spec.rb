@@ -2,9 +2,7 @@ require 'shoes/spec_helper'
 
 describe 'Shoes.url' do
   let(:klazz) do
-    Class.new do
-      include Shoes
-
+    Class.new(Shoes) do
       url '/', :index
       url '/path', :path
 

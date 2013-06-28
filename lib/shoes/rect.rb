@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Rect
     include CommonMethods
     include Common::Style

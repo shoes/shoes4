@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Text
     def initialize m, str, color=nil
       @style, @str, @color = m, str, color

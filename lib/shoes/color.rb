@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Color
     include Comparable
     OPAQUE = 255

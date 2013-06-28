@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     class Dialog
       SWT = ::Swt::SWT

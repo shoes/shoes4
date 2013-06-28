@@ -1,6 +1,6 @@
 require 'shoes/swt/input_box'
 
-module Shoes
+class Shoes
   module Swt
     class EditLine < InputBox
       def initialize(dsl, parent)

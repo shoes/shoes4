@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Point
     def initialize(x, y)
       @x, @y = x, y
