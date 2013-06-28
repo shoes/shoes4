@@ -72,6 +72,8 @@ module Shoes
       end
 
       class TbPainter
+        #include org.eclipse.swt.events.PaintListener
+        include ::Swt::Events::PaintListener
         include Common::Resource
         include Common::Clickable
 

@@ -5,10 +5,16 @@ module Swt
   include_package 'org.eclipse.swt.graphics'
   include_package 'org.eclipse.swt.events'
   include_package 'org.eclipse.swt.dnd'
+
+  module Events
+    import org.eclipse.swt.events.PaintListener
+  end
+
   module Widgets
     import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
   end
+
   module Graphics
     import org.eclipse.swt.graphics
     import org.eclipse.swt.graphics.Pattern
