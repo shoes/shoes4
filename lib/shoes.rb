@@ -29,14 +29,9 @@ module Shoes
     # @param block [Proc] The block that describes the gems that are needed
     # @deprecated
     def setup(&block)
-      $stderr.puts "WARN: The Shoes.setup method is no longer used, you need to install gems yourself."
-      Class.new do
-        def gem(name)
-          name, version = name.split()
-          install_cmd = ["gem install", name, version ? "--version \"#{version}\"" : ''].join(' ')
-          $stderr.puts "WARN: To use the '#{name}' gem, install it with '#{install_cmd}', and put 'require \"#{name}\"' at the top of your Shoes program."
-        end
-      end.new.instance_eval(&block)
+      $stderr.puts "WARN: The Shoes.setup method is no longer used, you need to install gems yourself." +
+                   "You can do this using the 'gem install' command or bundler and a Gemfile."
+      DeprecatedShoesGemSetup.new.instance_eval(&block)
     end
 
     # Load the backend in memory. This does not set any configuration.
@@ -50,6 +45,15 @@ module Shoes
       rescue LoadError => e
         raise LoadError, "Couldn't load backend Shoes::#{name.capitalize}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
       end
+    end
+  end
+
+  class DeprecatedShoesGemSetup
+    def gem(name)
+      name, version = name.split()
+      install_cmd = 'gem install ' + name
+      install_cmd += " --version \"#{version}\"" if version
+      $stderr.puts "WARN: To use the '#{name}' gem, install it with '#{install_cmd}', and put 'require \"#{name}\"' at the top of your Shoes program."
     end
   end
 end
