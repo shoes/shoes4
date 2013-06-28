@@ -37,7 +37,7 @@ module Shoes
       Shoes::Dialog.new.ask_color title
     end
 
-    def font(path = '')
+    def font(path = DEFAULT_TEXTBLOCK_FONT)
       Shoes::Font.new(path).load_font
     end
   end

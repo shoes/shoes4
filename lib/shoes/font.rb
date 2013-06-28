@@ -55,8 +55,7 @@ module Shoes
     end
 
     def load_font
-      return @name unless @path == ''
-      DEFAULT_TEXTBLOCK_FONT
+      @name
     end
   end
 end
