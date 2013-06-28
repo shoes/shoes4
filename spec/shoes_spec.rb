@@ -2,6 +2,6 @@ require 'spec_helper'
 
 describe Shoes, 'load_backend' do
   it "raises ArgumentError on bad input" do
-    lambda { Shoes.load_backend :bogus }
+    expect { Shoes.load_backend :bogus }.to raise_error
   end
 end
