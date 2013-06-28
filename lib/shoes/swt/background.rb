@@ -1,6 +1,6 @@
 require 'shoes/swt/rect'
 
-module Shoes
+class Shoes
   module Swt
     class Background
       include Common::Fill

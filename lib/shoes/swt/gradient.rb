@@ -1,6 +1,6 @@
 require 'shoes/swt/color'
 
-module Shoes
+class Shoes
   module Swt
     class Gradient
       def initialize(dsl)

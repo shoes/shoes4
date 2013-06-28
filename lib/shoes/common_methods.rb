@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-module Shoes
+class Shoes
   # Methods common to Shoes gui elements.
   #
   # Classes that include this module must expose:

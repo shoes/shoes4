@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Download
     def initialize app, name, args, &blk
       require 'open-uri'

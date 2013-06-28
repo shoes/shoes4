@@ -2,7 +2,7 @@ require 'optparse'
 require 'shoes'
 require 'furoshiki/shoes'
 
-module Shoes
+class Shoes
   class CLI
     def initialize
       @packages = []

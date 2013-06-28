@@ -1,7 +1,7 @@
 require 'shoes/common_methods'
 require 'shoes/common/margin'
 
-module Shoes
+class Shoes
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock

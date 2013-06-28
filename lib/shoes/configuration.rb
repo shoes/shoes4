@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Configuration
     class << self
       def reset

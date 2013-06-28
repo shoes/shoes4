@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     class Image
       include Common::Child

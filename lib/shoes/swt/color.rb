@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     class Color
       def self.create(color)

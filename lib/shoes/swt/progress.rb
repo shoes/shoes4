@@ -1,6 +1,6 @@
 require 'shoes/swt/swt_button'
 
-module Shoes
+class Shoes
   module Swt
     class Progress
       include Common::Child

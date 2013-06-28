@@ -4,7 +4,7 @@ require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/common/clickable'
 
-module Shoes
+class Shoes
   class Star
     include Shoes::CommonMethods
     include Shoes::Common::Fill

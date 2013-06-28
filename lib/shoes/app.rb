@@ -4,7 +4,7 @@ require 'shoes/common/margin'
 require 'tmpdir'
 require 'fileutils'
 
-module Shoes
+class Shoes
   shoes_icon = File.expand_path("../../../static/shoes-icon.png", __FILE__)
   if shoes_icon.include? '.jar!'
     SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png').freeze

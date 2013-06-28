@@ -9,7 +9,7 @@ require 'support/jogg-0.0.7.jar'
 require 'support/jorbis-0.0.15.jar'
 require 'support/vorbisspi1.0.3.jar'
 
-module Shoes
+class Shoes
   module Swt
     class Sound
       JFile = java.io.File

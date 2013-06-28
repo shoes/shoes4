@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Animation
 
     # Creates a new Animation.

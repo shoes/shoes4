@@ -1,6 +1,6 @@
 require 'shoes/common/margin'
 
-module Shoes
+class Shoes
   class Slot
     include Shoes::DSL
     include Shoes::Common::Margin
