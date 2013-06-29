@@ -16,12 +16,16 @@ describe Shoes::Font do
     @font.path.should == "/Library/Fonts/Arial.ttf"
   end
 
-  describe '#fonts_from_dir' do
-    it 'returns a hash of font names and paths from the dir passed in' do
-      @font.fonts_from_dir(Shoes::FONT_DIR).should be_a(Array)
-    end
+  it 'parses the path into a font name' do
+    @font.name.should == "Arial"
+  end
 
-    it 'returns the names of the fonts in the directory' do
+  it 'adds the font to the loaded fonts hash' do
+    Shoes::Font.loaded_fonts.should include("Arial")
+  end
+
+  describe '#fonts_from_dir' do
+    it 'returns an array of the names of the fonts in the directory' do
       @font.fonts_from_dir(Shoes::FONT_DIR).should == ["Coolvetica", "Lacuna"]
     end
   end
@@ -49,15 +53,24 @@ describe Shoes::Font do
   end
 
   describe '#remove_file_ext' do
-    pending "fill this out"
+    it 'removes the extension from the filename' do
+      @font.remove_file_ext("Coolvetica.ttf").should == "Coolvetica"
+    end
   end
 
   describe '#add_font_names_to_fonts_constant' do
-    pending "fill this out"
+    it 'adds font names for fonts found in directories' do
+      Shoes::FONTS.clear
+      Shoes::FONTS.should == []
+      @font.add_font_names_to_fonts_constant
+      Shoes::FONTS.should_not == []
+    end
   end
 
   describe "#load_font" do
-    pending "fill this out"
+    it 'returns the font name' do
+      @font.load_font.should == "Arial"
+    end
   end
 end
 

@@ -1,13 +1,15 @@
 module Shoes
   FONT_DIR = DIR + "/fonts/"
 
-    # TODO-refactor this to have better names for methods and variables
   class Font
     FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
     attr_reader :path, :name
     @@loaded_fonts = {}
 
-      # TODO-check for font name or path here this assumes good input
+    def self.loaded_fonts
+      @@loaded_fonts
+    end
+
     def initialize(path)
       @path = path
       @name = remove_file_ext(parse_filename_from_path(@path))
