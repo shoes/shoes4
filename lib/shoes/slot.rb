@@ -1,6 +1,6 @@
 require 'shoes/common/margin'
 
-module Shoes
+class Shoes
   class Slot
     include Shoes::DSL
     include Shoes::Common::Margin
@@ -34,8 +34,12 @@ module Shoes
       if blk
         begin
           @app.instance_eval &blk
-        rescue NameError
-          Shoes::URL.shoes_included_instance.instance_eval &blk if Shoes::URL.shoes_included_instance
+        rescue NameError => error
+          if Shoes::URL.shoes_included_instance
+            Shoes::URL.shoes_included_instance.instance_eval &blk
+          else
+            raise error
+          end
         end
       end
 
@@ -93,7 +97,7 @@ module Shoes
 
     def contents_alignment slot
       x, y = slot.left.to_i, slot.top.to_i
-      max = Struct.new(:top, :height).new
+      max = TopHeightData.new
       max.top, max.height = y, 0
       slot_height, slot_top = 0, y
 
@@ -109,6 +113,8 @@ module Shoes
       slot_height
     end
   end
+
+  TopHeightData = Struct.new(:top, :height)
   class Flow < Slot; end
   class Stack < Slot; end
 end

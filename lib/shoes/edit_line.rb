@@ -1,7 +1,7 @@
 require 'shoes/common_methods'
 require 'shoes/common/changeable'
 
-module Shoes
+class Shoes
   class EditLine
     include Shoes::CommonMethods
     include Shoes::Common::Changeable

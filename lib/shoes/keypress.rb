@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Keypress
     def initialize(app, opts = {}, &blk)
       @app = app

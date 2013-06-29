@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     class Slot
       include Common::Container
@@ -15,7 +15,6 @@ module Shoes
       end
 
       attr_reader :real, :dsl, :parent, :contents, :app, :left, :top, :width, :height
-      attr_accessor :ln
     end
     class Flow < Slot; end
     class Stack < Slot; end

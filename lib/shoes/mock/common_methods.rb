@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     module CommonMethods
       def initialize(dsl, *args)

@@ -1,6 +1,5 @@
-class PhotoFrame
+class PhotoFrame < Shoes
   SPACE = "    "
-  include Shoes
   url '/', :index
   url '/loogink', :loogink
   url '/cy', :cy

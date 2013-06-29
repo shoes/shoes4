@@ -23,8 +23,7 @@ class Array
   end
 end
 
-class Manual
-  include Shoes
+class Manual < Shoes
   url '/', :index
   url '/manual/(\d+)', :index
 

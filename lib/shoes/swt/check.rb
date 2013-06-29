@@ -1,6 +1,6 @@
 require 'shoes/swt/swt_button'
 
-module Shoes
+class Shoes
   module Swt
     class Check < SwtButton
       include Common::Child

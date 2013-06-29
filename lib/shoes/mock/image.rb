@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     class Image
       include Shoes::Mock::CommonMethods

@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     class Button
       include Shoes::Mock::CommonMethods

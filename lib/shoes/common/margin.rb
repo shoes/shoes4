@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Common
     module Margin
       def set_margin

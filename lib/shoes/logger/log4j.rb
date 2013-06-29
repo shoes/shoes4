@@ -1,6 +1,6 @@
 require 'delegate'
 
-module Shoes
+class Shoes
   module Logger
     class Log4j < SimpleDelegator
       def initialize

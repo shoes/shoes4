@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Logger
     class << self
       def register(name, obj)
