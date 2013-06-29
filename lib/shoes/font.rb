@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   FONT_DIR = DIR + "/fonts/"
 
   class Font
