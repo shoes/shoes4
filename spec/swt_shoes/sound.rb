@@ -1,3 +1,5 @@
+require 'swt_shoes/spec_helper'
+
 describe Shoes::Swt::Sound do
   let(:dsl) { double('dsl') }
   let(:filepath) { double('filepath') }

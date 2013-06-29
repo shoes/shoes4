@@ -26,7 +26,7 @@ module Shoes::Swt
 
     def contents_alignment slot
       x, y = slot.left.to_i, slot.top.to_i
-      max = Struct.new(:top, :height).new
+      max = TopHeightData.new
       max.top, max.height = y, 0
       slot_height, slot_top = 0, y
 
@@ -41,5 +41,7 @@ module Shoes::Swt
       end
       slot_height
     end
+
+    TopHeightData = Struct.new(:top, :height)
   end
 end

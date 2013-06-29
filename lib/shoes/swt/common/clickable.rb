@@ -2,37 +2,54 @@ module Shoes
   module Swt
     module Common
       module Clickable
-        def clickable s, blk, flag = :click
-          if blk
-            ln = ::Swt::Widgets::Listener.new
-            s.ln = ln
-            s = s.dsl unless s.is_a?(::Shoes::Link) 
-            s.app.gui.mscs << s
-            class << ln; self end.
-            instance_eval do
-              define_method :handleEvent do |e|
-                mb, mx, my = e.button, e.x, e.y
-                if s.is_a?(::Shoes::Link) #and !s.parent.hidden
-                  blk[mb, mx, my] if ((s.pl..(s.pl+s.pw)).include?(mx) and (s.sy..s.ey).include?(my) and !((s.pl..s.sx).include?(mx) and (s.sy..(s.sy+s.lh)).include?(my)) and !((s.ex..(s.pl+s.pw)).include?(mx) and ((s.ey-s.lh)..s.ey).include?(my)))
-                elsif s.is_a?(::Shoes::App)
-                  blk[mb, mx, my]
-                elsif !s.is_a?(::Shoes::Link) and !s.hidden
-                  blk[mb, mx, my] if s.left <= mx and mx <= s.left + s.width and s.top <= my and my <= s.top + s.height
-                end
-              end
-            end
-            s.app.gui.real.addListener ::Swt::SWT::MouseDown, ln if flag == :click
-            s.app.gui.real.addListener ::Swt::SWT::MouseUp, ln if flag == :release
-          end
+
+        attr_accessor :click_listener
+
+        # object = self is there for compatibility reasons for now
+        # it's for link (defined in text.rb) and the listener is added in the
+        # swt/text_block.rb ... moving it around would be too hard now
+        def clickable(object = self, block)
+          add_listener_for object, ::Swt::SWT::MouseDown, block
         end
-        
-        def click &blk
-          clickable self, blk, :click
+
+        def click(&block)
+          add_listener_for ::Swt::SWT::MouseDown, block
         end
     
-        def release &blk
-          clickable self, blk, :release
+        def release(&block)
+          add_listener_for ::Swt::SWT::MouseUp, block
         end
+
+        private
+        def add_listener_for(object = self, event, block)
+          if object.respond_to? :dsl
+            dsl_object = object.dsl
+          else
+            dsl_object = object
+          end
+          listener = ClickListener.new(dsl_object, block)
+          object.click_listener = listener
+          app_gui = dsl_object.app.gui
+          app_gui.add_clickable_element dsl_object
+          app_gui.real.addListener event, listener
+        end
+
+
+        class ClickListener
+          include ::Swt::Widgets::Listener
+
+          def initialize(clickable_object, block)
+            @clickable_object = clickable_object
+            @block            = block
+          end
+
+          def handleEvent(mouseEvent)
+            if @clickable_object.in_bounds?(mouseEvent.x, mouseEvent.y)
+              @block.call mouseEvent.button, mouseEvent.x, mouseEvent.y
+            end
+          end
+        end
+
       end
     end
   end

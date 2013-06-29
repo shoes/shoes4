@@ -2,6 +2,7 @@ module Shoes
   module Swt	
     module Common
       class Painter
+        include ::Swt::Events::PaintListener
         include Resource
         LINECAP = {curve: ::Swt::SWT::CAP_ROUND, rect: ::Swt::SWT::CAP_FLAT, project: ::Swt::SWT::CAP_SQUARE}
 

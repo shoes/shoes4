@@ -28,6 +28,12 @@ module Shoes
       @gui = Shoes.backend_for(self, left, top, points, outer, inner, opts, &blk)
     end
 
+    def in_bounds?(x, y)
+      dx = width / 2.0
+      dy = height / 2.0
+      left - dx <= x and x <= right - dx and top - dy <= y and y <= bottom - dy
+    end
+
     attr_reader :app, :hidden, :gui
   end
 end

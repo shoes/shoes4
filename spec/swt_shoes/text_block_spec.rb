@@ -28,49 +28,49 @@ describe Shoes::Swt::TextBlock do
   end
 
   describe "text block painter" do
-    let(:tl) { double("text layout", getLocation: Shoes::Point.new(0, 0)).as_null_object }
+    let(:text_layout) { double("text layout", getLocation: Shoes::Point.new(0, 0)).as_null_object }
     let(:event) { double("event", gc: gc) }
     let(:gc) { double("gc").as_null_object }
     let(:style) { double(:style) }
     subject { Shoes::Swt::TextBlock::TbPainter.new(dsl, opts) }
 
     before :each do
-      ::Swt::TextLayout.stub(:new) { tl }
+      ::Swt::TextLayout.stub(:new) { text_layout }
       #::Swt::Font.stub(:new)
     end
 
     it "sets text" do
-      tl.should_receive(:setText).with(dsl.text)
+      text_layout.should_receive(:setText).with(dsl.text)
       subject.paintControl(event)
     end
 
     it "sets width" do
-      tl.should_receive(:setWidth).with(dsl.width)
+      text_layout.should_receive(:setWidth).with(dsl.width)
       subject.paintControl(event)
     end
 
     it "draws" do
-      tl.should_receive(:draw).with(gc, dsl.left, dsl.top)
+      text_layout.should_receive(:draw).with(gc, dsl.left, dsl.top)
       subject.paintControl(event)
     end
 
     it "sets justify" do
-      tl.should_receive(:setJustify).with(opts[:justify])
+      text_layout.should_receive(:setJustify).with(opts[:justify])
       subject.paintControl(event)
     end
 
     it "sets spacing" do
-      tl.should_receive(:setSpacing).with(opts[:leading])
+      text_layout.should_receive(:setSpacing).with(opts[:leading])
       subject.paintControl(event)
     end
 
     it "sets alignment" do
-      tl.should_receive(:setAlignment).with(anything)
+      text_layout.should_receive(:setAlignment).with(anything)
       subject.paintControl(event)
     end
 
     it "sets text styles" do
-      tl.should_receive(:setStyle).with(anything, anything, anything).at_least(1).times
+      text_layout.should_receive(:setStyle).with(anything, anything, anything).at_least(1).times
       subject.paintControl(event)
     end
 
