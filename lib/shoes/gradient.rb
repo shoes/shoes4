@@ -1,6 +1,6 @@
 require 'shoes/color'
 
-module Shoes
+class Shoes
   class Gradient
     def initialize(color1, color2, alpha = Shoes::Color::OPAQUE)
       @color1, @color2 = color1, color2

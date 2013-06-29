@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     module Common
       # Methods for retrieving fill values from a Shoes DSL class

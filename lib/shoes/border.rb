@@ -3,7 +3,7 @@ require 'shoes/common/fill'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
 
-module Shoes
+class Shoes
   class Border
     include CommonMethods
     include Common::Style

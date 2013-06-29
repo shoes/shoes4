@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     class Keypress
       def initialize(*opts)

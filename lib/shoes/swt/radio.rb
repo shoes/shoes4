@@ -1,6 +1,6 @@
 require 'shoes/swt/swt_button'
 
-module Shoes
+class Shoes
   module Swt
     # In Swt a radio button is actually just a
     # button, so a lot of these methods are

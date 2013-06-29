@@ -1,7 +1,7 @@
 require 'optparse'
 require 'shoes'
 
-module Shoes
+class Shoes
   class CLI
     def initialize
       @packages = []

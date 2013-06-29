@@ -1,6 +1,6 @@
 require 'delegate'
 
-module Shoes
+class Shoes
   module Logger
     class Ruby < SimpleDelegator
       def initialize

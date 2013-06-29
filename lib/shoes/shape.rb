@@ -4,7 +4,7 @@ require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/line'
 
-module Shoes
+class Shoes
   class Shape
     include Shoes::CommonMethods
     include Shoes::Common::Fill

@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Sound
     def initialize(parent, filepath, opts={}, &blk)
       @parent = parent
