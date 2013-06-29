@@ -125,7 +125,6 @@ class Shoes
           style = ::Swt::TextStyle.new font, fgc, bgc
           style.underline = @opts[:underline].nil? || @opts[:underline] == "none" ? false : true
           style.underlineStyle = UNDERLINE_STYLES[@opts[:underline]]
-          @tl.setStyle style, 0, @dsl.text.length - 1
           @text_layout.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
