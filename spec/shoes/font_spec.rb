@@ -26,7 +26,7 @@ describe Shoes::Font do
 
   describe '#fonts_from_dir' do
     it 'returns an array of the names of the fonts in the directory' do
-      @font.fonts_from_dir(Shoes::FONT_DIR).should contain("Coolvetica", "Lacuna")
+      @font.fonts_from_dir(Shoes::FONT_DIR).should include("Coolvetica", "Lacuna")
     end
   end
 
