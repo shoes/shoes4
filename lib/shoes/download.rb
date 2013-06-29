@@ -7,7 +7,7 @@ class Shoes
           content_length_proc: lambda{|len| @content_length, @started = len, true},
           progress_proc: lambda{|size| @progress = size} do |sio|
           open(args[:save], 'wb'){|fw| fw.print sio.read} if args[:save]
-          @finished, @sio = true, sio
+          @finished, @sio = true, StringIO.new(sio.read)
         end
       end
       a = app.animate 10 do
