@@ -22,8 +22,15 @@ describe Shoes::Font do
     Shoes::Font.loaded_fonts.should include("Arial")
   end
 
-  it 'is known by the main object' do
-    main_object.should respond_to :font
+  describe 'font method on the main object' do
+    it 'returns the name of the font loaded' do
+      main_object.font(EXAMPLE_FONT_PATH).should eq 'Arial'
+    end
+
+    it 'adds Arial to the FONTS Array' do
+      main_object.font(EXAMPLE_FONT_PATH)
+      Shoes::FONTS.should include 'Arial'
+    end
   end
 
   describe '.fonts_from_dir' do

@@ -29,9 +29,17 @@ class Shoes
       def add_font(path)
         path = path
         name = remove_file_ext(parse_filename_from_path(path))
-        loaded_fonts[name] = path
-        add_font_names_to_fonts_constant
+        load_font(name, path) unless font_already_loaded?(name)
         name
+      end
+
+      def load_font(name, path)
+        loaded_fonts[name] = path
+        Shoes::FONTS << name
+      end
+
+      def font_already_loaded?(font_name)
+        loaded_fonts.include?(font_name) || Shoes::FONTS.include?(font_name)
       end
 
       def parse_filename_from_path(file_path)
@@ -56,6 +64,10 @@ class Shoes
       end
 
     end
+
+    # as soon as this file is loaded populate the FONTS array with fonts
+    # maybe we need something like boot.rb for this?
+    add_font_names_to_fonts_constant
 
   end
 end
