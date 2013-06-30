@@ -22,45 +22,55 @@ describe Shoes::Font do
     Shoes::Font.loaded_fonts.should include("Arial")
   end
 
-  describe '#fonts_from_dir' do
+  it 'is known by the main object' do
+    main_object.should respond_to :font
+  end
+
+  describe '.fonts_from_dir' do
     it 'returns an array of the names of the fonts in the directory' do
       Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should include("Coolvetica", "Lacuna")
     end
   end
 
-  describe '#system_font_dirs' do
-    it 'returns the path to the systems font directory' do
-      case RbConfig::CONFIG['host_os']
-        when "darwin"
-          Shoes::Font.system_font_dirs.should == ["/System/Library/Fonts/", "/Library/Fonts/" ]
-        when "linux", "linux-gnu"
-          Shoes::Font.system_font_dirs.should == ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
-        when "mswin", "windows", "mingw"
-          Shoes::Font.system_font_dirs.should == ["/Windows/Fonts/"]
-        else
-          raise RuntimeError, "Undetermined Host OS"
-      end
+  describe '.system_font_dirs' do
+    def stub_host_os_to(os_identifier)
+      stub_const('RbConfig::CONFIG', {'host_os' => os_identifier})
+    end
+
+    it 'returns the path to the systems font directory for Mac' do
+      stub_host_os_to 'darwin'
+      Shoes::Font.system_font_dirs.should == ["/System/Library/Fonts/", "/Library/Fonts/" ]
+    end
+
+    it 'returns the path to the systems font directory for Linux' do
+      stub_host_os_to 'linux'
+      Shoes::Font.system_font_dirs.should == ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
+    end
+
+    it 'returns the path to systems font directory on Windows' do
+      stub_host_os_to 'windows'
+      Shoes::Font.system_font_dirs.should == ["/Windows/Fonts/"]
     end
   end
 
-  describe '#parse_filename_from_path' do
+  describe '.parse_filename_from_path' do
     it 'returns name of file with extension' do
       path = "/Library/Fonts/Coolvetica.ttf"
       Shoes::Font.parse_filename_from_path(path).should == "Coolvetica.ttf"
     end
   end
 
-  describe '#remove_file_ext' do
+  describe '.remove_file_ext' do
     it 'removes the extension from the filename' do
       Shoes::Font.remove_file_ext("Coolvetica.ttf").should == "Coolvetica"
     end
   end
 
-  describe '#add_font_names_to_fonts_constant' do
+  describe '.add_font_names_to_fonts_constant' do
     it 'adds font names for fonts found in directories' do
       Shoes::FONTS.clear
       Shoes::Font.add_font_names_to_fonts_constant
-      Shoes::FONTS.should_not == []
+      Shoes::FONTS.should_not be_empty
     end
   end
 

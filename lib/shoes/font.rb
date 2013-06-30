@@ -1,7 +1,7 @@
 class Shoes
   FONT_DIR = DIR + "/fonts/"
 
-  class Font
+  module Font
     FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
     @loaded_fonts = {}
 
@@ -45,11 +45,11 @@ class Shoes
       def system_font_dirs
         case RbConfig::CONFIG['host_os']
           when "darwin"
-            return ["/System/Library/Fonts/", "/Library/Fonts/" ]
+            ["/System/Library/Fonts/", "/Library/Fonts/" ]
           when "linux", "linux-gnu"
-            return ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
+            ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
           when "mswin", "windows", "mingw"
-            return ["/Windows/Fonts/"]
+            ["/Windows/Fonts/"]
           else
             raise RuntimeError, "Undetermined Host OS"
         end
