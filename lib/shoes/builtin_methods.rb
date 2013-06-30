@@ -38,7 +38,7 @@ class Shoes
     end
 
     def font(path = DEFAULT_TEXTBLOCK_FONT)
-      Shoes::Font.new(path).load_font
+      Shoes::Font.add_font(path)
     end
   end
 end
