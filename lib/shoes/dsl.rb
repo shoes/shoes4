@@ -15,7 +15,6 @@ require 'shoes/slot'
 require 'shoes/sound'
 require 'shoes/text'
 require 'shoes/text_block'
-require 'shoes/curve'
 
 module Shoes
   # Methods for creating and manipulating Shoes elements
@@ -177,11 +176,6 @@ module Shoes
     # Draws an arc
     def arc(left, top, width, height, angle1, angle2, opts = {})
       Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(opts))
-    end
-
-    # Draws a cubic curve
-    def curve(x1, y1, x2, y2, x3, y3, x4, y4, opts = {})
-      Shoes::Curve.new(app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2,y2), Shoes::Point.new(x3,y3), Shoes::Point.new(x4,y4), style.merge(opts))
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
