@@ -120,10 +120,6 @@ class Shoes
       }
     end
 
-    def font *family
-      family.empty? ? @font : @font = family.first
-    end
-
     def rotate angle=nil
       angle ? @rotate = angle : @rotate ||= 0
     end

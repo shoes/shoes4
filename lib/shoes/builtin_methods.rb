@@ -12,11 +12,11 @@ class Shoes
     end
 
     alias_method :confirm?, :confirm
-    
+
     def ask_open_file
       Shoes::Dialog.new.dialog_chooser 'Open File...'
     end
-  
+
     def ask_save_file
       Shoes::Dialog.new.dialog_chooser 'Save File...'
     end
@@ -35,6 +35,10 @@ class Shoes
 
     def ask_color title = 'Pick a color...'
       Shoes::Dialog.new.ask_color title
+    end
+
+    def font(path = DEFAULT_TEXTBLOCK_FONT)
+      Shoes::Font.add_font(path)
     end
   end
 end
