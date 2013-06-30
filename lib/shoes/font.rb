@@ -20,7 +20,7 @@ class Shoes
 
       def fonts_from_dir(path)
         font_names = []
-        Dir.glob(path + "*." + FONT_TYPES).each do |font_file|
+        Dir.glob(path + "**/*." + FONT_TYPES).each do |font_file|
           font_names << remove_file_ext(parse_filename_from_path(font_file))
         end
         font_names
@@ -55,7 +55,7 @@ class Shoes
           when "darwin"
             ["/System/Library/Fonts/", "/Library/Fonts/" ]
           when "linux", "linux-gnu"
-            ["/usr/share/fonts/" , "/usr/local/share/fonts/", "~/.fonts/"]
+            ["/usr/share/fonts/" , "/usr/local/share/fonts/", Dir.home + "/.fonts/"]
           when "mswin", "windows", "mingw"
             ["/Windows/Fonts/"]
           else
