@@ -16,6 +16,7 @@ simple-oval.rb
 simple-sound.rb
 simple-stripes.rb
 simple-dialogs-outside.rb
+simple-curve.rb
 
 expert-definr-adjusted.rb
 expert-irb-adjusted.rb
