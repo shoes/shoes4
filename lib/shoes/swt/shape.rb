@@ -35,8 +35,8 @@ module Shoes
         @element.quad_to *args
       end
 
-      def curve_to *args
-        @element.cubic_to *args
+      def curve_to(cx1, cy1, cx2, cy2, x, y)
+        @element.cubic_to(cx1, cy1, cx2, cy2, x, y)
       end
 
       def move(left, top)

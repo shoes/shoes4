@@ -72,7 +72,7 @@ module Shoes
     # @param [Integer] y The new point's y-value
     # @return [Shoes::Shape] This shape
     def line_to(x, y)
-      update_bounds(@x, @y, x, y)
+      update_bounds_rect(@x, @y, x, y)
       @x, @y = x, y
       @gui.line_to(x, y)
       self
@@ -93,8 +93,10 @@ module Shoes
       @gui.quad_to *args
     end
 
-    def curve_to *args
-      @gui.curve_to *args
+    def curve_to(cx1, cy1, cx2, cy2, x, y)
+      update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
+      @gui.curve_to(cx1, cy1, cx2, cy2, x, y)
+      self
     end
 
     private
@@ -120,9 +122,17 @@ module Shoes
     # @param [Integer] x2 The x-value of the second coordinate
     # @param [Integer] y2 The y-value of the second coordinate
     # @return nil
-    def update_bounds(x1, y1, x2, y2)
-      xs = [x1, x2]
-      ys = [y1, y2]
+    def update_bounds_rect(x1, y1, x2, y2)
+      update_bounds( [x1, x2], [y1, y2] )
+    end
+
+    # Updates the bounds of this shape to the rectangle covering all
+    # the given coordinates.
+    #
+    # @param [Array<Integer>] xs Array of X coordinates
+    # @param [Array<Integer>] ys Array of Y coordinates
+    # @return nil
+    def update_bounds(xs, ys)
       x_min = xs.min
       x_max = xs.max
       y_min = ys.min
