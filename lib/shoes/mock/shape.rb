@@ -11,6 +11,9 @@ class Shoes
 
       def quad_to(*args)
       end
+
+      def curve_to(*args)
+      end
     end
   end
 end

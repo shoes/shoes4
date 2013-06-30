@@ -31,4 +31,23 @@ describe Shoes::Shape do
 
     it_behaves_like "movable object"
   end
+
+  describe "curve" do
+    let(:draw) {
+      Proc.new {
+        move_to 10, 10
+        curve_to 20, 30, 100, 200, 50, 50
+      }
+    }
+    subject { Shoes::Shape.new app, Hash.new, draw }
+
+    its(:left)   { should eq(10) }
+    its(:top)    { should eq(10) }
+    its(:right)  { should eq(100) }
+    its(:bottom) { should eq(200) }
+    its(:width)  { should eq(90) }
+    its(:height) { should eq(190) }
+
+    it_behaves_like "movable object"
+  end
 end
