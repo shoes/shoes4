@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock do
-  let(:opts) { {justify: true, leading: 10} }
+  let(:opts) { {justify: true, leading: 10, underline: "single"} }
   let(:font) { ::Swt::Graphics::Font.new }
   let(:parent) { Shoes::Flow.new app_real, app_real }
   let(:textcursor) { double("text cursor", move: move_textcursor) }
@@ -31,6 +31,7 @@ describe Shoes::Swt::TextBlock do
     let(:text_layout) { double("text layout", getLocation: Shoes::Point.new(0, 0)).as_null_object }
     let(:event) { double("event", gc: gc) }
     let(:gc) { double("gc").as_null_object }
+    let(:style) { double(:style) }
     subject { Shoes::Swt::TextBlock::TbPainter.new(dsl, opts) }
 
     before :each do
@@ -70,6 +71,25 @@ describe Shoes::Swt::TextBlock do
 
     it "sets text styles" do
       text_layout.should_receive(:setStyle).with(anything, anything, anything).at_least(1).times
+      subject.paintControl(event)
+    end
+
+    it "sets default underline style to none" do
+      opts.delete(:underline)
+      ::Swt::TextStyle.stub(:new) { style }
+
+      style.should_receive(:underline=).with(false)
+      style.should_receive(:underlineStyle=).with(nil)
+
+      subject.paintControl(event)
+    end
+
+    it "sets correct underline style" do
+      ::Swt::TextStyle.stub(:new) { style }
+
+      style.should_receive(:underline=).with(true)
+      style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlock::TbPainter::UNDERLINE_STYLES["single"])
+
       subject.paintControl(event)
     end
   end
