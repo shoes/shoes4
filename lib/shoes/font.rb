@@ -56,7 +56,7 @@ class Shoes
             ["/System/Library/Fonts/", "/Library/Fonts/" ]
           when "linux", "linux-gnu"
             ["/usr/share/fonts/" , "/usr/local/share/fonts/", Dir.home + "/.fonts/"]
-          when "mswin", "windows", "mingw"
+          when /mswin/, "windows", "mingw"
             ["/Windows/Fonts/"]
           else
             raise RuntimeError, "Undetermined Host OS"
