@@ -170,7 +170,10 @@ In order to do so you can run `rake non_samples` to run a random sample we think
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
+
 In fact we greatly appreciate early pull requests to review code and help you find your way around Shoes4! =)
+
+If you have questions, also feel free to drop by on the #shoes channel on FreeNode irc. People might not respond instantly, but after some time someone will respond :-)
 
 It sometimes is also a good way to refactor some code or write some specs in order to get familiar with a project. If you want to try this approach you can have a look at our [Code Climate](https://codeclimate.com/github/shoes/shoes4) to find candidates for refactoring or after running the specs locally take a peak into the coverage directory and open index.html - it shows you our current coverage data. See something that isn't covered and maybe you can write a spec for it?
 
