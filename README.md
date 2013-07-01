@@ -160,6 +160,8 @@ Want to contribute?
 That's awesome, thank you! 
 
 You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoes4/issues).
+We have introduced a new tag 'Newcomer Friendly' for issues we believe are suitable to get started with shoes contributing. These issues either are relatively easy to accomplish or don't depend on a lot of other shoes code (e.g. completely new features) so that it's easier to get started.
+Please feel free to tackle any issue - we will help you if needed. The tag is just a suggestion! =)
 
 Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run.
 
@@ -168,4 +170,7 @@ In order to do so you can run `rake non_samples` to run a random sample we think
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
+In fact we greatly appreciate early pull requests to review code and help you find your way around Shoes4! =)
+
+It sometimes is also a good way to refactor some code or write some specs in order to get familiar with a project. If you want to try this approach you can have a look at our [Code Climate](https://codeclimate.com/github/shoes/shoes4) to find candidates for refactoring or after running the specs locally take a peak into the coverage directory and open index.html - it shows you our current coverage data. See something that isn't covered and maybe you can write a spec for it?
 
