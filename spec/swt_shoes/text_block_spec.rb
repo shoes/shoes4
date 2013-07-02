@@ -109,7 +109,6 @@ describe Shoes::Swt::TextBlock do
     end
 
     it "sets default underline color to nil" do
-      opts.delete(:undercolor)
       ::Swt::TextStyle.stub(:new) { style }
       style.stub(:underline=)
       style.stub(:underlineStyle=)
