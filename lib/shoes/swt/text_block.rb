@@ -186,9 +186,6 @@ class Shoes
             (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
           end - [nil]
         end
-
-        def set_underline_styles
-        end
       end
     end
 
