@@ -176,6 +176,7 @@ class Shoes
             ft = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, ft
             style = ::Swt::TextStyle.new ft, fg, bg
             cmds.each{|cmd| eval "style.#{cmd}"}
+            style.underlineColor = @opts[:undercolor] ? ::Swt::Color.new(Shoes.display, @opts[:undercolor].red, @opts[:undercolor].green, @opts[:undercolor].blue) : nil
             @text_layout.setStyle style, st[1].first, st[1].last
             @gcs << ft
           end if @opts[:text_styles]
