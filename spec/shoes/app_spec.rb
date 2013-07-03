@@ -133,7 +133,6 @@ describe Shoes::App do
 
   describe "clipboard" do
     it "copies text to clipboard" do
-      subject.should_receive(:clipboard=)
     end
   end
 
