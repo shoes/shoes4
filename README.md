@@ -10,9 +10,10 @@ But if you want to check it out, that's awesome! If you're not too adventurous j
 
 But hey, make sure to check back later, because shoes4 is the future!
 
+Installing Shoes4 from github
+-----------------------------
 
-Hacking
--------
+There isn't a shoes4 gem release (yet) - in the meantime check out these instructions to get shoes4 running on your computer.
 
 ### *nix
 
@@ -59,36 +60,6 @@ Hacking
 4. You're ready to go!
 
 Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
-
-Running Specs
--------------
-
-Shoes 4 is developed in a TDD style. You should be writing and running the specs :)
-
-There are two kinds of Shoes 4 specs:
-
-1. **Integration specs:** These specify the functionality of the Shoes
-   DSL. They can be run with any compatible Shoes backend. Shoes 4 comes
-   with a mock backend and an Swt backend that can run the integration
-   specs.
-
-2. **Isolation specs:** These specify the internal behavior of a Shoes
-   backend, in isolation from the DSL. Shoes 4 comes with an isolation spec
-   suite for the Swt backend.
-
-There are rake tasks for running specs. Some examples:
-
-    $ rake spec                      # Run the whole spec suite
-    $ rake spec:shoes                # Run integration specs using the mock backend
-    $ rake spec:swt                  # Run integration specs using the Swt backend, plus isolation specs for the Swt backend
-    $ rake spec:swt:isolation        # Run isolation specs for the Swt backend
-    $ rake spec:swt:integration      # Run integration specs using the Swt backend
-    $ rake spec[Shape]               # Run the whole spec suite, but only for Shape
-    $ rake spec:shoes[Shape]         # Run integration specs for Shape using the mock backend
-    $ rake spec:swt[Shape]           # Run integration and isolation specs for Shape, using the Swt backend
-    $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
-    
-**Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
     
 Running a Shoes App
 -------------------
@@ -163,9 +134,7 @@ You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoe
 We have introduced a new tag 'Newcomer Friendly' for issues we believe are suitable to get started with shoes contributing. These issues either are relatively easy to accomplish or don't depend on a lot of other shoes code (e.g. completely new features) so that it's easier to get started.
 Please feel free to tackle any issue - we will help you if needed. The tag is just a suggestion! =)
 
-Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run.
-
-In order to do so you can run `rake non_samples` to run a random sample we think does not work. If you just want to list the non working samples you can also run `rake list_non_samples`.
+Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. In order to do so you can run `rake non_samples` to run a random sample we think does not work. If you just want to list the non working samples you can also run `rake list_non_samples`.
 
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
 
@@ -177,3 +146,34 @@ If you have questions, also feel free to drop by on the #shoes channel on FreeNo
 
 It sometimes is also a good way to refactor some code or write some specs in order to get familiar with a project. If you want to try this approach you can have a look at our [Code Climate](https://codeclimate.com/github/shoes/shoes4) to find candidates for refactoring or after running the specs locally take a peak into the coverage directory and open index.html - it shows you our current coverage data. See something that isn't covered and maybe you can write a spec for it?
 
+Refer to the following section for information on how to run the specs, that were mentioned before :-)
+
+Running Specs
+-------------
+
+Shoes 4 is developed in a TDD style. You should be writing and running the specs :)
+
+There are two kinds of Shoes 4 specs:
+
+1. **Integration specs:** These specify the functionality of the Shoes
+   DSL. They can be run with any compatible Shoes backend. Shoes 4 comes
+   with a mock backend and an Swt backend that can run the integration
+   specs.
+
+2. **Isolation specs:** These specify the internal behavior of a Shoes
+   backend, in isolation from the DSL. Shoes 4 comes with an isolation spec
+   suite for the Swt backend.
+
+There are rake tasks for running specs. Some examples:
+
+    $ rake spec                      # Run the whole spec suite
+    $ rake spec:shoes                # Run integration specs using the mock backend
+    $ rake spec:swt                  # Run integration specs using the Swt backend, plus isolation specs for the Swt backend
+    $ rake spec:swt:isolation        # Run isolation specs for the Swt backend
+    $ rake spec:swt:integration      # Run integration specs using the Swt backend
+    $ rake spec[Shape]               # Run the whole spec suite, but only for Shape
+    $ rake spec:shoes[Shape]         # Run integration specs for Shape using the mock backend
+    $ rake spec:swt[Shape]           # Run integration and isolation specs for Shape, using the Swt backend
+    $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
+
+**Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
