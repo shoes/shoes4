@@ -58,4 +58,11 @@ describe Shoes::Swt::App do
     end
   end
 
+  context "when attempting to copy text" do
+    it "copies text to clipboard" do
+      subject.clipboard = "test"
+      subject.clipboard.should eq("test")
+    end
+  end
+
 end

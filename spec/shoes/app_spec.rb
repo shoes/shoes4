@@ -131,6 +131,13 @@ describe Shoes::App do
     end
   end
 
+  describe "clipboard" do
+    it "copies text to clipboard" do
+      subject.clipboard = "test"
+      subject.clipboard.should eq("test")
+    end
+  end
+
   describe "#quit" do
     it "quits" do
       subject.quit
