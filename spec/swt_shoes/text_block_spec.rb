@@ -80,6 +80,7 @@ describe Shoes::Swt::TextBlock do
 
       style.should_receive(:underline=).with(false)
       style.should_receive(:underlineStyle=).with(nil)
+      style.stub(:underlineColor=)
 
       subject.paintControl(event)
     end
@@ -89,6 +90,30 @@ describe Shoes::Swt::TextBlock do
 
       style.should_receive(:underline=).with(true)
       style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlock::TbPainter::UNDERLINE_STYLES["single"])
+      style.stub(:underlineColor=)
+
+      subject.paintControl(event)
+    end
+
+    it "sets underline color" do
+      opts[:undercolor] = Shoes::Color.new(0, 0, 255)
+      swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
+
+      ::Swt::TextStyle.stub(:new) { style }
+      style.stub(:underline=)
+      style.stub(:underlineStyle=)
+
+      style.should_receive(:underlineColor=).with(swt_color)
+
+      subject.paintControl(event)
+    end
+
+    it "sets default underline color to nil" do
+      ::Swt::TextStyle.stub(:new) { style }
+      style.stub(:underline=)
+      style.stub(:underlineStyle=)
+
+      style.should_receive(:underlineColor=).with(nil)
 
       subject.paintControl(event)
     end
