@@ -45,5 +45,5 @@ class Shoes
     end
   end
 
-  FONTS = Shoes::Font.initial_fonts
+  FONTS = []
 end

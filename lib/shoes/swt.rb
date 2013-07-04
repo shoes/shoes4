@@ -43,7 +43,6 @@ require 'shoes/swt/color'
 require 'shoes/swt/dialog'
 require 'shoes/swt/edit_box'
 require 'shoes/swt/edit_line'
-require 'shoes/swt/font'
 require 'shoes/swt/gradient'
 require 'shoes/swt/image'
 require 'shoes/swt/image_pattern'
@@ -86,3 +85,5 @@ class Shoes
   end
 end
 
+Shoes.configuration.backend = :swt
+require 'shoes/swt/font'
