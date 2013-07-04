@@ -10,20 +10,16 @@ class Shoes
 
       def add_font_names_to_fonts_constant
         Shoes::FONTS.clear
-        Shoes::FONTS << fonts_from_dir(FONT_DIR)
+        all_font_source_dirs = system_font_dirs << FONT_DIR
+        all_font_source_dirs.each{|dir| load_fonts_from_dir(dir)}
         Shoes::FONTS << @loaded_fonts.keys
-        system_font_dirs.each do |dir|
-          Shoes::FONTS << fonts_from_dir(dir)
-        end
         Shoes::FONTS.flatten!
       end
 
-      def fonts_from_dir(path)
-        font_names = []
+      def load_fonts_from_dir(path)
         Dir.glob(path + "**/*." + FONT_TYPES).each do |font_file|
-          font_names << remove_file_ext(parse_filename_from_path(font_file))
+          add_font(font_file)
         end
-        font_names
       end
 
       def add_font(path)

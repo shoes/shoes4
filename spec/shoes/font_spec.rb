@@ -36,14 +36,16 @@ describe Shoes::Font do
 
   describe '.fonts_from_dir' do
     it 'returns an array of the names of the fonts in the directory' do
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should include("Coolvetica", "Lacuna")
+      Shoes::Font.load_fonts_from_dir(Shoes::FONT_DIR)
+      Shoes::FONTS.should include("Coolvetica", "Lacuna")
     end
 
     it 'handles sub directories' do
       tmp_font_dir = Shoes::FONT_DIR + 'tmp/'
       Dir.mkdir(tmp_font_dir)
       FileUtils.touch tmp_font_dir + 'weird_font.ttf'
-      Shoes::Font.fonts_from_dir(Shoes::FONT_DIR).should include 'weird_font'
+      Shoes::Font.load_fonts_from_dir(Shoes::FONT_DIR)
+      Shoes::FONTS.should include 'weird_font'
       FileUtils.rm_r tmp_font_dir
     end
   end
