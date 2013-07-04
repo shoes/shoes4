@@ -17,6 +17,6 @@ while [ $# -gt 0 ]; do
 done
 args=$args"]"
 
-cmd="jruby --1.9 ${swt_opt:-} -rrubygems -I$include -rshoes/cli -e 'Shoes::CLI.new.run("$args")'"
+cmd="jruby --1.9 ${swt_opt:-} -I$include -rshoes/cli -e 'Shoes::CLI.new.run("$args")'"
 eval $cmd
 
