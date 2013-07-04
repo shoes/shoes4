@@ -495,6 +495,7 @@ EOS
           end
         end
       end
+      timer(0.01){top_slot.contents_alignment top_slot}
     end
 
     def scroll_top

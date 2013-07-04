@@ -31,6 +31,7 @@ class Shoes
       def open
         @shell.pack
         @shell.open
+        @dsl.top_slot.contents_alignment @dsl.top_slot
         @started = true
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
