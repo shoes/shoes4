@@ -9,14 +9,19 @@ describe Shoes::Font do
       result = main_object.font(Shoes::FONT_DIR + "Coolvetica" + '.ttf')
       result.should eq 'Coolvetica'
     end
+
+    it 'calls the backend add_font method' do
+      Shoes.backend::Font.should_receive :add_font
+      main_object.font 'some/path'
+    end
   end
 
   describe '.font_paths_from_dir' do
     it 'returns an array of the paths of the fonts in the directory' do
       result = Shoes::Font.font_paths_from_dir(Shoes::FONT_DIR)
 
-      result.should include(Shoes::FONT_DIR + "Coolvetica" + '.ttf',
-                            Shoes::FONT_DIR + "Lacuna" + '.ttf')
+      result.should include(Shoes::FONT_DIR + 'Coolvetica.ttf',
+                            Shoes::FONT_DIR + 'Lacuna.ttf')
     end
 
     it 'handles sub directories' do
@@ -29,4 +34,5 @@ describe Shoes::Font do
       FileUtils.rm_r tmp_font_dir
     end
   end
+
 end
