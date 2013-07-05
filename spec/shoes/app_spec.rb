@@ -142,6 +142,15 @@ describe Shoes::App do
       subject.started?
     end
   end
+
+  describe 'Execution context' do
+    it 'starts with self as the execution context' do
+      my_self = nil
+      app = Shoes.app do my_self = self end
+      my_self.should eq app
+    end
+  end
+
 end
 
 describe "App registry" do
