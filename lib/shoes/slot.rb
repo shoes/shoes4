@@ -38,22 +38,14 @@ class Shoes
     end
 
     def clear &blk
-      puts ' start clear'
       super
-      puts 'end clear'
       eval_block blk
     end
 
     def eval_block blk
       if blk
         @app.current_slot = self
-        p blk.binding.to_s
-        if blk.binding.to_s == 'main'
-          puts 'instance evaling'
-          @app.instance_eval blk
-        else
-          blk.call
-        end
+        blk.call
         @app.current_slot = parent
       end
     end

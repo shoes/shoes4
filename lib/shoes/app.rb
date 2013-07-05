@@ -67,7 +67,7 @@ class Shoes
       else
         execution_blk = Proc.new do visit '/' end
       end
-      
+
       @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &execution_blk
 
       Shoes.register self

@@ -14,7 +14,6 @@ class Shoes
     attr_accessor :app
 
     def method_missing(method, *args, &blk)
-      puts 'missing you ' + method.to_s
       if app_should_handle_method? method
         app.send(method, *args, &blk)
       else
@@ -34,7 +33,6 @@ class Shoes
       url_class = self
 
       Shoes::URL.urls[page] = proc do |app, arg|
-        p app
         new_url_instance = url_class.new
         new_url_instance.app = app
         if arg
