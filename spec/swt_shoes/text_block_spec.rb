@@ -74,48 +74,97 @@ describe Shoes::Swt::TextBlock do
       subject.paintControl(event)
     end
 
-    it "sets default underline style to none" do
-      opts.delete(:underline)
-      ::Swt::TextStyle.stub(:new) { style }
+    context "underline option" do
+      before :each do
+        ::Swt::TextStyle.stub(:new) { style }
+        style.stub(:strikeout=)
+        style.stub(:strikeoutColor=)
+      end
 
-      style.should_receive(:underline=).with(false)
-      style.should_receive(:underlineStyle=).with(nil)
-      style.stub(:underlineColor=)
+      it "sets default underline style to none" do
+        opts.delete(:underline)
 
-      subject.paintControl(event)
+        style.should_receive(:underline=).with(false)
+        style.should_receive(:underlineStyle=).with(nil)
+        style.stub(:underlineColor=)
+
+        subject.paintControl(event)
+      end
+
+      it "sets correct underline style" do
+
+        style.should_receive(:underline=).with(true)
+        style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlock::TbPainter::UNDERLINE_STYLES["single"])
+        style.stub(:underlineColor=)
+
+        subject.paintControl(event)
+      end
+
+      it "sets underline color" do
+        opts[:undercolor] = Shoes::Color.new(0, 0, 255)
+        swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
+
+        style.stub(:underline=)
+        style.stub(:underlineStyle=)
+
+        style.should_receive(:underlineColor=).with(swt_color)
+
+        subject.paintControl(event)
+      end
+
+      it "sets default underline color to nil" do
+        style.stub(:underline=)
+        style.stub(:underlineStyle=)
+
+        style.should_receive(:underlineColor=).with(nil)
+
+        subject.paintControl(event)
+      end
     end
 
-    it "sets correct underline style" do
-      ::Swt::TextStyle.stub(:new) { style }
+    context "strikethrough option" do
+      before :each do
+        ::Swt::TextStyle.stub(:new) { style }
+        style.stub(:underline=)
+        style.stub(:underlineStyle=)
+        style.stub(:underlineColor=)
+      end
 
-      style.should_receive(:underline=).with(true)
-      style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlock::TbPainter::UNDERLINE_STYLES["single"])
-      style.stub(:underlineColor=)
+      it "sets default strikethrough to none" do
 
-      subject.paintControl(event)
-    end
+        style.should_receive(:strikeout=).with(false)
+        style.stub(:strikeoutColor=)
 
-    it "sets underline color" do
-      opts[:undercolor] = Shoes::Color.new(0, 0, 255)
-      swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
+        subject.paintControl(event)
+      end
 
-      ::Swt::TextStyle.stub(:new) { style }
-      style.stub(:underline=)
-      style.stub(:underlineStyle=)
+      it "sets strikethrough" do
+        opts[:strikethrough] = "single"
 
-      style.should_receive(:underlineColor=).with(swt_color)
+        style.should_receive(:strikeout=).with(true)
+        style.stub(:strikeoutColor=)
 
-      subject.paintControl(event)
-    end
+        subject.paintControl(event)
+      end
 
-    it "sets default underline color to nil" do
-      ::Swt::TextStyle.stub(:new) { style }
-      style.stub(:underline=)
-      style.stub(:underlineStyle=)
+      it "sets strikethrough color" do
+        opts[:strikecolor] = Shoes::Color.new(0, 0, 255)
+        swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
 
-      style.should_receive(:underlineColor=).with(nil)
+        style.stub(:strikeout=)
 
-      subject.paintControl(event)
+        style.should_receive(:strikeoutColor=).with(swt_color)
+
+        subject.paintControl(event)
+      end
+
+      it "sets default strikethrough color to nil" do
+        style.stub(:strikeout=)
+
+        style.should_receive(:strikeoutColor=).with(nil)
+
+        subject.paintControl(event)
+      end
     end
   end
 end
