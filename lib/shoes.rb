@@ -6,7 +6,6 @@ class Shoes
   TWO_PI = 2 * PI
   HALF_PI = 0.5 * PI
   DIR = Pathname.new(__FILE__).join("../..").realpath.to_s
-  FONTS = []
 
   extend ::Shoes::Common::Registration
 
