@@ -7,6 +7,10 @@
 $width, $height = 700, 500
 $camera_tightness = 0.1
 
+p self
+p self.object_id
+p self.class
+
 module Collisions
 	def contains? x, y
 		not (x < west or x > east or y < north or y > south)

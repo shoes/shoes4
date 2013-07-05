@@ -488,10 +488,12 @@ EOS
 
     def visit url
       Shoes::URL.urls.each do |page, action_proc|
-        if page =~ url
-	  clear do
+        match_data = page.match url
+        if match_data
+          clear do
             @location = url
-            action_proc.call self, $1
+            url_argument = match_data[1]
+            action_proc.call @app, url_argument
           end
         end
       end

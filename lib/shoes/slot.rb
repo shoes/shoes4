@@ -30,34 +30,32 @@ class Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
-      @app.current_slot = self
-      if blk
-        begin
-          @app.instance_eval &blk
-        rescue NameError => error
-          if Shoes::URL.shoes_included_instance
-            Shoes::URL.shoes_included_instance.instance_eval &blk
-          else
-            raise error
-          end
-        end
-      end
-
-      @app.current_slot = parent
+      eval_block blk
     end
 
-    def current_slot ; @app.current_slot ; end
+    def current_slot
+      @app.current_slot
+    end
 
     def clear &blk
+      puts ' start clear'
       super
+      puts 'end clear'
       eval_block blk
     end
 
     def eval_block blk
-      @app.current_slot = self
-      @app.instance_eval &blk if blk
-      @app.current_slot = parent
-      @app.gui.flush
+      if blk
+        @app.current_slot = self
+        p blk.binding.to_s
+        if blk.binding.to_s == 'main'
+          puts 'instance evaling'
+          @app.instance_eval blk
+        else
+          blk.call
+        end
+        @app.current_slot = parent
+      end
     end
 
     def add_child(element)

@@ -62,8 +62,13 @@ class Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
-      blk = Shoes::URL.urls[%r{^/$}] unless blk
-      @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &blk
+      if blk
+        execution_blk = Proc.new do @app.instance_eval &blk end
+      else
+        execution_blk = Proc.new do visit '/' end
+      end
+      
+      @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &execution_blk
 
       Shoes.register self
       @gui.open
