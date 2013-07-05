@@ -132,7 +132,12 @@ describe Shoes::App do
   end
 
   describe "clipboard" do
-    it "copies text to clipboard" do
+    it "gets clipboard" do
+      subject.clipboard
+    end
+
+    it "sets clipboard" do
+      subject.clipboard = "test"
     end
   end
 
