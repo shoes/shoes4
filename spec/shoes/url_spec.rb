@@ -22,10 +22,6 @@ describe 'Shoes.url' do
     Shoes.app
   end
 
-  after do
-    Shoes::URL.shoes_included_instance = nil
-  end
-
   it "should call index upon startup" do
     klazz.any_instance.should_receive(:index)
     subject
