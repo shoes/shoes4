@@ -85,3 +85,5 @@ class Shoes
   end
 end
 
+Shoes.configuration.backend = :swt
+require 'shoes/swt/font'
