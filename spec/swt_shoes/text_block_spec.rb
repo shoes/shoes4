@@ -36,6 +36,7 @@ describe Shoes::Swt::TextBlock do
 
     before :each do
       ::Swt::TextLayout.stub(:new) { text_layout }
+      ::Swt::TextStyle.stub(:new) { style.as_null_object }
       #::Swt::Font.stub(:new)
     end
 
@@ -75,18 +76,11 @@ describe Shoes::Swt::TextBlock do
     end
 
     context "underline option" do
-      before :each do
-        ::Swt::TextStyle.stub(:new) { style }
-        style.stub(:strikeout=)
-        style.stub(:strikeoutColor=)
-      end
-
       it "sets default underline style to none" do
         opts.delete(:underline)
 
         style.should_receive(:underline=).with(false)
         style.should_receive(:underlineStyle=).with(nil)
-        style.stub(:underlineColor=)
 
         subject.paintControl(event)
       end
@@ -95,7 +89,6 @@ describe Shoes::Swt::TextBlock do
 
         style.should_receive(:underline=).with(true)
         style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlock::TbPainter::UNDERLINE_STYLES["single"])
-        style.stub(:underlineColor=)
 
         subject.paintControl(event)
       end
@@ -104,18 +97,12 @@ describe Shoes::Swt::TextBlock do
         opts[:undercolor] = Shoes::Color.new(0, 0, 255)
         swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
 
-        style.stub(:underline=)
-        style.stub(:underlineStyle=)
-
         style.should_receive(:underlineColor=).with(swt_color)
 
         subject.paintControl(event)
       end
 
       it "sets default underline color to nil" do
-        style.stub(:underline=)
-        style.stub(:underlineStyle=)
-
         style.should_receive(:underlineColor=).with(nil)
 
         subject.paintControl(event)
@@ -123,17 +110,8 @@ describe Shoes::Swt::TextBlock do
     end
 
     context "strikethrough option" do
-      before :each do
-        ::Swt::TextStyle.stub(:new) { style }
-        style.stub(:underline=)
-        style.stub(:underlineStyle=)
-        style.stub(:underlineColor=)
-      end
-
       it "sets default strikethrough to none" do
-
         style.should_receive(:strikeout=).with(false)
-        style.stub(:strikeoutColor=)
 
         subject.paintControl(event)
       end
@@ -142,7 +120,6 @@ describe Shoes::Swt::TextBlock do
         opts[:strikethrough] = "single"
 
         style.should_receive(:strikeout=).with(true)
-        style.stub(:strikeoutColor=)
 
         subject.paintControl(event)
       end
@@ -151,16 +128,12 @@ describe Shoes::Swt::TextBlock do
         opts[:strikecolor] = Shoes::Color.new(0, 0, 255)
         swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
 
-        style.stub(:strikeout=)
-
         style.should_receive(:strikeoutColor=).with(swt_color)
 
         subject.paintControl(event)
       end
 
       it "sets default strikethrough color to nil" do
-        style.stub(:strikeout=)
-
         style.should_receive(:strikeoutColor=).with(nil)
 
         subject.paintControl(event)
