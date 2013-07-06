@@ -43,7 +43,7 @@ release: Mindfully
 
 # App icons for various platforms
 icons:
-  osx: images/Shoes.icns
+  osx: static/Shoes.icns
   gtk: path/to/app.png
   win32: path/to/App.ico
 
