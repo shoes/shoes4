@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   class Arc
     include CommonMethods
     include Common::Fill

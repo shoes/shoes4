@@ -1,8 +1,8 @@
-module Shoes
+class Shoes
   module Swt
     class TextBlock
       include Common::Clear
-      
+
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @opts = opts
@@ -72,8 +72,16 @@ module Shoes
       end
 
       class TbPainter
+        #include org.eclipse.swt.events.PaintListener
+        include ::Swt::Events::PaintListener
         include Common::Resource
         include Common::Clickable
+
+        UNDERLINE_STYLES = {
+          "single" => 0,
+          "double" => 1,
+          "error" => 2,
+        }
 
         def initialize(dsl, opts)
           @dsl = dsl
@@ -115,6 +123,13 @@ module Shoes
             ::Swt::Color.new(Shoes.display, 0, 0, 0)
           bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
           style = ::Swt::TextStyle.new font, fgc, bgc
+
+          set_underline(style)
+          set_undercolor(style)
+
+          set_strikethrough(style)
+          set_strikecolor(style)
+
           @text_layout.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
@@ -164,6 +179,8 @@ module Shoes
             ft = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, ft
             style = ::Swt::TextStyle.new ft, fg, bg
             cmds.each{|cmd| eval "style.#{cmd}"}
+            @opts[:strikecolor] ? set_strikecolor(style) : nil
+            @opts[:undercolor] ? set_undercolor(style) : nil
             @text_layout.setStyle style, st[1].first, st[1].last
             @gcs << ft
           end if @opts[:text_styles]
@@ -173,6 +190,23 @@ module Shoes
           styles.map do |e|
             (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
           end - [nil]
+        end
+
+        def set_underline(style)
+          style.underline = @opts[:underline].nil? || @opts[:underline] == "none" ? false : true
+          style.underlineStyle = UNDERLINE_STYLES[@opts[:underline]]
+        end
+
+        def set_undercolor(style)
+          style.underlineColor = @opts[:undercolor] ? ::Swt::Color.new(Shoes.display, @opts[:undercolor].red, @opts[:undercolor].green, @opts[:undercolor].blue) : nil
+        end
+
+        def set_strikethrough(style)
+          style.strikeout = @opts[:strikethrough].nil? || @opts[:strikethrough] == "none" ? false : true
+        end
+
+        def set_strikecolor(style)
+          style.strikeoutColor = @opts[:strikecolor] ? ::Swt::Color.new(Shoes.display, @opts[:strikecolor].red, @opts[:strikecolor].green, @opts[:strikecolor].blue) : nil
         end
       end
     end

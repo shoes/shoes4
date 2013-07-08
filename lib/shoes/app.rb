@@ -4,13 +4,7 @@ require 'shoes/common/margin'
 require 'tmpdir'
 require 'fileutils'
 
-def window(a={}, &b)
-  a.merge! owner: self
-  Shoes.app(a, &b)
-end
-
-
-module Shoes
+class Shoes
   shoes_icon = File.expand_path("../../../static/shoes-icon.png", __FILE__)
   if shoes_icon.include? '.jar!'
     SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png').freeze
@@ -58,14 +52,6 @@ module Shoes
       self.opts       = opts
 
       @owner = opts[:owner]
-      if @owner
-        win_title = @owner.is_a?(Shoes::App) ? @owner.app_title : nil
-        class << @owner; self end.
-        class_eval do
-          define_method(:to_s){win_title}
-        end
-      end
-
       @app = self
       @style = default_styles
       @contents, @unslotted_elements = [], []
@@ -81,6 +67,11 @@ module Shoes
 
       Shoes.register self
       @gui.open
+    end
+
+    def window(options={}, &block)
+      options.merge! owner: self
+      self.class.new(options, &block)
     end
 
     def width
@@ -129,16 +120,16 @@ module Shoes
       }
     end
 
-    def font *family
-      family.empty? ? @font : @font = family.first
-    end
-
     def rotate angle=nil
       angle ? @rotate = angle : @rotate ||= 0
     end
 
     def in_bounds?(x, y)
       true
+    end
+
+    def to_s
+      'Shoes App: ' + app_title
     end
   end
 end

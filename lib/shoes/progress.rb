@@ -1,6 +1,6 @@
 require 'shoes/common_methods'
 
-module Shoes
+class Shoes
   class Progress
     include Shoes::CommonMethods
 

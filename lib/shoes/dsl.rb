@@ -16,7 +16,7 @@ require 'shoes/sound'
 require 'shoes/text'
 require 'shoes/text_block'
 
-module Shoes
+class Shoes
   # Methods for creating and manipulating Shoes elements
   #
   # Requirements
@@ -495,6 +495,7 @@ EOS
           end
         end
       end
+      timer(0.01){top_slot.contents_alignment top_slot}
     end
 
     def scroll_top

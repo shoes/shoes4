@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     # The Swt implementation of a Shoes::Shape
     class Shape
@@ -33,6 +33,10 @@ module Shoes
 
       def quad_to *args
         @element.quad_to *args
+      end
+
+      def curve_to(cx1, cy1, cx2, cy2, x, y)
+        @element.cubic_to(cx1, cy1, cx2, cy2, x, y)
       end
 
       def move(left, top)

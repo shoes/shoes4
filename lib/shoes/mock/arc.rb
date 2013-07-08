@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     class Arc
       def initialize(dsl, app, left, top, width, height, opts = {})

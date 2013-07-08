@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     class Animation
       # An Swt animation implementation

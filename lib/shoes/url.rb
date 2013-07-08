@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module URL
     class << self
       attr_accessor :shoes_included_instance
@@ -31,7 +31,7 @@ module Shoes
     end
   end
 
-  def self.included(base)
+  def self.inherited(base)
     base.instance_eval do
       include URL
     end

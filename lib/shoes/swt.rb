@@ -5,10 +5,16 @@ module Swt
   include_package 'org.eclipse.swt.graphics'
   include_package 'org.eclipse.swt.events'
   include_package 'org.eclipse.swt.dnd'
+
+  module Events
+    import org.eclipse.swt.events.PaintListener
+  end
+
   module Widgets
     import org.eclipse.swt.widgets
     import org.eclipse.swt.widgets.Layout
   end
+
   module Graphics
     import org.eclipse.swt.graphics
     import org.eclipse.swt.graphics.Pattern
@@ -55,25 +61,29 @@ require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
 require 'shoes/swt/timer'
 
-module Shoes::Swt
-  extend ::Shoes::Common::Registration
+class Shoes
+  module Swt
+    extend ::Shoes::Common::Registration
 
-  module Shoes
-    def self.app(opts={}, &blk)
-      Shoes::App.new(opts, &blk)
-      Shoes.logger.debug "Exiting Shoes.app"
-    end
+    module Shoes
+      def self.app(opts={}, &blk)
+        Shoes::App.new(opts, &blk)
+        Shoes.logger.debug "Exiting Shoes.app"
+      end
 
-    def self.logger
-      ::Shoes.logger
-    end
+      def self.logger
+        ::Shoes.logger
+      end
 
-    def self.display
-      ::Swt::Widgets::Display.getCurrent
+      def self.display
+        ::Swt::Widgets::Display.getCurrent
+      end
+
+      ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
+      ::Shoes::FONTS.uniq!
     end
-    
-    ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
-    ::Shoes::FONTS.uniq!
   end
 end
 
+Shoes.configuration.backend = :swt
+require 'shoes/swt/font'

@@ -1,6 +1,6 @@
 require 'shoes/color'
 
-module Shoes
+class Shoes
   module Swt
     # Class is used by edit_box and edit_line
     class InputBox

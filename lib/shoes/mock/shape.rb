@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     class Shape
       include Shoes::Mock::CommonMethods
@@ -10,6 +10,9 @@ module Shoes
       end
 
       def quad_to(*args)
+      end
+
+      def curve_to(*args)
       end
     end
   end

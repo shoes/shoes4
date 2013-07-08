@@ -1,6 +1,6 @@
 require 'swt'
 
-module Shoes
+class Shoes
   module Swt
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]
@@ -31,6 +31,7 @@ module Shoes
       def open
         @shell.pack
         @shell.open
+        @dsl.top_slot.contents_alignment @dsl.top_slot
         @started = true
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
@@ -61,8 +62,10 @@ module Shoes
       end
       
       def flush
-        @dsl.top_slot.contents_alignment @dsl.top_slot
-        @real.layout
+        if @dsl.top_slot
+          @dsl.top_slot.contents_alignment @dsl.top_slot
+          @real.layout
+        end
       end
 
       def scroll_top

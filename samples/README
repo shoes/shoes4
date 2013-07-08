@@ -16,7 +16,9 @@ simple-oval.rb
 simple-sound.rb
 simple-stripes.rb
 simple-dialogs-outside.rb
+simple-curve.rb
 
+expert-definr-adjusted.rb
 expert-irb-adjusted.rb
 expert-othello-adjusted.rb
 expert-pong-adjusted.rb
@@ -57,5 +59,4 @@ sample37.rb
 sample44.rb
 sample45.rb
 sample46.rb
-sample50.rb
 sample99.rb

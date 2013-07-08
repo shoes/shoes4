@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Mock
     class ListBox
       include Shoes::Mock::CommonMethods

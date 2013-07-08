@@ -1,4 +1,4 @@
-module Shoes
+class Shoes
   module Swt
     module Common
       # Behavior for elements that act as children of other elements
