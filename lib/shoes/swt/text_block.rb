@@ -119,9 +119,8 @@ class Shoes
             else ::Swt::SWT::LEFT
             end
           font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
-          fgc = @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) : 
-            ::Swt::Color.new(Shoes.display, 0, 0, 0)
-          bgc = @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
+          fgc = foreground_color
+          bgc = background_color
           style = ::Swt::TextStyle.new font, fgc, bgc
 
           set_underline(style)
@@ -133,6 +132,41 @@ class Shoes
           @text_layout.setStyle style, 0, @dsl.text.length - 1
           @gcs << font << fgc << bgc
 
+          set_text_styles(fgc, bgc)
+        end
+
+        def background_color
+          @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
+        end
+
+        def foreground_color
+          @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) :
+            ::Swt::Color.new(Shoes.display, 0, 0, 0)
+        end
+
+        def create_link(e)
+          spos = @text_layout.getLocation e[1].first, false
+          epos = @text_layout.getLocation e[1].last, true
+          left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
+          e[0].lh = @text_layout.getLineBounds(0).height
+          e[0].sx, e[0].sy = left + spos.x, top + spos.y
+          e[0].ex, e[0].ey = left + epos.x, top + epos.y + e[0].lh
+          e[0].pl, e[0].pt, e[0].pw, e[0].ph = left, top, @dsl.width, @dsl.height
+          @dsl.links << e[0]
+          unless e[0].clickabled
+            e[0].parent = @dsl
+            clickable e[0], e[0].blk
+            e[0].clickabled = true
+          end
+        end
+
+        def nested_styles styles, st
+          styles.map do |e|
+            (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
+          end - [nil]
+        end
+
+        def set_text_styles(fgc, bgc)
           @opts[:text_styles].each do |st|
             font, ft, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
             nested_styles(@opts[:text_styles], st).each do |e|
@@ -160,19 +194,7 @@ class Shoes
               when :link
                 cmds << "underline = true"
                 fg = ::Swt::Color.new Shoes.display, 0, 0, 255
-                spos = @text_layout.getLocation e[1].first, false
-                epos = @text_layout.getLocation e[1].last, true
-                left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
-                e[0].lh = @text_layout.getLineBounds(0).height
-                e[0].sx, e[0].sy = left + spos.x, top + spos.y
-                e[0].ex, e[0].ey = left + epos.x, top + epos.y + e[0].lh
-                e[0].pl, e[0].pt, e[0].pw, e[0].ph = left, top, @dsl.width, @dsl.height
-                @dsl.links << e[0]
-                unless e[0].clickabled
-                  e[0].parent = @dsl
-                  clickable e[0], e[0].blk
-                  e[0].clickabled = true
-                end
+                create_link(e)
               else
               end
             end
@@ -186,19 +208,18 @@ class Shoes
           end if @opts[:text_styles]
         end
 
-        def nested_styles styles, st
-          styles.map do |e|
-            (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
-          end - [nil]
-        end
-
         def set_underline(style)
           style.underline = @opts[:underline].nil? || @opts[:underline] == "none" ? false : true
           style.underlineStyle = UNDERLINE_STYLES[@opts[:underline]]
         end
 
         def set_undercolor(style)
-          style.underlineColor = @opts[:undercolor] ? ::Swt::Color.new(Shoes.display, @opts[:undercolor].red, @opts[:undercolor].green, @opts[:undercolor].blue) : nil
+          style.underlineColor = @opts[:undercolor] ?
+            ::Swt::Color.new(Shoes.display,
+                               @opts[:undercolor].red,
+                               @opts[:undercolor].green,
+                               @opts[:undercolor].blue)
+            : nil
         end
 
         def set_strikethrough(style)
@@ -206,7 +227,12 @@ class Shoes
         end
 
         def set_strikecolor(style)
-          style.strikeoutColor = @opts[:strikecolor] ? ::Swt::Color.new(Shoes.display, @opts[:strikecolor].red, @opts[:strikecolor].green, @opts[:strikecolor].blue) : nil
+          style.strikeoutColor = @opts[:strikecolor] ?
+            ::Swt::Color.new(Shoes.display,
+                             @opts[:strikecolor].red,
+                             @opts[:strikecolor].green,
+                             @opts[:strikecolor].blue)
+            : nil
         end
       end
     end
