@@ -53,14 +53,16 @@ Shoes.app do
     flush_gui
   end
 
-  button 'start benchmark' do
+  button 'start repeated clear benchmark' do
     Benchmark.bm do |benchmark|
-      benchmark.report 'filling up the app do' do
-        fill_up_app_with_senseless_stuff
-      end
+      3.times do
+        benchmark.report 'filling up the app do' do
+          fill_up_app_with_senseless_stuff
+        end
 
-      benchmark.report 'clearing the app takes...' do
-        clear do ; end
+        benchmark.report 'clearing the app takes...' do
+          clear
+        end
       end
     end
   end
