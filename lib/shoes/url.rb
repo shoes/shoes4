@@ -1,11 +1,15 @@
 class Shoes
 
+  # Backwards compatibility, kind of likely to be removed
   def self.inherited(base_class)
     base_class.send :include, URL #include is private, therefore send
-    base_class.extend URLDefiner
   end
 
   module URL
+
+    def self.included(base_class)
+      base_class.extend URLDefiner
+    end
 
     def self.urls
       @urls ||= {}
