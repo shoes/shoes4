@@ -119,8 +119,8 @@ class Shoes
             else ::Swt::SWT::LEFT
             end
           font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
-          fgc = foreground_color
-          bgc = background_color
+          fgc = parse_foreground_color
+          bgc = parse_background_color
           style = ::Swt::TextStyle.new font, fgc, bgc
 
           set_underline(style)
@@ -135,11 +135,13 @@ class Shoes
           set_text_styles(fgc, bgc)
         end
 
-        def background_color
+        private
+
+        def parse_background_color
           @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
         end
 
-        def foreground_color
+        def parse_foreground_color
           @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) :
             ::Swt::Color.new(Shoes.display, 0, 0, 0)
         end
