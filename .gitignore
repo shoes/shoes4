@@ -46,3 +46,4 @@ pkg
 *.app
 docs-*
 spec/test_app/pkg
+testing
