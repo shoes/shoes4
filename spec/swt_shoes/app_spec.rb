@@ -5,14 +5,14 @@ describe Shoes::Swt::App do
   let(:app) { double('app', :opts => opts,
                             :width => 0,
                             :height => 0,
-                            :app_title => 'mock') }
+                            :app_title => 'double') }
 
   let(:opts_unresizable) { {:background => Shoes::COLORS[:salmon],
                             :resizable => false} }
   let(:app_unresizable) { double('app', :opts => opts_unresizable,
                                         :width => 0,
                                         :height => 0,
-                                        :app_title => 'mock') }
+                                        :app_title => 'double') }
 
   subject { Shoes::Swt::App.new(app) }
 
@@ -36,7 +36,7 @@ describe Shoes::Swt::App do
     let(:the_display) { ::Swt::Widgets::Display }
 
     it "should set the menubar title" do
-      the_display.should_receive(:app_name=).with('mock')
+      the_display.should_receive(:app_name=).with('double')
       subject
     end
   end
