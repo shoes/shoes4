@@ -11,13 +11,13 @@ shared_examples 'clickable backend' do
   let(:click_real) {double 'real', addListener: true}
 
   it {should respond_to :clickable}
-  let(:clickable_block) {mock 'clickable_block'}
+  let(:clickable_block) {double 'clickable_block'}
   let(:clickable_subject) do
     subject.clickable clickable_block
     subject
   end
 
-  let(:mouse_event) {stub 'mouse_event', button: 1, x: 2, y:3}
+  let(:mouse_event) {double 'mouse_event', button: 1, x: 2, y:3}
 
   it 'its click_handler should not be nil' do
     clickable_subject.click_listener.should_not be_nil

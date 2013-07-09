@@ -14,7 +14,7 @@ describe Shoes::Swt::Image do
   let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: {})}
   let(:left) { 100 }
   let(:top) { 200 }
-  let(:mock_image) { mock(:swt_image, getImageData: MockSize.new, addListener: true, add_paint_listener: true) }
+  let(:mock_image) { double(:swt_image, getImageData: MockSize.new, addListener: true, add_paint_listener: true) }
   let(:real) { mock_image }
   let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app) { double("app", gui: gui) }

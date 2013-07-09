@@ -27,9 +27,9 @@ describe Shoes::Swt::Oval do
     it_behaves_like "stroke painter"
 
     it "creates oval clipping area" do
-      mock_path = double("path")
-      ::Swt::Path.stub(:new) { mock_path }
-      mock_path.should_receive(:add_arc).with(left, top, width, height, 0, 360)
+      double_path = double("path")
+      ::Swt::Path.stub(:new) { double_path }
+      double_path.should_receive(:add_arc).with(left, top, width, height, 0, 360)
       subject.clipping
     end
 
