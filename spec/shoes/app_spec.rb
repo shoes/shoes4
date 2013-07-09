@@ -131,6 +131,18 @@ describe Shoes::App do
     end
   end
 
+  describe "clipboard" do
+    it "gets clipboard" do
+      subject.gui.should_receive(:clipboard)
+      subject.clipboard
+    end
+
+    it "sets clipboard" do
+      subject.gui.should_receive(:clipboard=).with("test")
+      subject.clipboard = "test"
+    end
+  end
+
   describe "#quit" do
     it "quits" do
       subject.quit
