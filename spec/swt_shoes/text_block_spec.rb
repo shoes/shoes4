@@ -75,6 +75,18 @@ describe Shoes::Swt::TextBlock do
       subject.paintControl(event)
     end
 
+    it "sets default rise value to nil" do
+      style.should_receive(:rise=).with(nil)
+      subject.paintControl(event)
+    end
+
+    it "sets correct rise value" do
+      opts[:rise] = 10
+      style.should_receive(:rise=).with(10)
+
+      subject.paintControl(event)
+    end
+
     context "underline option" do
       it "sets default underline style to none" do
         opts.delete(:underline)

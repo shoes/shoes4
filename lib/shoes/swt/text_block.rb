@@ -126,6 +126,8 @@ class Shoes
           set_underline(style)
           set_undercolor(style)
 
+          set_rise(style)
+
           set_strikethrough(style)
           set_strikecolor(style)
 
@@ -208,6 +210,10 @@ class Shoes
             @text_layout.setStyle style, st[1].first, st[1].last
             @gcs << ft
           end if @opts[:text_styles]
+        end
+
+        def set_rise(style)
+          style.rise = @opts[:rise]
         end
 
         def set_underline(style)
