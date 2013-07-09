@@ -26,6 +26,12 @@ class Shoes
 
       def flush
       end
+
+      def clipboard
+      end
+
+      def clipboard=(text)
+      end
     end
   end
 end
