@@ -5,7 +5,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Keypress do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
-  let(:app) { stub shell: stub() }
+  let(:app) { double shell: double() }
   let(:dsl) { double('dsl') }
   let(:block) { proc{ |key| key} }
   subject { Shoes::Swt::Keypress.new dsl, app, &block}
@@ -26,7 +26,7 @@ describe Shoes::Swt::KeyListener do
 
   def test_character_press(character, state_modifier = 0, result_char = character)
     block.should_receive(:call).with(result_char)
-    event = stub  character: character.ord,
+    event = double  character: character.ord,
                   stateMask: 0 | state_modifier,
                   keyCode: character.downcase.ord
     subject.key_pressed(event)
@@ -84,7 +84,7 @@ describe Shoes::Swt::KeyListener do
     def test_ctrl_character_press(character, modifier = 0)
       result_char = ('control_' + character).to_sym
       block.should_receive(:call).with(result_char)
-      event = stub  character: 'something weird like \x00',
+      event = double  character: 'something weird like \x00',
                     stateMask: CTRL | modifier,
                     keyCode: character.downcase.ord
       subject.key_pressed(event)
@@ -126,7 +126,7 @@ describe Shoes::Swt::KeyListener do
   describe 'only modifier keys yield nothing' do
     def test_receive_nothing_with_modifier(modifier, last_key_press = modifier)
       block.should_not_receive :call
-      event = stub stateMask: modifier, keyCode: last_key_press, character: 0
+      event = double stateMask: modifier, keyCode: last_key_press, character: 0
       subject.key_pressed(event)
     end
 
@@ -161,7 +161,7 @@ describe Shoes::Swt::KeyListener do
 
     def special_key_test(code, expected, modifier = 0)
       block.should_receive(:call).with(expected)
-      event = stub stateMask: modifier,
+      event = double stateMask: modifier,
                    keyCode: code,
                    character: 0
       subject.key_pressed(event)

@@ -4,8 +4,8 @@ describe Shoes::Oval do
   let(:app) { Shoes::App.new }
 
   before :each do
-    Shoes::Mock::Oval.any_instance.stub(:real) { mock( size:
-      mock(x: 100, y: 100) ) }
+    Shoes::Mock::Oval.any_instance.stub(:real) { double( size:
+      double(x: 100, y: 100) ) }
   end
 
   describe "basic" do
