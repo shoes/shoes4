@@ -133,10 +133,12 @@ describe Shoes::App do
 
   describe "clipboard" do
     it "gets clipboard" do
+      subject.should_receive(:clipboard)
       subject.clipboard
     end
 
     it "sets clipboard" do
+      subject.should_receive(:clipboard=).with("test")
       subject.clipboard = "test"
     end
   end
