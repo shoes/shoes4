@@ -5,7 +5,7 @@ describe Shoes::Swt::ListBox do
   let(:dsl)    { double('dsl', items: items, opts: {}) }
   let(:parent) { double('parent') }
   let(:block)  { ->(){} }
-  let(:real)   { mock(text: "", set_size: true, add_selection_listener: true) }
+  let(:real)   { double(text: "", set_size: true, add_selection_listener: true) }
 
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 

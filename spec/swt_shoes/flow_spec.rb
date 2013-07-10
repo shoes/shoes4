@@ -10,7 +10,7 @@ describe Shoes::Swt::Flow do
 
   describe "#initialize" do
     before do
-      parent_real.stub(:get_layout){mock(top_slot: true)}
+      parent_real.stub(:get_layout){double(top_slot: true)}
     end
 
     it "sets readers" do
