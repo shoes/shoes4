@@ -26,6 +26,7 @@ class Shoes
         vb = @shell.getVerticalBar
         vb.setIncrement 10
         vb.addSelectionListener SelectionListener.new(self, vb)
+        RedrawingAspect.redraws_for self
       end
 
       def open
