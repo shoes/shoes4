@@ -13,7 +13,6 @@ describe Shoes::Swt::Animation do
     dsl.stub(:framerate) { 10 }
     dsl.stub(:current_frame)
     dsl.stub(:increment_frame)
-    Shoes::Swt::RedrawingAspect.redraws_for app_real
   end
 
   it "triggers an Swt timer" do
@@ -45,7 +44,8 @@ describe Shoes::Swt::Animation do
     end
 
     it "triggers redraw" do
-      app_real.should_receive(:redraw)
+      Shoes::Swt::RedrawingAspect.redraws_for app_real
+      app_real.should_receive(:flush)
       task.call
     end
 
