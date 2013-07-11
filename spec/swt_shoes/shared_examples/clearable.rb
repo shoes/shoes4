@@ -3,9 +3,7 @@ shared_examples_for "clearable" do
     subject.should respond_to :clear
   end
 
-  it "should redraw and remove paint listener" do
-    container.should_receive(:disposed?)
-    container.should_receive(:redraw)
+  it "should remove paint listener" do
     container.should_receive(:remove_paint_listener)
     container.should_receive(:remove_listener).at_least(2).times
     subject.clear
