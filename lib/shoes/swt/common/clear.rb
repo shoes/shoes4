@@ -4,7 +4,6 @@ class Shoes
       module Clear
         def clear
           if @painter
-            @container.redraw(@left, @top, @width, @height, false) unless @container.disposed?
             @container.remove_paint_listener @painter
             remove_click_listeners if @click_listener
           else
