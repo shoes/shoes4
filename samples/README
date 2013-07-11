@@ -10,6 +10,7 @@ good-clock-adjusted.rb
 good-reminder-adjusted.rb
 
 simple-animate.rb
+simple-draw-adjusted.rb
 simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
 simple-bounce.rb
 simple-oval.rb
