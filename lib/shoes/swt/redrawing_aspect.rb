@@ -5,8 +5,10 @@ class Shoes
 
       NEED_TO_FLUSH_GUI  = {Animation   => [:eval_block],
                             Button      => [:eval_block],
-                            KeyListener => [:eval_block]}
-      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :shape, :line, :rect],
+                            KeyListener => [:eval_block],
+                            Timer       => [:eval_block]}
+      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :shape, :line,
+                                               :rect, :background, :arc],
                             ::Shoes::Oval  => [:style],
                             ::Shoes::Rect  => [:style],
                             ::Shoes::Star  => [:style],
