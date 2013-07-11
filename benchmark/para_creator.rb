@@ -4,10 +4,6 @@ module ParaCreator
 
   def create_paras(count)
     count.times do para LOREM_IPSUM end
-    flush_gui
   end
 
-  def flush_gui
-    gui.flush if respond_to? :gui
-  end
 end
