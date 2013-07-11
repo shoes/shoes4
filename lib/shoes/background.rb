@@ -1,4 +1,4 @@
-require 'shoes/common_methods'
+require 'shoes/common/common_methods'
 require 'shoes/common/fill'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
