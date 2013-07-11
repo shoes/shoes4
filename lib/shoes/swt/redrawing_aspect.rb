@@ -7,7 +7,7 @@ class Shoes
                             Button      => [:eval_block],
                             KeyListener => [:eval_block],
                             Timer       => [:eval_block]}
-      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :shape, :line,
+      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :line,
                                                :rect, :background, :arc],
                             ::Shoes::Oval  => [:style],
                             ::Shoes::Rect  => [:style],
