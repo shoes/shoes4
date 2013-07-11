@@ -18,6 +18,5 @@ Shoes.app do
       4.times{colors << send(Shoes::COLORS.keys[rand(Shoes::COLORS.keys.size)])}
       ele.style fill: gradient(colors[0], colors[1]), stroke: gradient(colors[2], colors[3])
     end
-    gui.flush
   end
 end

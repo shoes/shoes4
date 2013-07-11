@@ -3,7 +3,15 @@ class Shoes
 
     module RedrawingAspect
 
-      CLASSES_TO_EXTEND = [Animation, Button, KeyListener]
+      NEED_TO_FLUSH_GUI  = {Animation   => [:eval_block],
+                            Button      => [:eval_block],
+                            KeyListener => [:eval_block]}
+      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :shape, :line, :rect],
+                            ::Shoes::Oval  => [:style],
+                            ::Shoes::Rect  => [:style],
+                            ::Shoes::Star  => [:style],
+                            ::Shoes::Shape => [:style],
+                            ::Shoes::Line  => [:style]}
 
       class << self
         attr_reader :app
@@ -16,14 +24,18 @@ class Shoes
 
         private
         def extend_needed_classes
-          CLASSES_TO_EXTEND.each { |klass| klass.extend AfterDo }
+          NEED_TO_FLUSH_GUI.keys.each {|klass| klass.extend AfterDo}
+          NEED_TO_REDRAW_GUI.keys.each {|klass| klass.extend AfterDo}
         end
 
         # TODO when to redrawn, when to just flush? figure out differences...
         def add_redraws
-          Animation.after :eval_block do app.real.redraw end
-          Button.after :eval_block do app.real.redraw end
-          KeyListener.after :eval_block do app.flush end
+          NEED_TO_FLUSH_GUI.each do |klass, methods|
+            klass.after methods do app.flush end
+          end
+          NEED_TO_REDRAW_GUI.each do |klass, methods|
+            klass.after methods do app.real.redraw end
+          end
         end
       end
     end
