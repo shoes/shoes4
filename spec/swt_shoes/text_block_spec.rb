@@ -156,6 +156,8 @@ describe Shoes::Swt::TextBlock do
       it "sets font style to bold" do
         opts[:weight] = true
         font_style = ::Swt::SWT::BOLD
+        f = ::Swt::Font.new(Shoes.display, dsl.font, dsl.font_size, font_style)
+        style.should_receive(:new).with(f, anything, anything)
         subject.paintControl(event)
       end
 
