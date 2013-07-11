@@ -33,7 +33,6 @@ require 'shoes/swt/common/clickable'
 require 'shoes/swt/common/toggle'
 require 'shoes/swt/common/clear'
 
-require 'shoes/swt/redrawing_aspect'
 require 'shoes/swt/app'
 require 'shoes/swt/animation'
 require 'shoes/swt/arc'
@@ -89,3 +88,5 @@ end
 
 Shoes.configuration.backend = :swt
 require 'shoes/swt/font'
+require 'shoes/swt/redrawing_aspect'
+
