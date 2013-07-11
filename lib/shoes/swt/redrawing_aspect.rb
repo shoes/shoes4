@@ -30,14 +30,13 @@ class Shoes
           NEED_TO_REDRAW_GUI.keys.each {|klass| klass.extend AfterDo}
         end
 
-        # TODO when to redrawn, when to just flush? figure out differences...
         def add_redraws
-          NEED_TO_FLUSH_GUI.each do |klass, methods|
-            klass.after methods do app.flush end
-          end
-          NEED_TO_REDRAW_GUI.each do |klass, methods|
-            klass.after methods do app.real.redraw end
-          end
+          after_every NEED_TO_FLUSH_GUI do app.flush end
+          after_every NEED_TO_REDRAW_GUI do app.real.redraw end
+        end
+
+        def after_every(hash, &blk)
+          hash.each {|klass, methods| klass.after methods, &blk }
         end
       end
     end
