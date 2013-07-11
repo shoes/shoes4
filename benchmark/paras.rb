@@ -40,7 +40,6 @@ Shoes.app do
         end
       end
     end
-    flush_gui
   end
 
   button 'benchmark paras' do

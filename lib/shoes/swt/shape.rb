@@ -1,6 +1,5 @@
 class Shoes
   module Swt
-    # The Swt implementation of a Shoes::Shape
     class Shape
       include Common::Fill
       include Common::Stroke

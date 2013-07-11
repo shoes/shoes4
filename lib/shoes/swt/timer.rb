@@ -2,13 +2,17 @@ class Shoes
   module Swt
     class Timer
       def initialize(dsl, app, blk)
+        @blk = blk
         task = Proc.new do
           unless app.real.disposed?
-            blk.call
-            app.flush
+            eval_block
           end
         end
         ::Swt.display.timer_exec(dsl.n, task)
+      end
+
+      def eval_block
+        @blk.call
       end
     end
   end

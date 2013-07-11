@@ -8,7 +8,6 @@ Shoes.app :width => 300, :height => 300 do
     @flag = false
     box.click{@flag = true; @box = box}
     box.release{@flag = false}
-    app.gui.real.redraw
   end
   motion{|left, top| @box.move(left-10, top-10) if @flag}
 end

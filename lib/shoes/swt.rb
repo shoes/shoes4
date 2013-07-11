@@ -1,5 +1,6 @@
 require 'java'
 require 'swt'
+require 'after_do'
 
 module Swt
   include_package 'org.eclipse.swt.graphics'
@@ -87,3 +88,5 @@ end
 
 Shoes.configuration.backend = :swt
 require 'shoes/swt/font'
+require 'shoes/swt/redrawing_aspect'
+

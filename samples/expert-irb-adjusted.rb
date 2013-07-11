@@ -104,7 +104,6 @@ Shoes.app do
       @cmd += self.clipboard
     end
     @console.replace *(@str + [@cmd])
-    gui.flush
     tmp = @scroll.height - app.height
     @scroll.scroll_top = tmp > 0 ? tmp : 0
   end

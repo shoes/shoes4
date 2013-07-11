@@ -50,7 +50,6 @@ Shoes.app do
         end
       end
     end
-    flush_gui
   end
 
   button 'start repeated clear benchmark' do
