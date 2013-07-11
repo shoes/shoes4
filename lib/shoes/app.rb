@@ -110,7 +110,6 @@ class Shoes
         @contents << @top_slot
         @current_slot = @top_slot
         instance_eval &blk if blk
-        gui.flush
       else
         instance_eval &blk if blk
       end

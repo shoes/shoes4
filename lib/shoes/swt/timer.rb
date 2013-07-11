@@ -6,7 +6,6 @@ class Shoes
         task = Proc.new do
           unless app.real.disposed?
             eval_block
-            app.flush
           end
         end
         ::Swt.display.timer_exec(dsl.n, task)
