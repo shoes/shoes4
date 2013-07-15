@@ -41,7 +41,7 @@ class Shoes
         text_layout.setStyle style, 0, @dsl.text.length - 1
         return text_layout, font
       end
-      
+
       def clear
         super
         clear_links
@@ -118,7 +118,7 @@ class Shoes
             when 'right'; ::Swt::SWT::RIGHT
             else ::Swt::SWT::LEFT
             end
-          font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
+          font = parse_font
           fgc = parse_foreground_color
           bgc = parse_background_color
           style = ::Swt::TextStyle.new font, fgc, bgc
@@ -210,6 +210,15 @@ class Shoes
             @text_layout.setStyle style, st[1].first, st[1].last
             @gcs << ft
           end if @opts[:text_styles]
+        end
+
+        def parse_font
+          font_style = 0
+          font_style |= ::Swt::SWT::BOLD if @opts[:weight]
+          font_style |= ::Swt::SWT::ITALIC if @opts[:emphasis]
+          font_style |= ::Swt::SWT::NORMAL if !@opts[:weight] && !@opts[:emphasis]
+
+          ::Swt::Font.new(Shoes.display, @dsl.font, @dsl.font_size, font_style)
         end
 
         def set_rise(style)
