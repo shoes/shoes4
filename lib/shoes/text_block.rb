@@ -1,4 +1,4 @@
-require 'shoes/common_methods'
+require 'shoes/common/common_methods'
 require 'shoes/common/margin'
 
 class Shoes
@@ -7,6 +7,7 @@ class Shoes
   class TextBlock
     include Shoes::CommonMethods
     include Shoes::Common::Margin
+
 
     attr_reader  :gui, :parent, :text, :links, :app, :hidden
     attr_accessor :font, :font_size, :width, :height, :left, :top, :fixed, :cursor, :textcursor

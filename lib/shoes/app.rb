@@ -106,7 +106,6 @@ class Shoes
         super
         @app.unslotted_elements.each &:remove
         @app.unslotted_elements.clear
-
         @contents << @top_slot
         @current_slot = @top_slot
         instance_eval &blk if blk

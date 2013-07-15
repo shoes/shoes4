@@ -88,7 +88,6 @@ class Shoes
 
     def remove
       @parent.contents.delete self if @parent
-      @app.gui.flush
       @gui.clear
     end
 

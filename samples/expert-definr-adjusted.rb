@@ -13,7 +13,6 @@ Shoes.app :title => "Dictionary, powered by Definr", :width => 370, :height => 3
             title, doc = doc.split(/\n+/, 2)
             @deft.replace title
             @defn.replace doc
-            gui.flush
           end
         end
       end

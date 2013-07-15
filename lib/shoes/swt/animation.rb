@@ -1,6 +1,7 @@
 class Shoes
   module Swt
     class Animation
+
       # An Swt animation implementation
       #
       # @param [Shoes::Animation] dsl The Shoes DSL Animation this represents
@@ -15,13 +16,16 @@ class Shoes
         # Note that the task re-calls itself on each run.
         @task = Proc.new do
           unless @app.real.disposed?
-            @blk.call(@dsl.current_frame)
+            eval_block
             @dsl.increment_frame unless @dsl.stopped?
-            @app.real.redraw
             ::Swt.display.timer_exec(1000 / @dsl.framerate, @task) unless @dsl.removed?
           end
         end
         ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
+      end
+
+      def eval_block
+        @blk.call(@dsl.current_frame)
       end
 
       attr_reader :task

@@ -1,4 +1,4 @@
-require 'shoes/common_methods'
+require 'shoes/common/common_methods'
 
 class Shoes
   class Check

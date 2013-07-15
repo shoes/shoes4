@@ -48,13 +48,18 @@ class Shoes
         character = character_key(event)
         key_string = modifiers + character
         key_string = key_string.to_sym if should_be_symbol?(event, modifiers)
-        @block.call key_string unless character.empty?
+        eval_block key_string unless character.empty?
       end
 
       def key_released(event)
       end
 
       private
+
+      def eval_block(key_string)
+        @block.call key_string
+      end
+
       def modifier_keys(event)
         modifier_keys = ''
         modifier_keys += 'control_' if control?(event)
