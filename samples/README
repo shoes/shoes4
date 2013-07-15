@@ -20,6 +20,7 @@ simple-stripes.rb
 simple-dialogs-outside.rb
 simple-curve.rb
 simple-keypress.rb
+simple-timer.rb
 
 expert-definr-adjusted.rb
 expert-irb-adjusted.rb
