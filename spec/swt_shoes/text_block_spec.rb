@@ -32,7 +32,7 @@ describe Shoes::Swt::TextBlock do
     let(:event) { double("event", gc: gc) }
     let(:gc) { double("gc").as_null_object }
     let(:style) { double(:style) }
-    subject { Shoes::Swt::TextBlock::TbPainter.new(dsl, opts) }
+    subject { Shoes::Swt::TbPainter.new(dsl, opts) }
 
     before :each do
       ::Swt::TextLayout.stub(:new) { text_layout }
@@ -100,7 +100,7 @@ describe Shoes::Swt::TextBlock do
       it "sets correct underline style" do
 
         style.should_receive(:underline=).with(true)
-        style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlock::TbPainter::UNDERLINE_STYLES["single"])
+        style.should_receive(:underlineStyle=).with(Shoes::Swt::TbPainter::UNDERLINE_STYLES["single"])
 
         subject.paintControl(event)
       end
