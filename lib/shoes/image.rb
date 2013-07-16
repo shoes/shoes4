@@ -18,6 +18,8 @@ class Shoes
       @top = opts[:top] ? opts[:top] : 0
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+
+      click(&opts[:click]) if opts[:click]
     end
 
     def path

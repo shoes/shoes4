@@ -20,6 +20,8 @@ class Shoes
       @app.unslotted_elements << self
 
       @gui = Shoes.backend_for(self, point_a, point_b, gui_opts)
+
+      click(&opts[:click]) if opts[:click]
     end
 
     attr_reader :app, :hidden

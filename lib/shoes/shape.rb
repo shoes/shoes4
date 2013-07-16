@@ -23,6 +23,8 @@ class Shoes
       @gui = Shoes.backend_for(self, @style)
 
       instance_eval &@blk unless @blk.nil?
+
+      click(&opts[:click]) if opts[:click]
     end
 
     attr_reader :app, :blk, :hidden
