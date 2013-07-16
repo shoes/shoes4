@@ -15,6 +15,8 @@ class Shoes
       @gui.width  = opts[:width]
 
       @parent.add_child self
+
+      click(&opts[:click]) if opts[:click]
     end
 
     attr_reader :parent
