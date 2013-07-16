@@ -171,7 +171,7 @@ class Shoes
                            @opts[:strikecolor].blue)
           : nil
       end
-  end
+    end
   end
 end
 
