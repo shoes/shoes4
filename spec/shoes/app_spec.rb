@@ -163,6 +163,19 @@ describe Shoes::App do
     end
   end
 
+  describe '#append' do
+    let(:input_blk) {Proc.new do append do para 'Hi' end end}
+
+    it 'understands append' do
+      subject.should respond_to :append
+    end
+
+    it 'should receive a call to what is called in the append block' do
+      Shoes::App.any_instance.should_receive :para
+      subject
+    end
+  end
+
 end
 
 describe "App registry" do

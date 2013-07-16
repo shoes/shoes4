@@ -151,5 +151,33 @@ describe Shoes::Swt::TextBlock do
         subject.paintControl(event)
       end
     end
+
+    context "font styles" do
+      it "sets font style to bold" do
+        opts[:weight] = true
+        ::Swt::Font.should_receive(:new).with(anything, anything, anything, ::Swt::SWT::BOLD)
+        subject.paintControl(event)
+      end
+
+      it "sets font style to italic" do
+        opts[:emphasis] = true
+        ::Swt::Font.should_receive(:new).with(anything, anything, anything, ::Swt::SWT::ITALIC)
+        subject.paintControl(event)
+      end
+
+      it "sets font style to both bold and italic" do
+        opts[:weight] = true
+        opts[:emphasis] = true
+        ::Swt::Font.should_receive(:new).with(anything, anything, anything, ::Swt::SWT::BOLD | ::Swt::SWT::ITALIC)
+
+        subject.paintControl(event)
+      end
+
+      it "sets font style to normal by default" do
+        ::Swt::Font.should_receive(:new).with(anything, anything, anything, ::Swt::SWT::NORMAL)
+
+        subject.paintControl(event)
+      end
+    end
   end
 end

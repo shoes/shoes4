@@ -486,6 +486,10 @@ EOS
       @contents.clear
     end
 
+    def append(&blk)
+      blk.call if blk
+    end
+
     def visit url
       match_data = nil
       url_data = Shoes::URL.urls.find {|page, _| match_data = page.match url}
