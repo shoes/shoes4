@@ -1,15 +1,14 @@
 class Shoes
   module Swt
     class TbPainter
-      #include org.eclipse.swt.events.PaintListener
       include ::Swt::Events::PaintListener
       include Common::Resource
       include Common::Clickable
 
       UNDERLINE_STYLES = {
-        "single" => 0,
-        "double" => 1,
-        "error" => 2,
+          "single" => 0,
+          "double" => 1,
+          "error" => 2,
       }
 
       def initialize(dsl, opts)
@@ -27,7 +26,7 @@ class Shoes
           @text_layout.setWidth @dsl.width
           @text_layout.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
           if @dsl.cursor
-        h = @text_layout.getLineBounds(0).height
+            h = @text_layout.getLineBounds(0).height
             @dsl.textcursor ||= @dsl.app.line(0, 0, 0, h, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
             n = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
             n = 0 if n < 0
@@ -43,11 +42,11 @@ class Shoes
         @text_layout.setJustify @opts[:justify]
         @text_layout.setSpacing(@opts[:leading] || 4)
         @text_layout.setAlignment case @opts[:align]
-          when 'center'; ::Swt::SWT::CENTER
-          when 'right'; ::Swt::SWT::RIGHT
-          else ::Swt::SWT::LEFT
-          end
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
+                                    when 'center'; ::Swt::SWT::CENTER
+                                    when 'right'; ::Swt::SWT::RIGHT
+                                    else ::Swt::SWT::LEFT
+                                  end
+        font = parse_font
         fgc = parse_foreground_color
         bgc = parse_background_color
         style = ::Swt::TextStyle.new font, fgc, bgc
@@ -74,7 +73,7 @@ class Shoes
 
       def parse_foreground_color
         @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) :
-          ::Swt::Color.new(Shoes.display, 0, 0, 0)
+            ::Swt::Color.new(Shoes.display, 0, 0, 0)
       end
 
       def create_link(e)
@@ -104,31 +103,31 @@ class Shoes
           font, ft, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
           nested_styles(@opts[:text_styles], st).each do |e|
             case e[0].style
-            when :strong
-              ft = ft | ::Swt::SWT::BOLD
-            when :em
-              ft = ft | ::Swt::SWT::ITALIC
-            when :fg
-              fg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
-            when :bg
-              bg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
-            when :ins
-              cmds << "underline = true"
-            when :del
-              cmds << "strikeout = true"
-            when :sub
-              small *= 0.8
-              cmds << "rise = -5"
-            when :sup
-              small *= 0.8
-              cmds << "rise = 5"
-            when :code
-              font = "Lucida Console"
-            when :link
-              cmds << "underline = true"
-              fg = ::Swt::Color.new Shoes.display, 0, 0, 255
-              create_link(e)
-            else
+              when :strong
+                ft = ft | ::Swt::SWT::BOLD
+              when :em
+                ft = ft | ::Swt::SWT::ITALIC
+              when :fg
+                fg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
+              when :bg
+                bg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
+              when :ins
+                cmds << "underline = true"
+              when :del
+                cmds << "strikeout = true"
+              when :sub
+                small *= 0.8
+                cmds << "rise = -5"
+              when :sup
+                small *= 0.8
+                cmds << "rise = 5"
+              when :code
+                font = "Lucida Console"
+              when :link
+                cmds << "underline = true"
+                fg = ::Swt::Color.new Shoes.display, 0, 0, 255
+                create_link(e)
+              else
             end
           end
           ft = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, ft
@@ -139,6 +138,15 @@ class Shoes
           @text_layout.setStyle style, st[1].first, st[1].last
           @gcs << ft
         end if @opts[:text_styles]
+      end
+
+      def parse_font
+        font_style = 0
+        font_style |= ::Swt::SWT::BOLD if @opts[:weight]
+        font_style |= ::Swt::SWT::ITALIC if @opts[:emphasis]
+        font_style |= ::Swt::SWT::NORMAL if !@opts[:weight] && !@opts[:emphasis]
+
+        ::Swt::Font.new(Shoes.display, @dsl.font, @dsl.font_size, font_style)
       end
 
       def set_rise(style)
@@ -152,11 +160,11 @@ class Shoes
 
       def set_undercolor(style)
         style.underlineColor = @opts[:undercolor] ?
-          ::Swt::Color.new(Shoes.display,
+            ::Swt::Color.new(Shoes.display,
                              @opts[:undercolor].red,
                              @opts[:undercolor].green,
                              @opts[:undercolor].blue)
-          : nil
+        : nil
       end
 
       def set_strikethrough(style)
@@ -165,13 +173,14 @@ class Shoes
 
       def set_strikecolor(style)
         style.strikeoutColor = @opts[:strikecolor] ?
-          ::Swt::Color.new(Shoes.display,
-                           @opts[:strikecolor].red,
-                           @opts[:strikecolor].green,
-                           @opts[:strikecolor].blue)
-          : nil
+            ::Swt::Color.new(Shoes.display,
+                             @opts[:strikecolor].red,
+                             @opts[:strikecolor].green,
+                             @opts[:strikecolor].blue)
+        : nil
       end
     end
+
   end
 end
 
