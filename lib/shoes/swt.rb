@@ -32,6 +32,7 @@ require 'shoes/swt/common/painter'
 require 'shoes/swt/common/clickable'
 require 'shoes/swt/common/toggle'
 require 'shoes/swt/common/clear'
+require 'shoes/swt/tb_painter'
 
 require 'shoes/swt/app'
 require 'shoes/swt/animation'

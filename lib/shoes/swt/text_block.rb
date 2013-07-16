@@ -1,5 +1,3 @@
-require_relative 'tb_painter'
-
 class Shoes
   module Swt
     class TextBlock
@@ -9,7 +7,7 @@ class Shoes
         @dsl = dsl
         @opts = opts
         @container = @dsl.app.gui.real
-        @painter = ::Shoes::Swt::TbPainter.new @dsl, opts
+        @painter = TbPainter.new @dsl, opts
         @container.add_paint_listener @painter
       end
 
