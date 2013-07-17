@@ -32,7 +32,7 @@ class Shoes
       def open
         @shell.pack
         @shell.open
-        @dsl.top_slot.contents_alignment @dsl.top_slot
+        @dsl.top_slot.contents_alignment
         @started = true
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
@@ -64,7 +64,7 @@ class Shoes
       
       def flush
         if @dsl.top_slot
-          @dsl.top_slot.contents_alignment @dsl.top_slot
+          @dsl.top_slot.contents_alignment
           @real.layout
         end
       end

@@ -7,7 +7,7 @@ class Shoes
       def layout(*dontcare)
         dsl_app = @gui_app.dsl
         height = dsl_app.height
-        scrollable_height = contents_alignment dsl_app.top_slot
+        scrollable_height = dsl_app.top_slot.contents_alignment
         set_gui_size(height, scrollable_height)
 
         vertical_bar = @gui_app.shell.getVerticalBar
@@ -38,27 +38,6 @@ class Shoes
         location.y = 0
         @gui_app.real.setLocation location
       end
-
-
-      def contents_alignment slot
-        x, y = slot.left.to_i, slot.top.to_i
-        max = TopHeightData.new
-        max.top, max.height = y, 0
-        slot_height, slot_top = 0, y
-
-        slot.contents.each do |ele|
-          next if ele.is_a?(::Shoes::Background) or ele.is_a?(::Shoes::Border)
-          tmp = max
-          max = ele.positioning x, y, max
-          x, y = ele.left + ele.width, ele.top + ele.height
-          unless max == tmp
-            slot_height = max.top + max.height - slot_top
-          end
-        end
-        slot_height
-      end
-
-      TopHeightData = Struct.new(:top, :height)
     end
   end
 end

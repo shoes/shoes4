@@ -501,7 +501,7 @@ EOS
           action_proc.call @app, url_argument
         end
       end
-      timer(0.01){top_slot.contents_alignment top_slot}
+      timer(0.01){top_slot.contents_alignment}
     end
 
     def scroll_top
