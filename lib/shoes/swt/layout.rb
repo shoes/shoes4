@@ -4,24 +4,41 @@ class Shoes
 
       attr_accessor :gui_app
 
-      def layout *args
+      def layout(*dontcare)
         dsl_app = @gui_app.dsl
-        w, h = dsl_app.width, dsl_app.height
+        height = dsl_app.height
         scrollable_height = contents_alignment dsl_app.top_slot
-        size = @gui_app.real.compute_trim 0, 0, w, [scrollable_height, h].max
-        @gui_app.real.set_size(size.width, size.height)
-        vb = @gui_app.shell.getVerticalBar
-        vb.setVisible(scrollable_height > h)
-        if scrollable_height > h
-          vb.setThumb h * h / scrollable_height
-          vb.setMaximum scrollable_height - h + vb.getThumb
-          vb.setIncrement h / 2
+        set_gui_size(height, scrollable_height)
+
+        vertical_bar = @gui_app.shell.getVerticalBar
+        vertical_bar.setVisible(scrollable_height > height)
+        if scrollable_height > height
+          handle_scroll_bar(vertical_bar, height, scrollable_height)
         else
-          location = @gui_app.real.getLocation
-          location.y = 0
-          @gui_app.real.setLocation location
+          set_gui_location
         end
       end
+
+      private
+      def set_gui_size(height, scrollable_height)
+        width          = @gui_app.dsl.width
+        maximum_height = [scrollable_height, height].max
+        size           = @gui_app.real.compute_trim 0, 0, width, maximum_height
+        @gui_app.real.set_size(size.width, size.height)
+      end
+
+      def handle_scroll_bar(vertical_bar, height, scrollable_height)
+        vertical_bar.setThumb height * height / scrollable_height
+        vertical_bar.setMaximum scrollable_height - height + vertical_bar.getThumb
+        vertical_bar.setIncrement height / 2
+      end
+
+      def set_gui_location
+        location   = @gui_app.real.getLocation
+        location.y = 0
+        @gui_app.real.setLocation location
+      end
+
 
       def contents_alignment slot
         x, y = slot.left.to_i, slot.top.to_i
