@@ -60,6 +60,7 @@ require 'shoes/swt/common/clickable'
 require 'shoes/swt/common/toggle'
 require 'shoes/swt/common/clear'
 require 'shoes/swt/input_box'
+require 'shoes/swt/rect_painter.rb'
 require 'shoes/swt/swt_button'
 require 'shoes/swt/tb_painter'
 
