@@ -72,6 +72,7 @@ class Shoes
 
       @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &execution_blk
 
+
       Shoes.register self
       @gui.open
     end

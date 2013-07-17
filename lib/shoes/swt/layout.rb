@@ -1,27 +1,25 @@
 class Shoes
   module Swt
     class ShoesLayout < ::Swt::Widgets::Layout
-      attr_accessor :top_slot
+
+      attr_accessor :gui_app
 
       def layout *args
-        # Note: This is a Shoes::App
-        app = @top_slot.app
-        w, h = app.width, app.height
-        scrollable_height = contents_alignment @top_slot
-        # Note: This is a Shoes::Swt::App
-        app = app.gui
-        size = app.real.compute_trim 0, 0, w, [scrollable_height, h].max
-        app.real.set_size(size.width, size.height)
-        vb = app.shell.getVerticalBar
+        dsl_app = @gui_app.dsl
+        w, h = dsl_app.width, dsl_app.height
+        scrollable_height = contents_alignment dsl_app.top_slot
+        size = @gui_app.real.compute_trim 0, 0, w, [scrollable_height, h].max
+        @gui_app.real.set_size(size.width, size.height)
+        vb = @gui_app.shell.getVerticalBar
         vb.setVisible(scrollable_height > h)
         if scrollable_height > h
           vb.setThumb h * h / scrollable_height
           vb.setMaximum scrollable_height - h + vb.getThumb
           vb.setIncrement h / 2
         else
-          location = app.real.getLocation
+          location = @gui_app.real.getLocation
           location.y = 0
-          app.real.setLocation location
+          @gui_app.real.setLocation location
         end
       end
 

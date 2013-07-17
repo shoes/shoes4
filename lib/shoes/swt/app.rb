@@ -17,8 +17,8 @@ class Shoes
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background])
-        initialize_shell()
-        initialize_real()
+        initialize_shell
+        initialize_real
         ::Shoes::Swt.register self
 
         attach_event_listeners
@@ -120,7 +120,15 @@ class Shoes
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
-        @real.setLayout ShoesLayout.new
+        @real.setLayout init_shoes_layout
+      end
+
+      # it seems like the class can not not have a constructor with an argument
+      # due to its java super class
+      def init_shoes_layout
+        layout         = ShoesLayout.new
+        layout.gui_app = self
+        layout
       end
 
       def attach_event_listeners
