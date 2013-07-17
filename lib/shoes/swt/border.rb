@@ -30,7 +30,7 @@ class Shoes
       attr_reader :corners
       attr_accessor :left, :top, :width, :height
 
-      class Painter < Rect::Painter
+      class Painter < RectPainter
 
         def fill_setup(gc)
           # don't draw
