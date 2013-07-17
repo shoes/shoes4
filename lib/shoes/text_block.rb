@@ -1,6 +1,3 @@
-require 'shoes/common/common_methods'
-require 'shoes/common/margin'
-
 class Shoes
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 

@@ -1,5 +1,3 @@
-require 'shoes/color'
-
 class Shoes
   class Gradient
     def initialize(color1, color2, alpha = Shoes::Color::OPAQUE)
