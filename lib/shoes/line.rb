@@ -21,7 +21,7 @@ class Shoes
 
       @gui = Shoes.backend_for(self, point_a, point_b, gui_opts)
 
-      click(&opts[:click]) if opts[:click]
+      clickable_options(opts)
     end
 
     attr_reader :app, :hidden

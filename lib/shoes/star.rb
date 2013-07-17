@@ -27,7 +27,7 @@ class Shoes
       # GUI
       @gui = Shoes.backend_for(self, left, top, points, outer, inner, opts, &blk)
 
-      click(&opts[:click]) if opts[:click]
+      clickable_options(opts)
     end
 
     def in_bounds?(x, y)

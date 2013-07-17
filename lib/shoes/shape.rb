@@ -24,7 +24,7 @@ class Shoes
 
       instance_eval &@blk unless @blk.nil?
 
-      click(&opts[:click]) if opts[:click]
+      clickable_options(opts)
     end
 
     attr_reader :app, :blk, :hidden

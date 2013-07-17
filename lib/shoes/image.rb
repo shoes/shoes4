@@ -19,7 +19,7 @@ class Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
 
-      click(&opts[:click]) if opts[:click]
+      clickable_options(opts)
     end
 
     def path

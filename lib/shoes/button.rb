@@ -18,7 +18,7 @@ class Shoes
 
       @parent.add_child self
 
-      click(&opts[:click]) if opts[:click]
+      clickable_options(opts)
     end
 
     attr_reader :parent
