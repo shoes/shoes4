@@ -1,5 +1,3 @@
-require 'shoes/color'
-
 class Shoes
   module Swt
     # Class is used by edit_box and edit_line

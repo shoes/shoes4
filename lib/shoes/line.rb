@@ -1,8 +1,3 @@
-require 'shoes/common/common_methods'
-require 'shoes/common/fill'
-require 'shoes/common/stroke'
-require 'shoes/common/style'
-
 class Shoes
   class Line
     include Shoes::CommonMethods
