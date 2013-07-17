@@ -1,5 +1,3 @@
-require 'shoes/swt/swt_button'
-
 class Shoes
   module Swt
     class Check < SwtButton
