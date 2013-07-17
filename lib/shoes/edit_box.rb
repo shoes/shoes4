@@ -1,6 +1,3 @@
-require 'shoes/common/common_methods'
-require 'shoes/common/changeable'
-
 class Shoes
   class EditBox
     include Shoes::CommonMethods
