@@ -15,8 +15,6 @@ class Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
       @parent.add_child self
-
-      click(&opts[:click]) if opts[:click]
     end
 
     def checked?
