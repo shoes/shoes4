@@ -1,21 +1,3 @@
-require 'shoes/animation'
-require 'shoes/background'
-require 'shoes/border'
-require 'shoes/button'
-require 'shoes/color'
-require 'shoes/edit_line'
-require 'shoes/image'
-require 'shoes/line'
-require 'shoes/list_box'
-require 'shoes/oval'
-require 'shoes/progress'
-require 'shoes/radio'
-require 'shoes/shape'
-require 'shoes/slot'
-require 'shoes/sound'
-require 'shoes/text'
-require 'shoes/text_block'
-
 class Shoes
   # Methods for creating and manipulating Shoes elements
   #

@@ -1,5 +1,3 @@
-require 'swt'
-
 class Shoes
   module Swt
     # Shoes::App.new creates a new Shoes application window!

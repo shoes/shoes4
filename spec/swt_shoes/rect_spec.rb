@@ -3,11 +3,11 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Rect do
   let(:container) { double('container', :disposed? => false) }
   let(:app) { double('app', :real => container, :add_paint_listener => true, :dsl => dsl) }
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0).as_null_object }
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) { double("dsl object", hidden: false, rotate: 0).as_null_object }
 
   subject {
     Shoes::Swt::Rect.new dsl, app, left, top, width, height
@@ -26,38 +26,4 @@ describe Shoes::Swt::Rect do
   it_behaves_like "paintable"
   it_behaves_like "movable shape", 10, 20
   it_behaves_like 'clickable backend'
-
-  describe "painter" do
-    include_context "painter context"
-
-    let(:corners) { 0 }
-    let(:shape) { Shoes::Swt::Rect.new dsl, app, left, top, width, height, :curve => corners }
-    subject { Shoes::Swt::Rect::Painter.new shape }
-
-    it_behaves_like "fill painter"
-    it_behaves_like "stroke painter"
-
-    describe "square corners" do
-      let(:corners) { 0 }
-
-      it "fills rect" do
-        gc.should_receive(:fill_round_rectangle).with(left, top, width, height, corners*2, corners*2)
-        subject.paint_control(event)
-      end
-
-      it "draws rect" do
-        gc.should_receive(:draw_round_rectangle).with(left+sw/2, top+sw/2, width-sw, height-sw, corners*2, corners*2)
-        subject.paint_control(event)
-      end
-    end
-
-    describe "round corners" do
-      let(:corners) { 13 }
-
-      it "draws rect with rounded corners" do
-        gc.should_receive(:draw_round_rectangle).with(left+sw/2, top+sw/2, width-sw, height-sw, corners*2, corners*2)
-        subject.paint_control(event)
-      end
-    end
-  end
 end

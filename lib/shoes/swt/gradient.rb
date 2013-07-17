@@ -1,5 +1,3 @@
-require 'shoes/swt/color'
-
 class Shoes
   module Swt
     class Gradient
