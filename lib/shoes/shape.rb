@@ -1,10 +1,3 @@
-require 'shoes/common/common_methods'
-require 'shoes/common/fill'
-require 'shoes/common/stroke'
-require 'shoes/common/style'
-require 'shoes/common/clickable'
-require 'shoes/line'
-
 class Shoes
   class Shape
     include Shoes::CommonMethods
