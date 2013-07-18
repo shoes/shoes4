@@ -1,6 +1,7 @@
 class Shoes
   class Button
     include Shoes::CommonMethods
+    include Shoes::Common::Clickable
 
     def initialize(app, parent, text = 'Button', opts = {}, blk = nil)
       @app    = app
@@ -26,10 +27,6 @@ class Shoes
 
     def focus
       @gui.focus
-    end
-
-    def click &blk
-      @gui.click &blk
     end
   end
 end

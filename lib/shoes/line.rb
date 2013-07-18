@@ -3,6 +3,7 @@ class Shoes
     include Shoes::CommonMethods
     include Shoes::Common::Stroke
     include Shoes::Common::Style
+    include Shoes::Common::Clickable
 
     def initialize(app, point_a, point_b, opts = {})
       @app = app

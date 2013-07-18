@@ -1,6 +1,8 @@
 class Shoes
   class Radio
     include Shoes::CommonMethods
+    include Shoes::Common::Clickable
+
     attr_reader :gui, :blk, :parent
 
     # TODO according to the manual a Radio can take these options

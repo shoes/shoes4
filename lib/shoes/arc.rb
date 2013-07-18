@@ -4,6 +4,7 @@ class Shoes
     include Common::Fill
     include Common::Stroke
     include Common::Style
+    include Common::Clickable
 
     def initialize(app, left, top, width, height, angle1, angle2, opts = {})
       @app = app
