@@ -4,6 +4,7 @@ class Shoes
   class TextBlock
     include Shoes::CommonMethods
     include Shoes::Common::Margin
+    include Shoes::Common::Clickable
 
 
     attr_reader  :gui, :parent, :text, :links, :app, :hidden
@@ -18,6 +19,7 @@ class Shoes
       @left = opts[:left]
       @top = opts[:top]
       @links = []
+
       opts[:stroke] = Shoes::Color.new(opts[:stroke]) if opts[:stroke].is_a?(String)
       opts[:fill] = Shoes::Color.new(opts[:fill]) if opts[:fill].is_a?(String)
 
@@ -32,6 +34,8 @@ class Shoes
         @fixed = true
       end
       @left && @top ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
+
+      clickable_options(opts)
     end
 
     def move left, top
