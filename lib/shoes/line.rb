@@ -2,12 +2,14 @@ require 'shoes/common/common_methods'
 require 'shoes/common/fill'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
+require 'shoes/common/clickable'
 
 class Shoes
   class Line
     include Shoes::CommonMethods
     include Shoes::Common::Stroke
     include Shoes::Common::Style
+    include Shoes::Common::Clickable
 
     def initialize(app, point_a, point_b, opts = {})
       @app = app

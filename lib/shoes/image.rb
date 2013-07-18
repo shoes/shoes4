@@ -1,8 +1,10 @@
 require 'shoes/common/common_methods'
+require 'shoes/common/clickable'
 
 class Shoes
   class Image
     include CommonMethods
+    include Common::Clickable
 
     attr_reader :parent, :blk, :gui, :app, :hidden
     attr_reader :file_path, :opts

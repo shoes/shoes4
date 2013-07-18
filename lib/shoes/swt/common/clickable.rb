@@ -20,6 +20,10 @@ class Shoes
           add_listener_for ::Swt::SWT::MouseUp, block
         end
 
+        def clickable_options(opts)
+          click(&opts[:click]) if opts[:click]
+        end
+
         private
         def add_listener_for(object = self, event, block)
           if object.respond_to? :dsl

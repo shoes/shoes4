@@ -2,6 +2,7 @@ require 'shoes/common/common_methods'
 require 'shoes/common/fill'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
+require 'shoes/common/clickable'
 require 'shoes/line'
 
 class Shoes
@@ -10,6 +11,7 @@ class Shoes
     include Shoes::Common::Fill
     include Shoes::Common::Stroke
     include Shoes::Common::Style
+    include Shoes::Common::Clickable
 
     # Creates a new Shoes::Shape
     #
