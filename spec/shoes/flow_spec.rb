@@ -19,13 +19,6 @@ describe Shoes::Flow do
       subject.margin.should == [143, 143, 143, 143]
       subject.blk.should == input_block
     end
-
-    backend_is :swt do
-      it "sets top slot" do
-        Shoes.configuration.backend::ShoesLayout.any_instance.should_receive(:top_slot).at_least(:once)
-        subject
-      end
-    end
   end
 
   it "sets default values" do
