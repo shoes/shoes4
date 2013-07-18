@@ -1,5 +1,3 @@
-require 'shoes/swt/input_box'
-
 class Shoes
   module Swt
     class EditLine < InputBox

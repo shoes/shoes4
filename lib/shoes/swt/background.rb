@@ -1,5 +1,3 @@
-require 'shoes/swt/rect'
-
 class Shoes
   module Swt
     class Background
@@ -32,7 +30,7 @@ class Shoes
       attr_reader :corners
       attr_accessor :left, :top, :width, :height
 
-      class Painter < Rect::Painter
+      class Painter < RectPainter
         def fill_setup(gc)
           set_position_and_size
           @obj.apply_fill gc

@@ -1,5 +1,3 @@
-require 'shoes/common/margin'
-
 class Shoes
   class Slot
     include Shoes::DSL

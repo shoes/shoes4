@@ -1,5 +1,3 @@
-require 'shoes/common/common_methods'
-
 class Shoes
   class Progress
     include Shoes::CommonMethods
