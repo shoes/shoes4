@@ -64,11 +64,11 @@ class Shoes
       end
       if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
         @left, @top = x + parent.margin_left, max.top + parent.margin_top
-        @height = contents_alignment self
+        @height = contents_alignment
         max = self if max.height < @height
       else
         @left, @top = parent.left + parent.margin_left, max.top + max.height + parent.margin_top
-        @height = contents_alignment self
+        @height = contents_alignment
         max = self
       end
       case @init_height
@@ -81,17 +81,17 @@ class Shoes
       max
     end
 
-    def contents_alignment slot
-      x, y = slot.left.to_i, slot.top.to_i
+    def contents_alignment
+      x, y = left.to_i, top.to_i
       max = TopHeightData.new
       max.top, max.height = y, 0
       slot_height, slot_top = 0, y
 
-      slot.contents.each do |ele|
-        next if ele.is_a?(Shoes::Background) or ele.is_a?(Shoes::Border)
+      contents.each do |element|
+        next if element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border)
         tmp = max
-        max = ele.positioning x, y, max
-        x, y = ele.left + ele.width, ele.top + ele.height
+        max = element.positioning x, y, max
+        x, y = element.left + element.width, element.top + element.height
         unless max == tmp
           slot_height = max.top + max.height - slot_top
         end
