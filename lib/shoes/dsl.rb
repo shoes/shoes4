@@ -7,6 +7,7 @@ class Shoes
   #
   #     @style - a hash of styles
   module DSL
+    include Shoes::Common::Style
 
     def color(c)
       Shoes::Color.create c
@@ -376,12 +377,7 @@ EOS
       @style[:cap] = line_cap
     end
 
-    # Adds style, or just returns current style if no argument
-    #
-    # Returns the updated style
-    def style(new_styles = {})
-      @style.merge! new_styles
-    end
+
 
     # Text blocks
     # normally constants belong to the top, I put them here because they are
