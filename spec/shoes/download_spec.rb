@@ -12,6 +12,7 @@ describe Shoes::Download do
     File.delete args[:save]
   end
 
+  # TODO: use vcr gem, finally to make it run wihtout Internet :-D
   it "should have started? and finished? methods" do
     subject.should respond_to :started?
     subject.should respond_to :finished?
