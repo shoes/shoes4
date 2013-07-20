@@ -79,8 +79,8 @@ class Shoes
       create Shoes::Progress, opts, blk
     end
 
-    def check(&blk)
-      create Shoes::Check, blk
+    def check(opts = {}, &blk)
+      create Shoes::Check, opts, blk
     end
 
     def radio(opts = {}, &blk)
