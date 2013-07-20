@@ -5,6 +5,7 @@ describe Shoes::Arc do
     subject { Shoes::Arc.new(app, 13, 44, 200, 300, 0, Shoes::TWO_PI) }
 
     it_behaves_like "object with stroke"
+    it_behaves_like "object with style"
     it_behaves_like "object with fill"
 
     it "is a Shoes::Arc" do

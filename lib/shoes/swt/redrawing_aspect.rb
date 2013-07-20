@@ -9,11 +9,11 @@ class Shoes
                             Timer       => [:eval_block]}
       NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :line,
                                                :rect, :background, :arc],
-                            ::Shoes::Oval  => [:style],
-                            ::Shoes::Rect  => [:style],
-                            ::Shoes::Star  => [:style],
-                            ::Shoes::Shape => [:style],
-                            ::Shoes::Line  => [:style]}
+                            ::Shoes::Oval  => [:change_style],
+                            ::Shoes::Rect  => [:change_style],
+                            ::Shoes::Star  => [:change_style],
+                            ::Shoes::Shape => [:change_style],
+                            ::Shoes::Line  => [:change_style]}
 
       class << self
         attr_reader :app

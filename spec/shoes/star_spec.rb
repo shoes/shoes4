@@ -15,5 +15,6 @@ describe Shoes::Star do
   it_behaves_like "basic star"
   it_behaves_like "object with fill"
   it_behaves_like "object with stroke"
+  it_behaves_like "object with style"
   it_behaves_like "movable object"
 end
