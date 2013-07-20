@@ -1,6 +1,7 @@
 class Shoes
   class Image
     include CommonMethods
+    include Common::Clickable
 
     attr_reader :parent, :blk, :gui, :app, :hidden
     attr_reader :file_path, :opts
@@ -16,6 +17,8 @@ class Shoes
       @top = opts[:top] ? opts[:top] : 0
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+
+      clickable_options(opts)
     end
 
     def path

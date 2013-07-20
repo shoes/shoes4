@@ -4,6 +4,7 @@ class Shoes
     include Shoes::Common::Fill
     include Shoes::Common::Stroke
     include Shoes::Common::Style
+    include Shoes::Common::Clickable
 
     # Creates a new Shoes::Shape
     #
@@ -17,6 +18,8 @@ class Shoes
       @gui = Shoes.backend_for(self, @style)
 
       instance_eval &@blk unless @blk.nil?
+
+      clickable_options(opts)
     end
 
     attr_reader :app, :blk, :hidden
