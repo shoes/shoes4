@@ -1,6 +1,14 @@
+# This file uses the after gem, which you probably haven't heard of (yet)
+# It basically works like Class.after :method do ... end
+# So for every instance of Class, after method is executed the block you
+# gave it is executed.
+# Here it is used to redraw the application, after specific methods are called.
+# So that everything belonging to the aspect of redrawing is in one file.
+# There will be more documentation up here: https://github.com/PragTob/after_do
+# soon :-)
+
 class Shoes
   module Swt
-
     module RedrawingAspect
 
       NEED_TO_FLUSH_GUI  = {Animation   => [:eval_block],
