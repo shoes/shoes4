@@ -16,6 +16,10 @@ require 'rspec'
 require 'pry'
 require 'shoes'
 
+RSpec.configure do |c|
+  c.treat_symbols_as_metadata_keys_with_true_values = true
+end
+
 Shoes.load_backend(:mock)
 
 shared_examples = File.expand_path('../shoes/shared_examples/**/*.rb', __FILE__)
