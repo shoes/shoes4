@@ -1,17 +1,7 @@
-require 'simplecov'
-
-# using coveralls to publish test coverage statistics
-require 'coveralls'
-
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  Coveralls::SimpleCov::Formatter,
-  SimpleCov::Formatter::HTMLFormatter
-]
-SimpleCov.start
-
 SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
 $LOAD_PATH << File.join('../lib', SHOESSPEC_ROOT)
 
+require 'code_coverage'
 require 'rspec'
 require 'pry'
 require 'shoes'
@@ -19,7 +9,6 @@ require 'guard'
 
 include Guard
 
-Shoes.load_backend(:mock)
 
 RSpec.configure do |config|
   config.before(:each) do

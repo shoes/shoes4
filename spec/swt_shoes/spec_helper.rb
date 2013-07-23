@@ -1,5 +1,6 @@
-require "spec_helper"
+require 'code_coverage'
 require "shoes/swt"
+require "spec_helper"
 
 
 shared_examples = File.expand_path('../shared_examples/**/*.rb', __FILE__)

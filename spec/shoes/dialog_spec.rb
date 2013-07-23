@@ -7,7 +7,7 @@ main_object = self
 describe Shoes::Dialog do
 
   before :each do
-    Shoes.configuration.stub(backend: Shoes::Mock)
+    #Shoes.configuration.stub(backend: Shoes::Mock)
     @dialog = Shoes::Dialog.new
   end
 
