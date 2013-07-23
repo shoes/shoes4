@@ -5,7 +5,7 @@ describe Shoes::Swt::Button do
   let(:dsl) { double('dsl', :text => text) }
   let(:parent) { double('parent') }
   let(:block) { proc{} }
-  let(:real) { double('real').as_null_object }
+  let(:real) { double('real', disposed?: false).as_null_object }
 
   subject { Shoes::Swt::Button.new dsl, parent, block }
 
@@ -19,7 +19,7 @@ describe Shoes::Swt::Button do
 
   it_behaves_like "buttons"
   it_behaves_like "movable element", 140, 300
-  #it_behaves_like "clearable native element"
+  it_behaves_like "clearable native element"
 
   describe "#initialize" do
     it "sets text on real element" do
