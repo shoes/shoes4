@@ -16,6 +16,12 @@ require 'rspec'
 require 'pry'
 require 'shoes'
 require 'guard'
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/vcr_cassettes'
+  c.hook_into :webmock
+end
 
 include Guard
 

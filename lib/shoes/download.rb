@@ -16,6 +16,10 @@ class Shoes
       @finished
     end
 
+    def join_thread
+      @thread.join
+    end
+
     private
     def start_download args, url
       require 'open-uri'
