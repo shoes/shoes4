@@ -18,7 +18,7 @@ describe Shoes::Button do
   it { should respond_to :focus }
 
   describe "initialize" do
-    it "should set accessors", :no_swt do
+    it "should set accessors" do
       button = subject
       button.parent.should == parent
       button.blk.should == input_block
@@ -38,11 +38,11 @@ describe Shoes::Button do
     end
 
     shared_examples "stacked" do
-      specify "returns self", :no_swt do
+      specify "returns self" do
         subject.positioning(x, y, max).should be(subject)
       end
 
-      specify "top == max.top + max.height", :no_swt do
+      specify "top == max.top + max.height" do
         subject.positioning(x, y, max)
         subject.top.should eq(155)
       end
@@ -61,7 +61,7 @@ describe Shoes::Button do
     end
 
     shared_examples_for "right-aligned" do
-      specify "left position is measured from right edge of parent", :no_swt do
+      specify "left position is measured from right edge of parent" do
         subject.positioning(x, y, max)
         subject.left.should eq(final_x)
       end
@@ -75,11 +75,11 @@ describe Shoes::Button do
     end
 
     shared_examples "tall element" do
-      specify "element taller than max", :no_swt do
+      specify "element taller than max" do
         max.height.should be < subject.height
       end
 
-      specify "returns self", :no_swt do
+      specify "returns self" do
         subject.positioning(x, y, max).should be(subject)
       end
     end
@@ -124,7 +124,7 @@ describe Shoes::Button do
         it_behaves_like "stacked"
         it_behaves_like "right-aligned"
 
-        specify "subject receives :move", :no_swt do
+        specify "subject receives :move" do
           subject.should_receive(:_move).with(134, 155)
           subject.positioning(x, y, max)
         end
@@ -158,7 +158,7 @@ describe Shoes::Button do
         it_behaves_like "right-aligned"
         it_behaves_like "flowed"
 
-        specify "receives :move", :no_swt do
+        specify "receives :move" do
           subject.should_receive(:_move).with(final_x, max.top)
           subject.positioning(x, y, max)
         end
