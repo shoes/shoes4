@@ -1,6 +1,7 @@
 require 'java'
 require 'swt'
 require 'after_do'
+require 'shoes'
 
 module Swt
   include_package 'org.eclipse.swt.graphics'
