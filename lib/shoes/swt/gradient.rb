@@ -18,46 +18,37 @@ class Shoes
       end
 
       def apply_as_fill(gc, left, top, width, height, angle = 0)
-        l, t, w, h, a = *pattern_pos(left, top, width, height, -angle)
-        pattern = ::Swt::Pattern.new Shoes.display, l, t, w, h, color1.real, color2.real
+        pattern = pattern_position(left, top, width, height, -angle)
         gc.set_background_pattern pattern
       end
 
       def apply_as_stroke(gc, left, top, width, height, angle = 0)
-        l, t, w, h, a = *pattern_pos(left, top, width, height, -angle)
-        pattern = ::Swt::Pattern.new Shoes.display, l, t, w, h, color1.real, color2.real
+        pattern = pattern_position(left, top, width, height, -angle)
         gc.set_foreground_pattern pattern
       end
 
-      def pattern_pos left, top, w, h, a
-        w, h = w*0.5, h*0.5
-        a = Math::PI*(a/180.0)
-        a = a % (Math::PI*2.0)
+      def pattern_position left, top, width, height, angle
+        width, height = width*0.5, height*0.5
+        angle = Math::PI*(angle/180.0)
+        angle = angle % (Math::PI*2.0)
         cal = proc do
-          l = Math.sqrt(w**2 + h**2)
-          b = (h==0 and w==0) ? h/w : Math.atan(h/w)
-          c = Math::PI*0.5 - a - b
-          r = l * Math.cos(c.abs)
+          left = Math.sqrt(width**2 + height**2)
+          b = (height==0 and width==0) ? height/width : Math.atan(height/width)
+          c = Math::PI*0.5 - angle - b
+          r = left * Math.cos(c.abs)
           [r * Math.cos(b+c), r * Math.sin(b+c)]
         end
-        if 0 <= a and a < Math::PI*0.5
-          x, y = cal.call
-         [left+w+x, top+h-y, left+w-x, top+h+y]
-        elsif Math::PI*0.5 <= a and a < Math::PI
-          a -= Math::PI*0.5
-          w, h = h, w
-          x, y = cal.call
-          [left+h+y, top+w+x, left+h-y, top+w-x]
-        elsif Math::PI <= a and a < Math::PI*1.5
-          a -= Math::PI
-          x, y = cal.call
-          [left+w-x, top+h+y, left+w+x, top+h-y]
-        elsif Math::PI*1.5 <= a and a < Math::PI*2.0
-          a -= Math::PI*1.5
-          w, h = h, w
-          x, y = cal.call
-          [left+h-y, top+w-x, left+h+y, top+w+x]
+        x, y = cal.call
+        if 0 <= angle and angle < Math::PI*0.5
+          args = [left+width+x, top+height-y, left+width-x, top+height+y]
+        elsif Math::PI*0.5 <= angle and angle < Math::PI
+          args = [left+width+y, top+height+x, left+width-y, top+height-x]
+        elsif Math::PI <= angle and angle < Math::PI*1.5
+          args = [left+width-x, top+height+y, left+width+x, top+height-y]
+        elsif Math::PI*1.5 <= angle and angle < Math::PI*2.0
+          args = [left+width-y, top+height-x, left+width+y, top+height+x]
         end
+        ::Swt::Pattern.new Shoes.display, args[0], args[1], args[2], args[3], color1.real, color2.real
       end
     end
   end
