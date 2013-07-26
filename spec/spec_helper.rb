@@ -17,6 +17,7 @@ require 'pry'
 require 'shoes'
 require 'guard'
 require 'vcr'
+require 'async_helper'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr_cassettes'
