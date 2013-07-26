@@ -3,6 +3,7 @@ class Shoes
     include Shoes::CommonMethods
     include Shoes::Common::Stroke
     include Shoes::Common::Style
+    include Shoes::Common::Clickable
 
     def initialize(app, point_a, point_b, opts = {})
       @app = app
@@ -15,6 +16,8 @@ class Shoes
       @app.unslotted_elements << self
 
       @gui = Shoes.backend_for(self, point_a, point_b, gui_opts)
+
+      clickable_options(opts)
     end
 
     attr_reader :app, :hidden
