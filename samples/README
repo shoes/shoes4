@@ -8,6 +8,7 @@ good-follow.rb
 good-arc.rb
 good-clock-adjusted.rb
 good-reminder-adjusted.rb
+good-potato-chopping.rb
 
 simple-animate.rb
 simple-calc.rb # looks a bit off
@@ -40,8 +41,6 @@ expert-othello-adjusted.rb
 expert-pong-adjusted.rb
 expert-tankspank-adjusted.rb
 expert-snake.rb
-
-potato-chopping.rb
 
 sample1.rb
 sample2.rb
