@@ -456,6 +456,10 @@ EOS
       Shoes::Keypress.new app, opts, &blk
     end
 
+    def keyrelease &blk
+      Shoes::Keyrelease.new app, opts, &blk
+    end
+
     def clear
       contents = @contents.dup
       contents.each do |e|
