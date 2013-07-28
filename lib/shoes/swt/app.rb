@@ -137,6 +137,12 @@ class Shoes
       def attach_shell_event_listeners
         @shell.addControlListener ShellControlListener.new(self)
         @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
+        blk = proc { |key|
+          if key == :"control_/"
+            %x(bin/shoes lib/shoes/log_window.rb)
+          end
+        }
+        @shell.add_key_listener(::Shoes::Swt::KeyListener.new(blk))
       end
 
       def attach_real_event_listeners
