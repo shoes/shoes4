@@ -1,6 +1,6 @@
 class Shoes
-  class Keyrelease
-    def initialize(app, opts = {}, &blk)
+  class KeyEvent
+    def initialize(app, &blk)
       @app = app
       @gui = Shoes.backend_for self, &blk
     end
@@ -11,4 +11,7 @@ class Shoes
       @gui.clear
     end
   end
+
+  class Keypress < KeyEvent ; end
+  class Keyrelease < KeyEvent ; end
 end

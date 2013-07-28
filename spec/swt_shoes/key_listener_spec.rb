@@ -1,6 +1,10 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::KeyListener do
+describe Shoes::Swt::KeypressListener do
+  before :each do
+    # neglecting the effect of the redrawing aspect
+    Shoes::Swt::KeypressListener.remove_all_callbacks
+  end
 
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
@@ -21,7 +25,7 @@ describe Shoes::Swt::KeyListener do
   end
 
   let(:block) {double}
-  subject {Shoes::Swt::KeyListener.new block}
+  subject {Shoes::Swt::KeypressListener.new block}
 
   describe 'works with simple keys such as' do
     it '"a"' do

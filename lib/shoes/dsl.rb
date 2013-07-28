@@ -453,11 +453,11 @@ EOS
     attr_accessor :hovered
 
     def keypress &blk
-      Shoes::Keypress.new app, opts, &blk
+      Shoes::Keypress.new app, &blk
     end
 
     def keyrelease &blk
-      Shoes::Keyrelease.new app, opts, &blk
+      Shoes::Keyrelease.new app, &blk
     end
 
     def clear
