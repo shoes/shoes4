@@ -1,9 +1,10 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Download do
+  # makes it run offline
   let(:app) { Shoes::App.new }
   let(:block) { proc{} }
-  let(:name) { "http://is.gd/GVAGF7" }
+  let(:name) { "http://www.google.com/logos/nasa50th.gif" }
   let(:args) { {:save => "nasa50th.gif"} }
   subject{ Shoes::Download.new app, name, args, &block }
 
@@ -12,8 +13,42 @@ describe Shoes::Download do
     File.delete args[:save]
   end
 
-  it "should have started? and finished? methods" do
-    subject.should respond_to :started?
-    subject.should respond_to :finished?
+  it "should eventually finish" do
+    extend AsyncHelper
+    VCR.use_cassette 'download' do
+      eventually(timeout: 10, interval: 1) {subject.should be_finished}
+    end
   end
+
+  it 'should eventually start' do
+    extend AsyncHelper
+    VCR.use_cassette 'download' do
+      eventually(timeout: 10, interval: 1) {subject.should be_started}
+    end
+  end
+
+  it 'creates the file specified by save' do
+    extend AsyncHelper
+    VCR.use_cassette 'download' do
+      subject
+      eventually(timeout: 10, interval: 1) do
+        File.exist?(args[:save]).should be_true
+      end
+    end
+  end
+
+  describe 'with a called block' do
+    let(:block) {proc {@called = true}}
+
+    it 'calls the block with a result when the download is finished' do
+      extend AsyncHelper
+      VCR.use_cassette 'download' do
+        subject
+        eventually(timeout: 10, interval: 1) do
+          @called.should be_true
+        end
+      end
+    end
+  end
+
 end
