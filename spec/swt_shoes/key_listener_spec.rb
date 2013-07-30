@@ -3,7 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::KeypressListener do
   before :each do
     # neglecting the effect of the redrawing aspect
-    Shoes::Swt::KeypressListener.remove_all_callbacks
+    Shoes::Swt::App.any_instance.stub(flush: true)
   end
 
   CTRL = ::Swt::SWT::CTRL
