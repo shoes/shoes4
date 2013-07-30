@@ -3,6 +3,7 @@ Shoes.app height: 250, width: 198 do
     @number = @previous.send(@op, @number)  if @op
     @op = nil
   end
+
   @previous, @number, @op = 0, 0, nil
   background rgb(235, 235, 210)
   flow margin: 5 do
