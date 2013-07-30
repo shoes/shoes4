@@ -1,6 +1,8 @@
 class Shoes
   class Radio
     include Shoes::CommonMethods
+    include Shoes::Common::Clickable
+
     attr_reader :gui, :blk, :parent
 
     # TODO according to the manual a Radio can take these options
@@ -15,6 +17,8 @@ class Shoes
       @checked = false
       @gui     = Shoes.configuration.backend_for(self, @parent.gui, blk)
       @parent.add_child self
+
+      clickable_options(opts)
     end
 
     def checked?

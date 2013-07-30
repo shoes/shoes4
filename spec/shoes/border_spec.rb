@@ -16,4 +16,5 @@ describe Shoes::Border do
   subject { Shoes::Border.new(app, parent, blue, opts) }
 
   it_behaves_like "basic border"
+  it_behaves_like "object with style"
 end

@@ -7,6 +7,7 @@ class Shoes
   #
   #     @style - a hash of styles
   module DSL
+    include Shoes::Common::Style
 
     def color(c)
       Shoes::Color.create c
@@ -78,8 +79,8 @@ class Shoes
       create Shoes::Progress, opts, blk
     end
 
-    def check(&blk)
-      create Shoes::Check, blk
+    def check(opts = {}, &blk)
+      create Shoes::Check, opts, blk
     end
 
     def radio(opts = {}, &blk)
@@ -376,12 +377,7 @@ EOS
       @style[:cap] = line_cap
     end
 
-    # Adds style, or just returns current style if no argument
-    #
-    # Returns the updated style
-    def style(new_styles = {})
-      @style.merge! new_styles
-    end
+
 
     # Text blocks
     # normally constants belong to the top, I put them here because they are
@@ -457,7 +453,11 @@ EOS
     attr_accessor :hovered
 
     def keypress &blk
-      Shoes::Keypress.new app, opts, &blk
+      Shoes::Keypress.new app, &blk
+    end
+
+    def keyrelease &blk
+      Shoes::Keyrelease.new app, &blk
     end
 
     def clear
@@ -483,7 +483,7 @@ EOS
           action_proc.call @app, url_argument
         end
       end
-      timer(0.01){top_slot.contents_alignment top_slot}
+      timer(0.01){top_slot.contents_alignment}
     end
 
     def scroll_top

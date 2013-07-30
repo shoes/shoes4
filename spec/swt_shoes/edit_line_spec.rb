@@ -3,7 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::EditLine do
   let(:dsl) { double('dsl', opts: {secret: true}) }
   let(:parent) { double('parent') }
-  let(:real) { double('real').as_null_object }
+  let(:real) { double('real', disposed?: false).as_null_object }
 
   subject { Shoes::Swt::EditLine.new dsl, parent }
 
@@ -14,7 +14,7 @@ describe Shoes::Swt::EditLine do
   end
 
   it_behaves_like "movable element"
-  #it_behaves_like "clearable native element"
+  it_behaves_like "clearable native element"
 
   describe "#initialize" do
     it "sets text on real element" do

@@ -8,6 +8,7 @@ good-follow.rb
 good-arc.rb
 good-clock-adjusted.rb
 good-reminder-adjusted.rb
+good-potato-chopping.rb
 
 simple-animate.rb
 simple-calc.rb # looks a bit off
@@ -23,6 +24,15 @@ simple-curve.rb
 simple-keypress.rb
 simple-timer.rb
 simple-dialogs.rb
+simple-brightness-transitions.rb
+simple-color-selector.rb
+simple-color-transitions.rb
+simple-guess-game.rb
+simple-calc-2.rb
+simple-manual.rb
+simple-mouse-follow.rb
+simple-sample-executor.rb
+simple-shoes-intro.rb
 
 expert-definr-adjusted.rb
 expert-irb-adjusted.rb
@@ -30,35 +40,27 @@ expert-minesweeper-adjusted.rb
 expert-othello-adjusted.rb
 expert-pong-adjusted.rb
 expert-tankspank-adjusted.rb
+expert-snake.rb
 
 sample1.rb
 sample2.rb
 sample3.rb
 sample4.rb
-sample5.rb
 sample6.rb
 sample7.rb
 sample8.rb
 sample9.rb
-sample10.rb
-sample11.rb
 sample12.rb
 sample13.rb
 sample14.rb
 sample15.rb
 sample16.rb
 sample17.rb
-sample18.rb
 sample19.rb
-sample20.rb
 sample21.rb
-sample22.rb
 sample23.rb
 sample24.rb
 sample27.rb
-sample28.rb
-sample29.rb
-sample30.rb
 sample31.rb
 sample34.rb
 sample35.rb
@@ -67,5 +69,3 @@ sample37.rb
 sample42.rb
 sample44.rb
 sample45.rb
-sample46.rb
-sample99.rb

@@ -16,4 +16,5 @@ describe Shoes::Background do
   subject { Shoes::Background.new(app, parent, blue, opts) }
 
   it_behaves_like "basic background"
+  it_behaves_like "object with style"
 end
