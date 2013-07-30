@@ -32,8 +32,8 @@ class Shoes
         width  = width * 0.5
         height = height * 0.5
         angle  = normalize_angle(angle)
-        args   = determine_args_based_on_angle(angle, height, left, top, width)
-        ::Swt::Pattern.new Shoes.display, args[0], args[1], args[2], args[3], color1.real, color2.real
+        left, top, width, height  = determine_args_based_on_angle(angle, left, top, width, height)
+        ::Swt::Pattern.new Shoes.display, left, top, width, height, color1.real, color2.real
       end
 
       def normalize_angle(angle)
@@ -41,7 +41,7 @@ class Shoes
         angle % (Math::PI*2.0)
       end
 
-      def determine_args_based_on_angle(angle, height, left, top, width)
+      def determine_args_based_on_angle(angle, left, top, width, height)
         x, y = calculate_x_and_y(angle, height, width)
         if 0 <= angle and angle < Math::PI*0.5
           args = [left+width+x, top+height-y, left+width-x, top+height+y]
