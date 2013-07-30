@@ -11,10 +11,12 @@ class Shoes
   module Swt
     module RedrawingAspect
 
-      NEED_TO_FLUSH_GUI  = {Animation   => [:eval_block],
-                            Button      => [:eval_block],
-                            KeyListener => [:eval_block],
-                            Timer       => [:eval_block]}
+      NEED_TO_FLUSH_GUI = {Animation          => [:eval_block],
+                           Button             => [:eval_block],
+                           KeypressListener   => [:eval_block],
+                           KeyreleaseListener => [:eval_block],
+                           Timer              => [:eval_block]}
+
       NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :line,
                                                :rect, :background, :arc],
                             ::Shoes::Oval  => [:change_style],

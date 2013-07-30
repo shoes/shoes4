@@ -1,24 +1,10 @@
 require 'swt_shoes/spec_helper'
 
-# note that many important specs for this may be found in
-# shoes_key_listener_spec.rb
-describe Shoes::Swt::Keypress do
-  let(:input_blk) { Proc.new {} }
-  let(:opts) { Hash.new }
-  let(:app) { double shell: double() }
-  let(:dsl) { double('dsl') }
-  let(:block) { proc{ |key| key} }
-  subject { Shoes::Swt::Keypress.new dsl, app, &block}
-
-  describe "#initialize" do
-    it "adds key listener" do
-      app.shell.should_receive(:add_key_listener)
-      subject
-    end
+describe Shoes::Swt::KeypressListener do
+  before :each do
+    # neglecting the effect of the redrawing aspect
+    Shoes::Swt::KeypressListener.remove_all_callbacks
   end
-end
-
-describe Shoes::Swt::KeyListener do
 
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
@@ -39,7 +25,7 @@ describe Shoes::Swt::KeyListener do
   end
 
   let(:block) {double}
-  subject {Shoes::Swt::KeyListener.new block}
+  subject {Shoes::Swt::KeypressListener.new block}
 
   describe 'works with simple keys such as' do
     it '"a"' do
