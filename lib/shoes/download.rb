@@ -37,7 +37,11 @@ class Shoes
     def finish_download download_data
       @finished = true
       result   = StringIO.new(download_data)
-      @blk.call result if @blk
+      eval_block(result) if @blk
+    end
+
+    def eval_block(result)
+      @blk.call result
     end
 
     def save_to_file file_path, download_data

@@ -44,7 +44,7 @@ describe Shoes::Swt::Animation do
     end
 
     it "triggers redraw" do
-      Shoes::Swt::RedrawingAspect.redraws_for app_real
+      Shoes::Swt::RedrawingAspect.redraws_for app_real, double
       app_real.should_receive(:flush)
       task.call
     end

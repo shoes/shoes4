@@ -24,25 +24,33 @@ class Shoes
                             ::Shoes::Star  => [:change_style],
                             ::Shoes::Shape => [:change_style],
                             ::Shoes::Line  => [:change_style]}
+      # only the main thread may draw
+      NEED_TO_ASYNC_FLUSH_GUI = {::Shoes::Download  => [:eval_block]}
 
       class << self
         attr_reader :app
 
-        def redraws_for(swt_app)
+        def redraws_for(swt_app, display)
           @app = swt_app
+          @display = display
           extend_needed_classes
           add_redraws
         end
 
         private
         def extend_needed_classes
-          NEED_TO_FLUSH_GUI.keys.each {|klass| klass.extend AfterDo}
-          NEED_TO_REDRAW_GUI.keys.each {|klass| klass.extend AfterDo}
+          classes_to_extend = NEED_TO_FLUSH_GUI.keys +
+                              NEED_TO_REDRAW_GUI.keys +
+                              NEED_TO_ASYNC_FLUSH_GUI.keys
+          classes_to_extend.each {|klass| klass.extend AfterDo}
         end
 
         def add_redraws
           after_every NEED_TO_FLUSH_GUI do app.flush end
           after_every NEED_TO_REDRAW_GUI do app.real.redraw end
+          after_every NEED_TO_ASYNC_FLUSH_GUI do
+            @display.asyncExec do app.flush end
+          end
         end
 
         def after_every(hash, &blk)
