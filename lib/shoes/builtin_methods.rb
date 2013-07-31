@@ -11,6 +11,22 @@ class Shoes
       Shoes::Dialog.new.confirm(message)
     end
 
+    def info(message = '')
+      Shoes::LOG << ['info', message]
+    end
+
+    def debug(message = '')
+      Shoes::LOG << ['debug', message]
+    end
+
+    def warn(message = '')
+      Shoes::LOG << ['warn', message]
+    end
+
+    def error(message = '')
+      Shoes::LOG << ['error', message]
+    end
+
     alias_method :confirm?, :confirm
 
     def ask_open_file

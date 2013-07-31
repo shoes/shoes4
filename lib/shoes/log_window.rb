@@ -8,7 +8,6 @@ class Shoes
             app.tagline "Shoes Console", :stroke => app.white
           end
           app.button "Clear", :margin => 6, :width => 80, :height => 40 do
-            Shoes.log.clear
           end
         end
         @log, @hash = app.stack, nil
@@ -20,18 +19,18 @@ class Shoes
     end
 
     def self.update
-      if @hash != Shoes.log.hash
-        @hash = Shoes.log.hash
+      if @hash != Shoes::LOG.hash
+        # Shoes3 code that I don't understand yet - Faraaz
+        #@hash = Shoes::LOG.hash
         @log.clear do
           i = 0
-          Shoes.log.each do |typ, msg, at, mid, rbf, rbl|
+          Shoes::LOG.each do |typ, msg|
             stack do
               background "#f1f5e1" if i % 2 == 0
-              inscription strong(typ.to_s.capitalize, :stroke => "#05C"), " in ", 
+              inscription strong(typ.to_s.capitalize, :stroke => "#05C"), " in "
               flow do
-                stack :margin => 4, :width => -20 do
+                stack :margin => 4 do
                   s = msg.to_s
-                  s << "\n#{msg.backtrace.join("\n")}" if msg.kind_of?(Exception)
                   para s, :margin => 4, :margin_top => 0
                 end
               end
