@@ -27,7 +27,6 @@ class Shoes
       set_margin
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
-
       eval_block blk
     end
 

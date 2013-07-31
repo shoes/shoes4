@@ -24,15 +24,25 @@ class Shoes
         vb = @shell.getVerticalBar
         vb.setIncrement 10
         vb.addSelectionListener SelectionListener.new(self, vb)
-        RedrawingAspect.redraws_for self, Shoes.display
+
+        RedrawingAspect.redraws_for self
       end
 
       def open
         @shell.pack
+        force_shell_size
         @shell.open
         @dsl.top_slot.contents_alignment
         @started = true
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
+      end
+
+      def force_shell_size
+        frame_x_decorations = @shell.getSize().x - @shell.getClientArea().width
+        frame_y_decorations = @shell.getSize().y - @shell.getClientArea().height
+        new_width = @dsl.width + frame_x_decorations
+        new_height = @dsl.height + frame_y_decorations
+        @shell.setSize(new_width, new_height)
       end
 
       def quit
