@@ -53,19 +53,17 @@ class Shoes
       end
 
       def create_image(data)
-        @real                     = ::Swt::Graphics::Image.new(::Swt.display, data)
-        @full_width, @full_height = @real.getImageData.width, @real.getImageData.height
-        @width                    = @dsl.opts[:width] || @full_width
-        @height                   = @dsl.opts[:height] || @full_height
+        @real        = ::Swt::Graphics::Image.new(::Swt.display, data)
+        @full_width  = @real.getImageData.width
+        @full_height = @real.getImageData.height
+        @width       = @dsl.opts[:width] || @full_width
+        @height      = @dsl.opts[:height] || @full_height
       end
 
       def download_and_display_real_image(url)
         @tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}.png") unless @tmpname_or_data
         @dsl.app.download url, save: @tmpname do
-          @real                     = ::Swt::Graphics::Image.new Shoes.display, @tmpname
-          @full_width, @full_height = @real.getImageData.width, @real.getImageData.height
-          @width                    = @dsl.opts[:width] || @full_width
-          @height                   = @dsl.opts[:height] || @full_height
+          create_image @tmpname
         end
       end
 
