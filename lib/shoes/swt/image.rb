@@ -1,12 +1,16 @@
 class Shoes
   module Swt
     class Image
+      import java.io.ByteArrayInputStream
+
       include Common::Child
       include Common::Move
       include Common::Resource
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
+
+      BINARY_ENCODING = Encoding.find('binary')
 
       attr_reader :parent, :real, :dsl, :container, :painter, :width, :height
 
@@ -29,13 +33,25 @@ class Shoes
         clickable blk if blk
       end
 
-      def load_image(name)
-        if name =~ /^(http|https):\/\//
-          @tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}.png") unless @tmpname
-          url, name = name, File.join(DIR, 'static/downloading.png')
+      def load_image(name_or_data)
+        if name_or_data =~ /^(http|https):\/\//
+          @tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}.png") unless @tmpname_or_data
+          url, name_or_data = name_or_data, File.join(DIR, 'static/downloading.png')
         end
 
-        @real = ::Swt::Graphics::Image.new(::Swt.display, name)
+        # make a reasonable guess: if the name_or_data is binary it is possibly raw image data
+        if name_or_data.encoding == BINARY_ENCODING
+          stream = ByteArrayInputStream.new(name_or_data.to_java_bytes)
+          begin
+            data = ::Swt::Graphics::ImageLoader.new.load(stream).first
+          rescue ::Swt::SWTException
+            data = name_or_data
+          end
+        else
+          data = name_or_data
+        end
+
+        @real = ::Swt::Graphics::Image.new(::Swt.display, data)
         @full_width, @full_height = @real.getImageData.width, @real.getImageData.height
         @width = @dsl.opts[:width] || @full_width
         @height = @dsl.opts[:height] || @full_height
