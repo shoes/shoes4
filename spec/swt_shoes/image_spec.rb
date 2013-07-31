@@ -20,10 +20,10 @@ describe Shoes::Swt::Image do
   let(:app) { double("app", gui: gui) }
   let(:width) { 128 }
   let(:height) { 128 }
+  let(:image) { "spec/swt_shoes/minimal.png" }
 
   subject {
-    ::Swt::Graphics::Image.stub(:new) { mock_image}
-    dsl.stub(:file_path)
+    dsl.stub(:file_path) { image }
     Shoes::Swt::Image.new(dsl, parent, blk)
   }
 
@@ -40,8 +40,17 @@ describe Shoes::Swt::Image do
     end
 
     specify "draws image" do
-      gc.should_receive(:drawImage).with(real, 0, 0, width, height, left, top, width, height)
+      gc.should_receive(:drawImage).with(subject.real, 0, 0, 3, 1, 100, 200, 3, 1)
       subject.painter.call(event)
+    end
+  end
+
+  describe "painting raw images" do
+    let(:image) { File.read("spec/swt_shoes/minimal.png", :mode => "rb") }
+
+    specify "loads image from raw data" do
+      subject.real.image_data.width = 3
+      subject.real.image_data.height = 1
     end
   end
 end
