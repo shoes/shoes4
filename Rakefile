@@ -142,6 +142,8 @@ end
 
 desc "Run all working samples"
 task :samples do
+  samples = working_samples
+  puts "#{samples.size} samples are known to work"
   working_samples.shuffle.each{|sample| run_sample(sample)}
 end
 

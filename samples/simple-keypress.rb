@@ -4,4 +4,8 @@ Shoes.app do
     para 'You pressed ' + key.to_s
     p key
   end
+  keyrelease do |key|
+    para 'You released ' + key.to_s
+    p key
+  end
 end

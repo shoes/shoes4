@@ -1,32 +1,52 @@
 class Shoes
   class Download
-    def initialize app, name, args, &blk
-      require 'open-uri'
-      @thread = Thread.new do
-        open name,
-          content_length_proc: lambda{|len| @content_length, @started = len, true},
-          progress_proc: lambda{|size| @progress = size} do |sio|
-          open(args[:save], 'wb'){|fw| fw.print sio.read} if args[:save]
-          @finished, @sio = true, StringIO.new(sio.read)
-        end
-      end
-      a = app.animate 10 do
-        (a.remove; blk[@sio]) if @finished
-      end if blk
-    end
-    
+
     attr_reader :progress, :content_length
-    
-    def join_thread
-      @thread.join
+
+    def initialize app, url, args, &blk
+      @blk = blk
+      start_download args, url
     end
 
     def started?
       @started
     end
-    
+
     def finished?
       @finished
+    end
+
+    def join_thread
+      @thread.join
+    end
+
+    private
+    def start_download args, url
+      require 'open-uri'
+      @thread = Thread.new do
+        options = {content_length_proc: lambda { |length| download_started(length) },
+            progress_proc: lambda { |size| @progress = size }}
+        open url, options do |download|
+          download_data = download.read
+          save_to_file(args[:save], download_data) if args[:save]
+          finish_download download_data
+        end
+      end
+    end
+
+    def finish_download download_data
+      @finished = true
+      result   = StringIO.new(download_data)
+      @blk.call result if @blk
+    end
+
+    def save_to_file file_path, download_data
+      open(file_path, 'wb') { |fw| fw.print download_data }
+    end
+
+    def download_started(length)
+      @content_length = length
+      @started = true
     end
   end
 end
