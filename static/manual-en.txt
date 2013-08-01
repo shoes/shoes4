@@ -1752,7 +1752,7 @@ width x height.  Optionally, you may give the rectangle rounded corners with a
 fifth argument: the radius of the corners in pixels.
 
 Alternate Call:
-rect(top, left, sidelength): Will draw a square with sides having given length
+rect(top, left, sidelength): Will draw a square with sides having the given length
 
 
 As with all other shapes, the rectangle is drawn using the stroke and fill colors.
