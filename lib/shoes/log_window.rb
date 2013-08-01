@@ -11,32 +11,31 @@ class Shoes
           end
         end
         @log, @hash = app.stack, nil
-        #update
+        puts Shoes::LOG
+        update
         app.every(0.2) do
-          #update
+          update
         end
       end
     end
 
     def self.update
-      if @hash != Shoes::LOG.hash
-        # Shoes3 code that I don't understand yet - Faraaz
-        #@hash = Shoes::LOG.hash
-        @log.clear do
-          i = 0
-          Shoes::LOG.each do |typ, msg|
-            stack do
-              background "#f1f5e1" if i % 2 == 0
-              inscription strong(typ.to_s.capitalize, :stroke => "#05C"), " in "
-              flow do
-                stack :margin => 4 do
-                  s = msg.to_s
-                  para s, :margin => 4, :margin_top => 0
-                end
+      @log.clear do
+        i = 0
+        Shoes::LOG.each do |typ, msg|
+          para typ, :stroke => blue
+          stack do
+            background "#f1f5e1" if i % 2 == 0
+            para typ, stroke: "#05C"
+            inscription strong(typ.capitalize, :stroke => "#05C"), " in "
+            flow do
+              stack :margin => 4 do
+                s = msg.to_s
+                para s, :margin => 4, :margin_top => 0
               end
             end
-            i += 1
           end
+          i += 1
         end
       end
     end

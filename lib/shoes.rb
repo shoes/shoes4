@@ -9,7 +9,7 @@ class Shoes
   TWO_PI = 2 * PI
   HALF_PI = 0.5 * PI
   DIR = Pathname.new(__FILE__).join("../..").realpath.to_s
-  LOG = "Tesster"
+  LOG = []
 
   extend ::Shoes::Common::Registration
 
@@ -96,6 +96,7 @@ require 'shoes/keypress'
 require 'shoes/line'
 require 'shoes/list_box'
 require 'shoes/logger'
+require 'shoes/log_window'
 require 'shoes/manual'
 require 'shoes/oval'
 require 'shoes/point'
