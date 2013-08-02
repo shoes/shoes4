@@ -59,6 +59,9 @@ class Shoes
         if angle % Math::PI >= (Math::PI * 0.5)
           my_width = height
           my_height = width
+        else
+          my_width = width
+          my_height = height
         end
         my_angle = angle % (Math::PI * 0.5)
         length = Math.sqrt(my_width**2 + my_height**2)
