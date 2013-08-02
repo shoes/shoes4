@@ -56,9 +56,14 @@ class Shoes
       end
 
       def calculate_x_and_y(angle, height, width)
-        length = Math.sqrt(width**2 + height**2)
-        b      = (height==0 and width==0) ? height/width : Math.atan(height/width)
-        c      = Math::PI*0.5 - angle - b
+        if angle % Math::PI >= (Math::PI * 0.5)
+          my_width = height
+          my_height = width
+        end
+        my_angle = angle % (Math::PI * 0.5)
+        length = Math.sqrt(my_width**2 + my_height**2)
+        b      = (my_height==0 and my_width==0) ? my_height/my_width : Math.atan(my_height/my_width)
+        c      = Math::PI*0.5 - my_angle - b
         r      = length * Math.cos(c.abs)
         x      = r * Math.cos(b+c)
         y      = r * Math.sin(b+c)
