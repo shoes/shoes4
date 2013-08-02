@@ -18,17 +18,14 @@ class Shoes
         initialize_shell
         initialize_real
         ::Shoes::Swt.register self
-
         attach_event_listeners
-
-        vb = @shell.getVerticalBar
-        vb.setIncrement 10
-        vb.addSelectionListener SelectionListener.new(self, vb)
+        initialize_scroll_bar
         RedrawingAspect.redraws_for self, Shoes.display
       end
 
       def open
         @shell.pack
+        force_shell_size
         @shell.open
         @dsl.top_slot.contents_alignment
         @started = true
@@ -92,6 +89,20 @@ class Shoes
       end
 
       private
+      def initialize_scroll_bar
+        scroll_bar = @shell.getVerticalBar
+        scroll_bar.setIncrement 10
+        scroll_bar.addSelectionListener SelectionListener.new(self, scroll_bar)
+      end
+
+      def force_shell_size
+        frame_x_decorations = @shell.getSize().x - @shell.getClientArea().width
+        frame_y_decorations = @shell.getSize().y - @shell.getClientArea().height
+        new_width = @dsl.width + frame_x_decorations
+        new_height = @dsl.height + frame_y_decorations
+        @shell.setSize(new_width, new_height)
+      end
+
       def main_window_on_close
         lambda { |event|
           Shoes.logger.debug "main_window on_close block begin... disposing ::Swt.display"
