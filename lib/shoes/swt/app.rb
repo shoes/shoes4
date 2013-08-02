@@ -20,7 +20,7 @@ class Shoes
         ::Shoes::Swt.register self
         attach_event_listeners
         initialize_scroll_bar
-        RedrawingAspect.redraws_for self
+        RedrawingAspect.redraws_for self, Shoes.display
       end
 
       def open
