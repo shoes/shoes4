@@ -65,7 +65,7 @@ class Shoes
         end
         my_angle = angle % (Math::PI * 0.5)
         length = Math.sqrt(my_width**2 + my_height**2)
-        b      = (my_height==0 and my_width==0) ? my_height/my_width : Math.atan(my_height/my_width)
+        b      = (my_height==0 and my_width==0) ? 0 : Math.atan(my_height/my_width)
         c      = Math::PI*0.5 - my_angle - b
         r      = length * Math.cos(c.abs)
         x      = r * Math.cos(b+c)
