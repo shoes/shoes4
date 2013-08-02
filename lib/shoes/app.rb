@@ -76,11 +76,11 @@ class Shoes
     end
 
     def width
-      @top_slot ? @gui.width : @width
+      started? ? @gui.width : @width
     end
 
     def height
-      @top_slot ? @gui.height : @height
+      started? ? @gui.height : @height
     end
 
     def left; 0 end
@@ -92,7 +92,7 @@ class Shoes
     end
 
     def started?
-      @gui.started
+      @gui && @gui.started
     end
 
     def clear &blk
