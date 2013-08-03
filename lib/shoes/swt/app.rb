@@ -139,7 +139,8 @@ class Shoes
         @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
         blk = proc { |key|
           if key == :"control_/"
-            ::Shoes::LogWindow.setup(self)
+            puts "test"
+            #::Shoes::LogWindow.setup(self)
           end
         }
         @shell.add_key_listener(::Shoes::Swt::KeyListener.new(blk))
