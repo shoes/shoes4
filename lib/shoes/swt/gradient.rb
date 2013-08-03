@@ -18,46 +18,59 @@ class Shoes
       end
 
       def apply_as_fill(gc, left, top, width, height, angle = 0)
-        l, t, w, h, a = *pattern_pos(left, top, width, height, -angle)
-        pattern = ::Swt::Pattern.new Shoes.display, l, t, w, h, color1.real, color2.real
+        pattern = create_pattern(left, top, width, height, -angle)
         gc.set_background_pattern pattern
       end
 
       def apply_as_stroke(gc, left, top, width, height, angle = 0)
-        l, t, w, h, a = *pattern_pos(left, top, width, height, -angle)
-        pattern = ::Swt::Pattern.new Shoes.display, l, t, w, h, color1.real, color2.real
+        pattern = create_pattern(left, top, width, height, -angle)
         gc.set_foreground_pattern pattern
       end
 
-      def pattern_pos left, top, w, h, a
-        w, h = w*0.5, h*0.5
-        a = Math::PI*(a/180.0)
-        a = a % (Math::PI*2.0)
-        cal = proc do
-          l = Math.sqrt(w**2 + h**2)
-          b = (h==0 and w==0) ? h/w : Math.atan(h/w)
-          c = Math::PI*0.5 - a - b
-          r = l * Math.cos(c.abs)
-          [r * Math.cos(b+c), r * Math.sin(b+c)]
+      private
+      def create_pattern left, top, width, height, angle
+        width  = width * 0.5
+        height = height * 0.5
+        angle  = normalize_angle(angle)
+        left, top, width, height  = determine_args_based_on_angle(angle, left, top, width, height)
+        ::Swt::Pattern.new Shoes.display, left, top, width, height, color1.real, color2.real
+      end
+
+      def normalize_angle(angle)
+        angle = Math::PI * (angle/180.0)
+        angle % (Math::PI*2.0)
+      end
+
+      def determine_args_based_on_angle(angle, left, top, width, height)
+        x, y = calculate_x_and_y(angle, height, width)
+        if 0 <= angle and angle < Math::PI*0.5
+          args = [left+width+x, top+height-y, left+width-x, top+height+y]
+        elsif Math::PI*0.5 <= angle and angle < Math::PI
+          args = [left+width+y, top+height+x, left+width-y, top+height-x]
+        elsif Math::PI <= angle and angle < Math::PI*1.5
+          args = [left+width-x, top+height+y, left+width+x, top+height-y]
+        elsif Math::PI*1.5 <= angle and angle < Math::PI*2.0
+          args = [left+width-y, top+height-x, left+width+y, top+height+x]
         end
-        if 0 <= a and a < Math::PI*0.5
-          x, y = cal.call
-         [left+w+x, top+h-y, left+w-x, top+h+y]
-        elsif Math::PI*0.5 <= a and a < Math::PI
-          a -= Math::PI*0.5
-          w, h = h, w
-          x, y = cal.call
-          [left+h+y, top+w+x, left+h-y, top+w-x]
-        elsif Math::PI <= a and a < Math::PI*1.5
-          a -= Math::PI
-          x, y = cal.call
-          [left+w-x, top+h+y, left+w+x, top+h-y]
-        elsif Math::PI*1.5 <= a and a < Math::PI*2.0
-          a -= Math::PI*1.5
-          w, h = h, w
-          x, y = cal.call
-          [left+h-y, top+w-x, left+h+y, top+w+x]
+        args
+      end
+
+      def calculate_x_and_y(angle, height, width)
+        if angle % Math::PI >= (Math::PI * 0.5)
+          my_width = height
+          my_height = width
+        else
+          my_width = width
+          my_height = height
         end
+        my_angle = angle % (Math::PI * 0.5)
+        length = Math.sqrt(my_width**2 + my_height**2)
+        b      = (my_height==0 and my_width==0) ? 0 : Math.atan(my_height/my_width)
+        c      = Math::PI*0.5 - my_angle - b
+        r      = length * Math.cos(c.abs)
+        x      = r * Math.cos(b+c)
+        y      = r * Math.sin(b+c)
+        return x, y
       end
     end
   end

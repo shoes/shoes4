@@ -15,7 +15,7 @@ class Shoes
         @height = height
         @opts = opts
         @corners = opts[:curve] || 0
-	@angle = opts[:angle] || 0
+	      @angle = opts[:angle] || 0
         
         dsl.parent.contents << @dsl
 
