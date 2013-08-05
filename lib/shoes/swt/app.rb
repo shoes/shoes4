@@ -140,7 +140,7 @@ class Shoes
         blk = proc { |key|
           if key == :"control_/"
             puts "test"
-            #::Shoes::LogWindow.setup(self)
+            ::Shoes::LogWindow.setup(self)
           end
         }
         @shell.add_key_listener(::Shoes::Swt::KeyListener.new(blk))
