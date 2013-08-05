@@ -1,5 +1,11 @@
 class Shoes
   class LogWindow
+    def console(app)
+      Shoes.app do
+        Shoes::LogWindow.setup(app)
+      end
+    end
+
     def self.setup(app)
       app.stack do
         app.flow do
@@ -42,6 +48,3 @@ class Shoes
   end
 end
 
-Shoes.app do
-  Shoes::LogWindow.setup(app)
-end

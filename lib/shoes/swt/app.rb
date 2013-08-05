@@ -140,10 +140,12 @@ class Shoes
         blk = proc { |key|
           if key == :"control_/"
             puts "test"
-            ::Shoes::LogWindow.setup(self)
+            %x(bin/shoes lib/shoes/log_window.rb)
+            #::Shoes::LogWindow.console(self)
           end
         }
-        @shell.add_key_listener(::Shoes::Swt::KeyListener.new(blk))
+        @shell.add_key_listener(Shoes::Keypress.new(self, &blk))
+        #@shell.add_key_listener(::Shoes::Keypress.new(self, &blk))
       end
 
       def attach_real_event_listeners
