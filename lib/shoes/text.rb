@@ -21,7 +21,9 @@ class Shoes
                   :clickabled, :parent
     
     def in_bounds?(x, y)
-      ((pl..(pl+pw)).include?(x) and (sy..ey).include?(y) and !((pl..sx).include?(x) and (sy..(sy+lh)).include?(y)) and !((ex..(pl+pw)).include?(x) and ((ey-lh)..ey).include?(y)))
+      if pw
+        ((pl..(pl+pw)).include?(x) and (sy..ey).include?(y) and !((pl..sx).include?(x) and (sy..(sy+lh)).include?(y)) and !((ex..(pl+pw)).include?(x) and ((ey-lh)..ey).include?(y)))
+      end
     end
   end
 end

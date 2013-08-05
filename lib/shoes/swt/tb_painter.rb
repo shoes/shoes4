@@ -79,7 +79,7 @@ class Shoes
       def create_link(e)
         spos = @text_layout.getLocation e[1].first, false
         epos = @text_layout.getLocation e[1].last, true
-        left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
+        left, top =  @dsl.left.to_i  + @dsl.margin_left, @dsl.top.to_i  + @dsl.margin_top
         e[0].lh = @text_layout.getLineBounds(0).height
         e[0].sx, e[0].sy = left + spos.x, top + spos.y
         e[0].ex, e[0].ey = left + epos.x, top + epos.y + e[0].lh

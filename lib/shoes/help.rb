@@ -432,6 +432,7 @@ class Manual < Shoes
           unless term.empty?
             descs, methods = s.search term
             @f.clear{s.show_search_result term, descs, methods}
+	    app.gui.flush
           end
         }
         stack(height: 20){}
@@ -456,30 +457,34 @@ class Manual < Shoes
 
   def show_search_result term, descs, methods
     s = self
-    return subtitle 'Not Found' if descs.empty? and methods.empty?
-    methods.each do |(chapter, section, docs_title, docs_method)|
-      flow margin: [10, 10, 0, 5] do
-        background rgb(200, 200, 200), curve: 5
-        para "#{DOCS[chapter][0]}: #{docs_title.sub('The', '').split(' ').first}: ",
-          link(docs_method[0]){@f.clear{title docs_title; s.show_methods [docs_method], term}}, NL
-      end
-      stack(height: 2){}
-    end
-    descs.each do |(chapter, section, docs_title, paras)|
-      flow margin_left: 10 do
-        if section
-          background gray, curve: 5
-          tagline link(fg(docs_title, white)){@f.clear{title docs_title; s.show_page paras, true, term}}, width: 320
-          inscription "Sub-Section under #{DOCS[chapter][0]}", stroke: lightgrey, width: 180
-        else
-          background black(0.8), curve: 5
-          subtitle link(fg(docs_title, white)){@f.clear{title docs_title; s.show_page paras, true, term}}, width: 320
-          inscription 'Section Header', stroke: lightgrey, width: 100
+    if descs.empty? and methods.empty?
+      subtitle 'Not Found'
+    else
+      methods.each do |(chapter, section, docs_title, docs_method)|
+        flow margin: [10, 10, 0, 5] do
+          background rgb(200, 200, 200), curve: 5
+          para "#{DOCS[chapter][0]}: #{docs_title.sub('The', '').split(' ').first}: ",
+            link(docs_method[0]){@f.clear{title docs_title; s.show_methods [docs_method], term}; app.gui.flush}, NL
         end
+        stack(height: 2){}
       end
-      stack(height: 2){}
+      descs.each do |(chapter, section, docs_title, paras)|
+        flow margin_left: 10 do
+          if section
+            background gray, curve: 5
+            tagline link(fg(docs_title, white)){@f.clear{title docs_title; s.show_page paras, true, term}; app.gui.flush}, width: 320
+            inscription "Sub-Section under #{DOCS[chapter][0]}", stroke: lightgrey, width: 180
+          else
+            background black(0.8), curve: 5
+            subtitle link(fg(docs_title, white)){@f.clear{title docs_title; s.show_page paras, true, term}; app.gui.flush}, width: 320
+            inscription 'Section Header', stroke: lightgrey, width: 100
+          end
+        end
+        stack(height: 2){}
+      end
+      para NL
     end
-    para NL
+    app.gui.flush
   end
 
   def marker txt, term
