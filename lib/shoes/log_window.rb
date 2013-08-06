@@ -1,31 +1,27 @@
 class Shoes
   class LogWindow
-    def console(app)
-      Shoes.app do
-        Shoes::LogWindow.setup(app)
-      end
-    end
-
     def self.setup(app)
-      app.stack do
-        app.flow do
-          app.background app.black
-          app.stack do
-            app.tagline "Shoes Console", :stroke => app.white
+      Shoes.app do
+        app.stack do
+          app.flow do
+            app.background app.black
+            app.stack do
+              app.tagline "Shoes Console", :stroke => app.white
+            end
+            app.button "Clear", :margin => 6, :width => 80, :height => 40 do
+            end
           end
-          app.button "Clear", :margin => 6, :width => 80, :height => 40 do
-          end
-        end
-        @log, @hash = app.stack, nil
-        puts Shoes::LOG
-        update
-        app.every(0.2) do
-          update
+          @log, @hash = app.stack, nil
+          puts Shoes::LOG
+#          update_console
+          #app.every(0.2) do
+          #  Shoes::LogWindow.update
+          #end
         end
       end
     end
 
-    def self.update
+    def update_console
       @log.clear do
         i = 0
         Shoes::LOG.each do |typ, msg|

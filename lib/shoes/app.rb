@@ -66,6 +66,13 @@ class Shoes
 
       @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &execution_blk
 
+      blk = proc { |key|
+        if key == :"control_/"
+          ::Shoes::LogWindow.setup(self)
+        end
+      }
+      Shoes::Keypress.new(self, &blk)
+
       Shoes.register self
       @gui.open
     end
