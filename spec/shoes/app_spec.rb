@@ -23,6 +23,9 @@ describe Shoes::App do
       style.class.should eq(Hash)
     end
 
+    context "console" do
+    end
+
     context "defaults" do
       let(:args) { Hash.new }
 
