@@ -19,21 +19,24 @@ class Shoes
     def self.setup(app)
       Shoes.app do
         def update
-          @log.clear do
-            i = 0
-            Shoes::LOG.each do |typ, msg|
-              stack do
-                background "#f1f5e1" if i % 2 == 0
-                background rgb(220, 220, 220) if i % 2 != 0
-                para typ, :stroke => blue
-                flow do
-                  stack :margin => 4 do
-                    s = msg.to_s
-                    para s, :margin => 4, :margin_top => 0
+          if @hash != Shoes::LOG.hash
+            @hash = Shoes::LOG.hash
+            @log.clear do
+              i = 0
+              Shoes::LOG.each do |typ, msg|
+                stack do
+                  background "#f1f5e1" if i % 2 == 0
+                  background rgb(220, 220, 220) if i % 2 != 0
+                  para typ, :stroke => blue
+                  flow do
+                    stack :margin => 4 do
+                      s = msg.to_s
+                      para s, :margin => 4, :margin_top => 0
+                    end
                   end
                 end
+                i += 1
               end
-              i += 1
             end
           end
         end
