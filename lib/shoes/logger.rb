@@ -22,11 +22,10 @@ class Shoes
           if @hash != Shoes::LOG.hash
             @hash = Shoes::LOG.hash
             @log.clear do
-              i = 0
-              Shoes::LOG.each_with_index do |typ, msg, index|
+              Shoes::LOG.each_with_index do |(typ, msg), index|
                 stack do
-                  background "#f1f5e1" if i % 2 == 0
-                  background rgb(220, 220, 220) if i % 2 != 0
+                  background "#f1f5e1" if index % 2 == 0
+                  background rgb(220, 220, 220) if index % 2 != 0
                   para typ, :stroke => blue
                   flow do
                     stack :margin => 4 do
@@ -35,7 +34,6 @@ class Shoes
                     end
                   end
                 end
-                i += 1
               end
             end
           end
