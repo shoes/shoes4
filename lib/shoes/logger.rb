@@ -23,7 +23,7 @@ class Shoes
             @hash = Shoes::LOG.hash
             @log.clear do
               i = 0
-              Shoes::LOG.each_with_index do |typ, msg|
+              Shoes::LOG.each_with_index do |typ, msg, index|
                 stack do
                   background "#f1f5e1" if i % 2 == 0
                   background rgb(220, 220, 220) if i % 2 != 0
