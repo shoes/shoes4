@@ -75,7 +75,7 @@ class Shoes
     def add_console
       keypress do |key|
         if key == :"control_/"
-          ::Shoes::Logger.setup(self)
+          ::Shoes::Logger.setup
         end
       end
     end

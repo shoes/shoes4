@@ -16,14 +16,14 @@ class Shoes
       end
     end
 
-    def self.setup(app)
+    def self.setup
       Shoes.app do
         def update
           if @hash != Shoes::LOG.hash
             @hash = Shoes::LOG.hash
             @log.clear do
               i = 0
-              Shoes::LOG.each do |typ, msg|
+              Shoes::LOG.each_with_index do |typ, msg|
                 stack do
                   background "#f1f5e1" if i % 2 == 0
                   background rgb(220, 220, 220) if i % 2 != 0
@@ -43,7 +43,7 @@ class Shoes
 
         stack do
           flow do
-            background app.black
+            background black
             stack do
               tagline "Shoes Console", stroke: white
             end
@@ -54,7 +54,7 @@ class Shoes
           @log, @hash = stack, nil
           update
 
-          app.every(0.2) do
+          every(0.2) do
             update
           end
         end
