@@ -10,7 +10,8 @@ describe Shoes::Swt::Image do
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", contents: []) }
   let(:parent) { double("parent", real: real, dsl: parent_dsl, app: app) }
-  let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: {})}
+  let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: opts)}
+  let(:opts) {Hash.new}
   let(:left) { 100 }
   let(:top) { 200 }
   let(:real) { double 'real', addListener: true, add_paint_listener: true }
@@ -59,6 +60,32 @@ describe Shoes::Swt::Image do
 
     it 'has the given height' do
       subject.height.should == IMAGE_HEIGHT
+    end
+
+    describe 'with a given width' do
+      let(:opts) {{width: IMAGE_WIDTH * 2}}
+      it 'scales the height' do
+        subject.height.should == IMAGE_HEIGHT * 2
+      end
+    end
+
+    describe 'with a given height' do
+      let(:opts) {{height: IMAGE_HEIGHT * 4}}
+
+      it 'scales the width' do
+        subject.width.should == IMAGE_WIDTH * 4
+      end
+    end
+
+    describe 'with a given width and height' do
+      let(:opts) {{width: 1, height: 2}}
+      it 'sets the given width' do
+        subject.width.should == 1
+      end
+
+      it 'sets the given height' do
+        subject.height.should == 2
+      end
     end
 
   end

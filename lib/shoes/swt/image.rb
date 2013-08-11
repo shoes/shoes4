@@ -56,8 +56,26 @@ class Shoes
         @real        = ::Swt::Graphics::Image.new(::Swt.display, data)
         @full_width  = @real.getImageData.width
         @full_height = @real.getImageData.height
-        @width       = @dsl.opts[:width] || @full_width
-        @height      = @dsl.opts[:height] || @full_height
+        @width       = @dsl.opts[:width] || default_width
+        @height      = @dsl.opts[:height] || default_height
+      end
+
+      def default_width
+        if dsl.opts[:height]
+          ratio = dsl.opts[:height] / @full_height
+          @full_width * ratio
+        else
+          @full_width
+        end
+      end
+
+      def default_height
+        if dsl.opts[:width]
+          ratio = dsl.opts[:width] / @full_width
+          @full_height * ratio
+        else
+          @full_height
+        end
       end
 
       def download_and_display_real_image(url)
