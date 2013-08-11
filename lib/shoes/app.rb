@@ -141,5 +141,10 @@ class Shoes
     def to_s
       'Shoes App: ' + app_title
     end
+
+    def fullscreen=(state)
+      gui.fullscreen = state
+    end
+
   end
 end
