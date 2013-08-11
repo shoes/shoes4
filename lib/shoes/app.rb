@@ -146,5 +146,11 @@ class Shoes
       gui.fullscreen = state
     end
 
+    def fullscreen
+      gui.fullscreen
+    end
+
+    alias_method :fullscreen?, :fullscreen
+
   end
 end

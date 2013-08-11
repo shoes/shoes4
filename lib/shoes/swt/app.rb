@@ -88,6 +88,10 @@ class Shoes
         @shell.full_screen = state
       end
 
+      def fullscreen
+        @shell.full_screen
+      end
+
       def add_clickable_element(element)
         @clickable_elements << element
       end
