@@ -34,7 +34,7 @@ class Shoes
     attr_accessor :mouse_button, :mouse_pos, :mhcs
 
     attr_accessor :resizable, :app_title
-    attr_writer   :width, :height
+    attr_writer   :width, :height, :start_as_fullscreen
 
     def initialize(opts={}, &blk)
       set_attributes_from_options(opts)
@@ -125,6 +125,10 @@ class Shoes
 
     alias_method :fullscreen?, :fullscreen
 
+    def start_as_fullscreen?
+      @start_as_fullscreen
+    end
+
     private
     def create_execution_block(blk)
       if blk
@@ -154,11 +158,12 @@ class Shoes
     def set_attributes_from_options(opts)
       opts = DEFAULT_OPTIONS.merge(opts)
 
-      self.width     = opts[:width]
-      self.height    = opts[:height]
-      self.app_title = opts[:title]
-      self.resizable = opts[:resizable]
-      self.opts      = opts
+      self.width               = opts[:width]
+      self.height              = opts[:height]
+      self.app_title           = opts[:title]
+      self.resizable           = opts[:resizable]
+      self.opts                = opts
+      self.start_as_fullscreen = opts[:fullscreen]
 
       @owner = opts[:owner]
     end

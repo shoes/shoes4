@@ -179,6 +179,17 @@ describe Shoes::App do
 
   describe 'fullscreen' do
 
+    it 'does not starts as fullscreen by default' do
+      subject.should_not be_start_as_fullscreen
+    end
+
+    describe 'with the fullscreen option' do
+      let(:opts) {{fullscreen: true}}
+      it 'starts as fullscreen ' do
+        subject.should be_start_as_fullscreen
+      end
+    end
+
     it 'is not in fullscreen by default' do
       subject.should_not be_fullscreen
     end

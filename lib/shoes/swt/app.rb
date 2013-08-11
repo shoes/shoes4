@@ -29,6 +29,7 @@ class Shoes
         @shell.open
         @dsl.top_slot.contents_alignment
         @started = true
+        self.fullscreen = true if dsl.start_as_fullscreen?
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
 
