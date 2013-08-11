@@ -1,6 +1,8 @@
 class Shoes
   module Mock
     class App
+
+      attr_accessor :fullscreen
       def initialize(dsl)
         @dsl = dsl
       end

@@ -177,6 +177,39 @@ describe Shoes::App do
     end
   end
 
+  describe 'fullscreen' do
+
+    it 'is not in fullscreen by default' do
+      subject.should_not be_fullscreen
+    end
+
+    it 'can be turned into fullscreen' do
+      subject.fullscreen = true
+      subject.fullscreen.should be_true
+    end
+
+    describe 'going into fullscreen and back out again' do
+
+      before :each do
+        subject.fullscreen = true
+        subject.fullscreen = false
+      end
+
+      it 'is not in fullscreen' do
+        subject.fullscreen.should be_false
+      end
+
+      it 'has its original width' do
+        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+      end
+
+      it 'has its original height' do
+        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
+      end
+    end
+
+  end
+
 end
 
 describe "App registry" do
