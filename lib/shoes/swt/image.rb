@@ -63,8 +63,8 @@ class Shoes
 
       def default_width
         if dsl.opts[:height]
-          ratio = dsl.opts[:height] / @full_height
-          @full_width * ratio
+          ratio = dsl.opts[:height].to_r / @full_height
+          (@full_width * ratio).to_i
         else
           @full_width
         end
@@ -72,8 +72,8 @@ class Shoes
 
       def default_height
         if dsl.opts[:width]
-          ratio = dsl.opts[:width] / @full_width
-          @full_height * ratio
+          ratio = dsl.opts[:width].to_r / @full_width
+          (@full_height * ratio).to_i
         else
           @full_height
         end
