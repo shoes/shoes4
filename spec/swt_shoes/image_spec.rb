@@ -1,10 +1,9 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Image do
-  class MockSize
-    def width; 128 end
-    def height; 128 end
-  end
+
+  IMAGE_WIDTH = 3
+  IMAGE_HEIGHT = 1
 
   let(:gui_container_real) { container }
   let(:container) { parent.real }
@@ -14,12 +13,9 @@ describe Shoes::Swt::Image do
   let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: {})}
   let(:left) { 100 }
   let(:top) { 200 }
-  let(:mock_image) { double(:swt_image, getImageData: MockSize.new, addListener: true, add_paint_listener: true) }
-  let(:real) { mock_image }
+  let(:real) { double 'real', addListener: true, add_paint_listener: true }
   let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app) { double("app", gui: gui) }
-  let(:width) { 128 }
-  let(:height) { 128 }
   let(:image) { "spec/swt_shoes/minimal.png" }
 
   subject {
@@ -52,5 +48,18 @@ describe Shoes::Swt::Image do
       subject.real.image_data.width = 3
       subject.real.image_data.height = 1
     end
+  end
+
+  # note the image used is 3x1 pixel big
+  describe 'dimensions' do
+
+    it 'has the given width' do
+      subject.width.should == IMAGE_WIDTH
+    end
+
+    it 'has the given height' do
+      subject.height.should == IMAGE_HEIGHT
+    end
+
   end
 end
