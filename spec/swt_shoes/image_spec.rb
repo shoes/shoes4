@@ -62,6 +62,16 @@ describe Shoes::Swt::Image do
       subject.height.should == IMAGE_HEIGHT
     end
 
+    it 'can change its width' do
+      subject.width = 7
+      subject.width.should == 7
+    end
+
+    it 'can change its height' do
+      subject.height = 7
+      subject.height.should == 7
+    end
+
     describe 'with a given width' do
       let(:opts) {{width: IMAGE_WIDTH * 2}}
       it 'scales the height' do

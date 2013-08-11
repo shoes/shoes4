@@ -12,7 +12,8 @@ class Shoes
 
       BINARY_ENCODING = Encoding.find('binary')
 
-      attr_reader :parent, :real, :dsl, :container, :painter, :width, :height
+      attr_reader :parent, :real, :dsl, :container, :painter
+      attr_accessor :width, :height
 
       def initialize(dsl, parent, blk)
         @dsl = dsl
