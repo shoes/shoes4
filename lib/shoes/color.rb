@@ -182,7 +182,7 @@ EOS
       [:lightcyan, 224, 255, 255],
       [:lightgoldenrodyellow, 250, 250, 210],
       [:lightgreen, 144, 238, 144],
-      [:lightgrey, 211, 211, 211],
+      [:lightgray, 211, 211, 211],
       [:lightpink, 255, 182, 193],
       [:lightsalmon, 255, 160, 122],
       [:lightseagreen, 32, 178, 170],
