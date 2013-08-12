@@ -44,9 +44,10 @@ describe Shoes::Swt::Animation do
     end
 
     it "triggers redraw" do
-      Shoes::Swt::RedrawingAspect.new app_real, double
+      aspect = Shoes::Swt::RedrawingAspect.new app_real, double
       app_real.should_receive(:flush)
       task.call
+      aspect.remove_redraws
     end
 
     it "counts frames" do

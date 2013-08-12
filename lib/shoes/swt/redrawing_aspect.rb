@@ -36,12 +36,19 @@ class Shoes
         add_redraws
       end
 
+      def remove_redraws
+        affected_classes.each {|klass| klass.remove_all_callbacks}
+      end
+
       private
       def extend_needed_classes
-        classes_to_extend = NEED_TO_FLUSH_GUI.keys +
-                            NEED_TO_REDRAW_GUI.keys +
-                            NEED_TO_ASYNC_FLUSH_GUI.keys
-        classes_to_extend.each {|klass| klass.extend AfterDo}
+        affected_classes.each {|klass| klass.extend AfterDo}
+      end
+
+      def affected_classes
+        NEED_TO_FLUSH_GUI.keys +
+        NEED_TO_REDRAW_GUI.keys +
+        NEED_TO_ASYNC_FLUSH_GUI.keys
       end
 
       def add_redraws
