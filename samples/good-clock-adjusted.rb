@@ -2,7 +2,7 @@
 # Shoes Clock by Thomas Bell
 # posted to the Shoes mailing list on 04 Dec 2007
 #
-Shoes.app :height => 260, :width => 250 do
+Shoes.app height: 260, width: 250 do
   @radius, @centerx, @centery = 90, 126, 140
   animate(8) do
     @time = Time.now
@@ -10,7 +10,7 @@ Shoes.app :height => 260, :width => 250 do
       draw_background
       stack do
         background black
-        para(fg(@time.strftime("%a"), "#666"), fg(@time.strftime(" %b %d, %Y "), "#ccc"), 
+        para(fg(@time.strftime("%a"), "#666"), fg(@time.strftime(" %b %d, %Y "), "#ccc"),
           strong(fg(@time.strftime("%I:%M"), white)), fg(@time.strftime(".%S"), "#666"), margin: 4, align: 'center')
       end
       clock_hand @time.sec + (@time.usec * 0.000001),2,30,red

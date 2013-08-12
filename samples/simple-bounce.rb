@@ -3,10 +3,10 @@ xdir, ydir = 1, 1
 
 Shoes.app do
   background "#DFA"
-  border black, :strokewidth => 6
+  border black, strokewidth: 6
 
   nostroke
-  @icon = image "#{Shoes::DIR}/static/shoes-icon.png", :left => 100, :top => 100 do
+  @icon = image "#{Shoes::DIR}/static/shoes-icon.png", left: 100, top: 100 do
     alert "You're soooo quick."
   end
 
@@ -15,7 +15,7 @@ Shoes.app do
   animate(30) do
     x += xspeed * xdir
     y += yspeed * ydir
-    
+
     xdir *= -1 if x > self.width - size[0] or x < 0
     ydir *= -1 if y > self.height - size[1] or y < 0
 
