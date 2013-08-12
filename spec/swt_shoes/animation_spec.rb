@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Animation do
   let(:dsl) { double('dsl', :stopped? => false, :removed? => false)}
-  let(:app) { double 'app', :real => app_real }
+  let(:app) { double 'app', :real => app_real, top_slot: double.as_null_object }
   let(:block) { double 'block' }
   let(:display) { ::Swt.display }
   let(:app_real) { double('app_real').as_null_object }
@@ -44,7 +44,7 @@ describe Shoes::Swt::Animation do
     end
 
     it "triggers redraw" do
-      Shoes::Swt::RedrawingAspect.redraws_for app_real, double
+      Shoes::Swt::RedrawingAspect.new app_real, double
       app_real.should_receive(:flush)
       task.call
     end

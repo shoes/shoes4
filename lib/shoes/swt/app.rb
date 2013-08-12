@@ -20,7 +20,7 @@ class Shoes
         ::Shoes::Swt.register self
         attach_event_listeners
         initialize_scroll_bar
-        RedrawingAspect.redraws_for self, Shoes.display
+        @redrawing_aspect = RedrawingAspect.new self, Shoes.display
       end
 
       def open
@@ -157,6 +157,13 @@ class Shoes
       def attach_shell_event_listeners
         @shell.addControlListener ShellControlListener.new(self)
         @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
+        @shell.addListener(::Swt::SWT::Close, unregister_app)
+      end
+
+      def unregister_app
+        proc do |event|
+          ::Shoes::Swt.unregister(self)
+        end
       end
 
       def attach_real_event_listeners

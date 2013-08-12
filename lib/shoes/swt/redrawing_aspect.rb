@@ -9,7 +9,7 @@
 
 class Shoes
   module Swt
-    module RedrawingAspect
+    class RedrawingAspect
 
       NEED_TO_FLUSH_GUI = {Animation          => [:eval_block],
                            Button             => [:eval_block],
@@ -27,35 +27,33 @@ class Shoes
       # only the main thread may draw
       NEED_TO_ASYNC_FLUSH_GUI = {::Shoes::Download  => [:eval_block]}
 
-      class << self
-        attr_reader :app
+      attr_reader :app
 
-        def redraws_for(swt_app, display)
-          @app = swt_app
-          @display = display
-          extend_needed_classes
-          add_redraws
-        end
+      def initialize(swt_app, display)
+        @app = swt_app
+        @display = display
+        extend_needed_classes
+        add_redraws
+      end
 
-        private
-        def extend_needed_classes
-          classes_to_extend = NEED_TO_FLUSH_GUI.keys +
-                              NEED_TO_REDRAW_GUI.keys +
-                              NEED_TO_ASYNC_FLUSH_GUI.keys
-          classes_to_extend.each {|klass| klass.extend AfterDo}
-        end
+      private
+      def extend_needed_classes
+        classes_to_extend = NEED_TO_FLUSH_GUI.keys +
+                            NEED_TO_REDRAW_GUI.keys +
+                            NEED_TO_ASYNC_FLUSH_GUI.keys
+        classes_to_extend.each {|klass| klass.extend AfterDo}
+      end
 
-        def add_redraws
-          after_every NEED_TO_FLUSH_GUI do app.flush end
-          after_every NEED_TO_REDRAW_GUI do app.real.redraw end
-          after_every NEED_TO_ASYNC_FLUSH_GUI do
-            @display.asyncExec do app.flush end
-          end
+      def add_redraws
+        after_every NEED_TO_FLUSH_GUI do app.flush unless app.disposed? end
+        after_every NEED_TO_REDRAW_GUI do app.real.redraw unless app.disposed? end
+        after_every NEED_TO_ASYNC_FLUSH_GUI do
+          @display.asyncExec do app.flush unless app.disposed? end
         end
+      end
 
-        def after_every(hash, &blk)
-          hash.each {|klass, methods| klass.after methods, &blk }
-        end
+      def after_every(hash, &blk)
+        hash.each {|klass, methods| klass.after methods, &blk }
       end
     end
   end
