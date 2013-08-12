@@ -24,7 +24,7 @@ Shoes.app height: 250, width: 198 do
               do_calc
               @previous, @number = @number, nil
               @op = btn
-            end      
+            end
             number_field.text = @number.to_s
           end
         end

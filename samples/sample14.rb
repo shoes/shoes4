@@ -1,14 +1,14 @@
 degree = 0
-color = 0
-size = 0
+color  = 0
+size   = 0
 
-Shoes.app :width => 537, :height => 500 do
+Shoes.app width: 537, height: 500 do
   background rgb(1.0, 0.5, 1.0, 1.0)
   # Convert degrees to radians
   def to_radians(deg)
     deg * Math::PI / 180
   end
-  
+
   red_circles, blue_circles = [], []
 
   mx, my = (500/2).to_i, (537/2).to_i

@@ -15,11 +15,10 @@ Shoes programs are written in a language called Ruby.  When Shoes is handed
 this simple line of Ruby code, a window appears with a button inside reading
 "Click me!"  When the button is clicked, a message pops up.
 
-On Linux, here's how this might look: !{:margin_left => 100}man-shot1.png!
+On Linux, here's how this might look: !{margin_left: 100}man-shot1.png!
 
 While lots of Shoes apps are graphical games and art programs, you can also
-layout text and edit controls easily. !{:margin_left =>
-40}shoes-manual-apps.gif!
+layout text and edit controls easily. !{margin_left: 40}shoes-manual-apps.gif!
 
 And, ideally, Shoes programs will run on any of the major platforms out there.
 Microsoft Windows, Apple's Mac OS X, Linux and many others.
@@ -229,10 +228,10 @@ the [[Element.window]] and [[Element.dialog]] methods, in addition to
 Shoes.app.
 
 {{{
- Shoes.app :title => "MAIN" do
+ Shoes.app title: "MAIN" do
    para self
    button "Spawn" do
-     window :title => "CHILD" do
+     window title: "CHILD" do
        para self
      end
    end
@@ -326,11 +325,11 @@ Fixed widths on slots are great so you can split the window into columns.
 {{{
  Shoes.app do
    flow do
-     stack :width => 200 do
+     stack width: 200 do
        caption "Column one"
        para "is 200 pixels wide"
      end
-     stack :width => -200 do
+     stack width: -200 do
        caption "Column two"
        para "is 100% minus 200 pixels wide"
      end
@@ -352,7 +351,7 @@ can have scrollbars.
 
 {{{
  Shoes.app do
-   stack :width => 200, :height => 200, :scroll => true do
+   stack width: 200, height: 200, scroll: true do
      background "#DFA"
      100.times do |i|
        para "Paragraph No. #{i}"
@@ -443,8 +442,8 @@ To illustrate:
 
 {{{
  Shoes.app do
-   stack :margin => 10 do
-     @edit = edit_box :width => 1.0 do
+   stack margin: 10 do
+     @edit = edit_box width: 1.0 do
        @para.text = @edit.text
      end
      @para = para ""
@@ -467,7 +466,7 @@ UI Gothic'''.
 
 {{{
  Shoes.app do
-   para "てすと (te-su-to)", :font => case RUBY_PLATFORM
+   para "てすと (te-su-to)", font: case RUBY_PLATFORM
     when /mingw/; "MS UI Gothic"
     when /darwin/; "AppleGothic, Arial"
     else "Arial"
@@ -709,7 +708,7 @@ you'll get back a `true`. If not, you'll get back `false`.
 {{{
  #!ruby
  if confirm("Draw a circle?")
-  Shoes.app{ oval :top => 0, :left => 0, :radius => 50 }
+  Shoes.app{ oval top: 0, left: 0, radius: 50 }
  end
 }}}
 
@@ -847,7 +846,7 @@ App object is created and filled up with stacks, flows and other Shoes
 elements.
 
 The App is the window itself. Which may be closed or cleared and filled with
-new elements. !{:margin_left => 100}man-app.png!
+new elements. !{margin_left: 100}man-app.png!
 
 The App itself, in slot/box terminology, is a flow.  See the ''Slots'' section
 for more, but this just means that any elements placed directly at the
@@ -863,11 +862,11 @@ resizable.
 
 {{{
  #!ruby
- Shoes.app(:title => "White Circle",
-   :width => 200, :height => 200, :resizable => false) {
+ Shoes.app(title: "White Circle",
+   width: 200, height: 200, resizable: false) {
      background black
      fill white
-     oval :top => 20, :left => 20, :radius => 160
+     oval top: 20, left: 20, radius: 160
  }
 }}}
 
@@ -914,7 +913,7 @@ If you attach a block to a download, it'll get called as the `finish` event.
  #!ruby
  Shoes.app do
    stack do
-     title "Searching Google", :size => 16
+     title "Searching Google", size: 16
      @status = para "One moment..."
 
      # Search Google for 'shoes' and print the HTTP headers
@@ -936,11 +935,11 @@ Another simple use of `download` is to save some web data to a file, using the
  #!ruby
  Shoes.app do
    stack do
-     title "Downloading Google image", :size => 16
+     title "Downloading Google image", size: 16
      @status = para "One moment..."
 
      download "http://www.google.com/logos/nasa50th.gif",
-       :save => "nasa50th.gif" do
+       save: "nasa50th.gif" do
          @status.text = "Okay, is downloaded."
      end
    end
@@ -960,11 +959,11 @@ class.)
  #!ruby
  Shoes.app do
    stack do
-     title "GET Google", :size => 16
+     title "GET Google", size: 16
      @status = para "One moment..."
 
      download "http://www.google.com/search?q=shoes", 
-         :method => "GET" do |dump|
+         method: "GET" do |dump|
        @status.text = dump.response.body
      end
    end
@@ -1023,8 +1022,8 @@ entire class of elements.  (Like giving all paragraphs a certain font.)
 Styles are easy to spot.  They usually show up when the element is created.
 
 {{{
- Shoes.app :title => "A Styling Sample" do
-   para "Red with an underline", :stroke => red, :underline => "single"
+ Shoes.app title: "A Styling Sample" do
+   para "Red with an underline", stroke: red, underline: "single"
  end
 }}}
 
@@ -1035,9 +1034,9 @@ The style hash can also be changed by using the [[Common.style]] method,
 available on every element and slot.
 
 {{{
- Shoes.app :title => "A Styling Sample" do
+ Shoes.app title: "A Styling Sample" do
    @text = para "Red with an underline"
-   @text.style(:stroke => red, :underline => "single")
+   @text.style(stroke: red, underline: "single")
  end
 }}}
 
@@ -1045,7 +1044,7 @@ Most styles can also be set by calling them as methods.  (I'd use the manual
 search to find the method.)
 
 {{{
- Shoes.app :title => "A Styling Sample" do
+ Shoes.app title: "A Styling Sample" do
    @text = para "Red with an underline"
    @text.stroke = red
    @text.underline = "single"
@@ -1079,9 +1078,8 @@ degrees counter-clockwise and the gradient will go from left to right.
 
 For: ''flow, stack''.
 
-Pins a slot relative to another slot or element.  Also, one may write `:attach
-=> Window` to position the slot at the window's top, left corner.  Taking this
-a bit further, the style `:top => 10, :left => 10, :attach => Window` would
+Pins a slot relative to another slot or element.  Also, one may write `attach: Window` to position the slot at the window's top, left corner.  Taking this
+a bit further, the style `top: 10, left: 10, attach: Window` would
 place the slot at (10, 10) in the window's coordinates.
 
 If a slot is attached to an element that moves, the slot will move with it.  If
@@ -1100,7 +1098,7 @@ will start without asking the user.
 For: ''all slots and elements''.
 
 Sets the pixel coordinate of an element's lower edge.  The edge is placed
-relative to its container's lower edge.  So, `:bottom => 0` will align the
+relative to its container's lower edge.  So, `bottom: 0` will align the
 element so that its bottom edge and the bottom edge of its slot touch.
 
 === :cap » :curve or :rect or :project ===
@@ -1246,7 +1244,7 @@ being 100%.)
 
 For: ''all slots and elements''.
 
-Hides or shows this object.  Any object with `:hidden => true` are not
+Hides or shows this object.  Any object with `hidden: true` are not
 displayed on the screen.  Neither are its children.
 
 === :inner » a number ===
@@ -1287,8 +1285,7 @@ Sets the spacing between lines in a text block.  Defaults to 4 pixels.
 
 For: ''all slots and elements''.
 
-Sets the left coordinate of this object to a specific pixel.  Setting `:left =>
-10` places the object's left edge ten pixels away from the left edge of the
+Sets the left coordinate of this object to a specific pixel.  Setting `left: 10` places the object's left edge ten pixels away from the left edge of the
 slot containing it.  If this style is left unset (or set to `nil`,) the object
 will flow in with the other objects surrounding it.
 
@@ -1301,7 +1298,7 @@ For: ''all slots and elements''.
 Margins space an element out from its surroundings.  Each element has a left,
 top, right, and bottom margin.  If the `:margin` style is set to a single
 number, the spacing around the element uniformly matches that number.  In other
-words, if `:margin => 8` is set, all the margins around the element are set to
+words, if `margin: 8` is set, all the margins around the element are set to
 eight pixels in length.
 
 This style can also be given an array of four numbers in the form `[left, top,
@@ -1341,7 +1338,7 @@ Sets the outer radius (half of the ''total'' width) of the star, in pixels.
 
 For: ''star''.
 
-How many points does this star have?  A style of `:points => 5` creates a
+How many points does this star have?  A style of `points: 5` creates a
 five-pointed star.
 
 === :radius » a number ===
@@ -1357,9 +1354,9 @@ double this number.
 For: ''all slots and elements''.
 
 Sets the pixel coordinate of an element's right edge.  The edge is placed
-relative to its container's rightmost edge.  So, `:right => 0` will align the
+relative to its container's rightmost edge.  So, `right: 0` will align the
 element so that its own right edge and the right edge of its slot touch.
-Whereas `:right => 20` will position the right edge of the element off to the
+Whereas `right: 20` will position the right edge of the element off to the
 left of its slot's right edge by twenty pixels.
 
 === :rise » a number ===
@@ -1375,7 +1372,7 @@ element has a `:rise` of -10 pixels.
 
 For: ''flow, stack''.
 
-Establishes this slot as a scrolling slot.  If `:scroll => true` is set, the
+Establishes this slot as a scrolling slot.  If `scroll: true` is set, the
 slot will show a scrollbar if any of its contents go past its height.  The
 scrollbar will appear and disappear as needed.  It will also appear inside the
 width of the slot, meaning the slot's width will never change, regardless of
@@ -1478,7 +1475,7 @@ or edit_line.
 For: ''all slots and elements''.
 
 Sets the top coordinate for an object, relative to its parent slot.  If an
-object is set with `:top => 40`, this means the object's top edge will be
+object is set with `top: 40`, this means the object's top edge will be
 placed 40 pixels beneath the top edge of the slot that contains it.  If no
 `:top` style is given, the object is automatically placed in the natural flow
 of its slot.
@@ -1635,8 +1632,8 @@ color used to paint inside the lines.
  Shoes.app do
    stroke red
    fill blue
-   oval :top => 10, :left => 10,
-     :radius => 100
+   oval top: 10, left: 10,
+     radius: 100
  end
 }}}
 
@@ -1913,7 +1910,7 @@ Shoes layers background elements.
  #!ruby
  Shoes.app do
    background black
-   background white, :width => 50
+   background white, width: 50
  end
 }}}
 
@@ -1925,7 +1922,7 @@ along the left side.
 
 Creates a Banner text block.  Shoes automatically styles this text to 48 pixels high.
 
-=== border(text, :strokewidth => a number) » Shoes::Border ===
+=== border(text, strokewidth: a number) » Shoes::Border ===
 
 Draws a Border element using a specific color (or pattern.)  Patterns can be
 colors, gradients or images.  Colors and images will tile across the border.
@@ -1974,7 +1971,7 @@ attached here which is called any type the user changes the text in the box.
  Shoes.app do
    edit_box
    edit_box "HORRAY EDIT ME"
-   edit_box "small one", :width => 100, :height => 160
+   edit_box "small one", width: 100, height: 160
  end
 }}}
 
@@ -2034,14 +2031,14 @@ single underline.
 
 Creates an Inscription text block.  Shoes styles this text at 10 pixels high.
 
-=== link(text, :click => proc or string) » Shoes::Link ===
+=== link(text, click: proc or string) » Shoes::Link ===
 
 Creates a Link text block, which Shoes styles with a single underline and
 colors with a #06E (blue) colored stroke.
 
 The default LinkHover style is also single-underlined with a #039 (dark blue) stroke.
 
-=== list_box(:items => [strings, ...]) » Shoes::ListBox ===
+=== list_box(items: [strings, ...]) » Shoes::ListBox ===
 
 Adds a drop-down list box containing entries for everything in the `items`
 array.  An optional block may be attached, which is called if anything in the
@@ -2050,9 +2047,9 @@ box becomes selected by the user.
 {{{
  #!ruby
  Shoes.app do
-   stack :margin => 10 do
+   stack margin: 10 do
      para "Pick a card:"
-     list_box :items => ["Jack", "Ace", "Joker"]
+     list_box items: ["Jack", "Ace", "Joker"]
    end
  end
 }}}
@@ -2147,7 +2144,7 @@ window.  This way the child window can call the parent.
 
 {{{
  #!ruby
- Shoes.app :title => "The Owner" do
+ Shoes.app title: "The Owner" do
    button "Pop up?" do
      window do
        para "Okay, popped up from #{owner}"
@@ -2175,7 +2172,7 @@ away.
 {{{
  #!ruby
  Shoes.app do
-   s = stack :width => 200, :height => 200 do
+   s = stack width: 200, height: 200 do
      background red
      hover do
        s.clear { background blue }
@@ -2266,7 +2263,7 @@ The block is handed the cursor's `left` and `top` coordinates.
 
 {{{
  #!ruby
- Shoes.app :width => 200, :height => 200 do
+ Shoes.app width: 200, height: 200 do
    background black
    fill white
    @circ = oval 0, 0, 100, 100
@@ -2374,7 +2371,7 @@ To set the width of a stack to 150 pixels:
 {{{
  #!ruby
  Shoes.app do
-   stack(:width => 150) { para "Now that's precision." }
+   stack(width: 150) { para "Now that's precision." }
  end
 }}}
 
@@ -2406,7 +2403,7 @@ This is commonly used to pad elements on the right, like so:
 {{{
  #!ruby
  Shoes.app do
-   stack :margin_right => 20 + gutter do
+   stack margin_right: 20 + gutter do
      para "Insert fat and ratified declaration of independence here..."
    end
  end
@@ -2482,7 +2479,7 @@ originally requested.
 {{{
  #!ruby
  Shoes.app do
-   @s = stack :width => "100%"
+   @s = stack width: "100%"
    para @s.style[:width]
  end
 }}}
@@ -2499,7 +2496,7 @@ example, there is a `width` method, thus there is also a `width` style.
  #!ruby
  Shoes.app do
    @s = stack { background green }
-   @s.style(:width => 400, :height => 200)
+   @s.style(width: 400, height: 200)
  end
 }}}
 
@@ -2578,9 +2575,9 @@ covered as the [[Position.style]] method for slots.)
      @press = button "Stop your messin about!"
 
      # And so, both can be styled.
-     @text.style :size => 12, :stroke => red, :margin => 10
-     @press.style :width => 400
-     @back.style :height => 10
+     @text.style size: 12, stroke: red, margin: 10
+     @press.style width: 400
+     @back.style height: 10
    end
  end
 }}}
@@ -2604,7 +2601,7 @@ displace it 2 pixels left and 6 pixels on top, you end up with the coordinates
 {{{
  #!ruby
  Shoes.app do
-   flow :margin => 12 do
+   flow margin: 12 do
      # Set up three buttons
      button "One"
      @two = button "Two"
@@ -2658,7 +2655,7 @@ positioned instead.
 {{{
  #!ruby
  Shoes.app do
-   flow :margin => 12 do
+   flow margin: 12 do
      # Set up three buttons
      button "One"
      @two = button "Two"
@@ -2702,7 +2699,7 @@ original setting (things like "100%" for width or "10px" for top.)
  #!ruby
  Shoes.app do
    # A button which take up the whole page
-   @b = button "All of it", :width => 1.0, :height => 1.0
+   @b = button "All of it", width: 1.0, height: 1.0
 
    # When clicked, show the styles
    @b.click { alert(@b.style.inspect) }
@@ -2737,8 +2734,8 @@ a stack which is 120 pixels wide, you'll get back `120`.  However, if you call
 {{{
  #!ruby
  Shoes.app do
-   stack :width => 120 do
-     @b = button "Click me", :width => "100%" do
+   stack width: 120 do
+     @b = button "Click me", width: "100%" do
        alert "button.width = #{@b.width}\n" +
          "button.style[:width] = #{@b.style[:width]}"
      end
@@ -2747,17 +2744,16 @@ a stack which is 120 pixels wide, you'll get back `120`.  However, if you call
 }}}
 
 In order to set the width, you'll have to go through the [[Common.style]]
-method again.  So, to set the button to 150 pixels wide: `@b.style(:width =>
-150)`.
+method again.  So, to set the button to 150 pixels wide: `@b.style(width: 150)`.
 
-To let Shoes pick the element's width, go with `@b.style(:width => nil)` to
+To let Shoes pick the element's width, go with `@b.style(width: nil)` to
 empty out the setting.
 
 == Background ==
 
 A background is a color, a gradient or an image that is painted across an
 entire slot.  Both backgrounds and borders are a type of Shoes::Pattern.
-!{:margin_left => 100}man-ele-background.png!
+!{margin_left: 100}man-ele-background.png!
 
 Even though it's called a ''background'', you may still place this element in
 front of other elements.  If a background comes after something else painted on
@@ -2784,7 +2780,7 @@ To paint a black background across the top fifty pixels of the window:
 {{{
  #!ruby
  Shoes.app do
-   background black, :height => 50
+   background black, height: 50
  end
 }}}
 
@@ -2793,7 +2789,7 @@ Or, to paint a fifty pixel column on the right-side of the window:
 {{{
  #!ruby
  Shoes.app do
-   background black, :width => 50, :right => 50
+   background black, width: 50, right: 50
  end
 }}}
 
@@ -2810,7 +2806,7 @@ backgrounds and borders.  Reuse it as you like.
 
 A border is a color, gradient or image painted in a line around the edge of any
 slot.  Like the Background element in the last section, a Border is a kind of
-Shoes::Pattern. !{:margin_left => 100}man-ele-border.png!
+Shoes::Pattern. !{margin_left: 100}man-ele-border.png!
 
 The first, crucial thing to know about border is that all borders paint a line
 around the '''inside''' of a slot, not the outside.  So, if you have a slot
@@ -2826,9 +2822,9 @@ Here is just such a slot:
 {{{
  #!ruby
  Shoes.app do
-   stack :width => 50 do
-     border black, :strokewidth => 5
-     para "=^.^=", :stroke => green
+   stack width: 50 do
+     border black, strokewidth: 5
+     para "=^.^=", stroke: green
    end
  end
 }}}
@@ -2839,10 +2835,10 @@ that slot in another slot.  Then, place the border in the outside slot.
 {{{
  #!ruby
  Shoes.app do
-   stack :width => 60 do
-     border black, :strokewidth => 5
-     stack :width => 50 do
-       para "=^.^=", :stroke => green
+   stack width: 60 do
+     border black, strokewidth: 5
+     stack width: 50 do
+       para "=^.^=", stroke: green
      end
    end
  end
@@ -2865,7 +2861,7 @@ backgrounds.
 
 Buttons are, you know, push buttons.  You click them and they do something.
 Buttons are known to say "OK" or "Are you sure?"  And, then, if you're sure,
-you click the button. !{:margin_left => 100}man-ele-button.png!
+you click the button. !{margin_left: 100}man-ele-button.png!
 
 {{{
  #!ruby
@@ -2933,7 +2929,7 @@ hits Enter, the button will be clicked.
 
 Check boxes are clickable square boxes than can be either checked or unchecked.
 A single checkbox usually asks a "yes" or "no" question.  Sets of checkboxes
-are also seen in to-do lists. !{:margin_left => 100}man-ele-check.png!
+are also seen in to-do lists. !{margin_left: 100}man-ele-check.png!
 
 Here's a sample checklist.
 
@@ -3005,7 +3001,7 @@ Enter, the check will be toggled between its checked and unchecked states.
 
 Edit boxes are wide, rectangular boxes for entering text.  On the web, they
 call these textareas.  These are multi-line edit boxes for entering longer
-descriptions.  Essays, even! !{:margin_left => 100}man-ele-editbox.png!
+descriptions.  Essays, even! !{margin_left: 100}man-ele-editbox.png!
 
 Without any other styling, edit boxes are sized 200 pixels by 108 pixels.  You
 can also use `:width` and `:height` styles to set specific sizes.
@@ -3014,7 +3010,7 @@ can also use `:width` and `:height` styles to set specific sizes.
  #!ruby
  Shoes.app do
    edit_box
-   edit_box :width => 100, :height => 100
+   edit_box width: 100, height: 100
  end
 }}}
 
@@ -3062,7 +3058,7 @@ Fills the edit box with the characters of `a string`.
 
 Edit lines are a slender, little box for entering text. While the EditBox is
 multi-line, an edit line is just one. Line, that is. Horizontal, in fact.
-!{:margin_left => 100}man-ele-editline.png!
+!{margin_left: 100}man-ele-editline.png!
 
 The unstyled edit line is 200 pixels wide and 28 pixels wide. Roughly. The
 height may vary on some platforms.
@@ -3072,7 +3068,7 @@ height may vary on some platforms.
  Shoes.app do
    stack do
      edit_line
-     edit_line :width => 400
+     edit_line width: 400
    end
  end
 }}}
@@ -3110,7 +3106,7 @@ Fills the edit line with the characters of `a string`.
 
 An image is a picture in PNG, JPEG or GIF format. Shoes can resize images or
 flow them in with text. Images can be loaded from a file or directly off the
-web. !{:margin_left => 100}man-ele-image.png!
+web. !{margin_left: 100}man-ele-image.png!
 
 To create an image, use the `image` method in a slot:
 
@@ -3171,7 +3167,7 @@ Swaps the image with a different one, loaded from a file or URL.
 
 List boxes (also called "combo boxes" or "drop-down boxes" or "select boxes" in
 some places) are a list of options that drop down when you click on the box.
-!{:margin_left => 100}man-ele-listbox.png!
+!{margin_left: 100}man-ele-listbox.png!
 
 A list box gets its options from an array.  An array (a list) of strings,
 passed into the `:items` style.
@@ -3180,7 +3176,7 @@ passed into the `:items` style.
  #!ruby
  Shoes.app do
    para "Choose a fruit:"
-   list_box :items => ["Grapes", "Pears", "Apricots"]
+   list_box items: ["Grapes", "Pears", "Apricots"]
  end
 }}}
 
@@ -3191,8 +3187,8 @@ You can adjust this length using the `:width` style.
  #!ruby
  Shoes.app do
    para "Choose a fruit:"
-   list_box :items => ["Grapes", "Pears", "Apricots"],
-     :width => 120, :choose => "Apricots" do |list|
+   list_box items: ["Grapes", "Pears", "Apricots"],
+     width: 120, choose: "Apricots" do |list|
        @fruit.text = list.text
    end
 
@@ -3244,17 +3240,16 @@ now. If nothing is selected, `nil` will be the reply.
 
 Progress bars show you how far along you are in an activity. Usually, a
 progress bar represents a percentage (from 0% to 100%.) Shoes thinks of
-progress in terms of the decimal numbers 0.0 to 1.0. !{:margin_left =>
-100}man-ele-progress.png!
+progress in terms of the decimal numbers 0.0 to 1.0. !{margin_left: 100}man-ele-progress.png!
 
 A simple progress bar is 200 pixels wide, but you can use the `:width` style
 (as with all Shoes elements) to lengthen it.
 
 {{{
  Shoes.app do
-   stack :margin => 0.1 do
+   stack margin: 0.1 do
      title "Progress example"
-     @p = progress :width => 1.0
+     @p = progress width: 1.0
 
      animate do |i|
        @p.fraction = (i % 100) / 100.0
@@ -3278,8 +3273,7 @@ Sets the progress to a decimal number between 0.0 and 1.0.
 
 Radio buttons are a group of clickable circles. Click a circle and it'll be
 marked. Only one radio button can be marked at a time. (This is similar to the
-ListBox, where only one option can be selected at a time.) !{:margin_left =>
-100}man-ele-radio.png!
+ListBox, where only one option can be selected at a time.) !{margin_left: 100}man-ele-radio.png!
 
 So, how do you decide when to use radio buttons and when to use list boxes?
 Well, list boxes only show one highlighted item unless you click on the box and
@@ -3367,7 +3361,7 @@ Enter, the radio will be toggled between its marked and unmarked states.
 == Shape ==
 
 A shape is a path outline usually created by drawing methods like `oval` and
-`rect`. !{:margin_left => 100}man-ele-shape.png!
+`rect`. !{margin_left: 100}man-ele-shape.png!
 
 See the [[Common]] methods page.  Shapes respond to all of those methods.
 
@@ -3376,7 +3370,7 @@ See the [[Common]] methods page.  Shapes respond to all of those methods.
 The TextBlock object represents a group of text organized as a single element.
 A paragraph containing bolded text, for example. A caption containing links and
 bolded text. (So, a `caption` is a TextBlock type.  However, `link` and
-`strong` are TextClass types.) !{:margin_left => 100}man-ele-textblock.png!
+`strong` are TextClass types.) !{margin_left: 100}man-ele-textblock.png!
 
 All of the various types of TextBlock are found on the [[Element Element
 Creation]] page.
@@ -3443,7 +3437,7 @@ already running, it is stopped.
 Shoes supports embedding of QuickTime, Flash video (FLV), DivX, Xvid and
 various other popular video formats. This is all thanks to VideoLAN and ffmpeg,
 two sensational open source libraries. Use the `video` method on a slot to
-setup a Shoes::Video object. !{:margin_left => 100}man-ele-video.png!
+setup a Shoes::Video object. !{margin_left: 100}man-ele-video.png!
 
 In addition to video formats, some audio formats are also supported, such as
 MP3, WAV and Ogg Vorbis.
