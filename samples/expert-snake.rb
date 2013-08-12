@@ -1,8 +1,4 @@
 Shoes.app :title => 'Snake Game v0.1' do
-  background black
-
-  game_start
-
   def game_start
     @score = para 'Score:', stroke: white
     @pos = {:up => [0, -10], :down => [0, 10], :left => [-10, 0], :right => [10, 0]}
@@ -75,4 +71,8 @@ Shoes.app :title => 'Snake Game v0.1' do
 
     @snake[0].style stroke: red
   end
+
+  background black
+
+  game_start
 end
