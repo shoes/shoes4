@@ -11,9 +11,9 @@ Shoesは軽量なグラフィックツールキットです。これは単純で
 
 ShoesプログラムはRubyと呼ばれる言語で書かれています。ShoesがこのRubyコードの単純な行を渡されたとき、"Click me!"と中に書かれたボタンを持ったウィンドウを表示します。このボタンをクリックすると、メッセージがポップアップします。
 
-Linuxでは、このように見えるでしょう: !{:margin_left => 100}man-shot1.png!
+Linuxでは、このように見えるでしょう: !{margin_left: 100}man-shot1.png!
 
-多くのShoesのアプリケーションがグラフィカルなゲームやアートのプログラムである一方、テキストを配置したり編集したりすることも簡単にできます。 !{:margin_left => 40}shoes-manual-apps.gif!
+多くのShoesのアプリケーションがグラフィカルなゲームやアートのプログラムである一方、テキストを配置したり編集したりすることも簡単にできます。 !{margin_left: 40}shoes-manual-apps.gif!
 
 そして、理想的には、Shoesプログラムは世の中のいくつかの有名なプラットフォームで実行できるでしょう。マイクロソフトWindows、アップルのMac OS X、Linuxや多くの他のプラットフォームで。
 
@@ -176,10 +176,10 @@ Shoesでは、これらの種類のブロックは同じ働きをします。こ
 '''新しいウィンドウを作成するときはいつでも、`self`も変更されます。'''そして、Shoes.appに加えて、これは[[Element.window]]と[[Element.dialog]]メソッドを意味します。
 
 {{{
- Shoes.app :title => "MAIN" do
+ Shoes.app title: "MAIN" do
    para self
    button "Spawn" do
-     window :title => "CHILD" do
+     window title: "CHILD" do
        para self
      end
    end
@@ -257,11 +257,11 @@ Shoesでは、これらの種類のブロックは同じ働きをします。こ
 {{{
  Shoes.app do
    flow do
-     stack :width => 200 do
+     stack width: 200 do
        caption "Column one"
        para "is 200 pixels wide"
      end
-     stack :width => -200 do
+     stack width: -200 do
        caption "Column two"
        para "is 100% minus 200 pixels wide"
      end
@@ -277,7 +277,7 @@ Shoesでは、これらの種類のブロックは同じ働きをします。こ
 
 {{{
  Shoes.app do
-   stack :width => 200, :height => 200, :scroll => true do
+   stack width: 200, height: 200, scroll: true do
      background "#DFA"
      100.times do |i|
        para "Paragraph No. #{i}"
@@ -349,8 +349,8 @@ Ruby自体はUnicodeを意識しません。そして、UTF-8は一種のUnicode
 
 {{{
  Shoes.app do
-   stack :margin => 10 do
-     @edit = edit_box :width => 1.0 do
+   stack margin: 10 do
+     @edit = edit_box width: 1.0 do
        @para.text = @edit.text
      end
      @para = para ""
@@ -368,7 +368,7 @@ Ruby自体はUnicodeを意識しません。そして、UTF-8は一種のUnicode
 
 {{{
  Shoes.app do
-   para "てすと (te-su-to)", :font => case RUBY_PLATFORM
+   para "てすと (te-su-to)", font: case RUBY_PLATFORM
    when /mingw/; "MS UI Gothic"
    when /darwin/; "AppleGothic, Arial"
    else "Arial"
@@ -568,7 +568,7 @@ yes-または-noの質問をポップアップします。コンピュータの�
 {{{
  #!ruby
  if confirm("Draw a circle?")
-  Shoes.app{ oval :top => 0, :left => 0, :radius => 50 }
+  Shoes.app{ oval top: 0, left: 0, radius: 50 }
  end
 }}}
 
@@ -679,7 +679,7 @@ Shoesコンソールでユーザへの情報を含むメッセージを記録し
 
 アプリケーションはURLでコードを実行する一つのウィンドウです。URLを切り替えるとき、新しいアプリケーションオブジェクトが作成され、スタック、フローや他の要素で満たされます。
 
-アプリケーションはウィンドウ自体です。それは閉じられるか、クリアされるか、新しい要素で満たされるかもしれません。!{:margin_left => 100}man-app.png!
+アプリケーションはウィンドウ自体です。それは閉じられるか、クリアされるか、新しい要素で満たされるかもしれません。!{margin_left: 100}man-app.png!
 
 スロット／ボックスの用語では、アプリケーション自体がフローです。詳しくは''Slots''セクションを見てください、しかし、これはどんな要素も直接フローのトップレベルに置かれることを単に意味します。
 
@@ -689,11 +689,11 @@ Shoesのアプリケーションウィンドウを開始します。これはSho
 
 {{{
  #!ruby
- Shoes.app(:title => "White Circle",
-   :width => 200, :height => 200, :resizable => false) {
+ Shoes.app(title: "White Circle",
+   width: 200, height: 200, resizable: false) {
      background black
      fill white
-     oval :top => 20, :left => 20, :radius => 160
+     oval top: 20, left: 20, radius: 160
  }
 }}}
 
@@ -730,7 +730,7 @@ download
  #!ruby
  Shoes.app do
    stack do
-     title "Searching Google", :size => 16
+     title "Searching Google", size: 16
      @status = para "One moment..."
 
      # Search Google for 'shoes' and print the HTTP headers
@@ -749,11 +749,11 @@ download
  #!ruby
  Shoes.app do
    stack do
-     title "Downloading Google image", :size => 16
+     title "Downloading Google image", size: 16
      @status = para "One moment..."
 
      download "http://www.google.com/logos/nasa50th.gif",
-       :save => "nasa50th.gif" do
+       save: "nasa50th.gif" do
          @status.text = "Okay, is downloaded."
      end
    end
@@ -768,11 +768,11 @@ download
  #!ruby
  Shoes.app do
    stack do
-     title "POSTing to Google", :size => 16
+     title "POSTing to Google", size: 16
      @status = para "One moment..."
 
      download "http://www.stevex.net/dump.php",
-              :method => "POST", :body => "v=1.0&q=shoes" do |dump|
+              method: "POST", body: "v=1.0&q=shoes" do |dump|
        require 'nokogiri'
        @status.text = Nokogiri::HTML(dump.response.body).inner_text
      end
@@ -823,8 +823,8 @@ download
 スタイルは簡単にspotできます。通常は要素が生成されるときに現れます。
 
 {{{
- Shoes.app :title => "A Styling Sample" do
-   para "Red with an underline", :stroke => red, :underline => "single"
+ Shoes.app title: "A Styling Sample" do
+   para "Red with an underline", stroke: red, underline: "single"
  end
 }}}
 
@@ -833,16 +833,16 @@ download
 このスタイルのハッシュは、どんな要素やスロットも利用できる[[Common.style]]メソッドを利用して変更できます。
 
 {{{
- Shoes.app :title => "A Styling Sample" do
+ Shoes.app title: "A Styling Sample" do
    @text = para "Red with an underline"
-   @text.style(:stroke => red, :underline => "single")
+   @text.style(stroke: red, underline: "single")
  end
 }}}
 
 多くのスタイルもメソッドとして呼び出すことで設定することができます。（メソッドを見つけるために手動での検索を行うでしょう。）
 
 {{{
- Shoes.app :title => "A Styling Sample" do
+ Shoes.app title: "A Styling Sample" do
    @text = para "Red with an underline"
    @text.stroke = red
    @text.underline = "single"
@@ -871,8 +871,8 @@ download
 
 ''flow, stack''で利用できます。
 
-他のスロットや要素と比較してスロットをピンで止めます。ウィンドウの左上の角からスロットを配置するために`:attach => Window`と書く人もいるかもしれません。
-これについてもう少し取り上げると、`:top => 10, :left => 10, :attach => Window`のスタイルはスロットをウインドウの座標の(10, 10)に配置します。
+他のスロットや要素と比較してスロットをピンで止めます。ウィンドウの左上の角からスロットを配置するために`attach: Window`と書く人もいるかもしれません。
+これについてもう少し取り上げると、`top: 10, left: 10, attach: Window`のスタイルはスロットをウインドウの座標の(10, 10)に配置します。
 
 動く要素にスロットがアタッチされた場合は、そのスロットはそれとともに動きます。アタッチメントが`nil`にリセットされるなら、通常はそのスロットはそれを取り囲む他のオブジェクトとともに流れます。
 
@@ -886,7 +886,7 @@ download
 
 ''すべてのスロットと要素''で利用できます。
 
-要素の下の端の座標にピクセルを設定します。その端はコンテナの下の端に対して配置されます。そのため、`:bottom => 0`は、スロットの下の端とその下の端が接するように要素を配置するでしょう。
+要素の下の端の座標にピクセルを設定します。その端はコンテナの下の端に対して配置されます。そのため、`bottom: 0`は、スロットの下の端とその下の端が接するように要素を配置するでしょう。
 
 === :cap » :curve or :rect or :project ===
 
@@ -990,7 +990,7 @@ download
 
 ''すべてのスロットと要素''で利用できます。
 
-オブジェクトの表示または非表示です。すべてのオブジェクトにとって`:hidden => true`は画面上での非表示になります。その子供のスロットと要素でも同様です。
+オブジェクトの表示または非表示です。すべてのオブジェクトにとって`hidden: true`は画面上での非表示になります。その子供のスロットと要素でも同様です。
 
 === :inner » a number ===
 
@@ -1026,7 +1026,7 @@ download
 
 ''すべてのスロットと要素''で利用できます。
 
-オブジェクトの左の座標を特定のピクセルに設定します。`:left => 10`の設定はそのオブジェクトを含むスロットの左の端からオブジェクトの左の端が10ピクセル離れた位置に配置します。このleftのスタイルが設定されていない（または`nil`が設定される）なら、そのオブジェクトはそれを囲んでいる他のオブジェクトとともに動くでしょう。
+オブジェクトの左の座標を特定のピクセルに設定します。`left: 10`の設定はそのオブジェクトを含むスロットの左の端からオブジェクトの左の端が10ピクセル離れた位置に配置します。このleftのスタイルが設定されていない（または`nil`が設定される）なら、そのオブジェクトはそれを囲んでいる他のオブジェクトとともに動くでしょう。
 
 もし動作が期待通りでない時は、:top も指定すると良いかもしれません :)
 
@@ -1034,7 +1034,7 @@ download
 
 ''すべてのスロットと要素''で利用できます。
 
-マージンは要素の周囲に間隔をあけます。それぞれの要素はleft、top、right、そしてbottomのマージンを持っています。`:margin`スタイルに一つの数が設定されると、要素の周囲の間隔は均一にその数にとなります。言い換えると、`:margin => 8`を設定すると、その要素の周囲のすべてのマージンは8ピクセルの長さに設定されます。
+マージンは要素の周囲に間隔をあけます。それぞれの要素はleft、top、right、そしてbottomのマージンを持っています。`:margin`スタイルに一つの数が設定されると、要素の周囲の間隔は均一にその数にとなります。言い換えると、`margin: 8`を設定すると、その要素の周囲のすべてのマージンは8ピクセルの長さに設定されます。
 
 このスタイルは4つの数を`[left, top, right, bottom]`の形の配列で与えることもできます。
 
@@ -1072,7 +1072,7 @@ download
 
 ''star''で利用できます。
 
-その星はいくつの頂点を持ちますか？`:points => 5`のスタイルは5つの頂点を持つ星を作成します。
+その星はいくつの頂点を持ちますか？`points: 5`のスタイルは5つの頂点を持つ星を作成します。
 
 === :radius » a number ===
 
@@ -1084,7 +1084,7 @@ download
 
 ''すべてのスロットと要素''で利用できます。
 
-要素の右端の座標をピクセルで設定します。その端はコンテナの右端に対して配置されます。そのため、`:right => 0`は、スロットの右端とその右端が接するように要素を配置するでしょう。一方`:right => 20`は要素の右端をそのスロットの右端から左側に向けて20ピクセル離れたところに配置します。
+要素の右端の座標をピクセルで設定します。その端はコンテナの右端に対して配置されます。そのため、`right: 0`は、スロットの右端とその右端が接するように要素を配置するでしょう。一方`right: 20`は要素の右端をそのスロットの右端から左側に向けて20ピクセル離れたところに配置します。
 
 === :rise » a number ===
 
@@ -1096,7 +1096,7 @@ download
 
 ''flow, stack''で利用できます。
 
-スロットをスクロールするスロットとします。`:scroll => true`が設定され、そのコンテンツがスロットの高さ以上の場合はスクロールバーがスロットに表示されます。スクロールバーは必要に応じて表示したり非表示になります。それはスロットの幅の内側で表示されるので、スクロールバーのあるなしに関わらず、スロットの幅は決して変わらないことを意味します。
+スロットをスクロールするスロットとします。`scroll: true`が設定され、そのコンテンツがスロットの高さ以上の場合はスクロールバーがスロットに表示されます。スクロールバーは必要に応じて表示したり非表示になります。それはスロットの幅の内側で表示されるので、スクロールバーのあるなしに関わらず、スロットの幅は決して変わらないことを意味します。
 
 === :secret » true or false ===
 
@@ -1183,7 +1183,7 @@ edit_boxやedit_lineのコンテンツ、またはボタンコントロールに
 
 ''すべてのスロットと要素''で利用できます。
 
-オブジェクトの上側の座標を、その親のスロットに対して設定します。オブジェクトに`:top => 40`が設定されたなら、オブジェクトの上端はそのオブジェクトを含むスロットの上端から40ピクセル下に配置されることを意味します。`:top`スタイルが与えられないなら、そのスロットの自然な流れでオブジェクトは自動的に配置されます。
+オブジェクトの上側の座標を、その親のスロットに対して設定します。オブジェクトに`top: 40`が設定されたなら、オブジェクトの上端はそのオブジェクトを含むスロットの上端から40ピクセル下に配置されることを意味します。`:top`スタイルが与えられないなら、そのスロットの自然な流れでオブジェクトは自動的に配置されます。
 
 もし動作が期待通りでない時は、:left も指定すると良いかもしれません :)
 
@@ -1294,8 +1294,8 @@ Shoesで紹介するすべてのクラスの完全な一覧です。この表は
  Shoes.app do
    stroke red
    fill blue
-   oval :top => 10, :left => 10,
-     :radius => 100
+   oval top: 10, left: 10,
+     radius: 100
  end
 }}}
 
@@ -1511,7 +1511,7 @@ Shoesは幅広い種類の要素を持っており、その多くをHTMLから�
  #!ruby
  Shoes.app do
    background black
-   background white, :width => 50
+   background white, width: 50
  end
 }}}
 
@@ -1521,7 +1521,7 @@ Shoesは幅広い種類の要素を持っており、その多くをHTMLから�
 
 バナー（Banner）のテキストブロックを作成します。Shoesは自動的に48ピクセルの大きさにテキストを整形します。
 
-=== border(text, :strokewidth => a number) » Shoes::Border ===
+=== border(text, strokewidth: a number) » Shoes::Border ===
 
 色（またはパターン）を指定して枠線（Border）の要素を描きます。パターンは色、グラデーションまたは画像です。色と画像は枠線全体に敷き詰めます。グラデーションは背景を塗りつぶすように伸びます。
 
@@ -1563,7 +1563,7 @@ Shoesは幅広い種類の要素を持っており、その多くをHTMLから�
  Shoes.app do
    edit_box
    edit_box "HORRAY EDIT ME"
-   edit_box "small one", :width => 100, :height => 160
+   edit_box "small one", width: 100, height: 160
  end
 }}}
 
@@ -1609,20 +1609,20 @@ PNG、JPEGそしてGIFのフォーマットが許されます。
 
 題名（Inscription）のテキストブロックを作成します。Shoesは10ピクセルの大きさにこのテキストを整形します。
 
-=== link(text, :click => proc or string) » Shoes::Link ===
+=== link(text, click: proc or string) » Shoes::Link ===
 
 一本の下線を持ち線の色を#06E（青色）にShoesが整形した、リンクテキストブロックを作成します。デフォルトのリンクホバースタイルも一本の下線を持ち線の色を#039（ダークブルー）に整形します。
 
-=== list_box(:items => [strings, ...]) » Shoes::ListBox ===
+=== list_box(items: [strings, ...]) » Shoes::ListBox ===
 
 `items`の配列のすべてのエントリを含むドロップダウンリストボックスを追加します。オプションでブロックが取り付けることができ、これはユーザがボックスの項目を選択したら呼び出されます。
 
 {{{
  #!ruby
  Shoes.app do
-   stack :margin => 10 do
+   stack margin: 10 do
      para "Pick a card:"
-     list_box :items => ["Jack", "Ace", "Joker"]
+     list_box items: ["Jack", "Ace", "Joker"]
    end
  end
 }}}
@@ -1702,7 +1702,7 @@ Shoesが12ピクセルの大きさに整形する、Para（"paragraph"の省略�
 
 {{{
  #!ruby
- Shoes.app :title => "The Owner" do
+ Shoes.app title: "The Owner" do
    button "Pop up?" do
      window do
        para "Okay, popped up from #{owner}"
@@ -1722,7 +1722,7 @@ Shoesが12ピクセルの大きさに整形する、Para（"paragraph"の省略�
 {{{
  #!ruby
  Shoes.app do
-   s = stack :width => 200, :height => 200 do
+   s = stack width: 200, height: 200 do
      background red
      hover do
        s.clear { background blue }
@@ -1794,7 +1794,7 @@ Shoesがそれ自身のいくつかのホットキーを利用することを覚
 
 {{{
  #!ruby
- Shoes.app :width => 200, :height => 200 do
+ Shoes.app width: 200, height: 200 do
    background black
    fill white
    @circ = oval 0, 0, 100, 100
@@ -1891,7 +1891,7 @@ clearメソッドはオプションでブロックも取ります。このブロ
 {{{
  #!ruby
  Shoes.app do
-   stack(:width => 150) { para "Now that's precision." }
+   stack(width: 150) { para "Now that's precision." }
  end
 }}}
 
@@ -1912,7 +1912,7 @@ clearメソッドはオプションでブロックも取ります。このブロ
 {{{
  #!ruby
  Shoes.app do
-   stack :margin_right => 20 + gutter do
+   stack margin_right: 20 + gutter do
      para "Insert fat and ratified declaration of independence here..."
    end
  end
@@ -1976,7 +1976,7 @@ The left pixel location of the slot.  Also known as the x-axis coordinate.
 {{{
  #!ruby
  Shoes.app do
-   @s = stack :width => "100%"
+   @s = stack width: "100%"
    para @s.style[:width]
  end
 }}}
@@ -1991,7 +1991,7 @@ The left pixel location of the slot.  Also known as the x-axis coordinate.
  #!ruby
  Shoes.app do
    @s = stack { background green }
-   @s.style(:width => 400, :height => 200)
+   @s.style(width: 400, height: 200)
  end
 }}}
 
@@ -2049,9 +2049,9 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
      @press = button "Stop your messin about!"
 
      # And so, both can be styled.
-     @text.style :size => 12, :stroke => red, :margin => 10
-     @press.style :width => 400
-     @back.style :height => 10
+     @text.style size: 12, stroke: red, margin: 10
+     @press.style width: 400
+     @back.style height: 10
    end
  end
 }}}
@@ -2067,7 +2067,7 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   flow :margin => 12 do
+   flow margin: 12 do
      # Set up three buttons
      button "One"
      @two = button "Two"
@@ -2108,7 +2108,7 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   flow :margin => 12 do
+   flow margin: 12 do
      # Set up three buttons
      button "One"
      @two = button "Two"
@@ -2144,7 +2144,7 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
  #!ruby
  Shoes.app do
    # A button which take up the whole page
-   @b = button "All of it", :width => 1.0, :height => 1.0
+   @b = button "All of it", width: 1.0, height: 1.0
 
    # When clicked, show the styles
    @b.click { alert(@b.style.inspect) }
@@ -2172,8 +2172,8 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   stack :width => 120 do
-     @b = button "Click me", :width => "100%" do
+   stack width: 120 do
+     @b = button "Click me", width: "100%" do
        alert "button.width = #{@b.width}\n" +
          "button.style[:width] = #{@b.style[:width]}"
      end
@@ -2181,13 +2181,13 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
  end
 }}}
 
-幅を設定するためには、[[Common.style]]メソッドをもう一度調べる必要があります。そして、150ピクセルの幅にボタンを設定するには：`@b.style(:width => 150)`。
+幅を設定するためには、[[Common.style]]メソッドをもう一度調べる必要があります。そして、150ピクセルの幅にボタンを設定するには：`@b.style(width: 150)`。
 
-要素の幅を取るには、設定を空にするために`@b.style(:width => nil)`とします
+要素の幅を取るには、設定を空にするために`@b.style(width: nil)`とします
 
 == Background ==
 
-背景はスロット全体に渡って塗られた、グラデーションまたは画像の色です。背景と枠線はShoes::Patternの種類の一つです。!{:margin_left => 100}man-ele-background.png!
+背景はスロット全体に渡って塗られた、グラデーションまたは画像の色です。背景と枠線はShoes::Patternの種類の一つです。!{margin_left: 100}man-ele-background.png!
 
 ''背景（background）''と呼ばれているにも関わらず、この要素は他の要素よりも前面に表示されます。背景がスロットで塗られた何か他のもの（`rect`または`oval`のような）の後にきた場合、背景はその要素の上に塗られます。
 
@@ -2209,7 +2209,7 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   background black, :height => 50
+   background black, height: 50
  end
 }}}
 
@@ -2218,7 +2218,7 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   background black, :width => 50, :right => 50
+   background black, width: 50, right: 50
  end
 }}}
 
@@ -2230,7 +2230,7 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 
 == Border ==
 
-枠線はスロットの周囲の線に塗られた、色やグラデーションや画像です。次のセクションの背景の要素では、枠線（Border）はShoes::Patternの一種です。!{:margin_left => 100}man-ele-border.png!
+枠線はスロットの周囲の線に塗られた、色やグラデーションや画像です。次のセクションの背景の要素では、枠線（Border）はShoes::Patternの一種です。!{margin_left: 100}man-ele-border.png!
 
 はじめに、すべての枠線はスロットの周囲の外側ではなく、'''内側'''を塗ることについて知ることは重要です。そのため、50ピクセルの幅のスロットに5ピクセルの枠線を塗るなら、それは枠線で囲まれたスロットが内部に40ピクセルの幅のエリアを持つことを意味します。
 
@@ -2241,9 +2241,9 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   stack :width => 50 do
-     border black, :strokewidth => 5
-     para "=^.^=", :stroke => green
+   stack width: 50 do
+     border black, strokewidth: 5
+     para "=^.^=", stroke: green
    end
  end
 }}}
@@ -2253,10 +2253,10 @@ Shoesでは少しのメソッドがすべての小さな要素によって共有
 {{{
  #!ruby
  Shoes.app do
-   stack :width => 60 do
-     border black, :strokewidth => 5
-     stack :width => 50 do
-       para "=^.^=", :stroke => green
+   stack width: 60 do
+     border black, strokewidth: 5
+     stack width: 50 do
+       para "=^.^=", stroke: green
      end
    end
  end
@@ -2391,7 +2391,7 @@ HTMLや他の多くの言語では、枠線は箱の外側に塗られるため�
 
 == EditBox ==
 
-エディットボックス（Edit box）は、テキストを入力するための幅広い長方形の箱です。webでは、それらはテキストエリアと呼ばれます。それらは長い記述を入力するためのマルチラインエディットボックスです。エッセイでさえ書けます！　!{:margin_left => 100}man-ele-editbox.png!
+エディットボックス（Edit box）は、テキストを入力するための幅広い長方形の箱です。webでは、それらはテキストエリアと呼ばれます。それらは長い記述を入力するためのマルチラインエディットボックスです。エッセイでさえ書けます！　!{margin_left: 100}man-ele-editbox.png!
 
 スタイルを何も設定しなければ、エディットボックスは200ピクセルx108ピクセルのサイズです。特定のサイズに設定するために`:width`と`:height`のスタイルを利用することもできます。
 
@@ -2399,7 +2399,7 @@ HTMLや他の多くの言語では、枠線は箱の外側に塗られるため�
  #!ruby
  Shoes.app do
    edit_box
-   edit_box :width => 100, :height => 100
+   edit_box width: 100, height: 100
  end
 }}}
 
@@ -2447,7 +2447,7 @@ HTMLや他の多くの言語では、枠線は箱の外側に塗られるため�
  Shoes.app do
    stack do
      edit_line
-     edit_line :width => 400
+     edit_line width: 400
    end
  end
 }}}
@@ -2474,7 +2474,7 @@ HTMLや他の多くの言語では、枠線は箱の外側に塗られるため�
 
 == Image ==
 
-画像（image）はPNG、JPEGまたはGIFフォーマットの画像ファイルです。Shoesは画像をリサイズまたはテキストとともにそれらをフローすることができます。!{:margin_left => 100}man-ele-image.png!
+画像（image）はPNG、JPEGまたはGIFフォーマットの画像ファイルです。Shoesは画像をリサイズまたはテキストとともにそれらをフローすることができます。!{margin_left: 100}man-ele-image.png!
 
 画像を作成するために、スロット内部で`image`メソッドを利用します：
 
@@ -2521,7 +2521,7 @@ Shoesはバックグラウンドでシステムのスレッドを使ってリモ
 
 == ListBox ==
 
-リストボックス（List box）（環境によって"コンボボックス（combo box）"または"ドロップダウンボックス（drop-down box）"または"セレクトボックス（select box）"とも呼ばれています。）は箱をクリックしたときドロップダウンしてオプションが一覧として表示されます。!{:margin_left => 100}man-ele-listbox.png!
+リストボックス（List box）（環境によって"コンボボックス（combo box）"または"ドロップダウンボックス（drop-down box）"または"セレクトボックス（select box）"とも呼ばれています。）は箱をクリックしたときドロップダウンしてオプションが一覧として表示されます。!{margin_left: 100}man-ele-listbox.png!
 
 リストボックスは配列からオプションを取得します。配列（リスト）の文字列は、`:items`スタイルに渡されます。
 
@@ -2529,7 +2529,7 @@ Shoesはバックグラウンドでシステムのスレッドを使ってリモ
  #!ruby
  Shoes.app do
    para "Choose a fruit:"
-   list_box :items => ["Grapes", "Pears", "Apricots"]
+   list_box items: ["Grapes", "Pears", "Apricots"]
  end
 }}}
 
@@ -2539,8 +2539,8 @@ Shoesはバックグラウンドでシステムのスレッドを使ってリモ
  #!ruby
  Shoes.app do
    para "Choose a fruit:"
-   list_box :items => ["Grapes", "Pears", "Apricots"],
-     :width => 120, :choose => "Apricots" do |list|
+   list_box items: ["Grapes", "Pears", "Apricots"],
+     width: 120, choose: "Apricots" do |list|
        @fruit.text = list.text
    end
 
@@ -2580,15 +2580,15 @@ Shoesはバックグラウンドでシステムのスレッドを使ってリモ
 
 == Progress ==
 
-プログレスバー（Progress bar）は活動がどこまで進んでいるかを表示します。一般的には、プログレスバーはパーセンテージで示されます。（0%から100%まで）Shoesは0.0から1.0の10進数を使って進行を考えます。!{:margin_left => 100}man-ele-progress.png!
+プログレスバー（Progress bar）は活動がどこまで進んでいるかを表示します。一般的には、プログレスバーはパーセンテージで示されます。（0%から100%まで）Shoesは0.0から1.0の10進数を使って進行を考えます。!{margin_left: 100}man-ele-progress.png!
 
 シンプルなプログレスバーは200ピクセルの幅ですが、長くするために（すべてのShoesの要素のように）`:width`スタイルは利用できません。
 
 {{{
  Shoes.app do
-   stack :margin => 0.1 do
+   stack margin: 0.1 do
      title "Progress example"
-     @p = progress :width => 1.0
+     @p = progress width: 1.0
 
      animate do |i|
        @p.fraction = (i % 100) / 100.0
@@ -2609,7 +2609,7 @@ Shoesはバックグラウンドでシステムのスレッドを使ってリモ
 
 == Radio ==
 
-ラジオボタン（Radio button）はクリック可能な円のグループです。それをマークするには円をクリックしてください。ラジオボタンは１度に１つだけマークできます。（１度に１つのオプションだけしか選択できないところは、リストボックスに似ています。）!{:margin_left => 100}man-ele-radio.png!
+ラジオボタン（Radio button）はクリック可能な円のグループです。それをマークするには円をクリックしてください。ラジオボタンは１度に１つだけマークできます。（１度に１つのオプションだけしか選択できないところは、リストボックスに似ています。）!{margin_left: 100}man-ele-radio.png!
 
 それでは、リストボックスを利用すべきときと、ラジオボタンを利用すべきときをどのようにして決定しますか？そうですね、リストボックスはボックスをクリックしてドロップダウンを表示することなく１つのハイライトされたアイテムを表示します。しかし、ラジオボタンはどれがマークされているか気にすることなく、すべて表示されます。
 
@@ -2689,13 +2689,13 @@ Shoesはバックグラウンドでシステムのスレッドを使ってリモ
 
 == Shape ==
 
-形状（shape）は通常は`oval`と`rect`のようにドローイングメソッドによって作成されるアウトラインパスです。!{:margin_left => 100}man-ele-shape.png!
+形状（shape）は通常は`oval`と`rect`のようにドローイングメソッドによって作成されるアウトラインパスです。!{margin_left: 100}man-ele-shape.png!
 
 [[Common]]メソッドのページを見てください。形状はそれらすべてのメソッドに応答できます。
 
 == TextBlock ==
 
-テキストブロック（TextBlock）オブジェクトは単独の要素にとして形成されるテキストのグループを示します。例えば、太字のテキストを含むパラグラフです。リンクと太字のテキストを含むキャプションです。（そして、`caption`はテキストブロックのタイプです。しかしながら、`link`と`strong`はテキストクラスのタイプです。）!{:margin_left => 100}man-ele-textblock.png!
+テキストブロック（TextBlock）オブジェクトは単独の要素にとして形成されるテキストのグループを示します。例えば、太字のテキストを含むパラグラフです。リンクと太字のテキストを含むキャプションです。（そして、`caption`はテキストブロックのタイプです。しかしながら、`link`と`strong`はテキストクラスのタイプです。）!{margin_left: 100}man-ele-textblock.png!
 
 テキストブロックのすべての種類はタイプは[[Element Element Creation]]ページで確認できます。
 
@@ -2747,7 +2747,7 @@ Shoesは3つのタイマー（timer）クラスを持っています：アニメ
 
 == Video ==
 
-Shoesは埋め込みのQuickTime、Flashビデオ（FLV）、DivX、Xvidそして様々な他の人気のあるビデオフォーマットをサポートしています。これはすべて２つの驚くべきオープンソースライブラリである、VideoLANとffmpegのおかげです。Shoes::Videoオブジェクトをセットアップするためにスロット上で`video`メソッドを利用してください。!{:margin_left => 100}man-ele-video.png!
+Shoesは埋め込みのQuickTime、Flashビデオ（FLV）、DivX、Xvidそして様々な他の人気のあるビデオフォーマットをサポートしています。これはすべて２つの驚くべきオープンソースライブラリである、VideoLANとffmpegのおかげです。Shoes::Videoオブジェクトをセットアップするためにスロット上で`video`メソッドを利用してください。!{margin_left: 100}man-ele-video.png!
 
 ビデオフォーマットに加えて、MP3、WAVとOgg Vorbisのような、いくつかのオーディオフォーマットもサポートされています。
 
