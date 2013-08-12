@@ -1,11 +1,6 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::KeypressListener do
-  before :each do
-    # neglecting the effect of the redrawing aspect
-    Shoes::Swt::App.any_instance.stub(flush: true)
-  end
-
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
