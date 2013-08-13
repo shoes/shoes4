@@ -14,17 +14,17 @@ module Accordion
     @pages <<
       stack do
         page_text = nil
-        stack :width => "100%" do
+        stack width: "100%" do
           background "#fff".."#eed"
-          hi = background "#ddd".."#ba9", :hidden => true
-          para link(title) {}, :size => 26
+          hi = background "#ddd".."#ba9", hidden: true
+          para link(title) {}, size: 26
           hover { hi.show }
           leave { hi.hide }
           click { open_page page_text }
         end
         page_text =
-          stack :width => "100%", :height => (@pages.empty? ? 240 : 0) do
-            stack :margin => 10 do
+          stack width: "100%", height: (@pages.empty? ? 240 : 0) do
+            stack margin: 10 do
               text.split(/\n{2,}/).each do |pg|
                 para pg
               end
@@ -36,8 +36,8 @@ end
 
 Shoes.app do
   extend Accordion
-  style(Link, :stroke => black, :underline => nil, :weight => "strong")
-  style(LinkHover, :stroke => black, :fill => nil, :underline => nil)
+  style(Link, stroke: black, underline: nil, weight: "strong")
+  style(LinkHover, stroke: black, fill: nil, underline: nil)
 
   page "0.0", <<-'END'
 There is a thought

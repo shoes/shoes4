@@ -63,15 +63,15 @@ $stdout = StringIO.new
 
 Shoes.app do
   @str, @cmd = [CURSOR + " "], ""
-  stack :width => 1.0, :height => 1.0 do
+  stack width: 1.0, height: 1.0 do
     background "#555"
-    stack :width => 1.0, :height => 50 do
-      para "Interactive Ruby ready.", :fill => white, :stroke => red
+    stack width: 1.0, height: 50 do
+      para "Interactive Ruby ready.", fill: white, stroke: red
     end
     @scroll =
-      stack :width => 1.0, :height => -50, :scroll => true do
+      stack width: 1.0, height: -50, scroll: true do
         background "#555"
-        @console = para @str, :font => "Monospace 12px", :stroke => "#dfa"
+        @console = para @str, font: "Monospace 12px", stroke: "#dfa"
         @console.cursor = -1
       end
   end
@@ -81,7 +81,7 @@ Shoes.app do
       begin
         out, obj = IRBalike.run(@cmd + ';')
         @str += ["#@cmd\n",
-          span("#{out}=> #{obj.inspect}\n", :stroke => "#fda"),
+          span("#{out}=> #{obj.inspect}\n", stroke: "#fda"),
           "#{CURSOR} "]
         @cmd = ""
       rescue MimickIRB::Empty
@@ -89,7 +89,7 @@ Shoes.app do
         @str += ["#@cmd\n.. "]
         @cmd = ""
       rescue Object => e
-        @str += ["#@cmd\n", span("#{e.class}: #{e.message}\n", :stroke => "#fcf"),
+        @str += ["#@cmd\n", span("#{e.class}: #{e.message}\n", stroke: "#fcf"),
           "#{CURSOR} "]
         @cmd = ""
       end
