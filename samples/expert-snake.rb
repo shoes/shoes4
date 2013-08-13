@@ -1,7 +1,7 @@
-Shoes.app :title => 'Snake Game v0.1' do
+Shoes.app title: 'Snake Game v0.1' do
   def game_start
     @score = para 'Score:', stroke: white
-    @pos = {:up => [0, -10], :down => [0, 10], :left => [-10, 0], :right => [10, 0]}
+    @pos = {up: [0, -10], down: [0, 10], left: [-10, 0], right: [10, 0]}
     @rx, @ry = proc{20 + 10*rand(56)}, proc{40 + 10*rand(44)}
 
     create_food
@@ -42,7 +42,7 @@ Shoes.app :title => 'Snake Game v0.1' do
 
   def brick? s
     @bricks.each do |b|
-      (@run.remove; alert 'Game Over. ') if b.left == s.left and b.top == s.top      
+      (@run.remove; alert 'Game Over. ') if b.left == s.left and b.top == s.top
     end
   end
 

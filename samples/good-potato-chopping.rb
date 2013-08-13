@@ -8,7 +8,7 @@ Shoes.app title: 'potacho', width: 175, height: 160 do
   end
 
   @imgs.first.show
-  
+
   def potacho
     @imgs[58].hide
     a = animate 12 do |i|

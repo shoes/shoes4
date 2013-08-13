@@ -66,10 +66,10 @@ Shoes.app do
   background "#555"
   @scroll = stack do
     background "#555"
-    stack :width => 1.0, :height => 50 do
-      para "Interactive Ruby ready.", :fill => white, :stroke => red
+    stack width: 1.0, height: 50 do
+      para "Interactive Ruby ready.", fill: white, stroke: red
     end
-    @console = para *@str, :font => "Lucida Console", :stroke => "#dfa"
+    @console = para *@str, font: "Lucida Console", stroke: "#dfa"
     @console.cursor = -1
   end
   keypress do |k|

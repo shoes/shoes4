@@ -2,7 +2,7 @@
 # a translation from a processing example
 # http://vormplus.be/weging/an-introduction-to-processing/
 #
-Shoes.app :width => 420, :height => 420, :resizable => false do
+Shoes.app width: 420, height: 420, resizable: false do
   stage, wide, sw, basesize, step = 0, 3, 1.0, 600, 60
   stroke white(100)
   nofill
@@ -26,7 +26,7 @@ Shoes.app :width => 420, :height => 420, :resizable => false do
         left = (self.width - size) / 2
         arc top, left,
           size, size,
-          rotation * i, 
+          rotation * i,
           rotation * i + Shoes::TWO_PI - Shoes::HALF_PI
       end
     end
