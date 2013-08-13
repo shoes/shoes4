@@ -9,25 +9,25 @@
 # redrawing the shapes, you can move the shapes around as objects.
 # Yeah, see, notice how @you, @comp and @ball are used.
 #
-Shoes.app :width => 400, :height => 400, :resizable => false do
-  paddle_size = 75
+Shoes.app width: 400, height: 400, resizable: false do
+  paddle_size   = 75
   ball_diameter = 20
-  vx, vy = [3, 4]
-  compuspeed = 10
-  bounce = 1.2
+  vx, vy        = [3, 4]
+  compuspeed    = 10
+  bounce        = 1.2
 
   # set up the playing board
   nostroke and background white
-  @ball = oval 0, 0, ball_diameter, :fill => "#9B7"
-  @you, @comp = [app.height-4, 0].map {|y| rect 0, y, paddle_size, 4, :curve => 2}
+  @ball = oval 0, 0, ball_diameter, fill: "#9B7"
+  @you, @comp = [app.height-4, 0].map {|y| rect 0, y, paddle_size, 4, curve: 2}
 
   # animates at 40 frames per second
   @anim = animate 40 do
 
     # check for game over
     if @ball.top + ball_diameter < 0 or @ball.top > app.height
-      para strong("GAME OVER", :size => 32), "\n",
-        @ball.top < 0 ? "You win!" : "Computer wins", :top => 140, :align => 'center'
+      para strong("GAME OVER", size: 32), "\n",
+        @ball.top < 0 ? "You win!" : "Computer wins", top: 140, align: 'center'
       @ball.hide and @anim.stop
     end
 
@@ -36,7 +36,7 @@ Shoes.app :width => 400, :height => 400, :resizable => false do
     nx, ny = (@ball.left + vx).to_i, (@ball.top + vy).to_i
 
     # move the @comp paddle, speed based on `compuspeed` variable
-    @comp.left += 
+    @comp.left +=
       if nx + (ball_diameter / 2) > @comp.left + paddle_size;  compuspeed
       elsif nx < @comp.left;                                  -compuspeed
       else 0 end

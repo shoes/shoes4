@@ -1,5 +1,5 @@
-Shoes.app :width => 200 do
-  flow :margin => 12, :fill => red do
+Shoes.app width: 200 do
+  flow margin: 12, fill: red do
     background red
     # Set up three buttons
     button "button 1"
