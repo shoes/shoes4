@@ -2,9 +2,9 @@
 # a translation from a processing example
 # http://vormplus.be/weging/an-introduction-to-processing/
 #
-Shoes.app :width => 420, :height => 420, :resizable => false do
+Shoes.app width: 420, height: 420, resizable: false do
   rotation = -(Shoes::HALF_PI / 3)
-  step = 20 
+  step = 20
 
   background gray(240)
   stroke gray(127)

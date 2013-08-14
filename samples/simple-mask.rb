@@ -1,11 +1,11 @@
 Shoes.app do
   background black
 
-  stack :top => 0.4, :left => 0.2 do
+  stack top: 0.4, left: 0.2 do
     @stripes = stack
 
     mask do
-      title "Shoes", :weight => "bold", :size => 82
+      title "Shoes", weight: "bold", size: 82
     end
   end
 
