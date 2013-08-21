@@ -164,8 +164,7 @@ EOS
       [:ghostwhite, 248, 248, 255],
       [:gold, 255, 215, 0],
       [:goldenrod, 218, 165, 32],
-      [:gray, 128, 128, 128,
-       lambda {|level = 128, alpha = Shoes::Color::OPAQUE| Shoes::Color.new(level, level, level, alpha)}],
+      [:gray, 128, 128, 128],
       [:green, 0, 128, 0],
       [:greenyellow, 173, 255, 47],
       [:honeydew, 240, 255, 240],
@@ -257,20 +256,17 @@ EOS
       [:yellowgreen, 154, 205, 50],
     ]
 
-    colors.each do |c, r, g, b, func|
+    colors.each do |c, r, g, b|
       Shoes::COLORS[c] = Shoes::Color.new(r, g, b)
-      if func
-        define_method(c,func)
-      else
-        define_method(c) do |alpha = nil|
-          color = Shoes::COLORS.fetch(c)
-          if alpha
-            Shoes::Color.new(color.red, color.green, color.blue, alpha)
-          else
-            color
-          end
-        end
+      define_method(c) do |alpha = Shoes::Color::OPAQUE|
+        color = Shoes::COLORS.fetch(c)
+        return color if alpha == Shoes::Color::OPAQUE
+        Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
+    end
+
+    def gray(level = 128, alpha = Shoes::Color::OPAQUE)
+      Shoes::Color.new(level, level, level, alpha)
     end
   end
 end
