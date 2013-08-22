@@ -1,6 +1,10 @@
 language: ruby
 script: "rake spec:all"
 rvm: jruby
+jdk:
+  - openjdk7
+  - oraclejdk7
+  - openjdk6
 notifications:
   irc: "irc.freenode.org#shoes"
   email:
