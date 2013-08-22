@@ -119,7 +119,7 @@ class Shoes
     end
 
     def fits_without_wrapping?(element, parent, x)
-      x + element.width <= parent.left + parent.width
+      x + element.width <= parent.right
     end
 
     def bounds

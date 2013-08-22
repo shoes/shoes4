@@ -67,16 +67,12 @@ class Shoes
       eval_block blk
     end
 
-    def positioning x, y, max
+    def positioning current_x, _, max
       setup_dimensions
-      if parent.is_a?(Flow) and x + @width <= parent.right
-        @left, @top = x + parent.margin_left, max.top + parent.margin_top
-        @height = contents_alignment
-        max = self if max.height < @height
+      if stays_on_the_same_line?(current_x)
+        max = position_in_current_line(max, current_x)
       else
-        @left, @top = parent.left + parent.margin_left, max.top + max.height + parent.margin_top
-        @height = contents_alignment
-        max = self
+        max = move_to_next_line(max)
       end
       max.height = @height = @init_height unless @init_height == 0
       max
@@ -89,17 +85,41 @@ class Shoes
       slot_top, slot_height = y, 0
 
       contents.each do |element|
-        next if element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border)
-        tmp = max
-        max = element.positioning x, y, max
-        x = element.right
-        y = element.bottom
-        slot_height = max.top + max.height - slot_top unless max == tmp
+        if takes_up_space?(element)
+          tmp = max
+          max = element.positioning x, y, max
+          x = element.right
+          y = element.bottom
+          slot_height = max.top + max.height - slot_top unless max == tmp
+        end
       end
       slot_height
     end
 
     private
+    def position_in_current_line(max, x)
+      @left   = x + parent.margin_left
+      @top    = max.top + parent.margin_top
+      @height = contents_alignment
+      max = self if max.height < @height
+      max
+    end
+
+    def move_to_next_line(max)
+      @left   = parent.left + parent.margin_left
+      @top    = max.top + max.height + parent.margin_top
+      @height = contents_alignment
+      self
+    end
+
+    def stays_on_the_same_line?(x)
+      parent.is_a?(Flow) and fits_without_wrapping?(self, parent, x)
+    end
+
+    def takes_up_space?(element)
+      not (element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border))
+    end
+
     def setup_dimensions
       convert_percentage_dimensions_to_pixel
       apply_margins
