@@ -17,7 +17,7 @@ class Comic
   end
 end
 
-Shoes.app :width => 800, :height => 600 do
+Shoes.app width: 800, height: 600 do
   background "#555"
 
   @title = "Web Funnies"
@@ -30,20 +30,20 @@ Shoes.app :width => 800, :height => 600 do
     "http://indexed.blogspot.com/feeds/posts/default?alt=rss"
     ]
 
-  stack :margin => 10 do
-    title strong(@title), :align => "center", :stroke => "#DFA", :margin => 0
-    para "(loaded from RSS feeds)", :align => "center", :stroke => "#DFA",
-      :margin => 0
+  stack margin: 10 do
+    title strong(@title), align: "center", stroke: "#DFA", margin: 0
+    para "(loaded from RSS feeds)", align: "center", stroke: "#DFA",
+      margin: 0
 
     @feeds.each do |feed|
       download feed do |dl|
-        stack :width => "100%", :margin => 10, :border => 1 do
+        stack width: "100%", margin: 10, border: 1 do
           c = Comic.new dl.response.body
-          stack :margin_right => gutter do
-            background "#333", :curve => 4
-            caption c.title, :stroke => "#CD9", :margin => 4
+          stack margin_right: gutter do
+            background "#333", curve: 4
+            caption c.title, stroke: "#CD9", margin: 4
           end
-          image c.latest_image.first, :margin => 8
+          image c.latest_image.first, margin: 8
         end
       end
     end

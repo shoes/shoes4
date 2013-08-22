@@ -1,37 +1,37 @@
 #
 # Shoes Minesweeper by que/varyform
 #
-LEVELS = { :beginner => [9, 9, 10], :intermediate => [16, 16, 40], :expert => [30, 16, 99] }
+LEVELS = { beginner: [9, 9, 10], intermediate: [16, 16, 40], expert: [30, 16, 99] }
 
 class Field
   CELL_SIZE = 20
   COLORS = %w(#00A #0A0 #A00 #004 #040 #400 #000)
-  
+
   class Cell
     attr_accessor :flag
     def initialize(aflag = false)
       @flag = aflag
     end
   end
-  
+
   class Bomb < Cell
     attr_accessor :exploded
     def initialize(exploded = false)
       @exploded = exploded
     end
   end
-  
+
   class OpenCell < Cell
     attr_accessor :number
     def initialize(bombs_around = 0)
       @number = bombs_around
     end
   end
-  
+
   class EmptyCell < Cell; end
-  
+
   attr_reader :cell_size, :offset
-  
+
   def initialize(app, level = :beginner)
     @app = app
     @field = []
@@ -43,29 +43,29 @@ class Field
     plant_bombs
     @start_time = Time.now
   end
-  
+
   def total_time
     @latest_time = Time.now - @start_time unless game_over? || all_found?
     @latest_time
   end
-  
+
   def click!(x, y)
     return unless cell_exists?(x, y)
     return if has_flag?(x, y)
     return die!(x, y) if bomb?(x, y)
     open(x, y)
     discover(x, y) if bombs_around(x, y) == 0
-  end  
+  end
 
   def flag!(x, y)
     return unless cell_exists?(x, y)
     self[x, y].flag = !self[x, y].flag unless self[x, y].is_a?(OpenCell)
-  end  
-  
-  def game_over?
-    @game_over 
   end
-  
+
+  def game_over?
+    @game_over
+  end
+
   def render_cell(x, y, color = "#AAA", stroke = true)
     @app.stroke "#666" if stroke
     @app.fill color
@@ -74,15 +74,15 @@ class Field
     @app.line x*cell_size+1, y*cell_size+1, x*cell_size+cell_size-1, y*cell_size
     @app.line x*cell_size+1, y*cell_size+1, x*cell_size, y*cell_size+cell_size-1
   end
-  
+
   def render_flag(x, y)
     @app.stroke "#000"
     @app.line(x*cell_size+cell_size / 4 + 1, y*cell_size + cell_size / 5, x*cell_size+cell_size / 4 + 1, y*cell_size+cell_size / 5 * 4)
     @app.fill "#A00"
-    @app.rect(x*cell_size+cell_size / 4+2, y*cell_size + cell_size / 5, 
+    @app.rect(x*cell_size+cell_size / 4+2, y*cell_size + cell_size / 5,
       cell_size / 3, cell_size / 4)
   end
-  
+
   def render_bomb(x, y)
     render_cell(x, y)
     if (game_over? or all_found?) then # draw bomb
@@ -104,16 +104,16 @@ class Field
       @app.strokewidth 1
     end
   end
-  
+
   def render_number(x, y)
     render_cell(x, y, "#999", false)
     if self[x, y].number != 0 then
       @app.nostroke
-      @app.para self[x, y].number.to_s, :left => x*cell_size + 3, :top => y*cell_size - 2, 
-        :font => '13px', :stroke => COLORS[self[x, y].number - 1]
+      @app.para self[x, y].number.to_s, left: x*cell_size + 3, top: y*cell_size - 2,
+        font: '13px', stroke: COLORS[self[x, y].number - 1]
     end
   end
-  
+
   def paint
     0.upto @h-1 do |y|
       0.upto @w-1 do |x|
@@ -126,15 +126,15 @@ class Field
         render_flag(x, y) if has_flag?(x, y) && !(game_over? && bomb?(x, y))
       end
     end
-  end  
+  end
 
   def bombs_left
     @bombs - @field.flatten.compact.reject {|e| !e.flag }.size
-  end  
+  end
 
   def all_found?
     @field.flatten.compact.reject {|e| !e.is_a?(OpenCell) }.size + @bombs == @w*@h
-  end  
+  end
 
   def reveal!(x, y)
     return unless cell_exists?(x, y)
@@ -143,40 +143,40 @@ class Field
       (-1..1).each do |v|
         (-1..1).each { |h| click!(x+h, y+v) unless (v==0 && h==0) or has_flag?(x+h, y+v) }
       end
-    end      
-  end  
-  
-  private 
-  
+    end
+  end
+
+  private
+
   def cell_exists?(x, y)
     ((0...@w).include? x) && ((0...@h).include? y)
   end
-  
+
   def has_flag?(x, y)
     return false unless cell_exists?(x, y)
     return self[x, y].flag
   end
-  
+
   def bomb?(x, y)
     cell_exists?(x, y) && (self[x, y].is_a? Bomb)
   end
-  
+
   def can_be_discovered?(x, y)
     return false unless cell_exists?(x, y)
     return false if self[x, y].flag
     cell_exists?(x, y) && (self[x, y].is_a? EmptyCell) && !bomb?(x, y) && (bombs_around(x, y) == 0)
-  end  
-  
+  end
+
   def open(x, y)
     self[x, y] = OpenCell.new(bombs_around(x, y)) unless (self[x, y].is_a? OpenCell) or has_flag?(x, y)
   end
-  
+
   def neighbors
     (-1..1).each do |col|
       (-1..1).each { |row| yield row, col unless col==0 && row == 0 }
-    end  
+    end
   end
-  
+
   def discover(x, y)
     open(x, y)
     neighbors do |col, row|
@@ -185,7 +185,7 @@ class Field
       discover(cx, cy) if can_be_discovered?(cx, cy)
       open(cx, cy)
     end
-  end  
+  end
 
   def count_neighbors
     return 0 unless block_given?
@@ -193,15 +193,15 @@ class Field
     neighbors { |h, v| count += 1 if yield(h, v) }
     count
   end
-  
+
   def bombs_around(x, y)
     count_neighbors { |v, h| bomb?(x+h, y+v) }
   end
-  
+
   def flags_around(x, y)
     count_neighbors { |v, h| has_flag?(x+h, y+v) }
   end
-  
+
   def die!(x, y)
     self[x, y].exploded = true
     @game_over = true
@@ -210,7 +210,7 @@ class Field
   def plant_bomb(x, y)
     self[x, y].is_a?(EmptyCell) ? self[x, y] = Bomb.new : false
   end
-  
+
   def plant_bombs
     @bombs.times { redo unless plant_bomb(rand(@w), rand(@h)) }
   end
@@ -220,28 +220,28 @@ class Field
     raise "Cell #{x}:#{y} does not exists!" unless cell_exists?(x, y)
     @field[y][x]
   end
-  
+
   def []=(*args)
     x, y, v = args
     cell_exists?(x, y) ? @field[y][x] = v : false
   end
 end
 
-Shoes.app :width => 730, :height => 450, :title => 'Minesweeper' do
+Shoes.app width: 730, height: 450, title: 'Minesweeper' do
   def render_field
     clear do
       background rgb(50, 50, 90, 0.7)
-      flow :margin => 4 do
+      flow margin: 4 do
         button("Beginner") { new_game :beginner }
         button("Intermediate") { new_game :intermediate }
         button("Expert") { new_game :expert }
       end
-      stack do @status = para :stroke => white end
+      stack do @status = para stroke: white end
       @field.paint
-      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", :top => 420, :left => 0, :stroke => white,  :font => "11px"
-    end  
+      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white,  font: "11px"
+    end
   end
-  
+
   def new_game level
     @field = Field.new self, level
     translate -@old_offset.first, -@old_offset.last unless @old_offset.nil?
@@ -249,10 +249,10 @@ Shoes.app :width => 730, :height => 450, :title => 'Minesweeper' do
     @old_offset = @field.offset
     render_field
   end
-  
+
   new_game :beginner
   animate(5) { @status.replace "Time: #{@field.total_time.to_i} Bombs left: #{@field.bombs_left}" }
-  
+
   click do |button, x, y|
     next if @field.game_over? || @field.all_found?
     fx, fy = ((x-@field.offset.first) / @field.cell_size).to_i, ((y-@field.offset.last) / @field.cell_size).to_i
