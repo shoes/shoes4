@@ -3,31 +3,45 @@ class Shoes
     include Shoes::DSL
     include Shoes::Common::Margin
     include Shoes::Common::Clickable
+    include Shoes::CommonMethods
 
-    attr_reader :parent, :gui, :contents, :hidden
-    attr_reader :blk, :app
+    RECOGNIZED_OPTION_VALUES = %w[left top width height margin margin_left margin_top margin_right margin_bottom]
+
+    attr_reader :parent, :gui, :contents, :hidden, :blk, :app
     attr_accessor :width, :height, :left, :top
 
     def initialize(app, parent, opts={}, &blk)
-      @app = app
-      @parent = parent
-      @contents, @style = [], {}
-
-      %w[left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
-        instance_variable_set "@#{v}", opts[v.to_sym]
-      end
-
-      @left ||= 0
-      @top ||= 0
-      @width ||= 1.0
-      @height ||= 0
-      @init_height = @height
-      @blk = blk
-
+      init_attributes(app, parent, opts, blk)
       set_margin
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       eval_block blk
+    end
+
+    def init_attributes(app, parent, opts, blk)
+      @app      = app
+      @parent   = parent
+      @contents = []
+      @style    = {}
+
+      init_values_from_options(opts)
+      set_default_dimension_values
+      @init_width  = @width
+      @init_height = @height
+      @blk         = blk
+    end
+
+    def set_default_dimension_values
+      @left   ||= 0
+      @top    ||= 0
+      @width  ||= 1.0
+      @height ||= 0
+    end
+
+    def init_values_from_options(opts)
+      %w[left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
+        instance_variable_set "@#{v}", opts[v.to_sym]
+      end
     end
 
     def current_slot
@@ -54,13 +68,7 @@ class Shoes
     end
 
     def positioning x, y, max
-      @init_width ||= @width
-      if @init_width.is_a? Float
-        @width = (parent.width * @init_width).to_i
-        @width -= margin_left + margin_right
-      else
-        @width = @init_width - margin_left - margin_right
-      end
+      setup_dimensions
       if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
         @left, @top = x + parent.margin_left, max.top + parent.margin_top
         @height = contents_alignment
@@ -70,13 +78,7 @@ class Shoes
         @height = contents_alignment
         max = self
       end
-      case @init_height
-      when 0
-      when Float
-        max.height = @height = (parent.height * @init_height).to_i
-      else
-        max.height = @height = @init_height
-      end
+      max.height = @height unless @height == 0
       max
     end
 
@@ -84,18 +86,33 @@ class Shoes
       x, y = left.to_i, top.to_i
       max = TopHeightData.new
       max.top, max.height = y, 0
-      slot_height, slot_top = 0, y
+      slot_top, slot_height = y, 0
 
       contents.each do |element|
         next if element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border)
         tmp = max
         max = element.positioning x, y, max
-        x, y = element.left + element.width, element.top + element.height
-        unless max == tmp
-          slot_height = max.top + max.height - slot_top
-        end
+        x = element.right
+        y = element.bottom
+        slot_height = max.top + max.height - slot_top unless max == tmp
       end
       slot_height
+    end
+
+    private
+    def setup_dimensions
+      convert_percentage_dimensions_to_pixel
+      apply_margins
+    end
+
+    def apply_margins
+      @width  -= (margin_left + margin_right)
+      @height -= (margin_top + margin_bottom)
+    end
+
+    def convert_percentage_dimensions_to_pixel
+      @width = (@init_width * parent.width).to_i if @init_width.is_a? Float
+      @height = (@init_height * parent.height).to_i if @init_height.is_a? Float
     end
   end
 
