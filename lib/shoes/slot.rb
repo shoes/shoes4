@@ -39,8 +39,8 @@ class Shoes
     end
 
     def init_values_from_options(opts)
-      %w[left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
-        instance_variable_set "@#{v}", opts[v.to_sym]
+      RECOGNIZED_OPTION_VALUES.each do |value|
+        instance_variable_set "@#{value}", opts[value.to_sym]
       end
     end
 
@@ -69,7 +69,7 @@ class Shoes
 
     def positioning x, y, max
       setup_dimensions
-      if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
+      if parent.is_a?(Flow) and x + @width <= parent.right
         @left, @top = x + parent.margin_left, max.top + parent.margin_top
         @height = contents_alignment
         max = self if max.height < @height
@@ -78,7 +78,7 @@ class Shoes
         @height = contents_alignment
         max = self
       end
-      max.height = @height unless @height == 0
+      max.height = @height = @init_height unless @init_height == 0
       max
     end
 
