@@ -26,4 +26,13 @@ class Shoes
       end
     end
   end
+
+  class Span < Text
+    attr_reader :opts
+
+    def initialize m, str, opts={}
+      @opts = opts
+      super m, str
+    end
+  end
 end

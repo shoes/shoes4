@@ -204,6 +204,7 @@ describe Shoes::App do
       before :each do
         subject.fullscreen = true
         subject.fullscreen = false
+        sleep 2
       end
 
       it 'is not in fullscreen' do

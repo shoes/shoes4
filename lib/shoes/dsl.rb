@@ -402,14 +402,14 @@ EOS
       end
     end
 
-    def get_styles msg, styles=[], spoint=0
-      msg.each do |e|
-        if e.is_a? Shoes::Text
-          epoint = spoint + e.to_s.length - 1
-          styles << [e, spoint..epoint]
-          get_styles e.str, styles, spoint
+    def get_styles msg, styles=[], start_point=0
+      msg.each do |text|
+        if text.is_a? Shoes::Text
+          end_point = start_point + text.to_s.length - 1
+          styles << [text, start_point..end_point]
+          get_styles text.str, styles, start_point
         end
-        spoint += e.to_s.length
+        start_point += text.to_s.length
       end
       styles
     end
@@ -429,6 +429,10 @@ EOS
 
     def link *str, &blk
       Shoes::Link.new :link, str, &blk
+    end
+
+    def span *str, opts
+      Shoes::Span.new :span, str, opts
     end
 
     def mouse

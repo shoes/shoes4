@@ -7,7 +7,7 @@ class Shoes
         @dsl = dsl
         @opts = opts
         @container = @dsl.app.gui.real
-        @painter = TbPainter.new @dsl, opts
+        @painter = TextBlockPainter.new @dsl, opts
         @container.add_paint_listener @painter
       end
 
