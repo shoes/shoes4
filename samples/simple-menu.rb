@@ -3,9 +3,9 @@ class MenuPanel < Shoes::Widget
   def initialize(color, args)
     @@boxes << self
     background color
-    para link("Box #{@@boxes.length}", :stroke => white, :fill => nil).
+    para link("Box #{@@boxes.length}", stroke: white, fill: nil).
       click { visit "/" },
-        :margin => 18, :align => "center", :size => 20
+        margin: 18, align: "center", size: 20
     hover { expand }
   end
   def expand
@@ -21,11 +21,11 @@ class MenuPanel < Shoes::Widget
   end
 end
 
-Shoes.app :width => 400, :height => 130 do
-  style(Link, :underline => nil)
-  style(LinkHover, :fill => nil, :underline => nil)
-  menu_panel green,  :width => 170, :height => 120, :margin => 4
-  menu_panel blue,   :width => 140, :height => 120, :margin => 4
-  menu_panel red,    :width => 140, :height => 120, :margin => 4
-  menu_panel purple, :width => 140, :height => 120, :margin => 4
+Shoes.app width: 400, height: 130 do
+  style(Link, underline: nil)
+  style(LinkHover, fill: nil, underline: nil)
+  menu_panel green,  width: 170, height: 120, margin: 4
+  menu_panel blue,   width: 140, height: 120, margin: 4
+  menu_panel red,    width: 140, height: 120, margin: 4
+  menu_panel purple, width: 140, height: 120, margin: 4
 end

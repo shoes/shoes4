@@ -1,6 +1,6 @@
-Shoes.app :width => 408, :height => 346, :resizable => false do
+Shoes.app width: 408, height: 346, resizable: false do
   background "#eee"
-  stack :margin => 4 do
+  stack margin: 4 do
     @vid = video "http://www.rin-shun.com/shoes/AdventureTimewithFinnandJakeFinnTime.mp4"
   end
   para "controls: ",

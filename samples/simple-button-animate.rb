@@ -1,5 +1,5 @@
 Shoes.app do
-  flow :margin => 12 do
+  flow margin: 12 do
     # Set up three buttons
     button "Stop" do
       @anim.stop
