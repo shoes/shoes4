@@ -104,10 +104,6 @@ class Shoes
       parent.left + parent.width - element.width - margin
     end
 
-    def fits_without_wrapping?(element, x)
-      x + element.width <= element.parent.right
-    end
-
     def bounds
       gui_container ||= gui_container.getBounds
     end

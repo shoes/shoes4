@@ -68,64 +68,13 @@ class Shoes
       eval_block blk
     end
 
-    def position_element element, current_x, _, max
-      if stays_on_the_same_line?(element, current_x)
-        max = position_in_current_line(element, max, current_x)
-      else
-        max = move_to_next_line(element, max)
-      end
-      max
-    end
-
     def contents_alignment
       setup_dimensions
-      current_x = left
-      current_y = top
-      max = TopHeightData.new current_y, 0
-      slot_height = 0
-
-      contents.each do |element|
-        if takes_up_space?(element)
-          max = position_element element, current_x, current_y, max
-          current_x = element.right
-          current_y = element.bottom
-          slot_height = max.top + max.height - self.top
-        end
-      end
-      if @init_height == 0
-        @height = slot_height
-      else
-        @height = @init_height
-      end
-      slot_height
+      last_position = position_contents()
+      determine_slot_height(last_position)
     end
 
-    private
-    def position_in_current_line(element, max, current_x)
-      left   = current_x + margin_left
-      top    = max.top + margin_top
-      element.contents_alignment if element.respond_to? :contents_alignment
-      max = element if max.height < element.height
-      element._position left, top
-      max
-    end
-
-    def move_to_next_line(element, max)
-      left   = self.left + margin_left
-      top    = max.top + max.height + margin_top
-      element.contents_alignment if element.respond_to? :contents_alignment
-      element._position left, top
-      element
-    end
-
-    def stays_on_the_same_line?(element, x)
-      element.parent.is_a?(Flow) and fits_without_wrapping?(element, x)
-    end
-
-    def takes_up_space?(element)
-      not (element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border))
-    end
-
+    protected
     def setup_dimensions
       convert_percentage_dimensions_to_pixel
       apply_margins
@@ -140,9 +89,91 @@ class Shoes
       @width = (@init_width * parent.width).to_i if @init_width.is_a? Float
       @height = (@init_height * parent.height).to_i if @init_height.is_a? Float
     end
+
+    def position_contents
+      current_position = CurrentPosition.new left, top, top
+      contents.each do |element|
+        current_position = positioning(element, current_position)
+      end
+      current_position
+    end
+
+    def positioning(element, current_position)
+      if takes_up_space?(element)
+        position_element element, current_position
+        element.contents_alignment if element.respond_to? :contents_alignment
+        current_position = update_current_position(current_position, element)
+      end
+      current_position
+    end
+
+    def position_element(element, current_position)
+      raise 'position_element is subclass responsibility'
+    end
+
+    def update_current_position(current_position, element)
+      current_position.x = element.right
+      current_position.y = element.top
+      if current_position.max_bottom < element.bottom
+        current_position.max_bottom = element.bottom
+      end
+      current_position
+    end
+
+    def position_in_current_line(element, current_position)
+      left = current_position.x + margin_left
+      top  = current_position.y + margin_top
+      element._position left, top
+    end
+
+    def move_to_next_line(element, current_position)
+      left = self.left + margin_left
+      top  = current_position.max_bottom + margin_top
+      element._position left, top
+    end
+
+    def fits_on_the_same_line?(element, current_x)
+      current_x + element.width <= element.parent.right
+    end
+
+    def takes_up_space?(element)
+      not (element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border))
+    end
+
+    def determine_slot_height(last_position)
+      content_height = compute_content_height(last_position)
+      if has_variable_size?
+        @height = content_height
+      else
+        @height = @init_height
+      end
+      content_height
+    end
+
+    def compute_content_height(last_position)
+      last_position.max_bottom - self.top
+    end
+
+    def has_variable_size?
+      @init_height == 0
+    end
   end
 
-  TopHeightData = Struct.new(:top, :height)
-  class Flow < Slot; end
-  class Stack < Slot; end
+  CurrentPosition = Struct.new(:x, :y, :max_bottom)
+
+  class Flow < Slot
+    def position_element(element, current_position)
+      if fits_on_the_same_line?(element, current_position.x)
+        position_in_current_line(element, current_position)
+      else
+        move_to_next_line(element, current_position)
+      end
+    end
+  end
+
+  class Stack < Slot
+    def position_element(element, current_position)
+      move_to_next_line(element, current_position)
+    end
+  end
 end
