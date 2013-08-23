@@ -44,7 +44,6 @@ class Shoes
       @gui = Shoes.configuration.backend::App.new @app
 
       execution_blk = create_execution_block(blk)
-
       @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &execution_blk
 
       add_console

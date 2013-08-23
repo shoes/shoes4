@@ -39,11 +39,11 @@ describe Shoes::Button do
 
     shared_examples "stacked" do
       specify "returns self" do
-        subject.positioning(x, y, max).should be(subject)
+        subject.position_element(x, y, max).should be(subject)
       end
 
       specify "top == max.top + max.height" do
-        subject.positioning(x, y, max)
+        subject.position_element(x, y, max)
         subject.top.should eq(155)
       end
     end
@@ -51,25 +51,25 @@ describe Shoes::Button do
     shared_examples_for "left-aligned" do
       specify "subject receives :move" do
         subject.should_receive(:_position).with(0, 155)
-        subject.positioning(x, y, max)
+        subject.position_element(x, y, max)
       end
 
       specify "left == parent.left" do
-        subject.positioning(x, y, max)
+        subject.position_element(x, y, max)
         subject.left.should eq(0)
       end
     end
 
     shared_examples_for "right-aligned" do
       specify "left position is measured from right edge of parent" do
-        subject.positioning(x, y, max)
+        subject.position_element(x, y, max)
         subject.left.should eq(final_x)
       end
     end
 
     shared_examples_for "flowed" do
       specify "top == max.top" do
-        subject.positioning(x, y, max)
+        subject.position_element(x, y, max)
         subject.top.should eq(100)
       end
     end
@@ -80,7 +80,7 @@ describe Shoes::Button do
       end
 
       specify "returns self" do
-        subject.positioning(x, y, max).should be(subject)
+        subject.position_element(x, y, max).should be(subject)
       end
     end
 
@@ -90,7 +90,7 @@ describe Shoes::Button do
       end
 
       specify "returns max" do
-        subject.positioning(x, y, max).should be(max)
+        subject.position_element(x, y, max).should be(max)
       end
     end
 
@@ -126,7 +126,7 @@ describe Shoes::Button do
 
         specify "subject receives :move" do
           subject.should_receive(:_position).with(134, 155)
-          subject.positioning(x, y, max)
+          subject.position_element(x, y, max)
         end
       end
     end
@@ -160,7 +160,7 @@ describe Shoes::Button do
 
         specify "receives :move" do
           subject.should_receive(:_position).with(final_x, max.top)
-          subject.positioning(x, y, max)
+          subject.position_element(x, y, max)
         end
 
         context "short parent" do
@@ -178,11 +178,11 @@ describe Shoes::Button do
 
         specify "receives :move" do
           subject.should_receive(:_position).with(x, max.top)
-          subject.positioning(x, y, max)
+          subject.position_element(x, y, max)
         end
 
         specify "left == x" do
-          subject.positioning(x, y, max)
+          subject.position_element(x, y, max)
           subject.left.should eq(x)
         end
 

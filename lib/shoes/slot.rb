@@ -13,6 +13,7 @@ class Shoes
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
       set_margin
+      setup_dimensions
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       eval_block blk
@@ -67,18 +68,17 @@ class Shoes
       eval_block blk
     end
 
-    def positioning current_x, _, max
-      setup_dimensions
-      if stays_on_the_same_line?(current_x)
-        max = position_in_current_line(max, current_x)
+    def position_element element, current_x, _, max
+      if stays_on_the_same_line?(element, current_x)
+        max = position_in_current_line(element, max, current_x)
       else
-        max = move_to_next_line(max)
+        max = move_to_next_line(element, max)
       end
-      max.height = @height = @init_height unless @init_height == 0
       max
     end
 
     def contents_alignment
+      setup_dimensions
       current_x = left
       current_y = top
       max = TopHeightData.new current_y, 0
@@ -86,33 +86,40 @@ class Shoes
 
       contents.each do |element|
         if takes_up_space?(element)
-          max = element.positioning current_x, current_y, max
+          max = position_element element, current_x, current_y, max
           current_x = element.right
           current_y = element.bottom
           slot_height = max.top + max.height - self.top
         end
       end
+      if @init_height == 0
+        @height = slot_height
+      else
+        @height = @init_height
+      end
       slot_height
     end
 
     private
-    def position_in_current_line(max, x)
-      @left   = x + parent.margin_left
-      @top    = max.top + parent.margin_top
-      @height = contents_alignment
-      max = self if max.height < @height
+    def position_in_current_line(element, max, current_x)
+      left   = current_x + margin_left
+      top    = max.top + margin_top
+      element.contents_alignment if element.respond_to? :contents_alignment
+      max = element if max.height < element.height
+      element._position left, top
       max
     end
 
-    def move_to_next_line(max)
-      @left   = parent.left + parent.margin_left
-      @top    = max.top + max.height + parent.margin_top
-      @height = contents_alignment
-      self
+    def move_to_next_line(element, max)
+      left   = self.left + margin_left
+      top    = max.top + max.height + margin_top
+      element.contents_alignment if element.respond_to? :contents_alignment
+      element._position left, top
+      element
     end
 
-    def stays_on_the_same_line?(x)
-      parent.is_a?(Flow) and fits_without_wrapping?(self, parent, x)
+    def stays_on_the_same_line?(element, x)
+      element.parent.is_a?(Flow) and fits_without_wrapping?(element, x)
     end
 
     def takes_up_space?(element)

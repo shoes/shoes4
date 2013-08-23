@@ -81,6 +81,8 @@ class Shoes
       self
     end
 
+    # NOT part of the public interface e.g. no Shoes APP should use this
+    # however we need it from the Slot code to position elements
     def _position left, top
       @gui.move(left, top) if @gui
       @left, @top = left, top
@@ -97,28 +99,13 @@ class Shoes
       gui_container.setLocation(bounds.x + left, bounds.y + top)
     end
 
-    def positioning x, y, max
-      if parent.is_a?(Flow) and fits_without_wrapping?(self, parent, x)
-        left_align_position = x + parent.margin_left
-        y = max.top + parent.margin_top
-        max = self if max.height < height
-      else
-        left_align_position = parent.left + parent.margin_left
-        y = max.top + max.height + parent.margin_top
-        max = self
-      end
-      x = @right ? right_align_position(self, parent, @right) : left_align_position
-      _position x, y
-      max
-    end
-
     private
     def right_align_position(element, parent, margin)
       parent.left + parent.width - element.width - margin
     end
 
-    def fits_without_wrapping?(element, parent, x)
-      x + element.width <= parent.right
+    def fits_without_wrapping?(element, x)
+      x + element.width <= element.parent.right
     end
 
     def bounds

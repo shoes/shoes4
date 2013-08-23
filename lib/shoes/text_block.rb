@@ -34,6 +34,8 @@ class Shoes
         @fixed = true
       end
       @left && @top ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
+      set_size @left.to_i, @top.to_i
+
 
       clickable_options(opts)
     end
@@ -53,11 +55,6 @@ class Shoes
 
     def to_s
       self.text
-    end
-
-    def positioning x, y, max
-      set_size @left.to_i, @top.to_i
-      super
     end
 
     def set_size left, top
