@@ -31,13 +31,13 @@ class Shoes
     # This is the position of the right side of the Element,
     # measured from the *left* side of the Slot.  (pixels)
     def right
-      @left + width
+      left + width
     end
 
     # This is the position of the bottom of the Element,
     # measured from the *top* of the Slot.  (pixels)
     def bottom
-      @top + height
+      top + height
     end
 
     def in_bounds?(x, y)
