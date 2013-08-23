@@ -79,18 +79,17 @@ class Shoes
     end
 
     def contents_alignment
-      x, y = left.to_i, top.to_i
-      max = TopHeightData.new
-      max.top, max.height = y, 0
-      slot_top, slot_height = y, 0
+      current_x = left
+      current_y = top
+      max = TopHeightData.new current_y, 0
+      slot_height = 0
 
       contents.each do |element|
         if takes_up_space?(element)
-          tmp = max
-          max = element.positioning x, y, max
-          x = element.right
-          y = element.bottom
-          slot_height = max.top + max.height - slot_top unless max == tmp
+          max = element.positioning current_x, current_y, max
+          current_x = element.right
+          current_y = element.bottom
+          slot_height = max.top + max.height - self.top
         end
       end
       slot_height

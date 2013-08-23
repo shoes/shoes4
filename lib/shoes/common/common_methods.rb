@@ -77,11 +77,11 @@ class Shoes
     def move(left, top)
       @parent.contents.delete self if @parent
       @app.unslotted_elements.push self unless @app.unslotted_elements.include?(self)
-      _move left, top
+      _position left, top
       self
     end
 
-    def _move left, top
+    def _position left, top
       @gui.move(left, top) if @gui
       @left, @top = left, top
     end
@@ -95,7 +95,6 @@ class Shoes
     # Displacing an element moves it.  But without changing the layout around it.
     def displace(left, top)
       gui_container.setLocation(bounds.x + left, bounds.y + top)
-      #@swt_composite.pack
     end
 
     def positioning x, y, max
@@ -109,7 +108,7 @@ class Shoes
         max = self
       end
       x = @right ? right_align_position(self, parent, @right) : left_align_position
-      _move x, y
+      _position x, y
       max
     end
 

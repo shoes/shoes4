@@ -50,7 +50,7 @@ describe Shoes::Button do
 
     shared_examples_for "left-aligned" do
       specify "subject receives :move" do
-        subject.should_receive(:_move).with(0, 155)
+        subject.should_receive(:_position).with(0, 155)
         subject.positioning(x, y, max)
       end
 
@@ -125,7 +125,7 @@ describe Shoes::Button do
         it_behaves_like "right-aligned"
 
         specify "subject receives :move" do
-          subject.should_receive(:_move).with(134, 155)
+          subject.should_receive(:_position).with(134, 155)
           subject.positioning(x, y, max)
         end
       end
@@ -159,7 +159,7 @@ describe Shoes::Button do
         it_behaves_like "flowed"
 
         specify "receives :move" do
-          subject.should_receive(:_move).with(final_x, max.top)
+          subject.should_receive(:_position).with(final_x, max.top)
           subject.positioning(x, y, max)
         end
 
@@ -177,7 +177,7 @@ describe Shoes::Button do
         it_behaves_like "flowed"
 
         specify "receives :move" do
-          subject.should_receive(:_move).with(x, max.top)
+          subject.should_receive(:_position).with(x, max.top)
           subject.positioning(x, y, max)
         end
 
