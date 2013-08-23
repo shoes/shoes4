@@ -28,7 +28,3 @@ describe Shoes::Button do
     end
   end
 end
-
-def element_fits?(element_left, element_width, parent_left, parent_width)
-  element_left + element_width <= parent_left + parent_width
-end
