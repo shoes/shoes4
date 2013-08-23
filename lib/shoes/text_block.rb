@@ -34,15 +34,10 @@ class Shoes
         @fixed = true
       end
       @left && @top ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
-      set_size @left.to_i, @top.to_i
+      set_size @left.to_i, @top.to_i unless @fixed
 
 
       clickable_options(opts)
-    end
-
-    def move left, top
-      set_size left, top unless @fixed
-      super
     end
 
     def text=(*values)
