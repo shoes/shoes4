@@ -5,16 +5,16 @@ describe Shoes::Flow do
   let(:app) { parent }
   let(:parent) { Shoes::App.new }
   let(:input_block) { Proc.new {} }
-  let(:input_opts) { Hash.new }
+  let(:opts) { Hash.new }
 
-  subject { Shoes::Flow.new(app, parent, input_opts, &input_block) }
+  subject { Shoes::Flow.new(app, parent, opts, &input_block) }
 
   it_behaves_like "clickable object"
   it_behaves_like "hover and leave events"
   it_behaves_like "Slot"
 
   describe "initialize" do
-    let(:input_opts) { {:width => 131, :height => 137} }
+    let(:opts) { {:width => 131, :height => 137} }
     it "sets accessors" do
       subject.parent.should == parent
       subject.width.should == 131
@@ -23,7 +23,7 @@ describe Shoes::Flow do
     end
 
     describe 'margines' do
-      let(:input_opts){{margin: 143}}
+      let(:opts){{margin: 143}}
       it 'sets the margins' do
         subject.margin.should == [143, 143, 143, 143]
       end
@@ -47,6 +47,7 @@ describe Shoes::Flow do
 
     describe 'two elements added' do
       include_context 'two slot children'
+      include_context 'contents_alignment'
 
       it 'positions an element in the same row as long as they fit' do
         element2.top.should eq subject.top
@@ -56,10 +57,20 @@ describe Shoes::Flow do
         element2.left.should eq element.right
       end
 
-      describe 'when the elements dont fit next to each other' do
-        let(:input_opts){ {width: 80} }
-        it_behaves_like 'arranges elements underneath each other'
+      it 'has a slot height of the maximum value of the 2 elements' do
+        subject.height.should eq [element.height, element2.height].max
       end
     end
+
+    describe 'when the elements dont fit next to each other' do
+      let(:opts){ {width: element.width + 10} }
+      it_behaves_like 'arranges elements underneath each other'
+    end
+
+    describe 'elements dont fit next to each other and set height' do
+      let(:opts){ {width: element.width + 10, height: element.height + 10} }
+      it_behaves_like 'content height > set slot height'
+    end
+
   end
 end

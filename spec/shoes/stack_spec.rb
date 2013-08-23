@@ -34,5 +34,9 @@ describe Shoes::Stack do
     it_behaves_like 'positioning through :_position'
     it_behaves_like 'positions the first element in the top left'
     it_behaves_like 'arranges elements underneath each other'
+    describe 'small stack height' do
+      let(:opts){{height: element.height + 10}}
+      it_behaves_like 'content height > set slot height'
+    end
   end
 end

@@ -70,7 +70,7 @@ class Shoes
 
     def contents_alignment
       setup_dimensions
-      last_position = position_contents()
+      last_position = position_contents
       determine_slot_height(last_position)
     end
 
