@@ -4,6 +4,8 @@
 # NOTE: Comment out anything that isn't a filename, so we can execute this list.
 #       See the `rake samples` task
 
+class-book-adjusted.rb
+
 good-follow.rb
 good-arc.rb
 good-clock-adjusted.rb
@@ -64,7 +66,6 @@ sample27.rb
 sample31.rb
 sample34.rb
 sample35.rb
-sample36.rb
 sample37.rb
 sample42.rb
 sample44.rb

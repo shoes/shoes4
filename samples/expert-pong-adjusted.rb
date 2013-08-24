@@ -26,11 +26,9 @@ Shoes.app width: 400, height: 400, resizable: false do
 
     # check for game over
     if @ball.top + ball_diameter < 0 or @ball.top > app.height
-      a = para strong("GAME OVER"), size: 32, align: 'center'
-      b = para @ball.top < 0 ? "You win!" : "Computer wins", align: 'center'
+      para strong("GAME OVER"), size: 32, align: 'center', left: 0, top: 150
+      para @ball.top < 0 ? "You win!" : "Computer wins", align: 'center', left: 0, top: 200
       @ball.hide and @anim.remove
-      a.move 0, 150
-      b.move 0, 200
     end
 
     # move the @you paddle, following the mouse
