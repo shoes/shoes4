@@ -100,14 +100,8 @@ class Shoes
     end
 
     private
-    def right_align_position(element, parent, margin)
-      parent.left + parent.width - element.width - margin
-    end
-
     def bounds
       gui_container ||= gui_container.getBounds
     end
-
-
   end
 end
