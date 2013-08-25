@@ -7,6 +7,11 @@ class Shoes
 
     RECOGNIZED_OPTION_VALUES = %w[left top width height margin margin_left margin_top margin_right margin_bottom]
 
+    DEFAULT_LEFT   = 0
+    DEFAULT_TOP    = 0
+    DEFAULT_WIDTH  = 1.0
+    DEFAULT_HEIGHT = 0
+
     attr_reader :parent, :gui, :contents, :hidden, :blk, :app
     attr_accessor :width, :height, :left, :top
 
@@ -33,10 +38,10 @@ class Shoes
     end
 
     def set_default_dimension_values
-      @left   ||= 0
-      @top    ||= 0
-      @width  ||= 1.0
-      @height ||= 0
+      @left   ||= DEFAULT_LEFT
+      @top    ||= DEFAULT_TOP
+      @width  ||= DEFAULT_WIDTH
+      @height ||= DEFAULT_HEIGHT
     end
 
     def init_values_from_options(opts)
@@ -142,7 +147,7 @@ class Shoes
 
     def determine_slot_height(last_position)
       content_height = compute_content_height(last_position)
-      if has_variable_size?
+      if has_variable_height?
         @height = content_height
       else
         @height = @init_height
@@ -154,8 +159,8 @@ class Shoes
       last_position.max_bottom - self.top
     end
 
-    def has_variable_size?
-      @init_height == 0
+    def has_variable_height?
+      @init_height == DEFAULT_HEIGHT
     end
   end
 
