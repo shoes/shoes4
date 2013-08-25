@@ -67,9 +67,14 @@ describe Shoes::Flow do
       it_behaves_like 'arranges elements underneath each other'
     end
 
-    describe 'elements dont fit next to each other and set height' do
+    describe 'elements dont fit next to each other and set small height' do
       let(:opts){ {width: element.width + 10, height: element.height + 10} }
-      it_behaves_like 'content height > set slot height'
+      it_behaves_like 'set height and contents alignment'
+    end
+
+    describe 'elements dont fit next to each other and set big height' do
+      let(:opts){ {width: element.width + 10, height: 1000} }
+      it_behaves_like 'set height and contents alignment'
     end
 
   end

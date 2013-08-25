@@ -76,7 +76,7 @@ shared_examples_for 'arranges elements underneath each other' do
   end
 end
 
-shared_examples_for 'content height > set slot height' do
+shared_examples_for 'set height and contents alignment' do
   include_context 'two slot children'
 
   it 'contents_alignment returns the height of the content' do

@@ -36,7 +36,11 @@ describe Shoes::Stack do
     it_behaves_like 'arranges elements underneath each other'
     describe 'small stack height' do
       let(:opts){{height: element.height + 10}}
-      it_behaves_like 'content height > set slot height'
+      it_behaves_like 'set height and contents alignment'
+    end
+    describe 'big stack height' do
+      let(:opts){{height: 1000}}
+      it_behaves_like 'set height and contents alignment'
     end
   end
 end

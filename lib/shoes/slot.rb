@@ -31,17 +31,16 @@ class Shoes
       @style    = {}
 
       init_values_from_options(opts)
+      @fixed_height = @height || false
       set_default_dimension_values
-      @init_width  = @width
-      @init_height = @height
-      @blk         = blk
+      @blk = blk
     end
 
     def set_default_dimension_values
-      @left   ||= DEFAULT_LEFT
-      @top    ||= DEFAULT_TOP
-      @width  ||= DEFAULT_WIDTH
-      @height ||= DEFAULT_HEIGHT
+      @left   ||= 0
+      @top    ||= 0
+      @width  ||= 1.0
+      @height ||= 0
     end
 
     def init_values_from_options(opts)
@@ -74,7 +73,6 @@ class Shoes
     end
 
     def contents_alignment
-      setup_dimensions
       last_position = position_contents
       determine_slot_height(last_position)
     end
@@ -85,14 +83,14 @@ class Shoes
       apply_margins
     end
 
+    def convert_percentage_dimensions_to_pixel
+      @width = (@width * parent.width).to_i if @width.is_a? Float
+      @height = (@height * parent.height).to_i if @height.is_a? Float
+    end
+
     def apply_margins
       @width  -= (margin_left + margin_right)
       @height -= (margin_top + margin_bottom)
-    end
-
-    def convert_percentage_dimensions_to_pixel
-      @width = (@init_width * parent.width).to_i if @init_width.is_a? Float
-      @height = (@init_height * parent.height).to_i if @init_height.is_a? Float
     end
 
     def position_contents
@@ -147,11 +145,7 @@ class Shoes
 
     def determine_slot_height(last_position)
       content_height = compute_content_height(last_position)
-      if has_variable_height?
-        @height = content_height
-      else
-        @height = @init_height
-      end
+      @height = content_height if has_variable_height?
       content_height
     end
 
@@ -160,7 +154,7 @@ class Shoes
     end
 
     def has_variable_height?
-      @init_height == DEFAULT_HEIGHT
+      not @fixed_height
     end
   end
 
