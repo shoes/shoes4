@@ -114,9 +114,7 @@ class Shoes
 
       def main_window_on_close
         lambda { |event|
-          Shoes.logger.debug "main_window on_close block begin... disposing ::Swt.display"
           ::Swt.display.dispose
-          Shoes.logger.debug "::Swt.display disposed"
           Dir[File.join(Dir.tmpdir, "__shoes4_*.png")].each{|f| File.delete f}
         }
       end

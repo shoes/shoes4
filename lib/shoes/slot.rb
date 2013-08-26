@@ -3,31 +3,50 @@ class Shoes
     include Shoes::DSL
     include Shoes::Common::Margin
     include Shoes::Common::Clickable
+    include Shoes::CommonMethods
 
-    attr_reader :parent, :gui, :contents, :hidden
-    attr_reader :blk, :app
+    RECOGNIZED_OPTION_VALUES = %w[left top width height margin margin_left margin_top margin_right margin_bottom]
+
+    DEFAULT_LEFT   = 0
+    DEFAULT_TOP    = 0
+    DEFAULT_WIDTH  = 1.0
+    DEFAULT_HEIGHT = 0
+
+    attr_reader :parent, :gui, :contents, :hidden, :blk, :app
     attr_accessor :width, :height, :left, :top
 
     def initialize(app, parent, opts={}, &blk)
-      @app = app
-      @parent = parent
-      @contents, @style = [], {}
-
-      %w[left top width height margin margin_left margin_top margin_right margin_bottom].each do |v|
-        instance_variable_set "@#{v}", opts[v.to_sym]
-      end
-
-      @left ||= 0
-      @top ||= 0
-      @width ||= 1.0
-      @height ||= 0
-      @init_height = @height
-      @blk = blk
-
+      init_attributes(app, parent, opts, blk)
       set_margin
+      setup_dimensions
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       eval_block blk
+    end
+
+    def init_attributes(app, parent, opts, blk)
+      @app      = app
+      @parent   = parent
+      @contents = []
+      @style    = {}
+
+      init_values_from_options(opts)
+      @fixed_height = @height || false
+      set_default_dimension_values
+      @blk = blk
+    end
+
+    def set_default_dimension_values
+      @left   ||= 0
+      @top    ||= 0
+      @width  ||= 1.0
+      @height ||= 0
+    end
+
+    def init_values_from_options(opts)
+      RECOGNIZED_OPTION_VALUES.each do |value|
+        instance_variable_set "@#{value}", opts[value.to_sym]
+      end
     end
 
     def current_slot
@@ -53,53 +72,107 @@ class Shoes
       eval_block blk
     end
 
-    def positioning x, y, max
-      @init_width ||= @width
-      if @init_width.is_a? Float
-        @width = (parent.width * @init_width).to_i
-        @width -= margin_left + margin_right
-      else
-        @width = @init_width - margin_left - margin_right
-      end
-      if parent.is_a?(Flow) and x + @width <= parent.left + parent.width
-        @left, @top = x + parent.margin_left, max.top + parent.margin_top
-        @height = contents_alignment
-        max = self if max.height < @height
-      else
-        @left, @top = parent.left + parent.margin_left, max.top + max.height + parent.margin_top
-        @height = contents_alignment
-        max = self
-      end
-      case @init_height
-      when 0
-      when Float
-        max.height = @height = (parent.height * @init_height).to_i
-      else
-        max.height = @height = @init_height
-      end
-      max
+    def contents_alignment
+      last_position = position_contents
+      determine_slot_height(last_position)
     end
 
-    def contents_alignment
-      x, y = left.to_i, top.to_i
-      max = TopHeightData.new
-      max.top, max.height = y, 0
-      slot_height, slot_top = 0, y
+    protected
+    def setup_dimensions
+      convert_percentage_dimensions_to_pixel
+      apply_margins
+    end
 
+    def convert_percentage_dimensions_to_pixel
+      @width = (@width * parent.width).to_i if @width.is_a? Float
+      @height = (@height * parent.height).to_i if @height.is_a? Float
+    end
+
+    def apply_margins
+      @width  -= (margin_left + margin_right)
+      @height -= (margin_top + margin_bottom)
+    end
+
+    def position_contents
+      current_position = CurrentPosition.new left, top, top
       contents.each do |element|
-        next if element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border)
-        tmp = max
-        max = element.positioning x, y, max
-        x, y = element.left + element.width, element.top + element.height
-        unless max == tmp
-          slot_height = max.top + max.height - slot_top
-        end
+        current_position = positioning(element, current_position)
       end
-      slot_height
+      current_position
+    end
+
+    def positioning(element, current_position)
+      if takes_up_space?(element)
+        position_element element, current_position
+        element.contents_alignment if element.respond_to? :contents_alignment
+        current_position = update_current_position(current_position, element)
+      end
+      current_position
+    end
+
+    def position_element(element, current_position)
+      raise 'position_element is subclass responsibility'
+    end
+
+    def update_current_position(current_position, element)
+      current_position.x = element.right
+      current_position.y = element.top
+      if current_position.max_bottom < element.bottom
+        current_position.max_bottom = element.bottom
+      end
+      current_position
+    end
+
+    def position_in_current_line(element, current_position)
+      left = current_position.x + margin_left
+      top  = current_position.y + margin_top
+      element._position left, top
+    end
+
+    def move_to_next_line(element, current_position)
+      left = self.left + margin_left
+      top  = current_position.max_bottom + margin_top
+      element._position left, top
+    end
+
+    def fits_on_the_same_line?(element, current_x)
+      current_x + element.width <= right
+    end
+
+    def takes_up_space?(element)
+      not (element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border))
+    end
+
+    def determine_slot_height(last_position)
+      content_height = compute_content_height(last_position)
+      @height = content_height if has_variable_height?
+      content_height
+    end
+
+    def compute_content_height(last_position)
+      last_position.max_bottom - self.top
+    end
+
+    def has_variable_height?
+      not @fixed_height
     end
   end
 
-  TopHeightData = Struct.new(:top, :height)
-  class Flow < Slot; end
-  class Stack < Slot; end
+  CurrentPosition = Struct.new(:x, :y, :max_bottom)
+
+  class Flow < Slot
+    def position_element(element, current_position)
+      if fits_on_the_same_line?(element, current_position.x)
+        position_in_current_line(element, current_position)
+      else
+        move_to_next_line(element, current_position)
+      end
+    end
+  end
+
+  class Stack < Slot
+    def position_element(element, current_position)
+      move_to_next_line(element, current_position)
+    end
+  end
 end
