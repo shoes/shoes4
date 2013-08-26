@@ -93,7 +93,7 @@ class Manual < Shoes
     flow width: 0.2, margin_left: 10 do
       flow(margin_right: 20) do
         background black(0.7), curve: 5
-        inscription "Not findng it?\n", 'Try ', link(fg 'Search', white){visit '/manual/999'}, '!', align: 'center', stroke: lightgrey
+        inscription "Not findng it?\n", 'Try ', link(fg 'Search', white){visit '/manual/999'}, '!', align: 'center', stroke: lightgray
       end
       stack(height: 10){}
       para *TOC
@@ -473,11 +473,11 @@ class Manual < Shoes
           if section
             background gray, curve: 5
             tagline link(fg(docs_title, white)){@f.clear{title docs_title; s.show_page paras, true, term}; app.gui.flush}, width: 320
-            inscription "Sub-Section under #{DOCS[chapter][0]}", stroke: lightgrey, width: 180
+            inscription "Sub-Section under #{DOCS[chapter][0]}", stroke: lightgray, width: 180
           else
             background black(0.8), curve: 5
             subtitle link(fg(docs_title, white)){@f.clear{title docs_title; s.show_page paras, true, term}; app.gui.flush}, width: 320
-            inscription 'Section Header', stroke: lightgrey, width: 100
+            inscription 'Section Header', stroke: lightgray, width: 100
           end
         end
         stack(height: 2){}

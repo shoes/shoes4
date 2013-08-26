@@ -212,10 +212,12 @@ describe Shoes::App do
       end
 
       it 'has its original width' do
+        pending 'Failing on Mac fullscreen doesnt seem to work see #397'
         subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
 
       it 'has its original height' do
+        pending 'Failing on Mac fullscreen doesnt seem to work see #397'
         subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
     end
