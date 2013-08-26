@@ -89,3 +89,20 @@ shared_examples_for 'set height and contents alignment' do
     subject.height.should eq old_height
   end
 end
+
+shared_examples_for 'taking care of margin' do
+  include_context 'two slot children'
+  include_context 'contents_alignment'
+
+  it 'respects the left margin for the first element' do
+    element.left.should eq opts[:margin]
+  end
+
+  it 'respects the left margin for the second element' do
+    element2.left.should eq opts[:margin]
+  end
+
+  it 'respects the top margin for the first element' do
+    element.top.should eq opts[:margin]
+  end
+end

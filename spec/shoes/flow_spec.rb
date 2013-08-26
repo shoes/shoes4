@@ -77,5 +77,10 @@ describe Shoes::Flow do
       it_behaves_like 'set height and contents alignment'
     end
 
+    describe 'with margins and two elements not fitting next to each other' do
+      let(:opts){{width: element.width + 10, margin: 27}}
+      it_behaves_like 'taking care of margin'
+    end
+
   end
 end

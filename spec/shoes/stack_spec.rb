@@ -42,5 +42,9 @@ describe Shoes::Stack do
       let(:opts){{height: 1000}}
       it_behaves_like 'set height and contents alignment'
     end
+    describe 'with margin' do
+      let(:opts){{margin: 27}}
+      it_behaves_like 'taking care of margin'
+    end
   end
 end
