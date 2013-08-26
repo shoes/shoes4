@@ -21,6 +21,7 @@ class Shoes
       setup_dimensions
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
+      unslot if opts[:left] || opts[:top]
       eval_block blk
     end
 
@@ -94,7 +95,9 @@ class Shoes
     end
 
     def position_contents
-      current_position = CurrentPosition.new left, top, top
+      current_position = CurrentPosition.new left + margin_left,
+                                             top + margin_top,
+                                             top + margin_top
       contents.each do |element|
         current_position = positioning(element, current_position)
       end
@@ -124,15 +127,11 @@ class Shoes
     end
 
     def position_in_current_line(element, current_position)
-      left = current_position.x + margin_left
-      top  = current_position.y + margin_top
-      element._position left, top
+      element._position current_position.x, current_position.y
     end
 
     def move_to_next_line(element, current_position)
-      left = self.left + margin_left
-      top  = current_position.max_bottom + margin_top
-      element._position left, top
+      element._position self.left, current_position.max_bottom
     end
 
     def fits_on_the_same_line?(element, current_x)

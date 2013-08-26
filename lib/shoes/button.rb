@@ -20,9 +20,7 @@ class Shoes
       clickable_options(opts)
     end
 
-    attr_reader :parent
-    attr_reader :blk
-    attr_reader :gui, :opts
+    attr_reader :parent,:blk, :gui, :opts, :left, :top
     attr_accessor :text
 
     def focus
