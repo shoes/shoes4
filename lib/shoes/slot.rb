@@ -132,7 +132,7 @@ class Shoes
     end
 
     def move_to_next_line(element, current_position)
-      element._position self.left, current_position.max_bottom
+      element._position self.left + margin_left, current_position.max_bottom
     end
 
     def fits_on_the_same_line?(element, current_x)
