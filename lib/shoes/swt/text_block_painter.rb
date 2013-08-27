@@ -58,28 +58,17 @@ class Shoes
 
       def apply_styles(opts)
         font = parse_font(opts)
-        fgc = parse_foreground_color(opts)
-        bgc = parse_background_color(opts)
-        style = ::Swt::TextStyle.new font, fgc, bgc
-
-        set_underline(style, opts)
-        set_undercolor(style, opts)
-
-        set_rise(style, opts)
-
-        set_strikethrough(style, opts)
-        set_strikecolor(style, opts)
+        fgc = color_from_dsl @opts[:stroke], ::Swt::Color.new(Shoes.display, 0, 0, 0)
+        bgc = color_from_dsl @opts[:fill]
+        style = ::Swt::TextStyle.new(font, fgc, bgc).tap do |style|
+          set_underline(style, opts)
+          set_undercolor(style, opts)
+          set_rise(style, opts)
+          set_strikethrough(style, opts)
+          set_strikecolor(style, opts)
+        end
 
         [font, fgc, bgc, style]
-      end
-
-      def parse_background_color(opts)
-        opts[:fill] ? ::Swt::Color.new(Shoes.display, opts[:fill].red, opts[:fill].green, opts[:fill].blue) : nil
-      end
-
-      def parse_foreground_color(opts)
-        opts[:stroke] ? ::Swt::Color.new(Shoes.display, opts[:stroke].red, opts[:stroke].green, opts[:stroke].blue) :
-            ::Swt::Color.new(Shoes.display, 0, 0, 0)
       end
 
       def create_link(e)
@@ -118,9 +107,9 @@ class Shoes
                 when :em
                   font_style = font_style | ::Swt::SWT::ITALIC
                 when :fg
-                  fg = ::Swt::Color.new Shoes.display, text_object[0].color.red, text_object[0].color.green, text_object[0].color.blue
+                  fg = color_from_dsl e[0]
                 when :bg
-                  bg = ::Swt::Color.new Shoes.display, text_object[0].color.red, text_object[0].color.green, text_object[0].color.blue
+                  bg = color_from_dsl e[0]
                 when :ins
                   cmds << "underline = true"
                 when :del
@@ -170,12 +159,7 @@ class Shoes
       end
 
       def set_undercolor(style, opts)
-        style.underlineColor = opts[:undercolor] ?
-            ::Swt::Color.new(Shoes.display,
-                             opts[:undercolor].red,
-                             opts[:undercolor].green,
-                             opts[:undercolor].blue)
-        : nil
+        style.underlineColor = color_from_dsl @opts[:undercolor]
       end
 
       def set_strikethrough(style, opts)
@@ -183,15 +167,13 @@ class Shoes
       end
 
       def set_strikecolor(style, opts)
-        style.strikeoutColor = opts[:strikecolor] ?
-            ::Swt::Color.new(Shoes.display,
-                             opts[:strikecolor].red,
-                             opts[:strikecolor].green,
-                             opts[:strikecolor].blue)
-        : nil
+        style.strikeoutColor = color_from_dsl @opts[:strikecolor]
+      end
+
+      def color_from_dsl dsl_color, default = nil
+        return default if dsl_color.nil?
+        ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
       end
     end
-
   end
 end
-
