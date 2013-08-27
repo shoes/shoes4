@@ -7,7 +7,7 @@ class Shoes
     include Shoes::Common::Clickable
 
 
-    attr_reader  :gui, :parent, :text, :links, :app, :hidden
+    attr_reader  :gui, :parent, :text, :links, :app, :hidden, :text_styles
     attr_accessor :font, :font_size, :width, :height, :left, :top, :fixed, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
@@ -19,6 +19,7 @@ class Shoes
       @left = opts[:left]
       @top = opts[:top]
       @links = []
+      @text_styles = opts[:text_styles]
 
       opts[:stroke] = Shoes::Color.new(opts[:stroke]) if opts[:stroke].is_a?(String)
       opts[:fill] = Shoes::Color.new(opts[:fill]) if opts[:fill].is_a?(String)
