@@ -169,7 +169,7 @@ class Shoes
 
     def add_console
       keypress do |key|
-        if key == :"control_/"
+        if key == :"alt_/"
           ::Shoes::Logger.setup
         end
       end
