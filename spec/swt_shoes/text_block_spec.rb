@@ -100,7 +100,7 @@ describe Shoes::Swt::TextBlock do
       it "sets correct underline style" do
 
         style.should_receive(:underline=).with(true)
-        style.should_receive(:underlineStyle=).with(Shoes::Swt::TextBlockPainter::UNDERLINE_STYLES["single"])
+        style.should_receive(:underlineStyle=).with(Shoes::Swt::TextStyleFactory::UNDERLINE_STYLES["single"])
 
         subject.paintControl(event)
       end

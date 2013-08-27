@@ -5,12 +5,6 @@ class Shoes
       include Common::Resource
       include Common::Clickable
 
-      UNDERLINE_STYLES = {
-          "single" => 0,
-          "double" => 1,
-          "error" => 2,
-      }
-
       def initialize(dsl, opts)
         @dsl = dsl
         @opts = opts
@@ -60,14 +54,7 @@ class Shoes
         font = parse_font(opts)
         fgc = color_from_dsl @opts[:stroke], ::Swt::Color.new(Shoes.display, 0, 0, 0)
         bgc = color_from_dsl @opts[:fill]
-        style = ::Swt::TextStyle.new(font, fgc, bgc).tap do |style|
-          set_underline(style, opts)
-          set_undercolor(style, opts)
-          set_rise(style, opts)
-          set_strikethrough(style, opts)
-          set_strikecolor(style, opts)
-        end
-
+        style = TextStyleFactory.new(font, fgc, bgc, opts)
         [font, fgc, bgc, style]
       end
 
@@ -87,6 +74,11 @@ class Shoes
         end
       end
 
+      # @return [Shoes::Text, Range]: an array of text objects and the
+      #   character ranges they apply to, where the character ranges
+      #   are within those of st, inclusive. Conceptually, these are
+      #   all the styles that are applied to the text (or a substring
+      #   of the text) that st applies to.
       def nested_styles styles, st
         styles.map do |e|
           (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
@@ -149,6 +141,30 @@ class Shoes
         ::Swt::Font.new(Shoes.display, @dsl.font, @dsl.font_size, font_style)
       end
 
+      # TODO: remove duplication. Also in TextStyleFactory
+      def color_from_dsl dsl_color, default = nil
+        return default if dsl_color.nil?
+        ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
+      end
+    end
+
+    class TextStyleFactory
+      UNDERLINE_STYLES = {
+          "single" => 0,
+          "double" => 1,
+          "error" => 2,
+      }
+
+      def initialize(font, foreground_color, background_color, opts)
+        @style = ::Swt::TextStyle.new font, foreground_color, background_color
+        set_underline(@style, opts)
+        set_undercolor(@style, opts)
+        set_rise(@style, opts)
+        set_strikethrough(@style, opts)
+        set_strikecolor(@style, opts)
+      end
+
+      private
       def set_rise(style, opts)
         style.rise = opts[:rise]
       end
@@ -159,7 +175,7 @@ class Shoes
       end
 
       def set_undercolor(style, opts)
-        style.underlineColor = color_from_dsl @opts[:undercolor]
+        style.underlineColor = color_from_dsl opts[:undercolor]
       end
 
       def set_strikethrough(style, opts)
@@ -167,7 +183,7 @@ class Shoes
       end
 
       def set_strikecolor(style, opts)
-        style.strikeoutColor = color_from_dsl @opts[:strikecolor]
+        style.strikeoutColor = color_from_dsl opts[:strikecolor]
       end
 
       def color_from_dsl dsl_color, default = nil
