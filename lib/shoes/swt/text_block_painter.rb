@@ -106,21 +106,21 @@ class Shoes
 
       def set_text_styles(fgc, bgc)
         @opts[:text_styles].each do |st|
-          style, ft = nil, nil
+          style, font_style = nil, nil
           font, font_style, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
-          nested_styles(@opts[:text_styles], st).each do |e|
-            if e[0].style == :span
-              ft, fg, bg, style = apply_styles(e[0].opts)
+          nested_styles(@opts[:text_styles], st).each do |text_object|
+            if text_object[0].style == :span
+              font_style, fg, bg, style = apply_styles(text_object[0].opts)
             else
-              case e[0].style
+              case text_object[0].style
                 when :strong
                   font_style = font_style | ::Swt::SWT::BOLD
                 when :em
                   font_style = font_style | ::Swt::SWT::ITALIC
                 when :fg
-                  fg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
+                  fg = ::Swt::Color.new Shoes.display, text_object[0].color.red, text_object[0].color.green, text_object[0].color.blue
                 when :bg
-                  bg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
+                  bg = ::Swt::Color.new Shoes.display, text_object[0].color.red, text_object[0].color.green, text_object[0].color.blue
                 when :ins
                   cmds << "underline = true"
                 when :del
@@ -140,14 +140,14 @@ class Shoes
                 else
               end
             end
-            ft = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, font_style
-            style = ::Swt::TextStyle.new ft, fg, bg
+            font_style = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, font_style
+            style = ::Swt::TextStyle.new font_style, fg, bg
             cmds.each{|cmd| eval "style.#{cmd}"}
           end
           @opts[:strikecolor] ? set_strikecolor(style) : nil
           @opts[:undercolor] ? set_undercolor(style) : nil
           @text_layout.setStyle style, st[1].first, st[1].last
-          @gcs << ft
+          @gcs << font_style
         end if @opts[:text_styles]
       end
 
