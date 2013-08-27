@@ -44,8 +44,7 @@ class Shoes
       @gui = Shoes.configuration.backend::App.new @app
 
       execution_blk = create_execution_block(blk)
-
-      @top_slot = Flow.new self, self, { left: 0, top: 0, width: @width, height: @height}, &execution_blk
+      @top_slot = Flow.new self, self, { width: @width, height: @height}, &execution_blk
 
       add_console
 
@@ -170,7 +169,7 @@ class Shoes
 
     def add_console
       keypress do |key|
-        if key == :"control_/"
+        if key == :"alt_/"
           ::Shoes::Logger.setup
         end
       end

@@ -179,5 +179,36 @@ describe Shoes::Swt::TextBlock do
         subject.paintControl(event)
       end
     end
+
+    context "colors" do
+      let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
+      let(:salmon) { Shoes::Swt::Color.new(Shoes::COLORS[:salmon]).real }
+
+      describe "stroke" do
+        it "is black by default" do
+          ::Swt::TextStyle.should_receive(:new).with(anything, black, anything)
+          subject.paintControl(event)
+        end
+
+        it "is set with opts[:stroke]" do
+          opts[:stroke] = Shoes::COLORS[:salmon]
+          ::Swt::TextStyle.should_receive(:new).with(anything, salmon, anything)
+          subject.paintControl(event)
+        end
+      end
+
+      describe "fill" do
+        it "is nil by default" do
+          ::Swt::TextStyle.should_receive(:new).with(anything, anything, nil)
+          subject.paintControl(event)
+        end
+
+        it "is set with opts[:fill]" do
+          opts[:fill] = Shoes::COLORS[:salmon]
+          ::Swt::TextStyle.should_receive(:new).with(anything, anything, salmon)
+          subject.paintControl(event)
+        end
+      end
+    end
   end
 end

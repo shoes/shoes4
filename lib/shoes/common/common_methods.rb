@@ -31,13 +31,13 @@ class Shoes
     # This is the position of the right side of the Element,
     # measured from the *left* side of the Slot.  (pixels)
     def right
-      @left + width
+      left + width
     end
 
     # This is the position of the bottom of the Element,
     # measured from the *top* of the Slot.  (pixels)
     def bottom
-      @top + height
+      top + height
     end
 
     def in_bounds?(x, y)
@@ -75,13 +75,19 @@ class Shoes
     # Moves an element to a specific pixel position. The element is still in the slot,
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
-      @parent.contents.delete self if @parent
-      @app.unslotted_elements.push self unless @app.unslotted_elements.include?(self)
-      _move left, top
+      unslot
+      _position left, top
       self
     end
 
-    def _move left, top
+    def unslot
+      @parent.contents.delete self if @parent
+      @app.unslotted_elements.push self unless @app.unslotted_elements.include?(self)
+    end
+
+    # NOT part of the public interface e.g. no Shoes APP should use this
+    # however we need it from the Slot code to position elements
+    def _position left, top
       @gui.move(left, top) if @gui
       @left, @top = left, top
     end
@@ -95,37 +101,11 @@ class Shoes
     # Displacing an element moves it.  But without changing the layout around it.
     def displace(left, top)
       gui_container.setLocation(bounds.x + left, bounds.y + top)
-      #@swt_composite.pack
-    end
-
-    def positioning x, y, max
-      if parent.is_a?(Flow) and fits_without_wrapping?(self, parent, x)
-        left_align_position = x + parent.margin_left
-        y = max.top + parent.margin_top
-        max = self if max.height < height
-      else
-        left_align_position = parent.left + parent.margin_left
-        y = max.top + max.height + parent.margin_top
-        max = self
-      end
-      x = @right ? right_align_position(self, parent, @right) : left_align_position
-      _move x, y
-      max
     end
 
     private
-    def right_align_position(element, parent, margin)
-      parent.left + parent.width - element.width - margin
-    end
-
-    def fits_without_wrapping?(element, parent, x)
-      x + element.width <= parent.left + parent.width
-    end
-
     def bounds
       gui_container ||= gui_container.getBounds
     end
-
-
   end
 end

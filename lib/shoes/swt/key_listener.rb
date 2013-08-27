@@ -79,12 +79,12 @@ class Shoes
         elsif control?(event)
           character_for_control_keypress(event)
         else
-          event.character.chr
+          event.character.chr('UTF-8')
         end
       end
 
       def character_for_control_keypress(event)
-        character = event.keyCode.chr
+        character = event.keyCode.chr('UTF-8')
         if shift?(event)
           character.upcase
         else

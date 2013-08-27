@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::KeypressListener do
@@ -33,6 +34,10 @@ describe Shoes::Swt::KeypressListener do
 
     it '"$"' do
       test_character_press '$'
+    end
+
+    it 'handles UTF-8 (œ)' do
+      test_character_press 'œ'
     end
   end
 
