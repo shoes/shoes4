@@ -103,32 +103,32 @@ class Shoes
                 when :bg
                   bg = color_from_dsl e[0]
                 when :ins
-                  cmds << "underline = true"
+                  cmds[:underline] = true
                 when :del
-                  cmds << "strikeout = true"
+                  cmds[:strikeout] = true
                 when :sub
                   small *= 0.8
-                  cmds << "rise = -5"
+                  cmds[:rise] = -5
                 when :sup
                   small *= 0.8
-                  cmds << "rise = 5"
+                  cmds[:rise] = 5
                 when :code
                   font = "Lucida Console"
                 when :link
-                  cmds << "underline = true"
+                  cmds[:underline] = true
                   fg = ::Swt::Color.new Shoes.display, 0, 0, 255
                   create_link(e)
                 else
               end
             end
-            font_style = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, font_style
+            font = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, font_style
             style = ::Swt::TextStyle.new font_style, fg, bg
-            cmds.each{|cmd| eval "style.#{cmd}"}
+            cmds.each{|attr, value| style.public_send(attr, value)}
           end
           @opts[:strikecolor] ? set_strikecolor(style) : nil
           @opts[:undercolor] ? set_undercolor(style) : nil
           @text_layout.setStyle style, st[1].first, st[1].last
-          @gcs << font_style
+          @gcs << font
         end if @opts[:text_styles]
       end
 
