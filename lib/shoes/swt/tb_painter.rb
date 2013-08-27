@@ -47,9 +47,9 @@ class Shoes
                                     else ::Swt::SWT::LEFT
                                   end
         font = parse_font
-        fgc = parse_foreground_color
-        bgc = parse_background_color
-        style = ::Swt::TextStyle.new font, fgc, bgc
+        foreground_color = color_from_dsl @opts[:stroke], ::Swt::Color.new(Shoes.display, 0, 0, 0)
+        background_color = color_from_dsl @opts[:fill]
+        style = ::Swt::TextStyle.new font, foreground_color, background_color
 
         set_underline(style)
         set_undercolor(style)
@@ -60,21 +60,12 @@ class Shoes
         set_strikecolor(style)
 
         @text_layout.setStyle style, 0, @dsl.text.length - 1
-        @gcs << font << fgc << bgc
+        @gcs << font << foreground_color << background_color
 
-        set_text_styles(fgc, bgc)
+        set_text_styles(foreground_color, background_color)
       end
 
       private
-
-      def parse_background_color
-        @opts[:fill] ? ::Swt::Color.new(Shoes.display, @opts[:fill].red, @opts[:fill].green, @opts[:fill].blue) : nil
-      end
-
-      def parse_foreground_color
-        @opts[:stroke] ? ::Swt::Color.new(Shoes.display, @opts[:stroke].red, @opts[:stroke].green, @opts[:stroke].blue) :
-            ::Swt::Color.new(Shoes.display, 0, 0, 0)
-      end
 
       def create_link(e)
         spos = @text_layout.getLocation e[1].first, false
@@ -108,9 +99,9 @@ class Shoes
               when :em
                 ft = ft | ::Swt::SWT::ITALIC
               when :fg
-                fg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
+                fg = color_from_dsl e[0]
               when :bg
-                bg = ::Swt::Color.new Shoes.display, e[0].color.red, e[0].color.green, e[0].color.blue
+                bg = color_from_dsl e[0]
               when :ins
                 cmds << "underline = true"
               when :del
@@ -133,8 +124,8 @@ class Shoes
           ft = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, ft
           style = ::Swt::TextStyle.new ft, fg, bg
           cmds.each{|cmd| eval "style.#{cmd}"}
-          @opts[:strikecolor] ? set_strikecolor(style) : nil
-          @opts[:undercolor] ? set_undercolor(style) : nil
+          set_strikecolor(style)
+          set_undercolor(style)
           @text_layout.setStyle style, st[1].first, st[1].last
           @gcs << ft
         end if @opts[:text_styles]
@@ -159,12 +150,7 @@ class Shoes
       end
 
       def set_undercolor(style)
-        style.underlineColor = @opts[:undercolor] ?
-            ::Swt::Color.new(Shoes.display,
-                             @opts[:undercolor].red,
-                             @opts[:undercolor].green,
-                             @opts[:undercolor].blue)
-        : nil
+        style.underlineColor = color_from_dsl @opts[:undercolor]
       end
 
       def set_strikethrough(style)
@@ -172,15 +158,13 @@ class Shoes
       end
 
       def set_strikecolor(style)
-        style.strikeoutColor = @opts[:strikecolor] ?
-            ::Swt::Color.new(Shoes.display,
-                             @opts[:strikecolor].red,
-                             @opts[:strikecolor].green,
-                             @opts[:strikecolor].blue)
-        : nil
+        style.strikeoutColor = color_from_dsl @opts[:strikecolor]
+      end
+
+      def color_from_dsl dsl_color, default = nil
+        return default if dsl_color.nil?
+        ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
       end
     end
-
   end
 end
-
