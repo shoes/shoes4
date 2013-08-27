@@ -30,7 +30,7 @@ class Shoes
       def handle_scroll_bar(vertical_bar, height, scrollable_height)
         vertical_bar.setThumb height * height / scrollable_height
         vertical_bar.setMaximum scrollable_height - height + vertical_bar.getThumb
-        vertical_bar.setIncrement height / 2
+        vertical_bar.increment = 10
       end
 
       def set_gui_location
