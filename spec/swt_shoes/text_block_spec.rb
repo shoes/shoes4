@@ -216,14 +216,10 @@ describe Shoes::Swt::TextBlock do
       include TextFragmentHelpers
 
       let(:mock_text_style) { double("text style") }
-      let(:para) { Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
-
-      before do
-        stub_const ::Swt::TextStyle, mock_text_style
-      end
+      let(:para) { ::Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
 
       it "creates a text style" do
-        mock_text_style.should_receive(:new).with(0,1,2)
+        Shoes::Swt::TextStyleFactory.should_receive(:new_style).with(0,1,2)
         para
       end
     end

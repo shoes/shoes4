@@ -13,34 +13,38 @@ module TextFragmentHelpers
   end
 
   def strong_breadsticks
-    @strong_breadsticks ||= app.strong breadsticks
+    @strong_breadsticks ||= text :strong, breadsticks
   end
 
   def em
-    @em ||= app.em breadsticks
+    @em ||= text :em, breadsticks
   end
 
   def code
-    @code ||= app.code breadsticks
+    @code ||= text :code, breadsticks
   end
 
   def ins
-    @ins ||= app.ins even_better
+    @ins ||= text :ins, even_better
   end
 
   def fg
-    @fg ||= app.fg strong, app.white
+    @fg ||= text :fg, strong, Shoes::COLORS[:white]
   end
 
   def strong
-    @strong ||= app.strong ins
+    @strong ||= text :strong, ins
   end
 
   def bg
-    @bg ||= app.bg fg, app.rgb(255, 0, 192)
+    @bg ||= text :bg, fg, Shoes::Color.new(255, 0, 192)
   end
 
   def sub
-    @sub ||= app.sub fine
+    @sub ||= text :sub, fine
+  end
+
+  def text(style, string, color = nil)
+    Shoes::Text.new style, Array(string), color
   end
 end
