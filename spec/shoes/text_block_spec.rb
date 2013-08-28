@@ -98,16 +98,13 @@ describe Shoes::TextBlock do
     end
 
     it "has fragment styles" do
-      text_styles = [
-                     [strong_breadsticks, 21..33],
-                     [em, 34..46],
-                     [code, 47..59],
-                     [bg, 60..71],
-                     [fg, 60..71],
-                     [strong, 60..71],
-                     [ins, 60..71],
-                     [sub, 72..76]
-                    ]
+      text_styles = {
+                     21..33 => [strong_breadsticks],
+                     34..46 => [em],
+                     47..59 => [code],
+                     60..71 => [bg, fg, strong, ins],
+                     72..76 => [sub]
+                    }
       para.text_styles.should eq(text_styles)
     end
   end

@@ -73,22 +73,12 @@ class Shoes
         end
       end
 
-      # @return [Shoes::Text, Range]: an array of text objects and the
-      #   character ranges they apply to, where the character ranges
-      #   are within those of st, inclusive. Conceptually, these are
-      #   all the styles that are applied to the text (or a substring
-      #   of the text) that st applies to.
-      def nested_styles styles, st
-        styles.map do |e|
-          (e[1].first <= st[1].first and st[1].last <= e[1].last) ? e : nil
-        end - [nil]
-      end
-
       def set_text_styles(fgc, bgc)
-        @opts[:text_styles].each do |st|
+        @opts[:text_styles].each do |range, styles|
+          cmds = {}
           style, font_style = nil, nil
           font_name, font_style, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, {}, 1
-          nested_styles(@opts[:text_styles], st).each do |text_object, _|
+          styles.each do |text_object|
             if text_object.style == :span
               font_style, fg, bg, style = apply_styles(text_object.opts)
             else
@@ -125,7 +115,7 @@ class Shoes
           cmds[:undercolor]  = @opts[:undercolor]
           font = ::Swt::Font.new Shoes.display, font_name, @dsl.font_size*small, font_style
           style = TextStyleFactory.new_style font, fg, bg, cmds
-          @text_layout.setStyle style, st[1].first, st[1].last
+          @text_layout.setStyle style, range.first, range.last
           @gcs << font
         end if @opts[:text_styles]
       end
