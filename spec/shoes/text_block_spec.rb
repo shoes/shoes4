@@ -76,4 +76,48 @@ describe Shoes::TextBlock do
       color.blue.should eql 170
     end
   end
+
+  context "with nested text fragments" do
+    # Emulates samples/sample17.Rb
+    #
+    #   Shoes.app width: 240, height: 95 do
+    #     para 'Testing, test, test. ',
+    #       strong('Breadsticks. '),
+    #       em('Breadsticks. '),
+    #       code('Breadsticks. '),
+    #       bg(fg(strong(ins('EVEN BETTER.')), white), rgb(255, 0, 192)),
+    #       sub('fine!')
+    #   end
+
+    let(:breadsticks) { "Breadsticks. "}
+    let(:even_better) { "EVEN BETTER."}
+    let(:fine) { "fine!"}
+    let(:strong_breadsticks) { app.strong breadsticks }
+    let(:em) { app.em breadsticks }
+    let(:code) { app.code breadsticks }
+    let(:ins) { app.ins even_better }
+    let(:fg) { app.fg strong, app.white }
+    let(:strong) { app.strong ins }
+    let(:bg) { app.bg fg, app.rgb(255, 0, 192) }
+    let(:sub) { app.sub fine }
+    let(:para) { app.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
+
+    it "has full text of fragments" do
+      para.text.should eq("Testing, test, test. Breadsticks. Breadsticks. Breadsticks. EVEN BETTER.fine!")
+    end
+
+    it "has fragment styles" do
+      text_styles = [
+                     [strong_breadsticks, 21..33],
+                     [em, 34..46],
+                     [code, 47..59],
+                     [bg, 60..71],
+                     [fg, 60..71],
+                     [strong, 60..71],
+                     [ins, 60..71],
+                     [sub, 72..76]
+                    ]
+      para.text_styles.should eq(text_styles)
+    end
+  end
 end
