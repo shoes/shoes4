@@ -1,4 +1,5 @@
 require 'swt_shoes/spec_helper'
+require 'shoes/helpers/text_fragment_helpers'
 
 describe Shoes::Swt::TextBlock do
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
@@ -208,6 +209,22 @@ describe Shoes::Swt::TextBlock do
           ::Swt::TextStyle.should_receive(:new).with(anything, anything, salmon)
           subject.paintControl(event)
         end
+      end
+    end
+
+    context "with text fragments" do
+      include TextFragmentHelpers
+
+      let(:mock_text_style) { double("text style") }
+      let(:para) { Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
+
+      before do
+        stub_const ::Swt::TextStyle, mock_text_style
+      end
+
+      it "creates a text style" do
+        mock_text_style.should_receive(:new).with(0,1,2)
+        para
       end
     end
   end

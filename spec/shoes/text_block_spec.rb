@@ -1,4 +1,5 @@
 require 'shoes/spec_helper'
+require 'shoes/helpers/text_fragment_helpers'
 
 describe Shoes::TextBlock do
   let(:app) { Shoes::App.new }
@@ -74,6 +75,40 @@ describe Shoes::TextBlock do
       color.red.should eql 255
       color.green.should eql 221
       color.blue.should eql 170
+    end
+  end
+
+  # Emulates samples/sample17.rb
+  #
+  #   Shoes.app width: 240, height: 95 do
+  #     para 'Testing, test, test. ',
+  #       strong('Breadsticks. '),
+  #       em('Breadsticks. '),
+  #       code('Breadsticks. '),
+  #       bg(fg(strong(ins('EVEN BETTER.')), white), rgb(255, 0, 192)),
+  #       sub('fine!')
+  #   end
+  #
+  context "with nested text fragments" do
+    include TextFragmentHelpers
+    let(:para) { app.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
+
+    it "has full text of fragments" do
+      para.text.should eq("Testing, test, test. Breadsticks. Breadsticks. Breadsticks. EVEN BETTER.fine!")
+    end
+
+    it "has fragment styles" do
+      text_styles = [
+                     [strong_breadsticks, 21..33],
+                     [em, 34..46],
+                     [code, 47..59],
+                     [bg, 60..71],
+                     [fg, 60..71],
+                     [strong, 60..71],
+                     [ins, 60..71],
+                     [sub, 72..76]
+                    ]
+      para.text_styles.should eq(text_styles)
     end
   end
 end
