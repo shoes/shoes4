@@ -54,7 +54,7 @@ class Shoes
         font = parse_font(opts)
         fgc = color_from_dsl @opts[:stroke], ::Swt::Color.new(Shoes.display, 0, 0, 0)
         bgc = color_from_dsl @opts[:fill]
-        style = TextStyleFactory.new(font, fgc, bgc, opts)
+        style = TextStyleFactory.new(font, fgc, bgc, opts).style
         [font, fgc, bgc, style]
       end
 
@@ -88,20 +88,20 @@ class Shoes
       def set_text_styles(fgc, bgc)
         @opts[:text_styles].each do |st|
           style, font_style = nil, nil
-          font, font_style, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, [], 1
-          nested_styles(@opts[:text_styles], st).each do |text_object|
-            if text_object[0].style == :span
-              font_style, fg, bg, style = apply_styles(text_object[0].opts)
+          font, font_style, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, {}, 1
+          nested_styles(@opts[:text_styles], st).each do |text_object, _|
+            if text_object.style == :span
+              font_style, fg, bg, style = apply_styles(text_object.opts)
             else
-              case text_object[0].style
+              case text_object.style
                 when :strong
                   font_style = font_style | ::Swt::SWT::BOLD
                 when :em
                   font_style = font_style | ::Swt::SWT::ITALIC
                 when :fg
-                  fg = color_from_dsl e[0]
+                  fg = color_from_dsl text_object.color
                 when :bg
-                  bg = color_from_dsl e[0]
+                  bg = color_from_dsl text_object.color
                 when :ins
                   cmds[:underline] = true
                 when :del
@@ -117,14 +117,14 @@ class Shoes
                 when :link
                   cmds[:underline] = true
                   fg = ::Swt::Color.new Shoes.display, 0, 0, 255
-                  create_link(e)
+                  create_link(text_object)
                 else
               end
             end
-            font = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, font_style
-            style = ::Swt::TextStyle.new font_style, fg, bg
-            cmds.each{|attr, value| style.public_send(attr, value)}
           end
+          font = ::Swt::Font.new Shoes.display, font, @dsl.font_size*small, font_style
+          style = ::Swt::TextStyle.new font, fg, bg
+          cmds.each{|attr, value| style.public_send("#{attr}=", value)}
           @opts[:strikecolor] ? set_strikecolor(style) : nil
           @opts[:undercolor] ? set_undercolor(style) : nil
           @text_layout.setStyle style, st[1].first, st[1].last
@@ -163,6 +163,8 @@ class Shoes
         set_strikethrough(@style, opts)
         set_strikecolor(@style, opts)
       end
+
+      attr_reader :style
 
       private
       def set_rise(style, opts)
