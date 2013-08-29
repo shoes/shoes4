@@ -100,6 +100,7 @@ class Shoes
       private
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
+        scroll_bar.setIncrement 10
         scroll_bar.addSelectionListener SelectionListener.new(self, scroll_bar)
       end
 
