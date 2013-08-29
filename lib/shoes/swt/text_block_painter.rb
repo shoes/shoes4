@@ -40,18 +40,18 @@ class Shoes
                                     when 'right'; ::Swt::SWT::RIGHT
                                     else ::Swt::SWT::LEFT
                                   end
-        style = apply_styles(@opts)
-        @text_layout.setStyle style, 0, @dsl.text.length - 1
-        set_text_styles(style.foreground, style.background, @text_layout, @opts)
+        style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
+        set_text_style(@text_layout, style, 0..(@dsl.text.length - 1))
+        set_text_styles(style[:fg], style[:bg], @text_layout, @opts)
       end
 
       private
 
-      def apply_styles(opts)
-        font = parse_font(opts)
-        fgc = opts[:stroke]
-        bgc = opts[:fill]
-        create_style font, fgc, bgc, opts
+      def apply_styles(styles, opts)
+        styles[:font][:styles] = parse_font_style(opts)
+        styles[:fg] = opts[:stroke]
+        styles[:bg] = opts[:fill]
+        styles.merge(opts)
       end
 
       def create_link(e)
@@ -73,18 +73,22 @@ class Shoes
       def set_text_styles(foreground, background, layout, opts)
         opts[:text_styles].each do |range, text_styles|
           defaults = default_text_styles(foreground, background, opts[:strikecolor], opts[:undercolor])
-          styles = text_styles.inject(defaults) do |s, text|
+          styles = text_styles.inject(defaults) do |current_styles, text|
             if text.style == :span
-              apply_styles(text.opts)
+              apply_styles(current_styles, text.opts)
             else
-              accumulate_text_styles(text, s)
+              accumulate_text_styles(text, current_styles)
             end
           end
-          f = styles[:font]
-          font = create_font f[:name], f[:size], f[:styles]
-          style = create_style font, styles[:fg], styles[:bg], styles
-          layout.setStyle style, range.first, range.last
+          set_text_style(layout, styles, range)
         end if opts[:text_styles]
+      end
+
+      def set_text_style(layout, styles, range)
+        f = styles[:font]
+        font = create_font f[:name], f[:size], f[:styles]
+        style = create_style font, styles[:fg], styles[:bg], styles
+        layout.setStyle style, range.first, range.last
       end
 
       def default_text_styles(foreground, background, strikecolor, undercolor)
@@ -132,12 +136,12 @@ class Shoes
         styles
       end
 
-      def parse_font(opts)
+      def parse_font_style(opts)
         font_styles = []
         font_styles << ::Swt::SWT::BOLD if opts[:weight]
         font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
         font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
-        create_font(@dsl.font, @dsl.font_size, font_styles)
+        font_styles
       end
 
       def create_font(name, size, styles)
