@@ -74,59 +74,90 @@ class Shoes
       end
 
       def set_text_styles(fgc, bgc)
-        @opts[:text_styles].each do |range, styles|
-          style = nil
-          font_name, font_style, fg, bg, cmds, small = @dsl.font, ::Swt::SWT::NORMAL, fgc, bgc, {}, 1
-          styles.each do |text_object|
-            cmds[:strikecolor] = @opts[:strikecolor]
-            cmds[:undercolor]  = @opts[:undercolor]
-            if text_object.style == :span
-              font_style, fg, bg, style = apply_styles(text_object.opts)
+        @opts[:text_styles].each do |range, text_styles|
+          defaults = default_text_styles(fgc, bgc, @opts[:strikecolor], @opts[:undercolor])
+          styles = text_styles.inject(defaults) do |s, text|
+            if text.style == :span
+              apply_styles(text.opts)
             else
-              case text_object.style
-                when :strong
-                  font_style = font_style | ::Swt::SWT::BOLD
-                when :em
-                  font_style = font_style | ::Swt::SWT::ITALIC
-                when :fg
-                  fg = text_object.color
-                when :bg
-                  bg = text_object.color
-                when :ins
-                  cmds[:underline] = true
-                when :del
-                  cmds[:strikeout] = true
-                when :sub
-                  small *= 0.8
-                  cmds[:rise] = -5
-                when :sup
-                  small *= 0.8
-                  cmds[:rise] = 5
-                when :code
-                  font_name = "Lucida Console"
-                when :link
-                  cmds[:underline] = true
-                  fg = ::Swt::Color.new Shoes.display, 0, 0, 255
-                  create_link(text_object)
-                else
-              end
+              accumulate_text_styles(text, s)
             end
-            font = ::Swt::Font.new Shoes.display, font_name, @dsl.font_size*small, font_style
-            style = TextStyleFactory.new_style font, fg, bg, cmds
           end
+          f = styles[:font]
+          font = FontFactory.new_font f[:name], f[:size], f[:styles]
+          style = TextStyleFactory.new_style font, styles[:fg], styles[:bg], styles
           @text_layout.setStyle style, range.first, range.last
-          @gcs << font
+          # These need to be garbage-collected, but this @gcs doesn't
+          # do anything. Set on Shoes::Swt::TextBlock???
+          @gcs << style.font << style.foreground << style.background unless style.nil?
         end if @opts[:text_styles]
       end
 
-      def parse_font(opts)
-        font_style = 0
-        font_style |= ::Swt::SWT::BOLD if opts[:weight]
-        font_style |= ::Swt::SWT::ITALIC if opts[:emphasis]
-        font_style |= ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
-
-        ::Swt::Font.new(Shoes.display, @dsl.font, @dsl.font_size, font_style)
+      def default_text_styles(foreground, background, strikecolor, undercolor)
+        {
+          :fg          => foreground,
+          :bg          => background,
+          :strikecolor => strikecolor,
+          :undercolor  => undercolor,
+          :font        => {
+            :name   => @dsl.font,
+            :size   => @dsl.font_size,
+            :styles => [::Swt::SWT::NORMAL]
+          }
+        }
       end
+
+      def accumulate_text_styles(text, styles)
+        case text.style
+        when :strong
+          styles[:font][:styles] << ::Swt::SWT::BOLD
+        when :em
+          styles[:font][:styles] << ::Swt::SWT::ITALIC
+        when :fg
+          styles[:fg] = text.color
+        when :bg
+          styles[:bg] = text.color
+        when :ins
+          styles[:underline] = true
+        when :del
+          styles[:strikeout] = true
+        when :sub
+          styles[:font][:size] *= 0.8
+          styles[:rise] = -5
+        when :sup
+          styles[:font][:size] *= 0.8
+          styles[:rise] = 5
+        when :code
+          styles[:font][:name] = "Lucida Console"
+        when :link
+          styles[:underline] = true
+          styles[:fg] = ::Swt::Color.new Shoes.display, 0, 0, 255
+          create_link(text)
+        else
+        end
+        styles
+      end
+
+      def parse_font(opts)
+        font_styles = []
+        font_styles << ::Swt::SWT::BOLD if opts[:weight]
+        font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
+        font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
+
+        FontFactory.new_font(@dsl.font, @dsl.font_size, font_styles)
+      end
+    end
+
+    class FontFactory
+      def self.new_font(name, size, styles)
+        new(name, size, styles).font
+      end
+
+      def initialize(name, size, styles)
+        @font = ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
+      end
+
+      attr_reader :font
     end
 
     class TextStyleFactory
