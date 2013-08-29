@@ -78,7 +78,7 @@ describe Shoes::TextBlock do
     end
   end
 
-  # Emulates samples/sample17.rb
+  # Emulates samples/sample17.Rb
   #
   #   Shoes.app width: 240, height: 95 do
   #     para 'Testing, test, test. ',
@@ -90,7 +90,17 @@ describe Shoes::TextBlock do
   #   end
   #
   context "with nested text fragments" do
-    include TextFragmentHelpers
+    let(:breadsticks) { "Breadsticks. "}
+    let(:even_better) { "EVEN BETTER."}
+    let(:fine) { "fine!"}
+    let(:strong_breadsticks) { app.strong breadsticks }
+    let(:em) { app.em breadsticks }
+    let(:code) { app.code breadsticks }
+    let(:ins) { app.ins even_better }
+    let(:fg) { app.fg strong, app.white }
+    let(:strong) { app.strong ins }
+    let(:bg) { app.bg fg, app.rgb(255, 0, 192) }
+    let(:sub) { app.sub fine }
     let(:para) { app.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
 
     it "has full text of fragments" do
@@ -98,13 +108,16 @@ describe Shoes::TextBlock do
     end
 
     it "has fragment styles" do
-      text_styles = {
-                     21..33 => [strong_breadsticks],
-                     34..46 => [em],
-                     47..59 => [code],
-                     60..71 => [bg, fg, strong, ins],
-                     72..76 => [sub]
-                    }
+      text_styles = [
+                     [strong_breadsticks, 21..33],
+                     [em, 34..46],
+                     [code, 47..59],
+                     [bg, 60..71],
+                     [fg, 60..71],
+                     [strong, 60..71],
+                     [ins, 60..71],
+                     [sub, 72..76]
+                    ]
       para.text_styles.should eq(text_styles)
     end
   end
