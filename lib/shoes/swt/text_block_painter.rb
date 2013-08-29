@@ -48,7 +48,7 @@ class Shoes
       private
 
       def apply_styles(styles, opts)
-        styles[:font][:styles] = parse_font_style(opts)
+        styles[:font_detail][:styles] = parse_font_style(opts)
         styles[:fg] = opts[:stroke]
         styles[:bg] = opts[:fill]
         styles.merge(opts)
@@ -85,7 +85,7 @@ class Shoes
       end
 
       def set_text_style(layout, styles, range)
-        f = styles[:font]
+        f = styles[:font_detail]
         font = create_font f[:name], f[:size], f[:styles]
         style = create_style font, styles[:fg], styles[:bg], styles
         layout.setStyle style, range.first, range.last
@@ -97,7 +97,7 @@ class Shoes
           :bg          => background,
           :strikecolor => strikecolor,
           :undercolor  => undercolor,
-          :font        => {
+          :font_detail => {
             :name   => @dsl.font,
             :size   => @dsl.font_size,
             :styles => [::Swt::SWT::NORMAL]

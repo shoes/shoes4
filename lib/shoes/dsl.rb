@@ -416,17 +416,28 @@ EOS
       styles
     end
 
-    [:code, :del, :em, :ins, :strong, :sub, :sup].each do |m|
-      define_method m do |*str|
-        Shoes::Text.new m, str
+    TEXT_STYLES = {
+      code: { font: "Lucida Console" },
+      del: { strikeout: true },
+      em: { emphasis: true },
+      ins: { underline: true },
+      sub: { rise: -10 },
+      sup: { rise: 10 },
+      strong: { weight: true },
+    }
+
+    TEXT_STYLES.keys.each do |method|
+      define_method method do |*str|
+        Shoes::Span.new str, TEXT_STYLES[method]
       end
     end
 
-    [:bg, :fg].each do |m|
-      define_method m do |*str|
-        color = str.pop
-        Shoes::Text.new m, str, pattern(color)
-      end
+    def fg(*str, color)
+      Shoes::Span.new str, { stroke: pattern(color) }
+    end
+
+    def bg(*str, color)
+      Shoes::Span.new str, { fill: pattern(color) }
     end
 
     def link *str, &blk
@@ -434,7 +445,7 @@ EOS
     end
 
     def span *str, opts
-      Shoes::Span.new :span, str, opts
+      Shoes::Span.new str, opts
     end
 
     def mouse
