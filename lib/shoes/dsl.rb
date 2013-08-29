@@ -418,11 +418,11 @@ EOS
 
     TEXT_STYLES = {
       code: { font: "Lucida Console" },
-      del: { strikeout: true },
+      del: { strikethrough: true },
       em: { emphasis: true },
       ins: { underline: true },
-      sub: { rise: -10 },
-      sup: { rise: 10 },
+      sub: { rise: -10, size_modifier: 0.8 },
+      sup: { rise: 10, size_modifier: 0.8 },
       strong: { weight: true },
     }
 

@@ -49,24 +49,26 @@ class Shoes
 
       def apply_styles(styles, opts)
         styles[:font_detail][:styles] = parse_font_style(opts)
+        styles[:font_detail][:name] = opts[:font] if opts[:font]
         styles[:fg] = opts[:stroke]
         styles[:bg] = opts[:fill]
+        styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
         styles.merge(opts)
       end
 
-      def create_link(e)
-        spos = @text_layout.getLocation e[1].first, false
-        epos = @text_layout.getLocation e[1].last, true
+      def create_link(text, range)
+        spos = @text_layout.getLocation range.first, false
+        epos = @text_layout.getLocation range.last, true
         left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
-        e[0].lh = @text_layout.getLineBounds(0).height
-        e[0].sx, e[0].sy = left + spos.x, top + spos.y
-        e[0].ex, e[0].ey = left + epos.x, top + epos.y + e[0].lh
-        e[0].pl, e[0].pt, e[0].pw, e[0].ph = left, top, @dsl.width, @dsl.height
-        @dsl.links << e[0]
-        unless e[0].clickabled
-          e[0].parent = @dsl
-          clickable e[0], e[0].blk
-          e[0].clickabled = true
+        text.lh = @text_layout.getLineBounds(0).height
+        text.sx, text.sy = left + spos.x, top + spos.y
+        text.ex, text.ey = left + epos.x, top + epos.y + text.lh
+        text.pl, text.pt, text.pw, text.ph = left, top, @dsl.width, @dsl.height
+        @dsl.links << text
+        unless text.clickabled
+          text.parent = @dsl
+          clickable text, text.blk
+          text.clickabled = true
         end
       end
 
@@ -77,7 +79,7 @@ class Shoes
             if text.style == :span
               apply_styles(current_styles, text.opts)
             else
-              accumulate_text_styles(text, current_styles)
+              make_link_style(text, current_styles, range)
             end
           end
           set_text_style(layout, styles, range)
@@ -105,33 +107,11 @@ class Shoes
         }
       end
 
-      def accumulate_text_styles(text, styles)
-        case text.style
-        when :strong
-          styles[:font][:styles] << ::Swt::SWT::BOLD
-        when :em
-          styles[:font][:styles] << ::Swt::SWT::ITALIC
-        when :fg
-          styles[:fg] = text.color
-        when :bg
-          styles[:bg] = text.color
-        when :ins
-          styles[:underline] = true
-        when :del
-          styles[:strikeout] = true
-        when :sub
-          styles[:font][:size] *= 0.8
-          styles[:rise] = -5
-        when :sup
-          styles[:font][:size] *= 0.8
-          styles[:rise] = 5
-        when :code
-          styles[:font][:name] = "Lucida Console"
-        when :link
+      def make_link_style(text, styles, range)
+        if text.style == :link
           styles[:underline] = true
           styles[:fg] = ::Swt::Color.new Shoes.display, 0, 0, 255
-          create_link(text)
-        else
+          create_link(text, range)
         end
         styles
       end
