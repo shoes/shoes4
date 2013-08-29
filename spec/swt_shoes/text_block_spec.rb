@@ -215,12 +215,16 @@ describe Shoes::Swt::TextBlock do
     context "with text fragments" do
       include TextFragmentHelpers
 
-      let(:mock_text_style) { double("text style") }
-      let(:para) { ::Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
+      let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
+      let(:white) { ::Swt::Color.new Shoes.display, 255, 255, 255 }
+      let(:font) { ::Swt::Graphics::Font.new Shoes.display, "Arial", 12, ::Swt::SWT::NORMAL }
+      let(:text_styles) { ::Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub).text_styles }
+      let(:opts) { {:text_styles => text_styles} }
 
       it "creates a text style" do
-        Shoes::Swt::TextStyleFactory.should_receive(:new_style).with(0,1,2)
-        para
+        pending "creative testing energy"
+        ::Swt::TextStyle.should_receive(:new).exactly(42).times
+        subject.paintControl(event)
       end
     end
   end

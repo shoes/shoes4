@@ -41,20 +41,17 @@ class Shoes
                                     else ::Swt::SWT::LEFT
                                   end
         style = apply_styles(@opts)
-
         @text_layout.setStyle style, 0, @dsl.text.length - 1
-        @gcs << style.font << style.foreground << style.background
-
-        set_text_styles(style.foreground, style.background)
+        set_text_styles(style.foreground, style.background, @text_layout, @opts)
       end
 
       private
 
       def apply_styles(opts)
         font = parse_font(opts)
-        fgc = @opts[:stroke]
-        bgc = @opts[:fill]
-        TextStyleFactory.new_style font, fgc, bgc, opts
+        fgc = opts[:stroke]
+        bgc = opts[:fill]
+        create_style font, fgc, bgc, opts
       end
 
       def create_link(e)
@@ -73,9 +70,9 @@ class Shoes
         end
       end
 
-      def set_text_styles(fgc, bgc)
-        @opts[:text_styles].each do |range, text_styles|
-          defaults = default_text_styles(fgc, bgc, @opts[:strikecolor], @opts[:undercolor])
+      def set_text_styles(foreground, background, layout, opts)
+        opts[:text_styles].each do |range, text_styles|
+          defaults = default_text_styles(foreground, background, opts[:strikecolor], opts[:undercolor])
           styles = text_styles.inject(defaults) do |s, text|
             if text.style == :span
               apply_styles(text.opts)
@@ -84,13 +81,10 @@ class Shoes
             end
           end
           f = styles[:font]
-          font = FontFactory.new_font f[:name], f[:size], f[:styles]
-          style = TextStyleFactory.new_style font, styles[:fg], styles[:bg], styles
-          @text_layout.setStyle style, range.first, range.last
-          # These need to be garbage-collected, but this @gcs doesn't
-          # do anything. Set on Shoes::Swt::TextBlock???
-          @gcs << style.font << style.foreground << style.background unless style.nil?
-        end if @opts[:text_styles]
+          font = create_font f[:name], f[:size], f[:styles]
+          style = create_style font, styles[:fg], styles[:bg], styles
+          layout.setStyle style, range.first, range.last
+        end if opts[:text_styles]
       end
 
       def default_text_styles(foreground, background, strikecolor, undercolor)
@@ -143,21 +137,17 @@ class Shoes
         font_styles << ::Swt::SWT::BOLD if opts[:weight]
         font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
         font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
-
-        FontFactory.new_font(@dsl.font, @dsl.font_size, font_styles)
-      end
-    end
-
-    class FontFactory
-      def self.new_font(name, size, styles)
-        new(name, size, styles).font
+        create_font(@dsl.font, @dsl.font_size, font_styles)
       end
 
-      def initialize(name, size, styles)
-        @font = ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
+      def create_font(name, size, styles)
+        #TODO: mark font for garbage collection
+        ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
       end
 
-      attr_reader :font
+      def create_style(font, foreground, background, opts)
+        TextStyleFactory.new(font, foreground, background, opts).style
+      end
     end
 
     class TextStyleFactory
@@ -167,13 +157,9 @@ class Shoes
           "error" => 2,
       }
 
-      def self.new_style(font, foreground_color, background_color, opts)
-        new(font, foreground_color, background_color, opts).style
-      end
-
-      def initialize(font, foreground_color, background_color, opts)
-        fg = swt_color(foreground_color, ::Shoes::COLORS[:black])
-        bg = swt_color(background_color)
+      def initialize(font, foreground, background, opts)
+        fg = swt_color(foreground, ::Shoes::COLORS[:black])
+        bg = swt_color(background)
         @style = ::Swt::TextStyle.new font, fg, bg
         set_underline(@style, opts)
         set_undercolor(@style, opts)
@@ -214,7 +200,7 @@ class Shoes
       def color_from_dsl(dsl_color, default = nil)
         return nil if dsl_color.nil? and default.nil?
         return color_from_dsl default if dsl_color.nil?
-        return color_from_dsl default unless dsl_color.respond_to? :red and dsl_color.respond_to? :green and dsl_color.respond_to? :blue
+        # TODO: mark color for garbage collection
         ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
       end
     end
