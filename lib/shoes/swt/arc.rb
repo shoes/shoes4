@@ -1,14 +1,12 @@
 class Shoes
   module Swt
     class Arc
-      extend Forwardable
-
       include Common::Fill
       include Common::Stroke
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :dsl, :transform
-      def_delegators :dsl, :left, :top, :width, :height, :wedge?
 
       # Creates a new Shoes::Swt::Arc
       #
@@ -27,6 +25,10 @@ class Shoes
 
       def angle2
         radians_to_degrees dsl.angle2
+      end
+
+      def wedge?
+        dsl.wedge?
       end
 
       private
