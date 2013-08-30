@@ -42,12 +42,12 @@ class Shoes
     end
   end
 
-  # depends on a #dimensions method being present that
+  # depends on a #dimensions method being present that returns a Dimensions object
   module DimensionsDelegations
     extend Forwardable
 
     DELEGATED_METHODS = [:left, :top, :width, :height, :right, :bottom,
-                         :in_bounds?]
+                         :in_bounds?, :left=, :top=, :width=, :height=]
 
     def_delegators :dimensions, *DELEGATED_METHODS
   end

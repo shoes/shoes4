@@ -56,6 +56,13 @@ describe Shoes::Dimensions do
       end
     end
 
+    describe 'setters' do
+      it 'also has a setter for left' do
+        subject.left = 66
+        subject.left.should eq 66
+      end
+    end
+
     describe 'additional dimension methods' do
       its(:right) {should eq left + width}
       its(:bottom) {should eq top + height}
@@ -104,6 +111,11 @@ describe Shoes::DimensionsDelegations do
     it 'forwards bottom calls to dimensions' do
       dimensions.should_receive :bottom
       subject.bottom
+    end
+
+    it 'forwards setter calls like left= do dimenstions' do
+      dimensions.should receive :left=
+      subject.left = 66
     end
   end
 
