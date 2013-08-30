@@ -1,10 +1,13 @@
 class Shoes
   module Swt
     class Background
+      extend Forwardable
       include Common::Fill
       include Common::Stroke
       include Common::Clear
       include BackendDimensionsDelegations
+
+      def_delegators :dsl, :corners, :angle
 
       attr_reader :dsl, :transform, :painter, :opts
 
@@ -16,14 +19,6 @@ class Shoes
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-      end
-
-      def corners
-        dsl.corners
-      end
-
-      def angle
-        dsl.angle
       end
 
       class Painter < RectPainter

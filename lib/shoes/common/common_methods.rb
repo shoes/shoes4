@@ -54,6 +54,8 @@ class Shoes
       @hidden
     end
 
+    alias_method :hidden, :hidden?
+
     def visible?
       !hidden?
     end
