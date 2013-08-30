@@ -7,10 +7,9 @@ class Shoes
       # @param [Shoes::Animation] dsl The Shoes DSL Animation this represents
       # @param [Shoes::Swt::App] app The Swt representation of the current app
       # @param [Proc] blk The block of code to execute for each animation frame
-      def initialize(dsl, app, blk)
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
-        @blk = blk
 
         # Wrap the animation block so we can count frames.
         # Note that the task re-calls itself on each run.
@@ -25,7 +24,7 @@ class Shoes
       end
 
       def eval_block
-        @blk.call(@dsl.current_frame)
+        dsl.blk.call(@dsl.current_frame)
       end
 
       attr_reader :task
