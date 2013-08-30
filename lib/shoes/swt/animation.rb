@@ -24,7 +24,7 @@ class Shoes
       end
 
       def eval_block
-        dsl.blk.call(@dsl.current_frame)
+        @dsl.blk.call(@dsl.current_frame)
       end
 
       attr_reader :task
