@@ -2,7 +2,7 @@ class Shoes
   class Dimensions
     attr_accessor :left, :top, :width, :height
 
-    def initialize(left = 0, top = 0, width = 0, height = 0)
+    def initialize(left = 0, top = 0, width = nil, height = nil)
       if hash_as_argument?(left)
         init_with_hash(left)
       else
@@ -30,8 +30,8 @@ class Shoes
     def init_with_hash(dimensions_hash)
       @left   = dimensions_hash.fetch(:left, 0)
       @top    = dimensions_hash.fetch(:top, 0)
-      @width  = dimensions_hash.fetch(:width, 0)
-      @height = dimensions_hash.fetch(:height, 0)
+      @width  = dimensions_hash.fetch(:width, nil)
+      @height = dimensions_hash.fetch(:height, nil)
     end
 
     def init_with_arguments(left, top, width, height)

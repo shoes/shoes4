@@ -14,8 +14,8 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq 0}
       its(:top) {should eq 0}
-      its(:width) {should eq 0}
-      its(:height) {should eq 0}
+      its(:width) {should eq nil}
+      its(:height) {should eq nil}
     end
 
     describe 'with 2 arguments' do
@@ -23,8 +23,8 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq left}
       its(:top) {should eq top}
-      its(:width) {should eq 0}
-      its(:height) {should eq 0}
+      its(:width) {should eq nil}
+      its(:height) {should eq nil}
     end
 
     describe 'with 4 arguments' do
@@ -52,7 +52,7 @@ describe Shoes::Dimensions do
                                         top:    top,
                                         height: height }
 
-        its(:width) {should eq 0}
+        its(:width) {should eq nil}
       end
     end
 
