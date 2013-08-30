@@ -75,3 +75,57 @@ describe Shoes::Dimensions do
 
   end
 end
+
+describe Shoes::DimensionsDelegations do
+
+
+
+
+  describe 'with a DSL class and a dimensions method' do
+    let(:dimensions) {double('dimensions')}
+
+    class DummyClass
+      include Shoes::DimensionsDelegations
+      def dimensions
+      end
+    end
+
+    subject do
+      dummy = DummyClass.new
+      dummy.stub dimensions: dimensions
+      dummy
+    end
+
+    it 'forwards left calls to dimensions' do
+      dimensions.should_receive :left
+      subject.left
+    end
+
+    it 'forwards bottom calls to dimensions' do
+      dimensions.should_receive :bottom
+      subject.bottom
+    end
+  end
+
+  describe 'with any backend class that has a defined dsl method' do
+    let(:dsl){double 'dsl'}
+
+    class AnotherDummyClass
+      include Shoes::BackendDimensionsDelegations
+      def dsl
+      end
+    end
+
+    subject do
+      dummy = AnotherDummyClass.new
+      dummy.stub dsl: dsl
+      dummy
+    end
+
+    it 'forwards calls to dsl' do
+      dsl.should_receive :left
+      subject.left
+    end
+  end
+
+end

@@ -40,6 +40,22 @@ class Shoes
       @width  = width
       @height = height
     end
+  end
 
+  # depends on a #dimensions method being present that
+  module DimensionsDelegations
+    extend Forwardable
+
+    DELEGATED_METHODS = [:left, :top, :width, :height, :right, :bottom,
+                         :in_bounds?]
+
+    def_delegators :dimensions, *DELEGATED_METHODS
+  end
+
+  # depends on a #dsl method to forward to (e.g. for backend objects)
+  module BackendDimensionsDelegations
+    extend Forwardable
+
+    def_delegators :dsl, *DimensionsDelegations::DELEGATED_METHODS
   end
 end
