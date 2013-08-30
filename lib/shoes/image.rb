@@ -2,9 +2,9 @@ class Shoes
   class Image
     include CommonMethods
     include Common::Clickable
+    include DimensionsDelegations
 
-    attr_reader :parent, :blk, :gui, :app, :hidden, :file_path, :opts
-    attr_accessor :left, :top
+    attr_reader :parent, :blk, :gui, :app, :file_path, :opts, :dimensions
 
     def initialize(app, parent, file_path, opts = {}, blk = nil)
       @app = app
@@ -12,9 +12,9 @@ class Shoes
       @file_path = file_path
       @opts = opts
       @blk = blk
+      parent.add_child self
 
-      @left = opts[:left] ? opts[:left] : 0
-      @top = opts[:top] ? opts[:top] : 0
+      @dimensions = Dimensions.new opts
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
 

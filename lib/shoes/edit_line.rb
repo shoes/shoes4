@@ -1,7 +1,7 @@
 class Shoes
   class EditLine
-    include Shoes::CommonMethods
-    include Shoes::Common::Changeable
+    include CommonMethods
+    include Common::Changeable
     include DimensionsDelegations
 
     attr_reader :gui, :blk, :parent, :opts, :dimensions
