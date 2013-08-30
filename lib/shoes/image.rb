@@ -3,8 +3,8 @@ class Shoes
     include CommonMethods
     include Common::Clickable
 
-    attr_reader :parent, :blk, :gui, :app, :hidden
-    attr_reader :file_path, :opts
+    attr_reader :parent, :blk, :gui, :app, :hidden, :file_path, :opts
+    attr_accessor :left, :top
 
     def initialize(app, parent, file_path, opts = {}, blk = nil)
       @app = app

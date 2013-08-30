@@ -2,46 +2,32 @@ class Shoes
   module Swt
     class SwtButton
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
       
       # The Swt parent object
-      attr_reader :parent, :real, :opts
+      attr_reader :parent, :real
 
-      def initialize(dsl, parent, type, blk)
+      def initialize(dsl, parent, type)
         @dsl = dsl
         @parent = parent
-        @blk = blk
 
         @type = type
         @real = ::Swt::Widgets::Button.new(@parent.real, @type)
-        @real.addSelectionListener{|e| eval_block} if @blk
+        @real.addSelectionListener{|e| eval_block} if dsl.blk
 
         yield(@real) if block_given?
 
         if dsl.is_a?(::Shoes::Button) and dsl.opts[:width] and dsl.opts[:height]
-          @real.setSize dsl.opts[:width], dsl.opts[:height]
+          @real.setSize dsl.width, dsl.height
         else
           @real.pack
+          dsl.width = @real.size.x
+          dsl.height = @real.size.y
         end
       end
 
       def eval_block
-        @blk.call @dsl
-      end
-
-      def width=(value)
-        # TODO
-      end
-
-      def width
-        @real.size.x
-      end
-
-      def height=(value)
-        # TODO
-      end
-
-      def height
-        @real.size.y
+        dsl.blk.call @dsl
       end
 
       def focus
@@ -49,9 +35,7 @@ class Shoes
       end
 
       def move(left, top)
-        unless @real.disposed?
-          @real.set_location left, top
-        end
+        @real.set_location left, top unless @real.disposed?
       end
 
       def click &blk

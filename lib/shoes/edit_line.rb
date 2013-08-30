@@ -2,8 +2,9 @@ class Shoes
   class EditLine
     include Shoes::CommonMethods
     include Shoes::Common::Changeable
+    include DimensionsDelegations
 
-    attr_reader :gui, :blk, :parent, :opts
+    attr_reader :gui, :blk, :parent, :opts, :dimensions
 
     DEFAULT_STYLE = {
       width: 200,
@@ -15,6 +16,7 @@ class Shoes
       @parent = parent
       @opts = DEFAULT_STYLE.merge(opts)
       @blk = blk
+      @dimensions = Dimensions.new opts
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self

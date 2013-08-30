@@ -2,12 +2,12 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Button do
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', :text => text) }
+  let(:dsl) { double('dsl', text: text, blk: block) }
   let(:parent) { double('parent') }
   let(:block) { proc{} }
   let(:real) { double('real', disposed?: false).as_null_object }
 
-  subject { Shoes::Swt::Button.new dsl, parent, block }
+  subject { Shoes::Swt::Button.new dsl, parent }
 
   before :each do
     parent.stub(:real)

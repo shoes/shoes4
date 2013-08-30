@@ -9,7 +9,7 @@ class Shoes
       end
 
       attr_reader :dsl, :app
-      attr_reader :left, :top, :width, :height
+      attr_accessor :left, :top, :width, :height
     end
   end
 end

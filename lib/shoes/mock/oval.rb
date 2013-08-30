@@ -8,7 +8,7 @@ class Shoes
         @left, @top, @width, @height = left, top, width, height
       end
 
-      attr_reader :left, :top, :width, :height
+      attr_accessor :left, :top, :width, :height
     end
   end
 end
