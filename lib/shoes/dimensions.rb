@@ -8,7 +8,18 @@ class Shoes
       else
         init_with_arguments(left, top, width, height)
       end
+    end
 
+    def right
+      left + width
+    end
+
+    def bottom
+      top + height
+    end
+
+    def in_bounds?(x, y)
+      left <= x and x <= right and top <= y and y <= bottom
     end
 
     private
