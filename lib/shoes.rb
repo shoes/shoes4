@@ -1,6 +1,7 @@
 require 'pathname'
 require 'tmpdir'
 require 'fileutils'
+require 'forwardable'
 
 require 'shoes/common/registration'
 
