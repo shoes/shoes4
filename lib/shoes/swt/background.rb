@@ -4,31 +4,27 @@ class Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Clear
+      include BackendDimensionsDelegations
 
-      def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
+      attr_reader :dsl, :transform, :painter, :opts
+
+      def initialize(dsl, app, opts = {}, &blk)
         @dsl = dsl
         @app = app
         @container = @app.real
-        @left = left
-        @top = top
-        @width = width
-        @height = height
         @opts = opts
-        @corners = opts[:curve] || 0
-	      @angle = opts[:angle] || 0
-        
-        dsl.parent.contents << @dsl
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
 
-      attr_reader :dsl, :angle
-      attr_reader :transform
-      attr_reader :painter
-      attr_reader :opts
-      attr_reader :corners
-      attr_accessor :left, :top, :width, :height
+      def corners
+        dsl.corners
+      end
+
+      def angle
+        dsl.angle
+      end
 
       class Painter < RectPainter
         def fill_setup(gc)
