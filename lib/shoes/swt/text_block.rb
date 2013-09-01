@@ -7,7 +7,7 @@ class Shoes
         @dsl = dsl
         @opts = opts
         @container = @dsl.app.gui.real
-        @painter = TbPainter.new @dsl, opts
+        @painter = TextBlockPainter.new @dsl, opts
         @container.add_paint_listener @painter
       end
 
@@ -42,7 +42,7 @@ class Shoes
         text_layout.setStyle style, 0, @dsl.text.length - 1
         return text_layout, font
       end
-      
+
       def clear
         super
         clear_links
@@ -55,8 +55,11 @@ class Shoes
           @dsl.fixed = (@dsl.text.split.length == 1)
           @dsl.width, @dsl.height = get_size
         end
-        @opts[:text_styles] = @dsl.app.get_styles(values)
+        @opts[:text_styles] = @dsl.app.gather_text_styles(values)
         redraw
+      end
+
+      def contents
       end
 
 
