@@ -55,10 +55,7 @@ class Shoes
           @dsl.fixed = (@dsl.text.split.length == 1)
           @dsl.width, @dsl.height = get_size
         end
-        text_styles = @dsl.app.gather_text_styles(values)
-        @opts[:text_styles] = text_styles if !text_styles.empty?
-        @opts[:text_styles] = [] if text_styles.empty?
-        puts "OPTSSS #{@opts[:text_styles]}\n"
+        @opts[:text_styles] = @dsl.app.gather_text_styles(values)
         redraw
       end
 
