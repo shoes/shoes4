@@ -20,16 +20,20 @@ class Shoes
           @text_layout.setWidth @dsl.width
           @text_layout.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
           if @dsl.cursor
-            h = @text_layout.getLineBounds(0).height
-            @dsl.textcursor ||= @dsl.app.line(0, 0, 0, h, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
-            n = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
-            n = 0 if n < 0
-            pos = @text_layout.getLocation n, true
-            @dsl.textcursor.move(@dsl.left + pos.x, @dsl.top + pos.y).show
+            move_text_cursor
           else
             (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
           end
         end
+      end
+
+      def move_text_cursor
+          layout_height = @text_layout.getLineBounds(0).height
+          @dsl.textcursor ||= @dsl.app.line(0, 0, 0, layout_height, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
+          cursor_position = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
+          cursor_position = 0 if cursor_position < 0
+          pos = @text_layout.getLocation cursor_position, true
+          @dsl.textcursor.move(@dsl.left + pos.x, @dsl.top + pos.y).show
       end
 
       def set_styles
@@ -41,7 +45,7 @@ class Shoes
                                     else ::Swt::SWT::LEFT
                                   end
         style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
-        set_text_style(@text_layout, style, 0..(@dsl.text.length - 1))
+        set_font_styles(@text_layout, style, 0..(@dsl.text.length - 1))
         set_text_styles(style[:fg], style[:bg], @text_layout, @opts)
       end
 
@@ -57,12 +61,12 @@ class Shoes
       end
 
       def create_link(text, range)
-        spos = @text_layout.getLocation range.first, false
-        epos = @text_layout.getLocation range.last, true
+        start_position = @text_layout.getLocation range.first, false
+        end_position = @text_layout.getLocation range.last, true
         left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
         text.lh = @text_layout.getLineBounds(0).height
-        text.sx, text.sy = left + spos.x, top + spos.y
-        text.ex, text.ey = left + epos.x, top + epos.y + text.lh
+        text.sx, text.sy = left + start_position.x, top + start_position.y
+        text.ex, text.ey = left + end_position.x, top + end_position.y + text.lh
         text.pl, text.pt, text.pw, text.ph = left, top, @dsl.width, @dsl.height
         @dsl.links << text
         unless text.clickabled
@@ -82,13 +86,13 @@ class Shoes
               make_link_style(text, current_styles, range)
             end
           end
-          set_text_style(layout, styles, range)
+          set_font_styles(layout, styles, range)
         end if opts[:text_styles]
       end
 
-      def set_text_style(layout, styles, range)
-        f = styles[:font_detail]
-        font = create_font f[:name], f[:size], f[:styles]
+      def set_font_styles(layout, styles, range)
+        font_style = styles[:font_detail]
+        font = create_font font_style[:name], font_style[:size], font_style[:styles]
         style = create_style font, styles[:fg], styles[:bg], styles
         layout.setStyle style, range.first, range.last
       end
@@ -145,35 +149,35 @@ class Shoes
         fg = swt_color(foreground, ::Shoes::COLORS[:black])
         bg = swt_color(background)
         @style = ::Swt::TextStyle.new font, fg, bg
-        set_underline(@style, opts)
-        set_undercolor(@style, opts)
-        set_rise(@style, opts)
-        set_strikethrough(@style, opts)
-        set_strikecolor(@style, opts)
+        set_underline(opts)
+        set_undercolor(opts)
+        set_rise(opts)
+        set_strikethrough(opts)
+        set_strikecolor(opts)
       end
 
       attr_reader :style
 
       private
-      def set_rise(style, opts)
-        style.rise = opts[:rise]
+      def set_rise(opts)
+        @style.rise = opts[:rise]
       end
 
-      def set_underline(style, opts)
-        style.underline = opts[:underline].nil? || opts[:underline] == "none" ? false : true
-        style.underlineStyle = UNDERLINE_STYLES[opts[:underline]]
+      def set_underline(opts)
+        @style.underline = opts[:underline].nil? || opts[:underline] == "none" ? false : true
+        @style.underlineStyle = UNDERLINE_STYLES[opts[:underline]]
       end
 
-      def set_undercolor(style, opts)
-        style.underlineColor = color_from_dsl opts[:undercolor]
+      def set_undercolor(opts)
+        @style.underlineColor = color_from_dsl opts[:undercolor]
       end
 
-      def set_strikethrough(style, opts)
-        style.strikeout = opts[:strikethrough].nil? || opts[:strikethrough] == "none" ? false : true
+      def set_strikethrough(opts)
+        @style.strikeout = opts[:strikethrough].nil? || opts[:strikethrough] == "none" ? false : true
       end
 
-      def set_strikecolor(style, opts)
-        style.strikeoutColor = color_from_dsl opts[:strikecolor]
+      def set_strikecolor(opts)
+        @style.strikeoutColor = color_from_dsl opts[:strikecolor]
       end
 
       def swt_color(color, default = nil)

@@ -396,7 +396,11 @@ EOS
       define_method m do |*text|
         opts = text.last.class == Hash ? text.pop : {}
         styles = gather_text_styles text
-        opts[:text_styles] = styles unless styles.empty?
+        if !styles.empty?
+          opts[:text_styles] = styles
+        else
+          opts[:text_styles] = []
+        end
         text = text.map(&:to_s).join
         create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
       end

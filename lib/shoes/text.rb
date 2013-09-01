@@ -17,7 +17,7 @@ class Shoes
       super m, str, color
     end
     attr_reader :blk
-    attr_accessor :click_listener, :lh, :sx, :sy, :ex, :ey, :pl, :pt, :pw, :ph,
+    attr_accessor :click_listener, :lh, :start_x, :start_y, :end_x, :end_y, :pl, :pt, :pw, :ph,
                   :clickabled, :parent
     
     def in_bounds?(x, y)
