@@ -22,7 +22,7 @@ class Shoes
     
     def in_bounds?(x, y)
       if pw
-        ((pl..(pl+pw)).include?(x) and (sy..ey).include?(y) and !((pl..sx).include?(x) and (sy..(sy+lh)).include?(y)) and !((ex..(pl+pw)).include?(x) and ((ey-lh)..ey).include?(y)))
+        ((pl..(pl+pw)).include?(x) and (start_y..end_y).include?(y) and !((pl..start_x).include?(x) and (start_y..(start_y+lh)).include?(y)) and !((end_x..(pl+pw)).include?(x) and ((end_y-lh)..end_y).include?(y)))
       end
     end
   end

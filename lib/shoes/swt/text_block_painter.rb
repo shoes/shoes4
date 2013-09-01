@@ -65,8 +65,8 @@ class Shoes
         end_position = @text_layout.getLocation range.last, true
         left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
         text.lh = @text_layout.getLineBounds(0).height
-        text.sx, text.sy = left + start_position.x, top + start_position.y
-        text.ex, text.ey = left + end_position.x, top + end_position.y + text.lh
+        text.start_x, text.start_y = left + start_position.x, top + start_position.y
+        text.end_x, text.end_y = left + end_position.x, top + end_position.y + text.lh
         text.pl, text.pt, text.pw, text.ph = left, top, @dsl.width, @dsl.height
         @dsl.links << text
         unless text.clickabled
