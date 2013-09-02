@@ -1,4 +1,5 @@
 require 'swt_shoes/spec_helper'
+require 'shoes/helpers/text_fragment_helpers'
 
 describe Shoes::Swt::TextBlock do
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
@@ -32,7 +33,7 @@ describe Shoes::Swt::TextBlock do
     let(:event) { double("event", gc: gc) }
     let(:gc) { double("gc").as_null_object }
     let(:style) { double(:style) }
-    subject { Shoes::Swt::TbPainter.new(dsl, opts) }
+    subject { Shoes::Swt::TextBlockPainter.new(dsl, opts) }
 
     before :each do
       ::Swt::TextLayout.stub(:new) { text_layout }
@@ -75,16 +76,18 @@ describe Shoes::Swt::TextBlock do
       subject.paintControl(event)
     end
 
-    it "sets default rise value to nil" do
-      style.should_receive(:rise=).with(nil)
-      subject.paintControl(event)
-    end
+    context "rise option" do
+      it "sets default rise value to nil" do
+        style.should_receive(:rise=).with(nil)
+        subject.paintControl(event)
+      end
 
-    it "sets correct rise value" do
-      opts[:rise] = 10
-      style.should_receive(:rise=).with(10)
+      it "sets correct rise value" do
+        opts[:rise] = 10
+        style.should_receive(:rise=).with(10)
 
-      subject.paintControl(event)
+        subject.paintControl(event)
+      end
     end
 
     context "underline option" do
@@ -100,7 +103,7 @@ describe Shoes::Swt::TextBlock do
       it "sets correct underline style" do
 
         style.should_receive(:underline=).with(true)
-        style.should_receive(:underlineStyle=).with(Shoes::Swt::TbPainter::UNDERLINE_STYLES["single"])
+        style.should_receive(:underlineStyle=).with(Shoes::Swt::TextStyleFactory::UNDERLINE_STYLES["single"])
 
         subject.paintControl(event)
       end
@@ -207,6 +210,57 @@ describe Shoes::Swt::TextBlock do
           opts[:fill] = Shoes::COLORS[:salmon]
           ::Swt::TextStyle.should_receive(:new).with(anything, anything, salmon)
           subject.paintControl(event)
+        end
+      end
+    end
+
+    context "with text fragments" do
+      include TextFragmentHelpers
+
+      let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
+      let(:white) { ::Swt::Color.new Shoes.display, 255, 255, 255 }
+      let(:font) { ::Swt::Graphics::Font.new Shoes.display, "Arial", 12, ::Swt::SWT::NORMAL }
+      let(:text_styles) { ::Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub).text_styles }
+      let(:opts) { {:text_styles => text_styles} }
+
+      it "creates a text style" do
+        pending "creative testing energy"
+        ::Swt::TextStyle.should_receive(:new).exactly(42).times
+        subject.paintControl(event)
+      end
+
+      context "code" do
+        it "sets the font to Lucida Console" do
+        end
+      end
+
+      context "del" do
+        it "sets strikeout/strikethrough to true" do
+        end
+      end
+
+      context "em" do
+        it "sets emphasis to true" do
+        end
+      end
+
+      context "ins" do
+        it "sets underline to true" do
+        end
+      end
+
+      context "sub" do
+        it "sets rise to -10 and shrinks font size by 0.8" do
+        end
+      end
+
+      context "sup" do
+        it "sets rise to 10 and shrinks font size by 0.8" do
+        end
+      end
+
+      context "strong" do
+        it "sets weight to true" do
         end
       end
     end
