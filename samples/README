@@ -14,8 +14,7 @@ good-potato-chopping.rb
 good-vjot-adjusted.rb
 
 simple-animate.rb
-simple-calc.rb # looks a bit off
-simple-calc-adjusted.rb
+simple-calc.rb 
 simple-draw.rb
 simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
 simple-bounce.rb
