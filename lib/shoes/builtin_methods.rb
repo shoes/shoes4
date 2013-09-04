@@ -2,7 +2,7 @@
 # Shoes.app block. So they are monkey patched onto the main object.
 # However they can also be used from the normal Shoes.app block.
 class Shoes
-  def self.p(*message)
+  def self.p(message)
     Shoes::LOG << ['debug', message.inspect]
   end
 
