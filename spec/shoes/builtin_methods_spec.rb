@@ -22,13 +22,6 @@ describe Shoes::BuiltinMethods do
     end
   end
 
-  describe "at start of Shoes app" do
-    it "should clear Shoes::LOG" do
-      Shoes::App.new
-      Shoes::LOG.should == []
-    end
-  end
-
   describe "info" do
     it "sets Shoes::LOG" do
       app.info("test")
