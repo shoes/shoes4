@@ -76,14 +76,14 @@ class Shoes
         return '' if current_key_is_modifier?(event)
         if special_key?(event)
           SPECIAL_KEY_NAMES[event.keyCode]
-        elsif control?(event)
-          character_for_control_keypress(event)
+        elsif control?(event) || alt?(event)
+          character_for_modified_keypress(event)
         else
           event.character.chr('UTF-8')
         end
       end
 
-      def character_for_control_keypress(event)
+      def character_for_modified_keypress(event)
         character = event.keyCode.chr('UTF-8')
         if shift?(event)
           character.upcase

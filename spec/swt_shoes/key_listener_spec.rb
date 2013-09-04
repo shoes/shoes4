@@ -6,6 +6,9 @@ describe Shoes::Swt::KeypressListener do
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
 
+  let(:block) {double}
+  subject {Shoes::Swt::KeypressListener.new block}
+
   def test_character_press(character, state_modifier = 0, result_char = character)
     block.should_receive(:call).with(result_char)
     event = double  character: character.ord,
@@ -20,8 +23,7 @@ describe Shoes::Swt::KeypressListener do
     test_character_press(character, state_modifier, result)
   end
 
-  let(:block) {double}
-  subject {Shoes::Swt::KeypressListener.new block}
+
 
   describe 'works with simple keys such as' do
     it '"a"' do
@@ -63,6 +65,18 @@ describe Shoes::Swt::KeypressListener do
 
     it ':alt_z' do
       test_alt_character_press 'z'
+    end
+
+    it ':alt_/' do
+      test_alt_character_press '/'
+    end
+
+    it 'works with what Macs seem to produce for opt + / (should be alt_/)' do
+      block.should_receive(:call).with(:'alt_/')
+      event = double  character: '÷'.ord,
+                      stateMask: ALT,
+                      keyCode: '/'.ord
+      subject.key_pressed(event)
     end
   end
 
