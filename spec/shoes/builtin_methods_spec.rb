@@ -10,6 +10,18 @@ describe Shoes::BuiltinMethods do
     Shoes::LOG.clear
   end
 
+  describe 'Shoes.p' do
+    it 'adds a debug to the log with an inspected object' do
+      Shoes.p 'message'
+      Shoes::LOG.should include ['debug', 'message'.inspect]
+    end
+
+    it 'also handles object the way they should be handled' do
+      Shoes.p []
+      Shoes::LOG.should include ['debug', '[]']
+    end
+  end
+
   describe "at start of Shoes app" do
     it "should clear Shoes::LOG" do
       Shoes::LOG.should == []
