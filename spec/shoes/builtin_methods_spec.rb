@@ -6,7 +6,7 @@ describe Shoes::BuiltinMethods do
 
   subject { Shoes::BuiltinMethods }
 
-  after :each do
+  before :each do
     Shoes::LOG.clear
   end
 
@@ -24,34 +24,35 @@ describe Shoes::BuiltinMethods do
 
   describe "at start of Shoes app" do
     it "should clear Shoes::LOG" do
+      Shoes::App.new
       Shoes::LOG.should == []
     end
   end
 
   describe "info" do
     it "sets Shoes::LOG" do
-      Shoes.app.info("test")
+      app.info("test")
       Shoes::LOG.should == [["info", "test"]]
     end
   end
 
   describe "debug" do
     it "sets Shoes::LOG" do
-      Shoes.app.debug("test")
+      app.debug("test")
       Shoes::LOG.should == [["debug", "test"]]
     end
   end
 
   describe "warn" do
     it "sets Shoes::LOG" do
-      Shoes.app.warn("test")
+      app.warn("test")
       Shoes::LOG.should == [["warn", "test"]]
     end
   end
 
   describe "error" do
     it "sets Shoes::LOG" do
-      Shoes.app.error("test")
+      app.error("test")
       Shoes::LOG.should == [["error", "test"]]
     end
   end
