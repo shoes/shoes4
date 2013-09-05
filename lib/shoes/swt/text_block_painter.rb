@@ -67,7 +67,7 @@ class Shoes
         text.lh = @text_layout.getLineBounds(0).height
         text.start_x, text.start_y = left + start_position.x, top + start_position.y
         text.end_x, text.end_y = left + end_position.x, top + end_position.y + text.lh
-        text.pl, text.pt, text.pw, text.ph = left, top, @dsl.width, @dsl.height
+        text.parent_left, text.parent_width = left, @dsl.width
         @dsl.links << text
         unless text.clickabled
           text.parent = @dsl
@@ -134,18 +134,18 @@ class Shoes
       end
 
       def create_style(font, foreground, background, opts)
-        TextStyleFactory.new(font, foreground, background, opts).style
+        TextStyleFactory.create_style(font, foreground, background, opts)
       end
     end
 
-    class TextStyleFactory
+    module TextStyleFactory
       UNDERLINE_STYLES = {
           "single" => 0,
           "double" => 1,
           "error" => 2,
       }
 
-      def initialize(font, foreground, background, opts)
+      def self.create_style(font, foreground, background, opts)
         fg = swt_color(foreground, ::Shoes::COLORS[:black])
         bg = swt_color(background)
         @style = ::Swt::TextStyle.new font, fg, bg
@@ -154,38 +154,39 @@ class Shoes
         set_rise(opts)
         set_strikethrough(opts)
         set_strikecolor(opts)
+        @style
       end
 
       attr_reader :style
 
       private
-      def set_rise(opts)
+      def self.set_rise(opts)
         @style.rise = opts[:rise]
       end
 
-      def set_underline(opts)
+      def self.set_underline(opts)
         @style.underline = opts[:underline].nil? || opts[:underline] == "none" ? false : true
         @style.underlineStyle = UNDERLINE_STYLES[opts[:underline]]
       end
 
-      def set_undercolor(opts)
+      def self.set_undercolor(opts)
         @style.underlineColor = color_from_dsl opts[:undercolor]
       end
 
-      def set_strikethrough(opts)
+      def self.set_strikethrough(opts)
         @style.strikeout = opts[:strikethrough].nil? || opts[:strikethrough] == "none" ? false : true
       end
 
-      def set_strikecolor(opts)
+      def self.set_strikecolor(opts)
         @style.strikeoutColor = color_from_dsl opts[:strikecolor]
       end
 
-      def swt_color(color, default = nil)
+      def self.swt_color(color, default = nil)
         return color if color.is_a? ::Swt::Color
         color_from_dsl color, default
       end
 
-      def color_from_dsl(dsl_color, default = nil)
+      def self.color_from_dsl(dsl_color, default = nil)
         return nil if dsl_color.nil? and default.nil?
         return color_from_dsl default if dsl_color.nil?
         # TODO: mark color for garbage collection
