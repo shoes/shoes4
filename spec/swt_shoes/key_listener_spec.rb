@@ -84,9 +84,9 @@ describe Shoes::Swt::KeypressListener do
     def test_ctrl_character_press(character, modifier = 0)
       result_char = ('control_' + character).to_sym
       block.should_receive(:call).with(result_char)
-      event = double  character: 'something weird like \x00',
-                    stateMask: CTRL | modifier,
-                    keyCode: character.downcase.ord
+      event = double character: 'something weird like \x00',
+                     stateMask: CTRL | modifier,
+                     keyCode:   character.downcase.ord
       subject.key_pressed(event)
     end
 
