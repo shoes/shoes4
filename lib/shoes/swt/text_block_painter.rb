@@ -12,13 +12,13 @@ class Shoes
       end
 
       def paintControl(paint_event)
-        gc = paint_event.gc
-        gcs_reset gc
+        graphics_context = paint_event.gc
+        gcs_reset graphics_context
         @text_layout.setText @dsl.text
         set_styles
         if @dsl.width
           @text_layout.setWidth @dsl.width
-          @text_layout.draw gc, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
+          @text_layout.draw graphics_context, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
           if @dsl.cursor
             move_text_cursor
           else
