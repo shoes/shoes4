@@ -3,6 +3,15 @@ require 'shoes/spec_helper'
 describe Shoes::Span do
   let(:app) { Shoes::App.new }
 
+  describe 'span' do
+    it 'sets style to Span block' do
+      app.opts[:strikethrough].should be_nil
+      opts = { strikethrough: true }
+      result = app.span('test', opts)
+      result.opts[:strikethrough].should be_true
+    end
+  end
+
   describe 'code' do
     it 'sets font to Lucida Console' do
       result = app.code 'test'
