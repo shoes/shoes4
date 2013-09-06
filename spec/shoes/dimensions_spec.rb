@@ -114,7 +114,7 @@ describe Shoes::DimensionsDelegations do
     end
 
     it 'forwards setter calls like left= do dimenstions' do
-      dimensions.should receive :left=
+      dimensions.should_receive :left=
       subject.left = 66
     end
   end
