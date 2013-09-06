@@ -5,10 +5,13 @@ describe Shoes::Span do
 
   describe 'span' do
     it 'sets style to Span block' do
-      app.opts[:strikethrough].should be_nil
+      app.opts[:strikethrough].should_not be_true
+
       opts = { strikethrough: true }
       result = app.span('test', opts)
       result.opts[:strikethrough].should be_true
+
+      app.opts[:strikethrough].should_not be_true
     end
   end
 
