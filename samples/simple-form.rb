@@ -1,10 +1,11 @@
 Shoes.app width: 320, height: 420 do
-  background "../static/menu-gray.png"
-  background "../static/menu-top.png", height: 50
-  background "../static/menu-left.png", top: 50, width: 55
-  background "../static/menu-right.png", right: 0, top: 50, width: 55
-  image "../static/menu-corner1.png", top: 0, left: 0
-  image "../static/menu-corner2.png", right: 0, top: 0
+  static_dir = Shoes::DIR + "/static/"
+  background static_dir + "menu-gray.png"
+  background static_dir + "menu-top.png", height: 50
+  background static_dir + "menu-left.png", top: 50, width: 55
+  background static_dir + "menu-right.png", right: 0, top: 50, width: 55
+  image static_dir + "menu-corner1.png", top: 0, left: 0
+  image static_dir + "menu-corner2.png", right: 0, top: 0
 
   stack margin: 40 do
     stack margin: 10 do
