@@ -3,13 +3,11 @@ class Shoes
     class Star
       include CommonMethods
 
-      def initialize(dsl, app, left, top, points, outer, inner, opts = {})
+      def initialize(dsl, app)
         @dsl, @app = dsl, app
-        @left, @top, @points, @outer, @inner = left, top, points, outer, inner
       end
 
       attr_reader :dsl, :app
-      attr_accessor :left, :top, :width, :height, :points, :outer, :inner
     end
   end
 end

@@ -1,25 +1,27 @@
 class Shoes
   class Star
-    include Shoes::CommonMethods
-    include Shoes::Common::Fill
-    include Shoes::Common::Stroke
-    include Shoes::Common::Style
-    include Shoes::Common::Clickable
+    include CommonMethods
+    include Common::Fill
+    include Common::Stroke
+    include Common::Style
+    include Common::Clickable
+    include DimensionsDelegations
+
+    attr_reader :app, :gui, :angle, :dimensions, :outer, :inner, :points
 
     def initialize(app, left, top, points, outer, inner, opts = {}, &blk)
       @app = app
-      @left = left
-      @top = top
-      @width = @height = outer*2.0
+      width = height = outer*2.0
+      @dimensions = Dimensions.new left, top, width, height
       @points = points
       @outer = outer
       @inner = inner
+      @angle = opts[:angle] || 0
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @app.unslotted_elements << self
 
-      # GUI
-      @gui = Shoes.backend_for(self, left, top, points, outer, inner, opts, &blk)
+      @gui = Shoes.backend_for(self, &blk)
 
       clickable_options(opts)
     end
@@ -30,6 +32,5 @@ class Shoes
       left - dx <= x and x <= right - dx and top - dy <= y and y <= bottom - dy
     end
 
-    attr_reader :app, :hidden, :gui
   end
 end
