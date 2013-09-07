@@ -17,6 +17,7 @@ class Shoes
       @opts = DEFAULT_STYLE.merge(opts)
       @blk = blk
       @dimensions = Dimensions.new opts
+      @text = text
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
@@ -30,10 +31,15 @@ class Shoes
     end
 
     def text
-      @gui.text
+      if @gui
+        @gui.text
+      else
+        @text
+      end
     end
 
     def text=(value)
+      @text = value
       @gui.text = value
     end
   end
