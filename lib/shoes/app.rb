@@ -27,7 +27,8 @@ class Shoes
                         :resizable  => true,
                         :background => Shoes::COLORS[:white] }.freeze
 
-    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,                           :mouse_motion, :owner
+    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
+                :mouse_motion, :owner, :location
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mhcs, :resizable, :app_title
     attr_writer   :width, :height, :start_as_fullscreen

@@ -50,4 +50,9 @@ describe 'Shoes.url' do
     Shoes.app do visit '/foo' end
   end
 
+  it 'has a location method that returns the current URL' do
+    app = Shoes.app do visit '/foo' end
+    app.location.should eq '/foo'
+  end
+
 end
