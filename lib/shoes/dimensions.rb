@@ -11,11 +11,11 @@ class Shoes
     end
 
     def right
-      left + width
+      left + (width || 0)
     end
 
     def bottom
-      top + height
+      top + (height || 0)
     end
 
     def in_bounds?(x, y)

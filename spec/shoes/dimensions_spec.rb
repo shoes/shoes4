@@ -66,6 +66,13 @@ describe Shoes::Dimensions do
     describe 'additional dimension methods' do
       its(:right) {should eq left + width}
       its(:bottom) {should eq top + height}
+
+      describe 'without height and width' do
+        let(:width) {nil}
+        let(:height) {nil}
+        its(:right) {should eq left}
+        its(:bottom) {should eq top}
+      end
     end
 
     describe 'in_bounds?' do
