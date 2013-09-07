@@ -19,13 +19,15 @@ class Shoes
 
       BufferSize = 4096
 
-      def initialize(dsl, filepath)
+      def initialize(dsl)
         @dsl = dsl
-        @filepath = filepath
+      end
+
+      def filepath
+        @dsl.filepath
       end
 
       attr_accessor :mixer_channel, :audio_input_stream, :audio_format
-      attr_reader :filepath
 
       def play
         Thread.new do
