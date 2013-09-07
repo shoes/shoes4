@@ -88,7 +88,11 @@ class Shoes
     end
 
     def add_child(child)
-      @top_slot.add_child child if @top_slot
+      if top_slot
+        top_slot.add_child child
+      else
+        contents << child
+      end
     end
 
     def default_styles
