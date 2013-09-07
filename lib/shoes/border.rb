@@ -6,7 +6,7 @@ class Shoes
     include Common::Stroke
     include DimensionsDelegations
 
-    attr_reader :app, :gui, :parent, :corners, :angle, :opts
+    attr_reader :app, :gui, :parent, :corners, :angle, :opts, :dimensions
 
     def initialize(app, parent, color, opts = {}, blk = nil)
       @app = app
