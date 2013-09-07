@@ -6,12 +6,12 @@ describe Shoes::Swt::RectPainter do
   let(:corners) { 0 }
   let(:app) { double('app', :real => container, :add_paint_listener => true, :dsl => dsl) }
   let(:container) { double('container', :disposed? => false) }
-  let(:dsl) { double("dsl object", hidden: false, rotate: 0).as_null_object }
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0, left: left, top: top, width: width, height: height, corners: corners).as_null_object }
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:shape) { Shoes::Swt::Rect.new dsl, app, left, top, width, height, :curve => corners }
+  let(:shape) { Shoes::Swt::Rect.new dsl, app, :curve => corners }
   subject { Shoes::Swt::RectPainter.new shape }
 
   it_behaves_like "fill painter"
