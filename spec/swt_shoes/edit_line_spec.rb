@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::EditLine do
-  let(:dsl) { double('dsl', opts: {secret: true}) }
+  let(:dsl) { double('dsl', width: 80, height: 22, text: 'YOLO', opts: {secret: true}) }
   let(:parent) { double('parent') }
   let(:real) { double('real', disposed?: false).as_null_object }
 

@@ -16,7 +16,7 @@ class Shoes
       @parent = parent
       @opts = DEFAULT_STYLE.merge(opts)
       @blk = blk
-      @dimensions = Dimensions.new opts
+      @dimensions = Dimensions.new @opts
       @text = text
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)

@@ -7,6 +7,7 @@ describe 'Shoes.url' do
       url '/path', :path
       url '/number/(\d+)', :number
       url '/foo', :foo
+      url '/visit_me', :visit_me
 
       def index
       end
@@ -19,6 +20,10 @@ describe 'Shoes.url' do
 
       def foo
         some_method
+      end
+
+      def visit_me
+        location.should == '/visit_me'
       end
 
       def some_method
@@ -51,8 +56,7 @@ describe 'Shoes.url' do
   end
 
   it 'has a location method that returns the current URL' do
-    app = Shoes.app do visit '/foo' end
-    app.location.should eq '/foo'
+    Shoes.app do visit '/visit_me' end
   end
 
 end
