@@ -74,6 +74,7 @@ require 'shoes/common/margin'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/builtin_methods'
+require 'shoes/check_button'
 require 'shoes/dsl'
 require 'shoes/input_box'
 

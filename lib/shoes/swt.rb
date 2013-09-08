@@ -63,6 +63,7 @@ require 'shoes/swt/common/clear'
 require 'shoes/swt/input_box'
 require 'shoes/swt/rect_painter.rb'
 require 'shoes/swt/swt_button'
+require 'shoes/swt/check_button'
 require 'shoes/swt/text_block_painter'
 
 require 'shoes/swt/app'
