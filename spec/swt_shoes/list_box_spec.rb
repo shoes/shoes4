@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::ListBox do
   let(:items)  { ["Pie", "Apple", "Sand"] }
-  let(:dsl)    { double('dsl', items: items, opts: {}) }
+  let(:dsl)    { double('dsl', items: items, opts: {}, width: 200, height: 20) }
   let(:parent) { double('parent') }
   let(:block)  { ->(){} }
   let(:real)   { double(text: "", set_size: true, add_selection_listener: true) }

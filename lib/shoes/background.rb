@@ -4,24 +4,23 @@ class Shoes
     include Common::Style
     include Common::Fill
     include Common::Stroke
+    include DimensionsDelegations
+
+    attr_reader :app, :gui, :parent, :corners, :angle, :dimensions
 
     def initialize(app, parent, color, opts = {}, blk = nil)
-      @app = app
+      @app    = app
       @parent = parent
-
-      @left = opts[:left] || 0
-      @top = opts[:top] || 0
-      @width = opts[:width] || 0
-      @height = opts[:height] || 0
-      @corners = opts[:curve] || 0
+      @dimensions = Dimensions.new opts
+      @corners    = opts[:curve] || 0
+      @angle      = opts[:angle] || 0
       opts[:fill] = color
-      @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
 
-      @gui = Shoes.backend_for(self, left, top, width, height, opts, &blk)
+      @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
+      parent.contents << self
+
+      @gui = Shoes.backend_for(self, opts, &blk)
     end
 
-    attr_reader :app, :hidden
-    attr_reader :gui, :parent
-    attr_reader :corners
   end
 end

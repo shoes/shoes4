@@ -27,13 +27,10 @@ class Shoes
                         :resizable  => true,
                         :background => Shoes::COLORS[:white] }.freeze
 
-    attr_reader :gui, :shell, :top_slot, :contents, :unslotted_elements, :location
-    attr_reader :app, :mouse_motion, :owner, :hidden
-    attr_accessor :elements, :current_slot
-    attr_accessor :opts, :blk
-    attr_accessor :mouse_button, :mouse_pos, :mhcs
-
-    attr_accessor :resizable, :app_title
+    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
+                :mouse_motion, :owner, :location
+    attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
+                  :mouse_pos, :mhcs, :resizable, :app_title
     attr_writer   :width, :height, :start_as_fullscreen
 
     def initialize(opts={}, &blk)
@@ -92,7 +89,11 @@ class Shoes
     end
 
     def add_child(child)
-      @top_slot.add_child child
+      if top_slot
+        top_slot.add_child child
+      else
+        contents << child
+      end
     end
 
     def default_styles
@@ -145,13 +146,14 @@ class Shoes
     end
 
     def set_initial_attributes
-      @app                      = self
-      @style                    = default_styles
-      @contents                 = []
-      @unslotted_elements       = []
-      @mouse_motion             = []
-      @mouse_button, @mouse_pos = 0, [0, 0]
-      @mhcs                     = []
+      @app                = self
+      @style              = default_styles
+      @contents           = []
+      @unslotted_elements = []
+      @mouse_motion       = []
+      @mouse_button       = 0
+      @mouse_pos          =[0, 0]
+      @mhcs               = []
     end
 
     def set_attributes_from_options(opts)
@@ -169,9 +171,7 @@ class Shoes
 
     def add_console
       keypress do |key|
-        if key == :"alt_/"
-          ::Shoes::Logger.setup
-        end
+        ::Shoes::Logger.setup if key == :"alt_/"
       end
     end
 

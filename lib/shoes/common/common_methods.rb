@@ -54,6 +54,8 @@ class Shoes
       @hidden
     end
 
+    alias_method :hidden, :hidden?
+
     def visible?
       !hidden?
     end
@@ -89,7 +91,8 @@ class Shoes
     # however we need it from the Slot code to position elements
     def _position left, top
       @gui.move(left, top) if @gui
-      @left, @top = left, top
+      self.left = left
+      self.top = top
     end
 
     def remove
@@ -107,5 +110,6 @@ class Shoes
     def bounds
       gui_container ||= gui_container.getBounds
     end
+
   end
 end

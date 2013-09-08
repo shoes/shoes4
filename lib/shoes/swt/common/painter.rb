@@ -52,8 +52,8 @@ class Shoes
         def set_position_and_size
           @obj.left = @obj.dsl.parent.left
           @obj.top = @obj.dsl.parent.top
-          @obj.width = @obj.opts[:width] || @obj.dsl.parent.width
-          @obj.height = @obj.opts[:height] || @obj.dsl.parent.height
+          @obj.width = @obj.dsl.width || @obj.dsl.parent.width
+          @obj.height = @obj.dsl.height || @obj.dsl.parent.height
         end
 
         def set_rotate gc, angle, left, top

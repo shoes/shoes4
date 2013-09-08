@@ -4,18 +4,10 @@ class Shoes
       @parent = parent
       @filepath = filepath
 
-      #self.blk = blk
-
-      @gui = Shoes.configuration.backend_for(self, filepath)
-
-      #instance_eval &blk unless blk.nil?
-
+      @gui = Shoes.configuration.backend_for(self)
     end
 
-    attr_reader :gui
-    attr_reader :filepath
-    attr_reader :blk
-    attr_reader :parent
+    attr_reader :gui, :filepath, :parent
 
     def play
       @gui.play

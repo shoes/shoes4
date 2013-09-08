@@ -8,12 +8,14 @@ describe Shoes::Swt::Image do
   let(:gui_container_real) { container }
   let(:container) { parent.real }
   let(:blk) { double("block") }
-  let(:parent_dsl) { double("parent dsl", contents: []) }
-  let(:parent) { double("parent", real: real, dsl: parent_dsl, app: app) }
-  let(:dsl) { double("dsl object", left: left, top: top, app: app, hidden: false, opts: opts)}
-  let(:opts) {Hash.new}
+  let(:parent_dsl) { double("parent dsl", add_child: nil, contents: [], gui: parent) }
+  let(:parent) { double("parent", real: real, app: app) }
+  let(:dsl) { Shoes::Image.new app, parent_dsl, image, opts}
+  let(:opts) {{left: left, top: top, width: width, height: height}}
   let(:left) { 100 }
   let(:top) { 200 }
+  let(:height) { nil }
+  let(:width) {nil}
   let(:real) { double 'real', addListener: true, add_paint_listener: true }
   let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app) { double("app", gui: gui) }
@@ -73,14 +75,14 @@ describe Shoes::Swt::Image do
     end
 
     describe 'with a given width' do
-      let(:opts) {{width: (IMAGE_WIDTH * 5.8).to_i}}
+      let(:width) {(IMAGE_WIDTH * 5.8).to_i}
       it 'scales the height' do
         subject.height.should == (IMAGE_HEIGHT * 5.8).to_i
       end
     end
 
     describe 'with a given height' do
-      let(:opts) {{height: IMAGE_HEIGHT * 4}}
+      let(:height) {IMAGE_HEIGHT * 4}
 
       it 'scales the width' do
         subject.width.should == IMAGE_WIDTH * 4
@@ -88,7 +90,8 @@ describe Shoes::Swt::Image do
     end
 
     describe 'with a given width and height' do
-      let(:opts) {{width: 1, height: 2}}
+      let(:width) {1}
+      let(:height) {2}
       it 'sets the given width' do
         subject.width.should == 1
       end
