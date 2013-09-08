@@ -75,6 +75,7 @@ require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/builtin_methods'
 require 'shoes/dsl'
+require 'shoes/input_box'
 
 # please keep this list tidy and alphabetically sorted
 require 'shoes/animation'
