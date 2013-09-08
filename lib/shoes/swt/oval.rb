@@ -7,29 +7,23 @@ class Shoes
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
+
+      attr_reader :dsl, :transform, :painter
+
 
       # @param [Shoes::Oval] dsl the dsl object to provide gui for
       # @param [Shoes::Swt::App] app the app
       # @param [Hash] opts options
-      def initialize(dsl, app, left, top, width, height, opts = {}, &blk)
+      def initialize(dsl, app, &blk)
         @dsl = dsl
         @app = app
         @container = @app.real
-        @left = left
-        @top = top
-        @width = width
-        @height = height
-        @angle = opts[:angle] || app.dsl.rotate
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
         clickable blk if blk
       end
-
-      attr_reader :dsl, :angle
-      attr_reader :transform
-      attr_reader :painter
-      attr_accessor :width, :height, :left, :top
 
       class Painter < Common::Painter
         def clipping

@@ -3,21 +3,22 @@ class Shoes
     class ListBox
       include Common::Child
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
+
+      attr_reader :dsl
 
       # Create a list box
       #
       # @param dsl    [Shoes::List_obx] The Shoes DSL list box this represents
       # @param parent [::Swt::Widgets::Composite] The parent element of this button
       def initialize(dsl, parent)
-        dsl.opts[:width] ||= 200
-        dsl.opts[:height] ||= 20
         @dsl = dsl
         @parent = parent
         @real = ::Swt::Widgets::Combo.new(
           @parent.real,
           ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY
         )
-        @real.set_size dsl.opts[:width], dsl.opts[:height]
+        @real.set_size dsl.width, dsl.height
         @real.add_selection_listener do |event|
           @dsl.call_change_listeners
         end
@@ -27,11 +28,9 @@ class Shoes
         @real.items = values.map(&:to_s)
       end
 
-      # Returns the current selection or nil if nothing
-      # has been selected
       def text
-        v=@real.text
-        v == "" ? nil : v
+        text = @real.text
+        text == '' ? nil : text
       end
 
       def choose(item)
@@ -39,17 +38,7 @@ class Shoes
       end
       
       def move(left, top)
-        unless @real.disposed?
-          @real.set_location left, top
-        end
-      end
-
-      def width
-        @real.size.x
-      end
-
-      def height
-        @real.size.y
+        @real.set_location left, top unless @real.disposed?
       end
     end
   end

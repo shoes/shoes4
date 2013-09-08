@@ -7,6 +7,7 @@ describe 'Shoes.url' do
       url '/path', :path
       url '/number/(\d+)', :number
       url '/foo', :foo
+      url '/visit_me', :visit_me
 
       def index
       end
@@ -19,6 +20,10 @@ describe 'Shoes.url' do
 
       def foo
         some_method
+      end
+
+      def visit_me
+        location.should == '/visit_me'
       end
 
       def some_method
@@ -48,6 +53,10 @@ describe 'Shoes.url' do
   it 'can call methods defined in the URL class when visitting a URL' do
     klazz.any_instance.should_receive(:some_method)
     Shoes.app do visit '/foo' end
+  end
+
+  it 'has a location method that returns the current URL' do
+    Shoes.app do visit '/visit_me' end
   end
 
 end

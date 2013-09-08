@@ -3,7 +3,9 @@ class Shoes
     module Common
       module Toggle
         def toggle
-          @dsl.app.gui.real.redraw @left, @top, @width, @height, false unless @dsl.app.gui.real.isDisposed
+          unless @dsl.app.gui.real.isDisposed
+            @dsl.app.gui.real.redraw dsl.left, dsl.top, dsl.width, dsl.height, false
+          end
         end
       end
     end

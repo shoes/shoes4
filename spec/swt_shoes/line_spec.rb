@@ -2,13 +2,13 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Line do
   let(:container) { double('container', :disposed? => false).as_null_object }
-  let(:app) { double('app', :real => container, :add_paint_listener => true) }
-  let(:dsl) { double('dsl', hidden: false).as_null_object }
+  let(:app) { double('app', :real => container, :add_paint_listener => true, :style => {}).as_null_object }
+  let(:dsl) { Shoes::Line.new app, point_a, point_b }
   let(:point_a) { Shoes::Point.new(10, 100) }
   let(:point_b) { Shoes::Point.new(300, 10) }
 
   subject {
-    Shoes::Swt::Line.new(dsl, app, point_a, point_b)
+    Shoes::Swt::Line.new(dsl, app)
   }
 
   context "#initialize" do
@@ -27,7 +27,7 @@ describe Shoes::Swt::Line do
   describe "painter" do
     include_context "painter context"
 
-    let(:shape) { Shoes::Swt::Line.new(dsl, app, point_a, point_b) }
+    let(:shape) { Shoes::Swt::Line.new(dsl, app) }
     subject { Shoes::Swt::Line::Painter.new(shape) }
 
     it_behaves_like "stroke painter"

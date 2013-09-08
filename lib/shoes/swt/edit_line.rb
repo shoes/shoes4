@@ -1,10 +1,12 @@
 class Shoes
   module Swt
     class EditLine < InputBox
+
+      DEFAULT_STYLES = ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER
+
       def initialize(dsl, parent)
-        dsl.opts[:width] ||= 200
-        dsl.opts[:height] ||= 20
-        styles = dsl.opts[:secret] ? ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER | ::Swt::SWT::PASSWORD : ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER
+        styles = DEFAULT_STYLES
+        styles |= ::Swt::SWT::PASSWORD if dsl.secret?
         super(dsl, parent, styles)
       end
     end

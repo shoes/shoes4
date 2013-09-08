@@ -18,8 +18,6 @@ describe Shoes::Swt::Flow do
       flow.parent.should == parent
       flow.dsl.should == dsl
       flow.real.should == parent_real
-      flow.contents.should == []
-      flow.parent.dsl.contents.first.should == dsl
     end
   end
 end

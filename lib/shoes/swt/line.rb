@@ -5,55 +5,54 @@ class Shoes
       include Common::Move
       include Common::Toggle
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
+
+      attr_reader :dsl, :app
+      attr_reader :translated_point_a, :translated_point_b
+      attr_reader :transform
 
       # @param [Shoes::Line] dsl The {Shoes::Line} implemented by this object
       # @param [Shoes::Swt::App] app The {Swt::App} this object belongs to
       # @param [Shoes::Point] point_a One endpoint of the line
       # @param [Shoes::Point] point_b The other endpoint of the line
       # @param [Hash] opts Options
-      def initialize(dsl, app, point_a, point_b, opts = {})
+      def initialize(dsl, app, opts = {})
         @dsl, @app = dsl, app
-
-        # Move
         @container = @app.real
 
-        # Represent the enclosing box of the line as starting at (0,0), then
-        # apply a transform translation to draw it in the proper place.
-        @left = point_a.left(point_b)
-        @top = point_a.top(point_b)
-        @width = point_a.width(point_b)
-        @height = point_a.height(point_b)
-        @point_a = point_a.to(-@left, -@top)
-        @point_b = point_b.to(-@left, -@top)
-        @angle = opts[:angle] || 0
-        @transform = ::Swt::Transform.new(::Swt.display)
-        # Array to hold transform elements
-        @te = Java::float[6].new
-        move @left, @top
-
+        translate_according_to_enclosing_box
         @painter = Painter.new(self)
         @app.add_paint_listener(@painter)
       end
 
-      attr_reader :dsl, :app
-      attr_reader :point_a, :point_b
-      attr_reader :left, :top, :width, :height, :angle
-      attr_reader :transform
+      def angle
+        @dsl.angle
+      end
 
       def move(x, y)
         unless @container.disposed?
           @container.redraw left, top, width, height, false
           @container.redraw x, y, width, height, false
         end
-        @transform.get_elements @te
-        @transform.set_elements @te[0], @te[1], @te[2], @te[3], x, y
-        @left, @top = x, y
+        @transform.get_elements @transform_elements
+        @transform.set_elements @transform_elements[0], @transform_elements[1], @transform_elements[2], @transform_elements[3], x, y
+        self.left = x
+        self.top = y
         self
+      end
+
+      private
+      def translate_according_to_enclosing_box
+        @translated_point_a = @dsl.point_a.to(-left, -top)
+        @translated_point_b = @dsl.point_b.to(-left, -top)
+        @transform          = ::Swt::Transform.new(::Swt.display)
+        @transform_elements = Java::float[6].new
+        move left, top
       end
 
       class Painter < Common::Painter
         def draw(gc)
-          point_a, point_b = @obj.point_a, @obj.point_b
+          point_a, point_b = @obj.translated_point_a, @obj.translated_point_b
           gc.draw_line(point_a.x, point_a.y, point_b.x, point_b.y)
         end
 

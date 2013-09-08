@@ -1,12 +1,12 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Animation do
-  let(:dsl) { double('dsl', :stopped? => false, :removed? => false)}
+  let(:dsl) { double('dsl', :stopped? => false, :removed? => false, :blk => block) }
   let(:app) { double 'app', :real => app_real, top_slot: double('top_slot').as_null_object }
   let(:block) { double 'block' }
   let(:display) { ::Swt.display }
   let(:app_real) { double('app_real').as_null_object }
-  subject { Shoes::Swt::Animation.new dsl, app, block }
+  subject { Shoes::Swt::Animation.new dsl, app }
 
   before :each do
     display.stub(:timer_exec)

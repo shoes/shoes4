@@ -7,11 +7,12 @@ describe Shoes::Swt::Border do
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) { double("dsl object", width: width, height: height, parent: parent, strokewidth: 1, hidden: false).as_null_object }
+  let(:corners) { 0 }
+  let(:dsl) { double("dsl object", width: width, height: height, left: left, top: top, parent: parent, strokewidth: 1, corners: corners, hidden: false).as_null_object }
   let(:parent) { double("parent", width: width, height: height, left: left, top: top, contents: []) }
 
   subject {
-    Shoes::Swt::Border.new dsl, app, left, top, width, height
+    Shoes::Swt::Border.new dsl, app
   }
 
   context "#initialize" do
@@ -30,7 +31,7 @@ describe Shoes::Swt::Border do
     include_context "painter context"
 
     let(:corners) { 0 }
-    let(:shape) { Shoes::Swt::Border.new dsl, app, left, top, width, height, :curve => corners }
+    let(:shape) { Shoes::Swt::Border.new dsl, app }
     subject { Shoes::Swt::Border::Painter.new shape }
 
     it_behaves_like "stroke painter"

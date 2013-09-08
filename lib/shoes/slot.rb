@@ -19,6 +19,7 @@ class Shoes
       init_attributes(app, parent, opts, blk)
       set_margin
       setup_dimensions
+      @parent.add_child self
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       unslot if opts[:left] || opts[:top]

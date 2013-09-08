@@ -2,15 +2,16 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
   let(:container) { double('container', disposed?: false) }
-  let(:app) { double('app', real: container, add_paint_listener: true, dsl: dsl) }
+  let(:app) { double('app', real: container, add_paint_listener: true, dsl: dsl).as_null_object }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) { double("dsl object", hidden: false, rotate: 0).as_null_object }
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0, left: left, top: top, width: width, height: height).as_null_object }
+  let(:real_dsl) {::Shoes::Oval.new app, left, top, width, height}
 
   subject {
-    Shoes::Swt::Oval.new(dsl, app, left, top, width, height)
+    Shoes::Swt::Oval.new(real_dsl, app)
   }
 
   it_behaves_like "paintable"
@@ -20,7 +21,7 @@ describe Shoes::Swt::Oval do
   describe "painter" do
     include_context "painter context"
 
-    let(:shape) { Shoes::Swt::Oval.new(dsl, app, left, top, width, height) }
+    let(:shape) { Shoes::Swt::Oval.new(dsl, app) }
     subject { Shoes::Swt::Oval::Painter.new(shape) }
 
     it_behaves_like "fill painter"

@@ -1,17 +1,18 @@
 class Shoes
   class Progress
-    include Shoes::CommonMethods
+    include CommonMethods
+    include DimensionsDelegations
 
-    attr_reader :parent, :blk, :gui, :opts
-    attr_reader :fraction
+    attr_reader :parent, :blk, :gui, :opts, :dimensions, :fraction
 
     def initialize(app, parent, opts = {}, blk = nil)
-      @app = app
-      @parent = parent
-      @opts = opts
-      @blk = blk
+      @app        = app
+      @parent     = parent
+      @opts       = opts
+      @blk        = blk
+      @dimensions = Dimensions.new opts
+      @gui        = Shoes.configuration.backend_for(self, @parent.gui)
 
-      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
       @parent.add_child self
 
       @fraction = 0.0
@@ -19,7 +20,7 @@ class Shoes
 
     def fraction=(value)
       @fraction = value
-      @gui.fraction = value
+      @gui.fraction = @fraction
     end
   end
 end

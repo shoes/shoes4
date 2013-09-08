@@ -1,15 +1,22 @@
 class Shoes
   class ListBox
-    include Shoes::CommonMethods
-    include Shoes::Common::Changeable
+    include CommonMethods
+    include Common::Changeable
+    include DimensionsDelegations
 
-    attr_reader :items, :gui, :blk, :parent, :opts
+    DEFAULT_WIDTH = 200
+    DEFAULT_HEIGHT = 20
+
+    attr_reader :items, :gui, :blk, :parent, :opts, :dimensions
 
     def initialize(app, parent, opts = {}, blk = nil)
-      @app    = app
-      @parent = parent
-      @blk    = blk
-      @opts   = opts
+      @app        = app
+      @parent     = parent
+      @blk        = blk
+      @opts       = opts
+      @dimensions = Dimensions.new opts
+      @dimensions.width  ||= DEFAULT_WIDTH
+      @dimensions.height ||= DEFAULT_HEIGHT
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       self.items = opts.has_key?(:items) ? opts[:items] : [""]
