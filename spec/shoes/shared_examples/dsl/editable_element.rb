@@ -3,31 +3,27 @@ shared_examples_for "editable element" do
 
   describe "with no arguments" do
     let(:args) { [] }
-    it { should be_instance_of klazz }
-    its(:text) { should == '' }
-    its(:opts) { should == klazz::DEFAULT_STYLE  }
+    its(:initial_text) { should == '' }
+    its(:width) { should == klazz::DEFAULT_STYLE[:width] }
+    its(:height) { should == klazz::DEFAULT_STYLE[:height] }
   end
 
   describe "with a single text argument" do
     let(:args) { ['Hello text here'] }
 
-    it { should be_instance_of klazz }
-    its(:text) { should == 'Hello text here' }
-    its(:opts) { should == klazz::DEFAULT_STYLE }
+    its(:initial_text) { should == 'Hello text here' }
   end
 
   describe "with a style hash" do
     let(:args) { [{width: 100, height: 50}] }
 
-    it { should be_instance_of klazz }
-    its(:text) { should == '' }
-    its(:opts) { should == {width: 100, height: 50} }
+    its(:initial_text) { should == '' }
   end
 
   describe "with a text argument and a style hash" do
     let(:args) { ['Hello text here', {width: 100, height: 50}] }
-    it { should be_instance_of klazz }
-    its(:text) { should == 'Hello text here' }
-    its(:opts) { should == {width: 100, height: 50} }
+    its(:initial_text) { should == 'Hello text here' }
+    its(:width) { should == 100 }
+    its(:height) { should == 50 }
   end
 end
