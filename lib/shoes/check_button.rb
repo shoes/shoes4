@@ -6,7 +6,7 @@ class Shoes
 
     attr_reader :parent, :blk, :gui, :dimensions
 
-    def initialize(app, parent, opts, blk)
+    def initialize(app, parent, opts = {}, blk = nil)
       @app        = app
       @parent     = parent
       @blk        = blk
@@ -34,4 +34,8 @@ class Shoes
       @blk.call
     end
   end
+
+  class Check < CheckButton ; end
+  class Radio < CheckButton ; end
+
 end
