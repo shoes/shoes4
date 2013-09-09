@@ -36,4 +36,23 @@ class Shoes
       @gui.text = value.to_s
     end
   end
+
+  class EditBox < InputBox
+    DEFAULT_STYLE = { width: 200,
+                      height: 108 }
+
+    def initialize(app, parent, text, opts={}, blk = nil)
+      super(app, parent, text, DEFAULT_STYLE.merge(opts), blk)
+    end
+  end
+
+  class EditLine < InputBox
+    DEFAULT_STYLE = { width:  200,
+                      height: 28 }
+
+    def initialize(app, parent, text, opts={}, blk = nil)
+      super(app, parent, text, DEFAULT_STYLE.merge(opts), blk)
+    end
+  end
+
 end
