@@ -42,11 +42,11 @@ class Shoes
     end
 
     def width
-      (left - right).abs
+      @app.width
     end
 
     def height
-      (top - bottom).abs
+      @app.height
     end
 
     # Moves the shape
