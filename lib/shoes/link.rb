@@ -5,23 +5,15 @@ class Shoes
       super m, str, color
     end
     attr_reader :blk
-    attr_accessor :click_listener, :line_height, :start_x, :start_y, :end_x, :end_y, :parent_left, :parent_width,
-                  :clickabled, :parent
+    attr_accessor :click_listener, :line_height, :start_x, :start_y,
+                  :end_x, :end_y, :parent_left, :parent_width, :clickabled,
+                  :parent
 
     def in_bounds?(x, y)
       if parent_width
-        (
-          (parent_left..(parent_left + parent_width)).include?(x) and
-          (start_y..end_y).include?(y) and
-          !(
-            (parent_left..start_x).include?(x) and
-            (start_y..(start_y + line_height)).include?(y)
-          ) and
-          !(
-            (end_x..(parent_left + parent_width)).include?(x) and
-            ((end_y - line_height)..end_y).include?(y)
-          )
-        )
+        (start_x..end_x).include?(x) and (start_y..end_y).include?(y)
+        puts (start_x..end_x).include?(x) and (start_y..end_y).include?(y)
+        #inside_parent_width and !inside_line_height and !other_bound
       end
     end
   end
