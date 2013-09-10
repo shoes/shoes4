@@ -4,8 +4,8 @@ class Shoes
     include Shoes::Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :parent,:blk, :gui, :opts, :dimensions
-    attr_accessor :text
+    attr_reader :parent, :blk, :gui, :opts, :dimensions
+    attr_accessor :text, :state
 
     def initialize(app, parent, text = 'Button', opts = {}, blk = nil)
       @app    = app
@@ -21,6 +21,12 @@ class Shoes
       parent.add_child self
 
       clickable_options(opts)
+      self.state = @opts[:state] 
+    end
+
+    def state=(value)
+      @state = value
+      @gui.enabled value.nil?
     end
 
     def focus
