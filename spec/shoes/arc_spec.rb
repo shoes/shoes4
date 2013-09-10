@@ -1,3 +1,5 @@
+require 'shoes/spec_helper'
+
 describe Shoes::Arc do
   let(:app) { Shoes::App.new }
 

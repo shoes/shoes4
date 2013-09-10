@@ -9,23 +9,23 @@ describe Shoes::Swt::Arc do
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:dsl) { double("dsl object", angle1: angle1, angle2: angle2, hidden: false).as_null_object }
+  let(:dsl) { double("dsl object", left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2, wedge?: false,  hidden: false).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
   subject {
-    Shoes::Swt::Arc.new(dsl, app, left, top, width, height)
+    Shoes::Swt::Arc.new(dsl, app)
   }
+
+  its(:left) { should eq(left) }
+  its(:top) { should eq(top) }
+  its(:width) { should eq(width) }
+  its(:height) { should eq(height) }
 
   describe "basics" do
     before :each do
       app.should_receive(:add_paint_listener)
     end
-
-    its(:left) { should eq(left) }
-    its(:top) { should eq(top) }
-    its(:width) { should eq(width) }
-    its(:height) { should eq(height) }
 
     specify "converts angle1 to degrees" do
       subject.angle1.should eq(180.0)
@@ -46,7 +46,7 @@ describe Shoes::Swt::Arc do
   describe "painter" do
     include_context "painter context"
 
-    let(:shape) { Shoes::Swt::Arc.new(dsl, app, left, top, width, height) }
+    let(:shape) { Shoes::Swt::Arc.new(dsl, app) }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     it_behaves_like "stroke painter"
@@ -54,7 +54,7 @@ describe Shoes::Swt::Arc do
 
     context "normal fill style" do
       before :each do
-        shape.stub(:wedge?) { false }
+        shape.stub(wedge?: false)
       end
 
       specify "fills arc using path" do
@@ -82,7 +82,7 @@ describe Shoes::Swt::Arc do
 
     context "wedge fill style" do
       before :each do
-        shape.stub(:wedge?) { true }
+        shape.stub(wedge?: true)
       end
 
       specify "fills arc" do

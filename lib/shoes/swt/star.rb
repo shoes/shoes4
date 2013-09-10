@@ -1,34 +1,28 @@
 class Shoes
   module Swt
     class Star
+      extend Forwardable
       include Common::Fill
       include Common::Stroke
       include Common::Move
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
 
-      def initialize(dsl, app, left, top, points, outer, inner, opts = {}, &blk)
+      def_delegators :dsl, :angle, :outer, :inner, :points
+
+      attr_reader :dsl, :transform
+
+      def initialize(dsl, app, &blk)
         @dsl = dsl
         @app = app
         @container = @app.real
-        @left = left
-        @top = top
-        @width = @height = outer*2.0
-        @points = points
-        @outer = outer
-        @inner = inner
-        @angle = opts[:angle] || 0
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
         clickable blk if blk
       end
-
-      attr_reader :dsl, :angle
-      attr_reader :transform
-      attr_reader :painter
-      attr_accessor :width, :height, :left, :top, :points, :outer, :inner
 
       class Painter < Common::Painter
         def fill(gc)
@@ -39,7 +33,7 @@ class Shoes
           gc.drawPolygon make_polygon(@obj)
         end
         
-        def make_polygon obj
+        def make_polygon(obj)
           outer, inner, points, left, top = obj.outer, obj.inner, obj.points, obj.left, obj.top
           polygon = []
           polygon << left << (top + outer)

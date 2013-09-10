@@ -3,13 +3,11 @@ class Shoes
     class Rect
       include CommonMethods
 
-      def initialize(dsl, app, left, top, width, height, opts = {})
+      def initialize(dsl, app, opts = {})
         @dsl, @app = dsl, app
-        @left, @top, @width, @height = left, top, width, height
       end
 
       attr_reader :dsl, :app
-      attr_reader :left, :top, :width, :height
     end
   end
 end

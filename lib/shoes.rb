@@ -1,6 +1,7 @@
 require 'pathname'
 require 'tmpdir'
 require 'fileutils'
+require 'forwardable'
 
 require 'shoes/common/registration'
 
@@ -61,6 +62,7 @@ class Shoes
 end
 
 require 'shoes/version'
+require 'shoes/dimensions'
 
 require 'shoes/color'
 
@@ -72,8 +74,10 @@ require 'shoes/common/margin'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/builtin_methods'
+require 'shoes/check_button'
 require 'shoes/dsl'
 require 'shoes/text'
+require 'shoes/input_box'
 
 # please keep this list tidy and alphabetically sorted
 require 'shoes/animation'
@@ -82,13 +86,10 @@ require 'shoes/arc'
 require 'shoes/background'
 require 'shoes/border'
 require 'shoes/button'
-require 'shoes/check'
 require 'shoes/configuration'
 require 'shoes/color'
 require 'shoes/dialog'
 require 'shoes/download'
-require 'shoes/edit_line'
-require 'shoes/edit_box'
 require 'shoes/font'
 require 'shoes/gradient'
 require 'shoes/image'
@@ -102,7 +103,6 @@ require 'shoes/manual'
 require 'shoes/oval'
 require 'shoes/point'
 require 'shoes/progress'
-require 'shoes/radio'
 require 'shoes/rect'
 require 'shoes/shape'
 require 'shoes/slot'

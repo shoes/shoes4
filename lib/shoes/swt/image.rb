@@ -9,21 +9,18 @@ class Shoes
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
 
       BINARY_ENCODING = Encoding.find('binary')
 
       attr_reader :parent, :real, :dsl, :container, :painter
-      attr_accessor :width, :height
 
       def initialize(dsl, parent, blk)
         @dsl = dsl
         @app = @parent = parent
-        @left, @top = @dsl.left, @dsl.top
         @container = @parent.real
 
         load_image(@dsl.file_path)
-
-        parent.dsl.contents << @dsl
 
         add_paint_listener
 
@@ -57,13 +54,13 @@ class Shoes
         @real        = ::Swt::Graphics::Image.new(::Swt.display, data)
         @full_width  = @real.getImageData.width
         @full_height = @real.getImageData.height
-        @width       = @dsl.opts[:width] || default_width
-        @height      = @dsl.opts[:height] || default_height
+        dsl.width    = dsl.width || default_width
+        dsl.height   = dsl.height || default_height
       end
 
       def default_width
-        if dsl.opts[:height]
-          ratio = dsl.opts[:height].to_r / @full_height
+        if dsl.height
+          ratio = dsl.height.to_r / @full_height
           (@full_width * ratio).to_i
         else
           @full_width
@@ -71,8 +68,8 @@ class Shoes
       end
 
       def default_height
-        if dsl.opts[:width]
-          ratio = dsl.opts[:width].to_r / @full_width
+        if dsl.width
+          ratio = dsl.width.to_r / @full_width
           (@full_height * ratio).to_i
         else
           @full_height
@@ -112,7 +109,7 @@ class Shoes
       def add_paint_listener
         @painter = lambda do |event|
           gc = event.gc
-          gc.drawImage @real, 0, 0, @full_width, @full_height, @left, @top, @width, @height unless @dsl.hidden
+          gc.drawImage @real, 0, 0, @full_width, @full_height, dsl.left, dsl.top, dsl.width, dsl.height unless @dsl.hidden
         end
         @container.add_paint_listener(@painter)
       end
