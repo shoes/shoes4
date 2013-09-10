@@ -67,7 +67,6 @@ class Shoes
         text.line_height = @text_layout.getLineBounds(0).height
         text.start_x, text.start_y = left + start_position.x, top + start_position.y
         text.end_x, text.end_y = left + end_position.x, top + end_position.y + text.line_height
-        text.parent_left, text.parent_width = left, @dsl.width
         @dsl.links << text
         unless text.clickabled
           text.parent = @dsl
