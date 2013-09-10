@@ -12,8 +12,6 @@ class Shoes
     def in_bounds?(x, y)
       if parent_width
         (start_x..end_x).include?(x) and (start_y..end_y).include?(y)
-        puts (start_x..end_x).include?(x) and (start_y..end_y).include?(y)
-        #inside_parent_width and !inside_line_height and !other_bound
       end
     end
   end
