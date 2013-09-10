@@ -8,7 +8,7 @@ Shoes.app width: 420, height: 420, resizable: false do
 
   background gray(240)
   stroke gray(127)
-  cap :square
+  cap :curve
   nofill
 
   10.times do |i|
