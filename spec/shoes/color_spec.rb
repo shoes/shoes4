@@ -246,6 +246,29 @@ describe "Shoes built-in colors" do
   its(:tomato) { should eq(Shoes::Color.new(255, 99, 71)) }
 end
 
+describe "Shoes built in gray" do
+  let(:app) { Shoes::App.new }
+
+  it "creates a dsl method for gray" do
+    app.should respond_to(:gray)
+  end
+
+  specify "gray with no parameters is [128, 128, 128, OPAQUE]" do
+    app.gray.should eq(Shoes::Color.new(128, 128, 128))
+  end
+
+  specify "single parameter specifies the gray level" do
+    app.gray(64).should eq(Shoes::Color.new(64, 64, 64))
+  end
+
+  specify "two parameters specifies the gray level and opacity" do
+    app.gray(13, 57).should eq(Shoes::Color.new(13, 13, 13, 57))
+  end
+
+  specify "float parameters should be normalised" do
+    app.gray(1.0, 0.5).should eq(Shoes::Color.new( 255, 255, 255, 128 ))
+  end
+end
 
 # Differences between this implementation and Red Shoes
 describe "differences from Red Shoes" do

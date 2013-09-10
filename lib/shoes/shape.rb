@@ -96,6 +96,12 @@ class Shoes
       self
     end
 
+    def arc(x, y, width, height, start_angle, arc_angle)
+      @x, @y = x, y
+      update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
+      @gui.arc(x, y, width, height, start_angle, arc_angle)
+    end
+
     private
     # Gives the relative offset of the new position from original position.
     # This calculation is for a single coordinate value, e.g. an x or a y.
