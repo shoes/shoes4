@@ -1,3 +1,5 @@
+require 'shoes/spec_helper'
+
 shared_examples_for "basic background" do
   it "retains app" do
     subject.app.should eq(app)
