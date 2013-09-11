@@ -48,24 +48,12 @@ describe Shoes::Span do
       result = app.sub 'test'
       result.opts[:rise].should eq(-10)
     end
-
-    it 'sets size modifier to a positive fraction less than 1' do
-      result = app.sub 'test'
-      result.opts[:size_modifier].should be < 1
-      result.opts[:size_modifier].should be > 0
-    end
   end
 
   describe 'sup' do
     it 'sets rise to 10 and multiplies font size by 0.8' do
       result = app.sup 'test'
       result.opts[:rise].should eq(10)
-    end
-
-    it 'sets size modifier to a positive fraction less than 1' do
-      result = app.sup 'test'
-      result.opts[:size_modifier].should be < 1
-      result.opts[:size_modifier].should be > 0
     end
   end
 

@@ -228,41 +228,6 @@ describe Shoes::Swt::TextBlock do
         ::Swt::TextStyle.should_receive(:new).exactly(42).times
         subject.paintControl(event)
       end
-
-      context "code" do
-        it "sets the font to Lucida Console" do
-        end
-      end
-
-      context "del" do
-        it "sets strikeout/strikethrough to true" do
-        end
-      end
-
-      context "em" do
-        it "sets emphasis to true" do
-        end
-      end
-
-      context "ins" do
-        it "sets underline to true" do
-        end
-      end
-
-      context "sub" do
-        it "sets rise to -10 and shrinks font size by 0.8" do
-        end
-      end
-
-      context "sup" do
-        it "sets rise to 10 and shrinks font size by 0.8" do
-        end
-      end
-
-      context "strong" do
-        it "sets weight to true" do
-        end
-      end
     end
   end
 end
