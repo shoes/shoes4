@@ -40,6 +40,10 @@ class Shoes
       def click &blk
         @real.addSelectionListener{ blk[self] }
       end
+
+      def enabled(value) 
+        @real.enable_widget value
+      end
     end
   end
 end
