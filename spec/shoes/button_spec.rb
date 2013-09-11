@@ -5,7 +5,7 @@ require "shoes/spec_helper"
 describe Shoes::Button do
 
   let(:input_block) { Proc.new {} }
-  let(:input_opts) { {:width => 131, :height => 137, :margin => 143} }
+  let(:input_opts) { {:width => 131, :height => 137, :margin => 143, :state => "disabled"} }
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, app }
 
@@ -25,6 +25,7 @@ describe Shoes::Button do
       button.text.should == "text"
       button.width.should == 131
       button.height.should == 137
+      button.state.should == "disabled"
     end
   end
 end
