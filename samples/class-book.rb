@@ -8,7 +8,7 @@ class Book < Shoes
     incident(0)
   end
 
-  INCIDENTS = YAML.load_file('class-book.yaml')
+  INCIDENTS = YAML.load_file('samples/class-book.yaml')
 
   def table_of_contents
     toc = []
@@ -31,7 +31,7 @@ class Book < Shoes
     flow width: 180, margin_left: 10, margin_top: 0 do
       para table_of_contents, size: 8
     end
-    stack width: -190, margin: 10, margin_top: 0 do
+    stack margin: 10, margin_top: 0 do
       INCIDENTS[num][1].split(/\n\n+/).each do |p|
         para p
       end
