@@ -44,8 +44,8 @@ shared_examples_for "movable text" do |x, y|
 
   it "moves" do
     container.stub(:redraw)
+    subject.should_receive(:left=).with(x)
+    subject.should_receive(:top=).with(y)
     subject.move x, y
-    subject.instance_variable_get("@left").should eq(x)
-    subject.instance_variable_get("@top").should eq(y)
   end
 end

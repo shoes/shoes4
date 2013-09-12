@@ -7,7 +7,7 @@ describe Shoes::Swt::TextBlock do
   let(:parent) { Shoes::Flow.new app_real, app_real }
   let(:textcursor) { double("text cursor", move: move_textcursor) }
   let(:move_textcursor) { double("move text cursor", show: true) }
-  let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world", opts: opts, left: 0, top: 10,
+  let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world", opts: opts, left: 0, :left= => 0, top: 10, :top= => 0,
     width: 200, height: 180, font: "font", font_size: 16, margin_left: 0, margin_top: 0, cursor: -1, textcursor: textcursor) }
   let(:app) { parent.app.gui.real }
   let(:app_real) { Shoes::App.new }
