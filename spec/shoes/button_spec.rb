@@ -12,7 +12,6 @@ describe Shoes::Button do
   subject { Shoes::Button.new(app, parent, "text", input_opts, input_block) }
 
   it_behaves_like "movable object"
-  it_behaves_like "movable object with gui"
   it_behaves_like "object with state"
 
   it { should respond_to :click }
