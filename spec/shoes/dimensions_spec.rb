@@ -56,37 +56,41 @@ describe Shoes::Dimensions do
       end
     end
 
-    describe 'setters' do
-      it 'also has a setter for left' do
-        subject.left = 66
-        subject.left.should eq 66
-      end
+    describe 'absolute_left and _top' do
+      its(:absolute_left) {should eq nil}
+      its(:absolute_top) {should eq nil}
     end
+  end
 
-    describe 'additional dimension methods' do
-      its(:right) {should eq left + width}
-      its(:bottom) {should eq top + height}
-
-      describe 'without height and width' do
-        let(:width) {nil}
-        let(:height) {nil}
-        its(:right) {should eq left}
-        its(:bottom) {should eq top}
-      end
+  describe 'setters' do
+    it 'also has a setter for left' do
+      subject.left = 66
+      subject.left.should eq 66
     end
+  end
 
-    describe 'in_bounds?' do
-      it {should be_in_bounds 30, 40}
-      it {should be_in_bounds left, top}
-      it {should be_in_bounds left + width, top + height}
-      it {should_not be_in_bounds 0, 0}
-      it {should_not be_in_bounds 0, 40}
-      it {should_not be_in_bounds 40, 0}
-      it {should_not be_in_bounds 200, 50}
-      it {should_not be_in_bounds 80, 400}
-      it {should_not be_in_bounds 1000, 1000}
+  describe 'additional dimension methods' do
+    its(:right) {should eq left + width}
+    its(:bottom) {should eq top + height}
+
+    describe 'without height and width' do
+      let(:width) {nil}
+      let(:height) {nil}
+      its(:right) {should eq left}
+      its(:bottom) {should eq top}
     end
+  end
 
+  describe 'in_bounds?' do
+    it {should be_in_bounds 30, 40}
+    it {should be_in_bounds left, top}
+    it {should be_in_bounds left + width, top + height}
+    it {should_not be_in_bounds 0, 0}
+    it {should_not be_in_bounds 0, 40}
+    it {should_not be_in_bounds 40, 0}
+    it {should_not be_in_bounds 200, 50}
+    it {should_not be_in_bounds 80, 400}
+    it {should_not be_in_bounds 1000, 1000}
   end
 end
 

@@ -1,6 +1,6 @@
 class Shoes
   class Dimensions
-    attr_accessor :left, :top, :width, :height
+    attr_accessor :left, :top, :width, :height, :absolute_left, :absolute_top
 
     def initialize(left = 0, top = 0, width = nil, height = nil)
       if hash_as_argument?(left)
