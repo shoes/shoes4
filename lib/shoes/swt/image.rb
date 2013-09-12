@@ -31,6 +31,12 @@ class Shoes
         load_image(@dsl.file_path)
       end
 
+      # it has a painter and therefore this does not need to do anything,
+      # as it was already changed on the DSL layer
+      # We might want to revisit that though.
+      def move(x, y)
+      end
+
       private
       def load_image(name_or_data)
         if url?(name_or_data)
