@@ -19,31 +19,6 @@ class Shoes
     #  gui_container
     #end
 
-    def initialize(opts={})
-      @identifier = opts[:id]
-    end
-
-    %w[top left width height].each do |e|
-      eval "def #{e}; @gui.#{e} rescue @#{e} end"
-      eval "def #{e}=(v); @gui.#{e} = v end"
-    end
-
-    # This is the position of the right side of the Element,
-    # measured from the *left* side of the Slot.  (pixels)
-    def right
-      left + width
-    end
-
-    # This is the position of the bottom of the Element,
-    # measured from the *top* of the Slot.  (pixels)
-    def bottom
-      top + height
-    end
-
-    def in_bounds?(x, y)
-      visible? and left <= x and x <= right and top <= y and y <= bottom
-    end
-
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
       @hidden = false

@@ -52,6 +52,14 @@ class Shoes
       end
     end
 
+    def right
+      left + width
+    end
+
+    def bottom
+      top + height
+    end
+
     def current_slot
       @app.current_slot
     end
