@@ -7,8 +7,8 @@ class Shoes
             @container.redraw left, top, width, height, false
             @container.redraw x, y, width, height, false
           end
-          self.left = x
-          self.top  = y
+          self.absolute_left = x
+          self.absolute_top  = y
         end
       end
     end

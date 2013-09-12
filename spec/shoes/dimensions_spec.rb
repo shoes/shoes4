@@ -60,6 +60,18 @@ describe Shoes::Dimensions do
       its(:absolute_left) {should eq nil}
       its(:absolute_top) {should eq nil}
     end
+
+    describe 'absolute extra values' do
+      it 'has an appropriate absolute_right' do
+        subject.absolute_left = 10
+        subject.absolute_right.should eq width + 10
+      end
+
+      it 'has an appropriate absolute_bottom' do
+        subject.absolute_top = 15
+        subject.absolute_bottom.should eq height + 15
+      end
+    end
   end
 
   describe 'setters' do

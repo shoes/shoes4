@@ -109,7 +109,7 @@ class Shoes
       def add_paint_listener
         @painter = lambda do |event|
           gc = event.gc
-          gc.drawImage @real, 0, 0, @full_width, @full_height, dsl.left, dsl.top, dsl.width, dsl.height unless @dsl.hidden
+          gc.drawImage @real, 0, 0, @full_width, @full_height, dsl.absolute_left, dsl.absolute_top, dsl.width, dsl.height unless @dsl.hidden
         end
         @container.add_paint_listener(@painter)
       end

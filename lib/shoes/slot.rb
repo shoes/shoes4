@@ -13,7 +13,7 @@ class Shoes
     DEFAULT_HEIGHT = 0
 
     attr_reader :parent, :gui, :contents, :hidden, :blk, :app
-    attr_accessor :width, :height, :left, :top
+    attr_accessor :width, :height, :left, :top, :absolute_left, :absolute_top
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -40,10 +40,12 @@ class Shoes
     end
 
     def set_default_dimension_values
-      @left   ||= 0
-      @top    ||= 0
-      @width  ||= 1.0
-      @height ||= 0
+      @left          ||= 0
+      @top           ||= 0
+      @width         ||= 1.0
+      @height        ||= 0
+      @absolute_top  ||= 0
+      @absolute_left ||= 0
     end
 
     def init_values_from_options(opts)
@@ -58,6 +60,14 @@ class Shoes
 
     def bottom
       top + height
+    end
+
+    def absolute_right
+      absolute_left + width
+    end
+
+    def absolute_bottom
+      absolute_top + height
     end
 
     def current_slot
@@ -104,10 +114,12 @@ class Shoes
       @height -= (margin_top + margin_bottom)
     end
 
+    CurrentPosition = Struct.new(:x, :y, :max_bottom)
+
     def position_contents
-      current_position = CurrentPosition.new left + margin_left,
-                                             top + margin_top,
-                                             top + margin_top
+      current_position = CurrentPosition.new absolute_left + margin_left,
+                                             absolute_top + margin_top,
+                                             absolute_top + margin_top
       contents.each do |element|
         current_position = positioning(element, current_position)
       end
@@ -128,10 +140,10 @@ class Shoes
     end
 
     def update_current_position(current_position, element)
-      current_position.x = element.right
-      current_position.y = element.top
-      if current_position.max_bottom < element.bottom
-        current_position.max_bottom = element.bottom
+      current_position.x = element.absolute_right
+      current_position.y = element.absolute_top
+      if current_position.max_bottom < element.absolute_bottom
+        current_position.max_bottom = element.absolute_bottom
       end
       current_position
     end
@@ -141,7 +153,7 @@ class Shoes
     end
 
     def move_to_next_line(element, current_position)
-      element._position self.left + margin_left, current_position.max_bottom
+      element._position self.absolute_left + margin_left, current_position.max_bottom
     end
 
     def fits_on_the_same_line?(element, current_x)
@@ -159,15 +171,13 @@ class Shoes
     end
 
     def compute_content_height(last_position)
-      last_position.max_bottom - self.top
+      last_position.max_bottom - self.absolute_top
     end
 
     def has_variable_height?
       not @fixed_height
     end
   end
-
-  CurrentPosition = Struct.new(:x, :y, :max_bottom)
 
   class Flow < Slot
     def position_element(element, current_position)

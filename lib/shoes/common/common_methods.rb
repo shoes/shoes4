@@ -52,8 +52,8 @@ class Shoes
     # Moves an element to a specific pixel position. The element is still in the slot,
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
-      unslot
-      _position left, top
+      self.left = left
+      self.top  = top
       self
     end
 
@@ -66,8 +66,8 @@ class Shoes
     # however we need it from the Slot code to position elements
     def _position left, top
       @gui.move(left, top) if @gui
-      self.left = left
-      self.top = top
+      self.absolute_left = left
+      self.absolute_top  = top
     end
 
     def remove

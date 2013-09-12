@@ -18,6 +18,14 @@ class Shoes
       top + (height || 0)
     end
 
+    def absolute_right
+      absolute_left + (width || 0)
+    end
+
+    def absolute_bottom
+      absolute_top + (height || 0)
+    end
+
     def in_bounds?(x, y)
       left <= x and x <= right and top <= y and y <= bottom
     end
@@ -47,7 +55,9 @@ class Shoes
     extend Forwardable
 
     DELEGATED_METHODS = [:left, :top, :width, :height, :right, :bottom,
-                         :in_bounds?, :left=, :top=, :width=, :height=]
+                         :in_bounds?, :left=, :top=, :width=, :height=,
+                         :absolute_left, :absolute_top, :absolute_right,
+                         :absolute_bottom, :absolute_left=, :absolute_top=]
 
     def_delegators :dimensions, *DELEGATED_METHODS
   end

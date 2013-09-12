@@ -20,7 +20,7 @@ class Shoes
             obj = @obj.dsl
             case obj
             when ::Shoes::Oval, ::Shoes::Rect
-              set_rotate graphics_context, @obj.angle, obj.left+obj.width/2.0, obj.top+obj.height/2.0 do
+              set_rotate graphics_context, @obj.angle, obj.absolute_left+obj.width/2.0, obj.absolute_top+obj.height/2.0 do
                 fill graphics_context if fill_setup(graphics_context)
                 draw graphics_context if draw_setup(graphics_context)
               end
@@ -50,8 +50,8 @@ class Shoes
         end
 
         def set_position_and_size
-          @obj.left = @obj.dsl.parent.left
-          @obj.top = @obj.dsl.parent.top
+          @obj.left = @obj.dsl.parent.absolute_left
+          @obj.top = @obj.dsl.parent.absolute_top
           @obj.width = @obj.dsl.width || @obj.dsl.parent.width
           @obj.height = @obj.dsl.height || @obj.dsl.parent.height
         end
