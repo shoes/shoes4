@@ -50,11 +50,11 @@ shared_examples_for 'positions the first element in the top left' do
   include_context 'one slot child'
   include_context 'contents_alignment'
   it 'positions a single object at the same top as self' do
-    element.absolute_top.should eq subject.top
+    element.absolute_top.should eq subject.absolute_top
   end
 
   it 'positions a single object at the same left as self' do
-    element.absolute_left.should eq subject.left
+    element.absolute_left.should eq subject.absolute_left
   end
 
   it 'has a slot height of the element height' do
@@ -67,15 +67,19 @@ shared_examples_for 'arranges elements underneath each other' do
   include_context 'contents_alignment'
 
   it 'positions an element beneath a previous element' do
-    element2.absolute_top.should eq element.bottom
+    element2.absolute_top.should eq element.absolute_bottom
   end
 
   it 'still positions it at the start of the line (e.g. self.left)' do
-    element2.absolute_left.should eq subject.left
+    element2.absolute_left.should eq subject.absolute_left
   end
 
   it 'has a stack height according to its contents' do
     subject.height.should eq (element.height + element2.height)
+  end
+
+  it 'has an absolute_bottom of top + height' do
+    subject.absolute_bottom.should eq (subject.absolute_top + subject.height)
   end
 end
 
