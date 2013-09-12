@@ -59,7 +59,6 @@ class Shoes
         # TODO We should never use instance_variable_set rather an accessor
         @dsl.instance_variable_set :@text, values.map(&:to_s).join
         if @dsl.text.length > 1
-          @dsl.fixed = (@dsl.text.split.length == 1)
           @dsl.width, @dsl.height = get_size
         end
         @opts[:text_styles] = @dsl.app.gather_text_styles(values)

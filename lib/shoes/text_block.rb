@@ -8,9 +8,8 @@ class Shoes
     include DimensionsDelegations
 
 
-    attr_reader  :gui, :parent, :text, :links, :app, :text_styles, :dimensions
-    attr_accessor :font, :font_size, :fixed,
-                  :cursor, :textcursor
+    attr_reader   :gui, :parent, :text, :links, :app, :text_styles, :dimensions
+    attr_accessor :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
       @parent       = parent
@@ -29,13 +28,9 @@ class Shoes
       handle_opts opts
 
       @gui = Shoes.configuration.backend_for(self, opts)
-      if text.split.length == 1
-        self.width, self.height = @gui.get_size
-        @fixed = true
-      end
-      (left != 0) && (top != 0) ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
-      set_size left, top unless @fixed
-
+      self.width, self.height = @gui.get_size
+      @parent.add_child(self)
+      set_size left
 
       clickable_options(opts)
     end
@@ -52,10 +47,8 @@ class Shoes
       self.text
     end
 
-    def set_size left, top
-      unless @fixed
-        self.width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
-      end
+    def set_size left
+      self.width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
       self.height = @gui.get_height + @margin_top + @margin_bottom
     end
 
