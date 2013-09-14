@@ -1,13 +1,45 @@
 class Shoes
   class Dimensions
-    attr_accessor :left, :top, :width, :height, :absolute_left, :absolute_top
+    attr_accessor :width, :height, :absolute_left, :absolute_top
 
-    def initialize(left = 0, top = 0, width = nil, height = nil)
+    def initialize(left = nil, top = nil, width = nil, height = nil)
       if hash_as_argument?(left)
         init_with_hash(left)
       else
         init_with_arguments(left, top, width, height)
       end
+    end
+
+    def left=(value)
+      return if value.nil?
+      @left = value
+      @absolute_x_position = true
+    end
+
+    def top=(value)
+      return if value.nil?
+      @top = value
+      @absolute_y_position = true
+    end
+
+    def left
+      @left || 0
+    end
+
+    def top
+      @top || 0
+    end
+
+    def absolute_x_position?
+      @absolute_x_position
+    end
+
+    def absolute_y_position?
+      @absolute_y_position
+    end
+
+    def absolutely_positioned?
+      absolute_x_position? || absolute_y_position?
     end
 
     def right
@@ -36,17 +68,17 @@ class Shoes
     end
 
     def init_with_hash(dimensions_hash)
-      @left   = dimensions_hash.fetch(:left, 0)
-      @top    = dimensions_hash.fetch(:top, 0)
-      @width  = dimensions_hash.fetch(:width, nil)
-      @height = dimensions_hash.fetch(:height, nil)
+      self.left   = dimensions_hash.fetch(:left, nil)
+      self.top    = dimensions_hash.fetch(:top, nil)
+      self.width  = dimensions_hash.fetch(:width, nil)
+      self.height = dimensions_hash.fetch(:height, nil)
     end
 
     def init_with_arguments(left, top, width, height)
-      @left   = left
-      @top    = top
-      @width  = width
-      @height = height
+      self.left   = left
+      self.top    = top
+      self.width  = width
+      self.height = height
     end
   end
 
@@ -54,10 +86,7 @@ class Shoes
   module DimensionsDelegations
     extend Forwardable
 
-    DELEGATED_METHODS = [:left, :top, :width, :height, :right, :bottom,
-                         :in_bounds?, :left=, :top=, :width=, :height=,
-                         :absolute_left, :absolute_top, :absolute_right,
-                         :absolute_bottom, :absolute_left=, :absolute_top=]
+    DELEGATED_METHODS = Dimensions.public_instance_methods false
 
     def_delegators :dimensions, *DELEGATED_METHODS
   end

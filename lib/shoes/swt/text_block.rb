@@ -22,8 +22,6 @@ class Shoes
 
       def move x, y
         redraw unless @container.disposed?
-        self.left   = x
-        self.top    = y
       end
 
       def get_height

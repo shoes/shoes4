@@ -70,6 +70,21 @@ class Shoes
       absolute_top + height
     end
 
+    # TODO remove those and finally migrate slots to migrations,
+    # not done yet cause it's a bigger effort and I want to commit the current
+    # ones first
+    def absolutely_positioned?
+      absolute_y_position? || absolute_x_position?
+    end
+
+    def absolute_x_position?
+      left != 0
+    end
+
+    def absolute_y_position?
+      top != 0
+    end
+
     def current_slot
       @app.current_slot
     end
@@ -139,17 +154,13 @@ class Shoes
     end
 
     def update_current_position(current_position, element)
-      return current_position if absolutely_positioned? element
+      return current_position if element.absolutely_positioned?
       current_position.x = element.absolute_right
       current_position.y = element.absolute_top
       if current_position.max_bottom < element.absolute_bottom
         current_position.max_bottom = element.absolute_bottom
       end
       current_position
-    end
-
-    def absolutely_positioned?(element)
-      element.top != 0 || element.left != 0
     end
 
     def position_in_current_line(element, current_position)
@@ -163,7 +174,7 @@ class Shoes
     end
 
     def position_x(relative_x, element)
-      if absolute_x_positioning? element
+      if element.absolute_x_position?
         self.absolute_left + element.left
       else
         relative_x
@@ -171,19 +182,11 @@ class Shoes
     end
 
     def position_y(relative_y, element)
-      if absolute_y_positioning? element
+      if element.absolute_y_position?
         self.absolute_top + element.top
       else
         relative_y
       end
-    end
-
-    def absolute_x_positioning?(element)
-      element.left != 0 # should be boolean?
-    end
-
-    def absolute_y_positioning?(element)
-      element.top != 0 # should be boolean?
     end
 
     def fits_on_the_same_line?(element, current_x)

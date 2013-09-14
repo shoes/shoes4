@@ -34,11 +34,4 @@ shared_examples_for "movable text" do |x, y|
     container.should_receive(:redraw).at_least(1).times
     subject.move x, y
   end
-
-  it "moves" do
-    container.stub(:redraw)
-    subject.should_receive(:left=).with(x)
-    subject.should_receive(:top=).with(y)
-    subject.move x, y
-  end
 end

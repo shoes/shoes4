@@ -16,6 +16,9 @@ describe Shoes::Dimensions do
       its(:top) {should eq 0}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
+      its(:absolutely_positioned?) {should be_false}
+      its(:absolute_x_position?) {should be_false}
+      its(:absolute_y_position?) {should be_false}
     end
 
     describe 'with 2 arguments' do
@@ -25,6 +28,9 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
+      its(:absolutely_positioned?) {should be_true}
+      its(:absolute_x_position?) {should be_true}
+      its(:absolute_y_position?) {should be_true}
     end
 
     describe 'with 4 arguments' do
@@ -46,6 +52,9 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
+      its(:absolutely_positioned?) {should be_true}
+      its(:absolute_x_position?) {should be_true}
+      its(:absolute_y_position?) {should be_true}
 
       context 'missing width' do
         subject { Shoes::Dimensions.new left:   left,
@@ -104,12 +113,35 @@ describe Shoes::Dimensions do
     it {should_not be_in_bounds 80, 400}
     it {should_not be_in_bounds 1000, 1000}
   end
+
+  describe 'absolute positioning' do
+    subject {Shoes::Dimensions.new}
+    its(:absolutely_positioned?) {should be_false}
+
+    describe 'changing left' do
+      before :each do
+        subject.left = left
+      end
+
+      its(:absolute_x_position?) {should be_true}
+      its(:absolute_y_position?) {should be_false}
+      its(:absolutely_positioned?) {should be_true}
+    end
+
+    describe 'changing top' do
+      before :each do
+        subject.top = top
+      end
+
+      its(:absolute_x_position?) {should be_false}
+      its(:absolute_y_position?) {should be_true}
+      its(:absolutely_positioned?) {should be_true}
+    end
+
+  end
 end
 
 describe Shoes::DimensionsDelegations do
-
-
-
 
   describe 'with a DSL class and a dimensions method' do
     let(:dimensions) {double('dimensions')}
@@ -136,9 +168,14 @@ describe Shoes::DimensionsDelegations do
       subject.bottom
     end
 
-    it 'forwards setter calls like left= do dimenstions' do
+    it 'forwards setter calls like left= do dimensions' do
       dimensions.should_receive :left=
       subject.left = 66
+    end
+
+    it 'forwards absolutely_positioned? calls to the dimensions' do
+      dimensions.should_receive :absolutely_positioned?
+      subject.absolutely_positioned?
     end
   end
 
