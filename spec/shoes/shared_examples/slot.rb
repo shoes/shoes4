@@ -12,7 +12,9 @@ shared_examples_for "Slot" do
 end
 
 shared_context 'one slot child' do
-  let(:element) {Shoes::FakeElement.new height: 100, width: 50}
+  let(:ele_opts) {Hash.new}
+  let(:element) {Shoes::FakeElement.new({height: 100,
+                                         width: 50}.merge ele_opts)}
 
   before :each do
     subject.add_child element
@@ -34,6 +36,12 @@ shared_context 'contents_alignment' do
   end
 end
 
+shared_context 'element one with top and left' do
+  let(:ele_top) {22}
+  let(:ele_left) {47}
+  let(:ele_opts) {{left: ele_left, top: ele_top}}
+end
+
 shared_examples_for 'positioning through :_position' do
   it 'sends the child the :_position method to position it' do
     element = Shoes::FakeElement.new height: 100, width: 50
@@ -43,6 +51,16 @@ shared_examples_for 'positioning through :_position' do
     # these values aren't set appropriately
     element.stub absolute_right: 0, absolute_bottom: 0
     subject.contents_alignment
+  end
+end
+
+shared_examples_for 'element one positioned with top and left' do
+  it 'positions the element at its left value' do
+    element.absolute_left.should eq subject.absolute_left + ele_left
+  end
+
+  it 'positions the element at its top value' do
+    element.absolute_top.should eq subject.absolute_top + ele_top
   end
 end
 
@@ -59,6 +77,11 @@ shared_examples_for 'positions the first element in the top left' do
 
   it 'has a slot height of the element height' do
     subject.height.should eq element.height
+  end
+
+  describe 'top and left' do
+    include_context 'element one with top and left'
+    it_behaves_like 'element one positioned with top and left'
   end
 end
 
@@ -80,6 +103,21 @@ shared_examples_for 'arranges elements underneath each other' do
 
   it 'has an absolute_bottom of top + height' do
     subject.absolute_bottom.should eq (subject.absolute_top + subject.height)
+  end
+
+  describe 'element one with top and left' do
+    include_context 'element one with top and left'
+    it_behaves_like 'element one positioned with top and left'
+
+    describe 'positions element2 disregarding element1' do
+      it 'has the same absolute left as the slot' do
+        element2.absolute_left.should eq subject.absolute_left
+      end
+
+      it 'has the same absolute top as the slot' do
+        element2.absolute_top.should eq subject.absolute_top
+      end
+    end
   end
 end
 

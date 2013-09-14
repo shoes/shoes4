@@ -127,11 +127,10 @@ class Shoes
     end
 
     def positioning(element, current_position)
-      if takes_up_space?(element)
-        position_element element, current_position
-        element.contents_alignment if element.respond_to? :contents_alignment
-        current_position = update_current_position(current_position, element)
-      end
+      return current_position unless takes_up_space?(element)
+      position_element element, current_position
+      element.contents_alignment if element.respond_to? :contents_alignment
+      current_position = update_current_position(current_position, element)
       current_position
     end
 
@@ -140,6 +139,7 @@ class Shoes
     end
 
     def update_current_position(current_position, element)
+      return current_position if absolutely_positioned? element
       current_position.x = element.absolute_right
       current_position.y = element.absolute_top
       if current_position.max_bottom < element.absolute_bottom
@@ -148,12 +148,42 @@ class Shoes
       current_position
     end
 
+    def absolutely_positioned?(element)
+      element.top != 0 || element.left != 0
+    end
+
     def position_in_current_line(element, current_position)
-      element._position current_position.x, current_position.y
+      element._position position_x(current_position.x, element),
+                        position_y(current_position.y, element)
     end
 
     def move_to_next_line(element, current_position)
-      element._position self.absolute_left + margin_left, current_position.max_bottom
+      element._position position_x(self.absolute_left + margin_left, element),
+                        position_y(current_position.max_bottom, element)
+    end
+
+    def position_x(relative_x, element)
+      if absolute_x_positioning? element
+        self.absolute_left + element.left
+      else
+        relative_x
+      end
+    end
+
+    def position_y(relative_y, element)
+      if absolute_y_positioning? element
+        self.absolute_top + element.top
+      else
+        relative_y
+      end
+    end
+
+    def absolute_x_positioning?(element)
+      element.left != 0 # should be boolean?
+    end
+
+    def absolute_y_positioning?(element)
+      element.top != 0 # should be boolean?
     end
 
     def fits_on_the_same_line?(element, current_x)
