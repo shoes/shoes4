@@ -1,19 +1,14 @@
 class Shoes
   class Slot
-    include Shoes::DSL
-    include Shoes::Common::Margin
-    include Shoes::Common::Clickable
-    include Shoes::CommonMethods
+    include DSL
+    include Common::Margin
+    include Common::Clickable
+    include CommonMethods
+    include DimensionsDelegations
 
-    RECOGNIZED_OPTION_VALUES = %w[left top width height margin margin_left margin_top margin_right margin_bottom]
+    RECOGNIZED_OPTION_VALUES = %w[margin margin_left margin_top margin_right margin_bottom]
 
-    DEFAULT_LEFT   = 0
-    DEFAULT_TOP    = 0
-    DEFAULT_WIDTH  = 1.0
-    DEFAULT_HEIGHT = 0
-
-    attr_reader :parent, :gui, :contents, :hidden, :blk, :app
-    attr_accessor :width, :height, :left, :top, :absolute_left, :absolute_top
+    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -28,61 +23,29 @@ class Shoes
     end
 
     def init_attributes(app, parent, opts, blk)
-      @app      = app
-      @parent   = parent
-      @contents = []
-      @style    = {}
+      @app          = app
+      @parent       = parent
+      @contents     = []
+      @style        = {}
+      @blk          = blk
+      @dimensions   = Dimensions.new opts
+      @fixed_height = height || false
+      set_default_dimension_values
 
       init_values_from_options(opts)
-      @fixed_height = @height || false
-      set_default_dimension_values
-      @blk = blk
     end
 
     def set_default_dimension_values
-      @left          ||= 0
-      @top           ||= 0
-      @width         ||= 1.0
-      @height        ||= 0
-      @absolute_top  ||= 0
-      @absolute_left ||= 0
+      self.width          ||= 1.0
+      self.height         ||= 0
+      self.absolute_left  ||= 0
+      self.absolute_top   ||= 0
     end
 
     def init_values_from_options(opts)
       RECOGNIZED_OPTION_VALUES.each do |value|
         instance_variable_set "@#{value}", opts[value.to_sym]
       end
-    end
-
-    def right
-      left + width
-    end
-
-    def bottom
-      top + height
-    end
-
-    def absolute_right
-      absolute_left + width
-    end
-
-    def absolute_bottom
-      absolute_top + height
-    end
-
-    # TODO remove those and finally migrate slots to migrations,
-    # not done yet cause it's a bigger effort and I want to commit the current
-    # ones first
-    def absolutely_positioned?
-      absolute_y_position? || absolute_x_position?
-    end
-
-    def absolute_x_position?
-      left != 0
-    end
-
-    def absolute_y_position?
-      top != 0
     end
 
     def current_slot
@@ -101,7 +64,7 @@ class Shoes
     end
 
     def add_child(element)
-      gui.dsl.contents << element
+      contents << element
     end
 
     def append &blk
@@ -120,13 +83,13 @@ class Shoes
     end
 
     def convert_percentage_dimensions_to_pixel
-      @width = (@width * parent.width).to_i if @width.is_a? Float
-      @height = (@height * parent.height).to_i if @height.is_a? Float
+      self.width  = (width * parent.width).to_i if width.is_a? Float
+      self.height = (height * parent.height).to_i if height.is_a? Float
     end
 
     def apply_margins
-      @width  -= (margin_left + margin_right)
-      @height -= (margin_top + margin_bottom)
+      @actual_width  = width  - (margin_left + margin_right)
+      @actual_height = height - (margin_top + margin_bottom)
     end
 
     CurrentPosition = Struct.new(:x, :y, :max_bottom)
@@ -190,7 +153,7 @@ class Shoes
     end
 
     def fits_on_the_same_line?(element, current_x)
-      current_x + element.width <= right
+      current_x + element.width <= absolute_left + @actual_width
     end
 
     def takes_up_space?(element)
@@ -199,7 +162,7 @@ class Shoes
 
     def determine_slot_height(last_position)
       content_height = compute_content_height(last_position)
-      @height = content_height if has_variable_height?
+      self.height = content_height if has_variable_height?
       content_height
     end
 
