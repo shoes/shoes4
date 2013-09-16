@@ -8,6 +8,7 @@ describe Shoes::Radio do
   let(:parent) { Shoes::Flow.new app, app }
 
   it_behaves_like "checkable"
+  it_behaves_like "object with state"
 
   # should be unchecked when it's created"
   # only one radio in a group can be checked

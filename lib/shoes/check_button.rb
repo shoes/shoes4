@@ -5,6 +5,7 @@ class Shoes
     include DimensionsDelegations
 
     attr_reader :parent, :blk, :gui, :dimensions
+    attr_accessor :state
 
     def initialize(app, parent, opts = {}, blk = nil)
       @app        = app
@@ -16,6 +17,12 @@ class Shoes
       @parent.add_child self
 
       clickable_options(opts)
+      self.state = opts[:state] 
+    end
+
+    def state=(value)
+      @state = value
+      @gui.enabled value.nil?
     end
 
     def checked?
