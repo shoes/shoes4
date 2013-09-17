@@ -1514,6 +1514,12 @@ Vary the font for a group of text.  Two choices:
  * "normal" - standard font.
  * "smallcaps" - font with the lower case characters replaced by smaller variants of the capital characters. 
 
+=== :wedge » true or false ===
+
+For: ''arc''.
+
+Indicates how arcs are to be filled.  If set to true, the arc is filled as a 'pie chart' style wedge.  The default setting of false fills the arc to the chord connecting the end points of the arc.
+
 === :weight » a string ===
 
 For: ''banner, caption, code, del, em, ins, inscription, link, para, span,
