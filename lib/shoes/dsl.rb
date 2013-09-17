@@ -153,9 +153,24 @@ class Shoes
       Shoes::Sound.new self.gui, soundfile, opts, &blk
     end
 
-    # Draws an arc
+    # Creates an arc at (left, top)
+    #
+    # @param [Integer] left the x-coordinate of the top-left corner
+    # @param [Integer] top the y-coordinate of the top-left corner
+    # @param [Integer] width width of the arc's ellipse
+    # @param [Integer] height height of the arc's ellipse
+    # @param [Float] angle1 angle in radians marking the beginning of the arc segment
+    # @param [Float] angle2 angle in radians marking the end of the arc segment
+    # @param [Hash] opts Arc style options
+    # @option opts [Boolean] wedge (false)
+    # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(opts))
+      arc_style = normalize_style(opts)
+      if arc_style[:center]
+        left -= width / 2 if width > 0
+        top -= height / 2 if height > 0
+      end
+      Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(arc_style))
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
