@@ -13,11 +13,6 @@ describe Shoes::Swt::Shape do
       subject
     end
 
-    it "doesn't use Shoes::Mock" do
-      ancestors.should_not include('WhiteShoes::Shape')
-      subject
-    end
-
     its(:dsl) { should be(dsl) }
   end
 

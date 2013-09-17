@@ -26,8 +26,8 @@ describe Shoes::Shape do
     its(:top) { should eq(100) }
     its(:right) { should eq(370) }
     its(:bottom) { should eq(340) }
-    its(:width) { should eq(240) }
-    its(:height) { should eq(240) }
+    its(:width) { should eq(app.width) }
+    its(:height) { should eq app.height }
 
     it_behaves_like "movable object"
   end
@@ -45,8 +45,8 @@ describe Shoes::Shape do
     its(:top)    { should eq(10) }
     its(:right)  { should eq(100) }
     its(:bottom) { should eq(200) }
-    its(:width)  { should eq(90) }
-    its(:height) { should eq(190) }
+    its(:width) { should eq(app.width) }
+    its(:height) { should eq app.height }
 
     it_behaves_like "movable object"
   end
