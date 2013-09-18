@@ -139,6 +139,17 @@ describe Shoes::Dimensions do
     end
 
   end
+
+  describe Shoes::AbsoluteDimensions do
+    subject {Shoes::AbsoluteDimensions left, top, width, height}
+    it 'has the same absolute_left as left' do
+      subject.absolute_left.should eq left
+    end
+
+    it 'has the same absolute_top as top' do
+      subject.absolute_top.should eq top
+    end
+  end
 end
 
 describe Shoes::DimensionsDelegations do

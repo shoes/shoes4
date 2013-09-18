@@ -82,6 +82,17 @@ class Shoes
     end
   end
 
+  # for objects that are always absolutely positioned e.g. left == absolute_left
+  class AbsoluteDimensions < Dimensions
+    def absolute_left
+      left
+    end
+
+    def absolute_top
+      top
+    end
+  end
+
   # depends on a #dimensions method being present that returns a Dimensions object
   module DimensionsDelegations
     extend Forwardable

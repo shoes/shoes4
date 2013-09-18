@@ -10,6 +10,7 @@ Shoes.app width: 300, height: 300 do
   img = image 'static/shoes-icon.png' do
     alert "You're soooo quick!"
   end
+  #img = rect 100, 120, 140, 180
 
   x, y = 150, 150
   size = [128, 128]
