@@ -41,6 +41,14 @@ describe Shoes::App do
         app.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
       end
 
+      it 'has an absolute_left of 0' do
+        app.absolute_left.should eq 0
+      end
+
+      it 'has an absolute_top of 0' do
+        app.absolute_top.should eq 0
+      end
+
       it "is resizable", :qt do
         app.resizable.should be_true
       end

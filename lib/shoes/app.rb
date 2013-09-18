@@ -16,10 +16,10 @@ class Shoes
   end
 
   class App
-    include Shoes::DSL
-    include Shoes::Common::Margin
-    include Shoes::BuiltinMethods
-    include Shoes::Common::Clickable
+    include DSL
+    include Common::Margin
+    include BuiltinMethods
+    include Common::Clickable
 
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
@@ -64,6 +64,8 @@ class Shoes
 
     def left; 0 end
     def top; 0 end
+    def absolute_left; 0 end
+    def absolute_top; 0 end
 
     def quit
       Shoes.unregister self
