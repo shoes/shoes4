@@ -52,6 +52,7 @@ class Shoes
     # Moves an element to a specific pixel position. The element is still in the slot,
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
+      before_move_hook # needed for redrawing the old position of elements
       self.left = left
       self.top  = top
       self
@@ -82,6 +83,11 @@ class Shoes
     end
 
     private
+    # a hook needed for redrawing until AfterDo supports a before do
+    # e.g. for some objects we want to redraw their old bounds to clean them up
+    def before_move_hook
+    end
+
     def bounds
       gui_container ||= gui_container.getBounds
     end

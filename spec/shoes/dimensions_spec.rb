@@ -141,7 +141,7 @@ describe Shoes::Dimensions do
   end
 
   describe Shoes::AbsoluteDimensions do
-    subject {Shoes::AbsoluteDimensions left, top, width, height}
+    subject {Shoes::AbsoluteDimensions.new left, top, width, height}
     it 'has the same absolute_left as left' do
       subject.absolute_left.should eq left
     end

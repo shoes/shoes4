@@ -63,11 +63,20 @@ class Shoes
         after_every NEED_TO_ASYNC_FLUSH_GUI do
           @display.asyncExec do app.flush unless app.disposed? end
         end
-        after_every_call_of REDRAW_AFTER_MOVE_CLASSES, :move do |x, y, dsl|
+        redraws_for_move
+      end
+
+      def redraws_for_move
+        after_every_call_of REDRAW_AFTER_MOVE_CLASSES, :before_move_hook do |dsl|
           gui = dsl.gui
           unless gui.container.disposed?
             gui.container.redraw dsl.absolute_left, dsl.absolute_top,
                                  dsl.width, dsl.height, false
+          end
+        end
+        after_every_call_of REDRAW_AFTER_MOVE_CLASSES, :move do |x, y, dsl|
+          gui = dsl.gui
+          unless gui.container.disposed?
             gui.container.redraw x, y, dsl.width, dsl.height, false
           end
         end
