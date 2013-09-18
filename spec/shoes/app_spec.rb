@@ -12,7 +12,6 @@ describe Shoes::App do
 
   describe "initialize" do
     let(:input_blk) { Proc.new {} }
-    let(:app) { Shoes::App.new args, &input_blk }
 
     before do
       Shoes::App.any_instance.stub(:flow)
@@ -27,50 +26,50 @@ describe Shoes::App do
     end
 
     context "defaults" do
-      let(:args) { Hash.new }
+      let(:opts) { Hash.new }
 
       it "sets width", :qt do
-        app.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
 
       it "sets height", :qt do
-        app.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
+        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
 
       it "sets title", :qt do
-        app.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
+        subject.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
       end
 
       it 'has an absolute_left of 0' do
-        app.absolute_left.should eq 0
+        subject.absolute_left.should eq 0
       end
 
       it 'has an absolute_top of 0' do
-        app.absolute_top.should eq 0
+        subject.absolute_top.should eq 0
       end
 
       it "is resizable", :qt do
-        app.resizable.should be_true
+        subject.resizable.should be_true
       end
     end
 
     context "from opts" do
-      let(:args) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
+      let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
 
       it "sets width", :qt do
-        app.width.should == args[:width]
+        subject.width.should == opts[:width]
       end
 
       it "sets height", :qt do
-        app.height.should == args[:height]
+        subject.height.should == opts[:height]
       end
 
       it "sets title", :qt do
-        app.app_title.should == args[:title]
+        subject.app_title.should == opts[:title]
       end
 
       it "sets resizable", :qt do
-        app.resizable.should be_false
+        subject.resizable.should be_false
       end
     end
 
