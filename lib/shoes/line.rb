@@ -6,7 +6,7 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :point_a, :point_b, :angle, :dimensions
+    attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui
 
 
     def initialize(app, point_a, point_b, opts = {})

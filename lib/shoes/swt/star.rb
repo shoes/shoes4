@@ -4,7 +4,6 @@ class Shoes
       extend Forwardable
       include Common::Fill
       include Common::Stroke
-      include Common::Move
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
@@ -12,7 +11,7 @@ class Shoes
 
       def_delegators :dsl, :angle, :outer, :inner, :points
 
-      attr_reader :dsl, :transform
+      attr_reader :dsl, :transform, :container
 
       def initialize(dsl, app, &blk)
         @dsl = dsl

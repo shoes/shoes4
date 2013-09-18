@@ -24,8 +24,12 @@ class Shoes
                             ::Shoes::Star  => [:change_style],
                             ::Shoes::Shape => [:change_style],
                             ::Shoes::Line  => [:change_style]}
+
       # only the main thread may draw
       NEED_TO_ASYNC_FLUSH_GUI = {::Shoes::Download  => [:eval_block]}
+
+      REDRAW_AFTER_MOVE_CLASSES = [::Shoes::Image, ::Shoes::Line, ::Shoes::Oval,
+                                   ::Shoes::Rect, ::Shoes::Star]
 
       attr_reader :app
 
@@ -46,9 +50,11 @@ class Shoes
       end
 
       def affected_classes
-        NEED_TO_FLUSH_GUI.keys +
-        NEED_TO_REDRAW_GUI.keys +
-        NEED_TO_ASYNC_FLUSH_GUI.keys
+        classes = NEED_TO_FLUSH_GUI.keys +
+                  NEED_TO_REDRAW_GUI.keys +
+                  NEED_TO_ASYNC_FLUSH_GUI.keys +
+                  REDRAW_AFTER_MOVE_CLASSES
+        classes.uniq
       end
 
       def add_redraws
@@ -57,6 +63,18 @@ class Shoes
         after_every NEED_TO_ASYNC_FLUSH_GUI do
           @display.asyncExec do app.flush unless app.disposed? end
         end
+        after_every_call_of REDRAW_AFTER_MOVE_CLASSES, :move do |x, y, dsl|
+          gui = dsl.gui
+          unless gui.container.disposed?
+            gui.container.redraw dsl.absolute_left, dsl.absolute_top,
+                                 dsl.width, dsl.height, false
+            gui.container.redraw x, y, dsl.width, dsl.height, false
+          end
+        end
+      end
+
+      def after_every_call_of(classes, method, &blk)
+        classes.each do |klass| klass.after method, &blk end
       end
 
       def after_every(hash, &blk)

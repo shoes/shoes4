@@ -4,7 +4,6 @@ class Shoes
       extend Forwardable
       include Common::Fill
       include Common::Stroke
-      include Common::Move
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
@@ -13,14 +12,13 @@ class Shoes
       def_delegators :dsl, :angle, :corners
 
 
-      attr_reader :dsl, :app, :transform, :painter
+      attr_reader :dsl, :app, :transform, :painter, :container
 
       def initialize(dsl, app, opts ={}, &blk)
         @dsl = dsl
         @app = app
         @opts = opts
 
-        # Needed for Common::Move
         @container = @app.real
 
         @painter = RectPainter.new(self)
