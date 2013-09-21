@@ -15,6 +15,10 @@ class Shoes
 
       def focus
       end
+
+      def enabled(value)
+      end
+      
     end
   end
 end

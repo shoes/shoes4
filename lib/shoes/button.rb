@@ -2,10 +2,11 @@ class Shoes
   class Button
     include Shoes::CommonMethods
     include Shoes::Common::Clickable
+    include Shoes::Common::State
     include DimensionsDelegations
 
     attr_reader :parent, :blk, :gui, :opts, :dimensions
-    attr_accessor :text, :state
+    attr_accessor :text
 
     def initialize(app, parent, text = 'Button', opts = {}, blk = nil)
       @app    = app
@@ -21,12 +22,7 @@ class Shoes
       parent.add_child self
 
       clickable_options(opts)
-      self.state = @opts[:state] 
-    end
-
-    def state=(value)
-      @state = value
-      @gui.enabled value.nil?
+      state_options(opts)
     end
 
     def focus

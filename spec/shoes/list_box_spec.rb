@@ -8,6 +8,7 @@ describe Shoes::ListBox do
   let(:parent)      { Shoes::Flow.new app, app}
 
   it_behaves_like "an element that can respond to change"
+  it_behaves_like "object with state"
 
   it "should contain the correct items" do
     subject.items.should eq ["Wine", "Vodka", "Water"]

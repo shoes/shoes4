@@ -34,6 +34,11 @@ class Shoes
           @real.set_location left, top
         end
       end
+
+      def enabled(value) 
+        @real.enable_widget value
+      end
+      
     end
   end
 end

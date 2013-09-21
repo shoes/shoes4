@@ -2,6 +2,7 @@ class Shoes
   class ListBox
     include CommonMethods
     include Common::Changeable
+    include Common::State
     include DimensionsDelegations
 
     DEFAULT_WIDTH = 200
@@ -23,6 +24,7 @@ class Shoes
       @parent.add_child self
 
       self.change &blk if blk
+      state_options(opts)
     end
 
     def items=(values)

@@ -9,7 +9,7 @@ class Shoes
 
       # Create a list box
       #
-      # @param dsl    [Shoes::List_obx] The Shoes DSL list box this represents
+      # @param dsl    [Shoes::List_box] The Shoes DSL list box this represents
       # @param parent [::Swt::Widgets::Composite] The parent element of this button
       def initialize(dsl, parent)
         @dsl = dsl
@@ -39,6 +39,10 @@ class Shoes
       
       def move(left, top)
         @real.set_location left, top unless @real.disposed?
+      end
+
+      def enabled(value) 
+        @real.enable_widget value
       end
     end
   end
