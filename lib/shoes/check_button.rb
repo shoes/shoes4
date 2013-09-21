@@ -2,10 +2,10 @@ class Shoes
   class CheckButton
     include CommonMethods
     include Common::Clickable
+    include Common::State
     include DimensionsDelegations
 
     attr_reader :parent, :blk, :gui, :dimensions
-    attr_accessor :state
 
     def initialize(app, parent, opts = {}, blk = nil)
       @app        = app
@@ -17,12 +17,7 @@ class Shoes
       @parent.add_child self
 
       clickable_options(opts)
-      self.state = opts[:state] 
-    end
-
-    def state=(value)
-      @state = value
-      @gui.enabled value.nil?
+      state_options(opts)
     end
 
     def checked?

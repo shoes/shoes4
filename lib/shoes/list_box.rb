@@ -2,13 +2,13 @@ class Shoes
   class ListBox
     include CommonMethods
     include Common::Changeable
+    include Common::State
     include DimensionsDelegations
 
     DEFAULT_WIDTH = 200
     DEFAULT_HEIGHT = 20
 
     attr_reader :items, :gui, :blk, :parent, :opts, :dimensions
-    attr_accessor :state
 
     def initialize(app, parent, opts = {}, blk = nil)
       @app        = app
@@ -24,14 +24,9 @@ class Shoes
       @parent.add_child self
 
       self.change &blk if blk
-      self.state = @opts[:state] 
+      state_options(opts)
     end
 
-    def state=(value)
-      @state = value
-      @gui.enabled value.nil?
-    end
-    
     def items=(values)
       @items = values
       @gui.update_items values

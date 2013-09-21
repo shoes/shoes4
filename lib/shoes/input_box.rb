@@ -2,10 +2,10 @@ class Shoes
   class InputBox
     include CommonMethods
     include Common::Changeable
+    include Common::State
     include DimensionsDelegations
 
     attr_reader :gui, :blk, :parent, :dimensions, :initial_text
-    attr_accessor :state
 
     def initialize(app, parent, text, opts, blk = nil)
       @app          = app
@@ -19,12 +19,7 @@ class Shoes
       @parent.add_child self
 
       self.change &blk if blk
-      self.state = opts[:state] 
-    end
-
-    def state=(value)
-      @state = value
-      @gui.enabled value.nil?
+      state_options(opts)
     end
 
     def secret?
