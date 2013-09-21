@@ -13,6 +13,7 @@ describe Shoes::Button do
 
   it_behaves_like "movable object"
   it_behaves_like "movable object with gui"
+  it_behaves_like "object with state"
 
   it { should respond_to :click }
   it { should respond_to :focus }
