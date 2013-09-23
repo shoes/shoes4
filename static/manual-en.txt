@@ -3530,4 +3530,4 @@ Hope this helps:
 
  * You can join [[http://librelist.com/browser/shoes/ Shoes ML]] and feel free ask your questions. 
  * [[http://github.com/shoes/shoes/ Official Current Source Code]] is on GitHub.
- * [[http://github.com/shoes/shoes/downloads Recent Builds]] for your platform.
+ * [[https://github.com/shoes/shoes/wiki Wiki]] for Shoes general info.
