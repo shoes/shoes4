@@ -6,6 +6,7 @@ describe Shoes::Dimensions do
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
+  let(:parent) {Shoes::Dimensions.new left, top, width*2, height*2}
   subject {Shoes::Dimensions.new left, top, width, height}
 
   describe 'initialization' do
@@ -34,6 +35,24 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
+    end
+
+    describe 'with relative width and height of parent' do
+      subject {Shoes::Dimensions.new left, top, 0.5, 0.5, parent}
+
+      its(:left) {should eq left}
+      its(:top) {should eq top}
+      its(:width) {should eq width}
+      its(:height) {should eq height}
+    end
+
+    describe 'with relative width and height but no parent' do
+      subject {Shoes::Dimensions.new left, top, 0.5, 0.5}
+
+      its(:left) {should eq left}
+      its(:top) {should eq top}
+      its(:width) {should eq 0.5}
+      its(:height) {should eq 0.5}
     end
 
     describe 'with a hash' do
@@ -91,9 +110,6 @@ describe Shoes::Dimensions do
 end
 
 describe Shoes::DimensionsDelegations do
-
-
-
 
   describe 'with a DSL class and a dimensions method' do
     let(:dimensions) {double('dimensions')}
