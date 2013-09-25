@@ -1,7 +1,8 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Radio do
-  subject { Shoes::Radio.new(app, parent, input_opts, input_block) }
+  subject { Shoes::Radio.new(app, parent, group, input_opts, input_block) }
+  let(:group) { :a_group }
   let(:input_block) { Proc.new {} }
   let(:input_opts) { Hash.new }
   let(:app) { Shoes::App.new }
@@ -10,6 +11,13 @@ describe Shoes::Radio do
   it_behaves_like "checkable"
   it_behaves_like "object with state"
 
-  # should be unchecked when it's created"
   # only one radio in a group can be checked
+
+  describe "initialize" do
+    it "should set accessors" do
+      subject.parent.should == parent
+      subject.group.should == group
+      subject.blk.should == input_block
+    end
+  end
 end
