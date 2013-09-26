@@ -11,17 +11,13 @@ class Shoes
   module Swt
     class RedrawingAspect
 
-      NEED_TO_UPDATE = {Animation          => [:eval_block],
-                        ::Shoes::App       => [:eval_block],
-                        Button             => [:eval_block],
-                        KeypressListener   => [:eval_block],
-                        KeyreleaseListener => [:eval_block],
-                        Timer              => [:eval_block]}
-      NEED_TO_REDRAW = {::Shoes::Oval  => [:move],
-                        ::Shoes::Star  => [:move],
-                        ::Shoes::Rect  => [:move],
-                        ::Shoes::Star  => [:move],
-                        ::Shoes::Shape => [:move]}
+      NEED_TO_UPDATE = {Animation              => [:eval_block],
+                        ::Shoes::App           => [:eval_block],
+                        Button                 => [:eval_block],
+                        KeypressListener       => [:eval_block],
+                        KeyreleaseListener     => [:eval_block],
+                        MouseMoveListener      => [:eval_move_block],
+                        Timer                  => [:eval_block]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
@@ -45,14 +41,12 @@ class Shoes
 
       def affected_classes
         classes = NEED_TO_UPDATE.keys +
-                  NEED_TO_ASYNC_UPDATE_GUI.keys +
-                  NEED_TO_REDRAW.keys
+                  NEED_TO_ASYNC_UPDATE_GUI.keys
         classes.uniq
       end
 
       def add_redraws
         after_every NEED_TO_UPDATE do update_gui end
-        after_every NEED_TO_REDRAW do app.real.redraw unless app.disposed? end
         after_every NEED_TO_ASYNC_UPDATE_GUI do
           @display.asyncExec do update_gui end
         end
