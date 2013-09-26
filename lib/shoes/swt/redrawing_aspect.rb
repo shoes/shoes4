@@ -11,13 +11,14 @@ class Shoes
   module Swt
     class RedrawingAspect
 
-      NEED_TO_UPDATE = {Animation              => [:eval_block],
-                        ::Shoes::App           => [:eval_block],
-                        Button                 => [:eval_block],
-                        KeypressListener       => [:eval_block],
-                        KeyreleaseListener     => [:eval_block],
-                        MouseMoveListener      => [:eval_move_block],
-                        Timer                  => [:eval_block]}
+      NEED_TO_UPDATE = {Animation                        => [:eval_block],
+                        ::Shoes::App                     => [:eval_block],
+                        Button                           => [:eval_block],
+                        Common::Clickable::ClickListener => [:eval_block],
+                        KeypressListener                 => [:eval_block],
+                        KeyreleaseListener               => [:eval_block],
+                        MouseMoveListener                => [:eval_move_block],
+                        Timer                            => [:eval_block]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
