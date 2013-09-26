@@ -39,6 +39,7 @@ class Shoes
       private
       def load_image(name_or_data)
         if url?(name_or_data)
+          save_width_and_height
           display_temporary_download_image
           download_and_display_real_image(name_or_data)
         else
@@ -48,6 +49,11 @@ class Shoes
 
       def url?(name_or_data)
         name_or_data =~ /^(http|https):\/\//
+      end
+
+      def save_width_and_height
+        @saved_width  = dsl.width
+        @saved_height = dsl.height
       end
 
       def display_temporary_download_image
@@ -84,8 +90,14 @@ class Shoes
       def download_and_display_real_image(url)
         @tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}.png") unless @tmpname_or_data
         @dsl.app.download url, save: @tmpname do
+          restore_width_and_height
           create_image @tmpname
         end
+      end
+
+      def restore_width_and_height
+        dsl.width  = @saved_width
+        dsl.height = @saved_height
       end
 
       def display_image(name_or_data)
