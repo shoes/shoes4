@@ -9,11 +9,10 @@ describe Shoes::Swt::Border do
   let(:height) { 111 }
   let(:corners) { 0 }
   let(:dsl) { double("dsl object", width: width, height: height, left: left, top: top, parent: parent, strokewidth: 1, corners: corners, hidden: false).as_null_object }
-  let(:parent) { double("parent", width: width, height: height, left: left, top: top, contents: []) }
+  let(:parent) { double("parent", width: width, height: height,
+                        absolute_left: left, absolute_top: top, contents: []) }
 
-  subject {
-    Shoes::Swt::Border.new dsl, app
-  }
+  subject { Shoes::Swt::Border.new dsl, app }
 
   context "#initialize" do
     it { should be_an_instance_of(Shoes::Swt::Border) }

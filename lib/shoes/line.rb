@@ -6,7 +6,7 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :point_a, :point_b, :angle, :dimensions
+    attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui
 
 
     def initialize(app, point_a, point_b, opts = {})
@@ -29,10 +29,10 @@ class Shoes
     end
 
     def enclosing_box_of_line
-      @dimensions = Dimensions.new left:   @point_a.left(@point_b),
-                                   top:    @point_a.top(@point_b),
-                                   width:  @point_a.width(@point_b),
-                                   height: @point_a.height(@point_b)
+      @dimensions = AbsoluteDimensions.new left:   @point_a.left(@point_b),
+                                           top:    @point_a.top(@point_b),
+                                           width:  @point_a.width(@point_b),
+                                           height: @point_a.height(@point_b)
     end
 
     def move(x, y)

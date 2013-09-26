@@ -18,7 +18,7 @@ class Shoes
         set_styles
         if @dsl.width
           @text_layout.setWidth @dsl.width
-          @text_layout.draw graphics_context, @dsl.left.to_i + @dsl.margin_left, @dsl.top.to_i + @dsl.margin_top
+          @text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
           if @dsl.cursor
             move_text_cursor
           else
@@ -33,7 +33,7 @@ class Shoes
           cursor_position = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
           cursor_position = 0 if cursor_position < 0
           pos = @text_layout.getLocation cursor_position, true
-          @dsl.textcursor.move(@dsl.left + pos.x, @dsl.top + pos.y).show
+          @dsl.textcursor.move(@dsl.absolute_left + pos.x, @dsl.absolute_top + pos.y).show
       end
 
       def set_styles
@@ -63,7 +63,7 @@ class Shoes
       def create_link(text, range)
         start_position = @text_layout.getLocation range.first, false
         end_position = @text_layout.getLocation range.last, true
-        left, top =  @dsl.left + @dsl.margin_left, @dsl.top + @dsl.margin_top
+        left, top =  @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
         text.line_height = @text_layout.getLineBounds(0).height
         text.start_x, text.start_y = left + start_position.x, top + start_position.y
         text.end_x, text.end_y = left + end_position.x, top + end_position.y + text.line_height
