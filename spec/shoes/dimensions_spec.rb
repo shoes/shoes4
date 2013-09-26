@@ -87,13 +87,38 @@ describe Shoes::Dimensions do
       it {should_not be_in_bounds 1000, 1000}
     end
 
+    describe 'centered' do
+      describe '5 arguments' do
+        subject {Shoes::Dimensions.new 100, 50, 40, 20, true}
+        
+        its(:left) {should eq 80}
+        its(:top) {should eq 40}
+        its(:right) {should eq 120}
+        its(:bottom) {should eq 60}
+        its(:width) {should eq 40}
+        its(:height) {should eq 20}
+      end
+      
+      describe 'hash' do
+        subject {Shoes::Dimensions.new left:   100,
+                                       top:    50,
+                                       width:  40,
+                                       height: 20,
+                                       center: true }
+
+        its(:left) {should eq 80}
+        its(:top) {should eq 40}
+        its(:right) {should eq 120}
+        its(:bottom) {should eq 60}
+        its(:width) {should eq 40}
+        its(:height) {should eq 20}
+      end
+    end
+
   end
 end
 
 describe Shoes::DimensionsDelegations do
-
-
-
 
   describe 'with a DSL class and a dimensions method' do
     let(:dimensions) {double('dimensions')}

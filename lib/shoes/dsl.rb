@@ -1,14 +1,4 @@
 class Shoes
-  # Utility method for adjusting left and top for elements supporting the :center style.
-  #
-  def self.adjust_left_and_top(left, top, width, height, opts = {})
-    if opts[:center]
-      left -= width / 2 if width > 0
-      top -= height / 2 if height > 0
-    end
-    [left, top]
-  end
-
   # Methods for creating and manipulating Shoes elements
   #
   # Requirements
@@ -176,7 +166,6 @@ class Shoes
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
       arc_style = normalize_style(opts)
-      left, top = Shoes::adjust_left_and_top(left, top, width, height, arc_style)
       Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(arc_style))
     end
 
@@ -236,7 +225,6 @@ Wrong number of arguments. Must be one of:
 EOS
           raise ArgumentError, message
       end
-      left, top = Shoes::adjust_left_and_top(left, top, width, height, oval_style)
       Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style), &blk)
     end
 
@@ -290,7 +278,6 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      left, top = Shoes::adjust_left_and_top(left, top, width, height, opts)
       Shoes::Rect.new app, left, top, width, height, style.merge(opts), &blk
     end
 
