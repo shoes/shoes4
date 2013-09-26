@@ -2,6 +2,11 @@ class Shoes
   module Swt
     class TextBlock
       include Common::Clear
+      include ::Shoes::BackendDimensionsDelegations
+
+      DEFAULT_SPACING = 4
+
+      attr_reader :dsl
 
       def initialize(dsl, opts = nil)
         @dsl = dsl
@@ -17,7 +22,6 @@ class Shoes
 
       def move x, y
         redraw unless @container.disposed?
-        @left, @top, @width, @height = x, y, @dsl.width, @dsl.height
       end
 
       def get_height
@@ -36,7 +40,7 @@ class Shoes
       def set_styles
         text_layout = ::Swt::TextLayout.new Shoes.display
         text_layout.setText @dsl.text
-        text_layout.setSpacing(@opts[:leading] || 4)
+        text_layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
         font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
         text_layout.setStyle style, 0, @dsl.text.length - 1
@@ -50,9 +54,9 @@ class Shoes
 
       def replace *values
         clear_links
+        # TODO We should never use instance_variable_set rather an accessor
         @dsl.instance_variable_set :@text, values.map(&:to_s).join
         if @dsl.text.length > 1
-          @dsl.fixed = (@dsl.text.split.length == 1)
           @dsl.width, @dsl.height = get_size
         end
         @opts[:text_styles] = @dsl.app.gather_text_styles(values)

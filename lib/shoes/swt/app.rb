@@ -197,10 +197,14 @@ class Shoes
 
       def mouseMove(e)
         @app.dsl.mouse_pos = [e.x, e.y]
-        @app.dsl.mouse_motion.each{|blk| blk[e.x, e.y]}
+        @app.dsl.mouse_motion.each{|blk| eval_move_block blk, e}
         mouse_shape_control
         mouse_hover_control
         mouse_leave_control
+      end
+
+      def eval_move_block(blk, e)
+        blk.call e.x, e.y
       end
 
       def mouse_shape_control

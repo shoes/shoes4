@@ -11,21 +11,15 @@ class Shoes
   module Swt
     class RedrawingAspect
 
-      NEED_TO_FLUSH_GUI = {Animation          => [:eval_block],
-                           Button             => [:eval_block],
-                           KeypressListener   => [:eval_block],
-                           KeyreleaseListener => [:eval_block],
-                           Timer              => [:eval_block]}
-
-      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :line,
-                                               :rect, :background, :arc],
-                            ::Shoes::Oval  => [:change_style],
-                            ::Shoes::Rect  => [:change_style],
-                            ::Shoes::Star  => [:change_style],
-                            ::Shoes::Shape => [:change_style],
-                            ::Shoes::Line  => [:change_style]}
+      NEED_TO_UPDATE = {Animation              => [:eval_block],
+                        ::Shoes::App           => [:eval_block],
+                        Button                 => [:eval_block],
+                        KeypressListener       => [:eval_block],
+                        KeyreleaseListener     => [:eval_block],
+                        MouseMoveListener      => [:eval_move_block],
+                        Timer                  => [:eval_block]}
       # only the main thread may draw
-      NEED_TO_ASYNC_FLUSH_GUI = {::Shoes::Download  => [:eval_block]}
+      NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
       attr_reader :app
 
@@ -46,16 +40,26 @@ class Shoes
       end
 
       def affected_classes
-        NEED_TO_FLUSH_GUI.keys +
-        NEED_TO_REDRAW_GUI.keys +
-        NEED_TO_ASYNC_FLUSH_GUI.keys
+        classes = NEED_TO_UPDATE.keys +
+                  NEED_TO_ASYNC_UPDATE_GUI.keys
+        classes.uniq
       end
 
       def add_redraws
-        after_every NEED_TO_FLUSH_GUI do app.flush unless app.disposed? end
-        after_every NEED_TO_REDRAW_GUI do app.real.redraw unless app.disposed? end
-        after_every NEED_TO_ASYNC_FLUSH_GUI do
-          @display.asyncExec do app.flush unless app.disposed? end
+        after_every NEED_TO_UPDATE do update_gui end
+        after_every NEED_TO_ASYNC_UPDATE_GUI do
+          @display.asyncExec do update_gui end
+        end
+      end
+
+      # If/when we run into performance problems we can do this a lot more fine
+      # grained, e.g. when an object moves we only have to redraw the old
+      # and the new position of the screen not everything but premature
+      # optimization etc. and it's not that easy for elements that are layouted
+      def update_gui
+        unless app.disposed?
+          app.flush
+          app.real.redraw
         end
       end
 

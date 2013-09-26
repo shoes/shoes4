@@ -13,9 +13,7 @@ describe Shoes::Swt::Arc do
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
-  subject {
-    Shoes::Swt::Arc.new(dsl, app)
-  }
+  subject { Shoes::Swt::Arc.new(dsl, app) }
 
   its(:left) { should eq(left) }
   its(:top) { should eq(top) }
