@@ -41,7 +41,7 @@ class Shoes
       @gui = Shoes.configuration.backend::App.new @app
 
       execution_blk = create_execution_block(blk)
-      @top_slot = Flow.new self, self, { width: @width, height: @height}, &execution_blk
+      eval_block execution_blk
 
       add_console
 
@@ -132,6 +132,10 @@ class Shoes
     end
 
     private
+    def eval_block(execution_blk)
+      @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
+    end
+
     def create_execution_block(blk)
       if blk
         execution_blk = Proc.new do

@@ -11,25 +11,19 @@ class Shoes
   module Swt
     class RedrawingAspect
 
-      NEED_TO_FLUSH_GUI = {Animation          => [:eval_block],
-                           Button             => [:eval_block],
-                           KeypressListener   => [:eval_block],
-                           KeyreleaseListener => [:eval_block],
-                           Timer              => [:eval_block]}
-
-      NEED_TO_REDRAW_GUI = {::Shoes::App   => [:oval, :star, :line,
-                                               :rect, :background, :arc],
-                            ::Shoes::Oval  => [:change_style],
-                            ::Shoes::Rect  => [:change_style],
-                            ::Shoes::Star  => [:change_style],
-                            ::Shoes::Shape => [:change_style],
-                            ::Shoes::Line  => [:change_style]}
-
+      NEED_TO_UPDATE = {Animation          => [:eval_block],
+                        ::Shoes::App       => [:eval_block],
+                        Button             => [:eval_block],
+                        KeypressListener   => [:eval_block],
+                        KeyreleaseListener => [:eval_block],
+                        Timer              => [:eval_block]}
+      NEED_TO_REDRAW = {::Shoes::Oval  => [:move],
+                        ::Shoes::Star  => [:move],
+                        ::Shoes::Rect  => [:move],
+                        ::Shoes::Star  => [:move],
+                        ::Shoes::Shape => [:move]}
       # only the main thread may draw
-      NEED_TO_ASYNC_FLUSH_GUI = {::Shoes::Download  => [:eval_block]}
-
-      REDRAW_AFTER_MOVE_CLASSES = [::Shoes::Image, ::Shoes::Line, ::Shoes::Oval,
-                                   ::Shoes::Rect, ::Shoes::Star]
+      NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
       attr_reader :app
 
@@ -50,40 +44,29 @@ class Shoes
       end
 
       def affected_classes
-        classes = NEED_TO_FLUSH_GUI.keys +
-                  NEED_TO_REDRAW_GUI.keys +
-                  NEED_TO_ASYNC_FLUSH_GUI.keys +
-                  REDRAW_AFTER_MOVE_CLASSES
+        classes = NEED_TO_UPDATE.keys +
+                  NEED_TO_ASYNC_UPDATE_GUI.keys +
+                  NEED_TO_REDRAW.keys
         classes.uniq
       end
 
       def add_redraws
-        after_every NEED_TO_FLUSH_GUI do app.flush unless app.disposed? end
-        after_every NEED_TO_REDRAW_GUI do app.real.redraw unless app.disposed? end
-        after_every NEED_TO_ASYNC_FLUSH_GUI do
-          @display.asyncExec do app.flush unless app.disposed? end
-        end
-        redraws_for_move
-      end
-
-      def redraws_for_move
-        after_every_call_of REDRAW_AFTER_MOVE_CLASSES, :before_move_hook do |dsl|
-          gui = dsl.gui
-          unless gui.container.disposed?
-            gui.container.redraw dsl.absolute_left, dsl.absolute_top,
-                                 dsl.width, dsl.height, false
-          end
-        end
-        after_every_call_of REDRAW_AFTER_MOVE_CLASSES, :move do |x, y, dsl|
-          gui = dsl.gui
-          unless gui.container.disposed?
-            gui.container.redraw x, y, dsl.width, dsl.height, false
-          end
+        after_every NEED_TO_UPDATE do update_gui end
+        after_every NEED_TO_REDRAW do app.real.redraw unless app.disposed? end
+        after_every NEED_TO_ASYNC_UPDATE_GUI do
+          @display.asyncExec do update_gui end
         end
       end
 
-      def after_every_call_of(classes, method, &blk)
-        classes.each do |klass| klass.after method, &blk end
+      # If/when we run into performance problems we can do this a lot more fine
+      # grained, e.g. when an object moves we only have to redraw the old
+      # and the new position of the screen not everything but premature
+      # optimization etc. and it's not that easy for elements that are layouted
+      def update_gui
+        unless app.disposed?
+          app.flush
+          app.real.redraw
+        end
       end
 
       def after_every(hash, &blk)
