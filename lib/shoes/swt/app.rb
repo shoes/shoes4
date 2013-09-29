@@ -134,7 +134,8 @@ class Shoes
       end
 
       def initialize_real
-        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
+        @real = ::Swt::Widgets::Composite.new(@shell, 
+          ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout init_shoes_layout
       end

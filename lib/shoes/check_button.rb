@@ -46,7 +46,6 @@ class Shoes
       @group = group
       super(app, parent, opts, blk)
     end
-
   end
 
 end
