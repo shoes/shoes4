@@ -5,6 +5,7 @@ class Shoes
     # we simulate radio groups so that they can all be in one composite.
     class RadioGroup
       DEFAULT_RADIO_GROUP = "Default Radio Group"
+      @@radio_groups = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
 
       attr_reader :name
 
@@ -18,7 +19,7 @@ class Shoes
         return if @radio_buttons.include?(radio_button) 
         @radio_buttons << radio_button
         selection_listener = SelectionListener.new radio_button do |selected_radio, event|
-          select_one_radio_in_group(selected_radio)
+          select_only_one_radio_in_group(selected_radio)
         end
         @selection_listeners << selection_listener
         radio_button.real.add_selection_listener selection_listener
@@ -32,9 +33,13 @@ class Shoes
         @selection_listeners.delete(index)
       end
 
+      def self.all_groups
+        @@radio_groups
+      end
+      
       private
 
-      def select_one_radio_in_group(selected_radio)
+      def select_only_one_radio_in_group(selected_radio)
           @radio_buttons.each do |radio| 
             radio.real.set_selection(radio == selected_radio) 
           end

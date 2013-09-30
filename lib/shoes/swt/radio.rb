@@ -4,7 +4,7 @@ class Shoes
     # button, so a lot of these methods are
     # borrowed from button.rb
     class Radio < CheckButton
-      @@radio_groups = {}
+      attr_accessor :group
 
       # Create a radio button
       #
@@ -13,10 +13,13 @@ class Shoes
       # @param [Proc] blk The block of code to call when this button is activated
       def initialize(dsl, parent)
         super(dsl, parent, ::Swt::SWT::RADIO)
+        self.group = dsl.group
+      end
 
-        group = dsl.group || RadioGroup::DEFAULT_RADIO_GROUP
-        @@radio_groups[group] ||= RadioGroup.new(group)
-        @@radio_groups[group].add self
+      def group=(value)
+        RadioGroup::all_groups[@group].remove(self) unless @group.nil?
+        @group = value || RadioGroup::DEFAULT_RADIO_GROUP
+        RadioGroup::all_groups[group].add self
       end
     end
   end

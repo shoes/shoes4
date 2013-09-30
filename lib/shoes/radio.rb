@@ -6,5 +6,10 @@ class Shoes
       @group = group
       super(app, parent, opts, blk)
     end
+
+    def group=(value)
+      self.gui.group = value
+      @group = value
+    end
   end
 end
