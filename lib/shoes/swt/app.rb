@@ -101,7 +101,18 @@ class Shoes
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
         scroll_bar.setIncrement 10
-        scroll_bar.addSelectionListener SelectionListener.new(self, scroll_bar)
+        selection_listener = SelectionListener.new(scroll_bar) do |vertical_bar, event|
+          if self.shell.getVerticalBar.getVisible and event.detail != ::Swt::SWT::DRAG
+            vertically_scroll_window(vertical_bar)
+          end
+        end
+        scroll_bar.addSelectionListener selection_listener
+      end
+
+      def vertically_scroll_window(vertical_bar)
+          location = self.real.getLocation
+          location.y = -vertical_bar.getSelection
+          self.real.setLocation location
       end
 
       def force_shell_size
@@ -261,6 +272,8 @@ class Shoes
         # do nothing
       end
     end
+
+=begin
     
     class SelectionListener
       def initialize app, vb
@@ -275,6 +288,7 @@ class Shoes
       end
     end
 
+=end
   end
 end
 
