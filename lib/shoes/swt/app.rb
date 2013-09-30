@@ -273,22 +273,6 @@ class Shoes
       end
     end
 
-=begin
-    
-    class SelectionListener
-      def initialize app, vb
-        @app, @vb = app, vb
-      end
-      def widgetSelected e
-        if @app.shell.getVerticalBar.getVisible and e.detail != ::Swt::SWT::DRAG
-          location = @app.real.getLocation
-          location.y = -@vb.getSelection
-          @app.real.setLocation location
-        end
-      end
-    end
-
-=end
   end
 end
 
