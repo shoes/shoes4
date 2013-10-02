@@ -2,11 +2,11 @@ class Shoes
   class Dimensions
     attr_accessor :left, :top, :width, :height
 
-    def initialize(left = 0, top = 0, width = nil, height = nil, center = false)
+    def initialize(left = 0, top = 0, width = nil, height = nil, opts = {})
       if hash_as_argument?(left)
         init_with_hash(left)
       else
-        init_with_arguments(left, top, width, height, center)
+        init_with_arguments(left, top, width, height, opts)
       end
     end
 
@@ -27,8 +27,8 @@ class Shoes
       left.respond_to? :fetch
     end
 
-    def adjust_for_center(center)
-      if center
+    def adjust_for_left_top_as_center(opts)
+      if opts.fetch(:center, false)
         @left -= @width / 2 if @width && @width > 0
         @top -= @height / 2 if @height && @height > 0
       end
@@ -39,15 +39,15 @@ class Shoes
       @top    = dimensions_hash.fetch(:top, 0)
       @width  = dimensions_hash.fetch(:width, nil)
       @height = dimensions_hash.fetch(:height, nil)
-      adjust_for_center(dimensions_hash.fetch(:center, false))
+      adjust_for_left_top_as_center(dimensions_hash)
     end
 
-    def init_with_arguments(left, top, width, height, center)
+    def init_with_arguments(left, top, width, height, opts)
       @left   = left
       @top    = top
       @width  = width
       @height = height
-      adjust_for_center(center)
+      adjust_for_left_top_as_center(opts)
     end
   end
 

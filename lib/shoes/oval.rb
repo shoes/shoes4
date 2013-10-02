@@ -11,7 +11,7 @@ class Shoes
 
     def initialize(app, left, top, width, height, opts = {}, &blk)
       @app = app
-      @dimensions = Dimensions.new left, top, width, height, opts.fetch(:center, false)
+      @dimensions = Dimensions.new left, top, width, height, opts
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @angle = opts[:angle]

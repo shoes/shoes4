@@ -89,7 +89,7 @@ describe Shoes::Dimensions do
 
     describe 'centered' do
       describe '5 arguments' do
-        subject {Shoes::Dimensions.new 100, 50, 40, 20, true}
+        subject {Shoes::Dimensions.new 100, 50, 40, 20, :center => true}
         
         its(:left) {should eq 80}
         its(:top) {should eq 40}
