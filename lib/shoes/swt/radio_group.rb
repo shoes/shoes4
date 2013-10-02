@@ -4,8 +4,11 @@ class Shoes
     # and can interfere with users interacting with other controls. Here
     # we simulate radio groups so that they can all be in one composite.
     class RadioGroup
+      include Enumerable
+
       DEFAULT_RADIO_GROUP = "Default Radio Group"
-      @@radio_groups = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
+
+      @all_groups = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
 
       attr_reader :name
 
@@ -18,6 +21,7 @@ class Shoes
       def add(radio_button)
         return if @radio_buttons.include?(radio_button) 
         @radio_buttons << radio_button
+
         selection_listener = SelectionListener.new radio_button do |selected_radio, event|
           select_only_one_radio_in_group(selected_radio)
         end
@@ -29,20 +33,25 @@ class Shoes
         index = @radio_buttons.index(radio_button)
         return if index.nil?
         @radio_buttons.delete_at(index)
+
         radio_button.real.remove_selection_listener @selection_listeners[index]
-        @selection_listeners.delete(index)
+        @selection_listeners.delete_at(index)
+      end
+
+      def each(&block)
+        @radio_buttons.each(&block)
       end
 
       def self.all_groups
-        @@radio_groups
+        @all_groups
       end
-      
+
       private
 
       def select_only_one_radio_in_group(selected_radio)
-          @radio_buttons.each do |radio| 
-            radio.real.set_selection(radio == selected_radio) 
-          end
+        @radio_buttons.each do |radio| 
+          radio.real.set_selection(radio == selected_radio) 
+        end
       end
     end
   end

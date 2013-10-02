@@ -17,9 +17,21 @@ class Shoes
       end
 
       def group=(value)
-        RadioGroup::all_groups[@group].remove(self) unless @group.nil?
+        all_groups = RadioGroup::all_groups
+        all_groups[@group].remove(self) unless @group.nil?
         @group = value || RadioGroup::DEFAULT_RADIO_GROUP
-        RadioGroup::all_groups[group].add self
+        all_groups[@group].add self
+      end
+
+      def dump_all_radio_groups(all_groups)
+        puts "ALL RADIO GROUPS"
+        puts "----------------"
+        all_groups.each do |key, grp|
+          puts "Group Name: #{key}"
+          grp.each do |rad|
+            puts "  #{rad}"
+          end
+        end
       end
     end
   end

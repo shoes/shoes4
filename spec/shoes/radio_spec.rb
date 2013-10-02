@@ -20,4 +20,9 @@ describe Shoes::Radio do
       subject.blk.should == input_block
     end
   end
+
+  describe "groups" do
+    it { should respond_to :group= }
+    it { should respond_to :group }
+  end
 end
