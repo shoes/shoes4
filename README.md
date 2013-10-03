@@ -76,6 +76,18 @@ There is also a simple ruby starter script which you may use as follows:
 bin/ruby-shoes samples/simple-sound.rb
 ```
 
+This does not work yet on Mac as jruby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
+
+```
+jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
+```
+
+Another alternative yet is to put `require 'shoes'` at the top of your applications, then you can simply do 
+
+```
+jruby path/to/file.rb
+```
+
 Want to see what shoes can do?
 ------------------------------
 
