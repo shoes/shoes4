@@ -11,7 +11,7 @@ class Shoes
       @app        = app
       @parent     = parent
       @blk        = blk
-      @dimensions = Dimensions.new opts
+      @dimensions = Dimensions.new opts.merge(:parent => parent)
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
