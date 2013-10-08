@@ -189,3 +189,13 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
 
 **Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
+
+Contact
+-------
+
+Want to get in touch with the shoes community? That's great! You can get in touch here:
+
+* You can join the mailing list, simply send an email to shoes@librelist.com - you can also check out [the archives](http://librelist.com/browser/shoes/)
+* We also have an irc channel #shoes on freenode - a lot of people are idling there so it might take some time to react
+
+However we try to keep most discussions about the development in this repository/its issues list so everyone can see them and look them up.
