@@ -5,13 +5,14 @@ class Shoes
     # we simulate radio groups so that they can all be in one composite.
     class RadioGroup
       extend Forwardable
+      include Enumerable
 
       DEFAULT_RADIO_GROUP = "Default Radio Group"
 
       @group_lookup = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
 
       attr_reader :name
-      def_delegators :@radio_buttons, :each, :length, :empty?, :include?
+      def_delegators :@radio_buttons, :each, :length, :empty?
 
       def initialize(name = DEFAULT_RADIO_GROUP)
         @name = name
@@ -42,8 +43,6 @@ class Shoes
       def self.group_lookup
         @group_lookup
       end
-
-      private
 
       def select_only_one_radio_in_group(selected_radio)
         @radio_buttons.each do |radio| 

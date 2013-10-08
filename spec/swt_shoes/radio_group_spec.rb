@@ -50,4 +50,24 @@ describe Shoes::Swt::RadioGroup do
     end
   end
 
+  describe "#select_only_one_radio_in_group" do
+    let(:real_selected) { double('real').as_null_object }
+    let(:radio_selected) { double('radio', real: real_selected) }
+    before :each do
+      subject.add(radio)
+      subject.add(radio_selected)
+    end
+    after :each do 
+      subject.select_only_one_radio_in_group(radio_selected) 
+    end
+
+    it "turns on the selected radio" do
+      real_selected.should_receive(:set_selection).with(true) 
+    end
+
+    it "turns off the non-selected radios" do
+      real.should_receive(:set_selection).with(false)
+    end
+  end
+
 end
