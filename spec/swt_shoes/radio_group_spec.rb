@@ -15,13 +15,22 @@ describe Shoes::Swt::RadioGroup do
 
   describe "#add" do
     it "monitors selection" do
-      real.should_receive(:add_selection_listener)
+      real.should_receive(:add_selection_listener) 
       subject.add(radio)
     end
-    it "adds one button" do
-      subject.add(radio)
-      subject.count.should == 1
-      subject.include?(radio).should == true
+
+    describe 'after adding a button' do
+      before :each do
+         subject.add radio
+      end
+
+      it "only one button is added" do
+        subject.length.should == 1
+      end
+
+      it "the correct button is added" do
+        subject.include?(radio).should == true
+      end
     end
   end
 
@@ -29,13 +38,15 @@ describe Shoes::Swt::RadioGroup do
     before :each do
       subject.add(radio)
     end
-    it "stop monitoring selection" do
+
+    it "stops monitoring selection" do
       real.should_receive(:remove_selection_listener)
       subject.remove(radio)
     end
-    it "remove one button" do
+
+    it "removes one button" do
       subject.remove(radio)
-      subject.count.should == 0
+      subject.length.should == 0
     end
   end
 

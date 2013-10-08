@@ -17,21 +17,10 @@ class Shoes
       end
 
       def group=(value)
-        all_groups = RadioGroup::all_groups
-        all_groups[@group].remove(self) unless @group.nil?
+        group_lookup = RadioGroup.group_lookup
+        group_lookup[@group].remove(self) unless @group.nil?
         @group = value || RadioGroup::DEFAULT_RADIO_GROUP
-        all_groups[@group].add self
-      end
-
-      def dump_all_radio_groups(all_groups)
-        puts "ALL RADIO GROUPS"
-        puts "----------------"
-        all_groups.each do |key, grp|
-          puts "Group Name: #{key}"
-          grp.each do |rad|
-            puts "  #{rad}"
-          end
-        end
+        group_lookup[@group].add self
       end
     end
   end

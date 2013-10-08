@@ -4,13 +4,14 @@ class Shoes
     # and can interfere with users interacting with other controls. Here
     # we simulate radio groups so that they can all be in one composite.
     class RadioGroup
-      include Enumerable
+      extend Forwardable
 
       DEFAULT_RADIO_GROUP = "Default Radio Group"
 
-      @all_groups = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
+      @group_lookup = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
 
       attr_reader :name
+      def_delegators :@radio_buttons, :each, :length, :empty?, :include?
 
       def initialize(name = DEFAULT_RADIO_GROUP)
         @name = name
@@ -38,12 +39,8 @@ class Shoes
         @selection_listeners.delete_at(index)
       end
 
-      def each(&block)
-        @radio_buttons.each(&block)
-      end
-
-      def self.all_groups
-        @all_groups
+      def self.group_lookup
+        @group_lookup
       end
 
       private

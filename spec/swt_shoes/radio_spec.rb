@@ -27,25 +27,26 @@ describe Shoes::Swt::Radio do
   describe "#group=" do
     let(:group_name) { "New Group Name" }
     let(:radio_group) { double("radio_group").as_null_object }
-    let(:all_groups) { double('all_groups', :[] => radio_group).as_null_object }
+    let(:group_lookup) { double('group_lookup', :[] => radio_group).as_null_object }
     before :each do
-      Shoes::Swt::RadioGroup.stub(:all_groups) { all_groups }  
+      Shoes::Swt::RadioGroup.stub(:group_lookup) { group_lookup }  
     end
 
-    it "change the group" do
+    it "changes the group" do
       subject.group = group_name
       subject.group.should == group_name
     end
-    it "add to the new radio group" do
-      all_groups.should_receive(:[]).with group_name
+
+    it "adds to the new radio group" do
+      group_lookup.should_receive(:[]).with group_name
       radio_group.should_receive(:add).with subject
       subject.group = group_name
     end
-    it "remove from the old radio group" do
-      all_groups.should_receive(:[]).with Shoes::Swt::RadioGroup::DEFAULT_RADIO_GROUP
+
+    it "removes from the old radio group" do
+      group_lookup.should_receive(:[]).with Shoes::Swt::RadioGroup::DEFAULT_RADIO_GROUP
       radio_group.should_receive(:remove).with subject
       subject.group = group_name
     end
   end
-
 end

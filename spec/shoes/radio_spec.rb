@@ -13,16 +13,18 @@ describe Shoes::Radio do
 
   # only one radio in a group can be checked
 
-  describe "initialize" do
-    it "should set accessors" do
+  describe "#initialize" do
+    it "sets accessors" do
       subject.parent.should == parent
       subject.group.should == group
       subject.blk.should == input_block
     end
   end
 
-  describe "groups" do
-    it { should respond_to :group= }
-    it { should respond_to :group }
+  describe "#group=" do
+    it "changes the group" do
+      subject.group = "New Group"
+      subject.group.should == "New Group"
+    end
   end
 end
