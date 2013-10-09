@@ -30,6 +30,7 @@ class Shoes
       @blk          = blk
       @dimensions   = Dimensions.new opts
       @fixed_height = height || false
+      @prepending   = false
       set_default_dimension_values
 
       init_values_from_options(opts)
@@ -64,11 +65,21 @@ class Shoes
     end
 
     def add_child(element)
-      contents << element
+      if @prepending
+        contents.unshift element
+      else
+        contents << element
+      end
     end
 
-    def append &blk
+    def append(&blk)
       eval_block blk
+    end
+
+    def prepend(&blk)
+      @prepending = true
+      eval_block blk
+      @prepending = false
     end
 
     def contents_alignment
