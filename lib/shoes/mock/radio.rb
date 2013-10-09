@@ -19,6 +19,8 @@ class Shoes
       def enabled(value)
       end
       
+      def group=(value)
+      end
     end
   end
 end

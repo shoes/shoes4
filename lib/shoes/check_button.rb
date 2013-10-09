@@ -38,6 +38,6 @@ class Shoes
   end
 
   class Check < CheckButton ; end
-  class Radio < CheckButton ; end
+
 
 end

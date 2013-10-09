@@ -101,7 +101,18 @@ class Shoes
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
         scroll_bar.setIncrement 10
-        scroll_bar.addSelectionListener SelectionListener.new(self, scroll_bar)
+        selection_listener = SelectionListener.new(scroll_bar) do |vertical_bar, event|
+          if self.shell.getVerticalBar.getVisible and event.detail != ::Swt::SWT::DRAG
+            vertically_scroll_window(vertical_bar)
+          end
+        end
+        scroll_bar.addSelectionListener selection_listener
+      end
+
+      def vertically_scroll_window(vertical_bar)
+          location = self.real.getLocation
+          location.y = -vertical_bar.getSelection
+          self.real.setLocation location
       end
 
       def force_shell_size
@@ -134,7 +145,8 @@ class Shoes
       end
 
       def initialize_real
-        @real = ::Swt::Widgets::Composite.new(@shell, ::Swt::SWT::TRANSPARENT)
+        @real = ::Swt::Widgets::Composite.new(@shell, 
+          ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout init_shoes_layout
       end
@@ -262,19 +274,6 @@ class Shoes
       end
       def mouseDoubleClick(e)
         # do nothing
-      end
-    end
-    
-    class SelectionListener
-      def initialize app, vb
-        @app, @vb = app, vb
-      end
-      def widgetSelected e
-        if @app.shell.getVerticalBar.getVisible and e.detail != ::Swt::SWT::DRAG
-          location = @app.real.getLocation
-          location.y = -@vb.getSelection
-          @app.real.setLocation location
-        end
       end
     end
 
