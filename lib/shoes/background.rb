@@ -17,7 +17,7 @@ class Shoes
       opts[:fill] = color
 
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
-      parent.contents << self
+      parent.add_child self
 
       @gui = Shoes.backend_for(self, opts, &blk)
     end
