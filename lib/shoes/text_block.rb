@@ -7,30 +7,35 @@ class Shoes
     include Shoes::Common::Clickable
 
 
-    attr_reader  :gui, :parent, :text, :links, :app, :hidden, :text_styles
+    attr_reader  :gui, :parent, :text, :links, :app, :hidden, :text_styles, :opts, :contents
     attr_accessor :font, :font_size, :width, :height, :left, :top, :fixed, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
       @parent = parent
       @app = app
+      @opts = opts
       @font = @app.font || DEFAULT_TEXTBLOCK_FONT
-      @font_size = opts[:size] || font_size
-      @text = text
-      @left = opts[:left]
-      @top = opts[:top]
+      @font_size = @opts[:size] || font_size
+      @left = @opts[:left]
+      @top = @opts[:top]
       @links = []
-      @text_styles = opts[:text_styles]
+      @opts[:text_styles] = gather_text_styles(self, text)
+      @contents = text
+      @text = text.map(&:to_s).join
+      @text_styles = @opts[:text_styles]
 
-      opts[:stroke] = Shoes::Color.new(opts[:stroke]) if opts[:stroke].is_a?(String)
-      opts[:fill] = Shoes::Color.new(opts[:fill]) if opts[:fill].is_a?(String)
+      @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
+      @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
 
-      @margin = opts[:margin]
+      @margin = @opts[:margin]
       set_margin
 
-      handle_opts opts
+      handle_opts @opts
 
-      @gui = Shoes.configuration.backend_for(self, opts)
-      if text.split.length == 1
+      @opts = @app.style.merge(@opts)
+
+      @gui = Shoes.configuration.backend_for(self, @opts)
+      if @text.split.length == 1
         @width, @height = @gui.get_size
         @fixed = true
       end
@@ -38,7 +43,22 @@ class Shoes
       set_size @left.to_i, @top.to_i unless @fixed
 
 
-      clickable_options(opts)
+      clickable_options(@opts)
+    end
+
+    def gather_text_styles(parent, msg, styles={}, start_point=0)
+      msg.each do |text|
+        if text.is_a? Shoes::Text
+          text.parent = parent
+          end_point = start_point + text.to_s.length - 1
+          range = start_point..end_point
+          styles[range] ||= []
+          styles[range] << text
+          gather_text_styles(text, text.str, styles, start_point)
+        end
+        start_point += text.to_s.length
+      end
+      styles
     end
 
     def text=(*values)

@@ -395,24 +395,8 @@ EOS
     %w[banner title subtitle tagline caption para inscription].each do |m|
       define_method m do |*text|
         opts = text.last.class == Hash ? text.pop : {}
-        opts[:text_styles] = gather_text_styles text
-        text = text.map(&:to_s).join
         create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
       end
-    end
-
-    def gather_text_styles msg, styles={}, start_point=0
-      msg.each do |text|
-        if text.is_a? Shoes::Text
-          end_point = start_point + text.to_s.length - 1
-          range = start_point..end_point
-          styles[range] ||= []
-          styles[range] << text
-          gather_text_styles text.str, styles, start_point
-        end
-        start_point += text.to_s.length
-      end
-      styles
     end
 
     TEXT_STYLES = {
