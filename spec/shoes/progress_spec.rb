@@ -1,14 +1,22 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Progress do
-  subject { Shoes::Progress.new(app, parent, input_opts, input_block) }
+  let(:left) { 10 }
+  let(:top) { 20 }
+  let(:width) { 100 }
+  let(:height) { 200 }
+
   let(:input_block) { Proc.new {} }
-  let(:input_opts) { {} }
+  let(:input_opts) { { left: left, top: top, width: width, height: height } }
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, app}
 
+  subject { Shoes::Progress.new(app, parent, input_opts, input_block) }
+
   it { should respond_to :fraction }
   it { should respond_to :fraction= }
+
+  it_behaves_like "object with dimensions"
 
   context "setting fraction" do
     it "sets on gui" do
@@ -20,5 +28,13 @@ describe Shoes::Progress do
       subject.fraction = 0.5
       subject.fraction.should eq 0.5
     end
+  end
+
+  context"relative dimensions from parent" do
+    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
+
+    subject { Shoes::Progress.new(app, parent, relative_opts, input_block) }
+
+    it_behaves_like "object with relative dimensions"
   end
 end

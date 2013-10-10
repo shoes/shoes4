@@ -11,8 +11,8 @@ class Shoes
 
     def initialize(app, left, top, points, outer, inner, opts = {}, &blk)
       @app = app
-      width = height = outer*2.0
-      @dimensions = AbsoluteDimensions.new left, top, width, height
+      width = height = outer*2
+      @dimensions = AbsoluteDimensions.new left, top, width, height, app
       @points = points
       @outer = outer
       @inner = inner

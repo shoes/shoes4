@@ -11,7 +11,7 @@ class Shoes
       @app          = app
       @parent       = parent
       @blk          = blk
-      @dimensions   = Dimensions.new opts
+      @dimensions   = Dimensions.new opts.merge(:parent => parent)
       @initial_text = text
       @secret       = opts[:secret]
 

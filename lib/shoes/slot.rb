@@ -28,7 +28,7 @@ class Shoes
       @contents     = []
       @style        = {}
       @blk          = blk
-      @dimensions   = Dimensions.new opts
+      @dimensions   = Dimensions.new opts.merge(parent: parent)
       @fixed_height = height || false
       set_default_dimension_values
 

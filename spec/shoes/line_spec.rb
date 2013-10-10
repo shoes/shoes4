@@ -5,10 +5,16 @@ describe Shoes::Line do
   let(:opts) { Hash.new }
 
   describe "basic" do
-    subject { Shoes::Line.new(app, Shoes::Point.new(20, 23), Shoes::Point.new(300, 430), opts) }
+    let(:left) { 20 }
+    let(:top) { 23 }
+    let(:width) { 280 }
+    let(:height) { 407 }
+
+    subject { Shoes::Line.new(app, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), opts) }
     it_behaves_like "object with stroke"
     it_behaves_like "movable object"
     it_behaves_like "object with style"
+    it_behaves_like "object with dimensions"
   end
 
   shared_examples_for "basic line" do
