@@ -17,7 +17,7 @@ class Shoes
       @angle = opts[:angle] || 0
 
       opts[:stroke] = color
-      parent.contents << self
+      parent.add_child self
 
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
