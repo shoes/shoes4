@@ -16,7 +16,7 @@ class Shoes
 
         yield(@real) if block_given?
 
-        if (@dsl.is_a?(::Shoes::Button) || @dsl.is_a?(::Shoes::CheckButton)) and @dsl.width and @dsl.height
+        if @dsl.width and @dsl.height
           @real.setSize @dsl.width, @dsl.height
         else
           @real.pack
