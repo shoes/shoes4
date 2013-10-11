@@ -25,7 +25,7 @@ class Shoes
     def init_attributes(app, parent, opts, blk)
       @app          = app
       @parent       = parent
-      @contents     = []
+      @contents     = SlotContents.new
       @style        = {}
       @blk          = blk
       @dimensions   = Dimensions.new opts
@@ -65,11 +65,7 @@ class Shoes
     end
 
     def add_child(element)
-      if @prepending
-        contents.unshift element
-      else
-        contents << element
-      end
+      contents.add_element element
     end
 
     def append(&blk)
@@ -77,9 +73,9 @@ class Shoes
     end
 
     def prepend(&blk)
-      @prepending = true
-      eval_block blk
-      @prepending = false
+      contents.prepend do
+        eval_block blk
+      end
     end
 
     def contents_alignment
