@@ -9,6 +9,7 @@ shared_examples_for "Slot" do
   end
 
   it_behaves_like "DSL container"
+  it_behaves_like 'prepending'
 end
 
 shared_context 'one slot child' do
@@ -149,5 +150,67 @@ shared_examples_for 'taking care of margin' do
 
   it 'respects the top margin for the first element' do
     element.absolute_top.should eq opts[:margin]
+  end
+end
+
+shared_examples_for 'prepending' do
+  include_context 'two slot children'
+  let(:prepend1) {double 'prepend1'}
+  let(:prepend2) {double 'prepend2'}
+
+  describe 'one element' do
+    before :each do
+      subject.prepend do
+        subject.add_child prepend1
+      end
+    end
+
+    it 'as the first' do
+      subject.contents.first.should eq prepend1
+    end
+
+    it 'has a total of 3 elements then' do
+      subject.contents.size.should == 3
+    end
+  end
+
+  describe 'two elements' do
+    before :each do
+      subject.prepend do
+        subject.add_child prepend1
+        subject.add_child prepend2
+      end
+    end
+
+    it 'has prepend1 as the first child' do
+      subject.contents.first.should eq prepend1
+    end
+
+    it 'has prepend2 as the second child' do
+      subject.contents[1].should eq prepend2
+    end
+
+    it 'has a total of 4 children' do
+      subject.contents.size.should == 4
+    end
+  end
+
+  describe 'two times' do
+    before :each do
+      subject.prepend { subject.add_child prepend1 }
+      subject.prepend {subject.add_child prepend2 }
+    end
+
+    it 'has the last prepended element as the first' do
+      subject.contents.first.should eq prepend2
+    end
+
+    it 'has the first prepended element as the second' do
+      subject.contents[1].should eq prepend1
+    end
+
+    it 'has a total of 4 children' do
+      subject.contents.size.should == 4
+    end
   end
 end
