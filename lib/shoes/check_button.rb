@@ -2,6 +2,7 @@ class Shoes
   class CheckButton
     include CommonMethods
     include Common::Clickable
+    include Common::State
     include DimensionsDelegations
 
     attr_reader :parent, :blk, :gui, :dimensions
@@ -16,6 +17,7 @@ class Shoes
       @parent.add_child self
 
       clickable_options(opts)
+      state_options(opts)
     end
 
     def checked?
@@ -36,6 +38,6 @@ class Shoes
   end
 
   class Check < CheckButton ; end
-  class Radio < CheckButton ; end
+
 
 end

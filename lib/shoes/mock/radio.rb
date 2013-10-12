@@ -15,6 +15,12 @@ class Shoes
 
       def focus
       end
+
+      def enabled(value)
+      end
+      
+      def group=(value)
+      end
     end
   end
 end

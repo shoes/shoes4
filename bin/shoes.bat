@@ -1,1 +1,6 @@
-call jruby --1.9 -e "$:<< 'lib'; require 'shoes'; require 'shoes/configuration'; Shoes.configuration.backend = :swt; require '%1' "
+@setlocal enableextensions enabledelayedexpansion
+@echo off
+set bin_dir=%~dp0
+set command=jruby --1.9 !bin_dir!/ruby-shoes %1
+call !command!
+endlocal

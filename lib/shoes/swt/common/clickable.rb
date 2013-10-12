@@ -45,8 +45,12 @@ class Shoes
 
           def handleEvent(mouseEvent)
             if @clickable_object.in_bounds?(mouseEvent.x, mouseEvent.y)
-              @block.call mouseEvent.button, mouseEvent.x, mouseEvent.y
+              eval_block mouseEvent
             end
+          end
+
+          def eval_block mouseEvent
+            @block.call mouseEvent.button, mouseEvent.x, mouseEvent.y
           end
         end
 

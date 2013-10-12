@@ -16,10 +16,10 @@ class Shoes
   end
 
   class App
-    include Shoes::DSL
-    include Shoes::Common::Margin
-    include Shoes::BuiltinMethods
-    include Shoes::Common::Clickable
+    include DSL
+    include Common::Margin
+    include BuiltinMethods
+    include Common::Clickable
 
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
@@ -41,7 +41,7 @@ class Shoes
       @gui = Shoes.configuration.backend::App.new @app
 
       execution_blk = create_execution_block(blk)
-      @top_slot = Flow.new self, self, { width: @width, height: @height}, &execution_blk
+      eval_block execution_blk
 
       add_console
 
@@ -64,6 +64,8 @@ class Shoes
 
     def left; 0 end
     def top; 0 end
+    def absolute_left; 0 end
+    def absolute_top; 0 end
 
     def quit
       Shoes.unregister self
@@ -130,6 +132,10 @@ class Shoes
     end
 
     private
+    def eval_block(execution_blk)
+      @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
+    end
+
     def create_execution_block(blk)
       if blk
         execution_blk = Proc.new do

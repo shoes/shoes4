@@ -50,8 +50,8 @@ class Shoes
         end
 
         def set_position_and_size
-          @obj.left = @obj.dsl.parent.left
-          @obj.top = @obj.dsl.parent.top
+          @obj.left = @obj.dsl.parent.absolute_left
+          @obj.top = @obj.dsl.parent.absolute_top
           @obj.width = @obj.dsl.width || @obj.dsl.parent.width
           @obj.height = @obj.dsl.height || @obj.dsl.parent.height
         end

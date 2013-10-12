@@ -3,13 +3,12 @@ class Shoes
     class Oval
       include Common::Fill
       include Common::Stroke
-      include Common::Move
       include Common::Clickable
       include Common::Toggle
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl, :transform, :painter
+      attr_reader :dsl, :transform, :painter, :container
 
 
       # @param [Shoes::Oval] dsl the dsl object to provide gui for

@@ -37,7 +37,6 @@ simple-mouse-follow.rb
 simple-sample-executor.rb
 simple-shoes-intro.rb
 
-expert-definr-adjusted.rb
 expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
 expert-othello-adjusted.rb

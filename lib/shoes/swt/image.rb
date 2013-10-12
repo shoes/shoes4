@@ -4,7 +4,6 @@ class Shoes
       import java.io.ByteArrayInputStream
 
       include Common::Child
-      include Common::Move
       include Common::Resource
       include Common::Clickable
       include Common::Toggle
@@ -31,9 +30,16 @@ class Shoes
         load_image(@dsl.file_path)
       end
 
+      # it has a painter and therefore this does not need to do anything,
+      # as it was already changed on the DSL layer
+      # We might want to revisit that though.
+      def move(x, y)
+      end
+
       private
       def load_image(name_or_data)
         if url?(name_or_data)
+          save_width_and_height
           display_temporary_download_image
           download_and_display_real_image(name_or_data)
         else
@@ -43,6 +49,11 @@ class Shoes
 
       def url?(name_or_data)
         name_or_data =~ /^(http|https):\/\//
+      end
+
+      def save_width_and_height
+        @saved_width  = dsl.width
+        @saved_height = dsl.height
       end
 
       def display_temporary_download_image
@@ -79,8 +90,14 @@ class Shoes
       def download_and_display_real_image(url)
         @tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}.png") unless @tmpname_or_data
         @dsl.app.download url, save: @tmpname do
+          restore_width_and_height
           create_image @tmpname
         end
+      end
+
+      def restore_width_and_height
+        dsl.width  = @saved_width
+        dsl.height = @saved_height
       end
 
       def display_image(name_or_data)
@@ -108,8 +125,8 @@ class Shoes
 
       def add_paint_listener
         @painter = lambda do |event|
-          gc = event.gc
-          gc.drawImage @real, 0, 0, @full_width, @full_height, dsl.left, dsl.top, dsl.width, dsl.height unless @dsl.hidden
+          graphics_context = event.gc
+          graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.absolute_left, dsl.absolute_top, dsl.width, dsl.height unless @dsl.hidden
         end
         @container.add_paint_listener(@painter)
       end
