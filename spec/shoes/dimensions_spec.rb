@@ -43,13 +43,33 @@ describe Shoes::Dimensions do
       its(:height) {should eq height}
     end
 
-    describe 'with relative width and height of parent' do
+    describe 'with relative width and height' do
       subject {Shoes::Dimensions.new parent, left, top, 0.5, 0.5}
 
       its(:left) {should eq left}
       its(:top) {should eq top}
       its(:width) {should be_within(1).of 0.5 * width}
       its(:height) {should be_within(1).of 0.5 * height}
+      
+      describe 'width/height change of the parent' do
+        let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
+        
+        # note that here the first assertion/call is necessary as otherwise
+        # the subject will only lazily get initialized after the parent width
+        # is already adjusted and therefore wrong impls WILL PASS the tests
+        # (jay for red/green/refactor :-) )
+        it 'adapts width' do
+          subject.width.should be_within(1).of 0.5 * width
+          parent.width = 700
+          subject.width.should be_within(1).of 350
+        end
+
+        it 'adapts height' do
+          subject.height.should be_within(1).of 0.5 * height
+          parent.height = 800
+          subject.height.should be_within(1).of 400
+        end
+      end
     end
 
     describe 'with a hash' do
