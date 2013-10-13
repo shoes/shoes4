@@ -2,7 +2,8 @@ class Shoes
   class SlotContents
     extend Forwardable
 
-    def_delegators :@contents, :[], :size, :empty?, :first, :each
+    def_delegators :@contents, :[], :size, :empty?, :first, :each, :clear,
+                               :include?, :delete
 
     def initialize
       @contents         = []
