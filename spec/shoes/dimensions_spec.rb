@@ -6,12 +6,12 @@ describe Shoes::Dimensions do
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
-  let(:parent) {Shoes::Dimensions.new left, top, width*2, height*2}
-  subject {Shoes::Dimensions.new left, top, width, height}
+  let(:parent) {double 'parent', width: width, height: height}
+  subject {Shoes::Dimensions.new parent, left, top, width, height}
 
   describe 'initialization' do
     describe 'without arguments' do
-      subject {Shoes::Dimensions.new}
+      subject {Shoes::Dimensions.new parent}
 
       its(:left) {should eq 0}
       its(:top) {should eq 0}
@@ -23,7 +23,7 @@ describe Shoes::Dimensions do
     end
 
     describe 'with 2 arguments' do
-      subject {Shoes::Dimensions.new left, top}
+      subject {Shoes::Dimensions.new parent, left, top}
 
       its(:left) {should eq left}
       its(:top) {should eq top}
@@ -35,7 +35,7 @@ describe Shoes::Dimensions do
     end
 
     describe 'with 4 arguments' do
-      subject {Shoes::Dimensions.new left, top, width, height}
+      subject {Shoes::Dimensions.new parent, left, top, width, height}
 
       its(:left) {should eq left}
       its(:top) {should eq top}
@@ -44,28 +44,19 @@ describe Shoes::Dimensions do
     end
 
     describe 'with relative width and height of parent' do
-      subject {Shoes::Dimensions.new left, top, 0.5, 0.5, parent}
+      subject {Shoes::Dimensions.new parent, left, top, 0.5, 0.5}
 
       its(:left) {should eq left}
       its(:top) {should eq top}
-      its(:width) {should eq width}
-      its(:height) {should eq height}
-    end
-
-    describe 'with relative width and height but no parent' do
-      subject {Shoes::Dimensions.new left, top, 0.5, 0.5}
-
-      its(:left) {should eq left}
-      its(:top) {should eq top}
-      its(:width) {should eq 0.5}
-      its(:height) {should eq 0.5}
+      its(:width) {should be_within(1).of 0.5 * width}
+      its(:height) {should be_within(1).of 0.5 * height}
     end
 
     describe 'with a hash' do
-      subject { Shoes::Dimensions.new left:   left,
-                                      top:    top,
-                                      width:  width,
-                                      height: height }
+      subject { Shoes::Dimensions.new parent, left:   left,
+                                              top:    top,
+                                              width:  width,
+                                              height: height }
 
       its(:left) {should eq left}
       its(:top) {should eq top}
@@ -76,9 +67,9 @@ describe Shoes::Dimensions do
       its(:absolute_y_position?) {should be_true}
 
       context 'missing width' do
-        subject { Shoes::Dimensions.new left:   left,
-                                        top:    top,
-                                        height: height }
+        subject { Shoes::Dimensions.new parent, left:   left,
+                                                top:    top,
+                                                height: height }
 
         its(:width) {should eq nil}
       end
@@ -134,7 +125,7 @@ describe Shoes::Dimensions do
   end
 
   describe 'absolute positioning' do
-    subject {Shoes::Dimensions.new}
+    subject {Shoes::Dimensions.new parent}
     its(:absolutely_positioned?) {should be_false}
 
     describe 'changing left' do
@@ -159,7 +150,7 @@ describe Shoes::Dimensions do
   end
 
   describe Shoes::AbsoluteDimensions do
-    subject {Shoes::AbsoluteDimensions.new left, top, width, height}
+    subject {Shoes::AbsoluteDimensions.new parent, left, top, width, height}
     it 'has the same absolute_left as left' do
       subject.absolute_left.should eq left
     end

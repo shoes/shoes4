@@ -29,7 +29,8 @@ class Shoes
     end
 
     def enclosing_box_of_line
-      @dimensions = AbsoluteDimensions.new left:   @point_a.left(@point_b),
+      @dimensions = AbsoluteDimensions.new @app,
+                                           left:   @point_a.left(@point_b),
                                            top:    @point_a.top(@point_b),
                                            width:  @point_a.width(@point_b),
                                            height: @point_a.height(@point_b)

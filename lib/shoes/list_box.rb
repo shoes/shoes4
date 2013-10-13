@@ -15,7 +15,7 @@ class Shoes
       @parent     = parent
       @blk        = blk
       @opts       = opts
-      @dimensions = Dimensions.new opts.merge(:parent => parent)
+      @dimensions = Dimensions.new parent, opts
       @dimensions.width  ||= DEFAULT_WIDTH
       @dimensions.height ||= DEFAULT_HEIGHT
 

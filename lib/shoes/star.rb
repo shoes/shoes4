@@ -16,11 +16,11 @@ class Shoes
       width = outer*2
 
       # Ignore calculated height on Dimensions--will force to match width
-      @dimensions = AbsoluteDimensions.new left, top, width, 0, app
+      @dimensions = AbsoluteDimensions.new app, left, top, width, 0
       @dimensions.height = @dimensions.width
 
       # Calculate the inner dimensions, which might be relative too
-      inner_dimensions = AbsoluteDimensions.new 0, 0, inner*2, 0, app
+      inner_dimensions = AbsoluteDimensions.new app, 0, 0, inner*2, 0
 
       # Get actual outer/inner from the dimension to handle relative values
       @outer = @dimensions.width / 2

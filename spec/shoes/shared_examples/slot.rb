@@ -14,8 +14,7 @@ end
 
 shared_context 'one slot child' do
   let(:ele_opts) {Hash.new}
-  let(:element) {Shoes::FakeElement.new({height: 100,
-                                         width: 50}.merge ele_opts)}
+  let(:element) {Shoes::FakeElement.new(nil, {height: 100,width: 50}.merge(ele_opts))}
 
   before :each do
     subject.add_child element
@@ -24,7 +23,7 @@ end
 
 shared_context 'two slot children' do
   include_context 'one slot child'
-  let(:element2) {Shoes::FakeElement.new height: 200, width: 70}
+  let(:element2) {Shoes::FakeElement.new nil, height: 200, width: 70}
 
   before :each do
     subject.add_child element2
@@ -45,7 +44,7 @@ end
 
 shared_examples_for 'positioning through :_position' do
   it 'sends the child the :_position method to position it' do
-    element = Shoes::FakeElement.new height: 100, width: 50
+    element = Shoes::FakeElement.new nil, height: 100, width: 50
     subject.add_child element
     element.should_receive :_position
     # message expectation for _position seems to not execute the method, hence

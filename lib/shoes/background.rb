@@ -11,7 +11,7 @@ class Shoes
     def initialize(app, parent, color, opts = {}, blk = nil)
       @app    = app
       @parent = parent
-      @dimensions = Dimensions.new opts.merge(:parent => parent)
+      @dimensions = Dimensions.new parent, opts
       @corners    = opts[:curve] || 0
       @angle      = opts[:angle] || 0
       opts[:fill] = color
