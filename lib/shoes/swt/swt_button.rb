@@ -13,17 +13,11 @@ class Shoes
         @type = type
         @real = ::Swt::Widgets::Button.new(@parent.real, @type)
         @real.addSelectionListener{|e| eval_block} if @dsl.blk
+        set_size
 
         yield(@real) if block_given?
-
-        if @dsl.width and @dsl.height
-          @real.setSize @dsl.width, @dsl.height
-        else
-          @real.pack
-          @dsl.width = @real.size.x
-          @dsl.height = @real.size.y
-        end
       end
+
 
       def eval_block
         @dsl.blk.call @dsl
@@ -43,6 +37,14 @@ class Shoes
 
       def enabled(value) 
         @real.enable_widget value
+      end
+
+      private
+      def set_size
+        @real.pack
+        @dsl.width ||= @real.size.x
+        @dsl.height ||= @real.size.y
+        @real.setSize @dsl.width, @dsl.height
       end
     end
   end
