@@ -25,4 +25,14 @@ describe Shoes::Star do
   it_behaves_like "object with style"
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
+
+  describe "relative dimensions from parent" do
+    subject { Shoes::Star.new(app, left, top, 5, 0.5, 0.25) }
+
+    it "bases height on width of parent" do
+      # Doesn't follow the typical calculations for width/height on relative
+      subject.width.should == parent.width
+      subject.height.should == parent.width
+    end
+  end
 end
