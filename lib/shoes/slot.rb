@@ -85,13 +85,7 @@ class Shoes
 
     protected
     def setup_dimensions
-      convert_percentage_dimensions_to_pixel
       apply_margins
-    end
-
-    def convert_percentage_dimensions_to_pixel
-      self.width  = (width * parent.width).to_i if width.is_a? Float
-      self.height = (height * parent.height).to_i if height.is_a? Float
     end
 
     def apply_margins

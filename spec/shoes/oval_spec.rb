@@ -15,10 +15,4 @@ describe Shoes::Oval do
     it_behaves_like "object with dimensions"
     it_behaves_like "movable object"
   end
-
-  describe "relative dimensions from parent" do
-    subject { Shoes::Oval.new(app, left, top, relative_width, relative_height) }
-
-    it_behaves_like "object with relative dimensions"
-  end
 end

@@ -25,12 +25,4 @@ describe Shoes::Rect do
   it_behaves_like "object with style"
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
-
-  describe "relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
-
-    subject { Shoes::Rect.new(app, left, top, relative_width, relative_height) }
-
-    it_behaves_like "object with relative dimensions"
-  end
 end

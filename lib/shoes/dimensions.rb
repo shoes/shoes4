@@ -34,7 +34,7 @@ class Shoes
     end
 
     def width
-      if @width.is_a?(Float)
+      if @width.is_a?(Float) && @parent
         (@width * @parent.width).to_i
       else
         @width
@@ -42,7 +42,7 @@ class Shoes
     end
 
     def height
-      if @height.is_a?(Float)
+      if @height.is_a?(Float) && @parent
         (@height * @parent.height).to_i
       else
         @height
@@ -103,6 +103,11 @@ class Shoes
 
   # for objects that are always absolutely positioned e.g. left == absolute_left
   class AbsoluteDimensions < Dimensions
+
+    def initialize(*args)
+      super(nil, *args)
+    end
+
     def absolute_left
       left
     end
