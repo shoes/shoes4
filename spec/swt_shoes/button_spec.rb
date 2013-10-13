@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Button do
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', text: text, blk: block) }
+  let(:dsl) { double('dsl', text: text, blk: block, width: 100, height: 200) }
   let(:parent) { double('parent') }
   let(:block) { proc {} }
   let(:real) { double('real', disposed?: false).as_null_object }

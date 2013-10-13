@@ -2,12 +2,13 @@ class Shoes
   class Dimensions
     attr_accessor :width, :height, :absolute_left, :absolute_top
 
-    def initialize(left = nil, top = nil, width = nil, height = nil)
+    def initialize(left = nil, top = nil, width = nil, height = nil, parent = nil)
       if hash_as_argument?(left)
         init_with_hash(left)
       else
-        init_with_arguments(left, top, width, height)
+        init_with_arguments(left, top, width, height, parent)
       end
+      convert_percentage_dimensions_to_pixel
     end
 
     def left=(value)
@@ -72,13 +73,20 @@ class Shoes
       self.top    = dimensions_hash.fetch(:top, nil)
       self.width  = dimensions_hash.fetch(:width, nil)
       self.height = dimensions_hash.fetch(:height, nil)
+      @parent     = dimensions_hash.fetch(:parent, nil)
     end
 
-    def init_with_arguments(left, top, width, height)
+    def init_with_arguments(left, top, width, height, parent)
       self.left   = left
       self.top    = top
       self.width  = width
       self.height = height
+      @parent     = parent
+    end
+
+    def convert_percentage_dimensions_to_pixel
+      @width = (@width * @parent.width).to_i if @width.is_a?(Float) && @parent
+      @height = (@height * @parent.height).to_i if @height.is_a?(Float) && @parent
     end
   end
 

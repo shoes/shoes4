@@ -12,7 +12,7 @@ class Shoes
       @app = app
       @parent = parent
 
-      @dimensions = Dimensions.new opts
+      @dimensions = Dimensions.new opts.merge(:parent => parent)
       @corners = opts[:curve] || 0
       @angle = opts[:angle] || 0
 

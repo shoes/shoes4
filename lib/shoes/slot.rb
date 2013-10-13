@@ -28,7 +28,7 @@ class Shoes
       @contents     = SlotContents.new
       @style        = {}
       @blk          = blk
-      @dimensions   = Dimensions.new opts
+      @dimensions   = Dimensions.new opts.merge(parent: parent)
       @fixed_height = height || false
       @prepending   = false
       set_default_dimension_values
