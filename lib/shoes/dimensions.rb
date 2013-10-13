@@ -2,11 +2,12 @@ class Shoes
   class Dimensions
     attr_accessor :width, :height, :absolute_left, :absolute_top
 
-    def initialize(left = nil, top = nil, width = nil, height = nil, parent = nil)
-      if hash_as_argument?(left)
-        init_with_hash(left)
+    def initialize(left_or_hash = nil, top = nil, width = nil, height = nil,
+                   parent = nil)
+      if hash_as_argument?(left_or_hash)
+        init_with_hash(left_or_hash)
       else
-        init_with_arguments(left, top, width, height, parent)
+        init_with_arguments(left_or_hash, top, width, height, parent)
       end
       convert_percentage_dimensions_to_pixel
     end
