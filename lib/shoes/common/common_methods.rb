@@ -72,7 +72,7 @@ class Shoes
 
     def remove
       @parent.contents.delete self if @parent
-      @gui.clear
+      @gui.clear if @gui
     end
 
     # displace(left: a number, top: a number) » self

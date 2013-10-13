@@ -10,6 +10,7 @@ shared_examples_for "Slot" do
 
   it_behaves_like "DSL container"
   it_behaves_like 'prepending'
+  it_behaves_like 'clearing'
 end
 
 shared_context 'one slot child' do
@@ -210,6 +211,17 @@ shared_examples_for 'prepending' do
 
     it 'has a total of 4 children' do
       subject.contents.size.should == 4
+    end
+  end
+end
+
+shared_examples_for 'clearing' do
+  include_context 'two slot children'
+
+  describe '#clear' do
+    it 'removes all contents' do
+      subject.clear
+      subject.contents.should be_empty
     end
   end
 end
