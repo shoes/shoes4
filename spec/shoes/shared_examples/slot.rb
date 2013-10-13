@@ -224,4 +224,12 @@ shared_examples_for 'clearing' do
       subject.contents.should be_empty
     end
   end
+
+  describe 'Element#remove' do
+    it 'removees the element' do
+      element.parent = subject
+      element.remove
+      subject.contents.should_not include element
+    end
+  end
 end
