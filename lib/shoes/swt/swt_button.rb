@@ -13,9 +13,10 @@ class Shoes
         @type = type
         @real = ::Swt::Widgets::Button.new(@parent.real, @type)
         @real.addSelectionListener{|e| eval_block} if @dsl.blk
-        set_size
 
         yield(@real) if block_given?
+
+        set_size
       end
 
 
