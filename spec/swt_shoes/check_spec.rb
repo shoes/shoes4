@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Check do
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', :width= => true, :height= => true, blk: block, contents: []) }
+  let(:dsl) { double('dsl', :width => 100, :width= => true, :height => 200, :height= => true, blk: block, contents: []) }
   let(:parent) { double('parent', real: true, dsl: double(contents: []) ) }
   let(:block) { proc {} }
   let(:real) { double('real').as_null_object }

@@ -9,12 +9,13 @@ shared_examples_for "Slot" do
   end
 
   it_behaves_like "DSL container"
+  it_behaves_like 'prepending'
+  it_behaves_like 'clearing'
 end
 
 shared_context 'one slot child' do
   let(:ele_opts) {Hash.new}
-  let(:element) {Shoes::FakeElement.new({height: 100,
-                                         width: 50}.merge ele_opts)}
+  let(:element) {Shoes::FakeElement.new(nil, {height: 100,width: 50}.merge(ele_opts))}
 
   before :each do
     subject.add_child element
@@ -23,7 +24,7 @@ end
 
 shared_context 'two slot children' do
   include_context 'one slot child'
-  let(:element2) {Shoes::FakeElement.new height: 200, width: 70}
+  let(:element2) {Shoes::FakeElement.new nil, height: 200, width: 70}
 
   before :each do
     subject.add_child element2
@@ -44,7 +45,7 @@ end
 
 shared_examples_for 'positioning through :_position' do
   it 'sends the child the :_position method to position it' do
-    element = Shoes::FakeElement.new height: 100, width: 50
+    element = Shoes::FakeElement.new nil, height: 100, width: 50
     subject.add_child element
     element.should_receive :_position
     # message expectation for _position seems to not execute the method, hence
@@ -149,5 +150,86 @@ shared_examples_for 'taking care of margin' do
 
   it 'respects the top margin for the first element' do
     element.absolute_top.should eq opts[:margin]
+  end
+end
+
+shared_examples_for 'prepending' do
+  include_context 'two slot children'
+  let(:prepend1) {double 'prepend1'}
+  let(:prepend2) {double 'prepend2'}
+
+  describe 'one element' do
+    before :each do
+      subject.prepend do
+        subject.add_child prepend1
+      end
+    end
+
+    it 'as the first' do
+      subject.contents.first.should eq prepend1
+    end
+
+    it 'has a total of 3 elements then' do
+      subject.contents.size.should == 3
+    end
+  end
+
+  describe 'two elements' do
+    before :each do
+      subject.prepend do
+        subject.add_child prepend1
+        subject.add_child prepend2
+      end
+    end
+
+    it 'has prepend1 as the first child' do
+      subject.contents.first.should eq prepend1
+    end
+
+    it 'has prepend2 as the second child' do
+      subject.contents[1].should eq prepend2
+    end
+
+    it 'has a total of 4 children' do
+      subject.contents.size.should == 4
+    end
+  end
+
+  describe 'two times' do
+    before :each do
+      subject.prepend { subject.add_child prepend1 }
+      subject.prepend {subject.add_child prepend2 }
+    end
+
+    it 'has the last prepended element as the first' do
+      subject.contents.first.should eq prepend2
+    end
+
+    it 'has the first prepended element as the second' do
+      subject.contents[1].should eq prepend1
+    end
+
+    it 'has a total of 4 children' do
+      subject.contents.size.should == 4
+    end
+  end
+end
+
+shared_examples_for 'clearing' do
+  include_context 'two slot children'
+
+  describe '#clear' do
+    it 'removes all contents' do
+      subject.clear
+      subject.contents.should be_empty
+    end
+  end
+
+  describe 'Element#remove' do
+    it 'removees the element' do
+      element.parent = subject
+      element.remove
+      subject.contents.should_not include element
+    end
   end
 end

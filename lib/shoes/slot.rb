@@ -25,11 +25,12 @@ class Shoes
     def init_attributes(app, parent, opts, blk)
       @app          = app
       @parent       = parent
-      @contents     = []
+      @contents     = SlotContents.new
       @style        = {}
       @blk          = blk
-      @dimensions   = Dimensions.new opts
+      @dimensions   = Dimensions.new parent, opts
       @fixed_height = height || false
+      @prepending   = false
       set_default_dimension_values
 
       init_values_from_options(opts)
@@ -64,11 +65,17 @@ class Shoes
     end
 
     def add_child(element)
-      contents << element
+      contents.add_element element
     end
 
-    def append &blk
+    def append(&blk)
       eval_block blk
+    end
+
+    def prepend(&blk)
+      contents.prepend do
+        eval_block blk
+      end
     end
 
     def contents_alignment
@@ -78,13 +85,7 @@ class Shoes
 
     protected
     def setup_dimensions
-      convert_percentage_dimensions_to_pixel
       apply_margins
-    end
-
-    def convert_percentage_dimensions_to_pixel
-      self.width  = (width * parent.width).to_i if width.is_a? Float
-      self.height = (height * parent.height).to_i if height.is_a? Float
     end
 
     def apply_margins

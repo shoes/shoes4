@@ -8,7 +8,7 @@ class Shoes
     include DimensionsDelegations
     def initialize(app, left, top, width, height, angle1, angle2, opts = {})
       @app = app
-      @dimensions = Dimensions.new left, top, width, height
+      @dimensions = Dimensions.new app, left, top, width, height
       @angle1, @angle2 = angle1, angle2
       @wedge = opts[:wedge] || false
       default_style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS)

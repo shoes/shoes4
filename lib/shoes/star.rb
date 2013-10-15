@@ -11,11 +11,22 @@ class Shoes
 
     def initialize(app, left, top, points, outer, inner, opts = {}, &blk)
       @app = app
-      width = height = outer*2.0
-      @dimensions = AbsoluteDimensions.new left, top, width, height
+
+      # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
+      width = outer*2
+
+      # Ignore calculated height on Dimensions--will force to match width
+      @dimensions = AbsoluteDimensions.new left, top, width, 0
+      @dimensions.height = @dimensions.width
+
+      # Calculate the inner dimensions, which might be relative too
+      inner_dimensions = AbsoluteDimensions.new 0, 0, inner*2, 0
+
+      # Get actual outer/inner from the dimension to handle relative values
+      @outer = @dimensions.width / 2
+      @inner = inner_dimensions.width / 2
+
       @points = points
-      @outer = outer
-      @inner = inner
       @angle = opts[:angle] || 0
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1

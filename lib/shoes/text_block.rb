@@ -25,7 +25,7 @@ class Shoes
       @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
 
-      @dimensions   = Dimensions.new opts
+      @dimensions   = Dimensions.new parent, opts
       @margin = @opts[:margin]
       set_margin
 

@@ -6,11 +6,12 @@ describe Shoes::Dimensions do
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
-  subject {Shoes::Dimensions.new left, top, width, height}
+  let(:parent) {double 'parent', width: width, height: height}
+  subject {Shoes::Dimensions.new parent, left, top, width, height}
 
   describe 'initialization' do
     describe 'without arguments' do
-      subject {Shoes::Dimensions.new}
+      subject {Shoes::Dimensions.new parent}
 
       its(:left) {should eq 0}
       its(:top) {should eq 0}
@@ -22,7 +23,7 @@ describe Shoes::Dimensions do
     end
 
     describe 'with 2 arguments' do
-      subject {Shoes::Dimensions.new left, top}
+      subject {Shoes::Dimensions.new parent, left, top}
 
       its(:left) {should eq left}
       its(:top) {should eq top}
@@ -34,7 +35,7 @@ describe Shoes::Dimensions do
     end
 
     describe 'with 4 arguments' do
-      subject {Shoes::Dimensions.new left, top, width, height}
+      subject {Shoes::Dimensions.new parent, left, top, width, height}
 
       its(:left) {should eq left}
       its(:top) {should eq top}
@@ -42,11 +43,40 @@ describe Shoes::Dimensions do
       its(:height) {should eq height}
     end
 
+    describe 'with relative width and height' do
+      subject {Shoes::Dimensions.new parent, left, top, 0.5, 0.5}
+
+      its(:left) {should eq left}
+      its(:top) {should eq top}
+      its(:width) {should be_within(1).of 0.5 * width}
+      its(:height) {should be_within(1).of 0.5 * height}
+      
+      describe 'width/height change of the parent' do
+        let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
+        
+        # note that here the first assertion/call is necessary as otherwise
+        # the subject will only lazily get initialized after the parent width
+        # is already adjusted and therefore wrong impls WILL PASS the tests
+        # (jay for red/green/refactor :-) )
+        it 'adapts width' do
+          subject.width.should be_within(1).of 0.5 * width
+          parent.width = 700
+          subject.width.should be_within(1).of 350
+        end
+
+        it 'adapts height' do
+          subject.height.should be_within(1).of 0.5 * height
+          parent.height = 800
+          subject.height.should be_within(1).of 400
+        end
+      end
+    end
+
     describe 'with a hash' do
-      subject { Shoes::Dimensions.new left:   left,
-                                      top:    top,
-                                      width:  width,
-                                      height: height }
+      subject { Shoes::Dimensions.new parent, left:   left,
+                                              top:    top,
+                                              width:  width,
+                                              height: height }
 
       its(:left) {should eq left}
       its(:top) {should eq top}
@@ -57,9 +87,9 @@ describe Shoes::Dimensions do
       its(:absolute_y_position?) {should be_true}
 
       context 'missing width' do
-        subject { Shoes::Dimensions.new left:   left,
-                                        top:    top,
-                                        height: height }
+        subject { Shoes::Dimensions.new parent, left:   left,
+                                                top:    top,
+                                                height: height }
 
         its(:width) {should eq nil}
       end
@@ -115,7 +145,7 @@ describe Shoes::Dimensions do
   end
 
   describe 'absolute positioning' do
-    subject {Shoes::Dimensions.new}
+    subject {Shoes::Dimensions.new parent}
     its(:absolutely_positioned?) {should be_false}
 
     describe 'changing left' do
@@ -137,7 +167,6 @@ describe Shoes::Dimensions do
       its(:absolute_y_position?) {should be_true}
       its(:absolutely_positioned?) {should be_true}
     end
-
   end
 
   describe Shoes::AbsoluteDimensions do
@@ -148,6 +177,17 @@ describe Shoes::Dimensions do
 
     it 'has the same absolute_top as top' do
       subject.absolute_top.should eq top
+    end
+
+    describe 'not adapting floats to parent values' do
+      subject {Shoes::AbsoluteDimensions.new left, top, 1.04, 2.10}
+      it 'does not adapt width' do
+        subject.width.should be_within(0.01).of 1.04
+      end
+
+      it 'does not adapt height' do
+        subject.height.should be_within(0.01).of 2.10
+      end
     end
   end
 end
