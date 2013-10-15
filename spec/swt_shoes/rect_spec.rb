@@ -22,6 +22,5 @@ describe Shoes::Swt::Rect do
   end
 
   it_behaves_like "paintable"
-  it_behaves_like "movable shape", 10, 20
   it_behaves_like 'clickable backend'
 end

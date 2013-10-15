@@ -18,15 +18,14 @@ Gem::Specification.new do |s|
   s.executables = ['ruby-shoes']
 
   s.add_dependency "log4jruby"
-  s.add_dependency "swt", "~>0.16"
-  s.add_dependency "furoshiki"
+  s.add_dependency "swt", "~>0.17"
+  s.add_dependency "furoshiki", ">=0.1.2"
   s.add_dependency "nokogiri" # For converting the manual to HTML
   s.add_dependency "after_do"
 
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "pry"
-  s.add_development_dependency "pry-nav"
 
   s.add_development_dependency "rspec", "~>2.10"
   s.add_development_dependency "rake"

@@ -2,12 +2,11 @@ class Shoes
   module Swt
     class Line
       include Common::Stroke
-      include Common::Move
       include Common::Toggle
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl, :app
+      attr_reader :dsl, :app, :container
       attr_reader :translated_point_a, :translated_point_b
       attr_reader :transform
 
@@ -30,10 +29,6 @@ class Shoes
       end
 
       def move(x, y)
-        unless @container.disposed?
-          @container.redraw left, top, width, height, false
-          @container.redraw x, y, width, height, false
-        end
         @transform.get_elements @transform_elements
         @transform.set_elements @transform_elements[0], @transform_elements[1], @transform_elements[2], @transform_elements[3], x, y
         self.left = x

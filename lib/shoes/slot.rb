@@ -1,19 +1,14 @@
 class Shoes
   class Slot
-    include Shoes::DSL
-    include Shoes::Common::Margin
-    include Shoes::Common::Clickable
-    include Shoes::CommonMethods
+    include DSL
+    include Common::Margin
+    include Common::Clickable
+    include CommonMethods
+    include DimensionsDelegations
 
-    RECOGNIZED_OPTION_VALUES = %w[left top width height margin margin_left margin_top margin_right margin_bottom]
+    RECOGNIZED_OPTION_VALUES = %w[margin margin_left margin_top margin_right margin_bottom]
 
-    DEFAULT_LEFT   = 0
-    DEFAULT_TOP    = 0
-    DEFAULT_WIDTH  = 1.0
-    DEFAULT_HEIGHT = 0
-
-    attr_reader :parent, :gui, :contents, :hidden, :blk, :app
-    attr_accessor :width, :height, :left, :top
+    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -28,22 +23,24 @@ class Shoes
     end
 
     def init_attributes(app, parent, opts, blk)
-      @app      = app
-      @parent   = parent
-      @contents = []
-      @style    = {}
+      @app          = app
+      @parent       = parent
+      @contents     = SlotContents.new
+      @style        = {}
+      @blk          = blk
+      @dimensions   = Dimensions.new parent, opts
+      @fixed_height = height || false
+      @prepending   = false
+      set_default_dimension_values
 
       init_values_from_options(opts)
-      @fixed_height = @height || false
-      set_default_dimension_values
-      @blk = blk
     end
 
     def set_default_dimension_values
-      @left   ||= 0
-      @top    ||= 0
-      @width  ||= 1.0
-      @height ||= 0
+      self.width          ||= 1.0
+      self.height         ||= 0
+      self.absolute_left  ||= 0
+      self.absolute_top   ||= 0
     end
 
     def init_values_from_options(opts)
@@ -68,11 +65,17 @@ class Shoes
     end
 
     def add_child(element)
-      gui.dsl.contents << element
+      contents.add_element element
     end
 
-    def append &blk
+    def append(&blk)
       eval_block blk
+    end
+
+    def prepend(&blk)
+      contents.prepend do
+        eval_block blk
+      end
     end
 
     def contents_alignment
@@ -82,24 +85,20 @@ class Shoes
 
     protected
     def setup_dimensions
-      convert_percentage_dimensions_to_pixel
       apply_margins
     end
 
-    def convert_percentage_dimensions_to_pixel
-      @width = (@width * parent.width).to_i if @width.is_a? Float
-      @height = (@height * parent.height).to_i if @height.is_a? Float
+    def apply_margins
+      @actual_width  = width  - (margin_left + margin_right)
+      @actual_height = height - (margin_top + margin_bottom)
     end
 
-    def apply_margins
-      @width  -= (margin_left + margin_right)
-      @height -= (margin_top + margin_bottom)
-    end
+    CurrentPosition = Struct.new(:x, :y, :max_bottom)
 
     def position_contents
-      current_position = CurrentPosition.new left + margin_left,
-                                             top + margin_top,
-                                             top + margin_top
+      current_position = CurrentPosition.new absolute_left + margin_left,
+                                             absolute_top + margin_top,
+                                             absolute_top + margin_top
       contents.each do |element|
         current_position = positioning(element, current_position)
       end
@@ -107,11 +106,10 @@ class Shoes
     end
 
     def positioning(element, current_position)
-      if takes_up_space?(element)
-        position_element element, current_position
-        element.contents_alignment if element.respond_to? :contents_alignment
-        current_position = update_current_position(current_position, element)
-      end
+      return current_position unless takes_up_space?(element)
+      position_element element, current_position
+      element.contents_alignment if element.respond_to? :contents_alignment
+      current_position = update_current_position(current_position, element)
       current_position
     end
 
@@ -120,24 +118,43 @@ class Shoes
     end
 
     def update_current_position(current_position, element)
-      current_position.x = element.right
-      current_position.y = element.top
-      if current_position.max_bottom < element.bottom
-        current_position.max_bottom = element.bottom
+      return current_position if element.absolutely_positioned?
+      current_position.x = element.absolute_right
+      current_position.y = element.absolute_top
+      if current_position.max_bottom < element.absolute_bottom
+        current_position.max_bottom = element.absolute_bottom
       end
       current_position
     end
 
     def position_in_current_line(element, current_position)
-      element._position current_position.x, current_position.y
+      element._position position_x(current_position.x, element),
+                        position_y(current_position.y, element)
     end
 
     def move_to_next_line(element, current_position)
-      element._position self.left + margin_left, current_position.max_bottom
+      element._position position_x(self.absolute_left + margin_left, element),
+                        position_y(current_position.max_bottom, element)
+    end
+
+    def position_x(relative_x, element)
+      if element.absolute_x_position?
+        self.absolute_left + element.left
+      else
+        relative_x
+      end
+    end
+
+    def position_y(relative_y, element)
+      if element.absolute_y_position?
+        self.absolute_top + element.top
+      else
+        relative_y
+      end
     end
 
     def fits_on_the_same_line?(element, current_x)
-      current_x + element.width <= right
+      current_x + element.width <= absolute_left + @actual_width
     end
 
     def takes_up_space?(element)
@@ -146,20 +163,18 @@ class Shoes
 
     def determine_slot_height(last_position)
       content_height = compute_content_height(last_position)
-      @height = content_height if has_variable_height?
+      self.height = content_height if has_variable_height?
       content_height
     end
 
     def compute_content_height(last_position)
-      last_position.max_bottom - self.top
+      last_position.max_bottom - self.absolute_top
     end
 
     def has_variable_height?
       not @fixed_height
     end
   end
-
-  CurrentPosition = Struct.new(:x, :y, :max_bottom)
 
   class Flow < Slot
     def position_element(element, current_position)

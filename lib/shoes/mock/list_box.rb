@@ -5,6 +5,9 @@ class Shoes
 
       def update_items(v)
       end
+
+      def enabled(value)
+      end
     end
   end
 end

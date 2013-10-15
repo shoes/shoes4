@@ -1,13 +1,29 @@
 require 'shoes/spec_helper'
 
 describe Shoes::ListBox do
-  subject           { Shoes::ListBox.new(app, parent, input_opts, input_block) }
+  let(:left) { 10 }
+  let(:top) { 20 }
+  let(:width) { 100 }
+  let(:height) { 200 }
+
   let(:input_block) { ->(listbox) {} }
-  let(:input_opts)  { { :items => ["Wine", "Vodka", "Water"] } }
+  let(:input_opts)  { { items: ["Wine", "Vodka", "Water"], left: left, top: top, width: width, height: height } }
   let(:app)         { Shoes::App.new }
   let(:parent)      { Shoes::Flow.new app, app}
 
+  subject           { Shoes::ListBox.new(app, parent, input_opts, input_block) }
+
   it_behaves_like "an element that can respond to change"
+  it_behaves_like "object with state"
+  it_behaves_like "object with dimensions"
+
+  describe "relative dimensions from parent" do
+    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
+
+    subject { Shoes::ListBox.new(app, parent, relative_opts, input_block) }
+
+    it_behaves_like "object with relative dimensions"
+  end
 
   it "should contain the correct items" do
     subject.items.should eq ["Wine", "Vodka", "Water"]

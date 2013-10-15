@@ -83,8 +83,10 @@ class Shoes
       create Shoes::Check, opts, blk
     end
 
-    def radio(opts = {}, &blk)
-      create Shoes::Radio, opts, blk
+    def radio(*args, &blk)
+      style = pop_style(args)
+      group = args.first
+      create Shoes::Radio, group, style, blk
     end
 
     def list_box(opts = {}, &blk)

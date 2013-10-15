@@ -2,41 +2,35 @@ class Shoes
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock
-    include Shoes::CommonMethods
-    include Shoes::Common::Margin
-    include Shoes::Common::Clickable
+    include CommonMethods
+    include Common::Margin
+    include Common::Clickable
+    include DimensionsDelegations
 
 
-    attr_reader  :gui, :parent, :text, :links, :app, :hidden, :text_styles
-    attr_accessor :font, :font_size, :width, :height, :left, :top, :fixed, :cursor, :textcursor
+    attr_reader   :gui, :parent, :text, :links, :app, :text_styles, :dimensions
+    attr_accessor :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
-      @parent = parent
-      @app = app
-      @font = @app.font || DEFAULT_TEXTBLOCK_FONT
-      @font_size = opts[:size] || font_size
-      @text = text
-      @left = opts[:left]
-      @top = opts[:top]
-      @links = []
-      @text_styles = opts[:text_styles]
-
+      @parent       = parent
+      @app          = app
+      @font         = @app.font || DEFAULT_TEXTBLOCK_FONT
+      @font_size    = opts[:size] || font_size
+      @text         = text
+      @links        = []
+      @text_styles  = opts[:text_styles]
       opts[:stroke] = Shoes::Color.new(opts[:stroke]) if opts[:stroke].is_a?(String)
-      opts[:fill] = Shoes::Color.new(opts[:fill]) if opts[:fill].is_a?(String)
-
-      @margin = opts[:margin]
+      opts[:fill]   = Shoes::Color.new(opts[:fill]) if opts[:fill].is_a?(String)
+      @dimensions   = Dimensions.new parent, opts
+      @margin       = opts[:margin]
       set_margin
 
       handle_opts opts
 
       @gui = Shoes.configuration.backend_for(self, opts)
-      if text.split.length == 1
-        @width, @height = @gui.get_size
-        @fixed = true
-      end
-      @left && @top ? set_size(@left.to_i, @left.to_i) : @parent.add_child(self)
-      set_size @left.to_i, @top.to_i unless @fixed
-
+      self.width, self.height = @gui.get_size
+      @parent.add_child(self)
+      set_size left
 
       clickable_options(opts)
     end
@@ -53,30 +47,26 @@ class Shoes
       self.text
     end
 
-    def set_size left, top
-      unless @fixed
-        @width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
-      end
-      @height = @gui.get_height + @margin_top + @margin_bottom
+    def set_size left
+      self.width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
+      self.height = @gui.get_height + @margin_top + @margin_bottom
     end
 
     private
 
     def handle_opts(opts)
-      if opts.has_key? :font
-        parse_font_opt opts[:font]
-      end
+      parse_font_opt opts[:font] if opts.has_key? :font
     end
 
     def parse_font_opt(type)
       size_regex = /\d+(?=px)?/
       style_regex = /none|bold|normal|oblique|italic/i # TODO: add more
 
-      ffamily = type.gsub(style_regex,'').gsub(/\d+(px)?/,'').
+      font_family = type.gsub(style_regex,'').gsub(/\d+(px)?/,'').
                   split(',').map { |x| x.strip.gsub(/["]/,'') }
 
-      @font = ffamily.first unless (ffamily.size == 1 and
-        ffamily[0] == "") or ffamily.size == 0
+      @font = font_family.first unless (font_family.size == 1 and
+        font_family[0] == "") or font_family.size == 0
 
       fsize = type.scan(size_regex)
       @font_size = fsize.first.to_i unless fsize.empty?

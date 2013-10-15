@@ -1,3 +1,5 @@
+require 'shoes/spec_helper'
+
 describe Shoes::Point do
   subject { Shoes::Point.new(40, 50) }
   let(:other_point) { Shoes::Point.new(10, 60) }

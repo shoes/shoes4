@@ -42,11 +42,11 @@ class Shoes
     end
 
     def width
-      (left - right).abs
+      @app.width
     end
 
     def height
-      (top - bottom).abs
+      @app.height
     end
 
     # Moves the shape
@@ -94,6 +94,12 @@ class Shoes
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
       @gui.curve_to(cx1, cy1, cx2, cy2, x, y)
       self
+    end
+
+    def arc(x, y, width, height, start_angle, arc_angle)
+      @x, @y = x, y
+      update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
+      @gui.arc(x, y, width, height, start_angle, arc_angle)
     end
 
     private

@@ -22,7 +22,6 @@ describe Shoes::Swt::Line do
   end
 
   it_behaves_like "paintable"
-  it_behaves_like "movable shape", 42, 52
 
   describe "painter" do
     include_context "painter context"

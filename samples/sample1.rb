@@ -7,7 +7,7 @@ Shoes.app width: 300, height: 300 do
   button('stop'){a.stop}
   button('start'){a.start}
   button('remove'){a.remove}
-  img = image 'static/shoes-icon.png' do
+  img = image File.join(Shoes::DIR, 'static/shoes-icon.png') do
     alert "You're soooo quick!"
   end
 

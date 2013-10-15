@@ -22,7 +22,7 @@ describe Shoes::Flow do
       subject.blk.should == input_block
     end
 
-    describe 'margines' do
+    describe 'margins' do
       let(:opts){{margin: 143}}
       it 'sets the margins' do
         subject.margin.should == [143, 143, 143, 143]
@@ -54,7 +54,7 @@ describe Shoes::Flow do
       end
 
       it 'positions it next to the other element as long as it fits' do
-        element2.left.should eq element.right
+        element2.absolute_left.should eq element.absolute_right
       end
 
       it 'has a slot height of the maximum value of the 2 elements' do

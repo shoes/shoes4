@@ -19,31 +19,6 @@ class Shoes
     #  gui_container
     #end
 
-    def initialize(opts={})
-      @identifier = opts[:id]
-    end
-
-    %w[top left width height].each do |e|
-      eval "def #{e}; @gui.#{e} rescue @#{e} end"
-      eval "def #{e}=(v); @gui.#{e} = v end"
-    end
-
-    # This is the position of the right side of the Element,
-    # measured from the *left* side of the Slot.  (pixels)
-    def right
-      left + width
-    end
-
-    # This is the position of the bottom of the Element,
-    # measured from the *top* of the Slot.  (pixels)
-    def bottom
-      top + height
-    end
-
-    def in_bounds?(x, y)
-      visible? and left <= x and x <= right and top <= y and y <= bottom
-    end
-
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
       @hidden = false
@@ -77,8 +52,8 @@ class Shoes
     # Moves an element to a specific pixel position. The element is still in the slot,
     # but will no longer be stacked or flowed with the other stuff in the slot.
     def move(left, top)
-      unslot
-      _position left, top
+      self.left = left
+      self.top  = top
       self
     end
 
@@ -91,13 +66,13 @@ class Shoes
     # however we need it from the Slot code to position elements
     def _position left, top
       @gui.move(left, top) if @gui
-      self.left = left
-      self.top = top
+      self.absolute_left = left
+      self.absolute_top  = top
     end
 
     def remove
       @parent.contents.delete self if @parent
-      @gui.clear
+      @gui.clear if @gui
     end
 
     # displace(left: a number, top: a number) » self

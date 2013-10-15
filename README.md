@@ -76,6 +76,18 @@ There is also a simple ruby starter script which you may use as follows:
 bin/ruby-shoes samples/simple-sound.rb
 ```
 
+This does not work yet on Mac as jruby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
+
+```
+jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
+```
+
+Another alternative yet is to put `require 'shoes'` at the top of your applications, then you can simply do 
+
+```
+jruby path/to/file.rb
+```
+
 Want to see what shoes can do?
 ------------------------------
 
@@ -177,3 +189,13 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
 
 **Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
+
+Contact
+-------
+
+Want to get in touch with the shoes community? That's great! You can get in touch here:
+
+* You can join the mailing list, simply send an email to shoes@librelist.com - you can also check out [the archives](http://librelist.com/browser/shoes/)
+* We also have an irc channel #shoes on freenode - a lot of people are idling there so it might take some time to react
+
+However we try to keep most discussions about the development in this repository/its issues list so everyone can see them and look them up.

@@ -11,13 +11,13 @@ class Shoes
     def initialize(app, parent, color, opts = {}, blk = nil)
       @app    = app
       @parent = parent
-      @dimensions = Dimensions.new opts
+      @dimensions = Dimensions.new parent, opts
       @corners    = opts[:curve] || 0
       @angle      = opts[:angle] || 0
       opts[:fill] = color
 
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
-      parent.contents << self
+      parent.add_child self
 
       @gui = Shoes.backend_for(self, opts, &blk)
     end

@@ -2,6 +2,7 @@ class Shoes
   class InputBox
     include CommonMethods
     include Common::Changeable
+    include Common::State
     include DimensionsDelegations
 
     attr_reader :gui, :blk, :parent, :dimensions, :initial_text
@@ -10,7 +11,7 @@ class Shoes
       @app          = app
       @parent       = parent
       @blk          = blk
-      @dimensions   = Dimensions.new opts
+      @dimensions   = Dimensions.new parent, opts
       @initial_text = text
       @secret       = opts[:secret]
 
@@ -18,6 +19,7 @@ class Shoes
       @parent.add_child self
 
       self.change &blk if blk
+      state_options(opts)
     end
 
     def secret?

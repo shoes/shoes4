@@ -3,7 +3,7 @@ class Shoes
     class SwtButton
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
-      
+
       attr_reader :parent, :real, :dsl
 
       def initialize(dsl, parent, type)
@@ -16,14 +16,9 @@ class Shoes
 
         yield(@real) if block_given?
 
-        if @dsl.is_a?(::Shoes::Button) and @dsl.width and @dsl.height
-          @real.setSize @dsl.width, @dsl.height
-        else
-          @real.pack
-          @dsl.width = @real.size.x
-          @dsl.height = @real.size.y
-        end
+        set_size
       end
+
 
       def eval_block
         @dsl.blk.call @dsl
@@ -43,6 +38,14 @@ class Shoes
 
       def enabled(value) 
         @real.enable_widget value
+      end
+
+      private
+      def set_size
+        @real.pack
+        @dsl.width ||= @real.size.x
+        @dsl.height ||= @real.size.y
+        @real.setSize @dsl.width, @dsl.height
       end
     end
   end

@@ -7,14 +7,6 @@ shared_examples_for "movable object" do
   end
 end
 
-shared_examples_for "movable object with gui" do
-  it "tells gui to move" do
-    subject.gui.should_receive(:move).with(300, 200)
-    subject.instance_variable_set(:@app, app)
-    subject.move(300, 200)
-  end
-end
-
 shared_examples_for "clearable object" do
   it "clears" do
     subject.should_receive(:clear)
@@ -23,13 +15,13 @@ shared_examples_for "clearable object" do
 end
 
 shared_examples_for "left, top as center" do | *params |
-  let(:centered_object) { described_class.new(app, 100, 50, 40, 20, *params, :center => true) }
+  let(:centered_object) { described_class.new(parent, left, top, width, height, *params, :center => true) }
   it "should now be located somewhere" do
-    centered_object.left.should eq(80)
-    centered_object.top.should eq(40)
-    centered_object.right.should eq(120)
-    centered_object.bottom.should eq(60)
-    centered_object.width.should eq(40)
-    centered_object.height.should eq(20)
+    centered_object.left.should eq(left-(width/2))
+    centered_object.top.should eq(top-(height/2))
+    centered_object.right.should eq(left-(width/2)+width)
+    centered_object.bottom.should eq(top-(height/2)+height)
+    centered_object.width.should eq(width)
+    centered_object.height.should eq(height)
   end
 end
