@@ -59,7 +59,7 @@ class Shoes
         if @dsl.text.length > 1
           @dsl.width, @dsl.height = get_size
         end
-        @opts[:text_styles] = @dsl.app.gather_text_styles(values)
+        @opts[:text_styles] = @dsl.gather_text_styles([], values)
         redraw
       end
 
