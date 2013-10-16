@@ -4,14 +4,16 @@ mac_readlink_f () {
   # completely stolen from http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
   TARGET_FILE=$1
 
-  cd `dirname $TARGET_FILE`
+  NEXT_DIR=`dirname $TARGET_FILE`
+  cd ./$NEXT_DIR
   TARGET_FILE=`basename $TARGET_FILE`
 
   # Iterate down a (possible) chain of symlinks
   while [ -L "$TARGET_FILE" ]
   do
     TARGET_FILE=`readlink $TARGET_FILE`
-    cd `dirname $TARGET_FILE`
+    NEXT_DIR=`dirname $TARGET_FILE`
+    cd ./$NEXT_DIR
     TARGET_FILE=`basename $TARGET_FILE`
   done
 
@@ -35,5 +37,5 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 RUBYSHOES="$SCRIPTPATH/ruby-shoes"
 
-cmd="jruby --1.9 $RUBYSHOES ${swt_opt:-} ${1}"
+cmd="jruby --1.9 ${swt_opt:-} $RUBYSHOES ${1}"
 exec $cmd
