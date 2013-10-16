@@ -16,10 +16,12 @@ describe Shoes::Check do
   it_behaves_like "object with dimensions"
 
   describe "check takes relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
-
     subject { Shoes::Check.new(app, parent, relative_opts) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  describe "negative dimensions" do
+    subject { Shoes::Check.new(app, parent, negative_opts) }
+    it_behaves_like "object with negative dimensions"
   end
 end

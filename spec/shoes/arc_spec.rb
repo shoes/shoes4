@@ -42,8 +42,12 @@ describe Shoes::Arc do
 
   context "relative dimensions" do
     subject { Shoes::Arc.new(parent, left, top, relative_width, relative_height, 0, Shoes::TWO_PI) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  context "negative dimensions" do
+    subject { Shoes::Arc.new(parent, left, top, -width, -height, 0, Shoes::TWO_PI) }
+    it_behaves_like "object with negative dimensions"
   end
 
   context "wedge" do

@@ -34,19 +34,36 @@ class Shoes
     end
 
     def width
-      if @width.is_a?(Float) && @parent
-        (@width * @parent.width).to_i
-      else
-        @width
-      end
+      calculate_dimension(:width)
     end
 
     def height
-      if @height.is_a?(Float) && @parent
-        (@height * @parent.height).to_i
-      else
-        @height
+      calculate_dimension(:height)
+    end
+
+    def calculate_dimension(name)
+      result = instance_variable_get("@#{name}".to_sym)
+      if @parent
+        result = calculate_relative(name, result) if is_relative?(result)
+        result = calculate_negative(name, result) if is_negative?(result)
       end
+      result
+    end
+
+    def is_relative?(result)
+      result.is_a?(Float)
+    end
+
+    def calculate_relative(name, result)
+      (result * @parent.send(name)).to_i
+    end
+
+    def is_negative?(result)
+      result && result < 0.0
+    end
+
+    def calculate_negative(name, result)
+      @parent.send(name) + result
     end
 
     def absolute_x_position?
