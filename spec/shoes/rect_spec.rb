@@ -25,4 +25,6 @@ describe Shoes::Rect do
   it_behaves_like "object with style"
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
+  it_behaves_like "left, top as center"
+
 end
