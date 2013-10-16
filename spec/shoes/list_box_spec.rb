@@ -18,11 +18,13 @@ describe Shoes::ListBox do
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
-
     subject { Shoes::ListBox.new(app, parent, relative_opts, input_block) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  describe "negative dimensions" do
+    subject { Shoes::ListBox.new(app, parent, negative_opts, input_block) }
+    it_behaves_like "object with negative dimensions"
   end
 
   it "should contain the correct items" do

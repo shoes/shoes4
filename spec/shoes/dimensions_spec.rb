@@ -50,10 +50,10 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should be_within(1).of 0.5 * width}
       its(:height) {should be_within(1).of 0.5 * height}
-      
+
       describe 'width/height change of the parent' do
         let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
-        
+
         # note that here the first assertion/call is necessary as otherwise
         # the subject will only lazily get initialized after the parent width
         # is already adjusted and therefore wrong impls WILL PASS the tests
@@ -70,6 +70,17 @@ describe Shoes::Dimensions do
           subject.height.should be_within(1).of 400
         end
       end
+    end
+
+    describe 'with negative width and height' do
+      let(:width) { -50 }
+      let(:height) { -50 }
+      subject {Shoes::Dimensions.new parent, left, top, width, height}
+
+      its(:left) {should eq left}
+      its(:top) {should eq top}
+      its(:width) {should eq parent.width + width}
+      its(:height) {should eq parent.height + height}
     end
 
     describe 'with a hash' do
