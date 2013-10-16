@@ -106,6 +106,7 @@ class Shoes
       result = instance_variable_get("@#{name}".to_sym)
       if @parent
         result = calculate_relative(name, result) if is_relative?(result)
+        result = calculate_percent(name, result) if is_percent?(result)
         result = calculate_negative(name, result) if is_negative?(result)
       end
       result
@@ -117,6 +118,19 @@ class Shoes
 
     def calculate_relative(name, result)
       (result * @parent.send(name)).to_i
+    end
+
+    PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
+
+    def is_percent?(result)
+      result.is_a?(String)
+    end
+
+    def calculate_percent(name, result)
+      return nil unless result =~ PERCENT_REGEX
+
+      relative = result.match(PERCENT_REGEX)[1].to_f / 100.0
+      calculate_relative(name, relative)
     end
 
     def is_negative?(result)
