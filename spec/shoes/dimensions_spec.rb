@@ -48,8 +48,8 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq left}
       its(:top) {should eq top}
-      its(:width) {should be_within(1).of 0.5 * width}
-      its(:height) {should be_within(1).of 0.5 * height}
+      its(:width) {should be_within(1).of 0.5 * parent.width}
+      its(:height) {should be_within(1).of 0.5 * parent.height}
 
       describe 'width/height change of the parent' do
         let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
@@ -59,13 +59,13 @@ describe Shoes::Dimensions do
         # is already adjusted and therefore wrong impls WILL PASS the tests
         # (jay for red/green/refactor :-) )
         it 'adapts width' do
-          subject.width.should be_within(1).of 0.5 * width
+          subject.width.should be_within(1).of 0.5 * parent.width
           parent.width = 700
           subject.width.should be_within(1).of 350
         end
 
         it 'adapts height' do
-          subject.height.should be_within(1).of 0.5 * height
+          subject.height.should be_within(1).of 0.5 * parent.height
           parent.height = 800
           subject.height.should be_within(1).of 400
         end
