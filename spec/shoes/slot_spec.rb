@@ -12,10 +12,12 @@ describe Shoes::Rect do
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
-
     subject { Shoes::Slot.new(app, parent, relative_opts) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  describe "negative dimensions" do
+    subject { Shoes::Slot.new(app, parent, negative_opts) }
+    it_behaves_like "object with negative dimensions"
   end
 end

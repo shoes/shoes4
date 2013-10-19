@@ -25,10 +25,13 @@ describe Shoes::Image do
     it_behaves_like "object with dimensions"
 
     describe "relative dimensions from parent" do
-      let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
       subject { Shoes::Image.new(app, parent, filename, relative_opts) }
-
       it_behaves_like "object with relative dimensions"
+    end
+
+    describe "negative dimensions" do
+      subject { Shoes::Image.new(app, parent, filename, negative_opts) }
+      it_behaves_like "object with negative dimensions"
     end
   end
 
