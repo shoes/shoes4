@@ -126,7 +126,8 @@ class Shoes
       result.is_a?(String)
     end
 
-    def calculate_percent(name, result)
+    def calculate_percent(name, raw_result)
+      result = raw_result.gsub(/\s+/, "")
       return nil unless result =~ PERCENT_REGEX
 
       relative = result.match(PERCENT_REGEX)[1].to_f / 100.0

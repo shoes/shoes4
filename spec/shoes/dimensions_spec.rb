@@ -96,6 +96,12 @@ describe Shoes::Dimensions do
         its(:width) {should be_nil}
         its(:height) {should be_nil}
       end
+
+      describe 'with padded strings' do
+        subject {Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
     end
 
     describe 'with negative width and height' do
