@@ -141,6 +141,34 @@ describe Shoes::Dimensions do
     its(:right) {should eq left + width}
     its(:bottom) {should eq top + height}
 
+    describe 'centered' do
+      describe '5 arguments' do
+        subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, :center => true}
+        
+        its(:left) {should eq 80}
+        its(:top) {should eq 40}
+        its(:right) {should eq 120}
+        its(:bottom) {should eq 60}
+        its(:width) {should eq 40}
+        its(:height) {should eq 20}
+      end
+      
+      describe 'hash' do
+        subject {Shoes::Dimensions.new parent, left:   100,
+                                               top:    50,
+                                               width:  40,
+                                               height: 20,
+                                               center: true }
+
+        its(:left) {should eq 80}
+        its(:top) {should eq 40}
+        its(:right) {should eq 120}
+        its(:bottom) {should eq 60}
+        its(:width) {should eq 40}
+        its(:height) {should eq 20}
+      end
+    end
+
     describe 'without height and width' do
       let(:width) {nil}
       let(:height) {nil}

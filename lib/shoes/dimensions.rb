@@ -4,12 +4,12 @@ class Shoes
     attr_writer   :width, :height
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
-                   height = nil)
+                   height = nil, opts = {})
       @parent = parent
       if hash_as_argument?(left_or_hash)
         init_with_hash(left_or_hash)
       else
-        init_with_arguments(left_or_hash, top, width, height, parent)
+        init_with_arguments(left_or_hash, top, width, height, parent, opts)
       end
     end
 
@@ -78,18 +78,27 @@ class Shoes
       left.respond_to? :fetch
     end
 
+    def adjust_for_left_top_as_center(opts)
+      if opts.fetch(:center, false)
+        @left -= @width / 2 if @width && @width > 0
+        @top -= @height / 2 if @height && @height > 0
+      end
+    end
+
     def init_with_hash(dimensions_hash)
       self.left   = dimensions_hash.fetch(:left, nil)
       self.top    = dimensions_hash.fetch(:top, nil)
       self.width  = dimensions_hash.fetch(:width, nil)
       self.height = dimensions_hash.fetch(:height, nil)
+      adjust_for_left_top_as_center(dimensions_hash)
     end
 
-    def init_with_arguments(left, top, width, height, parent)
+    def init_with_arguments(left, top, width, height, parent, opts)
       self.left   = left
       self.top    = top
       self.width  = width
       self.height = height
+      adjust_for_left_top_as_center(opts)
     end
 
     def calculate_dimension(name)

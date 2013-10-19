@@ -13,3 +13,15 @@ shared_examples_for "clearable object" do
     subject.clear
   end
 end
+
+shared_examples_for "left, top as center" do | *params |
+  let(:centered_object) { described_class.new(parent, left, top, width, height, *params, :center => true) }
+  it "should now be located somewhere" do
+    centered_object.left.should eq(left-(width/2))
+    centered_object.top.should eq(top-(height/2))
+    centered_object.right.should eq(left-(width/2)+width)
+    centered_object.bottom.should eq(top-(height/2)+height)
+    centered_object.width.should eq(width)
+    centered_object.height.should eq(height)
+  end
+end
