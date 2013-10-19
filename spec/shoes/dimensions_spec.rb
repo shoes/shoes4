@@ -77,10 +77,16 @@ describe Shoes::Dimensions do
       let(:height) { -50 }
       subject {Shoes::Dimensions.new parent, left, top, width, height}
 
-      its(:left) {should eq left}
-      its(:top) {should eq top}
       its(:width) {should eq parent.width + width}
       its(:height) {should eq parent.height + height}
+    end
+
+    describe 'with relative negative width and height' do
+      let(:width) {-0.2}
+      let(:height) {-0.2}
+
+      its(:width) {should be_within(1).of 0.8 * parent.width}
+      its(:height) {should be_within(1).of 0.8 * parent.height}
     end
 
     describe 'with a hash' do

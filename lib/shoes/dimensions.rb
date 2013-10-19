@@ -59,7 +59,7 @@ class Shoes
     end
 
     def is_negative?(result)
-      result && result < 0.0
+      result && result < 0
     end
 
     def calculate_negative(name, result)
