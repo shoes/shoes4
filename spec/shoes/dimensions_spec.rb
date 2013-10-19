@@ -137,37 +137,49 @@ describe Shoes::Dimensions do
     end
   end
 
+  describe 'centered (e.g. left and top are seen as coords for the center)' do
+    describe '5 arguments' do
+      subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, :center => true}
+
+      its(:left) {should eq 80}
+      its(:top) {should eq 40}
+      its(:right) {should eq 120}
+      its(:bottom) {should eq 60}
+      its(:width) {should eq 40}
+      its(:height) {should eq 20}
+
+      it 'reacts to a width change' do
+        subject.left.should == 80
+        subject.width = 100
+        subject.left.should == 50
+      end
+
+      it 'reacts to a height change' do
+        subject.top.should == 40
+        subject.height = 40
+        subject.top.should == 30
+      end
+    end
+
+    describe 'hash' do
+      subject {Shoes::Dimensions.new parent, left:   100,
+                                     top:    50,
+                                     width:  40,
+                                     height: 20,
+                                     center: true }
+
+      its(:left) {should eq 80}
+      its(:top) {should eq 40}
+      its(:right) {should eq 120}
+      its(:bottom) {should eq 60}
+      its(:width) {should eq 40}
+      its(:height) {should eq 20}
+    end
+  end
+
   describe 'additional dimension methods' do
     its(:right) {should eq left + width}
     its(:bottom) {should eq top + height}
-
-    describe 'centered' do
-      describe '5 arguments' do
-        subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, :center => true}
-        
-        its(:left) {should eq 80}
-        its(:top) {should eq 40}
-        its(:right) {should eq 120}
-        its(:bottom) {should eq 60}
-        its(:width) {should eq 40}
-        its(:height) {should eq 20}
-      end
-      
-      describe 'hash' do
-        subject {Shoes::Dimensions.new parent, left:   100,
-                                               top:    50,
-                                               width:  40,
-                                               height: 20,
-                                               center: true }
-
-        its(:left) {should eq 80}
-        its(:top) {should eq 40}
-        its(:right) {should eq 120}
-        its(:bottom) {should eq 60}
-        its(:width) {should eq 40}
-        its(:height) {should eq 20}
-      end
-    end
 
     describe 'without height and width' do
       let(:width) {nil}

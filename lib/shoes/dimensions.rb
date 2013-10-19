@@ -9,7 +9,7 @@ class Shoes
       if hash_as_argument?(left_or_hash)
         init_with_hash(left_or_hash)
       else
-        init_with_arguments(left_or_hash, top, width, height, parent, opts)
+        init_with_arguments(left_or_hash, top, width, height, opts)
       end
     end
 
@@ -26,11 +26,15 @@ class Shoes
     end
 
     def left
-      @left || 0
+      value = @left || 0
+      value = adjust_left_for_center value if left_top_as_center?
+      value
     end
 
     def top
-      @top || 0
+      value = @top || 0
+      value = adjust_top_for_center(value) if left_top_as_center?
+      value
     end
 
     def width
@@ -78,27 +82,24 @@ class Shoes
       left.respond_to? :fetch
     end
 
-    def adjust_for_left_top_as_center(opts)
-      if opts.fetch(:center, false)
-        @left -= @width / 2 if @width && @width > 0
-        @top -= @height / 2 if @height && @height > 0
-      end
-    end
-
     def init_with_hash(dimensions_hash)
       self.left   = dimensions_hash.fetch(:left, nil)
       self.top    = dimensions_hash.fetch(:top, nil)
       self.width  = dimensions_hash.fetch(:width, nil)
       self.height = dimensions_hash.fetch(:height, nil)
-      adjust_for_left_top_as_center(dimensions_hash)
+      general_options dimensions_hash
     end
 
-    def init_with_arguments(left, top, width, height, parent, opts)
+    def init_with_arguments(left, top, width, height, opts)
       self.left   = left
       self.top    = top
       self.width  = width
       self.height = height
-      adjust_for_left_top_as_center(opts)
+      general_options opts
+    end
+
+    def general_options(opts)
+      @left_top_as_center = opts.fetch(:center, false)
     end
 
     def calculate_dimension(name)
@@ -124,6 +125,28 @@ class Shoes
 
     def calculate_negative(name, result)
       @parent.send(name) + result
+    end
+
+    def left_top_as_center?
+      @left_top_as_center
+    end
+
+    def adjust_left_for_center(left_value)
+      my_width = width
+      if my_width && my_width > 0
+        left_value - my_width / 2
+      else
+        left_value
+      end
+    end
+
+    def adjust_top_for_center(top_value)
+      my_height = height
+      if my_height && my_height > 0
+        top_value - my_height / 2
+      else
+        top_value
+      end
     end
   end
 
