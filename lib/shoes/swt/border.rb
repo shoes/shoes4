@@ -28,7 +28,6 @@ class Shoes
         end
 
         def draw_setup(gc)
-          set_position_and_size
           @obj.apply_stroke gc
           true
         end

@@ -2,6 +2,7 @@ class Shoes
   class Dimensions
     attr_accessor :absolute_left, :absolute_top
     attr_writer   :width, :height
+    attr_reader   :parent
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -152,7 +153,6 @@ class Shoes
 
   # for objects that are always absolutely positioned e.g. left == absolute_left
   class AbsoluteDimensions < Dimensions
-
     def initialize(*args)
       super(nil, *args)
     end
@@ -163,6 +163,41 @@ class Shoes
 
     def absolute_top
       top
+    end
+  end
+
+  # for objects that are more defined by their parents
+  class ParentDimensions < Dimensions
+    def left
+      if @left
+        super
+      else
+        parent.left
+      end
+    end
+
+    def top
+      if @top
+        super
+      else
+        parent.top
+      end
+    end
+
+    def width
+      super || parent.width
+    end
+
+    def height
+      super || parent.height
+    end
+
+    def absolute_left
+      super || parent.absolute_left
+    end
+
+    def absolute_top
+      super || parent.absolute_top
     end
   end
 
