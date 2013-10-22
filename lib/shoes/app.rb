@@ -154,6 +154,7 @@ class Shoes
     def set_initial_attributes
       @app                = self
       @style              = default_styles
+      @element_styles     = {}
       @contents           = []
       @unslotted_elements = []
       @mouse_motion       = []
