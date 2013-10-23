@@ -182,7 +182,7 @@ class Manual < Shoes
   end
 
   def mk_paras str
-    str.split("\n\n") - ['']
+    str.split(PARA_RE) - ['']
   end
 
   def mk_executable code
@@ -519,6 +519,7 @@ class Manual < Shoes
 
   IMAGE_RE = /\!(\{([^}\n]+)\})?([^!\n]+\.\w+)\!/
   CODE_RE = /\{{3}(?:\s*\#![^\n]+)?(.+?)\}{3}/m
+  PARA_RE = /\s*?(\{{3}(?:.+?)\}{3})|\n\n/m
   NL = "\n"
   LANG = $lang.downcase[0, 2]
   DOCS = load_docs($lang =~ /\.txt$/ ? $lang : File.join(DIR, "static/manual-#{LANG}.txt"))
