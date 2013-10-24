@@ -30,7 +30,6 @@ simple-dialogs.rb
 simple-brightness-transitions.rb
 simple-color-selector.rb
 simple-color-transitions.rb
-simple-guess-game.rb
 simple-calc-2.rb
 simple-manual.rb
 simple-mouse-follow.rb
