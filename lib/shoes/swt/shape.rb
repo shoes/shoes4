@@ -60,6 +60,9 @@ class Shoes
         elements[5]
       end
 
+      alias_method :absolute_left, :left
+      alias_method :absolute_top, :top
+
       def width
         bounds = Java::float[4].new
         @element.get_bounds(bounds)
