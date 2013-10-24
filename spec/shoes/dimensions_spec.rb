@@ -6,7 +6,8 @@ describe Shoes::Dimensions do
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
-  let(:parent) {double 'parent', width: width, height: height}
+  let(:parent) {double 'parent', width: 200, height: 250, left: 5, top: 12,
+                                 absolute_left: 25, absolute_top: 35}
   subject {Shoes::Dimensions.new parent, left, top, width, height}
 
   describe 'initialization' do
@@ -245,6 +246,28 @@ describe Shoes::Dimensions do
       it 'does not adapt height' do
         subject.height.should be_within(0.01).of 2.10
       end
+    end
+  end
+  
+  describe Shoes::ParentDimensions do
+    describe 'takes parent values if not specified' do
+      subject {Shoes::ParentDimensions.new parent}
+
+      its(:left) {should eq parent.left}
+      its(:top) {should eq parent.top}
+      its(:width) {should eq parent.width}
+      its(:height) {should eq parent.height}
+      its(:absolute_left) {should eq parent.absolute_left}
+      its(:absolute_top) {should eq parent.absolute_top}
+    end
+
+    describe 'otherwise it takes its own values' do
+      subject {Shoes::ParentDimensions.new parent, left, top, width, height}
+
+      its(:left) {should eq left}
+      its(:top) {should eq top}
+      its(:width) {should eq width}
+      its(:height) {should eq height}
     end
   end
 end
