@@ -106,7 +106,7 @@ class Shoes
     def calculate_dimension(name)
       result = instance_variable_get("@#{name}".to_sym)
       if @parent
-        result = calculate_from_string(name, result) if is_string?(result)
+        result = calculate_from_string(result) if is_string?(result)
         result = calculate_relative(name, result) if is_relative?(result)
         result = calculate_negative(name, result) if is_negative?(result)
       end
@@ -127,9 +127,10 @@ class Shoes
       result.is_a?(String)
     end
 
-    def calculate_from_string(name, result)
-      if result.gsub(/\s+/, "") =~ PERCENT_REGEX
-        $1.to_f / 100.0
+    def calculate_from_string(result)
+      match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
+      if match
+        match[1].to_f / 100.0
       else
         # Shoes eats invalid values, so this protects against non-% strings
         nil
