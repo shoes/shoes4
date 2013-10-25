@@ -66,6 +66,12 @@ describe Shoes::Swt::Button do
       it 'uses both specified values' do
         with_dimensions_real_should_be 130, 220, 130, 220
       end
+
+      it 'sends set_text to the real before packing it #452' do
+        real.should_receive(:set_text).ordered
+        real.should_receive(:pack).ordered
+        subject
+      end
     end
   end
 

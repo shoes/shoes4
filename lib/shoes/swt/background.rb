@@ -23,7 +23,6 @@ class Shoes
 
       class Painter < RectPainter
         def fill_setup(gc)
-          set_position_and_size
           @obj.apply_fill gc
           true
         end

@@ -2,14 +2,15 @@ class Shoes
   class Dimensions
     attr_accessor :absolute_left, :absolute_top
     attr_writer   :width, :height
+    attr_reader   :parent
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
-                   height = nil)
+                   height = nil, opts = {})
       @parent = parent
       if hash_as_argument?(left_or_hash)
         init_with_hash(left_or_hash)
       else
-        init_with_arguments(left_or_hash, top, width, height, parent)
+        init_with_arguments(left_or_hash, top, width, height, opts)
       end
     end
 
@@ -26,27 +27,23 @@ class Shoes
     end
 
     def left
-      @left || 0
+      value = @left || 0
+      value = adjust_left_for_center value if left_top_as_center?
+      value
     end
 
     def top
-      @top || 0
+      value = @top || 0
+      value = adjust_top_for_center(value) if left_top_as_center?
+      value
     end
 
     def width
-      if @width.is_a?(Float) && @parent
-        (@width * @parent.width).to_i
-      else
-        @width
-      end
+      calculate_dimension(:width)
     end
 
     def height
-      if @height.is_a?(Float) && @parent
-        (@height * @parent.height).to_i
-      else
-        @height
-      end
+      calculate_dimension(:height)
     end
 
     def absolute_x_position?
@@ -91,19 +88,71 @@ class Shoes
       self.top    = dimensions_hash.fetch(:top, nil)
       self.width  = dimensions_hash.fetch(:width, nil)
       self.height = dimensions_hash.fetch(:height, nil)
+      general_options dimensions_hash
     end
 
-    def init_with_arguments(left, top, width, height, parent)
+    def init_with_arguments(left, top, width, height, opts)
       self.left   = left
       self.top    = top
       self.width  = width
       self.height = height
+      general_options opts
+    end
+
+    def general_options(opts)
+      @left_top_as_center = opts.fetch(:center, false)
+    end
+
+    def calculate_dimension(name)
+      result = instance_variable_get("@#{name}".to_sym)
+      if @parent
+        result = calculate_relative(name, result) if is_relative?(result)
+        result = calculate_negative(name, result) if is_negative?(result)
+      end
+      result
+    end
+
+    def is_relative?(result)
+      result.is_a?(Float)
+    end
+
+    def calculate_relative(name, result)
+      (result * @parent.send(name)).to_i
+    end
+
+    def is_negative?(result)
+      result && result < 0
+    end
+
+    def calculate_negative(name, result)
+      @parent.send(name) + result
+    end
+
+    def left_top_as_center?
+      @left_top_as_center
+    end
+
+    def adjust_left_for_center(left_value)
+      my_width = width
+      if my_width && my_width > 0
+        left_value - my_width / 2
+      else
+        left_value
+      end
+    end
+
+    def adjust_top_for_center(top_value)
+      my_height = height
+      if my_height && my_height > 0
+        top_value - my_height / 2
+      else
+        top_value
+      end
     end
   end
 
   # for objects that are always absolutely positioned e.g. left == absolute_left
   class AbsoluteDimensions < Dimensions
-
     def initialize(*args)
       super(nil, *args)
     end
@@ -114,6 +163,41 @@ class Shoes
 
     def absolute_top
       top
+    end
+  end
+
+  # for objects that are more defined by their parents
+  class ParentDimensions < Dimensions
+    def left
+      if @left
+        super
+      else
+        parent.left
+      end
+    end
+
+    def top
+      if @top
+        super
+      else
+        parent.top
+      end
+    end
+
+    def width
+      super || parent.width
+    end
+
+    def height
+      super || parent.height
+    end
+
+    def absolute_left
+      super || parent.absolute_left
+    end
+
+    def absolute_top
+      super || parent.absolute_top
     end
   end
 

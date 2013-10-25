@@ -6,7 +6,8 @@ describe Shoes::Dimensions do
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
-  let(:parent) {double 'parent', width: width, height: height}
+  let(:parent) {double 'parent', width: 200, height: 250, left: 5, top: 12,
+                                 absolute_left: 25, absolute_top: 35}
   subject {Shoes::Dimensions.new parent, left, top, width, height}
 
   describe 'initialization' do
@@ -48,28 +49,45 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq left}
       its(:top) {should eq top}
-      its(:width) {should be_within(1).of 0.5 * width}
-      its(:height) {should be_within(1).of 0.5 * height}
-      
+      its(:width) {should be_within(1).of 0.5 * parent.width}
+      its(:height) {should be_within(1).of 0.5 * parent.height}
+
       describe 'width/height change of the parent' do
         let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
-        
+
         # note that here the first assertion/call is necessary as otherwise
         # the subject will only lazily get initialized after the parent width
         # is already adjusted and therefore wrong impls WILL PASS the tests
         # (jay for red/green/refactor :-) )
         it 'adapts width' do
-          subject.width.should be_within(1).of 0.5 * width
+          subject.width.should be_within(1).of 0.5 * parent.width
           parent.width = 700
           subject.width.should be_within(1).of 350
         end
 
         it 'adapts height' do
-          subject.height.should be_within(1).of 0.5 * height
+          subject.height.should be_within(1).of 0.5 * parent.height
           parent.height = 800
           subject.height.should be_within(1).of 400
         end
       end
+    end
+
+    describe 'with negative width and height' do
+      let(:width) { -50 }
+      let(:height) { -50 }
+      subject {Shoes::Dimensions.new parent, left, top, width, height}
+
+      its(:width) {should eq parent.width + width}
+      its(:height) {should eq parent.height + height}
+    end
+
+    describe 'with relative negative width and height' do
+      let(:width) {-0.2}
+      let(:height) {-0.2}
+
+      its(:width) {should be_within(1).of 0.8 * parent.width}
+      its(:height) {should be_within(1).of 0.8 * parent.height}
     end
 
     describe 'with a hash' do
@@ -117,6 +135,46 @@ describe Shoes::Dimensions do
     it 'also has a setter for left' do
       subject.left = 66
       subject.left.should eq 66
+    end
+  end
+
+  describe 'centered (e.g. left and top are seen as coords for the center)' do
+    describe '5 arguments' do
+      subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, :center => true}
+
+      its(:left) {should eq 80}
+      its(:top) {should eq 40}
+      its(:right) {should eq 120}
+      its(:bottom) {should eq 60}
+      its(:width) {should eq 40}
+      its(:height) {should eq 20}
+
+      it 'reacts to a width change' do
+        subject.left.should == 80
+        subject.width = 100
+        subject.left.should == 50
+      end
+
+      it 'reacts to a height change' do
+        subject.top.should == 40
+        subject.height = 40
+        subject.top.should == 30
+      end
+    end
+
+    describe 'hash' do
+      subject {Shoes::Dimensions.new parent, left:   100,
+                                     top:    50,
+                                     width:  40,
+                                     height: 20,
+                                     center: true }
+
+      its(:left) {should eq 80}
+      its(:top) {should eq 40}
+      its(:right) {should eq 120}
+      its(:bottom) {should eq 60}
+      its(:width) {should eq 40}
+      its(:height) {should eq 20}
     end
   end
 
@@ -188,6 +246,28 @@ describe Shoes::Dimensions do
       it 'does not adapt height' do
         subject.height.should be_within(0.01).of 2.10
       end
+    end
+  end
+  
+  describe Shoes::ParentDimensions do
+    describe 'takes parent values if not specified' do
+      subject {Shoes::ParentDimensions.new parent}
+
+      its(:left) {should eq parent.left}
+      its(:top) {should eq parent.top}
+      its(:width) {should eq parent.width}
+      its(:height) {should eq parent.height}
+      its(:absolute_left) {should eq parent.absolute_left}
+      its(:absolute_top) {should eq parent.absolute_top}
+    end
+
+    describe 'otherwise it takes its own values' do
+      subject {Shoes::ParentDimensions.new parent, left, top, width, height}
+
+      its(:left) {should eq left}
+      its(:top) {should eq top}
+      its(:width) {should eq width}
+      its(:height) {should eq height}
     end
   end
 end

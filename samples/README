@@ -9,7 +9,7 @@ class-book-adjusted.rb
 good-follow.rb
 good-arc.rb
 good-clock-adjusted.rb
-good-reminder-adjusted.rb
+good-reminder.rb
 good-potato-chopping.rb
 good-vjot-adjusted.rb
 
@@ -30,7 +30,6 @@ simple-dialogs.rb
 simple-brightness-transitions.rb
 simple-color-selector.rb
 simple-color-transitions.rb
-simple-guess-game.rb
 simple-calc-2.rb
 simple-manual.rb
 simple-mouse-follow.rb

@@ -16,7 +16,8 @@ describe Shoes::Border do
   let(:width) { 100 }
   let(:height) { 200 }
 
-  let(:parent) { Shoes::Flow.new(app, app) }
+  let(:parent) { double 'parent', absolute_left: left, absolute_top: top,
+                 width: width, height: height, add_child: true }
   let(:blue)  { Shoes::COLORS[:blue] }
   let(:app) { Shoes::App.new }
   let(:opts){ {left: left, top: top, width: width, height: height} }
@@ -27,9 +28,12 @@ describe Shoes::Border do
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
     subject { Shoes::Border.new(app, parent, blue, relative_opts) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  describe "negative dimensions" do
+    subject { Shoes::Border.new(app, parent, blue, negative_opts) }
+    it_behaves_like "object with negative dimensions"
   end
 end

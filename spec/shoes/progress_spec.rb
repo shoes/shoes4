@@ -30,11 +30,13 @@ describe Shoes::Progress do
     end
   end
 
-  context"relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
-
+  describe "relative dimensions from parent" do
     subject { Shoes::Progress.new(app, parent, relative_opts, input_block) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  describe "negative dimensions" do
+    subject { Shoes::Progress.new(app, parent, negative_opts, input_block) }
+    it_behaves_like "object with negative dimensions"
   end
 end

@@ -15,10 +15,12 @@ describe Shoes::EditBox do
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
-
     subject { Shoes::EditBox.new(app, parent, text, relative_opts) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  describe "negative dimensions" do
+    subject { Shoes::EditBox.new(app, parent, text, negative_opts) }
+    it_behaves_like "object with negative dimensions"
   end
 end

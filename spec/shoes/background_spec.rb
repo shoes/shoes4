@@ -27,9 +27,12 @@ describe Shoes::Background do
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do
-    let(:relative_opts) { { left: left, top: top, width: relative_width, height: relative_height } }
     subject { Shoes::Background.new(app, parent, blue, relative_opts) }
-
     it_behaves_like "object with relative dimensions"
+  end
+
+  context "negative dimensions" do
+    subject { Shoes::Background.new(app, parent, blue, negative_opts) }
+    it_behaves_like "object with negative dimensions"
   end
 end

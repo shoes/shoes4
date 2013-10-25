@@ -33,6 +33,9 @@ class Shoes
       @top || 0
     end
 
+    alias_method :absolute_left, :left
+    alias_method :absolute_top, :top
+
     def right
       @right || left
     end
