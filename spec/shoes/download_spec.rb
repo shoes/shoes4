@@ -39,20 +39,14 @@ describe Shoes::Download do
   end
 
   describe 'with a called block' do
-    let(:block) {proc {@called = true}}
+    let(:block) {proc {}}
 
     it 'calls the block with a result when the download is finished' do
-      if defined?(Shoes::Swt::Download)
-        Shoes::Swt::Download.any_instance.stub(:eval_block).and_return do |result|
-          block.call(result)
-        end
-      end
-
       extend AsyncHelper
       VCR.use_cassette 'download' do
         subject
         eventually(timeout: 10, interval: 1) do
-          @called.should be_true
+          subject.gui.should_receive :eval_block
         end
       end
     end

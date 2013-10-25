@@ -1,7 +1,7 @@
 class Shoes
   class Download
 
-    attr_reader :progress, :content_length
+    attr_reader :progress, :content_length, :gui
 
     def initialize app, parent, url, args, &blk
       @blk = blk

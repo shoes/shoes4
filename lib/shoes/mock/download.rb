@@ -5,8 +5,7 @@ class Shoes
       def initialize(*_)
       end
 
-      def eval_block(result, &blk)
-        blk.call result
+      def eval_block(*_)
       end
 
     end
