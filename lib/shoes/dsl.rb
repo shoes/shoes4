@@ -528,7 +528,7 @@ EOS
     end
 
     def download name, args={}, &blk
-      Shoes::Download.new @app, name, args, &blk
+      create Shoes::Download, name, args, &blk
     end
   end
 end

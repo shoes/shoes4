@@ -3,10 +3,11 @@ require 'shoes/spec_helper'
 describe Shoes::Download do
   # makes it run offline
   let(:app) { Shoes::App.new }
+  let(:parent) { app }
   let(:block) { proc{} }
   let(:name) { "http://www.google.com/logos/nasa50th.gif" }
   let(:args) { {:save => "nasa50th.gif"} }
-  subject{ Shoes::Download.new app, name, args, &block }
+  subject{ Shoes::Download.new app, parent, name, args, &block }
 
   after do
     subject.join_thread
