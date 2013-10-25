@@ -73,6 +73,38 @@ describe Shoes::Dimensions do
       end
     end
 
+    describe 'with percentages' do
+      describe 'with whole integers' do
+        subject {Shoes::Dimensions.new parent, left, top, "50%", "50%"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+
+      describe 'with floats' do
+        subject {Shoes::Dimensions.new parent, left, top, "50.0%", "50.00%"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+
+      describe 'with negatives' do
+        subject {Shoes::Dimensions.new parent, left, top, "-10.0%", "-10.00%"}
+        its(:width) {should be_within(1).of 0.9 * parent.width}
+        its(:height) {should be_within(1).of 0.9 * parent.height}
+      end
+
+      describe 'with invalid strings' do
+        subject {Shoes::Dimensions.new parent, left, top, "boo", "hoo"}
+        its(:width) {should be_nil}
+        its(:height) {should be_nil}
+      end
+
+      describe 'with padded strings' do
+        subject {Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+    end
+
     describe 'with negative width and height' do
       let(:width) { -50 }
       let(:height) { -50 }
