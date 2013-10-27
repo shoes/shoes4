@@ -1,8 +1,8 @@
 class Shoes
   class Slot
-    include DSL
     include Common::Margin
     include Common::Clickable
+    include Common::Clear
     include CommonMethods
     include DimensionsDelegations
 
@@ -26,8 +26,6 @@ class Shoes
       @app            = app
       @parent         = parent
       @contents       = SlotContents.new
-      @style          = {}
-      @element_styles = {}
       @blk            = blk
       @dimensions     = Dimensions.new parent, opts
       @fixed_height   = height || false

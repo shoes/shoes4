@@ -9,7 +9,8 @@ class Shoes
   #   @element_styles: a hash of {Class => styles}, where styles is
   #                    a hash of default styles for elements of Class,
   module DSL
-    include Shoes::Common::Style
+    include Common::Style
+    include Common::Clear
 
     def color(c)
       Shoes::Color.create c
@@ -518,14 +519,6 @@ EOS
 
     def keyrelease &blk
       Shoes::Keyrelease.new app, &blk
-    end
-
-    def clear
-      contents = @contents.dup
-      contents.each do |e|
-        e.is_a?(Shoes::Slot) ? e.clear : e.remove
-      end
-      @contents.clear
     end
 
     def append(&blk)
