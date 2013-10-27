@@ -1,7 +1,7 @@
 class Shoes
   class Dimensions
     attr_writer   :width, :height
-    attr_reader   :parent, :margin
+    attr_reader   :parent
     attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
                   :margin_top, :margin_bottom
 
@@ -90,6 +90,10 @@ class Shoes
       absolute_top <= y and y <= absolute_bottom
     end
 
+    def margin
+      [margin_left, margin_top, margin_right, margin_bottom]
+    end
+
     private
     def hash_as_argument?(left)
       left.respond_to? :fetch
@@ -112,18 +116,13 @@ class Shoes
     end
 
     def init_margins(opts)
-      @margin = opts.fetch(:margin, 0)
-      if @margin.is_a? Integer
-        margin_array = [@margin, @margin, @margin, @margin]
-      else
-        margin_array = @margin
-      end
-      margin_left, margin_top, margin_right, margin_bottom = margin_array
+      margin = opts.fetch(:margin, 0)
+      margin = [margin, margin, margin, margin] if margin.is_a? Integer
+      margin_left, margin_top, margin_right, margin_bottom = margin
       @margin_left   = opts.fetch(:margin_left, margin_left)
       @margin_top    = opts.fetch(:margin_top, margin_top)
       @margin_right  = opts.fetch(:margin_right, margin_right)
       @margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
-      @margin = [@margin_left, @margin_top, @margin_right, @margin_bottom]
     end
 
     def general_options(opts)

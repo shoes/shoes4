@@ -303,6 +303,11 @@ describe Shoes::Dimensions do
       its(:margin_bottom) {should == margin}
       its(:actual_width) {should == width + 2 * margin}
       its(:actual_height) {should == height + 2 * margin}
+
+      it 'adapts margin when one of the margins is changed' do
+        subject.margin_right = 7
+        subject.margin.should == [margin, margin, 7, margin]
+      end
     end
 
     describe 'creation with all distinct margin values' do
