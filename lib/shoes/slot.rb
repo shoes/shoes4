@@ -81,12 +81,12 @@ class Shoes
 
     def hover(blk)
       @hover_proc = blk
-      @app.mhcs << self unless @app.mhcs.include? self
+      @app.add_mouse_hover_control self
     end
 
     def leave(blk)
       @leave_proc = blk
-      @app.mhcs << self unless @app.mhcs.include? self
+      @app.add_mouse_hover_control self
     end
 
     protected

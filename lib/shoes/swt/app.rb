@@ -229,7 +229,7 @@ class Shoes
       end
 
       def mouse_hover_control
-        @app.dsl.mhcs.each do |e|
+        @app.dsl.mouse_hover_controls.each do |e|
           if mouse_on?(e) and !e.hovered
             e.hovered = true
             e.hover_proc[e] if e.hover_proc
@@ -238,7 +238,7 @@ class Shoes
       end
 
       def mouse_leave_control
-        @app.dsl.mhcs.each do |e|
+        @app.dsl.mouse_hover_controls.each do |e|
           if !mouse_on?(e) and e.hovered
             e.hovered = false
             e.leave_proc[e] if e.leave_proc
