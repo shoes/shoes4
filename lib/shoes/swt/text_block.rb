@@ -30,10 +30,14 @@ class Shoes
         text_layout.getBounds(0, @dsl.text.length - 1).height.tap{font.dispose}
       end
 
+      def get_width
+        text_layout, font = set_styles
+        text_layout.getBounds(0, @dsl.text.length - 1).width.tap{font.dispose}
+      end
+
       def get_size
         text_layout, font = set_styles
-        bounds = text_layout.getBounds(0, @dsl.text.length - 1)
-        font.dispose
+        bounds = text_layout.getBounds(0, @dsl.text.length - 1).tap{font.dispose}
         return bounds.width, bounds.height
       end
 

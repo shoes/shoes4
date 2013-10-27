@@ -12,6 +12,9 @@ class Shoes
       def get_size(*opts)
         [WIDTH, HEIGHT]
       end
+      def get_width
+        WIDTH
+      end
       def get_height
         HEIGHT
       end
