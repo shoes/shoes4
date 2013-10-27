@@ -48,7 +48,7 @@ class Shoes
     end
 
     def set_size left
-      self.width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
+      self.width = @gui.get_width + @margin_left + @margin_right
       self.height = @gui.get_height + @margin_top + @margin_bottom
     end
 
