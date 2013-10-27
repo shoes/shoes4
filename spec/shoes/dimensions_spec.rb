@@ -11,7 +11,7 @@ describe Shoes::Dimensions do
   subject {Shoes::Dimensions.new parent, left, top, width, height}
 
   describe 'initialization' do
-    describe 'without arguments' do
+    describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
 
       its(:left) {should eq 0}
@@ -21,6 +21,13 @@ describe Shoes::Dimensions do
       its(:absolutely_positioned?) {should be_false}
       its(:absolute_x_position?) {should be_false}
       its(:absolute_y_position?) {should be_false}
+      its(:margin)      {should == [0, 0, 0, 0]}
+      its(:margin_left) {should == 0}
+      its(:margin_top) {should == 0}
+      its(:margin_right) {should == 0}
+      its(:margin_bottom) {should == 0}
+      its(:actual_width) {should == nil}
+      its(:actual_height) {should == nil}
     end
 
     describe 'with 2 arguments' do
@@ -42,6 +49,8 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
+      its(:actual_width) {should == width}
+      its(:actual_height) {should == height}
     end
 
     describe 'with relative width and height' do
@@ -278,6 +287,58 @@ describe Shoes::Dimensions do
       its(:absolute_x_position?) {should be_false}
       its(:absolute_y_position?) {should be_true}
       its(:absolutely_positioned?) {should be_true}
+    end
+  end
+
+  describe 'margins' do
+    describe 'creation with single margin value' do
+      let(:margin) {13}
+      subject {Shoes::Dimensions.new parent, width: width, height: height,
+                                             margin: margin}
+
+      its(:margin)      {should == [margin, margin, margin, margin]}
+      its(:margin_left) {should == margin}
+      its(:margin_top) {should == margin}
+      its(:margin_right) {should == margin}
+      its(:margin_bottom) {should == margin}
+      its(:actual_width) {should == width + 2 * margin}
+      its(:actual_height) {should == height + 2 * margin}
+    end
+
+    describe 'creation with all distinct margin values' do
+      let(:margin_left) {1}
+      let(:margin_top) {7}
+      let(:margin_right) {11}
+      let(:margin_bottom) {17}
+
+      shared_examples_for 'all distinct margins' do
+        its(:margin){should == [margin_left, margin_top, margin_right, margin_bottom]}
+        its(:margin_left) {should == margin_left}
+        its(:margin_top) {should == margin_top}
+        its(:margin_right) {should == margin_right}
+        its(:margin_bottom) {should == margin_bottom}
+        its(:actual_width) {should == width + margin_left + margin_right}
+        its(:actual_height) {should == height + margin_top + margin_bottom}
+      end
+
+      describe 'setting margins separetely through hash' do
+        subject {Shoes::Dimensions.new parent, width: width,
+                                               height: height,
+                                               margin_left: margin_left,
+                                               margin_top: margin_top,
+                                               margin_right: margin_right,
+                                               margin_bottom: margin_bottom}
+        it_behaves_like 'all distinct margins'
+      end
+
+      describe 'setting margins through margin array' do
+        subject {Shoes::Dimensions.new parent,
+                                       width: width,
+                                       height: height,
+                                       margin: [margin_left, margin_top,
+                                                margin_right, margin_bottom]}
+        it_behaves_like 'all distinct margins'
+      end
     end
   end
 

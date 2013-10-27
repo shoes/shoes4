@@ -1,8 +1,9 @@
 class Shoes
   class Dimensions
     attr_writer   :width, :height
-    attr_reader   :parent
-    attr_accessor :absolute_left, :absolute_top
+    attr_reader   :parent, :margin
+    attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
+                  :margin_top, :margin_bottom
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -44,6 +45,16 @@ class Shoes
 
     def height
       calculate_dimension(:height)
+    end
+
+    def actual_width
+      return nil if width.nil?
+      margin_left + width + margin_right
+    end
+
+    def actual_height
+      return nil if height.nil?
+      margin_bottom + height + margin_top
     end
 
     def absolute_x_position?
@@ -100,8 +111,24 @@ class Shoes
       general_options opts
     end
 
+    def init_margins(opts)
+      @margin = opts.fetch(:margin, 0)
+      if @margin.is_a? Integer
+        margin_array = [@margin, @margin, @margin, @margin]
+      else
+        margin_array = @margin
+      end
+      margin_left, margin_top, margin_right, margin_bottom = margin_array
+      @margin_left   = opts.fetch(:margin_left, margin_left)
+      @margin_top    = opts.fetch(:margin_top, margin_top)
+      @margin_right  = opts.fetch(:margin_right, margin_right)
+      @margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
+      @margin = [@margin_left, @margin_top, @margin_right, @margin_bottom]
+    end
+
     def general_options(opts)
       @left_top_as_center = opts.fetch(:center, false)
+      init_margins opts
     end
 
     def calculate_dimension(name)
