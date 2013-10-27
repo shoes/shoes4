@@ -500,18 +500,15 @@ EOS
       @app.mouse_motion << blk
     end
 
-    def hover &blk
-      @hover_proc = blk
-      (@app.mhcs << self) unless @app.mhcs.include? self
+    # hover and leave just delegate to the current slot as hover and leave
+    # are just defined for slots but self is always the app.
+    def hover(&blk)
+      current_slot.hover(blk)
     end
 
-    def leave &blk
-      @leave_proc = blk
-      (@app.mhcs << self) unless @app.mhcs.include? self
+    def leave(&blk)
+      current_slot.leave(blk)
     end
-
-    attr_reader :hover_proc, :leave_proc
-    attr_accessor :hovered
 
     def keypress &blk
       Shoes::Keypress.new app, &blk

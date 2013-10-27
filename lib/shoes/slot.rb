@@ -8,7 +8,9 @@ class Shoes
 
     RECOGNIZED_OPTION_VALUES = %w[margin margin_left margin_top margin_right margin_bottom]
 
-    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions
+    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
+                :leave_proc
+    attr_accessor :hovered
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -47,10 +49,6 @@ class Shoes
       end
     end
 
-    def current_slot
-      @app.current_slot
-    end
-
     def clear &blk
       super
       eval_block blk
@@ -79,6 +77,16 @@ class Shoes
     def contents_alignment
       last_position = position_contents
       determine_slot_height(last_position)
+    end
+
+    def hover(blk)
+      @hover_proc = blk
+      @app.mhcs << self unless @app.mhcs.include? self
+    end
+
+    def leave(blk)
+      @leave_proc = blk
+      @app.mhcs << self unless @app.mhcs.include? self
     end
 
     protected
