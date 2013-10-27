@@ -23,14 +23,15 @@ class Shoes
     end
 
     def init_attributes(app, parent, opts, blk)
-      @app          = app
-      @parent       = parent
-      @contents     = SlotContents.new
-      @style        = {}
-      @blk          = blk
-      @dimensions   = Dimensions.new parent, opts
-      @fixed_height = height || false
-      @prepending   = false
+      @app            = app
+      @parent         = parent
+      @contents       = SlotContents.new
+      @style          = {}
+      @element_styles = {}
+      @blk            = blk
+      @dimensions     = Dimensions.new parent, opts
+      @fixed_height   = height || false
+      @prepending     = false
       set_default_dimension_values
 
       init_values_from_options(opts)
