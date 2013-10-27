@@ -223,15 +223,37 @@ describe Shoes::Dimensions do
   end
 
   describe 'in_bounds?' do
-    it {should be_in_bounds 30, 40}
-    it {should be_in_bounds left, top}
-    it {should be_in_bounds left + width, top + height}
-    it {should_not be_in_bounds 0, 0}
-    it {should_not be_in_bounds 0, 40}
-    it {should_not be_in_bounds 40, 0}
-    it {should_not be_in_bounds 200, 50}
-    it {should_not be_in_bounds 80, 400}
-    it {should_not be_in_bounds 1000, 1000}
+    describe 'absolute position same as offset' do
+      before :each do
+        subject.absolute_left = left
+        subject.absolute_top  = top
+      end
+
+      it {should be_in_bounds 30, 40}
+      it {should be_in_bounds left, top}
+      it {should be_in_bounds left + width, top + height}
+      it {should_not be_in_bounds 0, 0}
+      it {should_not be_in_bounds 0, 40}
+      it {should_not be_in_bounds 40, 0}
+      it {should_not be_in_bounds 200, 50}
+      it {should_not be_in_bounds 80, 400}
+      it {should_not be_in_bounds 1000, 1000}
+    end
+
+    describe 'with absolute position differing from relative' do
+      before :each do
+        subject.absolute_left = 150
+        subject.absolute_top  = 50
+      end
+
+      it {should_not be_in_bounds 30, 40}
+      it {should_not be_in_bounds left, top}
+      it {should_not be_in_bounds 149, 75}
+      it {should be_in_bounds 200, 50}
+      it {should be_in_bounds 150, 50}
+      it {should be_in_bounds 150 + width, 50 + height}
+      it {should_not be_in_bounds 80, 400}
+    end
   end
 
   describe 'absolute positioning' do

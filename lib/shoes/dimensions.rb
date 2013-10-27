@@ -1,8 +1,8 @@
 class Shoes
   class Dimensions
-    attr_accessor :absolute_left, :absolute_top
     attr_writer   :width, :height
     attr_reader   :parent
+    attr_accessor :absolute_left, :absolute_top
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -75,7 +75,8 @@ class Shoes
     end
 
     def in_bounds?(x, y)
-      left <= x and x <= right and top <= y and y <= bottom
+      absolute_left <= x and x <= absolute_right and
+      absolute_top <= y and y <= absolute_bottom
     end
 
     private
