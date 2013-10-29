@@ -31,6 +31,10 @@ shared_examples_for "arc DSL method" do
     arc.should be_an_instance_of(Shoes::Arc)
   end
 
+  it "raises an ArgumentError" do
+    lambda { dsl.arc(30) }.should raise_exception(ArgumentError)
+  end
+
   it_behaves_like "persistent fill" do
     let(:element) { arc }
   end

@@ -23,6 +23,10 @@ shared_examples_for "oval DSL method" do
     it_behaves_like "an oval/circle element"
   end
 
+  it "raises an ArgumentError" do
+    lambda { dsl.oval(10) }.should raise_error(ArgumentError)
+  end
+
   context "a circle" do
     let(:width) { height }
 

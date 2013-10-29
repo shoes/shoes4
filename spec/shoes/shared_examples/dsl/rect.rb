@@ -16,6 +16,10 @@ shared_examples_for "rect DSL method" do
   let(:top)    { 30 }
   let(:curve)  { 12 }
 
+  it "raises an ArgumentError" do
+    lambda { dsl.rect(30) }.should raise_exception(ArgumentError)
+  end
+
   context 'unequal sides' do
     let(:width)  { 200 }
     let(:height) { 100 }

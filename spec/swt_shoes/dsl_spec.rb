@@ -1,7 +1,5 @@
 require 'swt_shoes/spec_helper'
 
-# FIXME: These specs are copied from spec/shoes/element_methods_spec.rb
-#        We should run the same specs instead of duplicating.
 describe "Basic Element Methods" do
   class DSLShoeLaces
     include Shoes::DSL
@@ -22,7 +20,7 @@ describe "Basic Element Methods" do
 
   # Doubles for a Shoes::App
   let(:app) { DSLShoeLaces.new app_gui }
-  
+
   before :each do
     app.stub unslotted_elements: []
   end
@@ -32,20 +30,12 @@ describe "Basic Element Methods" do
       app_gui.should_receive(:add_paint_listener)
       app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
     end
-
-    specify "raises an ArgumentError" do
-      lambda { app.arc(30) }.should raise_exception(ArgumentError)
-    end
   end
 
   describe "rect" do
     specify "creates a Shoes::Rect" do
       app_gui.should_receive(:add_paint_listener)
       app.rect(10, 20, 10, 20, angle: 45).should be_an_instance_of(Shoes::Rect)
-    end
-
-    specify "raises an ArgumentError" do
-      lambda { app.rect(30) }.should raise_exception(ArgumentError)
     end
   end
 
@@ -54,10 +44,6 @@ describe "Basic Element Methods" do
       app_gui.should_receive(:add_paint_listener)
       app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
     end
-
-    specify "raises an ArgumentError" do
-      lambda { app.line(30) }.should raise_error(ArgumentError)
-    end
   end
 
   describe "oval" do
@@ -65,20 +51,12 @@ describe "Basic Element Methods" do
       app_gui.should_receive(:add_paint_listener)
       app.oval(30, 20, 100, 200).should be_an_instance_of(Shoes::Oval)
     end
-
-    specify "raises an ArgumentError" do
-      lambda { app.oval(10) }.should raise_error(ArgumentError)
-    end
   end
 
   describe "star" do
     specify "creates a Shoes::Star" do
       app_gui.should_receive(:add_paint_listener)
       app.star(30, 20).should be_an_instance_of(Shoes::Star)
-    end
-
-    specify "raises an ArgumentError" do
-      lambda { app.star(30) }.should raise_error(ArgumentError)
     end
   end
 
