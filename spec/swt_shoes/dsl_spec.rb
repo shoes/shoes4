@@ -26,35 +26,35 @@ describe "Basic Element Methods" do
   end
 
   describe "arc" do
-    specify "creates a Shoes::Arc" do
+    it "creates a Shoes::Arc" do
       app_gui.should_receive(:add_paint_listener)
       app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
     end
   end
 
   describe "rect" do
-    specify "creates a Shoes::Rect" do
+    it "creates a Shoes::Rect" do
       app_gui.should_receive(:add_paint_listener)
       app.rect(10, 20, 10, 20, angle: 45).should be_an_instance_of(Shoes::Rect)
     end
   end
 
   describe "line" do
-    specify "creates a Shoes::Line" do
+    it "creates a Shoes::Line" do
       app_gui.should_receive(:add_paint_listener)
       app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
     end
   end
 
   describe "oval" do
-    specify "creates a Shoes::Oval" do
+    it "creates a Shoes::Oval" do
       app_gui.should_receive(:add_paint_listener)
       app.oval(30, 20, 100, 200).should be_an_instance_of(Shoes::Oval)
     end
   end
 
   describe "star" do
-    specify "creates a Shoes::Star" do
+    it "creates a Shoes::Star" do
       app_gui.should_receive(:add_paint_listener)
       app.star(30, 20).should be_an_instance_of(Shoes::Star)
     end
@@ -68,7 +68,7 @@ describe "Basic Element Methods" do
       end
     }
 
-    specify "create a Shoes::Shape" do
+    it "create a Shoes::Shape" do
       app_gui.should_receive(:add_paint_listener)
       subject.should be_an_instance_of(Shoes::Shape)
     end
