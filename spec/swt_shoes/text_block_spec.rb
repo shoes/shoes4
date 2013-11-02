@@ -11,7 +11,8 @@ describe Shoes::Swt::TextBlock do
                      opts: opts, left: 0, :left= => 0, top: 10, :top= => 0,
                      width: 200, height: 180, font: "font", font_size: 16,
                      margin_left: 0, margin_top: 0, cursor: -1,
-                     textcursor: textcursor, absolute_left: 0, absolute_top: 10)
+                     textcursor: textcursor, absolute_left: 0, absolute_top: 10,
+                     :'hidden?' => false)
             }
   let(:app) { parent.app.gui.real }
   let(:app_real) { Shoes::App.new }
@@ -25,6 +26,7 @@ describe Shoes::Swt::TextBlock do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "toggable"
   it_behaves_like "movable text", 10, 20
 
   it "redraws the container" do

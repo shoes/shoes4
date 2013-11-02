@@ -106,6 +106,7 @@ class Shoes
                                              absolute_top + margin_top,
                                              absolute_top + margin_top
       contents.each do |element|
+        next if element.hidden?
         current_position = positioning(element, current_position)
       end
       current_position
