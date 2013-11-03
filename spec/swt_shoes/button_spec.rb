@@ -2,7 +2,10 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Button do
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', text: text, blk: block, width: 100, height: 200).as_null_object }
+  let(:container) { double('container', is_disposed?: false).as_null_object }
+  let(:gui) { double('gui', real: container) }
+  let(:app) { double('app', gui: gui).as_null_object }
+  let(:dsl) { double('dsl', app: app, real: real, text: text, blk: block, width: 100, height: 200).as_null_object }
   let(:parent) { double('parent') }
   let(:block) { proc {} }
   let(:real) { double('real', disposed?: false).as_null_object }
@@ -20,6 +23,7 @@ describe Shoes::Swt::Button do
   it_behaves_like "buttons"
   it_behaves_like "movable element", 140, 300
   it_behaves_like "clearable native element"
+  it_behaves_like "togglable"
 
   describe "#initialize" do
     it "sets text on real element" do
