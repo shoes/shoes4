@@ -26,7 +26,7 @@ describe Shoes::Swt::TextBlock do
   end
 
   it_behaves_like "paintable"
-  it_behaves_like "toggable"
+  it_behaves_like "togglable"
   it_behaves_like "movable text", 10, 20
 
   it "redraws the container" do

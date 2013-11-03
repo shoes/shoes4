@@ -1,8 +1,9 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Line do
-  let(:container) { double('container', :disposed? => false).as_null_object }
-  let(:app) { double('app', :real => container, :add_paint_listener => true, :style => {}).as_null_object }
+  let(:container) { double('container', :is_disposed? => false).as_null_object }
+  let(:gui) { double('gui', :real => container).as_null_object }
+  let(:app) { double('app', :gui => gui, :style => {}).as_null_object }
   let(:dsl) { Shoes::Line.new app, point_a, point_b }
   let(:point_a) { Shoes::Point.new(10, 100) }
   let(:point_b) { Shoes::Point.new(300, 10) }
@@ -22,6 +23,7 @@ describe Shoes::Swt::Line do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "togglable"
 
   describe "painter" do
     include_context "painter context"
