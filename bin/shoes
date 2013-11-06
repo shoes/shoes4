@@ -37,5 +37,5 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 RUBYSHOES="$SCRIPTPATH/ruby-shoes"
 
-cmd="jruby --1.9 ${swt_opt:-} $RUBYSHOES ${1}"
+cmd="jruby --1.9 ${swt_opt:-} $RUBYSHOES $@"
 exec $cmd
