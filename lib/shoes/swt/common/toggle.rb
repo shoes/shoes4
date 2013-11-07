@@ -3,9 +3,8 @@ class Shoes
     module Common
       module Toggle
         def toggle
-          # Ugly, but the drawn shapes have gui's without real's
-          if @dsl.respond_to?(:gui) && @dsl.gui && @dsl.gui.respond_to?(:real) && @dsl.gui.real
-            @dsl.gui.real.set_visible(@dsl.visible?)
+          unless @real.nil?
+            @real.set_visible(@dsl.visible?)
           end
 
           unless @dsl.app.gui.real.is_disposed?
