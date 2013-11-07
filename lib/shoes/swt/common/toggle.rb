@@ -3,7 +3,7 @@ class Shoes
     module Common
       module Toggle
         def toggle
-          unless @real.nil?
+          if @real && @real.respond_to?(:set_visible)
             @real.set_visible(@dsl.visible?)
           end
 
