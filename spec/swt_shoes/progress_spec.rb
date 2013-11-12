@@ -4,7 +4,7 @@ describe Shoes::Swt::Progress do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl').as_null_object }
   let(:parent) { double('parent') }
-  let(:real) { double('real').as_null_object }
+  let(:real) { double('real', :disposed? => false).as_null_object }
 
   subject { Shoes::Swt::Progress.new dsl, parent }
 
