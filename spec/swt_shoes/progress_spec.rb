@@ -28,4 +28,15 @@ describe Shoes::Swt::Progress do
     real.should_receive(:selection=).and_return(100)
     subject.fraction = 0.999
   end
+
+  context "with disposed real element" do
+    before :each do
+      real.stub(:disposed?) { true }
+    end
+
+    it "shouldn't set selection" do
+      real.should_not_receive(:selection=)
+      subject.fraction = 0.55
+    end
+  end
 end
