@@ -35,10 +35,10 @@ class Shoes
         end
       end
 
-      def enabled(value) 
+      def enabled(value)
         @real.enable_widget value
       end
-      
+
     end
   end
 end

@@ -1,6 +1,7 @@
 class Shoes
   module Swt
     class EditBox < InputBox
+      include Common::Toggle
 
       def initialize(dsl, parent)
         super(dsl, parent,
