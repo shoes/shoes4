@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Steve Klabnik", "Team Shoes"]
   s.email       = ["steve@steveklabnik.com"]
-  s.homepage    = "http://github.com/shoes/shoes"
+  s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = %q{Shoes is the best little GUI toolkit for Ruby.}
   s.description = %q{Shoes is the best little GUI toolkit for Ruby.}
 
