@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = %q{Shoes is the best little GUI toolkit for Ruby.}
   s.description = %q{Shoes is the best little GUI toolkit for Ruby.}
+  s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
