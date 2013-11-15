@@ -1,6 +1,6 @@
 require 'shoes/spec_helper'
 
-describe Shoes::Rect do
+describe Shoes::Slot do
   let(:left) { 44 }
   let(:top) { 66 }
   let(:width) { 111 }
