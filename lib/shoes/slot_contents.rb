@@ -26,6 +26,10 @@ class Shoes
       @prepending = false
     end
 
+    def to_ary
+      @contents
+    end
+
     private
     def append_element(element)
       @contents << element

@@ -19,6 +19,7 @@ class Shoes
       def replace *opts
         @dsl.instance_variable_set :@text, opts.map(&:to_s).join
       end
+      def clear;end
     end
 
     class Banner < TextBlock; end
