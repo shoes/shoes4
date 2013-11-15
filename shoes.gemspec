@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables = ['ruby-shoes']
 
   s.add_dependency "log4jruby"
-  s.add_dependency "swt", "~>0.17"
+  s.add_dependency "swt", "~>0.18"
   s.add_dependency "furoshiki", ">=0.1.2"
   s.add_dependency "nokogiri" # For converting the manual to HTML
   s.add_dependency "after_do", "~>0.2.2"
