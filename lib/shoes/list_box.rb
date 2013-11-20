@@ -8,7 +8,7 @@ class Shoes
     DEFAULT_WIDTH = 200
     DEFAULT_HEIGHT = 20
 
-    attr_reader :items, :gui, :blk, :parent, :opts, :dimensions
+    attr_reader :items, :app, :gui, :blk, :parent, :opts, :dimensions
 
     def initialize(app, parent, opts = {}, blk = nil)
       @app        = app
