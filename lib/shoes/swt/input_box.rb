@@ -4,6 +4,7 @@ class Shoes
     class InputBox
       include Common::Child
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :real, :dsl
