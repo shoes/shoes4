@@ -27,7 +27,7 @@ class Shoes
       end
 
       def fraction=(value)
-        @real.selection = (value*100).to_i
+        @real.selection = (value*100).to_i unless @real.disposed?
       end
 
       def move(left, top)
