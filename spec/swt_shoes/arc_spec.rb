@@ -1,15 +1,16 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Arc do
-  let(:container) { double('container', disposed?: false) }
-  let(:app) { double('app', real: container, add_paint_listener: true) }
+  let(:container) { double('container', is_disposed?: false) }
+  let(:gui) { double('gui', real: container) }
+  let(:app) { double('app', gui: gui).as_null_object }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:dsl) { double("dsl object", left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2, wedge?: false,  hidden: false).as_null_object }
+  let(:dsl) { double("dsl object", app: app, left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2, wedge?: false,  hidden: false).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
@@ -40,6 +41,7 @@ describe Shoes::Swt::Arc do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "togglable"
 
   describe "painter" do
     include_context "painter context"

@@ -30,8 +30,10 @@ shared_examples "DSL container" do
     rect
     rgb
     shape
+    star
     stroke
     strokewidth
+    style
   ].each do |method|
     include_examples "#{method} DSL method"
   end

@@ -1,10 +1,11 @@
 class Shoes
   class Download
 
-    attr_reader :progress, :content_length
+    attr_reader :progress, :content_length, :gui
 
-    def initialize app, url, args, &blk
+    def initialize app, parent, url, args, &blk
       @blk = blk
+      @gui = Shoes.configuration.backend_for(self)
       start_download args, url
     end
 
@@ -41,7 +42,7 @@ class Shoes
     end
 
     def eval_block(result)
-      @blk.call result
+      @gui.eval_block(result, &@blk)
     end
 
     def save_to_file file_path, download_data

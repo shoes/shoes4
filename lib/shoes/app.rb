@@ -30,7 +30,7 @@ class Shoes
     attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
                 :mouse_motion, :owner, :location
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
-                  :mouse_pos, :mhcs, :resizable, :app_title
+                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title
     attr_writer   :width, :height, :start_as_fullscreen
 
     def initialize(opts={}, &blk)
@@ -125,6 +125,12 @@ class Shoes
       gui.fullscreen
     end
 
+    def add_mouse_hover_control(element)
+      unless mouse_hover_controls.include? element
+        mouse_hover_controls << element
+      end
+    end
+
     alias_method :fullscreen?, :fullscreen
 
     def start_as_fullscreen?
@@ -152,14 +158,15 @@ class Shoes
     end
 
     def set_initial_attributes
-      @app                = self
-      @style              = default_styles
-      @contents           = []
-      @unslotted_elements = []
-      @mouse_motion       = []
-      @mouse_button       = 0
-      @mouse_pos          =[0, 0]
-      @mhcs               = []
+      @app                  = self
+      @style                = default_styles
+      @element_styles       = {}
+      @contents             = []
+      @unslotted_elements   = []
+      @mouse_motion         = []
+      @mouse_button         = 0
+      @mouse_pos            = [0, 0]
+      @mouse_hover_controls = []
     end
 
     def set_attributes_from_options(opts)

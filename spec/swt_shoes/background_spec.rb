@@ -1,19 +1,23 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Background do
-  let(:container) { double('container', :disposed? => false) }
-  let(:app) { double('app', :real => container, :add_paint_listener => true) }
+  let(:container) { double('container', is_disposed?: false) }
+  let(:gui) { double('gui', real: container) }
+  let(:app) { double('app', real: container, gui: gui, add_paint_listener: true) }
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
   let(:corners) { 0 }
-  let(:dsl) { double("dsl object", left: left, top: top, width: width,
-                     height: height, absolute_left: left, absolute_top: top,
-                     parent: parent, strokewidth: 1, corners: corners,
+  let(:dsl) { double("dsl object", app: app, parent: parent,
+                     left: left, top: top,
+                     width: width, height: height,
+                     absolute_left: left, absolute_top: top,
+                     strokewidth: 1, corners: corners,
                      hidden: false).as_null_object }
-  let(:parent) { double("parent", width: width, height: height, left: left,
-                        top: top, absolute_left: left, absolute_top: top,
+  let(:parent) { double("parent", left: left, top: top,
+                        absolute_left: left, absolute_top: top,
+                        width: width, height: height,
                         contents: []) }
 
   subject {
@@ -31,6 +35,7 @@ describe Shoes::Swt::Background do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "togglable"
 
   describe "painter" do
     include_context "painter context"

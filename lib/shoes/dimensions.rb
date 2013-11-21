@@ -1,8 +1,8 @@
 class Shoes
   class Dimensions
-    attr_accessor :absolute_left, :absolute_top
     attr_writer   :width, :height
     attr_reader   :parent
+    attr_accessor :absolute_left, :absolute_top
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -75,7 +75,8 @@ class Shoes
     end
 
     def in_bounds?(x, y)
-      left <= x and x <= right and top <= y and y <= bottom
+      absolute_left <= x and x <= absolute_right and
+      absolute_top <= y and y <= absolute_bottom
     end
 
     private
@@ -106,6 +107,7 @@ class Shoes
     def calculate_dimension(name)
       result = instance_variable_get("@#{name}".to_sym)
       if @parent
+        result = calculate_from_string(result) if is_string?(result)
         result = calculate_relative(name, result) if is_relative?(result)
         result = calculate_negative(name, result) if is_negative?(result)
       end
@@ -118,6 +120,22 @@ class Shoes
 
     def calculate_relative(name, result)
       (result * @parent.send(name)).to_i
+    end
+
+    PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
+
+    def is_string?(result)
+      result.is_a?(String)
+    end
+
+    def calculate_from_string(result)
+      match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
+      if match
+        match[1].to_f / 100.0
+      else
+        # Shoes eats invalid values, so this protects against non-% strings
+        nil
+      end
     end
 
     def is_negative?(result)

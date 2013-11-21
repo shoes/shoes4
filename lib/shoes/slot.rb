@@ -1,14 +1,16 @@
 class Shoes
   class Slot
-    include DSL
     include Common::Margin
     include Common::Clickable
+    include Common::Clear
     include CommonMethods
     include DimensionsDelegations
 
     RECOGNIZED_OPTION_VALUES = %w[margin margin_left margin_top margin_right margin_bottom]
 
-    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions
+    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
+                :leave_proc
+    attr_accessor :hovered
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -23,14 +25,12 @@ class Shoes
     end
 
     def init_attributes(app, parent, opts, blk)
-      @app          = app
-      @parent       = parent
-      @contents     = SlotContents.new
-      @style        = {}
-      @blk          = blk
-      @dimensions   = Dimensions.new parent, opts
-      @fixed_height = height || false
-      @prepending   = false
+      @app            = app
+      @parent         = parent
+      @contents       = SlotContents.new
+      @blk            = blk
+      @dimensions     = Dimensions.new parent, opts
+      @fixed_height   = height || false
       set_default_dimension_values
 
       init_values_from_options(opts)
@@ -47,10 +47,6 @@ class Shoes
       RECOGNIZED_OPTION_VALUES.each do |value|
         instance_variable_set "@#{value}", opts[value.to_sym]
       end
-    end
-
-    def current_slot
-      @app.current_slot
     end
 
     def clear &blk
@@ -83,6 +79,16 @@ class Shoes
       determine_slot_height(last_position)
     end
 
+    def hover(blk)
+      @hover_proc = blk
+      @app.add_mouse_hover_control self
+    end
+
+    def leave(blk)
+      @leave_proc = blk
+      @app.add_mouse_hover_control self
+    end
+
     protected
     def setup_dimensions
       apply_margins
@@ -100,6 +106,7 @@ class Shoes
                                              absolute_top + margin_top,
                                              absolute_top + margin_top
       contents.each do |element|
+        next if element.hidden?
         current_position = positioning(element, current_position)
       end
       current_position

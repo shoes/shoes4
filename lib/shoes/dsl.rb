@@ -5,9 +5,12 @@ class Shoes
   #
   # Including classes must provide:
   #
-  #     @style - a hash of styles
+  #   @style:          a hash of styles
+  #   @element_styles: a hash of {Class => styles}, where styles is
+  #                    a hash of default styles for elements of Class,
   module DSL
-    include Shoes::Common::Style
+    include Common::Style
+    include Common::Clear
 
     def color(c)
       Shoes::Color.create c
@@ -31,6 +34,33 @@ class Shoes
       end
     end
 
+    # Set default style for elements of a particular class, or for all
+    # elements, or return the current defaults for all elements
+    #
+    # @overload style(klass, styles)
+    #   Set default style for elements of a particular class
+    #   @param [Class] klass a Shoes element class
+    #   @param [Hash] styles default styles for elements of klass
+    #   @example
+    #     style Para, :text_size => 42, :stroke => green
+    #
+    # @overload style(styles)
+    # Set default style for all elements
+    #   @param [Hash] styles default style for all elements
+    #   @example
+    #     style :stroke => alicewhite, :fill => black
+    #
+    # @overload style()
+    #   @return [Hash] the default style for all elements
+    def style(klass_or_styles = nil, styles = {})
+      if klass_or_styles.kind_of? Class
+        klass = klass_or_styles
+        @element_styles[klass] = styles
+      else
+        super(klass_or_styles)
+      end
+    end
+
     private
 
     def pop_style(opts)
@@ -43,6 +73,11 @@ class Shoes
         normalized_style[s] = pattern(orig_style[s]) if orig_style[s]
       end
       orig_style.merge(normalized_style)
+    end
+
+    # Default styles for elements of klass
+    def style_for_element(klass, styles = {})
+      @element_styles.fetch(klass, {}).merge(styles)
     end
 
     def create(element, *args, &blk)
@@ -404,7 +439,11 @@ EOS
     %w[banner title subtitle tagline caption para inscription].each do |m|
       define_method m do |*text|
         opts = text.last.class == Hash ? text.pop : {}
-        create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
+        #create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
+        opts[:text_styles] = gather_text_styles text
+        text = text.map(&:to_s).join
+        klass = Shoes.const_get(m.capitalize)
+        create klass, text, FONT_SIZES[m.to_sym], style_for_element(klass, opts)
       end
     end
 
@@ -448,18 +487,15 @@ EOS
       @app.mouse_motion << blk
     end
 
-    def hover &blk
-      @hover_proc = blk
-      (@app.mhcs << self) unless @app.mhcs.include? self
+    # hover and leave just delegate to the current slot as hover and leave
+    # are just defined for slots but self is always the app.
+    def hover(&blk)
+      current_slot.hover(blk)
     end
 
-    def leave &blk
-      @leave_proc = blk
-      (@app.mhcs << self) unless @app.mhcs.include? self
+    def leave(&blk)
+      current_slot.leave(blk)
     end
-
-    attr_reader :hover_proc, :leave_proc
-    attr_accessor :hovered
 
     def keypress &blk
       Shoes::Keypress.new app, &blk
@@ -467,14 +503,6 @@ EOS
 
     def keyrelease &blk
       Shoes::Keyrelease.new app, &blk
-    end
-
-    def clear
-      contents = @contents.dup
-      contents.each do |e|
-        e.is_a?(Shoes::Slot) ? e.clear : e.remove
-      end
-      @contents.clear
     end
 
     def append(&blk)
@@ -512,7 +540,7 @@ EOS
     end
 
     def download name, args={}, &blk
-      Shoes::Download.new @app, name, args, &blk
+      create Shoes::Download, name, args, &blk
     end
   end
 end

@@ -2,6 +2,7 @@ class Shoes
   module Swt
     class SwtButton
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :parent, :real, :dsl
@@ -36,7 +37,7 @@ class Shoes
         @real.addSelectionListener{ blk[self] }
       end
 
-      def enabled(value) 
+      def enabled(value)
         @real.enable_widget value
       end
 

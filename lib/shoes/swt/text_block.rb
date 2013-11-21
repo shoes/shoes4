@@ -2,6 +2,7 @@ class Shoes
   module Swt
     class TextBlock
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
       DEFAULT_SPACING = 4

@@ -1,8 +1,9 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Oval do
-  let(:container) { double('container', disposed?: false) }
-  let(:app) { double('app', real: container, add_paint_listener: true, dsl: dsl).as_null_object }
+  let(:container) { double('container', is_disposed?: false) }
+  let(:gui) { double('gui', real: container).as_null_object }
+  let(:app) { double('app', gui: gui, dsl: dsl).as_null_object }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
@@ -15,6 +16,7 @@ describe Shoes::Swt::Oval do
   }
 
   it_behaves_like "paintable"
+  it_behaves_like "togglable"
   it_behaves_like 'clickable backend'
 
   describe "painter" do

@@ -8,7 +8,6 @@ shared_examples_for "Slot" do
     subject.contents.size.should eq(1)
   end
 
-  it_behaves_like "DSL container"
   it_behaves_like 'prepending'
   it_behaves_like 'clearing'
 end

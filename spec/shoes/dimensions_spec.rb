@@ -73,6 +73,38 @@ describe Shoes::Dimensions do
       end
     end
 
+    describe 'with percentages' do
+      describe 'with whole integers' do
+        subject {Shoes::Dimensions.new parent, left, top, "50%", "50%"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+
+      describe 'with floats' do
+        subject {Shoes::Dimensions.new parent, left, top, "50.0%", "50.00%"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+
+      describe 'with negatives' do
+        subject {Shoes::Dimensions.new parent, left, top, "-10.0%", "-10.00%"}
+        its(:width) {should be_within(1).of 0.9 * parent.width}
+        its(:height) {should be_within(1).of 0.9 * parent.height}
+      end
+
+      describe 'with invalid strings' do
+        subject {Shoes::Dimensions.new parent, left, top, "boo", "hoo"}
+        its(:width) {should be_nil}
+        its(:height) {should be_nil}
+      end
+
+      describe 'with padded strings' do
+        subject {Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n"}
+        its(:width) {should be_within(1).of 0.5 * parent.width}
+        its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+    end
+
     describe 'with negative width and height' do
       let(:width) { -50 }
       let(:height) { -50 }
@@ -191,15 +223,37 @@ describe Shoes::Dimensions do
   end
 
   describe 'in_bounds?' do
-    it {should be_in_bounds 30, 40}
-    it {should be_in_bounds left, top}
-    it {should be_in_bounds left + width, top + height}
-    it {should_not be_in_bounds 0, 0}
-    it {should_not be_in_bounds 0, 40}
-    it {should_not be_in_bounds 40, 0}
-    it {should_not be_in_bounds 200, 50}
-    it {should_not be_in_bounds 80, 400}
-    it {should_not be_in_bounds 1000, 1000}
+    describe 'absolute position same as offset' do
+      before :each do
+        subject.absolute_left = left
+        subject.absolute_top  = top
+      end
+
+      it {should be_in_bounds 30, 40}
+      it {should be_in_bounds left, top}
+      it {should be_in_bounds left + width, top + height}
+      it {should_not be_in_bounds 0, 0}
+      it {should_not be_in_bounds 0, 40}
+      it {should_not be_in_bounds 40, 0}
+      it {should_not be_in_bounds 200, 50}
+      it {should_not be_in_bounds 80, 400}
+      it {should_not be_in_bounds 1000, 1000}
+    end
+
+    describe 'with absolute position differing from relative' do
+      before :each do
+        subject.absolute_left = 150
+        subject.absolute_top  = 50
+      end
+
+      it {should_not be_in_bounds 30, 40}
+      it {should_not be_in_bounds left, top}
+      it {should_not be_in_bounds 149, 75}
+      it {should be_in_bounds 200, 50}
+      it {should be_in_bounds 150, 50}
+      it {should be_in_bounds 150 + width, 50 + height}
+      it {should_not be_in_bounds 80, 400}
+    end
   end
 
   describe 'absolute positioning' do
