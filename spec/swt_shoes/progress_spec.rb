@@ -1,10 +1,13 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Progress do
+  let(:container) { real }
+  let(:gui)    { double("gui", real: real) }
+  let(:app)    { double("app", gui: gui) }
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl').as_null_object }
+  let(:dsl) { double('dsl', app: app).as_null_object }
   let(:parent) { double('parent') }
-  let(:real) { double('real', :disposed? => false).as_null_object }
+  let(:real) { double('real', is_disposed?: false, :disposed? => false).as_null_object }
 
   subject { Shoes::Swt::Progress.new dsl, parent }
 
@@ -14,6 +17,7 @@ describe Shoes::Swt::Progress do
   end
 
   it_behaves_like "movable element"
+  it_behaves_like "togglable"
 
   it "should have a method called fraction=" do
     subject.should respond_to :fraction=

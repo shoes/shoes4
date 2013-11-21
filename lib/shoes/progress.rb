@@ -3,7 +3,7 @@ class Shoes
     include CommonMethods
     include DimensionsDelegations
 
-    attr_reader :parent, :blk, :gui, :opts, :dimensions, :fraction
+    attr_reader :app, :parent, :blk, :gui, :opts, :dimensions, :fraction
 
     def initialize(app, parent, opts = {}, blk = nil)
       @app        = app

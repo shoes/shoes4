@@ -3,9 +3,10 @@ class Shoes
     class Progress
       include Common::Child
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real
+      attr_reader :parent, :real, :dsl
 
       def initialize(dsl, parent)
         @dsl = dsl

@@ -14,15 +14,17 @@ class Shoes
       def paintControl(paint_event)
         graphics_context = paint_event.gc
         gcs_reset graphics_context
-        @text_layout.setText @dsl.text
-        set_styles
-        if @dsl.width
-          @text_layout.setWidth @dsl.width
-          @text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
-          if @dsl.cursor
-            move_text_cursor
-          else
-            (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
+        unless @dsl.hidden?
+          @text_layout.setText @dsl.text
+          set_styles
+          if @dsl.width
+            @text_layout.setWidth @dsl.width
+            @text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
+            if @dsl.cursor
+              move_text_cursor
+            else
+              (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
+            end
           end
         end
       end

@@ -5,7 +5,7 @@ class Shoes
     include Common::State
     include DimensionsDelegations
 
-    attr_reader :parent, :blk, :gui, :dimensions
+    attr_reader :app, :parent, :blk, :gui, :dimensions
 
     def initialize(app, parent, opts = {}, blk = nil)
       @app        = app

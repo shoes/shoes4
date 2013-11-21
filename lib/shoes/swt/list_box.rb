@@ -3,6 +3,7 @@ class Shoes
     class ListBox
       include Common::Child
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :dsl
