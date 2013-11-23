@@ -7,9 +7,10 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Steve Klabnik", "Team Shoes"]
   s.email       = ["steve@steveklabnik.com"]
-  s.homepage    = "http://github.com/shoes/shoes"
+  s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = %q{Shoes is the best little GUI toolkit for Ruby.}
   s.description = %q{Shoes is the best little GUI toolkit for Ruby.}
+  s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -18,10 +19,10 @@ Gem::Specification.new do |s|
   s.executables = ['ruby-shoes']
 
   s.add_dependency "log4jruby"
-  s.add_dependency "swt", "~>0.17"
+  s.add_dependency "swt", "~>0.18"
   s.add_dependency "furoshiki", ">=0.1.2"
   s.add_dependency "nokogiri" # For converting the manual to HTML
-  s.add_dependency "after_do"
+  s.add_dependency "after_do", "~>0.2.2"
 
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"

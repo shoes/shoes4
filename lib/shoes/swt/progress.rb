@@ -3,9 +3,10 @@ class Shoes
     class Progress
       include Common::Child
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real
+      attr_reader :parent, :real, :dsl
 
       def initialize(dsl, parent)
         @dsl = dsl
@@ -26,7 +27,7 @@ class Shoes
       end
 
       def fraction=(value)
-        @real.selection = (value*100).to_i
+        @real.selection = (value*100).to_i unless @real.disposed?
       end
 
       def move(left, top)

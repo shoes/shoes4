@@ -30,6 +30,7 @@ shared_examples "DSL container" do
     rect
     rgb
     shape
+    star
     stroke
     strokewidth
     style

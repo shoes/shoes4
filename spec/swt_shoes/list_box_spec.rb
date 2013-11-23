@@ -1,11 +1,18 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::ListBox do
+  let(:container) { real }
+  let(:gui)    { double("gui", real: real) }
+  let(:app)    { double("app", gui: gui) }
   let(:items)  { ["Pie", "Apple", "Sand"] }
-  let(:dsl)    { double('dsl', items: items, opts: {}, width: 200, height: 20) }
+  let(:dsl)    { double('dsl', app: app,
+                        items: items, opts: {},
+                        width: 200, height: 20).as_null_object }
   let(:parent) { double('parent') }
   let(:block)  { ->(){} }
-  let(:real)   { double(text: "", set_size: true, add_selection_listener: true) }
+  let(:real)   { double('real', text: "",
+                        set_size: true, add_selection_listener: true,
+                        is_disposed?: false) }
 
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 
@@ -13,6 +20,8 @@ describe Shoes::Swt::ListBox do
     parent.stub(:real)
     ::Swt::Widgets::Combo.stub(:new) { real }
   end
+
+  it_behaves_like "togglable"
 
   it "should return nil when nothing is highlighted" do
     subject.text.should be_nil

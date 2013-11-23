@@ -1,9 +1,15 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::EditBox do
-  let(:dsl)    { double('dsl', width: 70, height: 10, initial_text: 'jay', secret?: false ) }
-  let(:parent) { double('parent') }
-  let(:real)   { double('real', disposed?: false).as_null_object }
+  let(:container) { real }
+  let(:gui)    { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
+  let(:app)    { double("app", gui: gui) }
+  let(:real)   { double('real', is_disposed?: false, disposed?: false).as_null_object }
+  let(:parent) { double("parent", gui: gui, real: real, app: app) }
+  let(:dsl)    { double('dsl', app: app, visible?: true,
+                        left: 100, top: 100,
+                        width: 70, height: 10,
+                        initial_text: 'jay', secret?: false ) }
 
   subject { Shoes::Swt::EditBox.new dsl, parent }
 
@@ -15,6 +21,7 @@ describe Shoes::Swt::EditBox do
 
   it_behaves_like "movable element"
   it_behaves_like "clearable native element"
+  it_behaves_like "togglable"
 
   describe "#initialize" do
     it "sets text on real element" do

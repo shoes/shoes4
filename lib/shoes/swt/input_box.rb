@@ -4,6 +4,7 @@ class Shoes
     class InputBox
       include Common::Child
       include Common::Clear
+      include Common::Toggle
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :real, :dsl
@@ -35,10 +36,10 @@ class Shoes
         end
       end
 
-      def enabled(value) 
+      def enabled(value)
         @real.enable_widget value
       end
-      
+
     end
   end
 end

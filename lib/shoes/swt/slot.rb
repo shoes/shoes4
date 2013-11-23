@@ -3,6 +3,7 @@ class Shoes
     class Slot
       include Common::Container
       include Common::Clickable
+      include Common::Toggle
 
       def initialize(dsl, parent)
         @dsl = dsl
