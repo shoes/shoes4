@@ -47,14 +47,24 @@ class Shoes
       calculate_dimension(:height)
     end
 
-    def actual_width
+    def element_width
       return nil if width.nil?
-      margin_left + width + margin_right
+      width - (margin_left + margin_right)
     end
 
-    def actual_height
+    def element_height
       return nil if height.nil?
-      margin_bottom + height + margin_top
+      height - (margin_bottom + margin_top)
+    end
+
+    def element_left
+      return nil if absolute_left.nil?
+      absolute_left + margin_left
+    end
+
+    def element_top
+      return nil if absolute_top.nil?
+      absolute_top + margin_top
     end
 
     def absolute_x_position?

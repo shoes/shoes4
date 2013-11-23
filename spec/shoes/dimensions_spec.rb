@@ -8,7 +8,8 @@ describe Shoes::Dimensions do
   let(:height) {150}
   let(:parent) {double 'parent', width: 200, height: 250, left: 5, top: 12,
                                  absolute_left: 25, absolute_top: 35}
-  subject {Shoes::Dimensions.new parent, left, top, width, height}
+  let(:opts) { {} }
+  subject {Shoes::Dimensions.new parent, left, top, width, height, opts}
 
   describe 'initialization' do
     describe 'without arguments (defaults)' do
@@ -26,8 +27,8 @@ describe Shoes::Dimensions do
       its(:margin_top) {should == 0}
       its(:margin_right) {should == 0}
       its(:margin_bottom) {should == 0}
-      its(:actual_width) {should == nil}
-      its(:actual_height) {should == nil}
+      its(:element_width) {should == nil}
+      its(:element_height) {should == nil}
     end
 
     describe 'with 2 arguments' do
@@ -49,8 +50,8 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
-      its(:actual_width) {should == width}
-      its(:actual_height) {should == height}
+      its(:element_width) {should == width}
+      its(:element_height) {should == height}
     end
 
     describe 'with relative width and height' do
@@ -160,14 +161,42 @@ describe Shoes::Dimensions do
     end
 
     describe 'absolute extra values' do
+      let(:absolute_left) {7}
+      let(:absolute_top) {13}
+
+      before :each do
+        subject.absolute_left = absolute_left
+        subject.absolute_top  = absolute_top
+      end
+
       it 'has an appropriate absolute_right' do
-        subject.absolute_left = 10
-        subject.absolute_right.should eq width + 10
+        expect(subject.absolute_right).to eq width + absolute_left
       end
 
       it 'has an appropriate absolute_bottom' do
-        subject.absolute_top = 15
-        subject.absolute_bottom.should eq height + 15
+        expect(subject.absolute_bottom).to eq height + absolute_top
+      end
+
+      it 'has an element left which is the same' do
+        expect(subject.element_left).to eq subject.absolute_left
+      end
+
+      it 'has an element top which is the same' do
+        expect(subject.element_top).to eq subject.absolute_top
+      end
+
+      describe 'with margins' do
+        let(:margin_left) {3}
+        let(:margin_top) {5}
+        let(:opts) { {margin_left: margin_left, margin_top: margin_top} }
+
+        it 'adjusts element_left' do
+          expect(subject.element_left).to eq subject.absolute_left + margin_left
+        end
+
+        it 'adjusts element_top' do
+          expect(subject.element_top).to eq subject.absolute_top + margin_top
+        end
       end
     end
   end
@@ -301,8 +330,10 @@ describe Shoes::Dimensions do
       its(:margin_top) {should == margin}
       its(:margin_right) {should == margin}
       its(:margin_bottom) {should == margin}
-      its(:actual_width) {should == width + 2 * margin}
-      its(:actual_height) {should == height + 2 * margin}
+      its(:width) {should == width}
+      its(:height) {should == height}
+      its(:element_width) {should == width - 2 * margin}
+      its(:element_height) {should == height - 2 * margin}
 
       it 'adapts margin when one of the margins is changed' do
         subject.margin_right = 7
@@ -322,8 +353,10 @@ describe Shoes::Dimensions do
         its(:margin_top) {should == margin_top}
         its(:margin_right) {should == margin_right}
         its(:margin_bottom) {should == margin_bottom}
-        its(:actual_width) {should == width + margin_left + margin_right}
-        its(:actual_height) {should == height + margin_top + margin_bottom}
+        its(:width) {should == width}
+        its(:height) {should == height}
+        its(:element_width) {should == width - (margin_left + margin_right)}
+        its(:element_height) {should == height - (margin_top + margin_bottom)}
       end
 
       describe 'setting margins separetely through hash' do

@@ -139,7 +139,7 @@ class Shoes
     end
 
     def fits_on_the_same_line?(element, current_x)
-      current_x + element.width <= absolute_left + actual_width
+      current_x + element.width <= absolute_right
     end
 
     def takes_up_space?(element)
