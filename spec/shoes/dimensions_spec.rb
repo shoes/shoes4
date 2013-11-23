@@ -11,6 +11,15 @@ describe Shoes::Dimensions do
   let(:opts) { {} }
   subject {Shoes::Dimensions.new parent, left, top, width, height, opts}
 
+  shared_context 'margins' do
+    let(:margin_left) {3}
+    let(:margin_top) {5}
+    let(:margin_right) {7}
+    let(:margin_bottom) {11}
+    let(:opts) { {margin_left: margin_left, margin_top: margin_top,
+                  margin_right: margin_right, margin_bottom: margin_bottom } }
+  end
+
   describe 'initialization' do
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
@@ -186,9 +195,7 @@ describe Shoes::Dimensions do
       end
 
       describe 'with margins' do
-        let(:margin_left) {3}
-        let(:margin_top) {5}
-        let(:opts) { {margin_left: margin_left, margin_top: margin_top} }
+        include_context 'margins'
 
         it 'adjusts element_left' do
           expect(subject.element_left).to eq subject.absolute_left + margin_left
@@ -201,10 +208,59 @@ describe Shoes::Dimensions do
     end
   end
 
-  describe 'setters' do
-    it 'also has a setter for left' do
-      subject.left = 66
-      subject.left.should eq 66
+
+  describe 'setting ' do
+    describe 'left' do
+      it 'also has a setter for left' do
+        subject.left = 66
+        subject.left.should eq 66
+      end
+    end
+
+    describe 'element_*' do
+      let(:element_width) {43}
+      let(:element_height) {29}
+      
+      before :each do
+        subject.element_width = element_width
+        subject.element_height = element_height
+      end
+
+      it 'sets width to that value' do
+        expect(subject.width).to eq element_width
+      end
+
+      it 'responds that value for element_width' do
+        expect(subject.element_width).to eq element_width
+      end
+
+      it 'sets height to that value' do
+        expect(subject.height).to eq element_height
+      end
+
+      it 'sets element_height to that value' do
+        expect(subject.element_height).to eq element_height
+      end
+
+      describe 'with margins' do
+        include_context 'margins'
+
+        it 'sets width to element_width plus margins' do
+          expect(subject.width).to eq margin_left + element_width + margin_right
+        end
+
+        it 'sets height to element_height plus margins' do
+          expect(subject.height).to eq margin_top + element_height + margin_bottom
+        end
+
+        it 'sets that value for element_width' do
+          expect(subject.element_width).to eq element_width
+        end
+
+        it 'sets element_height to that value' do
+          expect(subject.element_height).to eq element_height
+        end
+      end
     end
   end
 
