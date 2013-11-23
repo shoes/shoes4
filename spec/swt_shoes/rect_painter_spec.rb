@@ -6,9 +6,9 @@ describe Shoes::Swt::RectPainter do
   let(:corners) { 0 }
   let(:app) { double('app', :real => container, :add_paint_listener => true, :dsl => dsl) }
   let(:container) { double('container', :disposed? => false) }
-  let(:dsl) { double("dsl object", hidden: false, rotate: 0, left: left,
-                     absolute_left: left, absolute_top: top, top: top,
-                     width: width, height: height,
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0,
+                     element_left: left, element_top: top,
+                     element_width: width, element_height: height,
                      corners: corners).as_null_object }
   let(:left) { 55 }
   let(:top) { 77 }

@@ -9,8 +9,9 @@ describe Shoes::Swt::TextBlock do
   let(:move_textcursor) { double("move text cursor", show: true) }
   let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world",
                      opts: opts, left: 0, :left= => 0, top: 10, :top= => 0,
-                     width: 200, height: 180, font: "font", font_size: 16,
-                     margin_left: 0, margin_top: 0, cursor: -1,
+                     element_width: 200, element_height: 180, width: 200,
+                     element_left: 0, element_top: 10,  font: "font",
+                     font_size: 16, margin_left: 0, margin_top: 0, cursor: -1,
                      textcursor: textcursor, absolute_left: 0, absolute_top: 10,
                      :'hidden?' => false)
             }

@@ -80,9 +80,9 @@ class Shoes
     CurrentPosition = Struct.new(:x, :y, :max_bottom)
 
     def position_contents
-      current_position = CurrentPosition.new absolute_left + margin_left,
-                                             absolute_top + margin_top,
-                                             absolute_top + margin_top
+      current_position = CurrentPosition.new element_left,
+                                             element_top,
+                                             element_top
       contents.each do |element|
         next if element.hidden?
         current_position = positioning(element, current_position)
@@ -118,7 +118,7 @@ class Shoes
     end
 
     def move_to_next_line(element, current_position)
-      element._position position_x(self.absolute_left + margin_left, element),
+      element._position position_x(self.element_left, element),
                         position_y(current_position.max_bottom, element)
     end
 
@@ -139,7 +139,7 @@ class Shoes
     end
 
     def fits_on_the_same_line?(element, current_x)
-      current_x + element.width <= absolute_right
+      current_x + element.width <= element_right
     end
 
     def takes_up_space?(element)

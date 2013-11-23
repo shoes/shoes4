@@ -27,7 +27,7 @@ class Shoes
 
       def get_height
         text_layout, font = set_styles
-        text_layout.width = @dsl.width
+        text_layout.width = @dsl.element_width
         text_layout.getBounds(0, @dsl.text.length - 1).height.tap{font.dispose}
       end
 
@@ -58,7 +58,7 @@ class Shoes
         # TODO We should never use instance_variable_set rather an accessor
         @dsl.instance_variable_set :@text, values.map(&:to_s).join
         if @dsl.text.length > 1
-          @dsl.width, @dsl.height = get_size
+          @dsl.element_width, @dsl.element_height = get_size
         end
         @opts[:text_styles] = @dsl.app.gather_text_styles(values)
         redraw

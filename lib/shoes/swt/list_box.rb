@@ -19,7 +19,7 @@ class Shoes
           @parent.real,
           ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY
         )
-        @real.set_size dsl.width, dsl.height
+        @real.set_size dsl.element_width, dsl.element_height
         @real.add_selection_listener do |event|
           @dsl.call_change_listeners
         end

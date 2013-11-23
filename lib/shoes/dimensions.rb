@@ -75,6 +75,16 @@ class Shoes
       absolute_top + margin_top
     end
 
+    def element_right
+      return nil if element_left.nil? || element_width.nil?
+      element_left + element_width
+    end
+
+    def element_bottom
+      return nil if element_top.nil? || element_height.nil?
+      element_top + element_height
+    end
+
     def absolute_x_position?
       @absolute_x_position
     end

@@ -7,7 +7,7 @@ describe Shoes::Swt::ListBox do
   let(:items)  { ["Pie", "Apple", "Sand"] }
   let(:dsl)    { double('dsl', app: app,
                         items: items, opts: {},
-                        width: 200, height: 20).as_null_object }
+                        element_width: 200, element_height: 20).as_null_object }
   let(:parent) { double('parent') }
   let(:block)  { ->(){} }
   let(:real)   { double('real', text: "",

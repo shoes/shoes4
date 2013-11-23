@@ -44,9 +44,9 @@ class Shoes
       private
       def set_size
         @real.pack
-        @dsl.width ||= @real.size.x
-        @dsl.height ||= @real.size.y
-        @real.setSize @dsl.width, @dsl.height
+        @dsl.element_width ||= @real.size.x
+        @dsl.element_height ||= @real.size.y
+        @real.setSize @dsl.element_width, @dsl.element_height
       end
     end
   end

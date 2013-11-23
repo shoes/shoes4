@@ -20,6 +20,16 @@ describe Shoes::Dimensions do
                   margin_right: margin_right, margin_bottom: margin_bottom } }
   end
 
+  shared_context 'element dimensions set' do
+    let(:element_width) {43}
+    let(:element_height) {29}
+
+    before :each do
+      subject.element_width = element_width
+      subject.element_height = element_height
+    end
+  end
+
   describe 'initialization' do
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
@@ -196,6 +206,7 @@ describe Shoes::Dimensions do
 
       describe 'with margins' do
         include_context 'margins'
+        include_context 'element dimensions set'
 
         it 'adjusts element_left' do
           expect(subject.element_left).to eq subject.absolute_left + margin_left
@@ -203,6 +214,16 @@ describe Shoes::Dimensions do
 
         it 'adjusts element_top' do
           expect(subject.element_top).to eq subject.absolute_top + margin_top
+        end
+
+        it 'returns an element_right' do
+          expect(subject.element_right).to eq subject.element_left +
+                                                  element_width
+        end
+
+        it 'returns an element_bottom' do
+          expect(subject.element_bottom).to eq subject.element_top +
+                                                   element_height
         end
       end
     end
@@ -218,13 +239,7 @@ describe Shoes::Dimensions do
     end
 
     describe 'element_*' do
-      let(:element_width) {43}
-      let(:element_height) {29}
-      
-      before :each do
-        subject.element_width = element_width
-        subject.element_height = element_height
-      end
+      include_context 'element dimensions set'
 
       it 'sets width to that value' do
         expect(subject.width).to eq element_width

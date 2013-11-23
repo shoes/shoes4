@@ -17,12 +17,12 @@ class Shoes
         @real.minimum = 0
         @real.maximum = 100
 
-        if @dsl.width and @dsl.height
-          @real.setSize dsl.width, dsl.height
+        if @dsl.element_width and @dsl.element_height
+          @real.setSize dsl.element_width, dsl.element_height
         else
           @real.pack
-          @dsl.width  = @real.size.x
-          @dsl.height = @real.size.y
+          @dsl.element_width  = @real.size.x
+          @dsl.element_height = @real.size.y
         end
       end
 

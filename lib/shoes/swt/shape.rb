@@ -62,6 +62,8 @@ class Shoes
 
       alias_method :absolute_left, :left
       alias_method :absolute_top, :top
+      alias_method :element_left, :left
+      alias_method :element_top, :top
 
       def width
         bounds = Java::float[4].new
@@ -74,6 +76,9 @@ class Shoes
         @element.get_bounds(bounds)
         bounds[3]
       end
+
+      alias_method :element_width, :width
+      alias_method :element_height, :height
 
       def transform
         @transform ||= ::Swt::Transform.new(::Swt.display)

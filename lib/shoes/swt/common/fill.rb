@@ -26,8 +26,8 @@ class Shoes
 
         def apply_fill(context)
           if fill
-            l, t = self.is_a?(Star) ? [absolute_left-width/2.0, absolute_top-height/2.0] : [absolute_left, absolute_top]
-            fill.apply_as_fill(context, l, t, width, height, angle)
+            l, t = self.is_a?(Star) ? [element_left-width/2.0, element_top-height/2.0] : [element_left, element_top]
+            fill.apply_as_fill(context, l, t, element_width, element_height, angle)
             true
           end
         end
