@@ -1,3 +1,27 @@
+# Dimensions is a central class that most Shoes classes use to represent their
+# dimensions, e.g. where they are and how much space they are taking up there.
+# All the different position types might be confusing. So here is a little list:
+#
+# Position (left, top, right, bottm)
+# plain: (just left, top...)
+#   An offset relative to the parent, e.g it isn't fully positioned/doesn't flow
+#    anymore when set
+#
+# absolute_*
+# The absolute position of an element in the app, set by positioning code. Might
+# not be the beginning of the element as it also takes margins into account.
+#
+# element_*
+# Derived from absolute_* but shows the real position of the object, e.g. it
+# adds the margins to absolute_* (mostly used by backend drawing code)
+#
+# Space taken up (width/height)
+# plain (just width/height)
+# The whole space taken up by this element with margins and everything.
+#
+# element_*
+# Just the space taken up by the element itself without margins. Used by drawing.
+
 class Shoes
   class Dimensions
     attr_writer   :width, :height
