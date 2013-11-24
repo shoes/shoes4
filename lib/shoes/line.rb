@@ -38,7 +38,7 @@ class Shoes
     def move(x, y)
       self.left = x
       self.top = y
-      @gui.move x, y
+      @gui.update_position
       self
     end
   end

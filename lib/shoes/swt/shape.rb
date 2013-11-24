@@ -44,8 +44,8 @@ class Shoes
                          (start_angle - arc_angle) * 180 / ::Shoes::PI)
       end
 
-      def move(left, top)
-        transform.translate(left, top)
+      def update_position
+        transform.translate(dsl.element_left, dsl.element_top)
       end
 
       def left

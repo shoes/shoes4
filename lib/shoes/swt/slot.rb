@@ -12,8 +12,7 @@ class Shoes
       end
 
       # needed by Layouter code, but slots are no physical elements so they
-      # don't really move around
-      def move(x, y)
+      def update_position
       end
 
       attr_reader :real, :dsl, :parent

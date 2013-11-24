@@ -33,7 +33,7 @@ class Shoes
       # it has a painter and therefore this does not need to do anything,
       # as it was already changed on the DSL layer
       # We might want to revisit that though.
-      def move(x, y)
+      def update_position
       end
 
       private

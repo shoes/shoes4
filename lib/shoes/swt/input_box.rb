@@ -5,6 +5,7 @@ class Shoes
       include Common::Child
       include Common::Clear
       include Common::Toggle
+      include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :real, :dsl
@@ -28,12 +29,6 @@ class Shoes
 
       def text=(value)
         @real.text = value
-      end
-
-      def move(left, top)
-        unless @real.disposed?
-          @real.set_location left, top
-        end
       end
 
       def enabled(value)

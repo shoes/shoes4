@@ -3,6 +3,7 @@ class Shoes
     class SwtButton
       include Common::Clear
       include Common::Toggle
+      include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :parent, :real, :dsl
@@ -27,10 +28,6 @@ class Shoes
 
       def focus
         @real.set_focus
-      end
-
-      def move(left, top)
-        @real.set_location left, top unless @real.disposed?
       end
 
       def click &blk

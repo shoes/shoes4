@@ -4,6 +4,7 @@ class Shoes
       include Common::Child
       include Common::Clear
       include Common::Toggle
+      include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :parent, :real, :dsl
@@ -28,10 +29,6 @@ class Shoes
 
       def fraction=(value)
         @real.selection = (value*100).to_i unless @real.disposed?
-      end
-
-      def move(left, top)
-        @real.set_location left, top unless @real.disposed?
       end
     end
   end

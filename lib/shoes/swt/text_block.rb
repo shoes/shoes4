@@ -18,11 +18,11 @@ class Shoes
       end
 
       def redraw
-        @container.redraw
+        @container.redraw unless @container.disposed?
       end
 
-      def move x, y
-        redraw unless @container.disposed?
+      def update_position
+        redraw
       end
 
       def get_height

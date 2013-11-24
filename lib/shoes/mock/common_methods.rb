@@ -4,8 +4,7 @@ class Shoes
       def initialize(dsl, *args)
       end
 
-      def move(left, top)
-        @left, @top = left, top
+      def update_position
       end
     end
   end
