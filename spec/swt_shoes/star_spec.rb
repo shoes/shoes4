@@ -9,7 +9,10 @@ describe Shoes::Swt::Star do
   let(:points) { 7 }
   let(:outer) { 100 }
   let(:inner) { 20 }
-  let(:dsl) { double("dsl object", hidden: false, left: left, top: top, points: points, outer: outer, inner: inner, element_width: outer * 2.0, element_height: outer * 2.0).as_null_object }
+  let(:dsl) { double("dsl object", hidden: false, points: points, outer: outer,
+                     inner: inner, element_width: outer * 2.0,
+                     element_height: outer * 2.0, element_left: left,
+                     element_top: top).as_null_object }
   let(:real_dsl) { Shoes::Star.new app, left, top, points, outer, inner }
 
   subject { Shoes::Swt::Star.new real_dsl, app }

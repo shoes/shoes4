@@ -12,7 +12,6 @@ describe Shoes::Swt::Background do
   let(:dsl) { double("dsl object", app: app, parent: parent,
                      element_left: left, element_top: top,
                      element_width: width, element_height: height,
-                     absolute_left: left, absolute_top: top,
                      strokewidth: 1, corners: corners,
                      hidden: false).as_null_object }
   let(:parent) { double("parent", left: left, top: top,

@@ -33,7 +33,8 @@ class Shoes
         end
         
         def make_polygon(obj)
-          outer, inner, points, left, top = obj.outer, obj.inner, obj.points, obj.left, obj.top
+          outer, inner, points, left, top = obj.outer, obj.inner, obj.points,
+                                            obj.element_left, obj.element_top
           polygon = []
           polygon << left << (top + outer)
           (1..points*2).each do |i|

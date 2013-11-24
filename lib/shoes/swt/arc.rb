@@ -47,7 +47,7 @@ class Shoes
           else
             path = ::Swt::Path.new(::Swt.display)
             path.add_arc(@obj.element_left, @obj.element_top,
-                         @obj.element_width, @obj.height,
+                         @obj.element_width, @obj.element_height,
                          @obj.angle1, @obj.angle2 * -1)
             graphics_context.fill_path(path)
           end

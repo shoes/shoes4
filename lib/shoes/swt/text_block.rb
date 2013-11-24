@@ -42,7 +42,8 @@ class Shoes
         text_layout = ::Swt::TextLayout.new Shoes.display
         text_layout.setText @dsl.text
         text_layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
+        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
+                               ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
         text_layout.setStyle style, 0, @dsl.text.length - 1
         return text_layout, font
