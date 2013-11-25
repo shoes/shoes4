@@ -439,9 +439,6 @@ EOS
     %w[banner title subtitle tagline caption para inscription].each do |m|
       define_method m do |*text|
         opts = text.last.class == Hash ? text.pop : {}
-        #create Shoes.const_get(m.capitalize), text, FONT_SIZES[m.to_sym], opts
-        opts[:text_styles] = gather_text_styles text
-        text = text.map(&:to_s).join
         klass = Shoes.const_get(m.capitalize)
         create klass, text, FONT_SIZES[m.to_sym], style_for_element(klass, opts)
       end
