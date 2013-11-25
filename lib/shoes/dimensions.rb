@@ -2,25 +2,33 @@
 # dimensions, e.g. where they are and how much space they are taking up there.
 # All the different position types might be confusing. So here is a little list:
 #
-# Position (left, top, right, bottm)
-# plain: (just left, top...)
-#   An offset relative to the parent, e.g it isn't fully positioned/doesn't flow
-#    anymore when set
+# Position (left, top, right, bottom)
+# plain (left, top, right, bottom)
+#   An offset relative to the parent (parents mostly are slots e.g. 
+#   flows/stacks), e.g it isn't fully positioned/doesn't flow anymore when set
 #
-# absolute_*
-# The absolute position of an element in the app, set by positioning code. Might
-# not be the beginning of the element as it also takes margins into account.
+# absolute (absolute_left, absolute_top, absolute_right, absolute_bottom)
+#   The absolute position of an element in the app, set by positioning code (in 
+#   slot.rb). Might not be the beginning of the element as it also takes margins
+#   into account, so it could be the beginning of the margin. Is also used in
+#   the positioning code.
 #
-# element_*
+# element_* (element_left, element_top, element_right, element_bottom)
 # Derived from absolute_* but shows the real position of the object, e.g. it
-# adds the margins to absolute_* (mostly used by backend drawing code)
+# adds the margins to absolute_* (mostly used by backend drawing code).
 #
 # Space taken up (width/height)
-# plain (just width/height)
-# The whole space taken up by this element with margins and everything.
+# plain (width, height)
+#   The whole space taken up by this element with margins and everything. Used
+#   for positioning/by the user.
 #
-# element_*
-# Just the space taken up by the element itself without margins. Used by drawing.
+# element_* (element_width, element_height)
+#   Just the space taken up by the element itself without margins.
+#   Used by drawing.
+#
+# Note that this is NOT how margins work in the CSS box model. We derive for
+# reasons mentioned in this comment/thread: 
+# https://github.com/shoes/shoes4/pull/467#issuecomment-27655355
 
 class Shoes
   class Dimensions
