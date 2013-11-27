@@ -20,7 +20,9 @@ class Shoes
             obj = @obj.dsl
             case obj
             when ::Shoes::Oval, ::Shoes::Rect
-              set_rotate graphics_context, @obj.angle, obj.absolute_left+obj.width/2.0, obj.absolute_top+obj.height/2.0 do
+              set_rotate graphics_context, @obj.angle,
+                         obj.element_left + obj.element_width/2.0,
+                         obj.element_top + obj.element_height/2.0 do
                 fill graphics_context if fill_setup(graphics_context)
                 draw graphics_context if draw_setup(graphics_context)
               end

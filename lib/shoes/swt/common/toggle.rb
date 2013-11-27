@@ -8,7 +8,8 @@ class Shoes
           end
 
           unless @dsl.app.gui.real.is_disposed?
-            @dsl.app.gui.real.redraw dsl.left, dsl.top, dsl.width, dsl.height, false
+            @dsl.app.gui.real.redraw dsl.element_left, dsl.element_top,
+                                     dsl.element_width, dsl.element_height, false
           end
         end
       end

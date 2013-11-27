@@ -5,7 +5,7 @@ describe Shoes::Swt::Button do
   let(:container) { double('container', is_disposed?: false).as_null_object }
   let(:gui) { double('gui', real: container) }
   let(:app) { double('app', gui: gui).as_null_object }
-  let(:dsl) { double('dsl', app: app, real: real, text: text, blk: block, width: 100, height: 200).as_null_object }
+  let(:dsl) { double('dsl', app: app, real: real, text: text, blk: block, element_width: 100, element_height: 200).as_null_object }
   let(:parent) { double('parent') }
   let(:block) { proc {} }
   let(:real) { double('real', disposed?: false).as_null_object }
@@ -44,14 +44,14 @@ describe Shoes::Swt::Button do
       end
 
       def dsl_for_dimensions(width, height)
-        double('dsl', width: width, height: height, text: text).as_null_object
+        double('dsl', element_width: width, element_height: height, text: text).as_null_object
       end
 
       def with_dimensions_real_should_be(input_width,    input_height,
                                          expected_width, expected_height)
         dsl = dsl_for_dimensions input_width, input_height
-        dsl.should_receive(:width=).with(expected_width) unless input_width
-        dsl.should_receive(:height=).with(expected_height) unless input_height
+        dsl.should_receive(:element_width=).with(expected_width) unless input_width
+        dsl.should_receive(:element_height=).with(expected_height) unless input_height
         Shoes::Swt::Button.new dsl, parent
       end
 

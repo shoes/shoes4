@@ -50,8 +50,9 @@ describe Shoes::Swt::Shape do
     end
 
     it "delegates #move" do
+      dsl.stub element_left: 20, element_top: 30
       transform.should_receive(:translate).with(20, 30)
-      subject.move 20, 30
+      subject.update_position
     end
 
   end

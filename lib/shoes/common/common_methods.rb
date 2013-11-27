@@ -65,9 +65,9 @@ class Shoes
     # NOT part of the public interface e.g. no Shoes APP should use this
     # however we need it from the Slot code to position elements
     def _position left, top
-      @gui.move(left, top) if @gui
       self.absolute_left = left
       self.absolute_top  = top
+      @gui.update_position if @gui
     end
 
     def remove

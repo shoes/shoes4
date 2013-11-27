@@ -8,7 +8,9 @@ describe Shoes::Swt::Oval do
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) { double("dsl object", hidden: false, rotate: 0, left: left, top: top, width: width, height: height).as_null_object }
+  let(:dsl) { double("dsl object", hidden: false, rotate: 0, element_left: left,
+                     element_top: top, element_width: width,
+                     element_height: height).as_null_object }
   let(:real_dsl) {::Shoes::Oval.new app, left, top, width, height}
 
   subject {

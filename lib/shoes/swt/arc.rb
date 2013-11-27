@@ -41,17 +41,25 @@ class Shoes
       class Painter < Common::Painter
         def fill(graphics_context)
           if (@obj.wedge?)
-            graphics_context.fill_arc(@obj.left, @obj.top, @obj.width, @obj.height, @obj.angle1, @obj.angle2 * -1)
+            graphics_context.fill_arc(@obj.element_left, @obj.element_top,
+                                      @obj.element_width, @obj.element_height,
+                                      @obj.angle1, @obj.angle2 * -1)
           else
             path = ::Swt::Path.new(::Swt.display)
-            path.add_arc(@obj.left, @obj.top, @obj.width, @obj.height,@obj. angle1, @obj.angle2 * -1)
+            path.add_arc(@obj.element_left, @obj.element_top,
+                         @obj.element_width, @obj.element_height,
+                         @obj.angle1, @obj.angle2 * -1)
             graphics_context.fill_path(path)
           end
         end
 
         def draw(graphics_context)
           sw = graphics_context.get_line_width
-          graphics_context.draw_arc(@obj.left+sw/2, @obj.top+sw/2, @obj.width-sw, @obj.height-sw, @obj.angle1, @obj.angle2 * -1)
+          graphics_context.draw_arc(@obj.element_left+sw/2,
+                                    @obj.element_top+sw/2,
+                                    @obj.element_width-sw,
+                                    @obj.element_height-sw,
+                                    @obj.angle1, @obj.angle2 * -1)
         end
       end
     end
