@@ -135,6 +135,10 @@ class Shoes
       @start_as_fullscreen
     end
 
+    def close
+      quit
+    end
+
     private
     def eval_block(execution_blk)
       @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
