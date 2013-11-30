@@ -9,8 +9,13 @@ class Shoes
         # Figure out how much space we have based on prior sibling
         width, height = available_space
         # Generate text layout for that with full text
-        # Does it fit?
-          # Last layout == the only layout
+        layout = generate_layout(@text_block, width)
+
+        if layout.get_bounds.height <= height
+          return layout
+        end
+
+        return nil
 
         # Doesn't fit?
           # Determine cut-off point for the first text layout
@@ -42,6 +47,10 @@ class Shoes
         width = @text_block.dsl.parent.width - sibling.width
         height = sibling.height
         [width, height]
+      end
+
+      def generate_layout(text_block, width)
+        text_block.generate_layout(width)
       end
     end
   end

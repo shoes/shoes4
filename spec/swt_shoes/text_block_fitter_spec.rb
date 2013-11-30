@@ -11,6 +11,7 @@ describe Shoes::Swt::TextBlockFitter do
 
   before(:each) do
     parent_dsl.stub(:contents) { [dsl] }
+    text_block.stub(:generate_layout)
   end
 
   describe "determining space from siblings" do
@@ -36,9 +37,31 @@ describe Shoes::Swt::TextBlockFitter do
     end
   end
 
-  describe "fit it in completely" do
-    it "should run without failing" do
-      subject.fit_it_in
+  describe "layout generation" do
+    it "should be delegated to the text block" do
+      expect(text_block).to receive(:generate_layout).with(100)
+      subject.generate_layout(text_block, 100)
+    end
+  end
+
+  describe "fit it in" do
+    let(:bounds) { double(width: 100, height: 50)}
+    let(:layout) { double(get_bounds: bounds) }
+
+    before(:each) do
+      text_block.stub(:generate_layout) { layout }
+    end
+
+    it "should return first layout if it fits" do
+      expect(subject.fit_it_in).to eq(layout)
+    end
+
+    it "should not fit in first layout" do
+      bounds.stub(width: 50)
+      prior_sibling_dsl = double(width: 50, height: 20)
+      parent_dsl.stub(:contents) { [prior_sibling_dsl, dsl] }
+
+      expect(subject.fit_it_in).to eq(nil)
     end
   end
 end
