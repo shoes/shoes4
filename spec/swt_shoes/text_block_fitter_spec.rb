@@ -10,7 +10,7 @@ describe Shoes::Swt::TextBlockFitter do
   subject { Shoes::Swt::TextBlockFitter.new(text_block) }
 
   before(:each) do
-    parent_dsl.stub(:contents) { [dsl] }
+    with_siblings(dsl)
     text_block.stub(:generate_layout)
   end
 
@@ -22,10 +22,8 @@ describe Shoes::Swt::TextBlockFitter do
     end
 
     describe "when second sibling" do
-      let(:prior_sibling_dsl) { double(width: 50, height: 20) }
-
       it "should be width from end of sibling" do
-        parent_dsl.stub(:contents) { [prior_sibling_dsl, dsl] }
+        with_siblings(double(width: 50, height: 20), dsl)
         subject.available_space.should == [50, 20]
       end
     end
@@ -58,10 +56,13 @@ describe Shoes::Swt::TextBlockFitter do
 
     it "should not fit in first layout" do
       bounds.stub(width: 50)
-      prior_sibling_dsl = double(width: 50, height: 20)
-      parent_dsl.stub(:contents) { [prior_sibling_dsl, dsl] }
+      with_siblings(double(width:50, height: 20), dsl)
 
       expect(subject.fit_it_in).to eq(nil)
     end
+  end
+
+  def with_siblings(*args)
+    parent_dsl.stub(:contents) { args }
   end
 end
