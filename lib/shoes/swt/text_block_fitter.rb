@@ -27,13 +27,20 @@ class Shoes
         siblings = @text_block.dsl.parent.contents.to_ary
         my_index = siblings.find_index(@text_block.dsl)
 
-        width = @text_block.dsl.parent.width
-        height = @text_block.dsl.parent.height
-        if my_index > 0
-          prior_sibling = siblings[my_index - 1]
-          width -= prior_sibling.width
-          height = prior_sibling.height
+        if my_index == 0
+          space_from_parent
+        else
+          space_from_sibling(siblings[my_index - 1])
         end
+      end
+
+      def space_from_parent
+        [@text_block.dsl.parent.width, @text_block.dsl.parent.height]
+      end
+
+      def space_from_sibling(sibling)
+        width = @text_block.dsl.parent.width - sibling.width
+        height = sibling.height
         [width, height]
       end
     end
