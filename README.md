@@ -21,11 +21,12 @@ There isn't a shoes4 gem release (yet) - in the meantime check out these instruc
 
         $ git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org)
+2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org). Installing JRuby can be done easily for instance by using [rvm](http://rvm.io/):
 
         $ rvm install jruby
 
 **Note:** Please make sure that you either install jruby-1.7.0 or higher or you set jruby to [always run in 1.9 mode](http://stackoverflow.com/questions/4755900/how-to-make-jruby-1-6-default-to-ruby-1-9). This is required in order for shoes4 to work.
+If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date mostly. You should be able to run it with the before mentioned versions either way. We recommend up to date versions though.
 
 3. Set up your local environment
 
