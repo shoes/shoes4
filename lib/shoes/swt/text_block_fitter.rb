@@ -11,11 +11,11 @@ class Shoes
         layout = generate_layout(@text_block, width, @dsl.text)
 
         if layout.get_bounds.height <= height
-          return layout
+          return [layout]
         end
 
         puts "NOT THE RIGHT THING!"
-        return layout
+        return []
 
         # Doesn't fit?
           # Determine cut-off point for the first text layout

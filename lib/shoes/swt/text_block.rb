@@ -67,8 +67,12 @@ class Shoes
 
       def contents_alignment
         fitter = ::Shoes::Swt::TextBlockFitter.new(self)
-        layout = fitter.fit_it_in
-        @dsl.absolute_right = @dsl.absolute_left + layout.get_bounds.width
+        layouts = fitter.fit_it_in
+
+        return if layouts.empty?
+
+        # TODO: Should this take value from right-most layout?
+        @dsl.absolute_right = @dsl.absolute_left + layouts.first.get_bounds.width
       end
 
       def clear

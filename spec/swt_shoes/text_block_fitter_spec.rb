@@ -51,14 +51,14 @@ describe Shoes::Swt::TextBlockFitter do
     end
 
     it "should return first layout if it fits" do
-      expect(subject.fit_it_in).to eq(layout)
+      expect(subject.fit_it_in).to eq([layout])
     end
 
     it "should not fit in first layout" do
       bounds.stub(width: 50)
       with_siblings(double(right:50, height: 20), dsl)
 
-      expect(subject.fit_it_in).to eq(nil)
+      expect(subject.fit_it_in).to be_empty
     end
   end
 

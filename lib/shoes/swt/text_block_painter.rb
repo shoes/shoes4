@@ -19,19 +19,23 @@ class Shoes
         gcs_reset graphics_context
         unless @dsl.hidden?
           fitter = ::Shoes::Swt::TextBlockFitter.new(@text_block)
-          @text_layout = fitter.fit_it_in
+          layouts = fitter.fit_it_in
 
-          @text_layout.setText @dsl.text
-          set_styles
-          #if @dsl.width
-          #  @text_layout.setWidth @dsl.width
-            @text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
+          # TODO: Reconcile other @text_layout references to take arguments
+          layouts.each do |text_layout|
+            # TODO: Determine what this does that should be in generate_layout
+            set_styles(text_layout)
+
+            # TODO: Deal with explicit widths from the DSL on the text block
+            # TODO: Deal with correct positioning of multiple layouts!
+            text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
+            # TODO: Deal with the textcursor placement
             #if @dsl.cursor
             #  move_text_cursor
             #else
             #  (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
             #end
-          #end
+          end
         end
       end
 
@@ -44,17 +48,17 @@ class Shoes
           @dsl.textcursor.move(@dsl.absolute_left + pos.x, @dsl.absolute_top + pos.y).show
       end
 
-      def set_styles
-        @text_layout.setJustify @opts[:justify]
-        @text_layout.setSpacing(@opts[:leading] || 4)
-        @text_layout.setAlignment case @opts[:align]
+      def set_styles(text_layout)
+        text_layout.setJustify @opts[:justify]
+        text_layout.setSpacing(@opts[:leading] || 4)
+        text_layout.setAlignment case @opts[:align]
                                     when 'center'; ::Swt::SWT::CENTER
                                     when 'right'; ::Swt::SWT::RIGHT
                                     else ::Swt::SWT::LEFT
                                   end
         style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
-        set_font_styles(@text_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(style[:fg], style[:bg], @text_layout, @opts)
+        set_font_styles(text_layout, style, 0..(@dsl.text.length - 1))
+        set_text_styles(style[:fg], style[:bg], text_layout, @opts)
       end
 
       private
