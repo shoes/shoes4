@@ -14,7 +14,6 @@ class Shoes
           return [layout]
         end
 
-        puts "NOT THE RIGHT THING!"
         return []
 
         # Doesn't fit?
@@ -51,6 +50,20 @@ class Shoes
 
       def generate_layout(text_block, width, text)
         text_block.generate_layout(width, text)
+      end
+
+      def split_text(layout, height)
+        ending_offset = 0
+        height_so_far = 0
+
+        offsets = layout.line_offsets
+        offsets.each_with_index do |_, i|
+          height_so_far += layout.line_metrics(i).height
+          break if height_so_far > height
+
+          ending_offset = offsets[i+1]
+        end
+        [layout.text[0...ending_offset], layout.text[ending_offset..-1]]
       end
     end
   end
