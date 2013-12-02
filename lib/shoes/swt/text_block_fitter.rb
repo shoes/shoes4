@@ -44,7 +44,7 @@ class Shoes
       end
 
       def space_from_sibling(sibling)
-        width = @text_block.dsl.parent.width - sibling.width
+        width = @text_block.dsl.parent.width - sibling.right
         height = sibling.height
         [width, height]
       end

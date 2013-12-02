@@ -22,8 +22,8 @@ describe Shoes::Swt::TextBlockFitter do
     end
 
     describe "when second sibling" do
-      it "should be width from end of sibling" do
-        with_siblings(double(width: 50, height: 20), dsl)
+      it "should be from end of sibling" do
+        with_siblings(double(right: 50, height: 20), dsl)
         subject.available_space.should == [50, 20]
       end
     end
@@ -56,7 +56,7 @@ describe Shoes::Swt::TextBlockFitter do
 
     it "should not fit in first layout" do
       bounds.stub(width: 50)
-      with_siblings(double(width:50, height: 20), dsl)
+      with_siblings(double(right:50, height: 20), dsl)
 
       expect(subject.fit_it_in).to eq(nil)
     end
