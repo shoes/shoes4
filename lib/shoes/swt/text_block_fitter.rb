@@ -3,19 +3,19 @@ class Shoes
     class TextBlockFitter
       def initialize(text_block)
         @text_block = text_block
+        @dsl = text_block.dsl
       end
 
       def fit_it_in
-        # Figure out how much space we have based on prior sibling
         width, height = available_space
-        # Generate text layout for that with full text
-        layout = generate_layout(@text_block, width)
+        layout = generate_layout(@text_block, width, @dsl.text)
 
         if layout.get_bounds.height <= height
           return layout
         end
 
-        return nil
+        puts "NOT THE RIGHT THING!"
+        return layout
 
         # Doesn't fit?
           # Determine cut-off point for the first text layout
@@ -49,8 +49,8 @@ class Shoes
         [width, height]
       end
 
-      def generate_layout(text_block, width)
-        text_block.generate_layout(width)
+      def generate_layout(text_block, width, text)
+        text_block.generate_layout(width, text)
       end
     end
   end

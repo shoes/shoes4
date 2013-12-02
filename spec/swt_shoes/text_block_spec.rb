@@ -39,7 +39,7 @@ describe Shoes::Swt::TextBlock do
     let(:event) { double("event", gc: gc) }
     let(:gc) { double("gc").as_null_object }
     let(:style) { double(:style) }
-    subject { Shoes::Swt::TextBlockPainter.new(dsl, opts) }
+    subject { Shoes::Swt::TextBlockPainter.new(dsl, double("text_block"), opts) }
 
     before :each do
       ::Swt::TextLayout.stub(:new) { text_layout }

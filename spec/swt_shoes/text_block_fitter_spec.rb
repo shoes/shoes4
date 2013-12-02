@@ -4,7 +4,7 @@ require 'shoes/swt/text_block_fitter'
 describe Shoes::Swt::TextBlockFitter do
   let(:parent_dsl) { double(width: 100, height: 200) }
 
-  let(:dsl)        { double(parent: parent_dsl) }
+  let(:dsl)        { double(parent: parent_dsl, text: "Text goes here") }
   let(:text_block) { double(dsl: dsl) }
 
   subject { Shoes::Swt::TextBlockFitter.new(text_block) }
@@ -37,8 +37,8 @@ describe Shoes::Swt::TextBlockFitter do
 
   describe "layout generation" do
     it "should be delegated to the text block" do
-      expect(text_block).to receive(:generate_layout).with(100)
-      subject.generate_layout(text_block, 100)
+      expect(text_block).to receive(:generate_layout).with(150, "Test")
+      subject.generate_layout(text_block, 150, "Test")
     end
   end
 

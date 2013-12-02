@@ -52,6 +52,24 @@ class Shoes
       self.height = @gui.get_height + @margin_top + @margin_bottom
     end
 
+    # We always claim we fit, and do our own wrapping if we don't
+    def fits_on_the_same_line?(_)
+      true
+    end
+
+    def absolute_right=(value)
+      @absolute_right = value
+    end
+
+    def absolute_right
+      return @dimensions.absolute_right unless @absolute_right
+      @absolute_right
+    end
+
+    def contents_alignment
+      @gui.contents_alignment
+    end
+
     private
 
     def handle_opts(opts)

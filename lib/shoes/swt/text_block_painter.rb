@@ -1,3 +1,5 @@
+require 'shoes/swt/text_block_fitter'
+
 class Shoes
   module Swt
     class TextBlockPainter
@@ -5,27 +7,31 @@ class Shoes
       include Common::Resource
       include Common::Clickable
 
-      def initialize(dsl, opts)
+      def initialize(dsl, text_block, opts)
         @dsl = dsl
         @opts = opts
-        @text_layout = ::Swt::TextLayout.new Shoes.display
+        @text_block = text_block
+        #@text_layout = ::Swt::TextLayout.new Shoes.display
       end
 
       def paintControl(paint_event)
         graphics_context = paint_event.gc
         gcs_reset graphics_context
         unless @dsl.hidden?
+          fitter = ::Shoes::Swt::TextBlockFitter.new(@text_block)
+          @text_layout = fitter.fit_it_in
+
           @text_layout.setText @dsl.text
           set_styles
-          if @dsl.width
-            @text_layout.setWidth @dsl.width
+          #if @dsl.width
+          #  @text_layout.setWidth @dsl.width
             @text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
-            if @dsl.cursor
-              move_text_cursor
-            else
-              (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
-            end
-          end
+            #if @dsl.cursor
+            #  move_text_cursor
+            #else
+            #  (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
+            #end
+          #end
         end
       end
 

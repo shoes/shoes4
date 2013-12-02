@@ -1,3 +1,5 @@
+require 'shoes/swt/text_block_fitter'
+
 class Shoes
   module Swt
     class TextBlock
@@ -13,7 +15,7 @@ class Shoes
         @dsl = dsl
         @opts = opts
         @container = @dsl.app.gui.real
-        @painter = TextBlockPainter.new @dsl, opts
+        @painter = TextBlockPainter.new @dsl, self, opts
         @container.add_paint_listener @painter
       end
 
@@ -46,6 +48,27 @@ class Shoes
         style = ::Swt::TextStyle.new font, nil, nil
         text_layout.setStyle style, 0, @dsl.text.length - 1
         return text_layout, font
+      end
+
+      def generate_layout(width, text)
+        text_layout = ::Swt::TextLayout.new Shoes.display
+        text_layout.setText text
+        text_layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
+        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
+        style = ::Swt::TextStyle.new font, nil, nil
+        text_layout.setStyle style, 0, text.length - 1
+
+        # Apply maximum width to wrap if we've exceeded our alotted space
+        # If we haven't, just leave it with the natural width it consumes
+        text_layout.setWidth(width) if text_layout.get_bounds.width > width
+
+        return text_layout
+      end
+
+      def contents_alignment
+        fitter = ::Shoes::Swt::TextBlockFitter.new(self)
+        layout = fitter.fit_it_in
+        @dsl.absolute_right = @dsl.absolute_left + layout.get_bounds.width
       end
 
       def clear
