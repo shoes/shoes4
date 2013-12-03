@@ -1,14 +1,11 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Flow do
-  let(:container) { real }
-  let(:gui)    { double("gui", real: real) }
-  let(:app)    { double("app", gui: gui) }
-  let(:dsl) { double('dsl', app: app).as_null_object }
-  let(:real) { double('real', is_disposed?: false) }
+  include_context "swt app"
+
+  let(:dsl) { double('dsl', app: shoes_app).as_null_object }
+  let(:real) { double('real', disposed?: false) }
   let(:parent_real) { double('parent_real', :get_layout => "ok") }
-  let(:parent_dsl) { double(contents: []) }
-  let(:parent) { double('parent', real: parent_real, dsl: parent_dsl, app: "app", :top_slot => "top slot") }
 
   subject { Shoes::Swt::Flow.new(dsl, parent) }
 
@@ -16,6 +13,7 @@ describe Shoes::Swt::Flow do
 
   describe "#initialize" do
     before do
+      parent.stub(:real) { parent_real }
       parent_real.stub(:get_layout){double(top_slot: true)}
     end
 

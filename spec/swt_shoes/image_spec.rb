@@ -5,20 +5,20 @@ describe Shoes::Swt::Image do
   IMAGE_WIDTH = 3
   IMAGE_HEIGHT = 1
 
-  let(:gui_container_real) { container }
   let(:container) { parent.real }
+  let(:paint_container) { parent.real }
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", add_child: nil, contents: [], gui: parent) }
-  let(:parent) { double("parent", real: real, app: app) }
+  let(:parent) { double("parent", real: real, app: swt_app) }
   let(:dsl) { Shoes::Image.new app, parent_dsl, image, opts}
   let(:opts) {{left: left, top: top, width: width, height: height}}
   let(:left) { 100 }
   let(:top) { 200 }
   let(:height) { nil }
   let(:width) {nil}
-  let(:real) { double 'real', is_disposed?: false, addListener: true, add_paint_listener: true }
-  let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
-  let(:app) { double("app", gui: gui) }
+  let(:real) { double 'real', addListener: true, add_paint_listener: true }
+  let(:swt_app) { double("swt_app", real: real, disposed?: false, clickable_elements: [], add_clickable_element: nil) }
+  let(:app) { double("app", gui: swt_app) }
   let(:image) { "spec/swt_shoes/minimal.png" }
 
   subject {
@@ -36,7 +36,7 @@ describe Shoes::Swt::Image do
     let(:gc) { double("gc", drawImage: true) }
 
     before :each do
-      container.should_receive(:add_paint_listener)
+      paint_container.should_receive(:add_paint_listener)
     end
 
     specify "draws image" do

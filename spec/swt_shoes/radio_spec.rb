@@ -1,17 +1,15 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Radio do
+  include_context "swt app"
+
   let(:text) { "TEXT" }
-  let(:container) { real }
-  let(:gui)    { double("gui", real: real) }
-  let(:app)    { double("app", gui: gui) }
-  let(:dsl) { double('dsl', :app => app,
+  let(:dsl) { double('dsl', :app => shoes_app,
                      :width= => true, :width => 100,
                      :height= => true, :height => 200,
                      :group => nil, :blk => block).as_null_object }
-  let(:parent) { double('parent', real: true, dsl: double(contents: []) ) }
   let(:block) { proc {} }
-  let(:real) { double('real', is_disposed?: false).as_null_object }
+  let(:real) { double('real').as_null_object }
 
   subject { Shoes::Swt::Radio.new dsl, parent }
 

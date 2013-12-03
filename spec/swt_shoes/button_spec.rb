@@ -1,12 +1,10 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Button do
+  include_context "swt app"
+
   let(:text) { "TEXT" }
-  let(:container) { double('container', is_disposed?: false).as_null_object }
-  let(:gui) { double('gui', real: container) }
-  let(:app) { double('app', gui: gui).as_null_object }
-  let(:dsl) { double('dsl', app: app, real: real, text: text, blk: block, element_width: 100, element_height: 200).as_null_object }
-  let(:parent) { double('parent') }
+  let(:dsl) { double('dsl', app: shoes_app, text: text, blk: block, element_width: 100, element_height: 200).as_null_object }
   let(:block) { proc {} }
   let(:real) { double('real', disposed?: false).as_null_object }
 

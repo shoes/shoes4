@@ -1,21 +1,19 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock do
+  include_context "swt app"
+
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
   let(:font) { ::Swt::Graphics::Font.new }
-  let(:parent) { Shoes::Flow.new app_real, app_real }
   let(:textcursor) { double("text cursor", move: move_textcursor) }
   let(:move_textcursor) { double("move text cursor", show: true) }
-  let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world",
+  let(:dsl) { double("dsl", app: shoes_app, text: "hello world",
                      opts: opts, element_width: 200, element_height: 180,
                      element_left: 0, element_top: 10,  font: "font",
                      font_size: 16, margin_left: 0, margin_top: 0, cursor: -1,
                      textcursor: textcursor, 
 					 text_styles: {}, :hidden? => false).as_null_object
             }
-  let(:app) { parent.app.gui.real }
-  let(:app_real) { Shoes::App.new }
-  let(:container) { app }
   subject {
     Shoes::Swt::TextBlock.new(dsl)
   }
@@ -28,8 +26,8 @@ describe Shoes::Swt::TextBlock do
   it_behaves_like "togglable"
   it_behaves_like "movable text", 10, 20
 
-  it "redraws the container" do
-    container.should_receive(:redraw)
+  it "redraws the app" do
+    swt_app.should_receive(:redraw)
     subject.redraw
   end
 
@@ -47,7 +45,6 @@ describe Shoes::Swt::TextBlock do
     before :each do
       ::Swt::TextLayout.stub(:new) { text_layout }
       ::Swt::TextStyle.stub(:new) { style.as_null_object }
-      #::Swt::Font.stub(:new)
     end
 
     it "sets text" do

@@ -51,7 +51,17 @@ class Shoes
       end
 
       def disposed?
-        @shell.disposed?
+        @shell.disposed? || @real.disposed?
+      end
+
+      def redraw(left=nil, top=nil, width=nil, height=nil, all=true)
+        unless @real.disposed?
+          if (left == nil or top == nil or width == nil or height == nil)
+            @real.redraw
+          else
+            @real.redraw(left, top, width, height, all)
+          end
+        end
       end
 
       def main_app?

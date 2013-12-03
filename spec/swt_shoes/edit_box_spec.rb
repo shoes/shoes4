@@ -1,12 +1,11 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::EditBox do
-  let(:container) { real }
-  let(:gui)    { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
-  let(:app)    { double("app", gui: gui) }
-  let(:real)   { double('real', is_disposed?: false, disposed?: false).as_null_object }
-  let(:parent) { double("parent", gui: gui, real: real, app: app) }
-  let(:dsl)    { double('dsl', app: app, visible?: true,
+  include_context "swt app"
+
+  #let(:gui)    { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
+  let(:real)   { double('real', disposed?: false).as_null_object }
+  let(:dsl)    { double('dsl', app: shoes_app, visible?: true,
                         element_left: 100, element_top: 100,
                         element_width: 70, element_height: 10,
                         initial_text: 'jay', secret?: false ) }

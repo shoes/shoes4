@@ -1,19 +1,17 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Check do
+  include_context "swt app"
+
   let(:text) { "TEXT" }
-  let(:container) { double('container', is_disposed?: false).as_null_object }
-  let(:gui) { double('gui', real: container) }
-  let(:app) { double('app', gui: gui).as_null_object }
   let(:dsl) { double('dsl',
-                     :app    => app, :real => real, :visible? => true,
+                     :app    => shoes_app, :visible? => true,
                      :left   => 42, :top => 66,
                      :element_left => 42, element_top: 66,
                      :width  => 100, :width= => true,
                      :element_width => 100, element_height: 200,
                      :height => 200, :height= => true,
                      blk:    block, contents: []) }
-  let(:parent) { double('parent', real: true, dsl: double(contents: []) ) }
   let(:block) { proc {} }
   let(:real) { double('real').as_null_object }
 

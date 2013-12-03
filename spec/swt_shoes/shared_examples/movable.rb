@@ -37,7 +37,7 @@ end
 
 shared_examples_for "movable text" do |x, y|
   it "redraws container" do
-    container.should_receive(:redraw).at_least(1).times
+    swt_app.should_receive(:redraw).at_least(1).times
     dsl.stub element_left: x, element_top: y
     subject.update_position
   end
