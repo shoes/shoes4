@@ -56,7 +56,7 @@ class Shoes
 
       def redraw(left=nil, top=nil, width=nil, height=nil, all=true)
         unless @real.disposed?
-          if left == nil and top == nil and width == nil and height == nil and all == true
+          if (left == nil or top == nil or width == nil or height == nil)
             @real.redraw
           else
             @real.redraw(left, top, width, height, all)

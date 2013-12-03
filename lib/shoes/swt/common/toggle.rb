@@ -8,8 +8,8 @@ class Shoes
           end
 
           unless app.disposed?
-            app.real.redraw dsl.element_left, dsl.element_top,
-                            dsl.element_width, dsl.element_height, false
+            app.redraw dsl.element_left, dsl.element_top,
+                       dsl.element_width, dsl.element_height, false
           end
         end
       end
