@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Arc do
-  let(:container) { double('container', is_disposed?: false) }
+  let(:container) { double('container', disposed?: false) }
   let(:gui) { double('gui', real: container) }
   let(:app) { double('app', gui: gui).as_null_object }
   let(:left) { 100 }

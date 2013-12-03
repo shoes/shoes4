@@ -11,7 +11,7 @@ describe Shoes::Swt::Radio do
                      :group => nil, :blk => block).as_null_object }
   let(:parent) { double('parent', real: true, dsl: double(contents: []) ) }
   let(:block) { proc {} }
-  let(:real) { double('real', is_disposed?: false).as_null_object }
+  let(:real) { double('real', disposed?: false).as_null_object }
 
   subject { Shoes::Swt::Radio.new dsl, parent }
 

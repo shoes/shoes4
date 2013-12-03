@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Background do
-  let(:container) { double('container', is_disposed?: false) }
+  let(:container) { double('container', disposed?: false) }
   let(:gui) { double('gui', real: container) }
   let(:app) { double('app', real: container, gui: gui, add_paint_listener: true) }
   let(:left) { 55 }

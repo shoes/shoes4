@@ -16,7 +16,7 @@ describe Shoes::Swt::Image do
   let(:top) { 200 }
   let(:height) { nil }
   let(:width) {nil}
-  let(:real) { double 'real', is_disposed?: false, addListener: true, add_paint_listener: true }
+  let(:real) { double 'real', disposed?: false, addListener: true, add_paint_listener: true }
   let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app) { double("app", gui: gui) }
   let(:image) { "spec/swt_shoes/minimal.png" }

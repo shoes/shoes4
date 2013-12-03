@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Check do
   let(:text) { "TEXT" }
-  let(:container) { double('container', is_disposed?: false).as_null_object }
+  let(:container) { double('container', disposed?: false).as_null_object }
   let(:gui) { double('gui', real: container) }
   let(:app) { double('app', gui: gui).as_null_object }
   let(:dsl) { double('dsl',

@@ -10,7 +10,7 @@ describe Shoes::Swt::EditLine do
                      initial_text: 'YOLO',
                      secret?: true).as_null_object }
   let(:parent) { double('parent') }
-  let(:real) { double('real', is_disposed?: false, disposed?: false).as_null_object }
+  let(:real) { double('real', disposed?: false, disposed?: false).as_null_object }
 
   subject { Shoes::Swt::EditLine.new dsl, parent }
 

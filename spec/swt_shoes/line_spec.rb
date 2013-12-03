@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Line do
-  let(:container) { double('container', :is_disposed? => false).as_null_object }
+  let(:container) { double('container', :disposed? => false).as_null_object }
   let(:gui) { double('gui', :real => container).as_null_object }
   let(:app) { double('app', :gui => gui, :style => {}).as_null_object }
   let(:dsl) { Shoes::Line.new app, point_a, point_b }

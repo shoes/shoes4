@@ -51,7 +51,7 @@ class Shoes
       end
 
       def disposed?
-        @shell.disposed?
+        @shell.disposed? || @real.disposed?
       end
 
       def main_app?

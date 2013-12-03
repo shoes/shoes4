@@ -12,7 +12,7 @@ describe Shoes::Swt::ListBox do
   let(:block)  { ->(){} }
   let(:real)   { double('real', text: "",
                         set_size: true, add_selection_listener: true,
-                        is_disposed?: false) }
+                        disposed?: false) }
 
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 

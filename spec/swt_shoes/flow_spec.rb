@@ -5,7 +5,7 @@ describe Shoes::Swt::Flow do
   let(:gui)    { double("gui", real: real) }
   let(:app)    { double("app", gui: gui) }
   let(:dsl) { double('dsl', app: app).as_null_object }
-  let(:real) { double('real', is_disposed?: false) }
+  let(:real) { double('real', disposed?: false) }
   let(:parent_real) { double('parent_real', :get_layout => "ok") }
   let(:parent_dsl) { double(contents: []) }
   let(:parent) { double('parent', real: parent_real, dsl: parent_dsl, app: "app", :top_slot => "top slot") }

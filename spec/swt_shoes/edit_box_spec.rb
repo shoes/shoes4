@@ -4,7 +4,7 @@ describe Shoes::Swt::EditBox do
   let(:container) { real }
   let(:gui)    { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:app)    { double("app", gui: gui) }
-  let(:real)   { double('real', is_disposed?: false, disposed?: false).as_null_object }
+  let(:real)   { double('real', disposed?: false, disposed?: false).as_null_object }
   let(:parent) { double("parent", gui: gui, real: real, app: app) }
   let(:dsl)    { double('dsl', app: app, visible?: true,
                         element_left: 100, element_top: 100,
