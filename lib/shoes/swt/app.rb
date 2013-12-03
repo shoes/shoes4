@@ -54,6 +54,16 @@ class Shoes
         @shell.disposed? || @real.disposed?
       end
 
+      def redraw(left=nil, top=nil, width=nil, height=nil, all=true)
+        unless @real.disposed?
+          if left == nil and top == nil and width == nil and height == nil and all == true
+            @real.redraw
+          else
+            @real.redraw(left, top, width, height, all)
+          end
+        end
+      end
+
       def main_app?
         ::Shoes::Swt.main_app.equal? self
       end

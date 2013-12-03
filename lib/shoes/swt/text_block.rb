@@ -7,7 +7,7 @@ class Shoes
 
       DEFAULT_SPACING = 4
 
-      attr_reader :dsl
+      attr_reader :dsl, :app
 
       def initialize(dsl)
         @dsl = dsl
@@ -18,7 +18,7 @@ class Shoes
       end
 
       def redraw
-        @container.redraw unless @container.disposed?
+        app.redraw
       end
 
       def update_position
@@ -73,7 +73,7 @@ class Shoes
 
       def clear_links
         @dsl.links.each do |link|
-          @dsl.app.gui.clickable_elements.delete link
+          app.clickable_elements.delete link
           ln = link.click_listener
           @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
           @container.remove_listener ::Swt::SWT::MouseUp, ln if ln
