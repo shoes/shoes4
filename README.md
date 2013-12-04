@@ -105,7 +105,7 @@ If this is your first time running the packager, you'll want to `bundle install`
 In order to package an app, you need to have the Shoes gem installed in your environment.
 
     $ rake gem
-    $ gem install pkg/shoes-4.0.0.pre1
+    $ gem install pkg/shoes-4.0.0.pre1.gem
 
 Now, you can package an app. But first, looky here:
 
