@@ -6,7 +6,7 @@ class Shoes
     end
 
     def opts
-      if @parent
+      if @parent && @parent.respond_to?(:opts)
         @parent.opts.merge(@opts)
       else
         @opts

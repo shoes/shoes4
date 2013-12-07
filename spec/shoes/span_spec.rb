@@ -2,6 +2,9 @@ require 'shoes/spec_helper'
 
 describe Shoes::Span do
   let(:app) { Shoes::App.new }
+  let(:opts) { {} }
+  let(:text) {['test']}
+  subject {Shoes::Span.new(text, opts)}
 
   describe 'span' do
     it 'sets style to Span block' do
@@ -13,6 +16,15 @@ describe Shoes::Span do
 
       app.opts[:strikethrough].should_not be_true
     end
+  end
+
+  describe 'Looking up parent styles' do
+    it 'does not try to merge with parent opts when there are none' do
+      parent = double 'parent'
+      subject.parent = parent
+      expect {subject.opts}.to_not raise_error(NoMethodError)
+    end
+
   end
 
   describe 'code' do
