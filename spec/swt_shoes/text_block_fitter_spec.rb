@@ -4,7 +4,10 @@ require 'shoes/swt/text_block_fitter'
 describe Shoes::Swt::TextBlockFitter do
   let(:parent_dsl) { double(width: 100, height: 200) }
 
-  let(:dsl)        { double(parent: parent_dsl, text: "Text goes here") }
+  let(:dsl)        { double(parent: parent_dsl,
+                            text: "Text goes here",
+                            absolute_left: 25, absolute_top: 75,
+                            margin_left: 1, margin_top: 1) }
   let(:text_block) { double(dsl: dsl) }
 
   subject { Shoes::Swt::TextBlockFitter.new(text_block) }
@@ -60,7 +63,11 @@ describe Shoes::Swt::TextBlockFitter do
     end
 
     it "should return first layout if it fits" do
-      expect(subject.fit_it_in).to eq([layout])
+      fitted_layouts = subject.fit_it_in
+      expect(fitted_layouts.size).to eq(1)
+      expect(fitted_layouts.first.layout).to eq(layout)
+      expect(fitted_layouts.first.left).to eq(26)
+      expect(fitted_layouts.first.top).to eq(76)
     end
 
     it "should not fit in first layout" do

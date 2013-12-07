@@ -6,24 +6,40 @@ class Shoes
         @dsl = text_block.dsl
       end
 
+      class FittedTextLayout
+        attr_reader :layout, :left, :top
+
+        def initialize(layout, left, top)
+          @layout = layout
+          @left = left
+          @top = top
+        end
+
+        def draw(graphics_context)
+          layout.draw graphics_context, left, top
+        end
+      end
+
       def fit_it_in
         width, height = available_space
         layout = generate_layout(@text_block, width, @dsl.text)
 
         if layout.get_bounds.height <= height
-          return [layout]
+          [FittedTextLayout.new(layout,
+                                @dsl.absolute_left + @dsl.margin_left,
+                                @dsl.absolute_top + @dsl.margin_top)]
+        else
+          # Doesn't fit?
+            # Determine cut-off point for the first text layout
+            # Advance to next line
+            # Generate text layout with remaining text
+
+          # Calculate finish-point in last line of text layout
+
+          # Return both layout(s) and finish-point
+          []
         end
 
-        return []
-
-        # Doesn't fit?
-          # Determine cut-off point for the first text layout
-          # Advance to next line
-          # Generate text layout with remaining text
-
-        # Calculate finish-point in last line of text layout
-
-        # Return both layout(s) and finish-point
       end
 
       def available_space

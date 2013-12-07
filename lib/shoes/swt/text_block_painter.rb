@@ -19,16 +19,17 @@ class Shoes
         gcs_reset graphics_context
         unless @dsl.hidden?
           fitter = ::Shoes::Swt::TextBlockFitter.new(@text_block)
-          layouts = fitter.fit_it_in
+          fitted_layouts = fitter.fit_it_in
 
           # TODO: Reconcile other @text_layout references to take arguments
-          layouts.each do |text_layout|
+          fitted_layouts.each do |fitted_layout|
             # TODO: Determine what this does that should be in generate_layout
-            set_styles(text_layout)
+            set_styles(fitted_layout.layout)
 
             # TODO: Deal with explicit widths from the DSL on the text block
             # TODO: Deal with correct positioning of multiple layouts!
-            text_layout.draw graphics_context, @dsl.absolute_left + @dsl.margin_left, @dsl.absolute_top + @dsl.margin_top
+            fitted_layout.draw graphics_context
+
             # TODO: Deal with the textcursor placement
             #if @dsl.cursor
             #  move_text_cursor
