@@ -1,10 +1,11 @@
 class Shoes
   class Text
-    def initialize str, color=nil
-      @str, @color = str, color
-      @to_s = str.map(&:to_s).join
+    def initialize texts, color=nil
+      @texts = texts
+      @color = color
+      @to_s = @texts.map(&:to_s).join
     end
-    attr_reader :to_s, :style, :str, :color
+    attr_reader :to_s, :texts, :color
     attr_accessor :parent
     def app
       @parent.app
