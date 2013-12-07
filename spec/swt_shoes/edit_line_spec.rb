@@ -6,7 +6,7 @@ describe Shoes::Swt::EditLine do
   let(:app)    { double("app", gui: gui) }
   let(:dsl) { double('dsl', app: app,
                      visible?: true,
-                     width: 80, height: 22,
+                     element_width: 80, element_height: 22,
                      initial_text: 'YOLO',
                      secret?: true).as_null_object }
   let(:parent) { double('parent') }

@@ -10,16 +10,14 @@ describe Shoes::Swt::Arc do
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:dsl) { double("dsl object", app: app, left: left, top: top, width: width, height: height, angle1: angle1, angle2: angle2, wedge?: false,  hidden: false).as_null_object }
+  let(:dsl) { double("dsl object", app: app, element_width: width,
+                     element_height: height, element_left: left,
+                     element_top: top, angle1: angle1, angle2: angle2,
+                     wedge?: false,  hidden: false).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
   subject { Shoes::Swt::Arc.new(dsl, app) }
-
-  its(:left) { should eq(left) }
-  its(:top) { should eq(top) }
-  its(:width) { should eq(width) }
-  its(:height) { should eq(height) }
 
   describe "basics" do
     before :each do

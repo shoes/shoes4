@@ -1,8 +1,41 @@
+# Dimensions is a central class that most Shoes classes use to represent their
+# dimensions, e.g. where they are and how much space they are taking up there.
+# All the different position types might be confusing. So here is a little list:
+#
+# Position (left, top, right, bottom)
+# plain (left, top, right, bottom)
+#   An offset relative to the parent (parents mostly are slots e.g. 
+#   flows/stacks), e.g it isn't fully positioned/doesn't flow anymore when set
+#
+# absolute (absolute_left, absolute_top, absolute_right, absolute_bottom)
+#   The absolute position of an element in the app, set by positioning code (in 
+#   slot.rb). Might not be the beginning of the element as it also takes margins
+#   into account, so it could be the beginning of the margin. Is also used in
+#   the positioning code.
+#
+# element_* (element_left, element_top, element_right, element_bottom)
+# Derived from absolute_* but shows the real position of the object, e.g. it
+# adds the margins to absolute_* (mostly used by backend drawing code).
+#
+# Space taken up (width/height)
+# plain (width, height)
+#   The whole space taken up by this element with margins and everything. Used
+#   for positioning/by the user.
+#
+# element_* (element_width, element_height)
+#   Just the space taken up by the element itself without margins.
+#   Used by drawing.
+#
+# Note that this is NOT how margins work in the CSS box model. We derive for
+# reasons mentioned in this comment/thread: 
+# https://github.com/shoes/shoes4/pull/467#issuecomment-27655355
+
 class Shoes
   class Dimensions
     attr_writer   :width, :height
     attr_reader   :parent
-    attr_accessor :absolute_left, :absolute_top
+    attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
+                  :margin_top, :margin_bottom
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -46,6 +79,44 @@ class Shoes
       calculate_dimension(:height)
     end
 
+    def element_width
+      return nil if width.nil?
+      width - (margin_left + margin_right)
+    end
+
+    def element_height
+      return nil if height.nil?
+      height - (margin_bottom + margin_top)
+    end
+
+    def element_width=(value)
+      self.width = margin_left + value + margin_right
+    end
+
+    def element_height=(value)
+      self.height = margin_top + value + margin_bottom
+    end
+
+    def element_left
+      return nil if absolute_left.nil?
+      absolute_left + margin_left
+    end
+
+    def element_top
+      return nil if absolute_top.nil?
+      absolute_top + margin_top
+    end
+
+    def element_right
+      return nil if element_left.nil? || element_width.nil?
+      element_left + element_width
+    end
+
+    def element_bottom
+      return nil if element_top.nil? || element_height.nil?
+      element_top + element_height
+    end
+
     def absolute_x_position?
       @absolute_x_position
     end
@@ -79,6 +150,10 @@ class Shoes
       absolute_top <= y and y <= absolute_bottom
     end
 
+    def margin
+      [margin_left, margin_top, margin_right, margin_bottom]
+    end
+
     private
     def hash_as_argument?(left)
       left.respond_to? :fetch
@@ -100,8 +175,19 @@ class Shoes
       general_options opts
     end
 
+    def init_margins(opts)
+      margin = opts.fetch(:margin, 0)
+      margin = [margin, margin, margin, margin] if margin.is_a? Integer
+      margin_left, margin_top, margin_right, margin_bottom = margin
+      @margin_left   = opts.fetch(:margin_left, margin_left)
+      @margin_top    = opts.fetch(:margin_top, margin_top)
+      @margin_right  = opts.fetch(:margin_right, margin_right)
+      @margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
+    end
+
     def general_options(opts)
       @left_top_as_center = opts.fetch(:center, false)
+      init_margins opts
     end
 
     def calculate_dimension(name)

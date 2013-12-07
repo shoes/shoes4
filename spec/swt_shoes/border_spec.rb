@@ -8,10 +8,9 @@ describe Shoes::Swt::Border do
   let(:width) { 222 }
   let(:height) { 111 }
   let(:corners) { 0 }
-  let(:dsl) { double("dsl object", width: width, height: height, left: left,
-                     absolute_left: left, absolute_top: top, top: top,
-                     parent: parent, strokewidth: 1, corners: corners,
-                     hidden: false).as_null_object }
+  let(:dsl) { double("dsl object", element_width: width, element_height: height,
+                     element_left: left, element_top: top, parent: parent,
+                     strokewidth: 1, corners: corners,hidden: false).as_null_object }
   let(:parent) { double("parent", width: width, height: height,
                         absolute_left: left, absolute_top: top, contents: []) }
 

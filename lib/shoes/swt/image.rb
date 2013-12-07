@@ -33,7 +33,7 @@ class Shoes
       # it has a painter and therefore this does not need to do anything,
       # as it was already changed on the DSL layer
       # We might want to revisit that though.
-      def move(x, y)
+      def update_position
       end
 
       private
@@ -52,8 +52,8 @@ class Shoes
       end
 
       def save_width_and_height
-        @saved_width  = dsl.width
-        @saved_height = dsl.height
+        @saved_width  = dsl.element_width
+        @saved_height = dsl.element_height
       end
 
       def display_temporary_download_image
@@ -62,16 +62,16 @@ class Shoes
       end
 
       def create_image(data)
-        @real        = ::Swt::Graphics::Image.new(::Swt.display, data)
-        @full_width  = @real.getImageData.width
-        @full_height = @real.getImageData.height
-        dsl.width    = dsl.width || default_width
-        dsl.height   = dsl.height || default_height
+        @real              = ::Swt::Graphics::Image.new(::Swt.display, data)
+        @full_width        = @real.getImageData.width
+        @full_height       = @real.getImageData.height
+        dsl.element_width  ||= default_width
+        dsl.element_height ||= default_height
       end
 
       def default_width
-        if dsl.height
-          ratio = dsl.height.to_r / @full_height
+        if dsl.element_height
+          ratio = dsl.element_height.to_r / @full_height
           (@full_width * ratio).to_i
         else
           @full_width
@@ -79,8 +79,8 @@ class Shoes
       end
 
       def default_height
-        if dsl.width
-          ratio = dsl.width.to_r / @full_width
+        if dsl.element_width
+          ratio = dsl.element_width.to_r / @full_width
           (@full_height * ratio).to_i
         else
           @full_height
@@ -96,8 +96,8 @@ class Shoes
       end
 
       def restore_width_and_height
-        dsl.width  = @saved_width
-        dsl.height = @saved_height
+        dsl.element_width  = @saved_width
+        dsl.element_height = @saved_height
       end
 
       def display_image(name_or_data)
@@ -126,7 +126,7 @@ class Shoes
       def add_paint_listener
         @painter = lambda do |event|
           graphics_context = event.gc
-          graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.absolute_left, dsl.absolute_top, dsl.width, dsl.height unless @dsl.hidden
+          graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.element_left, dsl.element_top, dsl.element_width, dsl.element_height unless @dsl.hidden
         end
         @container.add_paint_listener(@painter)
       end

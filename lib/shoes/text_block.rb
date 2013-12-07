@@ -3,11 +3,11 @@ class Shoes
 
   class TextBlock
     include CommonMethods
-    include Common::Margin
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader  :gui, :parent, :text, :links, :app, :text_styles, :dimensions, :opts, :contents
+
+    attr_reader   :gui, :parent, :text, :links, :app, :text_styles, :dimensions, :opts
     attr_accessor :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
@@ -25,8 +25,6 @@ class Shoes
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
 
       @dimensions   = Dimensions.new parent, opts
-      @margin = @opts[:margin]
-      set_margin
 
       handle_opts @opts
 
@@ -58,7 +56,7 @@ class Shoes
 
     def set_size left
       self.width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
-      self.height = @gui.get_height + @margin_top + @margin_bottom
+      self.height = @gui.get_height + margin_top + margin_bottom
     end
 
     private

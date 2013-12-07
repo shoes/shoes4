@@ -4,6 +4,7 @@ class Shoes
       include Common::Child
       include Common::Clear
       include Common::Toggle
+      include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :parent, :real, :dsl
@@ -17,21 +18,17 @@ class Shoes
         @real.minimum = 0
         @real.maximum = 100
 
-        if @dsl.width and @dsl.height
-          @real.setSize dsl.width, dsl.height
+        if @dsl.element_width and @dsl.element_height
+          @real.setSize dsl.element_width, dsl.element_height
         else
           @real.pack
-          @dsl.width  = @real.size.x
-          @dsl.height = @real.size.y
+          @dsl.element_width  = @real.size.x
+          @dsl.element_height = @real.size.y
         end
       end
 
       def fraction=(value)
         @real.selection = (value*100).to_i unless @real.disposed?
-      end
-
-      def move(left, top)
-        @real.set_location left, top unless @real.disposed?
       end
     end
   end

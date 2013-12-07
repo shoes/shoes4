@@ -27,17 +27,20 @@ class Shoes
       class Painter < Common::Painter
         def clipping
           clipping = ::Swt::Path.new(Shoes.display)
-          clipping.add_arc(@obj.left, @obj.top, @obj.width, @obj.height, 0, 360)
+          clipping.add_arc(@obj.element_left, @obj.element_top,
+                           @obj.element_width, @obj.element_height, 0, 360)
           clipping
         end
 
         def fill(gc)
-          gc.fill_oval(@obj.left, @obj.top, @obj.width, @obj.height)
+          gc.fill_oval(@obj.element_left, @obj.element_top,
+                       @obj.element_width, @obj.element_height)
         end
 
         def draw(gc)
           sw = gc.get_line_width
-          gc.draw_oval(@obj.left+sw/2, @obj.top+sw/2, @obj.width-sw, @obj.height-sw)
+          gc.draw_oval(@obj.element_left+sw/2, @obj.element_top+sw/2,
+                       @obj.element_width-sw, @obj.element_height-sw)
         end
       end
     end

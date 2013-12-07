@@ -8,11 +8,11 @@ describe Shoes::Swt::TextBlock do
   let(:textcursor) { double("text cursor", move: move_textcursor) }
   let(:move_textcursor) { double("move text cursor", show: true) }
   let(:dsl) { double("dsl", parent: parent, app: parent.app, text: "hello world",
-                     opts: opts, left: 0, :left= => 0, top: 10, :top= => 0,
-                     width: 200, height: 180, font: "font", font_size: 16,
-                     margin_left: 0, margin_top: 0, cursor: -1,
-                     textcursor: textcursor, absolute_left: 0, absolute_top: 10,
-                     text_styles: {}, :'hidden?' => false)
+                     opts: opts, element_width: 200, element_height: 180,
+                     element_left: 0, element_top: 10,  font: "font",
+                     font_size: 16, margin_left: 0, margin_top: 0, cursor: -1,
+                     textcursor: textcursor, 
+					 text_styles: {}, :hidden? => false).as_null_object
             }
   let(:app) { parent.app.gui.real }
   let(:app_real) { Shoes::App.new }
@@ -53,12 +53,12 @@ describe Shoes::Swt::TextBlock do
     end
 
     it "sets width" do
-      text_layout.should_receive(:setWidth).with(dsl.width)
+      text_layout.should_receive(:setWidth).with(dsl.element_width)
       subject.paintControl(event)
     end
 
     it "draws" do
-      text_layout.should_receive(:draw).with(gc, dsl.left, dsl.top)
+      text_layout.should_receive(:draw).with(gc, dsl.element_left, dsl.element_top)
       subject.paintControl(event)
     end
 

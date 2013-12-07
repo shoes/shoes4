@@ -21,11 +21,12 @@ There isn't a shoes4 gem release (yet) - in the meantime check out these instruc
 
         $ git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org)
+2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org). Installing JRuby can be done easily for instance by using [rvm](http://rvm.io/):
 
         $ rvm install jruby
 
 **Note:** Please make sure that you either install jruby-1.7.0 or higher or you set jruby to [always run in 1.9 mode](http://stackoverflow.com/questions/4755900/how-to-make-jruby-1-6-default-to-ruby-1-9). This is required in order for shoes4 to work.
+If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date mostly. You should be able to run it with the before mentioned versions either way. We recommend up to date versions though.
 
 3. Set up your local environment
 
@@ -104,7 +105,7 @@ If this is your first time running the packager, you'll want to `bundle install`
 In order to package an app, you need to have the Shoes gem installed in your environment.
 
     $ rake gem
-    $ gem install pkg/shoes-4.0.0.pre1
+    $ gem install pkg/shoes-4.0.0.pre1.gem
 
 Now, you can package an app. But first, looky here:
 
@@ -149,6 +150,8 @@ Please feel free to tackle any issue - we will help you if needed. The tag is ju
 Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. In order to do so you can run `rake non_samples` to run a random sample we think does not work. If you just want to list the non working samples you can also run `rake list_non_samples`.
 
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
+
+We write our specs in rspec and are currently in the process of migrating from the old `should` syntax to the [new `expect` syntax](http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax). We basically say that whenever you touch a spec it'd be good if you converted it to the new syntax. Also new specs should be written in the new expect syntax.
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
 

@@ -40,7 +40,7 @@ describe Shoes::Swt::Image do
     end
 
     specify "draws image" do
-      dsl.stub absolute_left: left, absolute_top: top
+      dsl.stub element_left: left, element_top: top
       gc.should_receive(:drawImage).with(subject.real, 0, 0, 3, 1, left, top, 3, 1)
       subject.painter.call(event)
     end

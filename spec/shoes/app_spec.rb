@@ -151,9 +151,15 @@ describe Shoes::App do
     end
   end
 
-  describe "#quit" do
-    it "quits" do
+  describe "quitting" do
+    it "#quit tells the GUI to quit" do
+      expect(subject.gui).to receive :quit
       subject.quit
+    end
+
+    it '#close tells the GUI to quit' do
+      expect(subject.gui).to receive :quit
+      subject.close
     end
   end
 
