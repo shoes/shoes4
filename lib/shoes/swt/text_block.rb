@@ -65,14 +65,24 @@ class Shoes
         return text_layout
       end
 
-      def contents_alignment
+      def update_current_position(current_position)
         fitter = ::Shoes::Swt::TextBlockFitter.new(self)
         fitted_layouts = fitter.fit_it_in
 
         return if fitted_layouts.empty?
 
-        # TODO: Should this take value from right-most layout?
-        @dsl.absolute_right = @dsl.absolute_left + fitted_layouts.first.layout.get_bounds.width
+        last_fitted = fitted_layouts.last
+        last_layout = last_fitted.layout
+        line_count = last_layout.line_count
+        last_bounds = last_layout.get_line_bounds(line_count - 1)
+
+        if fitted_layouts.size == 1
+          current_position.x = @dsl.absolute_left + last_bounds.width
+          current_position.y = @dsl.absolute_top
+        else
+          current_position.x = last_bounds.width
+          current_position.y = last_layout.get_bounds.height
+        end
       end
 
       def clear

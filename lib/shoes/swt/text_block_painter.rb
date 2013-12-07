@@ -27,7 +27,6 @@ class Shoes
             set_styles(fitted_layout.layout)
 
             # TODO: Deal with explicit widths from the DSL on the text block
-            # TODO: Deal with correct positioning of multiple layouts!
             fitted_layout.draw graphics_context
 
             # TODO: Deal with the textcursor placement

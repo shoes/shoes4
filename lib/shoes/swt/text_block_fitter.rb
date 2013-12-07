@@ -16,7 +16,7 @@ class Shoes
         end
 
         def draw(graphics_context)
-          layout.draw graphics_context, left, top
+          layout.draw(graphics_context, left, top)
         end
       end
 
@@ -29,17 +29,24 @@ class Shoes
                                 @dsl.absolute_left + @dsl.margin_left,
                                 @dsl.absolute_top + @dsl.margin_top)]
         else
-          # Doesn't fit?
-            # Determine cut-off point for the first text layout
-            # Advance to next line
-            # Generate text layout with remaining text
+          first_text, second_text = split_text(layout, height)
+          first_layout = generate_layout(@text_block, width, first_text)
+
+          parent_width, parent_height = space_from_parent
+          second_layout = generate_layout(@text_block, parent_width, second_text)
 
           # Calculate finish-point in last line of text layout
 
           # Return both layout(s) and finish-point
-          []
+          [
+            FittedTextLayout.new(first_layout,
+                                 @dsl.absolute_left + @dsl.margin_left,
+                                 @dsl.absolute_top + @dsl.margin_top),
+            FittedTextLayout.new(second_layout,
+                                 @dsl.parent.absolute_left + @dsl.margin_left,
+                                 @dsl.absolute_top + @dsl.margin_top + first_layout.get_bounds.height)
+          ]
         end
-
       end
 
       def available_space

@@ -126,8 +126,13 @@ class Shoes
 
     def update_current_position(current_position, element)
       return current_position if element.absolutely_positioned?
-      current_position.x = element.absolute_right
-      current_position.y = element.absolute_top
+      if element.respond_to? :update_current_position
+        element.update_current_position(current_position)
+      else
+        current_position.x = element.absolute_right
+        current_position.y = element.absolute_top
+      end
+
       if current_position.max_bottom < element.absolute_bottom
         current_position.max_bottom = element.absolute_bottom
       end

@@ -66,8 +66,8 @@ class Shoes
       @absolute_right
     end
 
-    def contents_alignment
-      @gui.contents_alignment
+    def update_current_position(current_position)
+      @gui.update_current_position(current_position)
     end
 
     private
