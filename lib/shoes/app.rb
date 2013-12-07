@@ -17,7 +17,6 @@ class Shoes
 
   class App
     include DSL
-    include Common::Margin
     include BuiltinMethods
     include Common::Clickable
 
@@ -36,7 +35,6 @@ class Shoes
     def initialize(opts={}, &blk)
       set_attributes_from_options(opts)
       set_initial_attributes
-      set_margin
 
       @gui = Shoes.configuration.backend::App.new @app
 
@@ -135,6 +133,10 @@ class Shoes
 
     def start_as_fullscreen?
       @start_as_fullscreen
+    end
+
+    def close
+      quit
     end
 
     private

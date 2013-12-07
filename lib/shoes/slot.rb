@@ -1,12 +1,9 @@
 class Shoes
   class Slot
-    include Common::Margin
     include Common::Clickable
     include Common::Clear
     include CommonMethods
     include DimensionsDelegations
-
-    RECOGNIZED_OPTION_VALUES = %w[margin margin_left margin_top margin_right margin_bottom]
 
     attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
                 :leave_proc
@@ -14,8 +11,6 @@ class Shoes
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
-      set_margin
-      setup_dimensions
       @parent.add_child self
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
@@ -32,8 +27,6 @@ class Shoes
       @dimensions     = Dimensions.new parent, opts
       @fixed_height   = height || false
       set_default_dimension_values
-
-      init_values_from_options(opts)
     end
 
     def set_default_dimension_values
@@ -41,12 +34,6 @@ class Shoes
       self.height         ||= 0
       self.absolute_left  ||= 0
       self.absolute_top   ||= 0
-    end
-
-    def init_values_from_options(opts)
-      RECOGNIZED_OPTION_VALUES.each do |value|
-        instance_variable_set "@#{value}", opts[value.to_sym]
-      end
     end
 
     def clear &blk
@@ -90,21 +77,12 @@ class Shoes
     end
 
     protected
-    def setup_dimensions
-      apply_margins
-    end
-
-    def apply_margins
-      @actual_width  = width  - (margin_left + margin_right)
-      @actual_height = height - (margin_top + margin_bottom)
-    end
-
     CurrentPosition = Struct.new(:x, :y, :max_bottom)
 
     def position_contents
-      current_position = CurrentPosition.new absolute_left + margin_left,
-                                             absolute_top + margin_top,
-                                             absolute_top + margin_top
+      current_position = CurrentPosition.new element_left,
+                                             element_top,
+                                             element_top
       contents.each do |element|
         next if element.hidden?
         current_position = positioning(element, current_position)
@@ -145,7 +123,7 @@ class Shoes
     end
 
     def move_to_next_line(element, current_position)
-      element._position position_x(self.absolute_left + margin_left, element),
+      element._position position_x(self.element_left, element),
                         position_y(current_position.max_bottom, element)
     end
 
@@ -167,9 +145,9 @@ class Shoes
 
     def fits_on_the_same_line?(element, current_x)
       if element.respond_to?(:fits_on_the_same_line?)
-        element.fits_on_the_same_line?(@actual_width - current_x)
+        element.fits_on_the_same_line?(element_width - current_x)
       else
-        current_x + element.width <= absolute_left + @actual_width
+        current_x + element.width <= element_right
       end
     end
 

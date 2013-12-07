@@ -4,6 +4,7 @@ class Shoes
       include Common::Child
       include Common::Clear
       include Common::Toggle
+      include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :dsl
@@ -19,7 +20,7 @@ class Shoes
           @parent.real,
           ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY
         )
-        @real.set_size dsl.width, dsl.height
+        @real.set_size dsl.element_width, dsl.element_height
         @real.add_selection_listener do |event|
           @dsl.call_change_listeners
         end
@@ -38,11 +39,7 @@ class Shoes
         @real.text = item
       end
       
-      def move(left, top)
-        @real.set_location left, top unless @real.disposed?
-      end
-
-      def enabled(value) 
+      def enabled(value)
         @real.enable_widget value
       end
     end

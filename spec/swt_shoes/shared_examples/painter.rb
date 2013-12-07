@@ -25,7 +25,7 @@ shared_examples_for "movable painter" do
 
     before :each do
       ::Swt::Transform.stub(:new) { transform }
-      shape.move(20, 30)
+      shape.update_position
     end
 
     it "applies transform" do

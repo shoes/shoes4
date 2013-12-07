@@ -35,6 +35,9 @@ class Shoes
 
     alias_method :absolute_left, :left
     alias_method :absolute_top, :top
+    alias_method :element_left, :left
+    alias_method :element_top, :top
+
 
     def right
       @right || left
@@ -52,6 +55,9 @@ class Shoes
       @app.height
     end
 
+    alias_method :element_width, :width
+    alias_method :element_height, :height
+
     # Moves the shape
     #
     # @param [Integer] left The new left value
@@ -62,7 +68,7 @@ class Shoes
       @bottom += offset(@top, top) if @bottom
       @left = left
       @top = top
-      @gui.move(@left, @top)
+      @gui.update_position
       self
     end
 

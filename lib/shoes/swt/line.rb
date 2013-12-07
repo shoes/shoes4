@@ -28,12 +28,9 @@ class Shoes
         @dsl.angle
       end
 
-      def move(x, y)
+      def update_position
         @transform.get_elements @transform_elements
-        @transform.set_elements @transform_elements[0], @transform_elements[1], @transform_elements[2], @transform_elements[3], x, y
-        self.left = x
-        self.top = y
-        self
+        @transform.set_elements @transform_elements[0], @transform_elements[1], @transform_elements[2], @transform_elements[3], dsl.element_left, dsl.element_top
       end
 
       private
@@ -42,7 +39,7 @@ class Shoes
         @translated_point_b = @dsl.point_b.to(-left, -top)
         @transform          = ::Swt::Transform.new(::Swt.display)
         @transform_elements = Java::float[6].new
-        move left, top
+        update_position
       end
 
       class Painter < Common::Painter

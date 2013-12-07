@@ -50,16 +50,18 @@ end
 Shoes.configuration.backend = :swt
 
 require 'shoes/swt/color'
-require 'shoes/swt/common/fill'
-require 'shoes/swt/common/stroke'
 require 'shoes/swt/common/child'
+require 'shoes/swt/common/clear'
+require 'shoes/swt/common/clickable'
 require 'shoes/swt/common/container'
+require 'shoes/swt/common/fill'
 require 'shoes/swt/common/resource'
 require 'shoes/swt/common/painter'
-require 'shoes/swt/common/clickable'
 require 'shoes/swt/common/toggle'
 require 'shoes/swt/common/selection_listener'
-require 'shoes/swt/common/clear'
+require 'shoes/swt/common/stroke'
+require 'shoes/swt/common/update_position'
+
 require 'shoes/swt/input_box'
 require 'shoes/swt/rect_painter.rb'
 require 'shoes/swt/swt_button'
