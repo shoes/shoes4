@@ -9,11 +9,11 @@ class Shoes
 
       attr_reader :dsl
 
-      def initialize(dsl, opts = nil)
+      def initialize(dsl)
         @dsl = dsl
-        @opts = opts
+        @opts = dsl.opts
         @container = @dsl.app.gui.real
-        @painter = TextBlockPainter.new @dsl, opts
+        @painter = TextBlockPainter.new @dsl
         @container.add_paint_listener @painter
       end
 
@@ -61,7 +61,7 @@ class Shoes
         if @dsl.text.length > 1
           @dsl.element_width, @dsl.element_height = get_size
         end
-        @opts[:text_styles] = @dsl.app.gather_text_styles(values)
+        @dsl.update_text_styles(values)
         redraw
       end
 

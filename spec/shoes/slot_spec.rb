@@ -24,7 +24,7 @@ describe Shoes::Slot do
   describe 'clearing' do
     before :each do
       10.times do
-        Shoes::TextBlock.new app, subject, 'text', 20
+        Shoes::TextBlock.new app, subject, ['text'], 20
       end
     end
 
