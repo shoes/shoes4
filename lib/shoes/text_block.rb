@@ -54,15 +54,6 @@ class Shoes
       true
     end
 
-    def absolute_right=(value)
-      @absolute_right = value
-    end
-
-    def absolute_right
-      return @dimensions.absolute_right unless @absolute_right
-      @absolute_right
-    end
-
     def update_current_position(current_position)
       @gui.update_current_position(current_position)
     end
