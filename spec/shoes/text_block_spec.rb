@@ -91,7 +91,7 @@ describe Shoes::TextBlock do
   #
   context "with nested text fragments" do
     let(:helper) {Sample17Helper.new(app)}
-    let(:para) { helper.create_para }
+    let!(:para) { helper.create_para }
 
     it "has full text of fragments" do
       para.text.should eq("Testing, test, test. Breadsticks. Breadsticks. Breadsticks. EVEN BETTER.fine!")
@@ -106,6 +106,14 @@ describe Shoes::TextBlock do
                      72..76 => [helper.sub]
                     }
       para.text_styles.should eq(text_styles)
+    end
+
+    it 'sets the parent of the non nested texts to the para' do
+      helper.strong_breadsticks.parent.should eq para
+    end
+
+    it 'sets the parent of nested fragments correctly' do
+      expect(helper.ins.parent).to eq helper.strong
     end
   end
 end
