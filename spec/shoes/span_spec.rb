@@ -24,7 +24,7 @@ describe Shoes::Span do
     it 'does not try to merge with parent opts when there are none' do
       parent = double 'parent'
       subject.parent = parent
-      expect {subject.opts}.to_not raise_error(NoMethodError)
+      expect {subject.opts}.to_not raise_error()
     end
 
     it 'merges with the styles of the parent' do
