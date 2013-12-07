@@ -1,5 +1,4 @@
 require 'swt_shoes/spec_helper'
-require 'shoes/helpers/text_fragment_helpers'
 
 describe Shoes::Swt::TextBlock do
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
@@ -221,13 +220,10 @@ describe Shoes::Swt::TextBlock do
     end
 
     context "with text fragments" do
-      include TextFragmentHelpers
 
       let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
       let(:white) { ::Swt::Color.new Shoes.display, 255, 255, 255 }
       let(:font) { ::Swt::Graphics::Font.new Shoes.display, "Arial", 12, ::Swt::SWT::NORMAL }
-      let(:text_styles) { ::Shoes::App.new.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub).text_styles }
-      let(:opts) { {:text_styles => text_styles} }
 
       it "creates a text style" do
         pending "creative testing energy"

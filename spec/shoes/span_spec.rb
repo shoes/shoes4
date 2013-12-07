@@ -19,10 +19,27 @@ describe Shoes::Span do
   end
 
   describe 'Looking up parent styles' do
+    let(:white) {Shoes::COLORS[:white]}
+    let(:red) {Shoes::COLORS[:red]}
     it 'does not try to merge with parent opts when there are none' do
       parent = double 'parent'
       subject.parent = parent
       expect {subject.opts}.to_not raise_error(NoMethodError)
+    end
+
+    it 'merges with the styles of the parent' do
+      parent = double 'parent', opts: {stroke: white}
+      subject.parent = parent
+      subject.opts[:stroke].should eq white
+    end
+
+    describe 'with own opts' do
+      let(:opts) {{stroke: red}}
+      it 'prefers own values over parent values' do
+        parent = double 'parent', opts: {stroke: white}
+        subject.parent = parent
+        subject.opts[:stroke].should eq red
+      end
     end
 
   end

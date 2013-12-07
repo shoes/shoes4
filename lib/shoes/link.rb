@@ -1,8 +1,8 @@
 class Shoes
   class Link < Text
-    def initialize m, str, color=nil, &blk
+    def initialize str, color=nil, &blk
       @blk = blk
-      super m, str, color
+      super str, color
     end
     attr_reader :blk
     attr_accessor :click_listener, :line_height, :start_x, :start_y,

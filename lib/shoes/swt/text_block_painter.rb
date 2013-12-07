@@ -83,7 +83,7 @@ class Shoes
         @dsl.text_styles.each do |range, text_styles|
           defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
           styles = text_styles.inject(defaults) do |current_styles, text|
-            if text.style == :span
+            if text.is_a? Shoes::Span
               apply_styles(current_styles, text.opts)
             else
               make_link_style(text, current_styles, range)
@@ -115,7 +115,7 @@ class Shoes
       end
 
       def make_link_style(text, styles, range)
-        if text.style == :link
+        if text.is_a? Shoes::Link
           styles[:underline] = true
           styles[:fg] = ::Swt::Color.new Shoes.display, 0, 0, 255
           create_link(text, range)

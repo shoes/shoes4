@@ -2,7 +2,7 @@ class Shoes
   class Span < Text
     def initialize str, options={}
       @opts = options
-      super :span, str
+      super str
     end
 
     def opts

@@ -1,10 +1,10 @@
 require 'shoes/spec_helper'
-require 'shoes/helpers/text_fragment_helpers'
+require 'shoes/helpers/sample17_helper'
 
 describe Shoes::TextBlock do
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new app, app }
-  let(:text_link) { Shoes::Link.new(:link, ['Hello']) }
+  let(:text_link) { Shoes::Link.new(['Hello']) }
   subject { Shoes::TextBlock.new(app, parent, ["#{text_link}, world!"], 99, {app: app}) }
 
   describe "initialize" do
@@ -90,8 +90,8 @@ describe Shoes::TextBlock do
   #   end
   #
   context "with nested text fragments" do
-    include TextFragmentHelpers
-    let(:para) { app.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub) }
+    let(:helper) {Sample17Helper.new(app)}
+    let(:para) { helper.create_para }
 
     it "has full text of fragments" do
       para.text.should eq("Testing, test, test. Breadsticks. Breadsticks. Breadsticks. EVEN BETTER.fine!")
@@ -99,11 +99,11 @@ describe Shoes::TextBlock do
 
     it "has fragment styles" do
       text_styles = {
-                     21..33 => [strong_breadsticks],
-                     34..46 => [em],
-                     47..59 => [code],
-                     60..71 => [bg, fg, strong, ins],
-                     72..76 => [sub]
+                     21..33 => [helper.strong_breadsticks],
+                     34..46 => [helper.em],
+                     47..59 => [helper.code],
+                     60..71 => [helper.bg, helper.fg, helper.strong, helper.ins],
+                     72..76 => [helper.sub]
                     }
       para.text_styles.should eq(text_styles)
     end

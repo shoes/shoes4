@@ -469,7 +469,7 @@ EOS
     end
 
     def link *str, &blk
-      Shoes::Link.new :link, str, &blk
+      Shoes::Link.new str, &blk
     end
 
     def span *str, opts
