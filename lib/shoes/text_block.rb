@@ -11,16 +11,15 @@ class Shoes
     attr_accessor :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
-      @parent = parent
-      @app = app
-      @opts = opts
-      @font = @app.font || DEFAULT_TEXTBLOCK_FONT
-      @font_size = @opts[:size] || font_size
-      @links = []
-      @opts[:text_styles] = gather_text_styles(self, text)
-      @contents = text
-      @text = text.map(&:to_s).join
-      @text_styles = @opts[:text_styles]
+      @parent             = parent
+      @app                = app
+      @opts               = opts
+      @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
+      @font_size          = @opts[:size] || font_size
+      @links              = []
+      @contents           = text
+      @text               = text.map(&:to_s).join
+      @text_styles        = gather_text_styles(self, text)
 
       @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
@@ -33,7 +32,7 @@ class Shoes
 
       @opts = @app.style.merge(@opts)
 
-      @gui = Shoes.configuration.backend_for(self, @opts)
+      @gui = Shoes.configuration.backend_for(self)
       self.width, self.height = @gui.get_size
       @parent.add_child(self)
       set_size left
@@ -41,19 +40,8 @@ class Shoes
       clickable_options(@opts)
     end
 
-    def gather_text_styles(parent, msg, styles={}, start_point=0)
-      msg.each do |text|
-        if text.is_a? Shoes::Text
-          text.parent = parent
-          end_point = start_point + text.to_s.length - 1
-          range = start_point..end_point
-          styles[range] ||= []
-          styles[range] << text
-          gather_text_styles(text, text.str, styles, start_point)
-        end
-        start_point += text.to_s.length
-      end
-      styles
+    def update_text_styles(texts)
+      @text_styles = gather_text_styles(self, texts)
     end
 
     def text=(*values)
@@ -74,6 +62,21 @@ class Shoes
     end
 
     private
+
+    def gather_text_styles(parent, texts, styles={}, start_point=0)
+      texts.each do |text|
+        if text.is_a? Shoes::Text
+          text.parent = parent
+          end_point = start_point + text.to_s.length - 1
+          range = start_point..end_point
+          styles[range] ||= []
+          styles[range] << text
+          gather_text_styles(text, text.str, styles, start_point)
+        end
+        start_point += text.to_s.length
+      end
+      styles
+    end
 
     def handle_opts(opts)
       parse_font_opt opts[:font] if opts.has_key? :font

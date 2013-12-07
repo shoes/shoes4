@@ -71,7 +71,7 @@ describe Shoes::TextBlock do
   describe "stroke" do
     it "should accept a hex code" do
       s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], 99, { stroke: "#fda", app: app })
-      color = s.gui.instance_variable_get('@opts')[:stroke]
+      color = s.opts[:stroke]
       color.red.should eql 255
       color.green.should eql 221
       color.blue.should eql 170

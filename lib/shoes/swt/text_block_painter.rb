@@ -5,9 +5,9 @@ class Shoes
       include Common::Resource
       include Common::Clickable
 
-      def initialize(dsl, opts)
+      def initialize(dsl)
         @dsl = dsl
-        @opts = opts
+        @opts = @dsl.opts
         @text_layout = ::Swt::TextLayout.new Shoes.display
       end
 
@@ -48,7 +48,7 @@ class Shoes
                                   end
         style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
         set_font_styles(@text_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(style[:fg], style[:bg], @text_layout, @opts)
+        set_text_styles(style[:fg], style[:bg], @text_layout)
       end
 
       private
@@ -77,9 +77,10 @@ class Shoes
         end
       end
 
-      def set_text_styles(foreground, background, layout, opts)
-        opts[:text_styles].each do |range, text_styles|
-          defaults = default_text_styles(foreground, background, opts[:strikecolor], opts[:undercolor])
+      def set_text_styles(foreground, background, layout)
+
+        @dsl.text_styles.each do |range, text_styles|
+          defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
           styles = text_styles.inject(defaults) do |current_styles, text|
             if text.style == :span
               apply_styles(current_styles, text.opts)
@@ -88,7 +89,7 @@ class Shoes
             end
           end
           set_font_styles(layout, styles, range)
-        end if opts[:text_styles]
+        end
       end
 
       def set_font_styles(layout, styles, range)

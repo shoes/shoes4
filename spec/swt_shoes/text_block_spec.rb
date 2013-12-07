@@ -12,13 +12,13 @@ describe Shoes::Swt::TextBlock do
                      width: 200, height: 180, font: "font", font_size: 16,
                      margin_left: 0, margin_top: 0, cursor: -1,
                      textcursor: textcursor, absolute_left: 0, absolute_top: 10,
-                     :'hidden?' => false)
+                     text_styles: {}, :'hidden?' => false)
             }
   let(:app) { parent.app.gui.real }
   let(:app_real) { Shoes::App.new }
   let(:container) { app }
   subject {
-    Shoes::Swt::TextBlock.new(dsl, opts)
+    Shoes::Swt::TextBlock.new(dsl)
   }
 
   context "#initialize" do
@@ -39,7 +39,7 @@ describe Shoes::Swt::TextBlock do
     let(:event) { double("event", gc: gc) }
     let(:gc) { double("gc").as_null_object }
     let(:style) { double(:style) }
-    subject { Shoes::Swt::TextBlockPainter.new(dsl, opts) }
+    subject { Shoes::Swt::TextBlockPainter.new(dsl) }
 
     before :each do
       ::Swt::TextLayout.stub(:new) { text_layout }
