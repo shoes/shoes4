@@ -436,28 +436,12 @@ EOS
       inscription:  10
     }.freeze
 
-    %w[banner title subtitle tagline caption para inscription].each do |m|
-      define_method m do |*text|
-        opts = text.last.class == Hash ? text.pop : {}
-        opts[:text_styles] = gather_text_styles text
-        text = text.map(&:to_s).join
-        klass = Shoes.const_get(m.capitalize)
-        create klass, text, FONT_SIZES[m.to_sym], style_for_element(klass, opts)
+    %w[banner title subtitle tagline caption para inscription].each do |method|
+      define_method method do |*texts|
+        opts = texts.last.class == Hash ? texts.pop : {}
+        klass = Shoes.const_get(method.capitalize)
+        create klass, texts, FONT_SIZES[method.to_sym], style_for_element(klass, opts)
       end
-    end
-
-    def gather_text_styles msg, styles={}, start_point=0
-      msg.each do |text|
-        if text.is_a? Shoes::Text
-          end_point = start_point + text.to_s.length - 1
-          range = start_point..end_point
-          styles[range] ||= []
-          styles[range] << text
-          gather_text_styles text.str, styles, start_point
-        end
-        start_point += text.to_s.length
-      end
-      styles
     end
 
     TEXT_STYLES = {
@@ -471,25 +455,25 @@ EOS
     }
 
     TEXT_STYLES.keys.each do |method|
-      define_method method do |*str|
-        Shoes::Span.new str, TEXT_STYLES[method]
+      define_method method do |*texts|
+        Shoes::Span.new texts, TEXT_STYLES[method]
       end
     end
 
-    def fg(*str, color)
-      Shoes::Span.new str, { stroke: pattern(color) }
+    def fg(*texts, color)
+      Shoes::Span.new texts, { stroke: pattern(color) }
     end
 
-    def bg(*str, color)
-      Shoes::Span.new str, { fill: pattern(color) }
+    def bg(*texts, color)
+      Shoes::Span.new texts, { fill: pattern(color) }
     end
 
-    def link *str, &blk
-      Shoes::Link.new :link, str, &blk
+    def link *texts, &blk
+      Shoes::Link.new texts, &blk
     end
 
-    def span *str, opts
-      Shoes::Span.new str, opts
+    def span *texts, opts
+      Shoes::Span.new texts, opts
     end
 
     def mouse

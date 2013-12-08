@@ -7,10 +7,9 @@ class Shoes
       include Common::Resource
       include Common::Clickable
 
-      def initialize(dsl, text_block, opts)
+      def initialize(dsl)
         @dsl = dsl
-        @opts = opts
-        @text_block = text_block
+        @opts = @dsl.opts
         #@text_layout = ::Swt::TextLayout.new Shoes.display
       end
 
@@ -18,7 +17,7 @@ class Shoes
         graphics_context = paint_event.gc
         gcs_reset graphics_context
         unless @dsl.hidden?
-          fitter = ::Shoes::Swt::TextBlockFitter.new(@text_block)
+          fitter = ::Shoes::Swt::TextBlockFitter.new(@dsl.gui)
           fitted_layouts = fitter.fit_it_in
 
           # TODO: Reconcile other @text_layout references to take arguments
@@ -59,7 +58,7 @@ class Shoes
                                   end
         style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
         set_font_styles(text_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(style[:fg], style[:bg], text_layout, @opts)
+        set_text_styles(style[:fg], style[:bg], text_layout)
       end
 
       private
@@ -88,18 +87,19 @@ class Shoes
         end
       end
 
-      def set_text_styles(foreground, background, layout, opts)
-        opts[:text_styles].each do |range, text_styles|
-          defaults = default_text_styles(foreground, background, opts[:strikecolor], opts[:undercolor])
+      def set_text_styles(foreground, background, layout)
+
+        @dsl.text_styles.each do |range, text_styles|
+          defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
           styles = text_styles.inject(defaults) do |current_styles, text|
-            if text.style == :span
+            if text.is_a? ::Shoes::Span
               apply_styles(current_styles, text.opts)
             else
               make_link_style(text, current_styles, range)
             end
           end
           set_font_styles(layout, styles, range)
-        end if opts[:text_styles]
+        end
       end
 
       def set_font_styles(layout, styles, range)
@@ -124,7 +124,7 @@ class Shoes
       end
 
       def make_link_style(text, styles, range)
-        if text.style == :link
+        if text.is_a? ::Shoes::Link
           styles[:underline] = true
           styles[:fg] = ::Swt::Color.new Shoes.display, 0, 0, 255
           create_link(text, range)

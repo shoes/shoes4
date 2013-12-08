@@ -1,10 +1,16 @@
 class Shoes
   class Span < Text
-    attr_reader :opts
+    def initialize texts, options={}
+      @opts = options
+      super texts
+    end
 
-    def initialize str, opts={}
-      @opts = opts
-      super :span, str
+    def opts
+      if @parent && @parent.respond_to?(:opts)
+        @parent.opts.merge(@opts)
+      else
+        @opts
+      end
     end
   end
 end
