@@ -60,12 +60,12 @@ class Shoes
     end
 
     # We always claim we fit, and do our own wrapping if we don't
-    def fits_on_the_same_line?(_)
+    def fits_in_width?(_)
       true
     end
 
-    def update_current_position(current_position)
-      @gui.update_current_position(current_position)
+    def move_current_position(current_position)
+      @gui.move_current_position(current_position)
     end
 
     private

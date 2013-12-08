@@ -71,7 +71,7 @@ class Shoes
         layout.get_bounds.width <= width
       end
 
-      def update_current_position(current_position)
+      def move_current_position(current_position)
         fitter = ::Shoes::Swt::TextBlockFitter.new(self)
         fitted_layouts = fitter.fit_it_in
 

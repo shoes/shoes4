@@ -104,8 +104,8 @@ class Shoes
 
     def update_current_position(current_position, element)
       return current_position if element.absolutely_positioned?
-      if element.respond_to? :update_current_position
-        element.update_current_position(current_position)
+      if element.respond_to? :move_current_position
+        element.move_current_position(current_position)
       else
         current_position.x = element.absolute_right
         current_position.y = element.absolute_top
@@ -144,8 +144,8 @@ class Shoes
     end
 
     def fits_on_the_same_line?(element, current_x)
-      if element.respond_to?(:fits_on_the_same_line?)
-        element.fits_on_the_same_line?(element_width - current_x)
+      if element.respond_to?(:fits_in_width?)
+        element.fits_in_width?(element_width - current_x)
       else
         current_x + element.width <= element_right
       end
