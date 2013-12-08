@@ -52,18 +52,23 @@ class Shoes
       end
 
       def generate_layout(width, text)
-        text_layout = ::Swt::TextLayout.new Shoes.display
-        text_layout.setText text
-        text_layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
+        layout = ::Swt::TextLayout.new Shoes.display
+        layout.setText text
+        layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
         font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
-        text_layout.setStyle style, 0, text.length - 1
+        layout.setStyle style, 0, text.length - 1
+        shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
 
-        # Apply maximum width to wrap if we've exceeded our alotted space
-        # If we haven't, just leave it with the natural width it consumes
-        text_layout.setWidth(width) if text_layout.get_bounds.width > width
+        layout
+      end
 
-        return text_layout
+      def shrink_layout_to(layout, width)
+        layout.setWidth(width)
+      end
+
+      def layout_fits_in?(layout, width)
+        layout.get_bounds.width <= width
       end
 
       def update_current_position(current_position)
