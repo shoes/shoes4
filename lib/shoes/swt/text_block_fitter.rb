@@ -6,20 +6,6 @@ class Shoes
         @dsl = text_block.dsl
       end
 
-      class FittedTextLayout
-        attr_reader :layout, :left, :top
-
-        def initialize(layout, left, top)
-          @layout = layout
-          @left = left
-          @top = top
-        end
-
-        def draw(graphics_context)
-          layout.draw(graphics_context, left, top)
-        end
-      end
-
       def fit_it_in
         width, height = available_space
         layout = generate_layout(@text_block, width, @dsl.text)
@@ -89,5 +75,20 @@ class Shoes
         [layout.text[0...ending_offset], layout.text[ending_offset..-1]]
       end
     end
+
+    class FittedTextLayout
+      attr_reader :layout, :left, :top
+
+      def initialize(layout, left, top)
+        @layout = layout
+        @left = left
+        @top = top
+      end
+
+      def draw(graphics_context)
+        layout.draw(graphics_context, left, top)
+      end
+    end
+
   end
 end
