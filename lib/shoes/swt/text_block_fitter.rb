@@ -6,33 +6,47 @@ class Shoes
         @dsl = text_block.dsl
       end
 
+      # TODO: Give layout diagram here and describe the general 1 vs 2 layout
+      # algorthim that we're using, and why it works
       def fit_it_in
         width, height = available_space
         layout = generate_layout(@text_block, width, @dsl.text)
 
-        if layout.get_bounds.height <= height
-          [FittedTextLayout.new(layout,
-                                @dsl.absolute_left + @dsl.margin_left,
-                                @dsl.absolute_top + @dsl.margin_top)]
+        if fits_in_one_layout?(layout, height)
+          fit_as_one_layout(layout)
         else
-          first_text, second_text = split_text(layout, height)
-          first_layout = generate_layout(@text_block, width, first_text)
-
-          parent_width, parent_height = space_from_parent
-          second_layout = generate_layout(@text_block, parent_width, second_text)
-
-          # Calculate finish-point in last line of text layout
-
-          # Return both layout(s) and finish-point
-          [
-            FittedTextLayout.new(first_layout,
-                                 @dsl.absolute_left + @dsl.margin_left,
-                                 @dsl.absolute_top + @dsl.margin_top),
-            FittedTextLayout.new(second_layout,
-                                 @dsl.parent.absolute_left + @dsl.margin_left,
-                                 @dsl.absolute_top + @dsl.margin_top + first_layout.get_bounds.height)
-          ]
+          fit_as_two_layouts(layout, height, width)
         end
+      end
+
+      def fits_in_one_layout?(layout, height)
+        layout.get_bounds.height <= height
+      end
+
+      def fit_as_one_layout(layout)
+        [FittedTextLayout.new(layout,
+                              @dsl.absolute_left + @dsl.margin_left,
+                              @dsl.absolute_top + @dsl.margin_top)]
+      end
+
+      def fit_as_two_layouts(layout, height, width)
+        first_text, second_text = split_text(layout, height)
+        first_layout = generate_layout(@text_block, width, first_text)
+        second_layout = generate_second_layout(second_text)
+
+        [
+          FittedTextLayout.new(first_layout,
+                               @dsl.absolute_left + @dsl.margin_left,
+                               @dsl.absolute_top + @dsl.margin_top),
+          FittedTextLayout.new(second_layout,
+                                @dsl.parent.absolute_left + @dsl.margin_left,
+                                @dsl.absolute_top + @dsl.margin_top + first_layout.get_bounds.height)
+        ]
+      end
+
+      def generate_second_layout(second_text)
+        parent_width, _ = space_from_parent
+        second_layout = generate_layout(@text_block, parent_width, second_text)
       end
 
       def available_space
@@ -57,6 +71,8 @@ class Shoes
         [width, height]
       end
 
+      # TODO: Is it worth having this take text_block?
+      # Always passing @text_block in this class for it... just use ivar?
       def generate_layout(text_block, width, text)
         text_block.generate_layout(width, text)
       end
