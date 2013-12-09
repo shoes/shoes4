@@ -9,17 +9,24 @@ class Shoes
         @dsl = dsl
         @opts = opts
       end
+
       def get_size(*opts)
         [WIDTH, HEIGHT]
       end
+
       def get_height
         HEIGHT
       end
+
       def redraw(*opts); end
+
       def replace *opts
         @dsl.instance_variable_set :@text, opts.map(&:to_s).join
       end
+
       def clear;end
+
+      def contents_alignment(*args);end
     end
 
     class Banner < TextBlock; end
