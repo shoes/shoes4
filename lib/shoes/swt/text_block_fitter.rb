@@ -1,9 +1,10 @@
 class Shoes
   module Swt
     class TextBlockFitter
-      def initialize(text_block)
+      def initialize(text_block, current_position)
         @text_block = text_block
         @dsl = text_block.dsl
+        @current_position = current_position
       end
 
       # TODO: Give layout diagram here and describe the general 1 vs 2 layout
@@ -50,7 +51,9 @@ class Shoes
       end
 
       def available_space
-        # TODO: Badly assumes all siblings are on same line. Fix that!
+        # TODO: This sibling checking is probably not needed anymore
+        # With the current position, we can probably just calculate our space
+        # but don't have time to lock that down right now.
         siblings = @text_block.dsl.parent.contents.to_ary
         my_index = siblings.find_index(@text_block.dsl)
 
@@ -62,12 +65,13 @@ class Shoes
       end
 
       def space_from_parent
+        # TODO: Height should take into account used up lines above in parent
         [@text_block.dsl.parent.width, @text_block.dsl.parent.height]
       end
 
       def space_from_sibling(sibling)
-        width = @text_block.dsl.parent.width - sibling.right
-        height = sibling.height
+        width = @text_block.dsl.parent.width - @current_position.x
+        height = @current_position.max_bottom - @current_position.y
         [width, height]
       end
 

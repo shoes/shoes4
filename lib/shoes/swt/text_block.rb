@@ -10,6 +10,7 @@ class Shoes
       DEFAULT_SPACING = 4
 
       attr_reader :dsl
+      attr_accessor :fitted_layouts
 
       def initialize(dsl)
         @dsl = dsl
@@ -71,11 +72,10 @@ class Shoes
         layout.get_bounds.width <= width
       end
 
-      def move_current_position(current_position)
-        fitter = ::Shoes::Swt::TextBlockFitter.new(self)
-        fitted_layouts = fitter.fit_it_in
 
-        return if fitted_layouts.empty?
+      def contents_alignment(current_position)
+        fitter = ::Shoes::Swt::TextBlockFitter.new(self, current_position)
+        @fitted_layouts = fitter.fit_it_in
 
         last_fitted = fitted_layouts.last
         last_layout = last_fitted.layout
@@ -83,11 +83,11 @@ class Shoes
         last_bounds = last_layout.get_line_bounds(line_count - 1)
 
         if fitted_layouts.size == 1
-          current_position.x = @dsl.absolute_left + last_bounds.width
-          current_position.y = @dsl.absolute_top
+          @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
         else
-          current_position.x = last_bounds.width
-          current_position.y = last_layout.get_bounds.height
+          @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
+          # TODO: This calculation is busted, only works on top line.
+          @dsl.absolute_top = last_layout.get_bounds.height
         end
       end
 

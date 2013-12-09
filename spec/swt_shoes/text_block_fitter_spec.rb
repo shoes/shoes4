@@ -12,7 +12,9 @@ describe Shoes::Swt::TextBlockFitter do
 
   let(:text_block) { double('text_block', dsl: dsl) }
 
-  subject { Shoes::Swt::TextBlockFitter.new(text_block) }
+  let(:current_position) { double('current_position') }
+
+  subject { Shoes::Swt::TextBlockFitter.new(text_block, current_position) }
 
   before(:each) do
     with_siblings(dsl)
@@ -28,7 +30,10 @@ describe Shoes::Swt::TextBlockFitter do
 
     describe "when second sibling" do
       it "should be from end of sibling" do
-        with_siblings(double('sibling_text_block', right: 50, height: 20), dsl)
+        with_siblings(double('sibling'))
+        current_position.stub(:x) { 50 }
+        current_position.stub(:y) { 0 }
+        current_position.stub(:max_bottom) { 20 }
         subject.available_space.should == [50, 20]
       end
     end
@@ -75,7 +80,10 @@ describe Shoes::Swt::TextBlockFitter do
     it "should not fit in first layout" do
       bounds.stub(width: 50)
       layout.stub(text: "", line_offsets: [])
-      with_siblings(double(right:50, height: 20), dsl)
+      with_siblings(double('sibling'))
+      current_position.stub(:x) { 50 }
+      current_position.stub(:y) { 0 }
+      current_position.stub(:max_bottom) { 20 }
 
       fitted_layouts = subject.fit_it_in
       expect(fitted_layouts.size).to eq(2)
@@ -84,6 +92,6 @@ describe Shoes::Swt::TextBlockFitter do
   end
 
   def with_siblings(*args)
-    parent_dsl.stub(:contents) { args }
+    parent_dsl.stub(:contents) { args + [dsl] }
   end
 end

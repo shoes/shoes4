@@ -10,18 +10,14 @@ class Shoes
       def initialize(dsl)
         @dsl = dsl
         @opts = @dsl.opts
-        #@text_layout = ::Swt::TextLayout.new Shoes.display
       end
 
       def paintControl(paint_event)
         graphics_context = paint_event.gc
         gcs_reset graphics_context
         unless @dsl.hidden?
-          fitter = ::Shoes::Swt::TextBlockFitter.new(@dsl.gui)
-          fitted_layouts = fitter.fit_it_in
-
           # TODO: Reconcile other @text_layout references to take arguments
-          fitted_layouts.each do |fitted_layout|
+          @dsl.gui.fitted_layouts.each do |fitted_layout|
             # TODO: Determine what this does that should be in generate_layout
             set_styles(fitted_layout.layout)
 

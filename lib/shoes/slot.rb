@@ -61,7 +61,7 @@ class Shoes
       end
     end
 
-    def contents_alignment
+    def contents_alignment(_=nil)
       last_position = position_contents
       determine_slot_height(last_position)
     end
@@ -93,7 +93,7 @@ class Shoes
     def positioning(element, current_position)
       return current_position unless takes_up_space?(element)
       position_element element, current_position
-      element.contents_alignment if element.respond_to? :contents_alignment
+      element.contents_alignment(current_position) if element.respond_to? :contents_alignment
       current_position = update_current_position(current_position, element)
       current_position
     end
@@ -104,13 +104,8 @@ class Shoes
 
     def update_current_position(current_position, element)
       return current_position if element.absolutely_positioned?
-      if element.respond_to? :move_current_position
-        element.move_current_position(current_position)
-      else
-        current_position.x = element.absolute_right
-        current_position.y = element.absolute_top
-      end
-
+      current_position.x = element.absolute_right
+      current_position.y = element.absolute_top
       if current_position.max_bottom < element.absolute_bottom
         current_position.max_bottom = element.absolute_bottom
       end
