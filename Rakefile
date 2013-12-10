@@ -60,6 +60,7 @@ def swt_args(args)
   # Adjust includes/excludes appropriately
   # args[:includes] = [:swt]
   args[:excludes] = [:no_swt]
+  args[:excludes] << :fails_on_osx if RbConfig::CONFIG["host_os"] =~ /darwin/
   args
 end
 
