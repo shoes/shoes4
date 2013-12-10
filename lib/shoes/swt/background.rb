@@ -10,12 +10,11 @@ class Shoes
 
       def_delegators :dsl, :corners, :angle
 
-      attr_reader :dsl, :transform, :painter, :opts
+      attr_reader :dsl, :app, :transform, :painter, :opts
 
       def initialize(dsl, app, opts = {}, &blk)
         @dsl = dsl
         @app = app
-        @container = @app.real
         @opts = opts
 
         @painter = Painter.new(self)
