@@ -37,6 +37,8 @@ class Shoes
     attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
                   :margin_top, :margin_bottom
 
+    protected :parent # we shall not mess with parent,see #495
+
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
       @parent = parent

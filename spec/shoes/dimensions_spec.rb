@@ -553,6 +553,11 @@ describe Shoes::DimensionsDelegations do
       dsl.should_receive :left
       subject.left
     end
+
+    it 'does not forward calls to parent' do
+      dsl.should_not_receive :parent
+      expect {subject.parent}.to raise_error
+    end
   end
 
 end
