@@ -12,12 +12,12 @@ class Shoes
 
       BINARY_ENCODING = Encoding.find('binary')
 
-      attr_reader :parent, :real, :dsl, :container, :painter
+      attr_reader :parent, :real, :dsl, :painter
 
       def initialize(dsl, parent, blk)
         @dsl = dsl
-        @app = @parent = parent
-        @container = @parent.real
+        @parent = parent
+        @container = parent.real 
 
         load_image(@dsl.file_path)
 
