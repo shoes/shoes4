@@ -1,11 +1,6 @@
 shared_examples_for "togglable" do
   it "triggers redrawing on the app" do
-    begin
-      container = swt_app
-    rescue
-      container = container
-    end
-    expect(container).to receive(:redraw)
+    expect(swt_app).to receive(:redraw)
     subject.toggle
   end
 

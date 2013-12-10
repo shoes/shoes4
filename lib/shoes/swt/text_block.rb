@@ -13,9 +13,8 @@ class Shoes
       def initialize(dsl)
         @dsl = dsl
         @app = dsl.app.gui
-        @opts = opts
-        @container = @app.real
-        @painter = TextBlockPainter.new @dsl, opts
+        @opts = @dsl.opts
+        @painter = TextBlockPainter.new @dsl
         @app.add_paint_listener @painter
       end
 
@@ -77,8 +76,8 @@ class Shoes
         @dsl.links.each do |link|
           app.clickable_elements.delete link
           ln = link.click_listener
-          @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
-          @container.remove_listener ::Swt::SWT::MouseUp, ln if ln
+          @app.remove_listener ::Swt::SWT::MouseDown, ln if ln
+          @app.remove_listener ::Swt::SWT::MouseUp, ln if ln
         end
         @dsl.links.clear
       end

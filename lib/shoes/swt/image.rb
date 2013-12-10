@@ -17,7 +17,6 @@ class Shoes
       def initialize(dsl, parent, blk)
         @dsl = dsl
         @parent = parent
-        @container = parent.real 
 
         load_image(@dsl.file_path)
 
@@ -128,7 +127,7 @@ class Shoes
           graphics_context = event.gc
           graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.element_left, dsl.element_top, dsl.element_width, dsl.element_height unless @dsl.hidden
         end
-        @container.add_paint_listener(@painter)
+        app.add_paint_listener(@painter)
       end
 
     end
