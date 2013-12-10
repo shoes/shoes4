@@ -1,17 +1,16 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Arc do
-  let(:swt_app_real) { double('swt app real') }
-  let(:swt_app) { double('swt_app', real: swt_app_real, disposed?: false, add_paint_listener: true) }
+  include_context "swt app"
+
   let(:paint_container) { swt_app }
-  let(:app) { double('app', gui: swt_app).as_null_object }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:dsl) { double("dsl object", app: app, element_width: width,
+  let(:dsl) { double("dsl object", app: shoes_app, element_width: width,
                      element_height: height, element_left: left,
                      element_top: top, angle1: angle1, angle2: angle2,
                      wedge?: false,  hidden: false).as_null_object }

@@ -1,12 +1,18 @@
 shared_examples_for "paintable" do
   it "registers for painting" do
     # Transitioning from gui_container_real to app_real
-    if defined? paint_container
+    begin
       container = paint_container
-    elsif defined? gui_container_real
-      container = gui_container_real
-    else
-      container = app
+    rescue
+      begin
+        container = gui_container_real
+      rescue
+        begin
+          container = swt_app
+        rescue
+          container = app
+        end
+      end
     end
     container.should_receive(:add_paint_listener)
     subject

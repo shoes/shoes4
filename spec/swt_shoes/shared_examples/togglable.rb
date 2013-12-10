@@ -1,11 +1,11 @@
 shared_examples_for "togglable" do
   it "triggers redrawing on the app" do
-    if defined? paint_container
-      container = paint_container
-    elsif defined? swt_app
+    begin
       container = swt_app
+    rescue
+      container = container
     end
-    expect(container).to receive(:redraw).at_least(:once)
+    expect(container).to receive(:redraw)
     subject.toggle
   end
 

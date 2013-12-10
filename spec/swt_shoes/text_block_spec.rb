@@ -1,6 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock do
+  include_context "swt app"
+
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
   let(:font) { ::Swt::Graphics::Font.new }
   let(:parent) { Shoes::Flow.new app_real, app_real }

@@ -8,7 +8,7 @@ class Shoes
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl, :transform, :painter, :container
+      attr_reader :dsl, :app, :transform, :painter, :container
 
 
       # @param [Shoes::Oval] dsl the dsl object to provide gui for

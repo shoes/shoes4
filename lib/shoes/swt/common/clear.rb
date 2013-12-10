@@ -3,12 +3,9 @@ class Shoes
     module Common
       module Clear
         def clear
-          if @painter
-            @container.remove_paint_listener @painter
-            remove_click_listeners if @click_listener
-          else
-            @real.dispose unless @real.disposed?
-          end
+          @container.remove_paint_listener @painter if @painter
+          remove_click_listeners if @click_listener
+          @real.dispose unless @real.disposed?
         end
 
         private

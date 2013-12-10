@@ -16,7 +16,6 @@ class Shoes
       def initialize(dsl, app, opts = {})
         @dsl = dsl
         @app = app
-        @container = @app.real
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
       end
