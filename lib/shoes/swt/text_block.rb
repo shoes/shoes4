@@ -11,10 +11,11 @@ class Shoes
 
       def initialize(dsl)
         @dsl = dsl
-        @opts = dsl.opts
-        @container = @dsl.app.gui.real
-        @painter = TextBlockPainter.new @dsl
-        @container.add_paint_listener @painter
+        @app = dsl.app.gui
+        @opts = opts
+        @container = @app.real
+        @painter = TextBlockPainter.new @dsl, opts
+        @app.add_paint_listener @painter
       end
 
       def redraw
