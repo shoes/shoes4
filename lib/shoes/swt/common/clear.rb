@@ -5,7 +5,7 @@ class Shoes
         def clear
           app.remove_paint_listener @painter
           remove_click_listeners
-          @real.dispose unless @real && @real.disposed?
+          @real.dispose unless @real.nil? || @real.disposed?
         end
 
         private
