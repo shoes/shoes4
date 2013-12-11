@@ -11,7 +11,7 @@ class Shoes
       # algorthim that we're using, and why it works
       def fit_it_in
         width, height = available_space
-        layout = generate_layout(@text_block, width, @dsl.text)
+        layout = generate_layout(width, @dsl.text)
 
         if fits_in_one_layout?(layout, height)
           fit_as_one_layout(layout)
@@ -32,7 +32,7 @@ class Shoes
 
       def fit_as_two_layouts(layout, height, width)
         first_text, second_text = split_text(layout, height)
-        first_layout = generate_layout(@text_block, width, first_text)
+        first_layout = generate_layout(width, first_text)
         second_layout = generate_second_layout(second_text)
 
         [
@@ -47,7 +47,7 @@ class Shoes
 
       def generate_second_layout(second_text)
         parent_width = @text_block.dsl.parent.width
-        second_layout = generate_layout(@text_block, parent_width, second_text)
+        second_layout = generate_layout(parent_width, second_text)
       end
 
       def available_space
@@ -60,10 +60,8 @@ class Shoes
         @text_block.dsl.parent
       end
 
-      # TODO: Is it worth having this take text_block?
-      # Always passing @text_block in this class for it... just use ivar?
-      def generate_layout(text_block, width, text)
-        text_block.generate_layout(width, text)
+      def generate_layout(width, text)
+        @text_block.generate_layout(width, text)
       end
 
       def split_text(layout, height)

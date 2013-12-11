@@ -36,7 +36,7 @@ describe Shoes::Swt::TextBlockFitter do
   describe "layout generation" do
     it "should be delegated to the text block" do
       expect(text_block).to receive(:generate_layout).with(150, "Test")
-      subject.generate_layout(text_block, 150, "Test")
+      subject.generate_layout(150, "Test")
     end
   end
 
