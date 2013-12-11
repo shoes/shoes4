@@ -51,9 +51,13 @@ class Shoes
       end
 
       def available_space
-        width = @text_block.dsl.parent.width - @current_position.x
+        width = parent.absolute_left + parent.width - @current_position.x
         height = @current_position.max_bottom - @current_position.y
         [width, height]
+      end
+
+      def parent
+        @text_block.dsl.parent
       end
 
       # TODO: Is it worth having this take text_block?

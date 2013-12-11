@@ -23,7 +23,13 @@ describe Shoes::Swt::TextBlockFitter do
   describe "determining available space" do
     it "should use the current position" do
       with_current_position(50, 0, 20)
-      subject.available_space.should == [50, 20]
+      expect(subject.available_space).to eq([50, 20])
+    end
+
+    it "should offset by parent with current position" do
+      parent_dsl.stub(width: 100, absolute_left: 20)
+      with_current_position(0, 0, 30)
+      expect(subject.available_space).to eq([120, 30])
     end
   end
 
