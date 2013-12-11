@@ -46,30 +46,11 @@ class Shoes
       end
 
       def generate_second_layout(second_text)
-        parent_width, _ = space_from_parent
+        parent_width = @text_block.dsl.parent.width
         second_layout = generate_layout(@text_block, parent_width, second_text)
       end
 
       def available_space
-        # TODO: This sibling checking is probably not needed anymore
-        # With the current position, we can probably just calculate our space
-        # but don't have time to lock that down right now.
-        siblings = @text_block.dsl.parent.contents.to_ary
-        my_index = siblings.find_index(@text_block.dsl)
-
-        if my_index == 0
-          space_from_parent
-        else
-          space_from_sibling(siblings[my_index - 1])
-        end
-      end
-
-      def space_from_parent
-        # TODO: Height should take into account used up lines above in parent
-        [@text_block.dsl.parent.width, @text_block.dsl.parent.height]
-      end
-
-      def space_from_sibling(sibling)
         width = @text_block.dsl.parent.width - @current_position.x
         height = @current_position.max_bottom - @current_position.y
         [width, height]
