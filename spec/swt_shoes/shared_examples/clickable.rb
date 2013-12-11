@@ -1,16 +1,10 @@
 shared_examples 'clickable backend' do
 
   before :each do
-    subject.stub dsl: click_dsl
+    swt_app.stub :add_clickable_element
+    dsl.stub(:in_bounds?) { true }
   end
 
-  let(:click_dsl) {double 'dsl', app: click_dsl_app, in_bounds?: true}
-  let(:click_dsl_app) {double 'dsl_app', gui: click_swt_app}
-  let(:click_swt_app) {double 'swt_app', real: click_real,
-                              add_clickable_element: true}
-  let(:click_real) {double 'real', addListener: true}
-
-  it {should respond_to :clickable}
   let(:clickable_block) {double 'clickable_block'}
   let(:clickable_subject) do
     subject.clickable clickable_block
@@ -19,6 +13,8 @@ shared_examples 'clickable backend' do
 
   let(:mouse_event) {double 'mouse_event', button: 1, x: 2, y:3}
 
+  it {should respond_to :clickable}
+ 
   it 'its click_handler should not be nil' do
     clickable_subject.click_listener.should_not be_nil
   end
@@ -28,14 +24,14 @@ shared_examples 'clickable backend' do
     clickable_subject.click_listener.handleEvent mouse_event
   end
 
-  describe 'interaction with the app gui' do
+  describe 'interaction with the swt app object' do
 
     def expect_adds_listener_for(event)
-      click_real.should_receive(:addListener).with(event, clickable_subject.click_listener)
+      swt_app.should_receive(:add_listener).with(event, clickable_subject.click_listener)
     end
 
     it 'receives the add_clickable_element message' do
-      click_swt_app.should_receive(:add_clickable_element)
+      swt_app.should_receive(:add_clickable_element)
       clickable_subject
     end
 
@@ -54,5 +50,4 @@ shared_examples 'clickable backend' do
       subject.release do ; end
     end
   end
-
 end
