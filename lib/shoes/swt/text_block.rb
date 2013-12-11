@@ -72,23 +72,37 @@ class Shoes
         layout.get_bounds.width <= width
       end
 
-
       def contents_alignment(current_position)
         fitter = ::Shoes::Swt::TextBlockFitter.new(self, current_position)
         @fitted_layouts = fitter.fit_it_in
 
-        last_fitted = fitted_layouts.last
-        last_layout = last_fitted.layout
+        if fitted_layouts.size == 1
+          set_absolutes_for_one_layout
+        else
+          set_absolutes_for_two_layouts(current_position)
+        end
+      end
+
+      def last_layout
+        fitted_layouts.last.layout
+      end
+
+      def last_bounds
         line_count = last_layout.line_count
         last_bounds = last_layout.get_line_bounds(line_count - 1)
+      end
 
-        if fitted_layouts.size == 1
-          @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
-        else
-          @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
-          # TODO: This calculation is busted, only works on top line.
-          @dsl.absolute_top = last_layout.get_bounds.height
-        end
+      def set_absolutes_for_one_layout
+        @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
+      end
+
+      def set_absolutes_for_two_layouts(current_position)
+        @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
+
+        layout = last_layout
+        last_line_height = layout.line_metrics(layout.line_count - 1).height
+        layout_height = layout.get_bounds.height - (layout.spacing * 2)
+        @dsl.absolute_top = current_position.max_bottom + layout_height - last_line_height
       end
 
       def clear
