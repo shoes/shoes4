@@ -18,30 +18,43 @@ class Shoes
         unless @dsl.hidden?
           # TODO: Reconcile other @text_layout references to take arguments
           @dsl.gui.fitted_layouts.each do |fitted_layout|
-            # TODO: Determine what this does that should be in generate_layout
             set_styles(fitted_layout.layout)
 
             # TODO: Deal with explicit widths from the DSL on the text block
-            # TODO: Use element_width
             fitted_layout.draw graphics_context
 
-            # TODO: Deal with the textcursor placement
-            #if @dsl.cursor
-            #  move_text_cursor
-            #else
-            #  (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
-            #end
+            if @dsl.cursor
+              move_text_cursor(fitted_layout)
+            else
+              remove_text_cursor
+            end
           end
         end
       end
 
-      def move_text_cursor
-          layout_height = @text_layout.getLineBounds(0).height
-          @dsl.textcursor ||= @dsl.app.line(0, 0, 0, layout_height, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
-          cursor_position = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
-          cursor_position = 0 if cursor_position < 0
-          pos = @text_layout.getLocation cursor_position, true
-          @dsl.textcursor.move(@dsl.element_left + pos.x, @dsl.element_top + pos.y).show
+      # TODO: Fix to span between multiple layouts properly. Currently just
+      # puts the cursor in the last one
+      #
+      # TODO: Also noticed existing bug when the position is past the end of
+      # the text, we'll crash instead of setting to the end like Shoes3
+      def move_text_cursor(fitted_layout)
+        text_layout = fitted_layout.layout
+        layout_height = text_layout.get_line_bounds(0).height
+
+        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, layout_height, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
+        cursor_position = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
+        cursor_position = 0 if cursor_position < 0
+        pos = text_layout.getLocation cursor_position, true
+
+        @dsl.textcursor.move(fitted_layout.left + pos.x,
+                             fitted_layout.top + pos.y).show
+      end
+
+      def remove_text_cursor
+        return unless @dsl.textcursor
+
+        @dsl.textcursor.remove
+        @dsl.textcursor = nil
       end
 
       def set_styles(text_layout)
