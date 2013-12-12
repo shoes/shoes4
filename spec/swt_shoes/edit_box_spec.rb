@@ -3,7 +3,6 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::EditBox do
   include_context "swt app"
 
-  #let(:gui)    { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
   let(:real)   { double('real', disposed?: false).as_null_object }
   let(:dsl)    { double('dsl', app: shoes_app, visible?: true,
                         element_left: 100, element_top: 100,

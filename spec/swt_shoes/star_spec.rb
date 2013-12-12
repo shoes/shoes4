@@ -3,9 +3,6 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Star do
   include_context "swt app"
 
-  #let(:container) { double('container', :disposed? => false) }
-  #let(:gui) { double('gui', :real => container).as_null_object }
-  #let(:app) { double('app', :gui => gui).as_null_object }
   let(:left) { 55 }
   let(:top) { 77 }
   let(:points) { 7 }
