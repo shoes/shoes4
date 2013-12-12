@@ -3,7 +3,6 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Arc do
   include_context "swt app"
 
-  let(:paint_container) { swt_app }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
