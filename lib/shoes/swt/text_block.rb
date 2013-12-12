@@ -76,8 +76,8 @@ class Shoes
         @dsl.links.each do |link|
           app.clickable_elements.delete link
           ln = link.click_listener
-          @app.remove_listener ::Swt::SWT::MouseDown, ln if ln
-          @app.remove_listener ::Swt::SWT::MouseUp, ln if ln
+          app.remove_listener ::Swt::SWT::MouseDown, ln if ln
+          app.remove_listener ::Swt::SWT::MouseUp, ln if ln
         end
         @dsl.links.clear
       end
