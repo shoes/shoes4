@@ -5,9 +5,13 @@ class Shoes
   #
   # Including classes must provide:
   #
-  #   @style:          a hash of styles
-  #   @element_styles: a hash of {Class => styles}, where styles is
-  #                    a hash of default styles for elements of Class,
+  #   @__privates__.style:
+  #     a hash of styles
+  #   @__privates__.element_styles:
+  #     a hash of {Class => styles}, where styles is a hash of 
+  #     default styles for elements of Class,
+  #   @__privates__.app:
+  #     the current Shoes app
   module DSL
     include Common::Style
     include Common::Clear
@@ -55,7 +59,7 @@ class Shoes
     def style(klass_or_styles = nil, styles = {})
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
-        @element_styles[klass] = styles
+        @__privates__.element_styles[klass] = styles
       else
         super(klass_or_styles)
       end
@@ -77,11 +81,11 @@ class Shoes
 
     # Default styles for elements of klass
     def style_for_element(klass, styles = {})
-      @element_styles.fetch(klass, {}).merge(styles)
+      @__privates__.element_styles.fetch(klass, {}).merge(styles)
     end
 
     def create(element, *args, &blk)
-      element.new(@app, current_slot, *args, &blk)
+      element.new(@__privates__.app, @__privates__.current_slot, *args, &blk)
     end
 
     public
@@ -173,7 +177,7 @@ class Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      Shoes::Animation.new app, opts, blk
+      Shoes::Animation.new @__privates__.app, opts, blk
     end
 
     def every n=1, &blk
@@ -182,7 +186,7 @@ class Shoes
 
     def timer n=1, &blk
       n *= 1000
-      Timer.new @app, n, &blk
+      Timer.new @__privates__.app, n, &blk
     end
 
     # similar controls as Shoes::Video (#video)
@@ -203,7 +207,7 @@ class Shoes
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
       arc_style = normalize_style(opts)
-      Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(arc_style))
+      Shoes::Arc.new(@__privates__.app, left, top, width, height, angle1, angle2, style.merge(arc_style))
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
@@ -214,7 +218,7 @@ class Shoes
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
     def line(x1, y1, x2, y2, opts = {})
-      Shoes::Line.new app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
+      Shoes::Line.new @__privates__.app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
     end
 
     # Creates an oval at (left, top)
@@ -262,7 +266,7 @@ Wrong number of arguments. Must be one of:
 EOS
           raise ArgumentError, message
       end
-      Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style), &blk)
+      Shoes::Oval.new(@__privates__.app, left, top, width, height, style.merge(oval_style), &blk)
     end
 
     # Creates a rectangle
@@ -315,7 +319,7 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      Shoes::Rect.new app, left, top, width, height, style.merge(opts), &blk
+      Shoes::Rect.new @__privates__.app, left, top, width, height, style.merge(opts), &blk
     end
 
     # Creates a new Shoes::Star object
@@ -335,12 +339,12 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      Shoes::Star.new(app, left, top, points, outer, inner, opts, &blk)
+      Shoes::Star.new(@__privates__.app, left, top, points, outer, inner, opts, &blk)
     end
 
     # Creates a new Shoes::Shape object
     def shape(shape_style = {}, &blk)
-      Shoes::Shape.new(app, style.merge(shape_style), blk)
+      Shoes::Shape.new(@__privates__.app, style.merge(shape_style), blk)
     end
 
     # Creates a new Shoes::Color object
@@ -393,32 +397,32 @@ EOS
     #
     # color - a Shoes::Color
     def stroke(color)
-      @style[:stroke] = pattern(color)
+      @__privates__.style[:stroke] = pattern(color)
     end
 
     def nostroke
-      @style[:stroke] = nil
+      @__privates__.style[:stroke] = nil
     end
 
     # Sets the stroke width, in pixels
     def strokewidth(width)
-      @style[:strokewidth] = width
+      @__privates__.style[:strokewidth] = width
     end
 
     # Sets the current fill color
     #
     # @param [Shoes::Color,Shoes::Gradient] pattern the pattern to set as fill
     def fill(pattern)
-      @style[:fill] = pattern(pattern)
+      @__privates__.style[:fill] = pattern(pattern)
     end
 
     def nofill
-      @style[:fill] = nil
+      @__privates__.style[:fill] = nil
     end
 
     # Sets the current line cap style
     def cap line_cap
-      @style[:cap] = line_cap
+      @__privates__.style[:cap] = line_cap
     end
 
 
@@ -477,29 +481,29 @@ EOS
     end
 
     def mouse
-      [@app.mouse_button, @app.mouse_pos[0], @app.mouse_pos[1]]
+      [@__privates__.app.mouse_button, @__privates__.app.mouse_pos[0], @__privates__.app.mouse_pos[1]]
     end
 
     def motion &blk
-      @app.mouse_motion << blk
+      @__privates__.app.mouse_motion << blk
     end
 
     # hover and leave just delegate to the current slot as hover and leave
     # are just defined for slots but self is always the app.
     def hover(&blk)
-      current_slot.hover(blk)
+      @__privates__.current_slot.hover(blk)
     end
 
     def leave(&blk)
-      current_slot.leave(blk)
+      @__privates__.current_slot.leave(blk)
     end
 
     def keypress &blk
-      Shoes::Keypress.new app, &blk
+      Shoes::Keypress.new @__privates__.app, &blk
     end
 
     def keyrelease &blk
-      Shoes::Keyrelease.new app, &blk
+      Shoes::Keyrelease.new @__privates__.app, &blk
     end
 
     def append(&blk)
@@ -514,26 +518,26 @@ EOS
         url_argument = match_data[1]
         clear do
           @location = url
-          action_proc.call @app, url_argument
+          action_proc.call @__privates__.app, url_argument
         end
       end
       timer(0.01){top_slot.contents_alignment}
     end
 
     def scroll_top
-      @app.gui.scroll_top
+      @__privates__.app.gui.scroll_top
     end
 
     def scroll_top=(n)
-      @app.gui.scroll_top = n
+      @__privates__.app.gui.scroll_top = n
     end
 
     def clipboard
-      @app.gui.clipboard
+      @__privates__.app.gui.clipboard
     end
 
     def clipboard=(str)
-      @app.gui.clipboard = str
+      @__privates__.app.gui.clipboard = str
     end
 
     def download name, args={}, &blk
