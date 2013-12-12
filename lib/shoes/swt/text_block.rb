@@ -60,7 +60,7 @@ class Shoes
       end
 
       def layout_fits_in?(layout, width)
-        layout.get_bounds.width <= width
+        layout.bounds.width <= width
       end
 
       def contents_alignment(current_position)
@@ -82,7 +82,7 @@ class Shoes
 
       def last_bounds
         line_count = last_layout.line_count
-        last_bounds = last_layout.get_line_bounds(line_count - 1)
+        last_layout.get_line_bounds(line_count - 1)
       end
 
       def set_absolutes_for_one_layout
@@ -94,7 +94,7 @@ class Shoes
 
         layout = last_layout
         last_line_height = layout.line_metrics(layout.line_count - 1).height
-        layout_height = layout.get_bounds.height - (layout.spacing * 2)
+        layout_height = layout.bounds.height - (layout.spacing * 2)
         @dsl.absolute_top = current_position.max_bottom + layout_height - last_line_height
       end
 
