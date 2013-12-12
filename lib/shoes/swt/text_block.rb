@@ -29,37 +29,28 @@ class Shoes
       end
 
       def get_height
-        text_layout, font = set_styles
-        text_layout.width = @dsl.element_width
-        text_layout.getBounds(0, @dsl.text.length - 1).height.tap{font.dispose}
+        get_size.last
       end
 
       def get_size
-        text_layout, font = set_styles
-        bounds = text_layout.getBounds(0, @dsl.text.length - 1)
-        font.dispose
+        # TODO: This isn't quite right, but this gets called by the DSL early
+        # on before we've actually fitted.
+        #
+        # Should contents_alignment instead write back to the DSL on fitting?
+        text_layout = generate_layout(nil, @dsl.text)
+        bounds = text_layout.bounds
         return bounds.width, bounds.height
-      end
-
-      def set_styles
-        text_layout = ::Swt::TextLayout.new Shoes.display
-        text_layout.setText @dsl.text
-        text_layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
-                               ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new font, nil, nil
-        text_layout.setStyle style, 0, @dsl.text.length - 1
-        return text_layout, font
       end
 
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
         layout.setText text
         layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size, ::Swt::SWT::NORMAL
+        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
+                               ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
         layout.setStyle style, 0, text.length - 1
-        shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
+        shrink_layout_to(layout, width) if width && !layout_fits_in?(layout, width)
 
         layout
       end
@@ -76,6 +67,8 @@ class Shoes
         fitter = ::Shoes::Swt::TextBlockFitter.new(self, current_position)
         @fitted_layouts = fitter.fit_it_in
 
+        # TODO: Should this also reassign the DSL sizes instead of the DSL
+        # trying to read (prematurely?) from the @gui?
         if fitted_layouts.size == 1
           set_absolutes_for_one_layout
         else
