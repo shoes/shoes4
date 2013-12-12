@@ -3,14 +3,18 @@ class Shoes
     class KeyListener
       include ::Swt::KeyListener
 
+      def self.get_swt_constant(name)
+        ::Swt::SWT.const_get name
+      end
+
       SPECIAL_KEY_NAMES = {}
 
       %w[TAB PAGE_UP PAGE_DOWN HOME END F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
          F13 F14 F15].each do|key|
-        SPECIAL_KEY_NAMES[eval("::Swt::SWT::#{key}")] = key.downcase
+        SPECIAL_KEY_NAMES[get_swt_constant key] = key.downcase
       end
       %w[UP DOWN LEFT RIGHT].each do |key|
-        SPECIAL_KEY_NAMES[eval("::Swt::SWT::ARROW_#{key}")] = key.downcase
+        SPECIAL_KEY_NAMES[get_swt_constant "ARROW_#{key}"] = key.downcase
       end
 
       SPECIAL_KEY_NAMES[::Swt::SWT::DEL] = "delete"
@@ -19,7 +23,7 @@ class Shoes
       SPECIAL_KEY_NAMES[::Swt::SWT::CR]  = "\n"
 
       MODIFIER_KEYS = %w[CTRL SHIFT ALT CAPS_LOCK].map do |key|
-        eval("::Swt::SWT::#{key}")
+        get_swt_constant key
       end
 
       def initialize(blk)

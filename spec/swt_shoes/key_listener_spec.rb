@@ -2,6 +2,13 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::KeypressListener do
+
+  describe '.get_swt_constant' do
+    it 'gets the swt constant' do
+      expect(Shoes::Swt::KeyListener.get_swt_constant("TAB")).to eq ::Swt::SWT::TAB
+    end
+  end
+
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
@@ -22,7 +29,6 @@ describe Shoes::Swt::KeypressListener do
     result = ('alt_' + character).to_sym
     test_character_press(character, state_modifier, result)
   end
-
 
 
   describe 'works with simple keys such as' do
