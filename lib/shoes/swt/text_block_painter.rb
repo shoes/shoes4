@@ -13,23 +13,24 @@ class Shoes
       end
 
       def paintControl(paint_event)
-        graphics_context = paint_event.gc
-        gcs_reset graphics_context
-        unless @dsl.hidden?
-          # TODO: Reconcile other @text_layout references to take arguments
-          @dsl.gui.fitted_layouts.each do |fitted_layout|
-            set_styles(fitted_layout.layout)
+        gcs_reset(paint_event.gc)
+        return if @dsl.hidden?
 
-            # TODO: Deal with explicit widths from the DSL on the text block
-            fitted_layout.draw graphics_context
-
-            if @dsl.cursor
-              move_text_cursor(fitted_layout)
-            else
-              remove_text_cursor
-            end
-          end
+        @dsl.gui.fitted_layouts.each do |fitted_layout|
+          draw_from_layout(paint_event.gc, fitted_layout)
         end
+      end
+
+      # TODO: Handle links that span multiple text layouts. Currently chokes on
+      # text location logic
+      #
+      # TODO: Fix link blocks losing their linkiness when text expands
+      #
+      # TODO: Pull text link meddling to separate class for easier testing
+      def draw_from_layout(gc, fitted_layout)
+        set_styles(fitted_layout)
+        fitted_layout.draw(gc)
+        draw_text_cursor(fitted_layout)
       end
 
       # TODO: Fix to span between multiple layouts properly. Currently just
@@ -37,6 +38,16 @@ class Shoes
       #
       # TODO: Also noticed existing bug when the position is past the end of
       # the text, we'll crash instead of setting to the end like Shoes3
+      #
+      # TODO: Consider pulling cursor to separate class for easier testing
+      def draw_text_cursor(fitted_layout)
+        if @dsl.cursor
+          move_text_cursor fitted_layout
+        else
+          remove_text_cursor
+        end
+      end
+
       def move_text_cursor(fitted_layout)
         text_layout = fitted_layout.layout
         layout_height = text_layout.get_line_bounds(0).height
@@ -57,7 +68,8 @@ class Shoes
         @dsl.textcursor = nil
       end
 
-      def set_styles(text_layout)
+      def set_styles(fitted_layout)
+        text_layout = fitted_layout.layout
         text_layout.setJustify @opts[:justify]
         text_layout.setSpacing(@opts[:leading] || 4)
         text_layout.setAlignment case @opts[:align]
@@ -66,8 +78,8 @@ class Shoes
                                     else ::Swt::SWT::LEFT
                                   end
         style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
-        set_font_styles(text_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(style[:fg], style[:bg], text_layout)
+        set_font_styles(fitted_layout, style, 0..(@dsl.text.length - 1))
+        set_text_styles(fitted_layout, style[:fg], style[:bg])
       end
 
       private
@@ -81,11 +93,12 @@ class Shoes
         styles.merge(opts)
       end
 
-      def create_link(text, range)
-        start_position = @text_layout.getLocation range.first, false
-        end_position = @text_layout.getLocation range.last, true
-        left, top =  @dsl.element_left, @dsl.element_top
-        text.line_height = @text_layout.getLineBounds(0).height
+      def create_link(fitted_layout, text, range)
+        layout = fitted_layout.layout
+        start_position = layout.getLocation range.first, false
+        end_position = layout.getLocation range.last, true
+        left, top =  fitted_layout.left, fitted_layout.top
+        text.line_height = layout.getLineBounds(0).height
         text.start_x, text.start_y = left + start_position.x, top + start_position.y
         text.end_x, text.end_y = left + end_position.x, top + end_position.y + text.line_height
         @dsl.links << text
@@ -96,7 +109,7 @@ class Shoes
         end
       end
 
-      def set_text_styles(foreground, background, layout)
+      def set_text_styles(fitted_layout, foreground, background)
 
         @dsl.text_styles.each do |range, text_styles|
           defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
@@ -104,18 +117,18 @@ class Shoes
             if text.is_a? ::Shoes::Span
               apply_styles(current_styles, text.opts)
             else
-              make_link_style(text, current_styles, range)
+              make_link_style(fitted_layout, text, current_styles, range)
             end
           end
-          set_font_styles(layout, styles, range)
+          set_font_styles(fitted_layout, styles, range)
         end
       end
 
-      def set_font_styles(layout, styles, range)
+      def set_font_styles(fitted_layout, styles, range)
         font_style = styles[:font_detail]
         font = create_font font_style[:name], font_style[:size], font_style[:styles]
         style = create_style font, styles[:fg], styles[:bg], styles
-        layout.setStyle style, range.first, range.last
+        fitted_layout.layout.setStyle style, range.first, range.last
       end
 
       def default_text_styles(foreground, background, strikecolor, undercolor)
@@ -132,11 +145,11 @@ class Shoes
         }
       end
 
-      def make_link_style(text, styles, range)
+      def make_link_style(fitted_layout, text, styles, range)
         if text.is_a? ::Shoes::Link
           styles[:underline] = true
           styles[:fg] = ::Swt::Color.new Shoes.display, 0, 0, 255
-          create_link(text, range)
+          create_link(fitted_layout, text, range)
         end
         styles
       end

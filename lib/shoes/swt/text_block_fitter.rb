@@ -26,6 +26,7 @@ class Shoes
 
       def fit_as_one_layout(layout)
         # TODO: Potentially need extra spacing consideration
+        # TODO: Make sure we deal with explicit widths from the DSL
         [FittedTextLayout.new(layout,
                               @dsl.absolute_left + @dsl.margin_left,
                               @dsl.absolute_top + @dsl.margin_top)]
@@ -33,6 +34,7 @@ class Shoes
 
       def fit_as_two_layouts(layout, height, width)
         # TODO: Potentially need extra spacing consideration
+        # TODO: Make sure we deal with explicit widths from the DSL
         first_text, second_text = split_text(layout, height)
         first_layout = generate_layout(width, first_text)
         second_layout = generate_second_layout(second_text)
@@ -72,6 +74,7 @@ class Shoes
 
         offsets = layout.line_offsets
         offsets.each_with_index do |_, i|
+          # TODO: Fix bug where if this hits the last offset we crash!
           height_so_far += layout.line_metrics(i).height
           break if height_so_far > height
 
