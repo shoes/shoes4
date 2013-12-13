@@ -7,7 +7,6 @@ class Shoes
 
     attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
                 :leave_proc
-    attr_accessor :hovered
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -66,6 +65,10 @@ class Shoes
       determine_slot_height(last_position)
     end
 
+    def hovered?
+      @hovered
+    end
+
     def hover(blk)
       @hover_proc = blk
       @app.add_mouse_hover_control self
@@ -74,6 +77,14 @@ class Shoes
     def leave(blk)
       @leave_proc = blk
       @app.add_mouse_hover_control self
+    end
+
+    def mouse_hovered
+      @hovered = true
+    end
+
+    def mouse_left
+      @hovered = false
     end
 
     protected

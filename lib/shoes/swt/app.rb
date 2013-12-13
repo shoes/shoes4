@@ -207,20 +207,21 @@ class Shoes
         @app = app
       end
 
-      def mouseMove(e)
-        @app.dsl.mouse_pos = [e.x, e.y]
-        @app.dsl.mouse_motion.each{|blk| eval_move_block blk, e}
-        mouse_shape_control
-        mouse_hover_control
-        mouse_leave_control
+      def mouseMove(mouse_event)
+        @app.dsl.mouse_pos = [mouse_event.x, mouse_event.y]
+        @app.dsl.mouse_motion.each{|blk| eval_move_block blk, mouse_event}
+        mouse_shape_control mouse_event
+        mouse_leave_control mouse_event
+        mouse_hover_control mouse_event
       end
 
-      def eval_move_block(blk, e)
-        blk.call e.x, e.y
+      private
+      def eval_move_block(blk, event)
+        blk.call event.x, event.y
       end
 
-      def mouse_shape_control
-        cursor = if cursor_over_clickable_element?
+      def mouse_shape_control(mouse_event)
+        cursor = if cursor_over_clickable_element? mouse_event
                    ::Swt::SWT::CURSOR_HAND
                  else
                    ::Swt::SWT::CURSOR_ARROW
@@ -228,34 +229,31 @@ class Shoes
         @app.shell.setCursor  Shoes.display.getSystemCursor(cursor)
       end
 
-      def mouse_hover_control
-        @app.dsl.mouse_hover_controls.each do |e|
-          if mouse_on?(e) and !e.hovered
-            e.hovered = true
-            e.hover_proc[e] if e.hover_proc
+      def mouse_leave_control(mouse_event)
+        @app.dsl.mouse_hover_controls.each do |element|
+          if !mouse_on?(element, mouse_event) and element.hovered?
+            element.mouse_left
+            element.leave_proc.call element if element.leave_proc
           end
         end
       end
 
-      def mouse_leave_control
-        @app.dsl.mouse_hover_controls.each do |e|
-          if !mouse_on?(e) and e.hovered
-            e.hovered = false
-            e.leave_proc[e] if e.leave_proc
+      def mouse_hover_control(mouse_event)
+        @app.dsl.mouse_hover_controls.each do |element|
+          if mouse_on?(element, mouse_event) and !element.hovered?
+            element.mouse_hovered
+            element.hover_proc.call element if element.hover_proc
           end
         end
       end
-  
-      def mouse_on? element
-        mb, mx, my = element.app.mouse
-        element.in_bounds? mx, my
+
+      def mouse_on?(element, mouse_event)
+        element.in_bounds? mouse_event.x, mouse_event.y
       end
 
-      private
-      def cursor_over_clickable_element?
-        mouse_x, mouse_y = @app.dsl.mouse_pos
+      def cursor_over_clickable_element?(mouse_event)
         @app.clickable_elements.any? do |element|
-          element.in_bounds? mouse_x, mouse_y
+          element.in_bounds? mouse_event.x, mouse_event.y
         end
       end
     end
@@ -264,14 +262,17 @@ class Shoes
       def initialize app
         @app = app
       end
+
       def mouseDown(e)
         @app.dsl.mouse_button = e.button
         @app.dsl.mouse_pos = [e.x, e.y]
       end
+
       def mouseUp(e)
         @app.dsl.mouse_button = 0
         @app.dsl.mouse_pos = [e.x, e.y]
       end
+
       def mouseDoubleClick(e)
         # do nothing
       end
