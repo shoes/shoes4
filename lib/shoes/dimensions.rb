@@ -36,8 +36,18 @@ class Shoes
     attr_reader   :parent
     attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
                   :margin_top, :margin_bottom
-
     protected :parent # we shall not mess with parent,see #495
+
+
+    # in case you wonder about the -1... it is used to adjust the right and
+    # bottom values. Because right is not left + width but rather left + width -1
+    # Let me give you an example:
+    # Say left is 20 and we have a width of 100 then the right must be 119,
+    # because you have to take pixel number 20 into account so 20..119 is 100
+    # while 20..120 is 101. E.g.:
+    # (20..119).size => 100
+    PIXEL_COUNTING_ADJUSTMENT = -1
+
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -111,12 +121,12 @@ class Shoes
 
     def element_right
       return nil if element_left.nil? || element_width.nil?
-      element_left + element_width
+      element_left + element_width + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def element_bottom
       return nil if element_top.nil? || element_height.nil?
-      element_top + element_height
+      element_top + element_height + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def absolute_x_position?
@@ -132,19 +142,23 @@ class Shoes
     end
 
     def right
-      left + (width || 0)
+      return left if width.nil?
+      left + width + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def bottom
-      top + (height || 0)
+      return top if height.nil?
+      top + height + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def absolute_right
-      absolute_left + (width || 0)
+      return absolute_left if width.nil?
+      absolute_left + width + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def absolute_bottom
-      absolute_top + (height || 0)
+      return absolute_top if height.nil?
+      absolute_top + height + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def in_bounds?(x, y)
