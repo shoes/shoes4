@@ -46,7 +46,7 @@ shared_examples_for 'positioning through :_position' do
   it 'sends the child the :_position method to position it' do
     element = Shoes::FakeElement.new nil, height: 100, width: 50
     subject.add_child element
-    element.should_receive :_position
+    element.should_receive(:_position).and_call_original
     # message expectation for _position seems to not execute the method, hence
     # these values aren't set appropriately
     element.stub absolute_right: 0, absolute_bottom: 0
@@ -68,11 +68,11 @@ shared_examples_for 'positions the first element in the top left' do
   include_context 'one slot child'
   include_context 'contents_alignment'
   it 'positions a single object at the same top as self' do
-    element.absolute_top.should eq subject.absolute_top
+    element.absolute_top.should eq subject.element_top
   end
 
   it 'positions a single object at the same left as self' do
-    element.absolute_left.should eq subject.absolute_left
+    element.absolute_left.should eq subject.element_left
   end
 
   it 'has a slot height of the element height' do
@@ -90,7 +90,7 @@ shared_examples_for 'arranges elements underneath each other' do
   include_context 'contents_alignment'
 
   it 'positions an element beneath a previous element' do
-    element2.absolute_top.should eq element.absolute_bottom
+    element2.absolute_top.should eq element.absolute_bottom + 1
   end
 
   it 'still positions it at the start of the line (e.g. self.left)' do
@@ -102,7 +102,7 @@ shared_examples_for 'arranges elements underneath each other' do
   end
 
   it 'has an absolute_bottom of top + height' do
-    subject.absolute_bottom.should eq (subject.absolute_top + subject.height)
+    subject.absolute_bottom.should eq (subject.absolute_top + subject.height - 1)
   end
 
   describe 'element one with top and left' do
