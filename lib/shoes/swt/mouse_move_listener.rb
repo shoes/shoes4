@@ -51,7 +51,7 @@ class Shoes
 
       def cursor_over_clickable_element?(mouse_event)
         @app.clickable_elements.any? do |element|
-          element.in_bounds? mouse_event.x, mouse_event.y
+          mouse_on? element, mouse_event
         end
       end
     end
