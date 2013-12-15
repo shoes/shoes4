@@ -5,6 +5,9 @@ class Shoes
     include CommonMethods
     include DimensionsDelegations
 
+    NEXT_ELEMENT_ON_SAME_LINE_OFFSET = Point.new(1, 0)
+    NEXT_ELEMENT_ON_NEXT_LINE_OFFSET = Point.new(0, 1)
+
     attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
                 :leave_proc
 
@@ -115,13 +118,13 @@ class Shoes
     def position_in_current_line(element, current_position)
       element._position position_x(current_position.x, element),
                         position_y(current_position.y, element)
-      Point.new 1, 0
+      NEXT_ELEMENT_ON_SAME_LINE_OFFSET
     end
 
     def move_to_next_line(element, current_position)
       element._position position_x(self.element_left, element),
                         position_y(current_position.next_line_start, element)
-      Point.new 0, 1
+      NEXT_ELEMENT_ON_NEXT_LINE_OFFSET
     end
 
     def update_current_position(current_position, element, position_modifier)
