@@ -162,10 +162,9 @@ class Shoes
     end
 
     def execute_block(block)
-      # self.instance_eval &block
       @execution_context.instance_eval &block
     end
-    
+
     def create_execution_context
       @execution_context = Shoes::Context.new(self)
     end
