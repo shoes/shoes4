@@ -19,7 +19,6 @@ describe Shoes::Swt::MouseMoveListener do
     subject.mouse_move(mouse_event)
   end
 
-  it {should_not be_nil}
   describe 'mouse position' do
     it 'receives the correct mouse position' do
       expect(dsl_app).to have_received(:mouse_pos=).with([x, y])
