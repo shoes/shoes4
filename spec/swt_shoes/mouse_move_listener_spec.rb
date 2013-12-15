@@ -16,7 +16,7 @@ describe Shoes::Swt::MouseMoveListener do
 
   subject {Shoes::Swt::MouseMoveListener.new(app)}
   before :each do
-    subject.mouseMove(mouse_event)
+    subject.mouse_move(mouse_event)
   end
 
   it {should_not be_nil}
@@ -123,7 +123,7 @@ describe Shoes::Swt::MouseMoveListener do
       it 'calls leave for element 1 before calling hover for element 2' do
         expect(element_leave).to receive(:call).ordered
         expect(element2_hover).to receive(:call).ordered
-        subject.mouseMove(mouse_event)
+        subject.mouse_move(mouse_event)
       end
     end
   end

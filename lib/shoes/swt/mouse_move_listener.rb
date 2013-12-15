@@ -1,11 +1,13 @@
 class Shoes
   module Swt
     class MouseMoveListener
+      include ::Swt::Events::MouseMoveListener
+
       def initialize app
         @app = app
       end
 
-      def mouseMove(mouse_event)
+      def mouse_move(mouse_event)
         @app.dsl.mouse_pos = [mouse_event.x, mouse_event.y]
         @app.dsl.mouse_motion.each{|blk| eval_move_block blk, mouse_event}
         mouse_shape_control mouse_event

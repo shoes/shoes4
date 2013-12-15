@@ -10,6 +10,7 @@ module Swt
 
   module Events
     import org.eclipse.swt.events.PaintListener
+    import org.eclipse.swt.events.MouseMoveListener
   end
 
   module Widgets
