@@ -20,36 +20,102 @@ class Shoes
     include BuiltinMethods
     include Common::Clickable
 
+    def initialize(opts={}, &blk)
+      @__private_proxy__ = Shoes::AppProxy.new(self, opts, &blk)
+      @__private_proxy__.setup_gui
+      Shoes.register self
+      @__private_proxy__.open_gui
+    end
+
+    # FIXME placeholder for code that calls app.gui. We should be able to get
+    # rid of this
+    def gui
+      @__private_proxy__.gui
+    end
+
+    def window(options={}, &block)
+      options.merge! owner: self
+      self.class.new(options, &block)
+    end
+
+    def left; 0 end
+    def top; 0 end
+    def absolute_left; 0 end
+    def absolute_top; 0 end
+
+    def quit
+      Shoes.unregister self
+      @__private_proxy__.gui.quit
+    end
+
+    def clear &blk
+      @__private_proxy__.clear &blk
+    end
+
+    def rotate angle=nil
+      angle ? @__private_proxy__.rotate = angle : @__private_proxy__.rotate ||= 0
+    end
+
+    def to_s
+      'Shoes App: ' + @__private_proxy__.app_title
+    end
+
+    def fullscreen=(state)
+      gui.fullscreen = state
+    end
+
+    def fullscreen
+      gui.fullscreen
+    end
+
+    alias_method :fullscreen?, :fullscreen
+
+    def close
+      quit
+    end
+  end
+
+  class AppProxy
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
                         :title      => "Shoes 4",
                         :resizable  => true,
                         :background => Shoes::COLORS[:white] }.freeze
 
-    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
-                :mouse_motion, :owner, :location
-    attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
-                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title
-    attr_writer   :width, :height, :start_as_fullscreen
-
-    def initialize(opts={}, &blk)
+    def initialize(app, opts, &blk)
+      @app = app
+      @blk = blk
       set_attributes_from_options(opts)
       set_initial_attributes
+    end
 
-      @gui = Shoes.configuration.backend::App.new @app
+    def setup_gui
+      @gui = Shoes.configuration.backend::App.new self
 
       execution_blk = create_execution_block(blk)
       eval_block execution_blk
 
       add_console
-
-      Shoes.register self
-      @gui.open
     end
 
-    def window(options={}, &block)
-      options.merge! owner: self
-      self.class.new(options, &block)
+    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
+                :mouse_motion, :owner, :location, :style, :element_styles
+    attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
+                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title
+    attr_writer   :width, :height, :start_as_fullscreen
+
+    def clear &blk
+      if started?
+        super
+        @unslotted_elements.each &:remove
+        @unslotted_elements.clear
+        @contents << @top_slot
+        @current_slot = @top_slot
+        @app.instance_eval &blk if blk
+        gui.flush
+      else
+        @app.instance_eval &blk if blk
+      end
     end
 
     def width
@@ -60,32 +126,12 @@ class Shoes
       started? ? @gui.height : @height
     end
 
-    def left; 0 end
-    def top; 0 end
-    def absolute_left; 0 end
-    def absolute_top; 0 end
-
-    def quit
-      Shoes.unregister self
-      @gui.quit
+    def font(path = Shoes::DEFAULT_TEXTBLOCK_FONT) 
+      @app.font path
     end
 
     def started?
       @gui && @gui.started
-    end
-
-    def clear &blk
-      if started?
-        super
-        @app.unslotted_elements.each &:remove
-        @app.unslotted_elements.clear
-        @contents << @top_slot
-        @current_slot = @top_slot
-        instance_eval &blk if blk
-        gui.flush
-      else
-        instance_eval &blk if blk
-      end
     end
 
     def add_child(child)
@@ -103,24 +149,12 @@ class Shoes
       }
     end
 
-    def rotate angle=nil
-      angle ? @rotate = angle : @rotate ||= 0
-    end
-
     def in_bounds?(x, y)
       true
     end
 
-    def to_s
-      'Shoes App: ' + app_title
-    end
-
-    def fullscreen=(state)
-      gui.fullscreen = state
-    end
-
-    def fullscreen
-      gui.fullscreen
+    def start_as_fullscreen?
+      @start_as_fullscreen
     end
 
     def add_mouse_hover_control(element)
@@ -129,14 +163,8 @@ class Shoes
       end
     end
 
-    alias_method :fullscreen?, :fullscreen
-
-    def start_as_fullscreen?
-      @start_as_fullscreen
-    end
-
-    def close
-      quit
+    def open_gui
+      @gui.open
     end
 
     private
@@ -144,10 +172,14 @@ class Shoes
       @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
     end
 
+    def execute_block(blk)
+      @app.instance_eval &blk
+    end
+
     def create_execution_block(blk)
       if blk
         execution_blk = Proc.new do
-          @app.instance_eval &blk
+          execute_block blk
         end
       elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
         execution_blk = Proc.new do
@@ -160,7 +192,6 @@ class Shoes
     end
 
     def set_initial_attributes
-      @app                  = self
       @style                = default_styles
       @element_styles       = {}
       @contents             = []
@@ -185,9 +216,12 @@ class Shoes
     end
 
     def add_console
-      keypress do |key|
-        ::Shoes::Logger.setup if key == :"alt_/"
+      console = Proc.new do 
+        keypress do |key|
+          ::Shoes::Logger.setup if key == :"alt_/"
+        end
       end
+      @app.instance_eval &console
     end
 
   end

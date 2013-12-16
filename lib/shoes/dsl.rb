@@ -5,9 +5,12 @@ class Shoes
   #
   # Including classes must provide:
   #
-  #   @style:          a hash of styles
-  #   @element_styles: a hash of {Class => styles}, where styles is
-  #                    a hash of default styles for elements of Class,
+  #   @__private_proxy__
+  #
+  #   which provides
+  #     #style:          a hash of styles
+  #     #element_styles: a hash of {Class => styles}, where styles is
+  #                      a hash of default styles for elements of Class,
   module DSL
     include Common::Style
     include Common::Clear
@@ -55,7 +58,7 @@ class Shoes
     def style(klass_or_styles = nil, styles = {})
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
-        @element_styles[klass] = styles
+        @__private_proxy__.element_styles[klass] = styles
       else
         super(klass_or_styles)
       end
@@ -77,11 +80,11 @@ class Shoes
 
     # Default styles for elements of klass
     def style_for_element(klass, styles = {})
-      @element_styles.fetch(klass, {}).merge(styles)
+      @__private_proxy__.element_styles.fetch(klass, {}).merge(styles)
     end
 
     def create(element, *args, &blk)
-      element.new(@app, current_slot, *args, &blk)
+      element.new(@__private_proxy__, @__private_proxy__.current_slot, *args, &blk)
     end
 
     public
@@ -173,7 +176,7 @@ class Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      Shoes::Animation.new app, opts, blk
+      Shoes::Animation.new @__private_proxy__.app, opts, blk
     end
 
     def every n=1, &blk
@@ -214,7 +217,7 @@ class Shoes
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
     def line(x1, y1, x2, y2, opts = {})
-      Shoes::Line.new app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
+      Shoes::Line.new @__private_proxy__.app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
     end
 
     # Creates an oval at (left, top)
@@ -262,7 +265,7 @@ Wrong number of arguments. Must be one of:
 EOS
           raise ArgumentError, message
       end
-      Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style), &blk)
+      Shoes::Oval.new(app, left, top, width, height, @__private_proxy__.style.merge(oval_style), &blk)
     end
 
     # Creates a rectangle
@@ -315,7 +318,7 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      Shoes::Rect.new app, left, top, width, height, style.merge(opts), &blk
+      Shoes::Rect.new @__private_proxy__.app, left, top, width, height, @__private_proxy__.style.merge(opts), &blk
     end
 
     # Creates a new Shoes::Star object
@@ -340,7 +343,7 @@ EOS
 
     # Creates a new Shoes::Shape object
     def shape(shape_style = {}, &blk)
-      Shoes::Shape.new(app, style.merge(shape_style), blk)
+      Shoes::Shape.new(app, @__private_proxy__.style.merge(shape_style), blk)
     end
 
     # Creates a new Shoes::Color object
@@ -393,32 +396,32 @@ EOS
     #
     # color - a Shoes::Color
     def stroke(color)
-      @style[:stroke] = pattern(color)
+      @__private_proxy__.style[:stroke] = pattern(color)
     end
 
     def nostroke
-      @style[:stroke] = nil
+      @__private_proxy__.style[:stroke] = nil
     end
 
     # Sets the stroke width, in pixels
     def strokewidth(width)
-      @style[:strokewidth] = width
+      @__private_proxy__.style[:strokewidth] = width
     end
 
     # Sets the current fill color
     #
     # @param [Shoes::Color,Shoes::Gradient] pattern the pattern to set as fill
     def fill(pattern)
-      @style[:fill] = pattern(pattern)
+      @__private_proxy__.style[:fill] = pattern(pattern)
     end
 
     def nofill
-      @style[:fill] = nil
+      @__private_proxy__.style[:fill] = nil
     end
 
     # Sets the current line cap style
     def cap line_cap
-      @style[:cap] = line_cap
+      @__private_proxy__.style[:cap] = line_cap
     end
 
 
@@ -495,11 +498,11 @@ EOS
     end
 
     def keypress &blk
-      Shoes::Keypress.new app, &blk
+      Shoes::Keypress.new @__private_proxy__.app, &blk
     end
 
     def keyrelease &blk
-      Shoes::Keyrelease.new app, &blk
+      Shoes::Keyrelease.new @__private_proxy__.app, &blk
     end
 
     def append(&blk)

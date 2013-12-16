@@ -11,7 +11,7 @@ class Shoes
     class RedrawingAspect
 
       NEED_TO_UPDATE = {Animation                        => [:eval_block],
-                        ::Shoes::App                     => [:eval_block],
+                        ::Shoes::AppProxy                => [:eval_block],
                         Button                           => [:eval_block],
                         Common::Clickable::ClickListener => [:eval_block],
                         KeypressListener                 => [:eval_block],
