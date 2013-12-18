@@ -19,8 +19,8 @@ shared_examples_for "left, top as center" do | *params |
   it "should now be located somewhere" do
     centered_object.left.should eq(left-(width/2))
     centered_object.top.should eq(top-(height/2))
-    centered_object.right.should eq(left-(width/2)+width)
-    centered_object.bottom.should eq(top-(height/2)+height)
+    centered_object.right.should eq(left-(width/2)+width-1)
+    centered_object.bottom.should eq(top-(height/2)+height-1)
     centered_object.width.should eq(width)
     centered_object.height.should eq(height)
   end

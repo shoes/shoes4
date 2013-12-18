@@ -202,76 +202,21 @@ class Shoes
       end
     end
 
-    class MouseMoveListener
-      def initialize app
-        @app = app
-      end
-
-      def mouseMove(e)
-        @app.dsl.mouse_pos = [e.x, e.y]
-        @app.dsl.mouse_motion.each{|blk| eval_move_block blk, e}
-        mouse_shape_control
-        mouse_hover_control
-        mouse_leave_control
-      end
-
-      def eval_move_block(blk, e)
-        blk.call e.x, e.y
-      end
-
-      def mouse_shape_control
-        cursor = if cursor_over_clickable_element?
-                   ::Swt::SWT::CURSOR_HAND
-                 else
-                   ::Swt::SWT::CURSOR_ARROW
-                 end
-        @app.shell.setCursor  Shoes.display.getSystemCursor(cursor)
-      end
-
-      def mouse_hover_control
-        @app.dsl.mouse_hover_controls.each do |e|
-          if mouse_on?(e) and !e.hovered
-            e.hovered = true
-            e.hover_proc[e] if e.hover_proc
-          end
-        end
-      end
-
-      def mouse_leave_control
-        @app.dsl.mouse_hover_controls.each do |e|
-          if !mouse_on?(e) and e.hovered
-            e.hovered = false
-            e.leave_proc[e] if e.leave_proc
-          end
-        end
-      end
-  
-      def mouse_on? element
-        mb, mx, my = element.app.mouse
-        element.in_bounds? mx, my
-      end
-
-      private
-      def cursor_over_clickable_element?
-        mouse_x, mouse_y = @app.dsl.mouse_pos
-        @app.clickable_elements.any? do |element|
-          element.in_bounds? mouse_x, mouse_y
-        end
-      end
-    end
-
     class MouseListener
       def initialize app
         @app = app
       end
+
       def mouseDown(e)
         @app.dsl.mouse_button = e.button
         @app.dsl.mouse_pos = [e.x, e.y]
       end
+
       def mouseUp(e)
         @app.dsl.mouse_button = 0
         @app.dsl.mouse_pos = [e.x, e.y]
       end
+
       def mouseDoubleClick(e)
         # do nothing
       end

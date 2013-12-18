@@ -5,9 +5,11 @@ class Shoes
     include CommonMethods
     include DimensionsDelegations
 
+    NEXT_ELEMENT_ON_SAME_LINE_OFFSET = Point.new(1, 0)
+    NEXT_ELEMENT_ON_NEXT_LINE_OFFSET = Point.new(0, 1)
+
     attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
                 :leave_proc
-    attr_accessor :hovered
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -66,6 +68,10 @@ class Shoes
       determine_slot_height(last_position)
     end
 
+    def hovered?
+      @hovered
+    end
+
     def hover(blk)
       @hover_proc = blk
       @app.add_mouse_hover_control self
@@ -76,8 +82,16 @@ class Shoes
       @app.add_mouse_hover_control self
     end
 
+    def mouse_hovered
+      @hovered = true
+    end
+
+    def mouse_left
+      @hovered = false
+    end
+
     protected
-    CurrentPosition = Struct.new(:x, :y, :max_bottom)
+    CurrentPosition = Struct.new(:x, :y, :next_line_start)
 
     def position_contents
       current_position = CurrentPosition.new element_left,
@@ -92,34 +106,35 @@ class Shoes
 
     def positioning(element, current_position)
       return current_position unless takes_up_space?(element)
-      position_element element, current_position
+      position_modifier = position_element element, current_position
       element.contents_alignment if element.respond_to? :contents_alignment
-      current_position = update_current_position(current_position, element)
-      current_position
+      update_current_position(current_position, element, position_modifier)
     end
 
     def position_element(element, current_position)
       raise 'position_element is subclass responsibility'
     end
 
-    def update_current_position(current_position, element)
-      return current_position if element.absolutely_positioned?
-      current_position.x = element.absolute_right
-      current_position.y = element.absolute_top
-      if current_position.max_bottom < element.absolute_bottom
-        current_position.max_bottom = element.absolute_bottom
-      end
-      current_position
-    end
-
     def position_in_current_line(element, current_position)
       element._position position_x(current_position.x, element),
                         position_y(current_position.y, element)
+      NEXT_ELEMENT_ON_SAME_LINE_OFFSET
     end
 
     def move_to_next_line(element, current_position)
       element._position position_x(self.element_left, element),
-                        position_y(current_position.max_bottom, element)
+                        position_y(current_position.next_line_start, element)
+      NEXT_ELEMENT_ON_NEXT_LINE_OFFSET
+    end
+
+    def update_current_position(current_position, element, position_modifier)
+      return current_position if element.absolutely_positioned?
+      current_position.x = element.absolute_right + position_modifier.x
+      current_position.y = element.absolute_top + position_modifier.y
+      if current_position.next_line_start < element.absolute_bottom + 1
+        current_position.next_line_start = element.absolute_bottom + 1
+      end
+      current_position
     end
 
     def position_x(relative_x, element)
@@ -153,7 +168,7 @@ class Shoes
     end
 
     def compute_content_height(last_position)
-      last_position.max_bottom - self.absolute_top
+      last_position.next_line_start - self.absolute_top
     end
 
     def has_variable_height?

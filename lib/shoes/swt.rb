@@ -10,6 +10,7 @@ module Swt
 
   module Events
     import org.eclipse.swt.events.PaintListener
+    import org.eclipse.swt.events.MouseMoveListener
   end
 
   module Widgets
@@ -88,6 +89,7 @@ require 'shoes/swt/key_event'
 require 'shoes/swt/key_listener'
 require 'shoes/swt/line'
 require 'shoes/swt/list_box'
+require 'shoes/swt/mouse_move_listener'
 require 'shoes/swt/oval'
 require 'shoes/swt/progress'
 require 'shoes/swt/radio'

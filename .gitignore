@@ -47,3 +47,4 @@ pkg
 docs-*
 spec/test_app/pkg
 testing
+tmp/*

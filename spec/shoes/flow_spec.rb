@@ -50,11 +50,11 @@ describe Shoes::Flow do
       include_context 'contents_alignment'
 
       it 'positions an element in the same row as long as they fit' do
-        element2.top.should eq subject.top
+        element2.absolute_top.should eq subject.absolute_top
       end
 
       it 'positions it next to the other element as long as it fits' do
-        element2.absolute_left.should eq element.absolute_right
+        element2.absolute_left.should eq element.absolute_right + 1
       end
 
       it 'has a slot height of the maximum value of the 2 elements' do
