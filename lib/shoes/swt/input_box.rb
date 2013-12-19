@@ -43,6 +43,10 @@ class Shoes
         @real.enable_widget value
       end
 
+      def selected_text(start_index, final_index)
+        final_index ? @real.set_selection(start_index, final_index) : @real.set_selection(start_index)
+      end
+
       private
 
       def last_text() @last_text; end

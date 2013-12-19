@@ -37,6 +37,10 @@ class Shoes
     def text=(value)
       @gui.text = value.to_s
     end
+
+    def selected_text(start_index, final_index=nil)
+      @gui.selected_text(start_index, final_index)
+    end
   end
 
   class EditBox < InputBox
