@@ -19,6 +19,13 @@ class Shoes
         @real.set_size dsl.element_width, dsl.element_height
         @real.set_text dsl.initial_text.to_s
         @real.add_modify_listener do |event|
+          source = event.source
+
+          if event.class == Java::OrgEclipseSwtEvents::ModifyEvent && source.class == Java::OrgEclipseSwtWidgets::Text
+            # return immediately if the text matches the last entry to avoid going into infinite loop
+            return if source.text == last_text
+          end
+
           @dsl.call_change_listeners
         end
       end
@@ -28,6 +35,7 @@ class Shoes
       end
 
       def text=(value)
+        @last_text = @real.text
         @real.text = value
       end
 
@@ -35,6 +43,9 @@ class Shoes
         @real.enable_widget value
       end
 
+      private
+
+      def last_text() @last_text; end
     end
   end
 end
