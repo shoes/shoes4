@@ -21,6 +21,7 @@ class Shoes
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       self.items = opts.has_key?(:items) ? opts[:items] : [""]
+      choose(opts[:choose]) if opts.has_key?(:choose)
       @parent.add_child self
 
       self.change &blk if blk
