@@ -1,18 +1,16 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::ListBox do
-  let(:container) { real }
-  let(:gui)    { double("gui", real: real) }
-  let(:app)    { double("app", gui: gui) }
+  include_context "swt app"
+
   let(:items)  { ["Pie", "Apple", "Sand"] }
-  let(:dsl)    { double('dsl', app: app,
+  let(:dsl)    { double('dsl', app: shoes_app,
                         items: items, opts: {},
                         element_width: 200, element_height: 20).as_null_object }
-  let(:parent) { double('parent') }
   let(:block)  { ->(){} }
   let(:real)   { double('real', text: "",
                         set_size: true, add_selection_listener: true,
-                        is_disposed?: false) }
+                        disposed?: false) }
 
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 

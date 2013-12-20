@@ -13,7 +13,7 @@ class Shoes
       @app = app
       @dimensions = AbsoluteDimensions.new left, top, width, height, opts
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
-      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
+      @style[:strokewidth] ||= 1
       @angle = opts[:angle]
 
       @app.unslotted_elements << self

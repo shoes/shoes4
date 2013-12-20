@@ -1,8 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Border do
-  let(:container) { double('container', :disposed? => false) }
-  let(:app) { double('app', :real => container, :add_paint_listener => true) }
+  include_context "swt app"
+
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
@@ -11,19 +11,12 @@ describe Shoes::Swt::Border do
   let(:dsl) { double("dsl object", element_width: width, element_height: height,
                      element_left: left, element_top: top, parent: parent,
                      strokewidth: 1, corners: corners,hidden: false).as_null_object }
-  let(:parent) { double("parent", width: width, height: height,
-                        absolute_left: left, absolute_top: top, contents: []) }
 
-  subject { Shoes::Swt::Border.new dsl, app }
+  subject { Shoes::Swt::Border.new dsl, swt_app }
 
   context "#initialize" do
     it { should be_an_instance_of(Shoes::Swt::Border) }
     its(:dsl) { should be(dsl) }
-
-    specify "adds paint listener" do
-      app.should_receive(:add_paint_listener)
-      subject
-    end
   end
 
   it_behaves_like "paintable"
@@ -32,7 +25,7 @@ describe Shoes::Swt::Border do
     include_context "painter context"
 
     let(:corners) { 0 }
-    let(:shape) { Shoes::Swt::Border.new dsl, app }
+    let(:shape) { Shoes::Swt::Border.new dsl, swt_app }
     subject { Shoes::Swt::Border::Painter.new shape }
 
     it_behaves_like "stroke painter"
