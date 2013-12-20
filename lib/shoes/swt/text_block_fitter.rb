@@ -93,6 +93,18 @@ class Shoes
         @top = top
       end
 
+      def line_height
+        @layout.get_line_bounds(0).height
+      end
+
+      def get_location(cursor)
+        @layout.get_location(cursor, true)
+      end
+
+      def text
+        @layout.text
+      end
+
       def draw(graphics_context)
         layout.draw(graphics_context, left, top)
       end
