@@ -10,13 +10,12 @@ class Shoes
 
       attr_reader :dsl
 
-      def initialize(dsl, &blk)
+      def initialize(dsl)
         @dsl = dsl
         @opts = dsl.opts
         @container = @dsl.app.gui.real
         @painter = TextBlockPainter.new @dsl
         @container.add_paint_listener @painter
-        clickable blk if blk
       end
 
       def redraw

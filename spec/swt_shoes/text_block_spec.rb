@@ -33,6 +33,10 @@ describe Shoes::Swt::TextBlock do
     subject.redraw
   end
 
+  it 'responds to click' do
+    expect(subject).to respond_to :click
+  end
+
   describe "text block painter" do
     let(:text_layout) { double("text layout", getLocation: Shoes::Point.new(0, 0)).as_null_object }
     let(:event) { double("event", gc: gc) }
