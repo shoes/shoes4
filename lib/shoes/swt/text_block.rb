@@ -3,18 +3,20 @@ class Shoes
     class TextBlock
       include Common::Clear
       include Common::Toggle
+      include Common::Clickable
       include ::Shoes::BackendDimensionsDelegations
 
       DEFAULT_SPACING = 4
 
       attr_reader :dsl
 
-      def initialize(dsl)
+      def initialize(dsl, &blk)
         @dsl = dsl
         @opts = dsl.opts
         @container = @dsl.app.gui.real
         @painter = TextBlockPainter.new @dsl
         @container.add_paint_listener @painter
+        clickable blk if blk
       end
 
       def redraw
