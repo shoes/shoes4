@@ -3,6 +3,7 @@ class Shoes
     class TextBlock
       include Common::Clear
       include Common::Toggle
+      include Common::Clickable
       include ::Shoes::BackendDimensionsDelegations
 
       DEFAULT_SPACING = 4
