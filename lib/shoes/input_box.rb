@@ -38,8 +38,12 @@ class Shoes
       @gui.text = value.to_s
     end
 
-    def selected_text(start_index, final_index=nil)
-      @gui.selected_text(start_index, final_index)
+    def highlight_text(start_index, final_index)
+      @gui.highlight_text(start_index, final_index)
+    end
+
+    def caret_to(index)
+      @gui.caret_to(index)
     end
   end
 

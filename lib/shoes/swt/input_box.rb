@@ -43,8 +43,12 @@ class Shoes
         @real.enable_widget value
       end
 
-      def selected_text(start_index, final_index)
-        final_index ? @real.set_selection(start_index, final_index) : @real.set_selection(start_index)
+      def highlight_text(start_index, final_index)
+        @real.set_selection(start_index, final_index)
+      end
+
+      def caret_to(index)
+        @real.set_selection(index)
       end
 
       private
