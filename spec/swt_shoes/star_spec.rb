@@ -8,7 +8,7 @@ describe Shoes::Swt::Star do
   let(:points) { 7 }
   let(:outer) { 100 }
   let(:inner) { 20 }
-  let(:dsl) { Shoes::Star.new shoes_app, left, top, points, outer, inner }
+  let(:dsl) { Shoes::Star.new shoes_app, parent, left, top, points, outer, inner }
 
   subject { Shoes::Swt::Star.new dsl, swt_app }
 

@@ -7,7 +7,7 @@ describe Shoes::Swt::Oval do
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) {::Shoes::Oval.new shoes_app, left, top, width, height}
+  let(:dsl) {::Shoes::Oval.new shoes_app, parent, left, top, width, height}
 
   subject {
     Shoes::Swt::Oval.new(dsl, swt_app)

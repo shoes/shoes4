@@ -8,6 +8,6 @@ shared_context "swt app" do
                          add_paint_listener: true, remove_paint_listener: true,
                          add_clickable_element: true, add_listener: true) }
   let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0) }
-  let(:parent) { double('parent', app: swt_app, real: true) }
+  let(:parent) { double('parent', app: swt_app, add_child: true, real: true) }
 end
 

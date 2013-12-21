@@ -1,6 +1,7 @@
 require 'swt_shoes/spec_helper'
 
 describe "Basic Element Methods" do
+
   class DSLShoeLaces
     include Shoes::DSL
 
@@ -8,6 +9,10 @@ describe "Basic Element Methods" do
       @gui = gui
       @app = self
       @style = {}
+    end
+
+    def current_slot
+      @current_slot ||= ::Shoes::Flow.new(app = Shoes::App.new, app)
     end
 
     attr_reader :gui, :app
