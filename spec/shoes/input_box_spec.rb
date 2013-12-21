@@ -13,7 +13,9 @@ describe Shoes::InputBox do
   let(:text) { "the text" }
   let(:input_opts) {{left: left, top: top, width: width, height: height}}
 
-  subject { Shoes::InputBox.new(app, parent, text, input_opts, input_block) }
+  # EditBox is an InputBox but InputBox is enver instantiated itself
+  # And there are problems in the backend due to option settings
+  subject { Shoes::EditBox.new(app, parent, text, input_opts, input_block) }
 
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
