@@ -9,7 +9,7 @@ describe Shoes::Oval do
   let(:parent) { app }
 
   describe "basic" do
-    subject { Shoes::Oval.new(app, left, top, width, height) }
+    subject { Shoes::Oval.new(app, parent, left, top, width, height) }
     it_behaves_like "object with stroke"
     it_behaves_like "object with fill"
     it_behaves_like "object with dimensions"

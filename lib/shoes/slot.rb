@@ -16,7 +16,6 @@ class Shoes
       @parent.add_child self
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
-      unslot if opts[:left] || opts[:top]
       eval_block blk
       contents_alignment
     end

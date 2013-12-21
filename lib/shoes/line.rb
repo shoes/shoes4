@@ -9,7 +9,7 @@ class Shoes
     attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui
 
 
-    def initialize(app, point_a, point_b, opts = {})
+    def initialize(app, parent, point_a, point_b, opts = {})
       @app = app
 
       @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
@@ -21,7 +21,7 @@ class Shoes
       enclosing_box_of_line
 
       gui_opts = @style.clone
-      @app.unslotted_elements << self
+      parent.add_child self
 
       @gui = Shoes.backend_for(self, gui_opts)
 

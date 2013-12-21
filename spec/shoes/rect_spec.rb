@@ -17,7 +17,7 @@ describe Shoes::Rect do
   let(:height) { 333 }
   let(:app) { Shoes::App.new }
   let(:parent) { app }
-  subject { Shoes::Rect.new(app, left, top, width, height) }
+  subject { Shoes::Rect.new(app, parent, left, top, width, height) }
 
   it_behaves_like "basic rect"
   it_behaves_like "object with fill"

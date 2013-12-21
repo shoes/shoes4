@@ -7,10 +7,11 @@ describe Shoes::Arc do
   let(:height)      { 300 }
   let(:start_angle) { 0 }
   let(:end_angle)   { Shoes::TWO_PI }
-  let(:parent)      { Shoes::App.new }
+  let(:app)         { Shoes::App.new }
+  let(:parent)      { app }
 
   context "basic" do
-    subject { Shoes::Arc.new(parent, left, top, width, height, start_angle, end_angle) }
+    subject { Shoes::Arc.new(app, app, left, top, width, height, start_angle, end_angle) }
 
     it_behaves_like "object with stroke"
     it_behaves_like "object with style"
@@ -38,24 +39,24 @@ describe Shoes::Arc do
         :angle1 => start_angle,
         :angle2 => end_angle
       }
-      Shoes.configuration.backend::Arc.should_receive(:new).with(subject, parent.gui, gui_opts)
+      Shoes.configuration.backend::Arc.should_receive(:new).with(subject, app.gui, gui_opts)
       subject
     end
   end
 
   context "relative dimensions" do
-    subject { Shoes::Arc.new(parent, left, top, relative_width, relative_height, start_angle, end_angle) }
+    subject { Shoes::Arc.new(app, app, left, top, relative_width, relative_height, start_angle, end_angle) }
 
     it_behaves_like "object with relative dimensions"
   end
 
   context "negative dimensions" do
-    subject { Shoes::Arc.new(parent, left, top, -width, -height, 0, Shoes::TWO_PI) }
+    subject { Shoes::Arc.new(app, app, left, top, -width, -height, 0, Shoes::TWO_PI) }
     it_behaves_like "object with negative dimensions"
   end
 
   context "wedge" do
-    subject { Shoes::Arc.new(parent, left, top, width, height, start_angle, end_angle, :wedge => true) }
+    subject { Shoes::Arc.new(app, app, left, top, width, height, start_angle, end_angle, :wedge => true) }
 
     specify "accepts :wedge => true" do
       subject.should be_wedge

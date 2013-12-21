@@ -21,10 +21,6 @@ describe "Basic Element Methods" do
   # Doubles for a Shoes::App
   let(:app) { DSLShoeLaces.new app_gui }
 
-  before :each do
-    app.stub unslotted_elements: []
-  end
-
   describe "arc" do
     it "creates a Shoes::Arc" do
       app_gui.should_receive(:add_paint_listener)

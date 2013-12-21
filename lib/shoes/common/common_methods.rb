@@ -57,11 +57,6 @@ class Shoes
       self
     end
 
-    def unslot
-      @parent.contents.delete self if @parent
-      @app.unslotted_elements.push self unless @app.unslotted_elements.include?(self)
-    end
-
     # NOT part of the public interface e.g. no Shoes APP should use this
     # however we need it from the Slot code to position elements
     def _position left, top

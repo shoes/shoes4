@@ -7,7 +7,7 @@ shared_context "swt app" do
   let(:swt_app) { double('swt app', real: swt_app_real, disposed?: false, 
                          add_paint_listener: true, remove_paint_listener: true,
                          add_clickable_element: true, add_listener: true) }
-  let(:shoes_app) { double('shoes app', gui: swt_app, unslotted_elements: [], rotate: 0) }
+  let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0) }
   let(:parent) { double('parent', app: swt_app, real: true) }
 end
 

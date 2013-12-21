@@ -6,7 +6,7 @@ class Shoes
     include Common::Style
     include Common::Clickable
     include DimensionsDelegations
-    def initialize(app, left, top, width, height, angle1, angle2, opts = {})
+    def initialize(app, parent, left, top, width, height, angle1, angle2, opts = {})
       @app = app
       @dimensions = Dimensions.new app, left, top, width, height, opts
       @angle1, @angle2 = angle1, angle2
@@ -14,7 +14,7 @@ class Shoes
       default_style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS)
       @style = default_style.merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
-      @app.unslotted_elements << self
+      parent.add_child self
 
       #GUI
       @gui = Shoes.backend_for(self, opts)

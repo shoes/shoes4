@@ -9,14 +9,14 @@ class Shoes
 
     attr_reader :app, :dimensions, :angle, :gui
 
-    def initialize(app, left, top, width, height, opts = {}, &blk)
+    def initialize(app, parent, left, top, width, height, opts = {}, &blk)
       @app = app
       @dimensions = AbsoluteDimensions.new left, top, width, height, opts
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= 1
       @angle = opts[:angle]
 
-      @app.unslotted_elements << self
+      parent.add_child self
 
       @gui = Shoes.backend_for(self, &blk)
 

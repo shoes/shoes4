@@ -17,7 +17,7 @@ describe Shoes::Star do
   let(:height) { 100 }
   let(:app) { Shoes::App.new }
   let(:parent) { Shoes::Flow.new(app, app) }
-  subject { Shoes::Star.new(app, left, top, 5, 50, 30) }
+  subject { Shoes::Star.new(app, parent, left, top, 5, 50, 30) }
 
   it_behaves_like "basic star"
   it_behaves_like "object with fill"

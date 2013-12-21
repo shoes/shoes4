@@ -9,14 +9,14 @@ class Shoes
 
     attr_reader :app, :gui, :corners, :dimensions, :angle
 
-    def initialize(app, left, top, width, height, opts = {}, &blk)
+    def initialize(app, parent, left, top, width, height, opts = {}, &blk)
       @app = app
       @dimensions = AbsoluteDimensions.new left, top, width, height, opts
       @corners = opts[:curve] || 0
       @angle = opts[:angle] || app.rotate
       @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= 1
-      @app.unslotted_elements << self
+      parent.add_child self
 
       @gui = Shoes.backend_for(self, opts, &blk)
       clickable_options(opts)
