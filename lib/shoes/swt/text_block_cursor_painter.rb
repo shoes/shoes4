@@ -24,12 +24,12 @@ class Shoes
       end
 
       # Only works with one or two layouts, but that's what we've got
-      # -1 should position us at the very end, regardless text length
+      # -1 positions us at the very end, regardless text length
       def choose_layout
         first_layout = @fitted_layouts.first
         last_layout = @fitted_layouts.last
 
-        if cursor_fits_in?(@dsl.cursor, first_layout)
+        if cursor_fits_in?(first_layout)
           first_layout
         else
           last_layout
@@ -41,18 +41,35 @@ class Shoes
         first_layout = @fitted_layouts.first
         last_layout = @fitted_layouts.last
 
-        if cursor_fits_in?(@dsl.cursor, first_layout)
+        if cursor_fits_in?(first_layout)
           @dsl.cursor
-        elsif @dsl.cursor < 0 ||
-              @dsl.cursor > (first_layout.text.length + last_layout.text.length)
+        elsif cursor_at_end?
           last_layout.text.length
         else
           @dsl.cursor - first_layout.text.length
         end
       end
 
-      def cursor_fits_in?(cursor, layout)
-        cursor <= layout.text.length && cursor >= 0
+      def cursor_fits_in?(layout)
+        @dsl.cursor <= layout.text.length && @dsl.cursor >= 0
+      end
+
+      def cursor_at_end?
+        single_layout? ||
+          cursor_negative? ||
+          cursor_past_all_text?
+      end
+
+      def cursor_negative?
+        @dsl.cursor < 0
+      end
+
+      def cursor_past_all_text?
+        @dsl.cursor > @dsl.text.length
+      end
+
+      def single_layout?
+        @fitted_layouts.first == @fitted_layouts.last
       end
 
       def textcursor(line_height)

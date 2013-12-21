@@ -93,12 +93,14 @@ class Shoes
         @top = top
       end
 
+      # We assume the text layout doesn't have varying line heights, so we can
+      # treat the first line as the typical height for the whole text block.
       def line_height
         @layout.get_line_bounds(0).height
       end
 
       def get_location(cursor)
-        @layout.get_location(cursor, true)
+        @layout.get_location(cursor, false)
       end
 
       def text

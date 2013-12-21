@@ -1,4 +1,5 @@
 require 'shoes/swt/text_block_fitter'
+require 'shoes/swt/text_block_cursor_painter'
 
 class Shoes
   module Swt
@@ -19,53 +20,20 @@ class Shoes
         @dsl.gui.fitted_layouts.each do |fitted_layout|
           draw_from_layout(paint_event.gc, fitted_layout)
         end
+        draw_text_cursor
       end
 
       # TODO: Handle links that span multiple text layouts. Currently chokes on
       # text location logic
       #
-      # TODO: Fix link blocks losing their linkiness when text expands
-      #
       # TODO: Pull text link meddling to separate class for easier testing
       def draw_from_layout(gc, fitted_layout)
         set_styles(fitted_layout)
         fitted_layout.draw(gc)
-        draw_text_cursor(fitted_layout)
       end
 
-      # TODO: Fix to span between multiple layouts properly. Currently just
-      # puts the cursor in the last one
-      #
-      # TODO: Also noticed existing bug when the position is past the end of
-      # the text, we'll crash instead of setting to the end like Shoes3
-      #
-      # TODO: Consider pulling cursor to separate class for easier testing
-      def draw_text_cursor(fitted_layout)
-        if @dsl.cursor
-          move_text_cursor fitted_layout
-        else
-          remove_text_cursor
-        end
-      end
-
-      def move_text_cursor(fitted_layout)
-        text_layout = fitted_layout.layout
-        layout_height = text_layout.get_line_bounds(0).height
-
-        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, layout_height, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
-        cursor_position = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
-        cursor_position = 0 if cursor_position < 0
-        pos = text_layout.getLocation cursor_position, true
-
-        @dsl.textcursor.move(fitted_layout.left + pos.x,
-                             fitted_layout.top + pos.y).show
-      end
-
-      def remove_text_cursor
-        return unless @dsl.textcursor
-
-        @dsl.textcursor.remove
-        @dsl.textcursor = nil
+      def draw_text_cursor
+        TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
       end
 
       def set_styles(fitted_layout)
