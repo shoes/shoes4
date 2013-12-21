@@ -47,6 +47,11 @@ describe Shoes::Swt::TextBlock do
       ::Swt::TextStyle.stub(:new) { style.as_null_object }
     end
 
+    # needed for clickable - otherwise manual fails
+    it 'responds to app' do
+      expect(subject.app).to eq swt_app
+    end
+
     it "sets text" do
       text_layout.should_receive(:setText).with(dsl.text)
       subject.paintControl(event)
