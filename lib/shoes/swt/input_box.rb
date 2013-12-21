@@ -18,14 +18,7 @@ class Shoes
         @real.set_size dsl.element_width, dsl.element_height
         @real.set_text dsl.initial_text.to_s
         @real.add_modify_listener do |event|
-          source = event.source
-
-          if event.class == Java::OrgEclipseSwtEvents::ModifyEvent && source.class == Java::OrgEclipseSwtWidgets::Text
-            # return immediately if the text matches the last entry to avoid going into infinite loop
-            return if source.text == last_text
-          end
-
-          @dsl.call_change_listeners
+          @dsl.call_change_listeners unless nothing_changed?(event)
         end
       end
 
@@ -51,8 +44,12 @@ class Shoes
       end
 
       private
-
-      def last_text() @last_text; end
+      def nothing_changed?(event)
+        source = event.source
+        event.class == Java::OrgEclipseSwtEvents::ModifyEvent &&
+        source.class == Java::OrgEclipseSwtWidgets::Text &&
+        source.text == @last_text
+      end
     end
 
     class EditLine < InputBox
