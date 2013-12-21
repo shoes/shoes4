@@ -318,23 +318,8 @@ EOS
       create Shoes::Rect, left, top, width, height, style.merge(opts), &blk
     end
 
-    # Creates a new Shoes::Star object
-    def star(*args, &blk)
-      opts = normalize_style pop_style(args)
-      case args.length
-      when 2
-        left, top = args
-        points, outer, inner = 10, 100.0, 50.0
-      when 5
-        left, top, points, outer, inner = args
-      else
-        message = <<EOS
-Wrong number of arguments. Must be one of:
-  - star(left, top, [opts])
-  - star(left, top, points, outer, inner, [opts])
-EOS
-        raise ArgumentError, message
-      end
+    def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
+      opts = normalize_style opts
       create Shoes::Star, left, top, points, outer, inner, opts, &blk
     end
 

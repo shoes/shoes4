@@ -3,7 +3,8 @@ require 'shoes/spec_helper'
 describe Shoes::App do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
-  subject { Shoes::App.new(opts, &input_blk) }
+  let(:app) {Shoes::App.new(opts, &input_blk)}
+  subject { app }
 
   it_behaves_like "DSL container"
   it { should respond_to :clipboard }

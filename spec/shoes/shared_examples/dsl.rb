@@ -6,7 +6,7 @@
 # we don't need to test how they work in details. Here we just test that
 # the DSL methods construct elements correctly.
 shared_examples "DSL container" do
-  let(:dsl) { subject }
+  let(:dsl) { app }
 
   %w[
     animate
