@@ -13,7 +13,6 @@ class Shoes
       def initialize(dsl, parent, text_options)
         @dsl          = dsl
         @parent       = parent
-        @text_options = text_options
 
         @real = ::Swt::Widgets::Text.new(@parent.real, text_options)
         @real.set_size dsl.element_width, dsl.element_height
@@ -55,5 +54,22 @@ class Shoes
 
       def last_text() @last_text; end
     end
+
+    class EditLine < InputBox
+      DEFAULT_STYLES = ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER
+      def initialize(dsl, parent)
+        styles = DEFAULT_STYLES
+        styles |= ::Swt::SWT::PASSWORD if dsl.secret?
+        super(dsl, parent, styles)
+      end
+    end
+
+    class EditBox < InputBox
+      DEFAULT_STYLES = ::Swt::SWT::MULTI | ::Swt::SWT::BORDER | ::Swt::SWT::WRAP
+      def initialize(dsl, parent)
+        super(dsl, parent, DEFAULT_STYLES)
+      end
+    end
+
   end
 end
