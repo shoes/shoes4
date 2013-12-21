@@ -23,6 +23,8 @@ describe Shoes::Swt::EditLine do
   it_behaves_like "togglable"
 
   describe "#initialize" do
+    let(:event) {double 'Event', source: source}
+    let(:source) {double 'Source'}
     it "sets text on real element" do
       real.should_receive(:text=).with("some text")
       subject.text = "some text"
@@ -31,7 +33,7 @@ describe Shoes::Swt::EditLine do
     it "should set up a listener that delegates change events" do
       dsl.should_receive(:call_change_listeners)
       real.should_receive(:add_modify_listener) do |&blk|
-        blk.call()
+        blk.call(event)
       end
       subject
     end
