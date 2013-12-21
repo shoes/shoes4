@@ -20,6 +20,10 @@ describe Shoes::Swt::Oval do
   describe "painter" do
     include_context "painter context"
 
+    before :each do
+      shape.absolute_left = left
+      shape.absolute_top  = top
+    end
     let(:shape) { Shoes::Swt::Oval.new(dsl, swt_app) }
     subject { Shoes::Swt::Oval::Painter.new(shape) }
 

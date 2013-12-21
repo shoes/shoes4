@@ -62,7 +62,7 @@ class Shoes
     def _position left, top
       self.absolute_left = left
       self.absolute_top  = top
-      @gui.update_position if @gui
+      @gui.update_position if @gui && @gui.respond_to?(:update_position)
     end
 
     def remove
