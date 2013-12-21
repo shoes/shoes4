@@ -6,6 +6,12 @@ class Shoes
 
       def enabled(value)
       end
+
+      def highlight_text(start_index, finish_index)
+      end
+
+      def caret_to(index)
+      end
     end
 
     class EditBox < InputBox

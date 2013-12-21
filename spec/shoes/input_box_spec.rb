@@ -25,6 +25,16 @@ describe Shoes::InputBox do
   it { should respond_to :text  }
   it { should respond_to :text= }
 
+  it 'forwards calls to highlight_text to the backend' do
+    expect(subject.gui).to receive(:highlight_text).with(4, 20)
+    subject.highlight_text 4, 20
+  end
+
+  it 'forwards calls to caret_to to the backend' do
+    expect(subject.gui).to receive(:caret_to).with(42)
+    subject.caret_to 42
+  end
+
   describe "relative dimensions from parent" do
     subject { Shoes::EditBox.new(app, parent, text, relative_opts) }
     it_behaves_like "object with relative dimensions"

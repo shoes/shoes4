@@ -73,6 +73,18 @@ describe Shoes::Swt::InputBox do
     end
   end
 
+  describe 'text selections' do
+    it 'translates the highlight_text call' do
+      subject.highlight_text 4, 20
+      expect(real).to have_received(:set_selection).with(4, 20)
+    end
+
+    it 'translates the caret_to call' do
+      subject.caret_to 42
+      expect(real).to have_received(:set_selection).with(42)
+    end
+  end
+
   describe Shoes::Swt::EditLine do
     subject {Shoes::Swt::EditLine.new dsl, parent}
     describe ":secret option" do
