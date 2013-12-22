@@ -3,14 +3,12 @@ require 'delegate'
 class Shoes
   module Swt
     class UnlessDisposedDelegator < SimpleDelegator
-      def initialize(delegation_object)
-        super
-        @delegate_sd_null_obj = NullObject.new
-      end
-
       def __getobj__
-        return NullObject.new if @delegate_sd_obj.disposed?
-        @delegate_sd_obj
+        if @delegate_sd_obj.disposed?
+          @delegate_sd_null_obj ||= NullObject.new
+        else
+          @delegate_sd_obj
+        end
       end
 
       class NullObject
