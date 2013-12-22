@@ -1,29 +1,24 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Arc do
-  let(:container) { double('container', is_disposed?: false) }
-  let(:gui) { double('gui', real: container) }
-  let(:app) { double('app', gui: gui).as_null_object }
+  include_context "swt app"
+
   let(:left) { 100 }
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
-  let(:dsl) { double("dsl object", app: app, element_width: width,
+  let(:dsl) { double("dsl object", app: shoes_app, element_width: width,
                      element_height: height, element_left: left,
                      element_top: top, angle1: angle1, angle2: angle2,
                      wedge?: false,  hidden: false).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
-  subject { Shoes::Swt::Arc.new(dsl, app) }
+  subject { Shoes::Swt::Arc.new(dsl, swt_app) }
 
   describe "basics" do
-    before :each do
-      app.should_receive(:add_paint_listener)
-    end
-
     specify "converts angle1 to degrees" do
       subject.angle1.should eq(180.0)
     end
@@ -44,7 +39,7 @@ describe Shoes::Swt::Arc do
   describe "painter" do
     include_context "painter context"
 
-    let(:shape) { Shoes::Swt::Arc.new(dsl, app) }
+    let(:shape) { Shoes::Swt::Arc.new(dsl, swt_app) }
     subject { Shoes::Swt::Arc::Painter.new(shape) }
 
     it_behaves_like "stroke painter"

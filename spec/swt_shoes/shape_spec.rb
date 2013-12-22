@@ -1,9 +1,10 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Shape do
-  let(:app) { double("app", add_paint_listener: true) }
+  include_context "swt app"
+
   let(:dsl) { double('dsl', hidden: false).as_null_object }
-  subject { Shoes::Swt::Shape.new dsl, app }
+  subject { Shoes::Swt::Shape.new dsl, swt_app }
 
   shared_examples_for "Swt::Shape" do
     let(:ancestors) { subject.class.ancestors.map(&:name) }
@@ -60,7 +61,7 @@ describe Shoes::Swt::Shape do
   describe "painter" do
     include_context "painter context"
 
-    let(:shape) { Shoes::Swt::Shape.new(dsl, app) }
+    let(:shape) { Shoes::Swt::Shape.new(dsl, swt_app) }
     subject { Shoes::Swt::Shape::Painter.new(shape) }
 
     it_behaves_like "stroke painter"

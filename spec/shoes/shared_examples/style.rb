@@ -16,4 +16,3 @@ shared_examples_for "object with style" do
     subject.style
   end
 end
-

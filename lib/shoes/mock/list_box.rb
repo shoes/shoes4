@@ -8,6 +8,9 @@ class Shoes
 
       def enabled(value)
       end
+
+      def choose(string)
+      end
     end
   end
 end

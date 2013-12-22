@@ -1,13 +1,11 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock do
+  include_context "swt app"
+
   let(:height) { 100 }
   let(:width)  { 200 }
-  let(:parent) { Shoes::Flow.new app_real, app_real }
-  let(:dsl) { double("dsl", parent: parent, app: parent.app).as_null_object }
-  let(:app) { parent.app.gui.real }
-  let(:app_real) { Shoes::App.new }
-  let(:container) { app }
+  let(:dsl) { double("dsl", app: shoes_app).as_null_object }
 
   subject { Shoes::Swt::TextBlock.new(dsl) }
 
@@ -17,18 +15,12 @@ describe Shoes::Swt::TextBlock do
 
   describe "redrawing" do
     it "delegates to the app" do
-      expect(app).to receive(:redraw)
-      subject.redraw
-    end
-
-    it "shouldn't call on disposed app" do
-      app.stub(disposed?: true)
-      expect(app).to receive(:redraw).never
+      expect(swt_app).to receive(:redraw)
       subject.redraw
     end
 
     it "should redraw on updating position" do
-      expect(app).to receive(:redraw)
+      expect(swt_app).to receive(:redraw)
       subject.update_position
     end
   end
@@ -97,7 +89,7 @@ describe Shoes::Swt::TextBlock do
     end
 
     it "should set position for fitting two layouts" do
-      current_position.max_bottom = 0
+      current_position.next_line_start = 0
 
       last_layout = create_layout(200, 100)
       last_layout.stub(:get_line_bounds) { last_layout.bounds }

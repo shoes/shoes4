@@ -56,7 +56,7 @@ class Shoes
 
       def available_space
         width = parent.absolute_left + parent.width - @current_position.x
-        height = @current_position.max_bottom - @current_position.y
+        height = @current_position.next_line_start - @current_position.y
         [width, height]
       end
 

@@ -6,7 +6,7 @@ class Shoes
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl, :app, :container
+      attr_reader :dsl, :app
       attr_reader :translated_point_a, :translated_point_b
       attr_reader :transform
 
@@ -17,7 +17,6 @@ class Shoes
       # @param [Hash] opts Options
       def initialize(dsl, app, opts = {})
         @dsl, @app = dsl, app
-        @container = @app.real
 
         translate_according_to_enclosing_box
         @painter = Painter.new(self)

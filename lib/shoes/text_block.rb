@@ -72,7 +72,7 @@ class Shoes
     end
 
     def absolute_right
-      return @dimensions.absolute_right if @absolute_top.nil?
+      return @dimensions.absolute_right if @absolute_right.nil?
       @absolute_right
     end
 

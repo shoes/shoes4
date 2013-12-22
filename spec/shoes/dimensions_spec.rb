@@ -188,12 +188,16 @@ describe Shoes::Dimensions do
         subject.absolute_top  = absolute_top
       end
 
+      # in case you wonder about the -1... say left is 20 and we have a width of
+      # 100 then the right must be 119, because you have to take pixel number 20
+      # into account so 20..119 is 100 while 20..120 is 101. E.g.:
+      # (20..119).size => 100
       it 'has an appropriate absolute_right' do
-        expect(subject.absolute_right).to eq width + absolute_left
+        expect(subject.absolute_right).to eq width + absolute_left - 1
       end
 
       it 'has an appropriate absolute_bottom' do
-        expect(subject.absolute_bottom).to eq height + absolute_top
+        expect(subject.absolute_bottom).to eq height + absolute_top - 1
       end
 
       it 'has an element left which is the same' do
@@ -218,12 +222,12 @@ describe Shoes::Dimensions do
 
         it 'returns an element_right' do
           expect(subject.element_right).to eq subject.element_left +
-                                                  element_width
+                                                  element_width - 1
         end
 
         it 'returns an element_bottom' do
           expect(subject.element_bottom).to eq subject.element_top +
-                                                   element_height
+                                                   element_height - 1
         end
       end
     end
@@ -285,8 +289,8 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}
-      its(:right) {should eq 120}
-      its(:bottom) {should eq 60}
+      its(:right) {should eq 119}
+      its(:bottom) {should eq 59}
       its(:width) {should eq 40}
       its(:height) {should eq 20}
 
@@ -312,16 +316,16 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}
-      its(:right) {should eq 120}
-      its(:bottom) {should eq 60}
+      its(:right) {should eq 119}
+      its(:bottom) {should eq 59}
       its(:width) {should eq 40}
       its(:height) {should eq 20}
     end
   end
 
   describe 'additional dimension methods' do
-    its(:right) {should eq left + width}
-    its(:bottom) {should eq top + height}
+    its(:right) {should eq left + width - 1}
+    its(:bottom) {should eq top + height - 1}
 
     describe 'without height and width' do
       let(:width) {nil}
@@ -332,6 +336,12 @@ describe Shoes::Dimensions do
   end
 
   describe 'in_bounds?' do
+
+    let(:left) {10}
+    let(:top) {20}
+    let(:width) {100}
+    let(:height) {150}
+
     describe 'absolute position same as offset' do
       before :each do
         subject.absolute_left = left
@@ -340,7 +350,10 @@ describe Shoes::Dimensions do
 
       it {should be_in_bounds 30, 40}
       it {should be_in_bounds left, top}
-      it {should be_in_bounds left + width, top + height}
+      it {should be_in_bounds left + width - 1, top + height - 1}
+      it {should_not be_in_bounds left + width, top + height}
+      it {should_not be_in_bounds 30, top + height}
+      it {should_not be_in_bounds left + width, 40}
       it {should_not be_in_bounds 0, 0}
       it {should_not be_in_bounds 0, 40}
       it {should_not be_in_bounds 40, 0}
@@ -350,17 +363,20 @@ describe Shoes::Dimensions do
     end
 
     describe 'with absolute position differing from relative' do
+      let(:absolute_left) {150}
+      let(:absolute_top) {50}
+
       before :each do
-        subject.absolute_left = 150
-        subject.absolute_top  = 50
+        subject.absolute_left = absolute_left
+        subject.absolute_top  = absolute_top
       end
 
       it {should_not be_in_bounds 30, 40}
       it {should_not be_in_bounds left, top}
       it {should_not be_in_bounds 149, 75}
-      it {should be_in_bounds 200, 50}
-      it {should be_in_bounds 150, 50}
-      it {should be_in_bounds 150 + width, 50 + height}
+      it {should be_in_bounds 200, absolute_top}
+      it {should be_in_bounds absolute_left, absolute_top}
+      it {should be_in_bounds absolute_left + width - 1, absolute_top + height - 1}
       it {should_not be_in_bounds 80, 400}
     end
   end
@@ -552,6 +568,11 @@ describe Shoes::DimensionsDelegations do
     it 'forwards calls to dsl' do
       dsl.should_receive :left
       subject.left
+    end
+
+    it 'does not forward calls to parent' do
+      dsl.should_not_receive :parent
+      expect {subject.parent}.to raise_error
     end
   end
 

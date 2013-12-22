@@ -79,10 +79,10 @@ describe Shoes::Swt::TextBlockFitter do
     end
   end
 
-  def with_current_position(x, y, max_bottom)
+  def with_current_position(x, y, next_line_start)
     current_position.stub(:x) { x }
     current_position.stub(:y) { y }
-    current_position.stub(:max_bottom) { max_bottom }
+    current_position.stub(:next_line_start) { next_line_start }
   end
 
   def expect_fitted_with(fitted_layout, layout, left, top)

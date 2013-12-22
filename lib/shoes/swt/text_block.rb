@@ -5,23 +5,24 @@ class Shoes
     class TextBlock
       include Common::Clear
       include Common::Toggle
+      include Common::Clickable
       include ::Shoes::BackendDimensionsDelegations
 
       DEFAULT_SPACING = 4
 
-      attr_reader :dsl
+      attr_reader :dsl, :app
       attr_accessor :fitted_layouts
 
       def initialize(dsl)
         @dsl = dsl
-        @opts = dsl.opts
-        @container = @dsl.app.gui.real
+        @app = dsl.app.gui
+        @opts = @dsl.opts
         @painter = TextBlockPainter.new @dsl
-        @container.add_paint_listener @painter
+        @app.add_paint_listener @painter
       end
 
       def redraw
-        @container.redraw unless @container.disposed?
+        app.redraw
       end
 
       def update_position
@@ -95,7 +96,7 @@ class Shoes
         layout = last_layout
         last_line_height = layout.line_metrics(layout.line_count - 1).height
         layout_height = layout.bounds.height - (layout.spacing * 2)
-        @dsl.absolute_top = current_position.max_bottom + layout_height - last_line_height
+        @dsl.absolute_top = current_position.next_line_start + layout_height - last_line_height
       end
 
       def clear
@@ -122,10 +123,10 @@ class Shoes
 
       def clear_links
         @dsl.links.each do |link|
-          @dsl.app.gui.clickable_elements.delete link
+          app.clickable_elements.delete link
           ln = link.click_listener
-          @container.remove_listener ::Swt::SWT::MouseDown, ln if ln
-          @container.remove_listener ::Swt::SWT::MouseUp, ln if ln
+          app.remove_listener ::Swt::SWT::MouseDown, ln if ln
+          app.remove_listener ::Swt::SWT::MouseUp, ln if ln
         end
         @dsl.links.clear
       end

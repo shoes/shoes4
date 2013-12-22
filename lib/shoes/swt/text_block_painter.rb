@@ -8,9 +8,11 @@ class Shoes
       include Common::Resource
       include Common::Clickable
 
+      attr_reader :app
       def initialize(dsl)
         @dsl = dsl
         @opts = @dsl.opts
+        @app = @dsl.app.gui
       end
 
       def paintControl(paint_event)

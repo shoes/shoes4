@@ -7,7 +7,7 @@ class Shoes
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl
+      attr_reader :dsl, :parent
 
       # Create a list box
       #

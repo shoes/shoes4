@@ -37,6 +37,14 @@ class Shoes
     def text=(value)
       @gui.text = value.to_s
     end
+
+    def highlight_text(start_index, final_index)
+      @gui.highlight_text(start_index, final_index)
+    end
+
+    def caret_to(index)
+      @gui.caret_to(index)
+    end
   end
 
   class EditBox < InputBox
