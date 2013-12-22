@@ -1,19 +1,17 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlockPainter do
+  include_context "swt app"
+
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
-  let(:parent) { Shoes::Flow.new app_real, app_real }
   let(:gui) { double("gui", fitted_layouts: [fitted_layout])}
-  let(:dsl) { double("dsl", parent: parent, app: parent.app,
-                     gui: gui, text: "hello world", cursor: nil,
+  let(:dsl) { double("dsl", app: shoes_app, gui: gui,
+                     text: "hello world", cursor: nil,
                      opts: opts, element_width: 200, element_height: 180,
                      element_left: 0, element_top: 10, font: "font",
                      font_size: 16, margin_left: 0, margin_top: 0,
                      text_styles: {}, :hidden? => false).as_null_object
             }
-  let(:app) { parent.app.gui.real }
-  let(:app_real) { Shoes::App.new }
-  let(:container) { app }
 
   let(:fitted_layout) { double("fitted layout", left: 0, top: 10,
                                draw: nil, layout: text_layout) }

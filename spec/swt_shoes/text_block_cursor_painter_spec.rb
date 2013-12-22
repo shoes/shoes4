@@ -2,8 +2,9 @@ require 'swt_shoes/spec_helper'
 require 'shoes/swt/text_block_cursor_painter'
 
 describe Shoes::Swt::TextBlockCursorPainter do
-  let(:app) { double("app", black: double("black")) }
-  let(:dsl) { double("dsl", app: app, textcursor: textcursor) }
+  include_context "swt app"
+
+  let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor) }
   let(:textcursor) { double("textcursor") }
   let(:fitted_layouts) { [] }
 
@@ -152,7 +153,8 @@ describe Shoes::Swt::TextBlockCursorPainter do
 
     it "should create textcursor if missing" do
       dsl.stub(:textcursor) { nil }
-      app.stub(:line).and_return(textcursor)
+      shoes_app.stub(:line).and_return(textcursor)
+      shoes_app.stub(:black)
 
       result = subject.textcursor(0)
       expect(result).to eq(textcursor)
