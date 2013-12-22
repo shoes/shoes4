@@ -3,6 +3,7 @@ require 'shoes/spec_helper'
 describe Shoes::Line do
   let(:app) { Shoes::App.new }
   let(:opts) { Hash.new }
+  let(:parent) { app }
 
   describe "basic" do
     let(:left) { 20 }
@@ -10,11 +11,12 @@ describe Shoes::Line do
     let(:width) { 280 }
     let(:height) { 407 }
 
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), opts) }
+    subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), opts) }
     it_behaves_like "object with stroke"
     it_behaves_like "movable object"
     it_behaves_like "object with style"
     it_behaves_like "object with dimensions"
+    it_behaves_like 'object with parent'
   end
 
   shared_examples_for "basic line" do

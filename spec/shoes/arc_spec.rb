@@ -18,6 +18,7 @@ describe Shoes::Arc do
     it_behaves_like "object with fill"
     it_behaves_like "object with dimensions"
     it_behaves_like "left, top as center", :start_angle, :end_angle
+    it_behaves_like 'object with parent'
 
     it "is a Shoes::Arc" do
       subject.class.should be(Shoes::Arc)

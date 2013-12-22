@@ -15,5 +15,6 @@ describe Shoes::Oval do
     it_behaves_like "object with dimensions"
     it_behaves_like "movable object"
     it_behaves_like "left, top as center"
+    it_behaves_like 'object with parent'
   end
 end
