@@ -203,7 +203,7 @@ class Shoes
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
       arc_style = normalize_style(opts)
-      Shoes::Arc.new(app, left, top, width, height, angle1, angle2, style.merge(arc_style))
+      create Shoes::Arc, left, top, width, height, angle1, angle2, style.merge(arc_style)
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
@@ -214,7 +214,7 @@ class Shoes
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
     def line(x1, y1, x2, y2, opts = {})
-      Shoes::Line.new app, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
+      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
     end
 
     # Creates an oval at (left, top)
@@ -262,7 +262,7 @@ Wrong number of arguments. Must be one of:
 EOS
           raise ArgumentError, message
       end
-      Shoes::Oval.new(app, left, top, width, height, style.merge(oval_style), &blk)
+      create Shoes::Oval, left, top, width, height, style.merge(oval_style), &blk
     end
 
     # Creates a rectangle
@@ -315,27 +315,12 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      Shoes::Rect.new app, left, top, width, height, style.merge(opts), &blk
+      create Shoes::Rect, left, top, width, height, style.merge(opts), &blk
     end
 
-    # Creates a new Shoes::Star object
-    def star(*args, &blk)
-      opts = normalize_style pop_style(args)
-      case args.length
-      when 2
-        left, top = args
-        points, outer, inner = 10, 100.0, 50.0
-      when 5
-        left, top, points, outer, inner = args
-      else
-        message = <<EOS
-Wrong number of arguments. Must be one of:
-  - star(left, top, [opts])
-  - star(left, top, points, outer, inner, [opts])
-EOS
-        raise ArgumentError, message
-      end
-      Shoes::Star.new(app, left, top, points, outer, inner, opts, &blk)
+    def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
+      opts = normalize_style opts
+      create Shoes::Star, left, top, points, outer, inner, opts, &blk
     end
 
     # Creates a new Shoes::Shape object

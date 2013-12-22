@@ -271,18 +271,10 @@ class Shoes
     end
   end
 
-  # for objects that are always absolutely positioned e.g. left == absolute_left
+  # for objects that do not depend on their parent (get 1.04 as real values)
   class AbsoluteDimensions < Dimensions
     def initialize(*args)
       super(nil, *args)
-    end
-
-    def absolute_left
-      left
-    end
-
-    def absolute_top
-      top
     end
   end
 
