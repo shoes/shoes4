@@ -73,8 +73,7 @@ class Shoes
         height_so_far = 0
 
         offsets = layout.line_offsets
-        offsets.each_with_index do |_, i|
-          # TODO: Fix bug where if this hits the last offset we crash!
+        offsets[0...-1].each_with_index do |_, i|
           height_so_far += layout.line_metrics(i).height
           break if height_so_far > height
 

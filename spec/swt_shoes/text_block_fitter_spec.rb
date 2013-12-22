@@ -42,11 +42,18 @@ describe Shoes::Swt::TextBlockFitter do
 
   describe "finding what didn't fit" do
     it "should tell split text by offsets and heights" do
-      layout = double('layout', height: 100,
-                      line_offsets: [0, 5, 9], text: "Text Split")
+      layout = double('layout', line_offsets: [0, 5, 9], text: "Text Split")
       layout.stub(:line_metrics) { double('line_metrics', height: 50)}
 
       subject.split_text(layout, 55).should eq(["Text ", "Split"])
+    end
+
+    it "should be able to split text when too small" do
+      layout = double('layout', line_offsets: [0, 10], text: "Text Split")
+      layout.stub(:line_metrics).with(0) { double('line_metrics', height: 21)}
+      layout.stub(:line_metrics).with(1) { raise "Boom" }
+
+      subject.split_text(layout, 33).should eq(["Text Split", ""])
     end
   end
 
