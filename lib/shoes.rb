@@ -79,6 +79,7 @@ require 'shoes/check_button'
 require 'shoes/dsl'
 require 'shoes/text'
 require 'shoes/input_box'
+require 'shoes/context'
 
 # please keep this list tidy and alphabetically sorted
 require 'shoes/animation'

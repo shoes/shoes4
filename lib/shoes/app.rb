@@ -28,6 +28,7 @@ class Shoes
 
     attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
                 :mouse_motion, :owner, :location
+    attr_reader :element_styles
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title
     attr_writer   :width, :height, :start_as_fullscreen
@@ -38,6 +39,7 @@ class Shoes
 
       @gui = Shoes.configuration.backend::App.new @app
 
+      create_execution_context
       execution_blk = create_execution_block(blk)
       eval_block execution_blk
 
@@ -147,7 +149,7 @@ class Shoes
     def create_execution_block(blk)
       if blk
         execution_blk = Proc.new do
-          @app.instance_eval &blk
+          @app.send(:execute_block, blk)
         end
       elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
         execution_blk = Proc.new do
@@ -157,6 +159,14 @@ class Shoes
         execution_blk = nil
       end
       execution_blk
+    end
+
+    def execute_block(block)
+      @execution_context.instance_eval &block
+    end
+
+    def create_execution_context
+      @execution_context = Shoes::Context.new(self)
     end
 
     def set_initial_attributes
@@ -185,9 +195,12 @@ class Shoes
     end
 
     def add_console
-      keypress do |key|
-        ::Shoes::Logger.setup if key == :"alt_/"
+      console = Proc.new do
+        keypress do |key|
+          ::Shoes::Logger.setup if key == :"alt_/"
+        end
       end
+      execute_block console
     end
 
   end
