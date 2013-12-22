@@ -120,14 +120,14 @@ class Shoes
       end
 
       def vertically_scroll_window(vertical_bar)
-          location = self.real.getLocation
-          location.y = -vertical_bar.getSelection
-          self.real.setLocation location
+        location = self.real.getLocation
+        location.y = -vertical_bar.getSelection
+        self.real.setLocation location
       end
 
       def force_shell_size
-        frame_x_decorations = @shell.getSize().x - @shell.getClientArea().width
-        frame_y_decorations = @shell.getSize().y - @shell.getClientArea().height
+        frame_x_decorations = @shell.size.x - @shell.client_area.width
+        frame_y_decorations = @shell.size.y - @shell.client_area.height
         new_width = @dsl.width + frame_x_decorations
         new_height = @dsl.height + frame_y_decorations
         @shell.setSize(new_width, new_height)
@@ -200,8 +200,8 @@ class Shoes
 
       def controlResized(event)
         shell = event.widget
-        width = shell.getClientArea().width
-        height = shell.getClientArea().height
+        width = shell.client_area.width
+        height = shell.client_area.height
         @app.dsl.top_slot.width   = width
         @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
