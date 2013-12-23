@@ -50,6 +50,7 @@ end
 
 Shoes.configuration.backend = :swt
 
+require 'shoes/swt/disposed_protection'
 require 'shoes/swt/color'
 require 'shoes/swt/common/child'
 require 'shoes/swt/common/clear'
@@ -62,7 +63,6 @@ require 'shoes/swt/common/toggle'
 require 'shoes/swt/common/selection_listener'
 require 'shoes/swt/common/stroke'
 require 'shoes/swt/common/update_position'
-require 'shoes/swt/with_disposed_protection'
 
 require 'shoes/swt/input_box'
 require 'shoes/swt/rect_painter.rb'
