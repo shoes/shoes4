@@ -71,10 +71,14 @@ class Shoes
         # TODO: Should this also reassign the DSL sizes instead of the DSL
         # trying to read (prematurely?) from the @gui?
         if fitted_layouts.size == 1
-          set_absolutes_for_one_layout
+          set_absolutes_for_one_layout(current_position)
         else
           set_absolutes_for_two_layouts(current_position)
         end
+      end
+
+      def first_layout
+        fitted_layouts.first.layout
       end
 
       def last_layout
@@ -86,17 +90,27 @@ class Shoes
         last_layout.get_line_bounds(line_count - 1)
       end
 
-      def set_absolutes_for_one_layout
+      def layout_height(layout)
+        layout.bounds.height - layout.spacing
+      end
+
+      def line_height(layout)
+        layout.line_metrics(layout.line_count - 1).height
+      end
+
+      def set_absolutes_for_one_layout(current_position)
         @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
+        if current_position.moving_next
+          @dsl.absolute_top = current_position.y + layout_height(first_layout)
+        end
       end
 
       def set_absolutes_for_two_layouts(current_position)
         @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
 
-        layout = last_layout
-        last_line_height = layout.line_metrics(layout.line_count - 1).height
-        layout_height = layout.bounds.height - layout.spacing
-        @dsl.absolute_top = current_position.next_line_start + layout_height - last_line_height
+        @dsl.absolute_top = current_position.next_line_start +
+                            layout_height(last_layout) -
+                            line_height(last_layout)
       end
 
       def clear

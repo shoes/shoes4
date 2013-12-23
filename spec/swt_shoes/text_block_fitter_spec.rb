@@ -31,6 +31,12 @@ describe Shoes::Swt::TextBlockFitter do
       with_current_position(0, 0, 30)
       expect(subject.available_space).to eq([120, 30])
     end
+
+    it "should move to next line" do
+      parent_dsl.stub(width: 100)
+      with_current_position(10, 20, 30, true)
+      expect(subject.available_space).to eq([100, :unbounded])
+    end
   end
 
   describe "layout generation" do
@@ -86,10 +92,11 @@ describe Shoes::Swt::TextBlockFitter do
     end
   end
 
-  def with_current_position(x, y, next_line_start)
+  def with_current_position(x, y, next_line_start, moving_next=false)
     current_position.stub(:x) { x }
     current_position.stub(:y) { y }
     current_position.stub(:next_line_start) { next_line_start }
+    current_position.stub(:moving_next) { moving_next }
   end
 
   def expect_fitted_with(fitted_layout, layout, left, top)
