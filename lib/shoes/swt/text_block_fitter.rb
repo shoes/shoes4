@@ -25,7 +25,6 @@ class Shoes
       end
 
       def fit_as_one_layout(layout)
-        # TODO: Potentially need extra spacing consideration
         # TODO: Make sure we deal with explicit widths from the DSL
         [FittedTextLayout.new(layout,
                               @dsl.absolute_left + @dsl.margin_left,
@@ -33,7 +32,6 @@ class Shoes
       end
 
       def fit_as_two_layouts(layout, height, width)
-        # TODO: Potentially need extra spacing consideration
         # TODO: Make sure we deal with explicit widths from the DSL
         first_text, second_text = split_text(layout, height)
         first_layout = generate_layout(width, first_text)

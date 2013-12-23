@@ -95,7 +95,7 @@ class Shoes
 
         layout = last_layout
         last_line_height = layout.line_metrics(layout.line_count - 1).height
-        layout_height = layout.bounds.height - (layout.spacing * 2)
+        layout_height = layout.bounds.height - layout.spacing
         @dsl.absolute_top = current_position.next_line_start + layout_height - last_line_height
       end
 
