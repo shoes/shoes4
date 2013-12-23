@@ -1,6 +1,4 @@
 describe Shoes::Swt::WithDisposedProtection do
-  include Shoes::Swt
-
   let(:width) { 234 }
   subject(:delegator) { Shoes::Swt::WithDisposedProtection.new delegation_object }
 
