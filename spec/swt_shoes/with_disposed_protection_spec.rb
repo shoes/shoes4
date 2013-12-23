@@ -1,37 +1,8 @@
-require 'delegate'
-
-class Shoes
-  module Swt
-    def with_disposed_protection(real)
-      WithDisposedProtection.new real
-    end
-
-    class WithDisposedProtection < BasicObject
-      def initialize(real)
-        @real = real
-      end
-
-      def ==(other)
-        @real == other
-      end
-
-      def !=(other)
-        @real != other
-      end
-
-      def method_missing(method, *args, &block)
-        @real.public_send method, *args, &block unless @real.disposed?
-      end
-    end
-  end
-end
-
-
 describe Shoes::Swt::WithDisposedProtection do
   include Shoes::Swt
 
   let(:width) { 234 }
-  subject(:delegator) { with_disposed_protection delegation_object }
+  subject(:delegator) { Shoes::Swt::WithDisposedProtection.new delegation_object }
 
   context "when delegation object is NOT disposed" do
     let(:delegation_object) { double("delegation object", width: width, dispose: nil, disposed?: false) }

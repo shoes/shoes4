@@ -8,7 +8,7 @@ class Shoes
       # @param [Shoes::Color] color the DSL representation of this color
       def initialize(color)
         @dsl = color
-        @real = ::Swt::Graphics::Color.new(Shoes.display, @dsl.red, @dsl.green, @dsl.blue)
+        @real = WithDisposedProtection.new ::Swt::Graphics::Color.new(Shoes.display, @dsl.red, @dsl.green, @dsl.blue)
       end
 
       attr_reader :dsl, :real
