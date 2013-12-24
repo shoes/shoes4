@@ -34,10 +34,16 @@ class Shoes
       end
 
       def get_size
-        # TODO: This isn't quite right, but this gets called by the DSL early
-        # on before we've actually fitted.
+        # TODO: This isn't right, but this gets called by the DSL early before
+        # we've actually fitted. We have to respond with something, but until
+        # contents_alignment, we don't actually know our size.
         #
-        # Should contents_alignment instead write back to the DSL on fitting?
+        # A better solution would probably be having contents_alignment write
+        # back to the DSL instead and making sure the early load cases can
+        # handle not having the values before we've positioned thing.
+        #
+        # Additionally, the sizing applied in the DSL doesn't factor in any
+        # explicitly set values for height/width.
         text_layout = generate_layout(nil, @dsl.text)
         bounds = text_layout.bounds
         return bounds.width, bounds.height
@@ -68,8 +74,6 @@ class Shoes
         fitter = ::Shoes::Swt::TextBlockFitter.new(self, current_position)
         @fitted_layouts = fitter.fit_it_in
 
-        # TODO: Should this also reassign the DSL sizes instead of the DSL
-        # trying to read (prematurely?) from the @gui?
         if fitted_layouts.size == 1
           set_absolutes_for_one_layout(current_position)
         else

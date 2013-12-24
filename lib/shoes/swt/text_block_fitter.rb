@@ -7,8 +7,30 @@ class Shoes
         @current_position = current_position
       end
 
-      # TODO: Give layout diagram here and describe the general 1 vs 2 layout
-      # algorthim that we're using, and why it works
+      # Fitting text works by using either 1 or 2 layouts
+      #
+      # If the text fits in the height and width available, we use one layout.
+      #
+      # --------------------------
+      # | button | text layout 1 |
+      # --------------------------
+      #
+      # If if the text doesn't fit into that space, then we'll break it into
+      # two different layouts.
+      #
+      # --------------------------
+      # | button | text layout 1 |
+      # --------------------------
+      # | text layout 2 goes here|
+      # | in space               |
+      # --------------------------
+      #           ^
+      #
+      # When flowing, the position for the next element gets set to the end of
+      # the text in the second layout (shown as ^ in the diagram).
+      #
+      # Stacks properly move to the next whole line as you'd expect.
+      #
       def fit_it_in
         width, height = available_space
         layout = generate_layout(width, @dsl.text)
@@ -26,14 +48,12 @@ class Shoes
       end
 
       def fit_as_one_layout(layout)
-        # TODO: Make sure we deal with explicit widths from the DSL
         [FittedTextLayout.new(layout,
                               @dsl.absolute_left + @dsl.margin_left,
                               @dsl.absolute_top + @dsl.margin_top)]
       end
 
       def fit_as_two_layouts(layout, height, width)
-        # TODO: Make sure we deal with explicit widths from the DSL
         first_text, second_text = split_text(layout, height)
         first_layout = generate_layout(width, first_text)
         second_layout = generate_second_layout(second_text)

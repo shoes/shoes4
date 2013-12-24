@@ -25,10 +25,6 @@ class Shoes
         draw_text_cursor
       end
 
-      # TODO: Handle links that span multiple text layouts. Currently chokes on
-      # text location logic
-      #
-      # TODO: Pull text link meddling to separate class for easier testing
       def draw_from_layout(gc, fitted_layout)
         set_styles(fitted_layout)
         fitted_layout.draw(gc)
