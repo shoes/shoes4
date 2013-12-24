@@ -57,7 +57,7 @@ class Shoes
                                ::Swt::SWT::NORMAL
         style = ::Swt::TextStyle.new font, nil, nil
         layout.setStyle style, 0, text.length - 1
-        shrink_layout_to(layout, width) if width && !layout_fits_in?(layout, width)
+        shrink_layout_to(layout, width) if width && width > 0 && !layout_fits_in?(layout, width)
 
         layout
       end

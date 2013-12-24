@@ -73,6 +73,9 @@ class Shoes
           clickable text, text.blk
           text.clickabled = true
         end
+      rescue => e
+        # TODO: Once we properly handle links in multi-layout text, this rescue
+        # should not be required any longer.
       end
 
       def set_text_styles(fitted_layout, foreground, background)
