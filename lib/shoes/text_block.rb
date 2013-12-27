@@ -59,9 +59,9 @@ class Shoes
       self.height = @gui.get_height + margin_top + margin_bottom
     end
 
-    # We always claim we fit, and do our own wrapping if we don't
-    def fits_in_width?(_)
-      true
+    # Since we flow, try to fit in almost any space
+    def fitting_width
+      10
     end
 
     # We take over a bunch of the absolute_* measurements since the jagged

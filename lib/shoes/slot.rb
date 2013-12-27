@@ -158,11 +158,9 @@ class Shoes
     end
 
     def fits_on_the_same_line?(element, current_x)
-      if element.respond_to?(:fits_in_width?)
-        element.fits_in_width?(element_width - current_x)
-      else
-        current_x + element.width - 1 <= element_right
-      end
+      fitting_width = element.width
+      fitting_width = element.fitting_width if element.respond_to?(:fitting_width)
+      current_x + fitting_width - 1 <= element_right
     end
 
     def takes_up_space?(element)
