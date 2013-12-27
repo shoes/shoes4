@@ -27,7 +27,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "sizing methods" do
     before(:each) do
-      stub_with_sizes(height, width)
+      stub_with_sizes(width, height)
     end
 
     it "should use layout to get size" do
@@ -40,7 +40,7 @@ describe Shoes::Swt::TextBlock do
   end
 
   describe "generating layouts" do
-    let(:layout) { create_layout(height, width) }
+    let(:layout) { create_layout(width, height) }
 
     before(:each) do
       stub_layout(layout)
@@ -70,7 +70,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "contents alignment" do
     let(:fitter) { double("fitter") }
-    let(:current_position) { Shoes::Slot::CurrentPosition.new }
+    let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
       ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
@@ -79,11 +79,33 @@ describe Shoes::Swt::TextBlock do
     it "should set position for fitting single layout" do
       dsl.stub(:absolute_left) { 50 }
 
-      layout = create_layout(:unused_height, 100)
-      layout.stub(:get_line_bounds) { layout.bounds }
+      layout = create_layout(100, :unused_height)
       fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
 
       expect(dsl).to receive(:absolute_right=).with(150)
+      expect(dsl).to_not receive(:absolute_top=)
+
+      subject.contents_alignment(current_position)
+    end
+
+    it "should push to next line if moving next" do
+      current_position.moving_next = true
+
+      layout = create_layout(100, 200)
+      fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
+
+      expect(dsl).to receive(:absolute_right=)
+      expect(dsl).to receive(:absolute_top=)
+
+      subject.contents_alignment(current_position)
+    end
+
+    it "should push to next line if ends in newline" do
+      layout = create_layout(100, 200, "text\n")
+      fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
+
+      expect(dsl).to receive(:absolute_right=)
+      expect(dsl).to receive(:absolute_top=)
 
       subject.contents_alignment(current_position)
     end
@@ -91,10 +113,8 @@ describe Shoes::Swt::TextBlock do
     it "should set position for fitting two layouts" do
       current_position.next_line_start = 0
 
-      last_layout = create_layout(200, 100)
-      last_layout.stub(:get_line_bounds) { last_layout.bounds }
+      last_layout = create_layout(100, 200)
       last_layout.stub(:line_metrics) { double("line_metrics", height: 10)}
-      last_layout.stub(:spacing) { 0 }
 
       fitter.stub(:fit_it_in) {
         [:unused_layout, double("fitted_layout", layout: last_layout)]
@@ -111,13 +131,15 @@ describe Shoes::Swt::TextBlock do
     pending "Waiting on re-enabling links and implementing contents"
   end
 
-  def create_layout(height, width)
+  def create_layout(width, height, text="layout text")
     bounds = double("bounds", height: height, width: width)
-    double("layout", bounds: bounds).as_null_object
+    double("layout",
+           get_line_bounds: bounds, bounds: bounds,
+           spacing: 0, text: text).as_null_object
   end
 
-  def stub_with_sizes(height, width)
-    stub_layout(create_layout(height, width))
+  def stub_with_sizes(width, height)
+    stub_layout(create_layout(width, height))
   end
 
   def stub_layout(layout)

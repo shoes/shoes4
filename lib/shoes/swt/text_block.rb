@@ -102,9 +102,13 @@ class Shoes
         layout.line_metrics(layout.line_count - 1).height
       end
 
+      def trailing_newline?
+        last_layout.text.end_with?("\n")
+      end
+
       def set_absolutes_for_one_layout(current_position)
         @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
-        if current_position.moving_next
+        if current_position.moving_next || trailing_newline?
           @dsl.absolute_top = current_position.y + layout_height(first_layout)
         end
       end
@@ -115,6 +119,10 @@ class Shoes
         @dsl.absolute_top = current_position.next_line_start +
                             layout_height(last_layout) -
                             line_height(last_layout)
+
+        if trailing_newline?
+          @dsl.absolute_right = @dsl.parent.absolute_left
+        end
       end
 
       def clear
