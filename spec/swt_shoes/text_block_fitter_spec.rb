@@ -23,13 +23,13 @@ describe Shoes::Swt::TextBlockFitter do
   describe "determining available space" do
     it "should use the current position" do
       with_current_position(50, 0, 20)
-      expect(subject.available_space).to eq([50, 20])
+      expect(subject.available_space).to eq([50, 19])
     end
 
     it "should offset by parent with current position" do
       parent_dsl.stub(width: 100, absolute_left: 20)
       with_current_position(0, 0, 30)
-      expect(subject.available_space).to eq([120, 30])
+      expect(subject.available_space).to eq([120, 29])
     end
 
     it "should move to next line" do
@@ -65,14 +65,15 @@ describe Shoes::Swt::TextBlockFitter do
 
   describe "fit it in" do
     let(:bounds) { double('bounds', width: 100, height: 50)}
-    let(:layout) { double('layout', get_bounds: bounds) }
+    let(:layout) { double('layout', text: "something something",
+                          line_offsets:[], get_bounds: bounds) }
 
     before(:each) do
       text_block.stub(:generate_layout) { layout }
     end
 
     it "should return first layout if it fits" do
-      with_current_position(0, 0, 50)
+      with_current_position(0, 0, 55)
       fitted_layouts = subject.fit_it_in
 
       expect(fitted_layouts.size).to eq(1)
@@ -81,7 +82,6 @@ describe Shoes::Swt::TextBlockFitter do
 
     it "should overflow to second layout" do
       bounds.stub(width: 50)
-      layout.stub(text: "", line_offsets: [])
 
       with_current_position(50, 0, 20)
       fitted_layouts = subject.fit_it_in

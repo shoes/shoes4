@@ -74,10 +74,14 @@ class Shoes
         fitter = ::Shoes::Swt::TextBlockFitter.new(self, current_position)
         @fitted_layouts = fitter.fit_it_in
 
-        if fitted_layouts.size == 1
+        if fitted_layouts.one?
           set_absolutes_for_one_layout(current_position)
         else
           set_absolutes_for_two_layouts(current_position)
+        end
+
+        if current_position.moving_next || trailing_newline?
+          bump_absolutes_to_next_line
         end
       end
 
@@ -108,21 +112,19 @@ class Shoes
 
       def set_absolutes_for_one_layout(current_position)
         @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
-        if current_position.moving_next || trailing_newline?
-          @dsl.absolute_top = current_position.y + layout_height(first_layout)
-        end
+        @dsl.absolute_bottom = current_position.y + layout_height(first_layout)
+        @dsl.absolute_top = @dsl.absolute_bottom - line_height(first_layout)
       end
 
       def set_absolutes_for_two_layouts(current_position)
         @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
+        @dsl.absolute_bottom = current_position.next_line_start + layout_height(last_layout)
+        @dsl.absolute_top = @dsl.absolute_bottom - line_height(last_layout)
+      end
 
-        @dsl.absolute_top = current_position.next_line_start +
-                            layout_height(last_layout) -
-                            line_height(last_layout)
-
-        if trailing_newline?
-          @dsl.absolute_right = @dsl.parent.absolute_left
-        end
+      def bump_absolutes_to_next_line
+        @dsl.absolute_right = @dsl.parent.absolute_left
+        @dsl.absolute_top = @dsl.absolute_bottom
       end
 
       def clear

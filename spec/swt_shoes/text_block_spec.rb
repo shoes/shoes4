@@ -69,61 +69,74 @@ describe Shoes::Swt::TextBlock do
   end
 
   describe "contents alignment" do
+    let(:layout_width) { 100 }
+    let(:layout_height) { 200 }
+    let(:line_height) { 10 }
+    let(:layout) { create_layout(layout_width, layout_height) }
     let(:fitter) { double("fitter") }
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
       ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
-    end
-
-    it "should set position for fitting single layout" do
-      dsl.stub(:absolute_left) { 50 }
-
-      layout = create_layout(100, :unused_height)
       fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
-
-      expect(dsl).to receive(:absolute_right=).with(150)
-      expect(dsl).to_not receive(:absolute_top=)
-
-      subject.contents_alignment(current_position)
+      layout.stub(:line_metrics) { double("line_metrics", height: line_height)}
     end
 
-    it "should push to next line if moving next" do
-      current_position.moving_next = true
+    describe "with single layout" do
+      before(:each) do
+        dsl.stub(:absolute_left) { 50 }
+        dsl.stub(:absolute_bottom) { layout_height }
+        layout.stub(:line_count) { 1 }
+      end
 
-      layout = create_layout(100, 200)
-      fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
+      it "should position for single line of text" do
+        expect(dsl).to receive(:absolute_right=).with(layout_width + 50)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-      expect(dsl).to receive(:absolute_right=)
-      expect(dsl).to receive(:absolute_top=)
+        subject.contents_alignment(current_position)
+      end
 
-      subject.contents_alignment(current_position)
+      it "should push to next line if moving next" do
+        current_position.moving_next = true
+
+        expect(dsl).to receive(:absolute_right=).with(50)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_top=).with(layout_height)
+
+        subject.contents_alignment(current_position)
+      end
+
+      it "should push to next line if ends in newline" do
+        layout.stub(:text) { "text\n" }
+
+        expect(dsl).to receive(:absolute_right=).with(50)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_top=).with(layout_height)
+
+        subject.contents_alignment(current_position)
+      end
     end
 
-    it "should push to next line if ends in newline" do
-      layout = create_layout(100, 200, "text\n")
-      fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
+    describe "with two layouts" do
+      before(:each) do
+        dsl.stub(:parent) { double("dsl parent", absolute_left: 0) }
+        dsl.stub(:absolute_bottom) { layout_height }
+      end
 
-      expect(dsl).to receive(:absolute_right=)
-      expect(dsl).to receive(:absolute_top=)
+      it "should set position for fitting two layouts" do
+        current_position.next_line_start = 0
 
-      subject.contents_alignment(current_position)
-    end
+        fitter.stub(:fit_it_in) {
+          [:unused_layout, double("fitted_layout", layout: layout)]
+        }
 
-    it "should set position for fitting two layouts" do
-      current_position.next_line_start = 0
+        expect(dsl).to receive(:absolute_right=).with(layout_width)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-      last_layout = create_layout(100, 200)
-      last_layout.stub(:line_metrics) { double("line_metrics", height: 10)}
-
-      fitter.stub(:fit_it_in) {
-        [:unused_layout, double("fitted_layout", layout: last_layout)]
-      }
-
-      expect(dsl).to receive(:absolute_right=)
-      expect(dsl).to receive(:absolute_top=)
-
-      subject.contents_alignment(current_position)
+        subject.contents_alignment(current_position)
+      end
     end
   end
 

@@ -56,6 +56,10 @@ class Shoes
       def fit_as_two_layouts(layout, height, width)
         first_text, second_text = split_text(layout, height)
         first_layout = generate_layout(width, first_text)
+        if second_text == ""
+          return fit_as_one_layout(first_layout)
+        end
+
         second_layout = generate_second_layout(second_text)
 
         [
@@ -87,7 +91,8 @@ class Shoes
 
       def available_space_on_current_line
         width = parent.absolute_left + parent.width - @current_position.x
-        height = @current_position.next_line_start - @current_position.y
+        height = @current_position.next_line_start - @current_position.y - 1
+        height = :unbounded if height <= 0
         [width, height]
       end
 
@@ -141,6 +146,5 @@ class Shoes
         layout.draw(graphics_context, left, top)
       end
     end
-
   end
 end

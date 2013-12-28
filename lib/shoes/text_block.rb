@@ -85,8 +85,13 @@ class Shoes
       @absolute_top
     end
 
+    def absolute_bottom=(value)
+      @absolute_bottom = value
+    end
+
     def absolute_bottom
-      absolute_top + height
+      return absolute_top + height if @absolute_bottom.nil?
+      @absolute_bottom
     end
 
     def contents_alignment(current_position=nil)
