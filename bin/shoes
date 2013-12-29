@@ -5,7 +5,11 @@ mac_readlink_f () {
   TARGET_FILE=$1
 
   NEXT_DIR=`dirname $TARGET_FILE`
-  cd ./$NEXT_DIR
+  if [[ $NEXT_DIR == /* ]]; then
+    cd $NEXT_DIR
+  else
+    cd ./$NEXT_DIR
+  fi
   TARGET_FILE=`basename $TARGET_FILE`
 
   # Iterate down a (possible) chain of symlinks
@@ -13,7 +17,11 @@ mac_readlink_f () {
   do
     TARGET_FILE=`readlink $TARGET_FILE`
     NEXT_DIR=`dirname $TARGET_FILE`
-    cd ./$NEXT_DIR
+    if [[ $NEXT_DIR == /* ]]; then
+      cd $NEXT_DIR
+    else
+      cd ./$NEXT_DIR
+    fi
     TARGET_FILE=`basename $TARGET_FILE`
   done
 
