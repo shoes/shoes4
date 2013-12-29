@@ -469,14 +469,6 @@ describe Shoes::Dimensions do
 
   describe Shoes::AbsoluteDimensions do
     subject {Shoes::AbsoluteDimensions.new left, top, width, height}
-    it 'has the same absolute_left as left' do
-      subject.absolute_left.should eq left
-    end
-
-    it 'has the same absolute_top as top' do
-      subject.absolute_top.should eq top
-    end
-
     describe 'not adapting floats to parent values' do
       subject {Shoes::AbsoluteDimensions.new left, top, 1.04, 2.10}
       it 'does not adapt width' do

@@ -32,15 +32,15 @@ class Shoes
           clipping
         end
 
-        def fill(gc)
-          gc.fill_oval(@obj.element_left, @obj.element_top,
-                       @obj.element_width, @obj.element_height)
+        def fill(graphics_context)
+          graphics_context.fill_oval(@obj.element_left, @obj.element_top,
+                                     @obj.element_width, @obj.element_height)
         end
 
-        def draw(gc)
-          sw = gc.get_line_width
-          gc.draw_oval(@obj.element_left+sw/2, @obj.element_top+sw/2,
-                       @obj.element_width-sw, @obj.element_height-sw)
+        def draw(graphics_context)
+          sw = graphics_context.get_line_width
+          graphics_context.draw_oval(@obj.element_left+sw/2, @obj.element_top+sw/2,
+                                     @obj.element_width-sw, @obj.element_height-sw)
         end
       end
     end

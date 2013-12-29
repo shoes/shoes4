@@ -88,12 +88,22 @@ describe Shoes::Swt::InputBox do
   describe Shoes::Swt::EditLine do
     subject {Shoes::Swt::EditLine.new dsl, parent}
     describe ":secret option" do
-      let(:secret) {true}
-      it "sets PASSWORD style" do
-        edit_box_password_style = ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER | ::Swt::SWT::PASSWORD
-        expect(::Swt::Widgets::Text).to receive(:new).with( parent.real,
-                                                           edit_box_password_style)
-        subject
+      context "when NOT set" do
+        it "does NOT set PASSWORD style" do
+          options = Shoes::Swt::EditLine::DEFAULT_STYLES
+          dsl.stub(:secret?) { false }
+          expect(::Swt::Widgets::Text).to receive(:new).with(parent.real, options)
+          subject
+        end
+      end
+
+      context "when set" do
+        it "sets PASSWORD style" do
+          options = Shoes::Swt::EditLine::DEFAULT_STYLES | ::Swt::SWT::PASSWORD
+          dsl.stub(:secret?) { true }
+          expect(::Swt::Widgets::Text).to receive(:new).with(parent.real, options)
+          subject
+        end
       end
     end
   end
