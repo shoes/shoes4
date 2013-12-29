@@ -9,11 +9,12 @@ describe Shoes::Oval do
   let(:parent) { app }
 
   describe "basic" do
-    subject { Shoes::Oval.new(app, left, top, width, height) }
+    subject { Shoes::Oval.new(app, parent, left, top, width, height) }
     it_behaves_like "object with stroke"
     it_behaves_like "object with fill"
     it_behaves_like "object with dimensions"
     it_behaves_like "movable object"
     it_behaves_like "left, top as center"
+    it_behaves_like 'object with parent'
   end
 end

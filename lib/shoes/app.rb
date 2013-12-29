@@ -26,7 +26,7 @@ class Shoes
                         :resizable  => true,
                         :background => Shoes::COLORS[:white] }.freeze
 
-    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
+    attr_reader :gui, :top_slot, :contents, :app,
                 :mouse_motion, :owner, :location
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title
@@ -77,8 +77,6 @@ class Shoes
     def clear &blk
       if started?
         super
-        @app.unslotted_elements.each &:remove
-        @app.unslotted_elements.clear
         @contents << @top_slot
         @current_slot = @top_slot
         instance_eval &blk if blk
@@ -164,7 +162,6 @@ class Shoes
       @style                = default_styles
       @element_styles       = {}
       @contents             = []
-      @unslotted_elements   = []
       @mouse_motion         = []
       @mouse_button         = 0
       @mouse_pos            = [0, 0]

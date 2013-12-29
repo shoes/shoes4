@@ -4,7 +4,7 @@ describe Shoes::Swt::Line do
   include_context "swt app"
 
   let(:container) { double('container', :disposed? => false).as_null_object }
-  let(:dsl) { Shoes::Line.new shoes_app, point_a, point_b }
+  let(:dsl) { Shoes::Line.new shoes_app, parent, point_a, point_b }
   let(:point_a) { Shoes::Point.new(10, 100) }
   let(:point_b) { Shoes::Point.new(300, 10) }
 
