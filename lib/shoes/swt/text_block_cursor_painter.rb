@@ -23,13 +23,18 @@ class Shoes
         cursor.show
       end
 
+      def first_layout
+        @fitted_layouts.first
+      end
+
+      def last_layout
+        @fitted_layouts.last
+      end
+
       # Only works with one or two layouts, but that's what we've got
       # -1 positions us at the very end, regardless text length
       def choose_layout
-        first_layout = @fitted_layouts.first
-        last_layout = @fitted_layouts.last
-
-        if cursor_fits_in?(first_layout)
+        if cursor_fits_in_first_layout?
           first_layout
         else
           last_layout
@@ -38,26 +43,21 @@ class Shoes
 
       # Again, assumes one or two layout system
       def relative_cursor
-        first_layout = @fitted_layouts.first
-        last_layout = @fitted_layouts.last
-
-        if cursor_fits_in?(first_layout)
-          @dsl.cursor
-        elsif cursor_at_end?
-          last_layout.text.length
+        if cursor_at_end?
+          relative_cursor_at_end
+        elsif cursor_fits_in_first_layout?
+          relative_cursor_in_first_layout
         else
-          @dsl.cursor - first_layout.text.length
+          relative_cursor_in_last_layout
         end
       end
 
-      def cursor_fits_in?(layout)
-        @dsl.cursor <= layout.text.length && @dsl.cursor >= 0
+      def cursor_fits_in_first_layout?
+        @dsl.cursor <= first_layout.text.length && @dsl.cursor >= 0
       end
 
       def cursor_at_end?
-        single_layout? ||
-          cursor_negative? ||
-          cursor_past_all_text?
+        cursor_negative? || cursor_past_all_text?
       end
 
       def cursor_negative?
@@ -68,8 +68,16 @@ class Shoes
         @dsl.cursor > @dsl.text.length
       end
 
-      def single_layout?
-        @fitted_layouts.first == @fitted_layouts.last
+      def relative_cursor_at_end
+        last_layout.text.length
+      end
+
+      def relative_cursor_in_first_layout
+        @dsl.cursor
+      end
+
+      def relative_cursor_in_last_layout
+        @dsl.cursor - first_layout.text.length
       end
 
       def textcursor(line_height)

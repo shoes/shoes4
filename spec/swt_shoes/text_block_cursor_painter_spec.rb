@@ -43,6 +43,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
     before(:each) do
       textcursor.stub(:move)
       textcursor.stub(:show)
+      dsl.stub(:text).and_return(first_layout.text)
       fitted_layouts << first_layout
     end
 
