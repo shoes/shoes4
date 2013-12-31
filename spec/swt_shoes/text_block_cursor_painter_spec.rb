@@ -6,6 +6,8 @@ describe Shoes::Swt::TextBlockCursorPainter do
 
   let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor) }
   let(:textcursor) { double("textcursor") }
+  let(:text_layout) { double("text layout",
+                             get_line_bounds: double("line bounds", height: 10)) }
   let(:fitted_layouts) { [] }
 
   subject { Shoes::Swt::TextBlockCursorPainter.new(dsl, fitted_layouts) }
@@ -35,10 +37,10 @@ describe Shoes::Swt::TextBlockCursorPainter do
     let(:left) { 10 }
     let(:top)  { 20 }
     let(:position) { double(x: 5, y: 5) }
-    let(:line_height) { 10 }
     let(:first_layout) { double("first layout", text: "first",
                                 get_location: position,
-                                left: left, top: top, line_height: line_height) }
+                                get_line_bounds: text_layout, height: 10,
+                                left: left, top: top) }
 
     before(:each) do
       textcursor.stub(:move)
@@ -85,7 +87,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
     context "with two layouts" do
       let(:second_layout) { double("second layout", text: "second",
                                    get_location: position,
-                                   left: left, top: top + 100, line_height: line_height) }
+                                   left: left, top: top + 100) }
       before(:each) do
         dsl.stub(:text).and_return(first_layout.text + second_layout.text)
         fitted_layouts << second_layout
@@ -148,8 +150,11 @@ describe Shoes::Swt::TextBlockCursorPainter do
   end
 
   describe "textcursor management" do
+    let(:first_layout) { double("first layout", layout: text_layout) }
+
     before(:each) do
       dsl.stub(:textcursor=)
+      fitted_layouts << first_layout
     end
 
     it "should create textcursor if missing" do
@@ -157,13 +162,13 @@ describe Shoes::Swt::TextBlockCursorPainter do
       shoes_app.stub(:line).and_return(textcursor)
       shoes_app.stub(:black)
 
-      result = subject.textcursor(0)
+      result = subject.textcursor
       expect(result).to eq(textcursor)
       expect(dsl).to have_received(:textcursor=).with(textcursor)
     end
 
     it "should just return textcursor if already there" do
-      result = subject.textcursor(0)
+      result = subject.textcursor
       expect(result).to eq(textcursor)
       expect(dsl).to_not have_received(:textcursor=)
     end

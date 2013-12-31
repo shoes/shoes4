@@ -18,9 +18,8 @@ class Shoes
         layout = choose_layout
         position = layout.get_location(relative_cursor)
 
-        cursor = textcursor(layout.line_height)
-        cursor.move(layout.left + position.x, layout.top + position.y)
-        cursor.show
+        textcursor.move(layout.left + position.x, layout.top + position.y)
+        textcursor.show
       end
 
       def first_layout
@@ -80,9 +79,15 @@ class Shoes
         @dsl.cursor - first_layout.text.length
       end
 
-      def textcursor(line_height)
-        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, line_height, hidden: true,
+      def textcursor
+        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, cursor_height, hidden: true,
                                           strokewidth: 1, stroke: @dsl.app.black)
+      end
+
+      # This could be smarter, basing height on the actual line the cursor's
+      # in. For now, just use the first line's height.
+      def cursor_height
+        first_layout.layout.get_line_bounds(0).height
       end
 
       def remove_textcursor
