@@ -1,34 +1,29 @@
 #!/usr/bin/env sh
 
 mac_readlink_f () {
-  # completely stolen from http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
-  TARGET_FILE=$1
+  # based on http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
 
-  NEXT_DIR=`dirname $TARGET_FILE`
-  if [[ $NEXT_DIR == /* ]]; then
-    cd $NEXT_DIR
-  else
-    cd ./$NEXT_DIR
+  # A relative or absolute path to a file, potentially a symlink
+  LINK=$1
+
+  if [ ! -L "$LINK" ] ; then
+    # Not a link, all good
+    echo $LINK
+    return
   fi
-  TARGET_FILE=`basename $TARGET_FILE`
 
-  # Iterate down a (possible) chain of symlinks
-  while [ -L "$TARGET_FILE" ]
-  do
-    TARGET_FILE=`readlink $TARGET_FILE`
-    NEXT_DIR=`dirname $TARGET_FILE`
-    if [[ $NEXT_DIR == /* ]]; then
-      cd $NEXT_DIR
-    else
-      cd ./$NEXT_DIR
-    fi
-    TARGET_FILE=`basename $TARGET_FILE`
+  # Look up links until we find something that is not a symlink
+  while [ -L "$LINK" ] ; do
+    LINK=$(readlink $LINK) # resolve the link
+    cd $(dirname $LINK)    # move to the directory where the link points to
+    LINK=$(basename $LINK) # now try the next link/path in the chain
   done
 
-  # Compute the canonicalized name by finding the physical path
-  # for the directory we're in and appending the target file.
+  # Now PATH is an unqualified file name, but we're in its directory, so turn
+  # it into an absolute path by prefixing with the current working directory.
+
   PHYS_DIR=`pwd -P`
-  RESULT=$PHYS_DIR/$TARGET_FILE
+  RESULT=$PHYS_DIR/$LINK
   echo $RESULT
 }
 
