@@ -98,6 +98,7 @@ require 'shoes/swt/slot'
 require 'shoes/swt/star'
 require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
+require 'shoes/swt/text_block_fitter'
 require 'shoes/swt/timer'
 
 # redrawing aspect needs to know all the classes

@@ -1,5 +1,3 @@
-require 'shoes/swt/text_block_fitter'
-
 class Shoes
   module Swt
     class TextBlock
@@ -71,7 +69,7 @@ class Shoes
       end
 
       def contents_alignment(current_position)
-        fitter = ::Shoes::Swt::TextBlockFitter.new(self, current_position)
+        fitter = TextBlockFitter.new(self, current_position)
         @fitted_layouts = fitter.fit_it_in
 
         if fitted_layouts.one?
