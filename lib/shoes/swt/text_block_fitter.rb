@@ -1,9 +1,12 @@
 class Shoes
   module Swt
     class TextBlockFitter
+      attr_reader :parent
+
       def initialize(text_block, current_position)
         @text_block = text_block
-        @dsl = text_block.dsl
+        @dsl = @text_block.dsl
+        @parent = @dsl.parent
         @current_position = current_position
       end
 
@@ -67,13 +70,13 @@ class Shoes
                                @dsl.absolute_left + @dsl.margin_left,
                                @dsl.absolute_top + @dsl.margin_top),
           FittedTextLayout.new(second_layout,
-                                @dsl.parent.absolute_left + @dsl.margin_left,
+                                parent.absolute_left + @dsl.margin_left,
                                 @dsl.absolute_top + @dsl.margin_top + first_layout.get_bounds.height)
         ]
       end
 
       def generate_second_layout(second_text)
-        parent_width = @text_block.dsl.parent.width
+        parent_width = parent.width
         second_layout = generate_layout(parent_width, second_text)
       end
 
@@ -94,10 +97,6 @@ class Shoes
         height = @current_position.next_line_start - @current_position.y - 1
         height = :unbounded if height <= 0
         [width, height]
-      end
-
-      def parent
-        @text_block.dsl.parent
       end
 
       def generate_layout(width, text)
