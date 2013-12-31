@@ -39,6 +39,7 @@ simple-guess-game.rb
 simple-face.rb
 
 expert-irb-adjusted.rb
+expert-definr.rb
 expert-minesweeper-adjusted.rb
 expert-othello-adjusted.rb
 expert-pong-adjusted.rb
