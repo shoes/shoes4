@@ -1,5 +1,3 @@
-require 'shoes/swt/text_block_fitter'
-
 class Shoes
   module Swt
     class TextBlock
