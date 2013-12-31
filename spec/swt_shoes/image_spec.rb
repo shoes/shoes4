@@ -1,24 +1,19 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Image do
+  include_context "swt app"
 
   IMAGE_WIDTH = 3
   IMAGE_HEIGHT = 1
 
-  let(:gui_container_real) { container }
-  let(:container) { parent.real }
   let(:blk) { double("block") }
   let(:parent_dsl) { double("parent dsl", add_child: nil, contents: [], gui: parent) }
-  let(:parent) { double("parent", real: real, app: app) }
-  let(:dsl) { Shoes::Image.new app, parent_dsl, image, opts}
+  let(:dsl) { Shoes::Image.new shoes_app, parent_dsl, image, opts}
   let(:opts) {{left: left, top: top, width: width, height: height}}
   let(:left) { 100 }
   let(:top) { 200 }
   let(:height) { nil }
   let(:width) {nil}
-  let(:real) { double 'real', is_disposed?: false, addListener: true, add_paint_listener: true }
-  let(:gui) { double("gui", real: real, clickable_elements: [], add_clickable_element: nil) }
-  let(:app) { double("app", gui: gui) }
   let(:image) { "spec/swt_shoes/minimal.png" }
 
   subject {
@@ -36,7 +31,7 @@ describe Shoes::Swt::Image do
     let(:gc) { double("gc", drawImage: true) }
 
     before :each do
-      container.should_receive(:add_paint_listener)
+      swt_app.should_receive(:add_paint_listener)
     end
 
     specify "draws image" do
@@ -102,6 +97,5 @@ describe Shoes::Swt::Image do
         subject.height.should == 2
       end
     end
-
   end
 end

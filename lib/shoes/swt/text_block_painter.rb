@@ -1,3 +1,6 @@
+require 'shoes/swt/text_block_fitter'
+require 'shoes/swt/text_block_cursor_painter'
+
 class Shoes
   module Swt
     class TextBlockPainter
@@ -5,51 +8,44 @@ class Shoes
       include Common::Resource
       include Common::Clickable
 
+      attr_reader :app
       def initialize(dsl)
         @dsl = dsl
         @opts = @dsl.opts
-        @text_layout = ::Swt::TextLayout.new Shoes.display
+        @app = @dsl.app.gui
       end
 
       def paintControl(paint_event)
-        graphics_context = paint_event.gc
-        gcs_reset graphics_context
-        unless @dsl.hidden?
-          @text_layout.setText @dsl.text
-          set_styles
-          if @dsl.element_width
-            @text_layout.setWidth @dsl.element_width
-            @text_layout.draw graphics_context, @dsl.element_left,
-                              @dsl.element_top
-            if @dsl.cursor
-              move_text_cursor
-            else
-              (@dsl.textcursor.remove; @dsl.textcursor = nil) if @dsl.textcursor
-            end
-          end
+        gcs_reset(paint_event.gc)
+        return if @dsl.hidden?
+
+        @dsl.gui.fitted_layouts.each do |fitted_layout|
+          draw_from_layout(paint_event.gc, fitted_layout)
         end
+        draw_text_cursor
       end
 
-      def move_text_cursor
-          layout_height = @text_layout.getLineBounds(0).height
-          @dsl.textcursor ||= @dsl.app.line(0, 0, 0, layout_height, strokewidth: 1, stroke: @dsl.app.black, hidden: true)
-          cursor_position = @dsl.cursor == -1 ? @dsl.text.length - 1 : @dsl.cursor
-          cursor_position = 0 if cursor_position < 0
-          pos = @text_layout.getLocation cursor_position, true
-          @dsl.textcursor.move(@dsl.element_left + pos.x, @dsl.element_top + pos.y).show
+      def draw_from_layout(gc, fitted_layout)
+        set_styles(fitted_layout)
+        fitted_layout.draw(gc)
       end
 
-      def set_styles
-        @text_layout.setJustify @opts[:justify]
-        @text_layout.setSpacing(@opts[:leading] || 4)
-        @text_layout.setAlignment case @opts[:align]
+      def draw_text_cursor
+        TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
+      end
+
+      def set_styles(fitted_layout)
+        text_layout = fitted_layout.layout
+        text_layout.setJustify @opts[:justify]
+        text_layout.setSpacing(@opts[:leading] || 4)
+        text_layout.setAlignment case @opts[:align]
                                     when 'center'; ::Swt::SWT::CENTER
                                     when 'right'; ::Swt::SWT::RIGHT
                                     else ::Swt::SWT::LEFT
                                   end
         style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
-        set_font_styles(@text_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(style[:fg], style[:bg], @text_layout)
+        set_font_styles(fitted_layout, style, 0..(@dsl.text.length - 1))
+        set_text_styles(fitted_layout, style[:fg], style[:bg])
       end
 
       private
@@ -63,11 +59,12 @@ class Shoes
         styles.merge(opts)
       end
 
-      def create_link(text, range)
-        start_position = @text_layout.getLocation range.first, false
-        end_position = @text_layout.getLocation range.last, true
-        left, top =  @dsl.element_left, @dsl.element_top
-        text.line_height = @text_layout.getLineBounds(0).height
+      def create_link(fitted_layout, text, range)
+        layout = fitted_layout.layout
+        start_position = layout.getLocation range.first, false
+        end_position = layout.getLocation range.last, true
+        left, top =  fitted_layout.left, fitted_layout.top
+        text.line_height = layout.getLineBounds(0).height
         text.start_x, text.start_y = left + start_position.x, top + start_position.y
         text.end_x, text.end_y = left + end_position.x, top + end_position.y + text.line_height
         @dsl.links << text
@@ -76,9 +73,12 @@ class Shoes
           clickable text, text.blk
           text.clickabled = true
         end
+      rescue => e
+        # TODO: Once we properly handle links in multi-layout text, this rescue
+        # should not be required any longer.
       end
 
-      def set_text_styles(foreground, background, layout)
+      def set_text_styles(fitted_layout, foreground, background)
 
         @dsl.text_styles.each do |range, text_styles|
           defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
@@ -86,18 +86,18 @@ class Shoes
             if text.is_a? ::Shoes::Span
               apply_styles(current_styles, text.opts)
             else
-              make_link_style(text, current_styles, range)
+              make_link_style(fitted_layout, text, current_styles, range)
             end
           end
-          set_font_styles(layout, styles, range)
+          set_font_styles(fitted_layout, styles, range)
         end
       end
 
-      def set_font_styles(layout, styles, range)
+      def set_font_styles(fitted_layout, styles, range)
         font_style = styles[:font_detail]
         font = create_font font_style[:name], font_style[:size], font_style[:styles]
         style = create_style font, styles[:fg], styles[:bg], styles
-        layout.setStyle style, range.first, range.last
+        fitted_layout.layout.setStyle style, range.first, range.last
       end
 
       def default_text_styles(foreground, background, strikecolor, undercolor)
@@ -114,11 +114,11 @@ class Shoes
         }
       end
 
-      def make_link_style(text, styles, range)
+      def make_link_style(fitted_layout, text, styles, range)
         if text.is_a? ::Shoes::Link
           styles[:underline] = true
           styles[:fg] = ::Swt::Color.new Shoes.display, 0, 0, 255
-          create_link(text, range)
+          create_link(fitted_layout, text, range)
         end
         styles
       end

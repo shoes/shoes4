@@ -59,6 +59,45 @@ class Shoes
       self.height = @gui.get_height + margin_top + margin_bottom
     end
 
+    # Since we flow, try to fit in almost any space
+    def fitting_width
+      10
+    end
+
+    # We take over a bunch of the absolute_* measurements since the jagged
+    # shape of a flowed TextBlock doesn't follow the usual rules for dimensions
+    # when we get to positioning (which is the main use of these values).
+    def absolute_right=(value)
+      @absolute_right = value
+    end
+
+    def absolute_right
+      return @dimensions.absolute_right if @absolute_right.nil?
+      @absolute_right
+    end
+
+    def absolute_top=(value)
+      @absolute_top = value
+    end
+
+    def absolute_top
+      return @dimensions.absolute_top if @absolute_top.nil?
+      @absolute_top
+    end
+
+    def absolute_bottom=(value)
+      @absolute_bottom = value
+    end
+
+    def absolute_bottom
+      return absolute_top + height if @absolute_bottom.nil?
+      @absolute_bottom
+    end
+
+    def contents_alignment(current_position=nil)
+      @gui.contents_alignment(current_position)
+    end
+
     private
 
     def gather_text_styles(parent, texts, styles={}, start_point=0)

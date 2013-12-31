@@ -2,6 +2,13 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::KeypressListener do
+
+  describe '.get_swt_constant' do
+    it 'gets the swt constant' do
+      expect(Shoes::Swt::KeyListener.get_swt_constant("TAB")).to eq ::Swt::SWT::TAB
+    end
+  end
+
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
@@ -10,7 +17,7 @@ describe Shoes::Swt::KeypressListener do
   subject {Shoes::Swt::KeypressListener.new block}
 
   def test_character_press(character, state_modifier = 0, result_char = character)
-    block.should_receive(:call).with(result_char)
+    expect(block).to receive(:call).with(result_char)
     event = double  character: character.ord,
                   stateMask: 0 | state_modifier,
                   keyCode: character.downcase.ord
@@ -22,7 +29,6 @@ describe Shoes::Swt::KeypressListener do
     result = ('alt_' + character).to_sym
     test_character_press(character, state_modifier, result)
   end
-
 
 
   describe 'works with simple keys such as' do
@@ -72,7 +78,7 @@ describe Shoes::Swt::KeypressListener do
     end
 
     it 'works with what Macs seem to produce for opt + / (should be alt_/)' do
-      block.should_receive(:call).with(:'alt_/')
+      expect(block).to receive(:call).with(:'alt_/')
       event = double  character: '÷'.ord,
                       stateMask: ALT,
                       keyCode: '/'.ord
@@ -83,7 +89,7 @@ describe Shoes::Swt::KeypressListener do
   describe 'works with the ctrl key pressed such as' do
     def test_ctrl_character_press(character, modifier = 0)
       result_char = ('control_' + character).to_sym
-      block.should_receive(:call).with(result_char)
+      expect(block).to receive(:call).with(result_char)
       event = double character: 'something weird like \x00',
                      stateMask: CTRL | modifier,
                      keyCode:   character.downcase.ord
@@ -125,7 +131,7 @@ describe Shoes::Swt::KeypressListener do
 
   describe 'only modifier keys yield nothing' do
     def test_receive_nothing_with_modifier(modifier, last_key_press = modifier)
-      block.should_not_receive :call
+      expect(block).not_to receive :call
       event = double stateMask: modifier, keyCode: last_key_press, character: 0
       subject.key_pressed(event)
     end
@@ -160,7 +166,7 @@ describe Shoes::Swt::KeypressListener do
     ARROW_LEFT = ::Swt::SWT::ARROW_LEFT
 
     def special_key_test(code, expected, modifier = 0)
-      block.should_receive(:call).with(expected)
+      expect(block).to receive(:call).with(expected)
       event = double stateMask: modifier,
                    keyCode: code,
                    character: 0

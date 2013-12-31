@@ -1,13 +1,11 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Progress do
-  let(:container) { real }
-  let(:gui)    { double("gui", real: real) }
-  let(:app)    { double("app", gui: gui) }
+  include_context "swt app"
+
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', app: app).as_null_object }
-  let(:parent) { double('parent') }
-  let(:real) { double('real', is_disposed?: false, :disposed? => false).as_null_object }
+  let(:dsl) { double('dsl', app: shoes_app).as_null_object }
+  let(:real) { double('real', disposed?: false, :disposed? => false).as_null_object }
 
   subject { Shoes::Swt::Progress.new dsl, parent }
 

@@ -7,9 +7,10 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :gui, :angle, :dimensions, :outer, :inner, :points
+    attr_reader :app, :gui, :angle, :dimensions, :outer, :inner, :points,
+                :parent
 
-    def initialize(app, left, top, points, outer, inner, opts = {}, &blk)
+    def initialize(app, parent, left, top, points, outer, inner, opts = {}, &blk)
       @app = app
 
       # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
@@ -29,8 +30,9 @@ class Shoes
       @points = points
       @angle = opts[:angle] || 0
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
-      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
-      @app.unslotted_elements << self
+      @style[:strokewidth] ||= 1
+      @parent = parent
+      @parent.add_child self
 
       @gui = Shoes.backend_for(self, &blk)
 

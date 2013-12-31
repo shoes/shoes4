@@ -30,6 +30,7 @@ class Shoes
         @dsl.top_slot.contents_alignment
         @started = true
         self.fullscreen = true if dsl.start_as_fullscreen?
+        flush
         ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
       end
 
@@ -51,7 +52,17 @@ class Shoes
       end
 
       def disposed?
-        @shell.disposed?
+        @shell.disposed? || @real.disposed?
+      end
+
+      def redraw(left=nil, top=nil, width=nil, height=nil, all=true)
+        unless @real.disposed?
+          if (left == nil or top == nil or width == nil or height == nil)
+            @real.redraw
+          else
+            @real.redraw(left, top, width, height, all)
+          end
+        end
       end
 
       def main_app?
@@ -60,7 +71,6 @@ class Shoes
       
       def flush
         if @dsl.top_slot
-          @dsl.top_slot.contents_alignment
           @real.layout
         end
       end
@@ -110,14 +120,14 @@ class Shoes
       end
 
       def vertically_scroll_window(vertical_bar)
-          location = self.real.getLocation
-          location.y = -vertical_bar.getSelection
-          self.real.setLocation location
+        location = self.real.getLocation
+        location.y = -vertical_bar.getSelection
+        self.real.setLocation location
       end
 
       def force_shell_size
-        frame_x_decorations = @shell.getSize().x - @shell.getClientArea().width
-        frame_y_decorations = @shell.getSize().y - @shell.getClientArea().height
+        frame_x_decorations = @shell.size.x - @shell.client_area.width
+        frame_y_decorations = @shell.size.y - @shell.client_area.height
         new_width = @dsl.width + frame_x_decorations
         new_height = @dsl.height + frame_y_decorations
         @shell.setSize(new_width, new_height)
@@ -190,8 +200,8 @@ class Shoes
 
       def controlResized(event)
         shell = event.widget
-        width = shell.getClientArea().width
-        height = shell.getClientArea().height
+        width = shell.client_area.width
+        height = shell.client_area.height
         @app.dsl.top_slot.width   = width
         @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
@@ -202,76 +212,21 @@ class Shoes
       end
     end
 
-    class MouseMoveListener
-      def initialize app
-        @app = app
-      end
-
-      def mouseMove(e)
-        @app.dsl.mouse_pos = [e.x, e.y]
-        @app.dsl.mouse_motion.each{|blk| eval_move_block blk, e}
-        mouse_shape_control
-        mouse_hover_control
-        mouse_leave_control
-      end
-
-      def eval_move_block(blk, e)
-        blk.call e.x, e.y
-      end
-
-      def mouse_shape_control
-        cursor = if cursor_over_clickable_element?
-                   ::Swt::SWT::CURSOR_HAND
-                 else
-                   ::Swt::SWT::CURSOR_ARROW
-                 end
-        @app.shell.setCursor  Shoes.display.getSystemCursor(cursor)
-      end
-
-      def mouse_hover_control
-        @app.dsl.mouse_hover_controls.each do |e|
-          if mouse_on?(e) and !e.hovered
-            e.hovered = true
-            e.hover_proc[e] if e.hover_proc
-          end
-        end
-      end
-
-      def mouse_leave_control
-        @app.dsl.mouse_hover_controls.each do |e|
-          if !mouse_on?(e) and e.hovered
-            e.hovered = false
-            e.leave_proc[e] if e.leave_proc
-          end
-        end
-      end
-  
-      def mouse_on? element
-        mb, mx, my = element.app.mouse
-        element.in_bounds? mx, my
-      end
-
-      private
-      def cursor_over_clickable_element?
-        mouse_x, mouse_y = @app.dsl.mouse_pos
-        @app.clickable_elements.any? do |element|
-          element.in_bounds? mouse_x, mouse_y
-        end
-      end
-    end
-
     class MouseListener
       def initialize app
         @app = app
       end
+
       def mouseDown(e)
         @app.dsl.mouse_button = e.button
         @app.dsl.mouse_pos = [e.x, e.y]
       end
+
       def mouseUp(e)
         @app.dsl.mouse_button = 0
         @app.dsl.mouse_pos = [e.x, e.y]
       end
+
       def mouseDoubleClick(e)
         # do nothing
       end

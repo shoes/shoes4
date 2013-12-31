@@ -37,14 +37,25 @@ describe Shoes::ListBox do
     lb.items.should eq ["Pie", "Apple", "Pig"]
   end
 
-  it "should allow us to choose an option" do
-    subject.should respond_to :choose
-  end
+  describe 'Choosing' do
+    it "should allow us to choose an option" do
+      subject.should respond_to :choose
+    end
 
-  it "should call @gui.choose when we choose something" do
-    Shoes.configuration.backend::ListBox.any_instance.
-        should_receive(:choose).with "Wine"
-    subject.choose "Wine"
+    def expect_gui_choose_with(string)
+      expect_any_instance_of(Shoes.configuration.backend::ListBox).
+      to receive(:choose).with string
+    end
+
+    it "should call @gui.choose when we choose something" do
+      expect_gui_choose_with "Wine"
+      subject.choose "Wine"
+    end
+
+    it 'should call @gui.choose when the choose option is passed' do
+      expect_gui_choose_with 'Wine'
+      Shoes::ListBox.new app, parent, input_opts.merge(choose: 'Wine')
+    end
   end
 
   it "should delegate #text to the backend" do

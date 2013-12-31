@@ -45,21 +45,31 @@ describe Shoes::Flow do
     it_behaves_like 'positioning through :_position'
     it_behaves_like 'positions the first element in the top left'
 
-    describe 'two elements added' do
-      include_context 'two slot children'
-      include_context 'contents_alignment'
-
+    shared_examples_for 'positioning in the same line' do
       it 'positions an element in the same row as long as they fit' do
-        element2.top.should eq subject.top
+        element2.absolute_top.should eq subject.absolute_top
       end
 
       it 'positions it next to the other element as long as it fits' do
-        element2.absolute_left.should eq element.absolute_right
+        element2.absolute_left.should eq element.absolute_right + 1
       end
 
       it 'has a slot height of the maximum value of the 2 elements' do
         subject.height.should eq [element.height, element2.height].max
       end
+    end
+
+    describe 'two elements added' do
+      include_context 'two slot children'
+      include_context 'contents_alignment'
+
+      it_behaves_like 'positioning in the same line'
+
+      describe 'exact fit' do
+        let(:opts) {{width: element.width + element2.width}}
+        it_behaves_like 'positioning in the same line'
+      end
+
     end
 
     describe 'when the elements dont fit next to each other' do

@@ -195,7 +195,6 @@ class Shoes
       @style                = default_styles
       @element_styles       = {}
       @contents             = []
-      @unslotted_elements   = []
       @mouse_motion         = []
       @mouse_button         = 0
       @mouse_pos            = [0, 0]

@@ -3,7 +3,8 @@ require 'shoes/spec_helper'
 describe Shoes::App do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
-  subject { Shoes::App.new(opts, &input_blk) }
+  let(:app) {Shoes::App.new(opts, &input_blk)}
+  subject { app }
 
   it_behaves_like "DSL container"
   it { should respond_to :clipboard }
@@ -219,17 +220,18 @@ describe Shoes::App do
         subject.fullscreen = false
       end
 
-      it 'is not in fullscreen' do
+      # Failing on Mac fullscreen doesnt seem to work see #397
+      it 'is not in fullscreen', :fails_on_osx => true do
         subject.fullscreen.should be_false
       end
 
-      it 'has its original width' do
-        pending 'Failing on Mac fullscreen doesnt seem to work see #397'
+      # Failing on Mac fullscreen doesnt seem to work see #397
+      it 'has its original width', :fails_on_osx => true do
         subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
       end
 
-      it 'has its original height' do
-        pending 'Failing on Mac fullscreen doesnt seem to work see #397'
+      # Failing on Mac fullscreen doesnt seem to work see #397
+      it 'has its original height', :fails_on_osx => true do
         subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
       end
     end

@@ -1,36 +1,26 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Background do
-  let(:container) { double('container', is_disposed?: false) }
-  let(:gui) { double('gui', real: container) }
-  let(:app) { double('app', real: container, gui: gui, add_paint_listener: true) }
+  include_context "swt app"
+
   let(:left) { 55 }
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
   let(:corners) { 0 }
-  let(:dsl) { double("dsl object", app: app, parent: parent,
+  let(:dsl) { double("dsl object", app: shoes_app,
                      element_left: left, element_top: top,
                      element_width: width, element_height: height,
                      strokewidth: 1, corners: corners,
                      hidden: false).as_null_object }
-  let(:parent) { double("parent", left: left, top: top,
-                        absolute_left: left, absolute_top: top,
-                        element_width: width, element_height: height,
-                        contents: []) }
 
   subject {
-    Shoes::Swt::Background.new dsl, app
+    Shoes::Swt::Background.new dsl, swt_app
   }
 
   context "#initialize" do
     it { should be_an_instance_of(Shoes::Swt::Background) }
     its(:dsl) { should be(dsl) }
-
-    it "adds paint listener" do
-      app.should_receive(:add_paint_listener)
-      subject
-    end
   end
 
   it_behaves_like "paintable"
@@ -40,7 +30,7 @@ describe Shoes::Swt::Background do
     include_context "painter context"
 
     let(:corners) { 0 }
-    let(:shape) { Shoes::Swt::Background.new dsl, app}
+    let(:shape) { Shoes::Swt::Background.new dsl, swt_app}
     subject { Shoes::Swt::Background::Painter.new shape }
 
     it_behaves_like "fill painter"

@@ -29,9 +29,8 @@ class Shoes
           end
           listener = ClickListener.new(dsl_object, block)
           object.click_listener = listener
-          app_gui = dsl_object.app.gui
-          app_gui.add_clickable_element dsl_object
-          app_gui.real.addListener event, listener
+          app.add_clickable_element dsl_object
+          app.add_listener event, listener
         end
 
 

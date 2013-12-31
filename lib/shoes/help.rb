@@ -66,7 +66,7 @@ class Manual < Shoes
       show_header docs_title
       show_toc
       paras = mk_paras docs_description
-      flow width: 0.8, margin: [10, 0, 20, 0] do
+      flow width: 0.75, margin: [20, 0, 20, 0] do
         show_page paras, true
         show_methods docs_methods
         para link('top'){visit "/manual/0"}, "  ",
@@ -131,9 +131,10 @@ class Manual < Shoes
             if _code.include? 'te-su-to'
               para fg(code('  ' + _code), maroon), NL, margin: [-10, 10, 0, 20]
             else
-              para *highlight('  ' + _code, nil).map{|e| code e}, NL, margin: [-10, 10, 0, 20]
+              para *highlight('  ' + _code, nil).map{|e| code e}, NL * 2, margin: [-10, 10, 0, 20]
             end
           end
+          fill_rest_of_line
           para NL
         end
         next
@@ -147,7 +148,6 @@ class Manual < Shoes
         end
       else
         show_paragraph text, intro, i, term
-        para NL
       end
     end
   end
@@ -165,11 +165,8 @@ class Manual < Shoes
     else
       para *mk_deco(mk_links(txts, term).flatten), NL, (intro and i.zero?) ? {size: 16} : ''
       txt.gsub IMAGE_RE do
-        para NL
-        #image File.join(DIR, "static/#{$3}"), eval("{#{$2 or "margin_left: 50"}}")
-        flow eval("{#{$2 or "margin_left: 50"}}") do
-          image File.join(DIR, "static/#{$3}")
-        end
+        image File.join(DIR, "static/#{$3}"), eval("{#{$2 or "margin_left: 50"}}")
+        fill_rest_of_line
       end
     end
   end
@@ -515,6 +512,13 @@ class Manual < Shoes
         data
       end
     end.flatten
+  end
+
+  # Hack to consume remaining space to the right of a flow.
+  # Used to rely on NL's, but with new text flowing, that doesn't work anymore.
+  def fill_rest_of_line
+    flow width:1.0 do
+    end
   end
 
   IMAGE_RE = /\!(\{([^}\n]+)\})?([^!\n]+\.\w+)\!/

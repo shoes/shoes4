@@ -6,22 +6,22 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui
+    attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui, :parent
 
 
-    def initialize(app, point_a, point_b, opts = {})
-      @app = app
+    def initialize(app, parent, point_a, point_b, opts = {})
+      @app                 = app
+      @style               = Shoes::Common::Stroke::DEFAULTS.merge(opts)
+      @style[:strokewidth] ||= 1
+      @angle               = opts[:angle] || 0
+      @point_a             = point_a
+      @point_b             = point_b
+      @parent              = parent
 
-      @style = Shoes::Common::Stroke::DEFAULTS.merge(opts)
-      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
-      @angle = opts[:angle] || 0
-
-      @point_a = point_a
-      @point_b = point_b
       enclosing_box_of_line
 
       gui_opts = @style.clone
-      @app.unslotted_elements << self
+      @parent.add_child self
 
       @gui = Shoes.backend_for(self, gui_opts)
 

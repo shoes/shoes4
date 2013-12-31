@@ -5,7 +5,6 @@ Shoes.app do
     @two = button "Two"
     button "Three"
     # Bounce the second button
-    debugger
     animate do |i|
       @two.displace(0, (Math.sin(i) * 6).to_i)
     end

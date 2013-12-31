@@ -38,7 +38,7 @@ Shoes.app width: 800, height: 600 do
     @feeds.each do |feed|
       download feed do |dl|
         stack width: "100%", margin: 10, border: 1 do
-          c = Comic.new dl.response.body
+          c = Comic.new dl.read
           stack margin_right: gutter do
             background "#333", curve: 4
             caption c.title, stroke: "#CD9", margin: 4

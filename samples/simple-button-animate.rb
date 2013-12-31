@@ -10,7 +10,6 @@ Shoes.app do
     end
     # Bounce the second button
     @anim = animate do |frame|
-      logger.debug "frame #{frame}"
       @two.displace(0, (Math.sin(frame) * 30).to_i)
     end
   end

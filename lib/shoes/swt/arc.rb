@@ -7,7 +7,7 @@ class Shoes
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl, :transform
+      attr_reader :dsl, :app, :transform
 
       # Creates a new Shoes::Swt::Arc
       #
@@ -15,9 +15,9 @@ class Shoes
       # @param [Shoes::Swt::App] app The implementation object of the Shoes app
       def initialize(dsl, app, opts = {})
         @dsl = dsl
-        @container = app.real
+        @app = app
         @painter = Painter.new(self)
-        app.add_paint_listener @painter
+        @app.add_paint_listener @painter
       end
 
       def angle1
@@ -55,11 +55,13 @@ class Shoes
 
         def draw(graphics_context)
           sw = graphics_context.get_line_width
-          graphics_context.draw_arc(@obj.element_left+sw/2,
-                                    @obj.element_top+sw/2,
-                                    @obj.element_width-sw,
-                                    @obj.element_height-sw,
-                                    @obj.angle1, @obj.angle2 * -1)
+          if (@obj.element_left and @obj.element_top and @obj.element_width and @obj.element_height)
+            graphics_context.draw_arc(@obj.element_left+sw/2,
+                                      @obj.element_top+sw/2,
+                                      @obj.element_width-sw,
+                                      @obj.element_height-sw,
+                                      @obj.angle1, @obj.angle2 * -1)
+          end
         end
       end
     end
