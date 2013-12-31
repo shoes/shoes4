@@ -4,47 +4,51 @@
 # NOTE: Comment out anything that isn't a filename, so we can execute this list.
 #       See the `rake samples` task
 
-class-book-adjusted.rb
-
-good-follow.rb
-good-arc.rb
-good-clock-adjusted.rb
-good-reminder.rb
-good-potato-chopping.rb
-good-vjot-adjusted.rb
-
+simple-anim-shapes.rb
 simple-animate.rb
-simple-calc.rb 
-simple-draw.rb
-simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
+simple-arc.rb
 simple-bounce.rb
-simple-oval.rb
-simple-sound.rb
-simple-stripes.rb
-simple-dialogs-outside.rb
-simple-curve.rb
-simple-editor.rb
-simple-keypress.rb
-simple-timer.rb
-simple-dialogs.rb
 simple-brightness-transitions.rb
+simple-calc.rb
+simple-calc-2.rb
 simple-color-selector.rb
 simple-color-transitions.rb
-simple-calc-2.rb
+simple-curve.rb
+simple-dialogs.rb
+simple-dialogs-outside.rb
+simple-draw.rb
+simple-editor.rb
+simple-face.rb
+simple-flow-wrap.rb
+simple-fullscreen.rb
+simple-guess-game.rb
+simple-keypress.rb
 simple-manual.rb
 simple-mouse-follow.rb
+simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
+simple-oval.rb
 simple-sample-executor.rb
 simple-shoes-intro.rb
-simple-guess-game.rb
-simple-face.rb
+simple-sound.rb
+simple-stripes.rb
+simple-timer.rb
 
-expert-irb-adjusted.rb
+good-arc.rb
+good-clock-adjusted.rb
+good-follow.rb
+good-potato-chopping.rb
+good-reminder.rb
+# good-vjot-adjusted.rb
+
 expert-definr.rb
+# expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
-expert-othello-adjusted.rb
+# expert-othello-adjusted.rb
 expert-pong-adjusted.rb
 expert-tankspank-adjusted.rb
 expert-snake.rb
+
+class-book-adjusted.rb
 
 sample1.rb
 sample2.rb
