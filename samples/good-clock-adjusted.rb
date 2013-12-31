@@ -1,6 +1,7 @@
 #
 # Shoes Clock by Thomas Bell
 # posted to the Shoes mailing list on 04 Dec 2007
+# modified for Shoes 4, using fg instead of span in TextBlock.
 #
 Shoes.app height: 260, width: 250 do
   @radius, @centerx, @centery = 90, 126, 140
