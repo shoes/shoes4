@@ -62,7 +62,7 @@ class Shoes
       end
     end
 
-    def contents_alignment
+    def contents_alignment(_=nil)
       last_position = position_contents
       determine_slot_height(last_position)
     end
@@ -90,12 +90,13 @@ class Shoes
     end
 
     protected
-    CurrentPosition = Struct.new(:x, :y, :next_line_start)
+    CurrentPosition = Struct.new(:x, :y, :next_line_start, :moving_next)
 
     def position_contents
       current_position = CurrentPosition.new element_left,
                                              element_top,
-                                             element_top
+                                             element_top,
+                                             false
       contents.each do |element|
         next if element.hidden?
         current_position = positioning(element, current_position)
@@ -106,7 +107,7 @@ class Shoes
     def positioning(element, current_position)
       return current_position unless takes_up_space?(element)
       position_modifier = position_element element, current_position
-      element.contents_alignment if element.respond_to? :contents_alignment
+      element.contents_alignment(current_position) if element.respond_to? :contents_alignment
       update_current_position(current_position, element, position_modifier)
     end
 
@@ -117,12 +118,14 @@ class Shoes
     def position_in_current_line(element, current_position)
       element._position position_x(current_position.x, element),
                         position_y(current_position.y, element)
+      current_position.moving_next = false
       NEXT_ELEMENT_ON_SAME_LINE_OFFSET
     end
 
     def move_to_next_line(element, current_position)
       element._position position_x(self.element_left, element),
                         position_y(current_position.next_line_start, element)
+      current_position.moving_next = true
       NEXT_ELEMENT_ON_NEXT_LINE_OFFSET
     end
 
@@ -130,7 +133,8 @@ class Shoes
       return current_position if element.absolutely_positioned?
       current_position.x = element.absolute_right + position_modifier.x
       current_position.y = element.absolute_top + position_modifier.y
-      if current_position.next_line_start < element.absolute_bottom + 1
+      if current_position.moving_next ||
+         current_position.next_line_start < element.absolute_bottom + 1
         current_position.next_line_start = element.absolute_bottom + 1
       end
       current_position
@@ -153,7 +157,9 @@ class Shoes
     end
 
     def fits_on_the_same_line?(element, current_x)
-      current_x + element.width - 1 <= element_right
+      fitting_width = element.width
+      fitting_width = element.fitting_width if element.respond_to?(:fitting_width)
+      current_x + fitting_width - 1 <= element_right
     end
 
     def takes_up_space?(element)
