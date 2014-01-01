@@ -254,23 +254,22 @@ describe Shoes::App do
   end
 
   describe 'add_child' do
-
+    let(:internal_app) { app.instance_variable_get(:@__app__) }
     let(:child) {double 'child'}
 
     it 'adds the child to the top_slot when there is one' do
       top_slot_double = double 'top slot'
-      top_slot_double.should_receive(:add_child).with child
-      subject.stub top_slot: top_slot_double
-      subject.add_child child
+      internal_app.stub(top_slot: top_slot_double)
+      expect(top_slot_double).to receive(:add_child).with(child)
+      internal_app.add_child child
     end
 
     it 'adds the child to the own contents when there is no top_slot' do
-      subject.stub top_slot: nil
-      subject.add_child child
-      subject.contents.should include child
+      internal_app.stub top_slot: nil
+      internal_app.add_child child
+      internal_app.contents.should include child
     end
   end
-
 end
 
 describe "App registry" do
