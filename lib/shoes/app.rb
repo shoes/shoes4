@@ -21,7 +21,7 @@ class Shoes
     include Common::Clickable
 
     def initialize(opts={}, &blk)
-      @__private_proxy__ = Shoes::AppProxy.new(self, opts, &blk)
+      @__private_proxy__ = Shoes::InternalApp.new(self, opts, &blk)
       @__private_proxy__.setup_gui
       Shoes.register self
       @__private_proxy__.open_gui
@@ -92,7 +92,7 @@ class Shoes
     end
   end
 
-  class AppProxy
+  class InternalApp
     include Common::Style
 
     DEFAULT_OPTIONS = { :width      => 600,

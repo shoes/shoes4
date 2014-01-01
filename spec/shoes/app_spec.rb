@@ -28,17 +28,18 @@ describe Shoes::App do
 
     context "defaults" do
       let(:opts) { Hash.new }
+      let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets width", :qt do
-        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+        subject.width.should == defaults[:width]
       end
 
       it "sets height", :qt do
-        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
+        subject.height.should == defaults[:height]
       end
 
       it "sets title", :qt do
-        subject.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
+        subject.app_title.should == defaults[:title]
       end
 
       it 'has an absolute_left of 0' do
@@ -214,6 +215,7 @@ describe Shoes::App do
     end
 
     describe 'going into fullscreen and back out again' do
+      let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       before :each do
         subject.fullscreen = true
@@ -227,12 +229,12 @@ describe Shoes::App do
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'has its original width', :fails_on_osx => true do
-        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+        subject.width.should == defaults[:width]
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'has its original height', :fails_on_osx => true do
-        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
+        subject.height.should == defaults[:height]
       end
     end
 
