@@ -97,16 +97,6 @@ describe Shoes::Swt::TextBlock do
         subject.contents_alignment(current_position)
       end
 
-      it "should push to next line if moving next" do
-        current_position.moving_next = true
-
-        expect(dsl).to receive(:absolute_right=).with(50)
-        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
-        expect(dsl).to receive(:absolute_top=).with(layout_height)
-
-        subject.contents_alignment(current_position)
-      end
-
       it "should push to next line if ends in newline" do
         layout.stub(:text) { "text\n" }
 

@@ -78,7 +78,7 @@ class Shoes
           set_absolutes_for_two_layouts(current_position)
         end
 
-        if current_position.moving_next || trailing_newline?
+        if trailing_newline?
           bump_absolutes_to_next_line
         end
       end
