@@ -95,8 +95,12 @@ class Shoes
       def available_space_on_current_line
         width = parent.absolute_left + parent.width - @current_position.x
         height = @current_position.next_line_start - @current_position.y - 1
-        height = :unbounded if height <= 0
+        height = :unbounded if height_above_consumed?
         [width, height]
+      end
+
+      def height_above_consumed?
+        @current_position.next_line_start == @current_position.y
       end
 
       def generate_layout(width, text)
