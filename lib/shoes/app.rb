@@ -21,37 +21,37 @@ class Shoes
     include Common::Clickable
 
     def initialize(opts={}, &blk)
-      @__private_proxy__ = Shoes::InternalApp.new(self, opts, &blk)
-      @__private_proxy__.setup_gui
+      @__app__ = Shoes::InternalApp.new(self, opts, &blk)
+      @__app__.setup_gui
       Shoes.register self
-      @__private_proxy__.open_gui
+      @__app__.open_gui
     end
 
     # FIXME placeholder for code that calls app.gui. We should be able to get
     # rid of this
     def gui
-      @__private_proxy__.gui
+      @__app__.gui
     end
 
 
     def width
-      @__private_proxy__.width
+      @__app__.width
     end
 
     def height
-      @__private_proxy__.height
+      @__app__.height
     end
 
     def owner
-      @__private_proxy__.owner
+      @__app__.owner
     end
 
     def started?
-      @__private_proxy__.started?
+      @__app__.started?
     end
 
     def location
-      @__private_proxy__.location
+      @__app__.location
     end
 
     def window(options={}, &block)
@@ -66,15 +66,15 @@ class Shoes
 
     def quit
       Shoes.unregister self
-      @__private_proxy__.gui.quit
+      @__app__.gui.quit
     end
 
     def clear &blk
-      @__private_proxy__.clear &blk
+      @__app__.clear &blk
     end
 
     def to_s
-      'Shoes App: ' + @__private_proxy__.app_title
+      'Shoes App: ' + @__app__.app_title
     end
 
     def fullscreen=(state)

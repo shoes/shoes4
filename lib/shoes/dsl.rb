@@ -5,7 +5,7 @@ class Shoes
   #
   # Including classes must provide:
   #
-  #   @__private_proxy__
+  #   @__app__
   #
   #   which provides
   #     #style:          a hash of styles
@@ -58,9 +58,9 @@ class Shoes
     def style(klass_or_styles = nil, styles = {})
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
-        @__private_proxy__.element_styles[klass] = styles
+        @__app__.element_styles[klass] = styles
       else
-        @__private_proxy__.style(klass_or_styles)
+        @__app__.style(klass_or_styles)
       end
     end
 
@@ -80,11 +80,11 @@ class Shoes
 
     # Default styles for elements of klass
     def style_for_element(klass, styles = {})
-      @__private_proxy__.element_styles.fetch(klass, {}).merge(styles)
+      @__app__.element_styles.fetch(klass, {}).merge(styles)
     end
 
     def create(element, *args, &blk)
-      element.new(@__private_proxy__, @__private_proxy__.current_slot, *args, &blk)
+      element.new(@__app__, @__app__.current_slot, *args, &blk)
     end
 
     public
@@ -176,7 +176,7 @@ class Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      Shoes::Animation.new @__private_proxy__.app, opts, blk
+      Shoes::Animation.new @__app__.app, opts, blk
     end
 
     def every n=1, &blk
@@ -185,7 +185,7 @@ class Shoes
 
     def timer n=1, &blk
       n *= 1000
-      Timer.new @__private_proxy__, n, &blk
+      Timer.new @__app__, n, &blk
     end
 
     # similar controls as Shoes::Video (#video)
@@ -328,7 +328,7 @@ EOS
 
     # Creates a new Shoes::Shape object
     def shape(shape_style = {}, &blk)
-      Shoes::Shape.new(app, @__private_proxy__.style.merge(shape_style), blk)
+      Shoes::Shape.new(app, @__app__.style.merge(shape_style), blk)
     end
 
     # Creates a new Shoes::Color object
@@ -381,32 +381,32 @@ EOS
     #
     # color - a Shoes::Color
     def stroke(color)
-      @__private_proxy__.style[:stroke] = pattern(color)
+      @__app__.style[:stroke] = pattern(color)
     end
 
     def nostroke
-      @__private_proxy__.style[:stroke] = nil
+      @__app__.style[:stroke] = nil
     end
 
     # Sets the stroke width, in pixels
     def strokewidth(width)
-      @__private_proxy__.style[:strokewidth] = width
+      @__app__.style[:strokewidth] = width
     end
 
     # Sets the current fill color
     #
     # @param [Shoes::Color,Shoes::Gradient] pattern the pattern to set as fill
     def fill(pattern)
-      @__private_proxy__.style[:fill] = pattern(pattern)
+      @__app__.style[:fill] = pattern(pattern)
     end
 
     def nofill
-      @__private_proxy__.style[:fill] = nil
+      @__app__.style[:fill] = nil
     end
 
     # Sets the current line cap style
     def cap line_cap
-      @__private_proxy__.style[:cap] = line_cap
+      @__app__.style[:cap] = line_cap
     end
 
 
@@ -465,11 +465,11 @@ EOS
     end
 
     def mouse
-      [@__private_proxy__.mouse_button, @__private_proxy__.mouse_pos[0], @__private_proxy__.mouse_pos[1]]
+      [@__app__.mouse_button, @__app__.mouse_pos[0], @__app__.mouse_pos[1]]
     end
 
     def motion &blk
-      @__private_proxy__.mouse_motion << blk
+      @__app__.mouse_motion << blk
     end
 
     # hover and leave just delegate to the current slot as hover and leave
@@ -483,11 +483,11 @@ EOS
     end
 
     def keypress &blk
-      Shoes::Keypress.new @__private_proxy__.app, &blk
+      Shoes::Keypress.new @__app__.app, &blk
     end
 
     def keyrelease &blk
-      Shoes::Keyrelease.new @__private_proxy__.app, &blk
+      Shoes::Keyrelease.new @__app__.app, &blk
     end
 
     def append(&blk)
@@ -501,7 +501,7 @@ EOS
         action_proc = url_data[1]
         url_argument = match_data[1]
         clear do
-          @__private_proxy__.location = url
+          @__app__.location = url
           action_proc.call self, url_argument
         end
       end
@@ -509,19 +509,19 @@ EOS
     end
 
     def scroll_top
-      @__private_proxy__.scroll_top
+      @__app__.scroll_top
     end
 
     def scroll_top=(n)
-      @__private_proxy__.scroll_top = n
+      @__app__.scroll_top = n
     end
 
     def clipboard
-      @__private_proxy__.clipboard
+      @__app__.clipboard
     end
 
     def clipboard=(str)
-      @__private_proxy__.clipboard = str
+      @__app__.clipboard = str
     end
 
     def download name, args={}, &blk
