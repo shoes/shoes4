@@ -1,12 +1,10 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Radio do
-  subject { Shoes::Radio.new(app, parent, group, input_opts, input_block) }
+  include_context "dsl app"
+
+  subject(:radio) { Shoes::Radio.new(app, parent, group, input_opts, input_block) }
   let(:group) { :a_group }
-  let(:input_block) { Proc.new {} }
-  let(:input_opts) { Hash.new }
-  let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app, app }
 
   it_behaves_like "checkable"
   it_behaves_like "object with state"
