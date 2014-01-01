@@ -230,7 +230,7 @@ class Shoes
         end
       elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
         execution_blk = Proc.new do
-          visit '/'
+          @app.visit '/'
         end
       else
         execution_blk = nil
