@@ -1,12 +1,12 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Oval do
+  include_context "dsl app"
+
   let(:left) { 20 }
   let(:top) { 30 }
   let(:width) { 100 }
   let(:height) { 200 }
-  let(:app) { Shoes::App.new }
-  let(:parent) { app }
 
   describe "basic" do
     subject { Shoes::Oval.new(app, parent, left, top, width, height) }
