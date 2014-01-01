@@ -38,10 +38,6 @@ describe Shoes::App do
         subject.height.should == defaults[:height]
       end
 
-      it "sets title", :qt do
-        subject.app_title.should == defaults[:title]
-      end
-
       it 'has an absolute_left of 0' do
         subject.absolute_left.should eq 0
       end
@@ -50,8 +46,16 @@ describe Shoes::App do
         subject.absolute_top.should eq 0
       end
 
-      it "is resizable", :qt do
-        subject.resizable.should be_true
+      describe "internal app state" do
+        let(:internal_app) { app.instance_variable_get(:@__app__) }
+
+        it "sets title", :qt do
+          internal_app.app_title.should == defaults[:title]
+        end
+
+        it "is resizable", :qt do
+          internal_app.resizable.should be_true
+        end
       end
     end
 
@@ -66,12 +70,16 @@ describe Shoes::App do
         subject.height.should == opts[:height]
       end
 
-      it "sets title", :qt do
-        subject.app_title.should == opts[:title]
-      end
+      describe "internal app state" do
+        let(:internal_app) { app.instance_variable_get(:@__app__) }
 
-      it "sets resizable", :qt do
-        subject.resizable.should be_false
+        it "sets title", :qt do
+          internal_app.app_title.should == opts[:title]
+        end
+
+        it "sets resizable", :qt do
+          internal_app.resizable.should be_false
+        end
       end
     end
 
@@ -193,15 +201,21 @@ describe Shoes::App do
   end
 
   describe 'fullscreen' do
+    describe 'starting' do
+      let(:internal_app) { app.instance_variable_get(:@__app__) }
 
-    it 'does not starts as fullscreen by default' do
-      subject.should_not be_start_as_fullscreen
-    end
+      context 'with defaults' do
+        it 'does not start as fullscreen' do
+          expect(internal_app.start_as_fullscreen?).to be_false
+        end
+      end
 
-    describe 'with the fullscreen option' do
-      let(:opts) {{fullscreen: true}}
-      it 'starts as fullscreen ' do
-        subject.should be_start_as_fullscreen
+      describe 'with the fullscreen option' do
+        let(:opts) { {fullscreen: true} }
+
+        it 'starts as fullscreen ' do
+          expect(internal_app.start_as_fullscreen?).to be_true
+        end
       end
     end
 

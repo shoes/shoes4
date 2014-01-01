@@ -78,11 +78,11 @@ class Shoes
     end
 
     def fullscreen=(state)
-      gui.fullscreen = state
+      @__app__.fullscreen = state
     end
 
     def fullscreen
-      gui.fullscreen
+      @__app__.fullscreen
     end
 
     alias_method :fullscreen?, :fullscreen
@@ -174,6 +174,14 @@ class Shoes
 
     def in_bounds?(x, y)
       true
+    end
+
+    def fullscreen=(state)
+      gui.fullscreen = state
+    end
+
+    def fullscreen
+      gui.fullscreen
     end
 
     def start_as_fullscreen?
