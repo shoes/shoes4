@@ -220,38 +220,37 @@ describe Shoes::App do
     end
 
     it 'is not in fullscreen by default' do
-      subject.should_not be_fullscreen
+      expect(app).not_to be_fullscreen
     end
 
     it 'can be turned into fullscreen' do
-      subject.fullscreen = true
-      subject.fullscreen.should be_true
+      app.fullscreen = true
+      expect(app).to be_fullscreen
     end
 
     describe 'going into fullscreen and back out again' do
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       before :each do
-        subject.fullscreen = true
-        subject.fullscreen = false
+        app.fullscreen = true
+        app.fullscreen = false
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'is not in fullscreen', :fails_on_osx => true do
-        subject.fullscreen.should be_false
+        expect(app).not_to be_fullscreen
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'has its original width', :fails_on_osx => true do
-        subject.width.should == defaults[:width]
+        expect(app.width).to eq(defaults[:width])
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'has its original height', :fails_on_osx => true do
-        subject.height.should == defaults[:height]
+        expect(app.height).to eq(defaults[:height])
       end
     end
-
   end
 
   describe 'add_child' do
