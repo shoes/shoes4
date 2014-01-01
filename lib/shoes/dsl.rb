@@ -60,7 +60,7 @@ class Shoes
         klass = klass_or_styles
         @__private_proxy__.element_styles[klass] = styles
       else
-        super(klass_or_styles)
+        @__private_proxy__.style(klass_or_styles)
       end
     end
 
@@ -185,7 +185,7 @@ class Shoes
 
     def timer n=1, &blk
       n *= 1000
-      Timer.new @app, n, &blk
+      Timer.new @__private_proxy__, n, &blk
     end
 
     # similar controls as Shoes::Video (#video)
@@ -465,11 +465,11 @@ EOS
     end
 
     def mouse
-      [@app.mouse_button, @app.mouse_pos[0], @app.mouse_pos[1]]
+      [@__private_proxy__.mouse_button, @__private_proxy__.mouse_pos[0], @__private_proxy__.mouse_pos[1]]
     end
 
     def motion &blk
-      @app.mouse_motion << blk
+      @__private_proxy__.mouse_motion << blk
     end
 
     # hover and leave just delegate to the current slot as hover and leave
@@ -501,27 +501,27 @@ EOS
         action_proc = url_data[1]
         url_argument = match_data[1]
         clear do
-          @location = url
-          action_proc.call @app, url_argument
+          @__private_proxy__.location = url
+          action_proc.call self, url_argument
         end
       end
       timer(0.01){top_slot.contents_alignment}
     end
 
     def scroll_top
-      @app.gui.scroll_top
+      @__private_proxy__.scroll_top
     end
 
     def scroll_top=(n)
-      @app.gui.scroll_top = n
+      @__private_proxy__.scroll_top = n
     end
 
     def clipboard
-      @app.gui.clipboard
+      @__private_proxy__.clipboard
     end
 
     def clipboard=(str)
-      @app.gui.clipboard = str
+      @__private_proxy__.clipboard = str
     end
 
     def download name, args={}, &blk

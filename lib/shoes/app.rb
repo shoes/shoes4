@@ -33,6 +33,27 @@ class Shoes
       @__private_proxy__.gui
     end
 
+
+    def width
+      @__private_proxy__.width
+    end
+
+    def height
+      @__private_proxy__.height
+    end
+
+    def owner
+      @__private_proxy__.owner
+    end
+
+    def started?
+      @__private_proxy__.started?
+    end
+
+    def location
+      @__private_proxy__.location
+    end
+
     def window(options={}, &block)
       options.merge! owner: self
       self.class.new(options, &block)
@@ -50,10 +71,6 @@ class Shoes
 
     def clear &blk
       @__private_proxy__.clear &blk
-    end
-
-    def rotate angle=nil
-      angle ? @__private_proxy__.rotate = angle : @__private_proxy__.rotate ||= 0
     end
 
     def to_s
@@ -76,6 +93,8 @@ class Shoes
   end
 
   class AppProxy
+    include Common::Style
+
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
                         :title      => "Shoes 4",
@@ -99,10 +118,10 @@ class Shoes
     end
 
     attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
-                :mouse_motion, :owner, :location, :style, :element_styles
+                :mouse_motion, :owner, :element_styles
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
-                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title
-    attr_writer   :width, :height, :start_as_fullscreen
+                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
+                  :width, :height, :start_as_fullscreen, :location
 
     def clear &blk
       if started?
@@ -132,6 +151,10 @@ class Shoes
 
     def started?
       @gui && @gui.started
+    end
+
+    def rotate angle=nil
+      @rotate = angle || 0
     end
 
     def add_child(child)
@@ -167,6 +190,22 @@ class Shoes
       @gui.open
     end
 
+    def scroll_top
+      @gui.scroll_top
+    end
+
+    def scroll_top=(n)
+      @gui.scroll_top = n
+    end
+
+    def clipboard
+      @gui.clipboard
+    end
+
+    def clipboard=(str)
+      @gui.clipboard = str
+    end
+
     private
     def eval_block(execution_blk)
       @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
@@ -199,6 +238,7 @@ class Shoes
       @mouse_button         = 0
       @mouse_pos            = [0, 0]
       @mouse_hover_controls = []
+      @rotate               = 0
     end
 
     def set_attributes_from_options(opts)
