@@ -30,6 +30,14 @@ class Shoes
       @contents
     end
 
+    def clear
+      my_contents = Array.new @contents
+      my_contents.each do |element|
+        element.is_a?(Shoes::Slot) ? element.clear : element.remove
+      end
+      @contents.clear
+    end
+
     private
     def append_element(element)
       @contents << element

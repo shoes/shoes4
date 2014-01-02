@@ -91,7 +91,6 @@ class Shoes
     end
 
     def clear(&blk)
-      super if started?
       @__app__.clear &blk
     end
 
@@ -151,14 +150,7 @@ class Shoes
                   :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
-      if started?
-        @contents << @top_slot
-        @current_slot = @top_slot
-        @app.instance_eval &blk if blk
-        gui.flush
-      else
-        @app.instance_eval &blk if blk
-      end
+      @top_slot.clear &blk
     end
 
     def width

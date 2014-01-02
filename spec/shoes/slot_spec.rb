@@ -22,10 +22,15 @@ describe Shoes::Slot do
     it_behaves_like "object with negative dimensions"
   end
 
-  describe 'clearing' do
+  describe '#clear' do
+
+    def add_text_block
+      Shoes::TextBlock.new app, slot, ['text'], 20
+    end
+
     before :each do
       10.times do
-        Shoes::TextBlock.new app, slot, ['text'], 20
+        add_text_block
       end
     end
 
@@ -33,7 +38,23 @@ describe Shoes::Slot do
       subject.contents.each do |element|
         expect(element).to receive(:remove).and_call_original
       end
-      slot.clear
+      subject.clear
     end
+
+    it 'removes everything' do
+      subject.clear
+      expect(subject.contents).to be_empty
+    end
+
+    describe 'with a block' do
+      before :each do
+        subject.clear {add_text_block}
+      end
+
+      it 'has one element afterwards' do
+        expect(subject.contents.size).to eq 1
+      end
+    end
+
   end
 end

@@ -13,7 +13,6 @@ class Shoes
   #                      a hash of default styles for elements of Class,
   module DSL
     include Common::Style
-    include Common::Clear
 
     def color(c)
       Shoes::Color.create c
