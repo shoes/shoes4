@@ -6,13 +6,16 @@ require 'forwardable'
 require 'shoes/common/registration'
 
 class Shoes
-  PI = Math::PI
-  TWO_PI = 2 * PI
-  HALF_PI = 0.5 * PI
-  DIR = Pathname.new(__FILE__).join("../..").realpath.to_s
-  LOG = []
+  PI                  = Math::PI
+  TWO_PI              = 2 * PI
+  HALF_PI             = 0.5 * PI
+  DIR                 = Pathname.new(__FILE__).join("../..").realpath.to_s
+  LOG                 = []
+  LEFT_MOUSE_BUTTON   = 1
+  MIDDLE_MOUSE_BUTTON = 2
+  RIGHT_MOUSE_BUTTON  = 3
 
-  extend ::Shoes::Common::Registration
+  extend Common::Registration
 
   class << self
 
