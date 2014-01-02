@@ -283,9 +283,24 @@ describe Shoes::App do
 
     it 'deletes everything (regression)' do
       subject.clear
-
       expect(internal_app.top_slot.contents).to be_empty
     end
+
+    context 'clear in the initial input_block' do
+      let(:input_blk) {
+        Proc.new do
+          para 'Hello there'
+          clear do
+            para 'see you'
+          end
+        end
+      }
+
+      it 'does not raise an error calling clear on a top_slot that is nil' do
+        expect {subject}.not_to raise_error
+      end
+    end
+
   end
 
 end

@@ -249,7 +249,10 @@ class Shoes
 
     private
     def eval_block(execution_blk)
-      @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
+      # creating it first, then appending is important because that way
+      # top_slot already exists and methods may be called on it
+      @top_slot = Flow.new self, self, width: @width, height: @height
+      @top_slot.append &execution_blk
     end
 
     def create_execution_block(blk)
