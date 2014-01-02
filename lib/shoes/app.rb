@@ -243,6 +243,10 @@ class Shoes
       @app.download url, opts, &block
     end
 
+    def textcursor(line_height)
+      @app.line(0, 0, 0, line_height, hidden: true, strokewidth: 1, stroke: ::Shoes::COLORS[:black])
+    end
+
     def execute_block(blk)
       @app.instance_eval &blk
     end

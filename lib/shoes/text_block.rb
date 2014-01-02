@@ -98,6 +98,10 @@ class Shoes
       @gui.contents_alignment(current_position)
     end
 
+    def textcursor(line_height = 0)
+      @textcursor ||= app.textcursor(line_height)
+    end
+
     private
 
     def gather_text_styles(parent, texts, styles={}, start_point=0)

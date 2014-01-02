@@ -73,8 +73,7 @@ class Shoes
       end
 
       def textcursor(line_height)
-        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, line_height, hidden: true,
-                                          strokewidth: 1, stroke: @dsl.app.black)
+        @dsl.textcursor(line_height)
       end
 
       def remove_textcursor
