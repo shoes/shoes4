@@ -214,6 +214,10 @@ class Shoes
       @gui.clipboard = str
     end
 
+    def download(url, opts, &block)
+      @app.download url, opts, &block
+    end
+
     def execute_block(blk)
       @app.instance_eval &blk
     end
