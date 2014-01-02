@@ -132,7 +132,7 @@ class Shoes
       add_console
     end
 
-    attr_reader :gui, :top_slot, :contents, :unslotted_elements, :app,
+    attr_reader :gui, :top_slot, :contents, :app,
                 :mouse_motion, :owner, :element_styles
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
@@ -140,9 +140,6 @@ class Shoes
 
     def clear &blk
       if started?
-        super
-        @unslotted_elements.each &:remove
-        @unslotted_elements.clear
         @contents << @top_slot
         @current_slot = @top_slot
         @app.instance_eval &blk if blk
