@@ -1,17 +1,13 @@
 require 'shoes/spec_helper'
 
 describe Shoes::InputBox do
+  include_context "dsl app"
+  let(:input_opts) {{left: left, top: top, width: width, height: height}}
   let(:left) { 10 }
   let(:top) { 20 }
   let(:width) { 100 }
   let(:height) { 200 }
-  let(:input_block) { Proc.new {} }
-
-
-  let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new(app, app) }
   let(:text) { "the text" }
-  let(:input_opts) {{left: left, top: top, width: width, height: height}}
 
   # EditBox is an InputBox but InputBox is enver instantiated itself
   # And there are problems in the backend due to option settings
@@ -21,7 +17,6 @@ describe Shoes::InputBox do
   it_behaves_like "movable object"
   it_behaves_like "an element that can respond to change"
   it_behaves_like "object with state"
-
 
   it { should respond_to :focus }
   it { should respond_to :text  }
