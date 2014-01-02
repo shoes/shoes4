@@ -18,7 +18,6 @@ class Shoes
   class App
     include DSL
     include BuiltinMethods
-    include Common::Clickable
 
     def initialize(opts={}, &blk)
       @__app__ = Shoes::InternalApp.new(self, opts, &blk)
@@ -79,6 +78,14 @@ class Shoes
       @__app__.rotate angle
     end
 
+    def click(&blk)
+      @__app__.click &blk
+    end
+
+    def release(&blk)
+      @__app__.release &blk
+    end
+
     def quit
       Shoes.unregister self
       @__app__.gui.quit
@@ -109,6 +116,7 @@ class Shoes
 
   class InternalApp
     include Common::Style
+    include Common::Clickable
 
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
