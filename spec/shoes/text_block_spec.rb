@@ -2,50 +2,50 @@ require 'shoes/spec_helper'
 require 'shoes/helpers/sample17_helper'
 
 describe Shoes::TextBlock do
-  let(:app) { Shoes::App.new }
-  let(:parent) { Shoes::Flow.new app, app }
+  include_context "dsl app"
+
   let(:text_link) { Shoes::Link.new(['Hello']) }
-  subject { Shoes::TextBlock.new(app, parent, ["#{text_link}, world!"], 99, {app: app}) }
+  subject(:text_block) { Shoes::TextBlock.new(app, parent, ["#{text_link}, world!"], 99, {app: app}) }
 
   describe "initialize" do
     it "creates gui object" do
-      expect(subject.gui).not_to be_nil
+      expect(text_block.gui).not_to be_nil
     end
   end
 
   describe "text" do
     it "sets text when the object is created" do
-      expect(subject.text).to eq "Hello, world!"
+      expect(text_block.text).to eq "Hello, world!"
     end
 
     it "allows us to change the text" do
-      subject.text = "Goodbye Cruel World"
-      expect(subject.text).to eq "Goodbye Cruel World"
+      text_block.text = "Goodbye Cruel World"
+      expect(text_block.text).to eq "Goodbye Cruel World"
     end
   end
 
   describe "#to_s" do
     it "is the same as #text" do
-      text = subject.text
-      expect(subject.to_s).to eq(text)
+      text = text_block.text
+      expect(text_block.to_s).to eq(text)
     end
   end
 
   describe "#replace" do
     it "replaces text" do
-      subject.replace "Goodbye Cruel World"
-      expect(subject.text).to eq("Goodbye Cruel World")
+      text_block.replace "Goodbye Cruel World"
+      expect(text_block.text).to eq("Goodbye Cruel World")
     end
 
     it "allows two arguments" do
-      subject.replace "Goodbye Cruel World, ", text_link
-      expect(subject.text).to eq("Goodbye Cruel World, Hello")
+      text_block.replace "Goodbye Cruel World, ", text_link
+      expect(text_block.text).to eq("Goodbye Cruel World, Hello")
     end
   end
 
   describe "font" do
     it "sets the default font to Arial" do
-      expect(subject.font).to eql "Arial"
+      expect(text_block.font).to eql "Arial"
     end
 
     it "should allow setting the font with :family" do
