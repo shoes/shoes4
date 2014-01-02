@@ -59,10 +59,25 @@ class Shoes
       self.class.new(options, &block)
     end
 
-    def left; 0 end
-    def top; 0 end
-    def absolute_left; 0 end
-    def absolute_top; 0 end
+    def left
+      @__app__.left
+    end
+
+    def top
+      @__app__.top
+    end
+
+    def absolute_left
+      @__app__.absolute_left
+    end
+
+    def absolute_top
+      @__app__.absolute_top
+    end
+
+    def rotate(angle)
+      @__app__.rotate angle
+    end
 
     def quit
       Shoes.unregister self
@@ -197,6 +212,11 @@ class Shoes
     def open_gui
       @gui.open
     end
+
+    def left; 0 end
+    def top; 0 end
+    def absolute_left; 0 end
+    def absolute_top; 0 end
 
     def scroll_top
       @gui.scroll_top
