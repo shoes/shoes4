@@ -11,6 +11,11 @@ describe Shoes::App do
   it { should respond_to :clipboard= }
   it { should respond_to :owner }
 
+  # For Shoes 3 compatibility
+  it "exposes self as #app" do
+    expect(app.app).to eq(app)
+  end
+
   describe "initialize" do
     let(:input_blk) { Proc.new {} }
 

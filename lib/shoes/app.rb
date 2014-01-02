@@ -26,6 +26,12 @@ class Shoes
       @__app__.open_gui
     end
 
+    # Shoes 3 exposes the app object like this, so we keep it for
+    # compatibility
+    def app
+      self
+    end
+
     # FIXME placeholder for code that calls app.gui. We should be able to get
     # rid of this
     def gui
