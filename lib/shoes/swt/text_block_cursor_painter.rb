@@ -18,18 +18,22 @@ class Shoes
         layout = choose_layout
         position = layout.get_location(relative_cursor)
 
-        cursor = textcursor(layout.line_height)
-        cursor.move(layout.left + position.x, layout.top + position.y)
-        cursor.show
+        textcursor.move(layout.left + position.x, layout.top + position.y)
+        textcursor.show
+      end
+
+      def first_layout
+        @fitted_layouts.first
+      end
+
+      def last_layout
+        @fitted_layouts.last
       end
 
       # Only works with one or two layouts, but that's what we've got
       # -1 positions us at the very end, regardless text length
       def choose_layout
-        first_layout = @fitted_layouts.first
-        last_layout = @fitted_layouts.last
-
-        if cursor_fits_in?(first_layout)
+        if cursor_fits_in_first_layout?
           first_layout
         else
           last_layout
@@ -38,26 +42,21 @@ class Shoes
 
       # Again, assumes one or two layout system
       def relative_cursor
-        first_layout = @fitted_layouts.first
-        last_layout = @fitted_layouts.last
-
-        if cursor_fits_in?(first_layout)
-          @dsl.cursor
-        elsif cursor_at_end?
-          last_layout.text.length
+        if cursor_at_end?
+          relative_cursor_at_end
+        elsif cursor_fits_in_first_layout?
+          relative_cursor_in_first_layout
         else
-          @dsl.cursor - first_layout.text.length
+          relative_cursor_in_last_layout
         end
       end
 
-      def cursor_fits_in?(layout)
-        @dsl.cursor <= layout.text.length && @dsl.cursor >= 0
+      def cursor_fits_in_first_layout?
+        @dsl.cursor <= first_layout.text.length && @dsl.cursor >= 0
       end
 
       def cursor_at_end?
-        single_layout? ||
-          cursor_negative? ||
-          cursor_past_all_text?
+        cursor_negative? || cursor_past_all_text?
       end
 
       def cursor_negative?
@@ -68,13 +67,27 @@ class Shoes
         @dsl.cursor > @dsl.text.length
       end
 
-      def single_layout?
-        @fitted_layouts.first == @fitted_layouts.last
+      def relative_cursor_at_end
+        last_layout.text.length
       end
 
-      def textcursor(line_height)
-        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, line_height, hidden: true,
+      def relative_cursor_in_first_layout
+        @dsl.cursor
+      end
+
+      def relative_cursor_in_last_layout
+        @dsl.cursor - first_layout.text.length
+      end
+
+      def textcursor
+        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, cursor_height, hidden: true,
                                           strokewidth: 1, stroke: @dsl.app.black)
+      end
+
+      # This could be smarter, basing height on the actual line the cursor's
+      # in. For now, just use the first line's height.
+      def cursor_height
+        first_layout.layout.get_line_bounds(0).height
       end
 
       def remove_textcursor
