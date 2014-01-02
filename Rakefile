@@ -64,8 +64,9 @@ def swt_args(args)
   args
 end
 
-def working_samples
-  samples = File.read("#{SAMPLES_DIR}/README").lines
+def working_samples(filename)
+  filename ||= "README"
+  samples = File.read("#{SAMPLES_DIR}/#{filename}").lines
   samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
 end
 
@@ -73,8 +74,8 @@ def non_samples
    Dir[File.join(SAMPLES_DIR, '*.rb')].map{|f| f.gsub(SAMPLES_DIR+'/', '')} - working_samples
 end
 
-def run_sample(sample_name)
-  puts "Running #{SAMPLES_DIR}/#{sample_name}...quit to run next sample"
+def run_sample(sample_name, index, total)
+  puts "Running #{SAMPLES_DIR}/#{sample_name} (#{index} of #{total})...quit to run next sample"
   system "bin/shoes #{SAMPLES_DIR}/#{sample_name}"
 end
 
@@ -142,18 +143,22 @@ namespace :spec do
 end
 
 desc "Run all working samples"
-task :samples do
-  samples = working_samples
+task :samples, [:list] do |t, args|
+  samples = working_samples(args[:list])
   puts "#{samples.size} samples are known to work"
-  working_samples.shuffle.each{|sample| run_sample(sample)}
+  samples.shuffle.each_with_index do |sample, index|
+    run_sample(sample, index, samples.size)
+  end
 end
 
 desc "Run all non-working samples"
 task :non_samples do
   non_working_samples = non_samples
-  puts "%d Samples are not known to work" % non_working_samples.count
+  puts "%d Samples are not known to work" % non_working_samples.size
 
-  non_working_samples.shuffle.each{|sample| run_sample(sample)}
+  non_working_samples.shuffle.each_with_index do |sample, index|
+    run_sample(sample, index, non_working_samples.size)
+  end
 end
 
 desc "Create list of non-working samples"
