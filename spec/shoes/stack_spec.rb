@@ -2,9 +2,9 @@ require 'shoes/spec_helper'
 require_relative 'helpers/fake_element'
 
 describe Shoes::Stack do
-  let(:app) { Shoes::App.new }
-  let(:opts) {Hash.new}
-  subject { Shoes::Stack.new(app, app, opts) }
+  include_context "dsl app"
+
+  subject(:stack) { Shoes::Stack.new(app, app, input_opts) }
 
   it_behaves_like "Slot"
 
@@ -34,16 +34,19 @@ describe Shoes::Stack do
     it_behaves_like 'positioning through :_position'
     it_behaves_like 'positions the first element in the top left'
     it_behaves_like 'arranges elements underneath each other'
+
     describe 'small stack height' do
-      let(:opts){{height: element.height + 10}}
+      let(:input_opts){{height: element.height + 10}}
       it_behaves_like 'set height and contents alignment'
     end
+
     describe 'big stack height' do
-      let(:opts){{height: 1000}}
+      let(:input_opts){{height: 1000}}
       it_behaves_like 'set height and contents alignment'
     end
+
     describe 'with margin' do
-      let(:opts){{margin: 27}}
+      let(:input_opts){{margin: 27}}
       it_behaves_like 'taking care of margin'
     end
   end
