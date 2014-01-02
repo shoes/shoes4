@@ -67,4 +67,8 @@ describe Shoes::Swt::App do
     end
   end
 
+  # fully testing the behavior would require stubbing for all of the open logic
+  # which at the time is overkill imo
+  it {should respond_to :started?}
+
 end

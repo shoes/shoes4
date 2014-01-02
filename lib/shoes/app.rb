@@ -174,7 +174,7 @@ class Shoes
     end
 
     def started?
-      @gui && @gui.started
+      @gui && @gui.started?
     end
 
     def rotate angle=nil

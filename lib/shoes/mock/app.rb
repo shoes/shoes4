@@ -23,7 +23,8 @@ class Shoes
       def quit
       end
       
-      def started
+      def started?
+        true
       end
 
       def flush
