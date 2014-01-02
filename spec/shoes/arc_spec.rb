@@ -31,19 +31,6 @@ describe Shoes::Arc do
     specify "defaults to chord fill" do
       expect(arc).not_to be_wedge
     end
-
-    it "passes required values to backend" do
-      gui_opts = {
-        :left => left,
-        :top => top,
-        :width => width,
-        :height => height,
-        :angle1 => start_angle,
-        :angle2 => end_angle
-      }
-      expect(Shoes.configuration.backend::Arc).to receive(:new).with(arc, app.gui, gui_opts)
-      arc
-    end
   end
 
   context "relative dimensions" do
