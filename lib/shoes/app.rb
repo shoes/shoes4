@@ -32,7 +32,6 @@ class Shoes
       @__app__.gui
     end
 
-
     def width
       @__app__.width
     end
@@ -91,7 +90,8 @@ class Shoes
       @__app__.gui.quit
     end
 
-    def clear &blk
+    def clear(&blk)
+      super if started?
       @__app__.clear &blk
     end
 
@@ -105,6 +105,10 @@ class Shoes
 
     def fullscreen
       @__app__.fullscreen
+    end
+
+    def contents
+      @__app__.contents
     end
 
     alias_method :fullscreen?, :fullscreen
@@ -146,7 +150,7 @@ class Shoes
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
                   :width, :height, :start_as_fullscreen, :location
 
-    def clear &blk
+    def clear(&blk)
       if started?
         @contents << @top_slot
         @current_slot = @top_slot

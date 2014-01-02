@@ -4,11 +4,11 @@ class Shoes
       def clear
         # duplicate neeeded because iterating over an array and deleting from
         # it (as #remove) does is no good... #478
-        contents = Array.new @contents
-        contents.each do |element|
+        my_contents = Array.new contents
+        my_contents.each do |element|
           element.is_a?(Shoes::Slot) ? element.clear : element.remove
         end
-        @contents.clear
+        contents.clear
       end
     end
   end
