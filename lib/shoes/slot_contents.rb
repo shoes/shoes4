@@ -31,8 +31,9 @@ class Shoes
     end
 
     def clear
-      my_contents = Array.new @contents
-      my_contents.each do |element|
+      # reverse_each is important as otherwise we always miss to delete one
+      # one element
+      @contents.reverse_each do |element|
         element.is_a?(Shoes::Slot) ? element.clear : element.remove
       end
       @contents.clear
