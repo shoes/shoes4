@@ -214,13 +214,13 @@ class Shoes
       @gui.clipboard = str
     end
 
+    def execute_block(blk)
+      @app.instance_eval &blk
+    end
+
     private
     def eval_block(execution_blk)
       @top_slot = Flow.new self, self, {width: @width, height: @height}, &execution_blk
-    end
-
-    def execute_block(blk)
-      @app.instance_eval &blk
     end
 
     def create_execution_block(blk)

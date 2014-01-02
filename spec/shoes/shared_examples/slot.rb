@@ -4,7 +4,7 @@ shared_examples_for "Slot" do
   it "should be able to append" do
     subject.contents.should be_empty
     our_subject = subject
-    app.instance_eval do our_subject.append {para "foo"} end
+    app.execute_block Proc.new { our_subject.append {para "foo"} }
     subject.contents.size.should eq(1)
   end
 
