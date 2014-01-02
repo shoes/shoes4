@@ -123,6 +123,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
       end
 
       it "should move within first layout" do
+        subject.stub(:cursor_height) { 0 }
         position_cursor(1)
         subject.draw
         expect(textcursor).to have_received(:move).with(left + position.x,
@@ -131,6 +132,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
       end
 
       it "should move within second layout" do
+        subject.stub(:cursor_height) { 0 }
         position_cursor(-1)
         subject.draw
         expect(textcursor).to have_received(:move).with(left + position.x,
