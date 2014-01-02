@@ -166,7 +166,7 @@ class Shoes
     end
 
     def rotate angle=nil
-      @rotate = angle || 0
+      @rotate = angle || @rotate || 0
     end
 
     def add_child(child)
