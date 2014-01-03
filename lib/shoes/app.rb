@@ -238,14 +238,13 @@ class Shoes
     def set_attributes_from_options(opts)
       opts = DEFAULT_OPTIONS.merge(opts)
 
-      self.width               = opts[:width]
-      self.height              = opts[:height]
-      self.app_title           = opts[:title]
-      self.resizable           = opts[:resizable]
-      self.opts                = opts
-      self.start_as_fullscreen = opts[:fullscreen]
-
-      @owner = opts[:owner]
+      @width               = opts[:width]
+      @height              = opts[:height]
+      @app_title           = opts[:title]
+      @resizable           = opts[:resizable]
+      @start_as_fullscreen = opts[:fullscreen]
+      @opts                = opts
+      @owner               = opts[:owner]
     end
 
     def add_console
@@ -256,6 +255,5 @@ class Shoes
       end
       @app.instance_eval &console
     end
-
   end
 end
