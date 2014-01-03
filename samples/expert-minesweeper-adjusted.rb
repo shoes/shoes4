@@ -263,9 +263,9 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
   click do |button, x, y|
     next if @field.game_over? || @field.all_found?
     fx, fy = ((x-@field.offset.first) / @field.cell_size).to_i, ((y-@field.offset.last) / @field.cell_size).to_i
-    @field.click!(fx, fy) if button == 1
-    @field.flag!(fx, fy) if button == 2
-    @field.reveal!(fx, fy) if button == 3
+    @field.click!(fx, fy) if button == Shoes::LEFT_MOUSE_BUTTON
+    @field.flag!(fx, fy) if button == Shoes::RIGHT_MOUSE_BUTTON
+    @field.reveal!(fx, fy) if button == Shoes::MIDDLE_MOUSE_BUTTON
 
     render_field
     alert("Winner!\nTotal time: #{@field.total_time}") if @field.all_found?
