@@ -102,23 +102,23 @@ class Shoes
                   :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
-      @top_slot.clear &blk
+      top_slot.clear &blk
     end
 
     def width
-      started? ? @gui.width : @width
+      started? ? gui.width : @width
     end
 
     def height
-      started? ? @gui.height : @height
+      started? ? gui.height : @height
     end
 
     def font(path = Shoes::DEFAULT_TEXTBLOCK_FONT) 
-      @app.font path
+      app.font path
     end
 
     def started?
-      @gui && @gui.started?
+      gui && gui.started?
     end
 
     def rotate angle=nil
@@ -161,7 +161,7 @@ class Shoes
     end
 
     def open_gui
-      @gui.open
+      gui.open
     end
 
     def quit
@@ -174,31 +174,31 @@ class Shoes
     def absolute_top; 0 end
 
     def scroll_top
-      @gui.scroll_top
+      gui.scroll_top
     end
 
     def scroll_top=(n)
-      @gui.scroll_top = n
+      gui.scroll_top = n
     end
 
     def clipboard
-      @gui.clipboard
+      gui.clipboard
     end
 
     def clipboard=(str)
-      @gui.clipboard = str
+      gui.clipboard = str
     end
 
     def download(url, opts, &block)
-      @app.download url, opts, &block
+      app.download url, opts, &block
     end
 
     def textcursor(line_height)
-      @app.line(0, 0, 0, line_height, hidden: true, strokewidth: 1, stroke: ::Shoes::COLORS[:black])
+      app.line(0, 0, 0, line_height, hidden: true, strokewidth: 1, stroke: ::Shoes::COLORS[:black])
     end
 
     def execute_block(blk)
-      @app.instance_eval &blk
+      app.instance_eval &blk
     end
 
     private
@@ -216,7 +216,7 @@ class Shoes
         end
       elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
         execution_blk = Proc.new do
-          @app.visit '/'
+          app.visit '/'
         end
       else
         execution_blk = nil
