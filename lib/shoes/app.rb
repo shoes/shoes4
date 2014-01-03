@@ -38,89 +38,35 @@ class Shoes
       @__app__.gui
     end
 
-    def width
-      @__app__.width
-    end
-
-    def height
-      @__app__.height
-    end
-
-    def owner
-      @__app__.owner
-    end
-
-    def started?
-      @__app__.started?
-    end
-
-    def location
-      @__app__.location
-    end
-
     def window(options={}, &block)
       options.merge! owner: self
       self.class.new(options, &block)
     end
 
-    def left
-      @__app__.left
-    end
-
-    def top
-      @__app__.top
-    end
-
-    def absolute_left
-      @__app__.absolute_left
-    end
-
-    def absolute_top
-      @__app__.absolute_top
-    end
-
-    def rotate(angle)
-      @__app__.rotate angle
-    end
-
-    def click(&blk)
-      @__app__.click &blk
-    end
-
-    def release(&blk)
-      @__app__.release &blk
+    def close
+      quit
     end
 
     def quit
       Shoes.unregister self
-      @__app__.gui.quit
-    end
-
-    def clear(&blk)
-      @__app__.clear &blk
+      @__app__.quit
     end
 
     def to_s
       'Shoes App: ' + @__app__.app_title
     end
 
-    def fullscreen=(state)
-      @__app__.fullscreen = state
-    end
-
-    def fullscreen
-      @__app__.fullscreen
-    end
-
-    def contents
-      @__app__.contents
+    %w(
+      width height owner started? location left top absolute_left
+      absolute_top rotate click release clear fullscreen fullscreen=
+      contents
+    ).each do |method|
+      define_method method do |*args, &block|
+        @__app__.public_send method, *args, &block
+      end
     end
 
     alias_method :fullscreen?, :fullscreen
-
-    def close
-      quit
-    end
   end
 
   class InternalApp
@@ -206,9 +152,7 @@ class Shoes
       gui.fullscreen
     end
 
-    def start_as_fullscreen?
-      @start_as_fullscreen
-    end
+    alias_method :start_as_fullscreen?, :start_as_fullscreen
 
     def add_mouse_hover_control(element)
       unless mouse_hover_controls.include? element
@@ -218,6 +162,10 @@ class Shoes
 
     def open_gui
       @gui.open
+    end
+
+    def quit
+      @gui.quit
     end
 
     def left; 0 end
