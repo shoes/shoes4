@@ -5,7 +5,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
   include_context "swt app"
 
   let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor) }
-  let(:textcursor) { double("textcursor") }
+  let(:textcursor) { double("textcursor", left:0, top: 0) }
   let(:text_layout) { double("text layout",
                              get_line_bounds: double("line bounds", height: 10)) }
   let(:fitted_layouts) { [] }
@@ -130,12 +130,34 @@ describe Shoes::Swt::TextBlockCursorPainter do
         expect(textcursor).to have_received(:show)
       end
 
+      it "should only move in first layout if necessary" do
+        position_cursor(1)
+        textcursor.stub(:left) { left + position.x }
+        textcursor.stub(:top)  { top + position.y }
+        subject.stub(:redraw_textcursor_at)
+
+        subject.draw
+
+        expect(subject).to_not have_received(:redraw_textcursor_at)
+      end
+
       it "should move within second layout" do
         position_cursor(-1)
         subject.draw
         expect(textcursor).to have_received(:move).with(left + position.x,
                                                         top + 100 + position.y)
         expect(textcursor).to have_received(:show)
+      end
+
+      it "should only move in second layout if necessary" do
+        position_cursor(-1)
+        textcursor.stub(:left) { left + position.x }
+        textcursor.stub(:top)  { top + 100 + position.y }
+        subject.stub(:redraw_textcursor_at)
+
+        subject.draw
+
+        expect(subject).to_not have_received(:redraw_textcursor_at)
       end
     end
 

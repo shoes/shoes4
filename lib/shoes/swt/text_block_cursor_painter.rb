@@ -16,9 +16,21 @@ class Shoes
 
       def draw_textcursor
         layout = choose_layout
-        position = layout.get_location(relative_cursor)
+        x, y = new_position(layout)
 
-        textcursor.move(layout.left + position.x, layout.top + position.y)
+        unless textcursor.left == x && textcursor.top == y
+         redraw_textcursor_at(x, y)
+        end
+      end
+
+      def new_position(layout)
+        position = layout.get_location(relative_cursor)
+        [layout.left + position.x, layout.top + position.y]
+      end
+
+      # It's important to only move when necessary to avoid constant redraws
+      def redraw_textcursor_at(x, y)
+        textcursor.move(x, y)
         textcursor.show
       end
 
