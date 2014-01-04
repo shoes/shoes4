@@ -5,4 +5,4 @@ case "${MACHTYPE:-}" in
     ;;
 esac
 
-eval "JRUBY_OPTS=${swt_opt:-} bin/guard"
+eval "JRUBY_OPTS=${swt_opt:-} bundle exec guard"
