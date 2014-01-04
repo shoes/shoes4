@@ -22,7 +22,7 @@ end
 
 def rspec(files, options = "")
   rspec_opts = "#{options} #{files}"
-  "./bin/rspec --tty #{rspec_opts}"
+  "rspec --tty #{rspec_opts}"
 end
 
 # run rspec in separate Jruby JVM
