@@ -81,26 +81,18 @@ class Shoes
       end
 
       def available_space
-        if @current_position.moving_next
-          available_space_on_next_line
-        else
-          available_space_on_current_line
-        end
-      end
-
-      def available_space_on_next_line
-        [parent.width, :unbounded]
-      end
-
-      def available_space_on_current_line
-        width = parent.absolute_left + parent.width - @current_position.x
-        height = @current_position.next_line_start - @current_position.y - 1
-        height = :unbounded if height_above_consumed?
+        width = parent.absolute_left + parent.width - @dsl.absolute_left
+        height = next_line_start - @dsl.absolute_top - 1
+        height = :unbounded if on_new_line?
         [width, height]
       end
 
-      def height_above_consumed?
-        @current_position.next_line_start == @current_position.y
+      def next_line_start
+        @current_position.next_line_start
+      end
+
+      def on_new_line?
+        next_line_start == @dsl.absolute_top
       end
 
       def generate_layout(width, text)
