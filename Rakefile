@@ -133,46 +133,63 @@ end
 desc "Working with samples"
 namespace :samples do
 
+  def samples_from_file(filename)
+    samples = File.read("#{SAMPLES_DIR}/#{filename}").lines
+    samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}.map {|s| "#{SAMPLES_DIR}/#{s}"}
+  end
+
   def working_samples
-    samples = File.read("#{SAMPLES_DIR}/README").lines
-    samples = samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
+    samples = samples_from_file "README"
     puts "#{samples.size} samples are known to work"
     samples
   end
 
   def non_samples
-    result = Dir[File.join(SAMPLES_DIR, '*.rb')].map{|f| f.gsub(SAMPLES_DIR+'/', '')} - working_samples
-    puts "#{result.count} samples are not known to work"
+    all_samples = Dir[File.join(SAMPLES_DIR, '*.rb')]
+    result = all_samples - working_samples
+    puts "#{result.size} samples are not known to work"
     result
   end
 
-  def run_sample(sample_name)
-    puts "Running #{SAMPLES_DIR}/#{sample_name}...quit to run next sample"
-    system "bin/shoes #{SAMPLES_DIR}/#{sample_name}"
+  def run_sample(sample_name, index, total)
+    print "Running #{sample_name} (#{index + 1} of #{total})...quit to run next sample"
+    system "bin/shoes #{sample_name}"
+  end
+
+  def run_samples(samples)
+    samples.each_with_index do |sample, index|
+      run_sample(sample, index, samples.size)
+    end
   end
 
   desc "Run all working samples in random order"
   task :random do |t|
     puts t.comment
-    working_samples.shuffle.each{|sample| run_sample(sample)}
+    run_samples working_samples.shuffle
   end
 
   desc "Run all working samples in alphabetical order"
   task :good do |t|
     puts t.comment
-    working_samples.sort.each{|sample| run_sample(sample)}
+    run_samples working_samples.sort
   end
 
   desc "Run all non-working samples in random order"
   task :bad do |t|
     puts t.comment
-    non_samples.shuffle.each{|sample| run_sample(sample)}
+    run_samples non_samples.shuffle
   end
 
   desc "Create list of non-working samples"
   task :bad_list do |t|
     puts t.comment
     non_samples.each{|non_sample| puts non_sample}
+  end
+
+  desc "Run all samples listed in samples/filename"
+  task :subset, [:filename] do |t, args|
+    puts t.comment
+    run_samples samples_from_file(args[:filename])
   end
 end
 
