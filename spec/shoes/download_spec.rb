@@ -3,14 +3,12 @@ require 'webmock/rspec'
 
 describe Shoes::Download do
   include AsyncHelper
+  include_context "dsl app"
 
-  let(:app) { Shoes::App.new }
-  let(:parent) { app }
-  let(:block) { proc{} }
   let(:name) { "http://www.google.com/logos/nasa50th.gif" }
   let(:response_body) { "NASA 50th logo" }
   let(:args) { {:save => "nasa50th.gif"} }
-  subject(:download) { Shoes::Download.new app, parent, name, args, &block }
+  subject(:download) { Shoes::Download.new app, parent, name, args, &input_block }
 
   before do
     stub_request(:get, name)
@@ -41,7 +39,7 @@ describe Shoes::Download do
     context 'with a block' do
       it 'calls the block with a result' do
         eventually do
-          expect(download.gui).to receive(:eval_block).with(result, block)
+          expect(download.gui).to receive(:eval_block).with(result, input_block)
         end
       end
     end
