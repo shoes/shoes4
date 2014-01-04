@@ -1,7 +1,8 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Shape do
-  let(:app) { Shoes::App.new }
+  include_context "dsl app"
+
   subject { Shoes::Shape.new(app) {} }
 
   it_behaves_like "object with stroke"

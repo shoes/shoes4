@@ -39,12 +39,6 @@ class Shoes
       self
     end
 
-    # FIXME placeholder for code that calls app.gui. We should be able to get
-    # rid of this
-    def gui
-      @__app__.gui
-    end
-
     def window(options={}, &block)
       options.merge! owner: self
       self.class.new(options, &block)

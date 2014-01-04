@@ -1,13 +1,11 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Keypress do
-  let(:input_blk) { Proc.new {} }
-  let(:app) { Shoes::App.new({}, &input_blk) }
-  let(:block) { proc{} }
-  subject{ Shoes::Keypress.new app, &block }
+  include_context "dsl app"
+
+  subject(:keypress) { Shoes::Keypress.new app, &input_block }
 
   it "should clear" do
-    subject.should respond_to :clear
+    expect(keypress).to respond_to(:clear)
   end
-
 end

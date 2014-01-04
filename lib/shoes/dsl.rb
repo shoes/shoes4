@@ -175,7 +175,7 @@ class Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      Shoes::Animation.new @__app__.app, opts, blk
+      Shoes::Animation.new @__app__, opts, blk
     end
 
     def every n=1, &blk
@@ -482,11 +482,11 @@ EOS
     end
 
     def keypress &blk
-      Shoes::Keypress.new @__app__.app, &blk
+      Shoes::Keypress.new @__app__, &blk
     end
 
     def keyrelease &blk
-      Shoes::Keyrelease.new @__app__.app, &blk
+      Shoes::Keyrelease.new @__app__, &blk
     end
 
     def append(&blk)

@@ -11,16 +11,18 @@ shared_examples_for "basic border" do
 end
 
 describe Shoes::Border do
+  include_context "dsl app"
+  let(:parent) { double 'parent', absolute_left: left, absolute_top: top,
+                 width: width, height: height, add_child: true }
+  let(:opts){ {left: left, top: top, width: width, height: height} }
+
   let(:left) { 10 }
   let(:top) { 20 }
   let(:width) { 100 }
   let(:height) { 200 }
 
-  let(:parent) { double 'parent', absolute_left: left, absolute_top: top,
-                 width: width, height: height, add_child: true }
   let(:blue)  { Shoes::COLORS[:blue] }
-  let(:app) { Shoes::App.new }
-  let(:opts){ {left: left, top: top, width: width, height: height} }
+
   subject { Shoes::Border.new(app, parent, blue, opts) }
 
   it_behaves_like "basic border"

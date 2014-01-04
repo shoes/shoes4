@@ -3,8 +3,7 @@ require 'shoes/spec_helper'
 describe Shoes::App do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
-  let(:app) {Shoes::App.new(opts, &input_blk)}
-  subject { app }
+  subject(:app) { Shoes::App.new(opts, &input_blk) }
 
   it_behaves_like "DSL container"
   it { should respond_to :clipboard }
@@ -160,27 +159,32 @@ describe Shoes::App do
       end
     end
   end
-  describe "clipboard" do
-    it "gets clipboard" do
-      subject.gui.should_receive(:clipboard)
-      subject.clipboard
+  
+  describe "connecting with gui" do 
+    let(:gui) { app.instance_variable_get(:@__app__).gui }
+
+    describe "clipboard" do
+      it "gets clipboard" do
+        expect(gui).to receive(:clipboard)
+        subject.clipboard
+      end
+
+      it "sets clipboard" do
+        expect(gui).to receive(:clipboard=).with("test")
+        subject.clipboard = "test"
+      end
     end
 
-    it "sets clipboard" do
-      subject.gui.should_receive(:clipboard=).with("test")
-      subject.clipboard = "test"
-    end
-  end
+    describe "quitting" do
+      it "#quit tells the GUI to quit" do
+        expect(gui).to receive :quit
+        subject.quit
+      end
 
-  describe "quitting" do
-    it "#quit tells the GUI to quit" do
-      expect(subject.gui).to receive :quit
-      subject.quit
-    end
-
-    it '#close tells the GUI to quit' do
-      expect(subject.gui).to receive :quit
-      subject.close
+      it '#close tells the GUI to quit' do
+        expect(gui).to receive :quit
+        subject.close
+      end
     end
   end
 
