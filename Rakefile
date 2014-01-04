@@ -8,6 +8,9 @@ SAMPLES_DIR = "samples"
 
 CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage', "spec/test_app/#{PACKAGE_DIR}"]
 
+# Necessary for tasks to have description which is convenient in a few cases
+Rake::TaskManager.record_task_metadata = true
+
 require 'jruby'
 JRuby.runtime.instance_config.runRubyInProcess = false
 
@@ -62,21 +65,6 @@ def swt_args(args)
   args[:excludes] = [:no_swt]
   args[:excludes] << :fails_on_osx if RbConfig::CONFIG["host_os"] =~ /darwin/
   args
-end
-
-def working_samples(filename)
-  filename ||= "README"
-  samples = File.read("#{SAMPLES_DIR}/#{filename}").lines
-  samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
-end
-
-def non_samples
-   Dir[File.join(SAMPLES_DIR, '*.rb')].map{|f| f.gsub(SAMPLES_DIR+'/', '')} - working_samples
-end
-
-def run_sample(sample_name, index, total)
-  puts "Running #{SAMPLES_DIR}/#{sample_name} (#{index} of #{total})...quit to run next sample"
-  system "bin/shoes #{SAMPLES_DIR}/#{sample_name}"
 end
 
 task :default => :spec
@@ -142,32 +130,63 @@ namespace :spec do
 
 end
 
-desc "Run all working samples"
-task :samples, [:list] do |t, args|
-  samples = working_samples(args[:list])
-  puts "#{samples.size} samples are known to work"
-  samples.shuffle.each_with_index do |sample, index|
-    run_sample(sample, index, samples.size)
+desc "Working with samples"
+namespace :samples do
+
+  def working_samples(filename)
+    filename ||= "README"
+    samples = File.read("#{SAMPLES_DIR}/#{filename}").lines
+    samples = samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}
+    puts "#{samples.size} samples are known to work"
+    samples
+  end
+
+  def non_samples(filename)
+    all_rb = Dir[File.join(SAMPLES_DIR, '*.rb')].map{|f| f.gsub(SAMPLES_DIR+'/', '')}
+    result = all_rb - working_samples(filename)
+    puts "#{result.count} samples are not known to work"
+    result
+  end
+
+  def run_samples(samples)
+    samples.each_with_index do |sample, index|
+      run_sample(sample, index, samples.size)
+    end
+  end
+
+  def run_sample(sample_name, index, total)
+    puts "Running #{SAMPLES_DIR}/#{sample_name} (#{index} of #{total})...quit to run next sample"
+    system "bin/shoes #{SAMPLES_DIR}/#{sample_name}"
+  end
+
+  desc "Run all working samples in random order"
+  task :random, [:list] do |t, args|
+    puts t.comment
+    run_samples(working_samples(args[:list]).shuffle)
+  end
+
+  desc "Run all working samples in alphabetical order"
+  task :good, [:list] do |t, args|
+    puts t.comment
+    run_samples(working_samples(args[:list]).sort)
+  end
+
+  desc "Run all non-working samples in random order"
+  task :bad, [:list] do |t, args|
+    puts t.comment
+    run_samples(non_samples(args[:list]).shuffle)
+  end
+
+  desc "Create list of non-working samples"
+  task :bad_list, [:list] do |t, args|
+    puts t.comment
+    non_samples(args[:list]).each{|non_sample| puts non_sample}
   end
 end
 
-desc "Run all non-working samples"
-task :non_samples do
-  non_working_samples = non_samples
-  puts "%d Samples are not known to work" % non_working_samples.size
-
-  non_working_samples.shuffle.each_with_index do |sample, index|
-    run_sample(sample, index, non_working_samples.size)
-  end
-end
-
-desc "Create list of non-working samples"
-task :list_non_samples do
-  non_working_samples = non_samples
-
-  puts "There are #{non_working_samples.size} samples marked as not working."
-  non_working_samples.each{|non_sample| puts non_sample}
-end
+task :samples     => ['samples:random']
+task :non_samples => ['samples:bad']
+task :list_non_samples => ['samples:bad_list']
 
 begin
   require 'yard'
