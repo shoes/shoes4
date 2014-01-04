@@ -148,39 +148,33 @@ namespace :samples do
     result
   end
 
-  def run_samples(samples)
-    samples.each_with_index do |sample, index|
-      run_sample(sample, index, samples.size)
-    end
-  end
-
-  def run_sample(sample_name, index, total)
-    puts "Running #{SAMPLES_DIR}/#{sample_name} (#{index} of #{total})...quit to run next sample"
+  def run_sample(sample_name)
+    puts "Running #{SAMPLES_DIR}/#{sample_name}...quit to run next sample"
     system "bin/shoes #{SAMPLES_DIR}/#{sample_name}"
   end
 
   desc "Run all working samples in random order"
-  task :random, [:list] do |t, args|
+  task :random do |t|
     puts t.comment
-    run_samples(working_samples(args[:list]).shuffle)
+    working_samples.shuffle.each{|sample| run_sample(sample)}
   end
 
   desc "Run all working samples in alphabetical order"
-  task :good, [:list] do |t, args|
+  task :good do |t|
     puts t.comment
-    run_samples(working_samples(args[:list]).sort)
+    working_samples.sort.each{|sample| run_sample(sample)}
   end
 
   desc "Run all non-working samples in random order"
-  task :bad, [:list] do |t, args|
+  task :bad do |t|
     puts t.comment
-    run_samples(non_samples(args[:list]).shuffle)
+    non_samples.shuffle.each{|sample| run_sample(sample)}
   end
 
   desc "Create list of non-working samples"
-  task :bad_list, [:list] do |t, args|
+  task :bad_list do |t|
     puts t.comment
-    non_samples(args[:list]).each{|non_sample| puts non_sample}
+    non_samples.each{|non_sample| puts non_sample}
   end
 end
 

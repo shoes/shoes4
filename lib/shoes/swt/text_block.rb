@@ -110,7 +110,7 @@ class Shoes
 
       def set_absolutes_for_one_layout(current_position)
         @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
-        @dsl.absolute_bottom = current_position.y + layout_height(first_layout)
+        @dsl.absolute_bottom = @dsl.absolute_top + layout_height(first_layout)
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(first_layout)
       end
 

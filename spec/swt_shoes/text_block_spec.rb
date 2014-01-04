@@ -84,9 +84,10 @@ describe Shoes::Swt::TextBlock do
 
     describe "with single layout" do
       before(:each) do
-        dsl.stub(:absolute_left) { 50 }
+        dsl.stub(:absolute_left)   { 50 }
+        dsl.stub(:absolute_top)    { 0 }
         dsl.stub(:absolute_bottom) { layout_height }
-        layout.stub(:line_count) { 1 }
+        layout.stub(:line_count)   { 1 }
       end
 
       it "should position for single line of text" do

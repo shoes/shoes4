@@ -5,7 +5,6 @@ require 'code_coverage'
 require 'rspec'
 require 'pry'
 require 'shoes'
-require 'vcr'
 require 'async_helper'
 
 RSpec.configure do |c|
