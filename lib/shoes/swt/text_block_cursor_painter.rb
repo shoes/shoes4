@@ -18,8 +18,9 @@ class Shoes
         layout = choose_layout
         x, y = new_position(layout)
 
+        # It's important to only move when necessary to avoid constant redraws
         unless textcursor.left == x && textcursor.top == y
-         redraw_textcursor_at(x, y)
+          move_textcursor(x, y)
         end
       end
 
@@ -28,8 +29,7 @@ class Shoes
         [layout.left + position.x, layout.top + position.y]
       end
 
-      # It's important to only move when necessary to avoid constant redraws
-      def redraw_textcursor_at(x, y)
+      def move_textcursor(x, y)
         textcursor.move(x, y)
         textcursor.show
       end

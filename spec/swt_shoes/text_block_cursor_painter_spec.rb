@@ -134,11 +134,11 @@ describe Shoes::Swt::TextBlockCursorPainter do
         position_cursor(1)
         textcursor.stub(:left) { left + position.x }
         textcursor.stub(:top)  { top + position.y }
-        subject.stub(:redraw_textcursor_at)
+        subject.stub(:move_textcursor)
 
         subject.draw
 
-        expect(subject).to_not have_received(:redraw_textcursor_at)
+        expect(subject).to_not have_received(:move_textcursor)
       end
 
       it "should move within second layout" do
@@ -153,11 +153,11 @@ describe Shoes::Swt::TextBlockCursorPainter do
         position_cursor(-1)
         textcursor.stub(:left) { left + position.x }
         textcursor.stub(:top)  { top + 100 + position.y }
-        subject.stub(:redraw_textcursor_at)
+        subject.stub(:move_textcursor)
 
         subject.draw
 
-        expect(subject).to_not have_received(:redraw_textcursor_at)
+        expect(subject).to_not have_received(:move_textcursor)
       end
     end
 
