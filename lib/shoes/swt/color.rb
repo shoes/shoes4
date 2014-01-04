@@ -1,6 +1,8 @@
 class Shoes
   module Swt
     class Color
+      include DisposedProtection
+
       def self.create(color)
         color ? new(color) : NullColor.new
       end
@@ -11,7 +13,7 @@ class Shoes
         @real = ::Swt::Graphics::Color.new(Shoes.display, @dsl.red, @dsl.green, @dsl.blue)
       end
 
-      attr_reader :dsl, :real
+      attr_reader :dsl
 
       # @return [Integer] the alpha value, from 0 (transparent) to 255 (opaque)
       def alpha

@@ -50,6 +50,7 @@ end
 
 Shoes.configuration.backend = :swt
 
+require 'shoes/swt/disposed_protection'
 require 'shoes/swt/color'
 require 'shoes/swt/common/child'
 require 'shoes/swt/common/clear'
