@@ -15,6 +15,13 @@ class Shoes
     Shoes::App.new(opts, &blk)
   end
 
+
+  # This is the user-facing App object. It is `self` inside of a Shoes.app
+  # block, and is the context in which a Shoes app is evaled. It delegates most
+  # of its functionality to an InternalApp object, which interacts with other
+  # Shoes objects. There should be no unnecessary instance variables or methods
+  # in this class, so users are free to use whatever names they choose for
+  # their own code.
   class App
     include DSL
     include BuiltinMethods
@@ -69,6 +76,14 @@ class Shoes
     alias_method :fullscreen?, :fullscreen
   end
 
+
+  # This is the representation of the app that is used internally by Shoes
+  # objects. It is *NOT* the app object that a user interacts with in a
+  # Shoes.app block. The user facing App object is...the App object.
+  #
+  # The InternalApp object is responsible for maintaining the state of the App
+  # and providing the bulk of the functionality, leaving the App a relatively
+  # blank slate for users to bend to their will.
   class InternalApp
     include Common::Style
     include Common::Clickable
