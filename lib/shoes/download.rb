@@ -42,7 +42,7 @@ class Shoes
     end
 
     def eval_block(result)
-      @gui.eval_block(result, &@blk)
+      @gui.eval_block(result, @blk)
     end
 
     def save_to_file file_path, download_data
