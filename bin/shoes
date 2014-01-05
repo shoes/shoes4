@@ -1,18 +1,11 @@
 #!/usr/bin/env sh
 
-# This works around a problem that when the script tries to `cd $NEXT_DIR` to a
-# relative directory, it fails if not preceded with ./  `pwd` reports the right
-# location, so I'm baffled why this is necessary.
-#
-# This forces special treatment for absolute paths too. Also don't try to cd
-# on an empty $NEXT_DIR (link in same directory)
+# Don't try to cd on an empty $NEXT_DIR (link in same directory)
 mac_move_to_link_dir () {
-  LINK=$1
-  NEXT_DIR=$(dirname $LINK)
-  if [[ $NEXT_DIR == /* ]]; then
+  # Skip if already in link directory
+  NEXT_DIR=$(dirname $1)
+  if [[ -n "$NEXT_DIR" ]]; then
     cd $NEXT_DIR
-  elif [[ -n "$NEXT_DIR" ]]; then # Skip if already in link directory
-    cd ./$NEXT_DIR
   fi
 }
 
@@ -27,6 +20,9 @@ mac_readlink_f () {
     echo $LINK
     return
   fi
+
+  # http://bosker.wordpress.com/2012/02/12/bash-scripters-beware-of-the-cdpath/
+  unset CDPATH
 
   # Look up links until we find something that is not a symlink
   while [ -L "$LINK" ] ; do
