@@ -26,8 +26,13 @@ describe Shoes::Swt::TextBlockFitter do
       expect(subject.available_space).to eq([85, 24])
     end
 
-    it "should move to next line" do
+    it "should move to next line with at very end of vertical space" do
       with_current_position(15, 5, 5)
+      expect(subject.available_space).to eq([85, :unbounded])
+    end
+
+    it "should move to next line when top is past the projected next line" do
+      with_current_position(15, 100, 5)
       expect(subject.available_space).to eq([85, :unbounded])
     end
   end

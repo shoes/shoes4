@@ -91,7 +91,7 @@ class Shoes
       end
 
       def on_new_line?
-        next_line_start == @dsl.absolute_top
+        next_line_start <= @dsl.absolute_top
       end
 
       def generate_layout(width, text)
