@@ -76,12 +76,11 @@ class Shoes
       end
 
       def generate_second_layout(second_text)
-        parent_width = parent.width
-        second_layout = generate_layout(parent_width, second_text)
+        second_layout = generate_layout(parent.width, second_text)
       end
 
       def available_space
-        width = parent.absolute_left + parent.width - @dsl.absolute_left
+        width = parent.absolute_right - @dsl.absolute_left
         height = next_line_start - @dsl.absolute_top - 1
         height = :unbounded if on_new_line?
         [width, height]

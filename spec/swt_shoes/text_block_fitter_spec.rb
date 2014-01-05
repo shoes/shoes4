@@ -7,7 +7,7 @@ describe Shoes::Swt::TextBlockFitter do
                      margin_left: 1, margin_top: 1) }
 
   let(:parent_dsl) { double('parent_dsl',
-                            absolute_left: 0,
+                            absolute_left: 0, absolute_right: 100,
                             width: 100, height: 200) }
 
   let(:text_block) { double('text_block', dsl: dsl) }
@@ -22,9 +22,8 @@ describe Shoes::Swt::TextBlockFitter do
 
   describe "determining available space" do
     it "should offset by parent with current position" do
-      parent_dsl.stub(absolute_left: 20)
       with_current_position(15, 5, 30)
-      expect(subject.available_space).to eq([105, 24])
+      expect(subject.available_space).to eq([85, 24])
     end
 
     it "should move to next line" do
