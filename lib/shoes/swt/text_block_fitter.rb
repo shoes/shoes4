@@ -80,7 +80,7 @@ class Shoes
       end
 
       def available_space
-        width = parent.absolute_right - @dsl.absolute_left
+        width = parent.absolute_left + parent.width - @dsl.absolute_left
         height = next_line_start - @dsl.absolute_top - 1
         height = :unbounded if on_new_line?
         [width, height]
