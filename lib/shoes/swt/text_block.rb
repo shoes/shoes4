@@ -73,9 +73,9 @@ class Shoes
         @fitted_layouts = fitter.fit_it_in
 
         if fitted_layouts.one?
-          set_absolutes_for_one_layout(current_position)
+          set_absolutes_for_one_layout
         else
-          set_absolutes_for_two_layouts(current_position)
+          set_absolutes_for_two_layouts(current_position.next_line_start)
         end
 
         if trailing_newline?
@@ -108,15 +108,15 @@ class Shoes
         last_layout.text.end_with?("\n")
       end
 
-      def set_absolutes_for_one_layout(current_position)
+      def set_absolutes_for_one_layout
         @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
         @dsl.absolute_bottom = @dsl.absolute_top + layout_height(first_layout)
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(first_layout)
       end
 
-      def set_absolutes_for_two_layouts(current_position)
+      def set_absolutes_for_two_layouts(next_line_start)
         @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
-        @dsl.absolute_bottom = current_position.next_line_start + layout_height(last_layout)
+        @dsl.absolute_bottom = next_line_start + layout_height(last_layout)
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(last_layout)
       end
 
