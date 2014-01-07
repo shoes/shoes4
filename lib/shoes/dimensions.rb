@@ -47,6 +47,12 @@ class Shoes
     # while 20..120 is 101. E.g.:
     # (20..119).size => 100
     PIXEL_COUNTING_ADJUSTMENT = -1
+		AXIS_HASH = {'left' => 'x', 'right' => 'x', 'top' => 'y'}
+		SIDE_HASH = {'width' => 'left', 'height' => 'top'}
+		DIRECTION_HASH = {'left' => 'width', 'right' => 'width', 
+			'top' => 'height', 'bottom' => 'height'}
+    OPPOSITE_HASH = {'right' => 'left', 'left' => 'right', 
+				'top' => 'bottom', 'bottom' => 'top'}
 
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
@@ -59,106 +65,67 @@ class Shoes
       end
     end
 
-    def left=(value)
-      return if value.nil?
-      @left = value
-      @absolute_x_position = true
-    end
+	  ['left', 'top'].each do |side|		
+	    define_method(side) do
+	      value = instance_variable_get("@#{side}") || 0
+	      value = send("adjust_#{side}_for_center", value) if left_top_as_center?
+	      value
+	    end
 
-    def top=(value)
-      return if value.nil?
-      @top = value
-      @absolute_y_position = true
-    end
+	    define_method("#{side}=") do |value|
+	      return if value.nil?
+	      instance_variable_set("@#{side}", value)
+	      instance_variable_set("@absolute_#{axis(side)}_position", true)
+	    end
 
-    def left
-      value = @left || 0
-      value = adjust_left_for_center value if left_top_as_center?
-      value
-    end
+	    define_method("element_#{side}") do
+	      return nil if send("absolute_#{side}").nil?
+	      send("absolute_#{side}") + send("margin_#{side}")
+	    end
+	  end
+	
+	  ['right', 'bottom'].each do |side|
+	    define_method(side) do
+	      return send(opposite(side)) if send(direction(side)).nil?
+	      send(opposite(side)) + send(direction(side)) + PIXEL_COUNTING_ADJUSTMENT
+	    end
+	
+	    define_method("element_#{side}") do
+	      return nil if send("element_#{opposite(side)}").nil? || send("element_#{direction(side)}").nil?
+	      send("element_#{opposite(side)}") + send("element_#{direction(side)}") + PIXEL_COUNTING_ADJUSTMENT
+	    end
+	
+	    define_method("absolute_#{side}") do
+	      return send("absolute_#{opposite(side)}") if send(direction(side)).nil?
+	      send("absolute_#{opposite(side)}") + send(direction(side)) + PIXEL_COUNTING_ADJUSTMENT
+	    end
+	  end
+	
+	  ['width', 'height'].each do |direction|
+	    define_method(direction) do
+	      calculate_dimension(direction.to_sym)
+	    end
 
-    def top
-      value = @top || 0
-      value = adjust_top_for_center(value) if left_top_as_center?
-      value
-    end
+	    define_method("element_#{direction}") do
+	      return nil if send(direction).nil?
+	      side = side(direction)
+	      send(direction) - (send("margin_#{side}") + send("margin_#{opposite(side)}"))
+	    end
 
-    def width
-      calculate_dimension(:width)
-    end
-
-    def height
-      calculate_dimension(:height)
-    end
-
-    def element_width
-      return nil if width.nil?
-      width - (margin_left + margin_right)
-    end
-
-    def element_height
-      return nil if height.nil?
-      height - (margin_bottom + margin_top)
-    end
-
-    def element_width=(value)
-      self.width = margin_left + value + margin_right
-    end
-
-    def element_height=(value)
-      self.height = margin_top + value + margin_bottom
-    end
-
-    def element_left
-      return nil if absolute_left.nil?
-      absolute_left + margin_left
-    end
-
-    def element_top
-      return nil if absolute_top.nil?
-      absolute_top + margin_top
-    end
-
-    def element_right
-      return nil if element_left.nil? || element_width.nil?
-      element_left + element_width + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def element_bottom
-      return nil if element_top.nil? || element_height.nil?
-      element_top + element_height + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def absolute_x_position?
-      @absolute_x_position
-    end
-
-    def absolute_y_position?
-      @absolute_y_position
-    end
+	    define_method("element_#{direction}=") do |value|
+	      side = side(direction)
+	      self.send("#{direction}=", send("margin_#{side}") + value + send("margin_#{opposite(side)}"))
+	    end
+	  end
+	
+	  ['x', 'y'].each do |axis|
+	    define_method("absolute_#{axis}_position?") do
+	      instance_variable_get("@absolute_#{axis}_position")
+	    end
+	  end
 
     def absolutely_positioned?
       absolute_x_position? || absolute_y_position?
-    end
-
-    def right
-      return left if width.nil?
-      left + width + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def bottom
-      return top if height.nil?
-      top + height + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def absolute_right
-      return absolute_left if width.nil?
-      absolute_left + width + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def absolute_bottom
-      return absolute_top if height.nil?
-      absolute_top + height + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def in_bounds?(x, y)
@@ -215,6 +182,22 @@ class Shoes
       end
       result
     end
+
+	  def axis(side)
+			AXIS_HASH[side]
+	  end
+
+	  def direction(side)
+			DIRECTION_HASH[side]
+	  end
+
+	  def opposite(side)
+			OPPOSITE_HASH[side]
+	  end
+
+	  def side(measure)
+			SIDE_HASH[measure]
+	  end
 
     def is_relative?(result)
       result.is_a?(Float)
