@@ -184,10 +184,11 @@ class Shoes
     end
 
     def init_with_arguments(left, top, width, height, opts)
-      self.left   = left
-      self.top    = top
+      self.left   = parse_input_value left
+      self.top    = parse_input_value top
       self.width  = width
       self.height = height
+
       general_options opts
     end
 
@@ -235,9 +236,28 @@ class Shoes
       if match
         match[1].to_f / 100.0
       else
-        # Shoes eats invalid values, so this protects against non-% strings
+        if valid_integer_string?(result)
+          result.to_i
+        else
+          nil
+        end
+      end
+    end
+
+    def parse_input_value(input)
+      if input.is_a?(Integer) || input.is_a?(Float)
+        input
+      elsif input.is_a? String
+        input.to_i
+
+        # valid_integer_string?(input) ? input.to_i : nil
+      else
         nil
       end
+    end
+
+    def valid_integer_string?(result)
+      result.to_i != 0 || result.include?("0")
     end
 
     def is_negative?(result)
