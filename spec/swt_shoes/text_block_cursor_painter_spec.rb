@@ -122,44 +122,56 @@ describe Shoes::Swt::TextBlockCursorPainter do
         expect_cursor_at_end_of(second_layout)
       end
 
-      it "should move within first layout" do
-        subject.stub(:cursor_height) { 0 }
-        position_cursor(1)
-        subject.draw
-        expect(textcursor).to have_received(:move).with(left + position.x,
-                                                        top + position.y)
-        expect(textcursor).to have_received(:show)
-      end
+      context "when moving" do
+        before :each do
+          subject.stub(:cursor_height) { 12 }
+        end
 
-      it "should only move in first layout if necessary" do
-        position_cursor(1)
-        textcursor.stub(:left) { left + position.x }
-        textcursor.stub(:top)  { top + position.y }
-        subject.stub(:move_textcursor)
+        context "in the first layout" do
+          before :each do
+            position_cursor(1)
+          end
 
-        subject.draw
+          it "moves" do
+            subject.draw
+            expect(textcursor).to have_received(:move).with(left + position.x,
+                                                            top + position.y)
+            expect(textcursor).to have_received(:show)
+          end
 
-        expect(subject).to_not have_received(:move_textcursor)
-      end
+          it "does not move when already in position" do
+            textcursor.stub(:left) { left + position.x }
+            textcursor.stub(:top)  { top + position.y }
+            subject.stub(:move_textcursor)
 
-      it "should move within second layout" do
-        subject.stub(:cursor_height) { 0 }
-        position_cursor(-1)
-        subject.draw
-        expect(textcursor).to have_received(:move).with(left + position.x,
-                                                        top + 100 + position.y)
-        expect(textcursor).to have_received(:show)
-      end
+            subject.draw
 
-      it "should only move in second layout if necessary" do
-        position_cursor(-1)
-        textcursor.stub(:left) { left + position.x }
-        textcursor.stub(:top)  { top + 100 + position.y }
-        subject.stub(:move_textcursor)
+            expect(subject).to_not have_received(:move_textcursor)
+          end
+        end
 
-        subject.draw
+        context "in the second layout" do
+          before :each do
+            position_cursor(-1)
+          end
 
-        expect(subject).to_not have_received(:move_textcursor)
+          it "moves" do
+            subject.draw
+            expect(textcursor).to have_received(:move).with(left + position.x,
+                                                            top + 100 + position.y)
+            expect(textcursor).to have_received(:show)
+          end
+
+          it "does not move when already in position" do
+            textcursor.stub(:left) { left + position.x }
+            textcursor.stub(:top)  { top + 100 + position.y }
+            subject.stub(:move_textcursor)
+
+            subject.draw
+
+            expect(subject).to_not have_received(:move_textcursor)
+          end
+        end
       end
     end
 
