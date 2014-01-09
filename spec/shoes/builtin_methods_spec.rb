@@ -4,8 +4,6 @@ describe Shoes::BuiltinMethods do
   let(:input_blk) { Proc.new {} }
   let(:app) { Shoes::App.new({}, &input_blk) }
 
-  subject { Shoes::BuiltinMethods }
-
   before :each do
     Shoes::LOG.clear
   end
