@@ -30,6 +30,15 @@ class Shoes
       @contents
     end
 
+    def clear
+      # reverse_each is important as otherwise we always miss to delete one
+      # one element
+      @contents.reverse_each do |element|
+        element.is_a?(Shoes::Slot) ? element.clear : element.remove
+      end
+      @contents.clear
+    end
+
     private
     def append_element(element)
       @contents << element

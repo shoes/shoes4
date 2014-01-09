@@ -12,7 +12,8 @@
 class Sample17Helper
   
   def initialize(app)
-    @app = app
+    # This gives us the Shoes::App
+    @app = app.app
   end
   
   def create_para

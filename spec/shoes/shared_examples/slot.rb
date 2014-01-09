@@ -4,7 +4,7 @@ shared_examples_for "Slot" do
   it "should be able to append" do
     subject.contents.should be_empty
     our_subject = subject
-    app.instance_eval do our_subject.append {para "foo"} end
+    app.execute_block Proc.new { our_subject.append {para "foo"} }
     subject.contents.size.should eq(1)
   end
 
@@ -140,15 +140,15 @@ shared_examples_for 'taking care of margin' do
   include_context 'contents_alignment'
 
   it 'respects the left margin for the first element' do
-    element.absolute_left.should eq opts[:margin]
+    element.absolute_left.should eq input_opts[:margin]
   end
 
   it 'respects the left margin for the second element' do
-    element2.absolute_left.should eq opts[:margin]
+    element2.absolute_left.should eq input_opts[:margin]
   end
 
   it 'respects the top margin for the first element' do
-    element.absolute_top.should eq opts[:margin]
+    element.absolute_top.should eq input_opts[:margin]
   end
 end
 

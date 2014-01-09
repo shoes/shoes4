@@ -22,7 +22,8 @@ describe Shoes::Configuration do
   end
 
   describe "backend" do
-    let(:app) { Shoes::App.new }
+    include_context "dsl app"
+
     let(:args) { Hash.new }
     let(:dsl_object) { Shoes::Shape.new app, args }
 

@@ -2,22 +2,23 @@ require 'shoes/spec_helper'
 
 shared_examples_for "basic rect" do
   it "retains app" do
-    subject.app.should eq(app)
+    expect(rect.app).to eq(app)
   end
 
   it "creates gui object" do
-    subject.gui.should_not be_nil
+    expect(rect.gui).not_to be_nil
   end
 end
 
 describe Shoes::Rect do
+  include_context "dsl app"
+
+  let(:parent) { app }
   let(:left) { 44 }
   let(:top) { 66 }
   let(:width) { 111 }
   let(:height) { 333 }
-  let(:app) { Shoes::App.new }
-  let(:parent) { app }
-  subject { Shoes::Rect.new(app, parent, left, top, width, height) }
+  subject(:rect) { Shoes::Rect.new(app, parent, left, top, width, height) }
 
   it_behaves_like "basic rect"
   it_behaves_like "object with fill"

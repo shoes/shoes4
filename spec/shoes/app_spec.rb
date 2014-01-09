@@ -3,13 +3,17 @@ require 'shoes/spec_helper'
 describe Shoes::App do
   let(:input_blk) { Proc.new {} }
   let(:opts) { Hash.new }
-  let(:app) {Shoes::App.new(opts, &input_blk)}
-  subject { app }
+  subject(:app) { Shoes::App.new(opts, &input_blk) }
 
   it_behaves_like "DSL container"
   it { should respond_to :clipboard }
   it { should respond_to :clipboard= }
   it { should respond_to :owner }
+
+  # For Shoes 3 compatibility
+  it "exposes self as #app" do
+    expect(app.app).to eq(app)
+  end
 
   describe "initialize" do
     let(:input_blk) { Proc.new {} }
@@ -28,17 +32,14 @@ describe Shoes::App do
 
     context "defaults" do
       let(:opts) { Hash.new }
+      let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets width", :qt do
-        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+        subject.width.should == defaults[:width]
       end
 
       it "sets height", :qt do
-        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
-      end
-
-      it "sets title", :qt do
-        subject.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
+        subject.height.should == defaults[:height]
       end
 
       it 'has an absolute_left of 0' do
@@ -49,8 +50,16 @@ describe Shoes::App do
         subject.absolute_top.should eq 0
       end
 
-      it "is resizable", :qt do
-        subject.resizable.should be_true
+      describe "internal app state" do
+        let(:internal_app) { app.instance_variable_get(:@__app__) }
+
+        it "sets title", :qt do
+          internal_app.app_title.should == defaults[:title]
+        end
+
+        it "is resizable", :qt do
+          internal_app.resizable.should be_true
+        end
       end
     end
 
@@ -65,12 +74,16 @@ describe Shoes::App do
         subject.height.should == opts[:height]
       end
 
-      it "sets title", :qt do
-        subject.app_title.should == opts[:title]
-      end
+      describe "internal app state" do
+        let(:internal_app) { app.instance_variable_get(:@__app__) }
 
-      it "sets resizable", :qt do
-        subject.resizable.should be_false
+        it "sets title", :qt do
+          internal_app.app_title.should == opts[:title]
+        end
+
+        it "sets resizable", :qt do
+          internal_app.resizable.should be_false
+        end
       end
     end
 
@@ -88,79 +101,90 @@ describe Shoes::App do
     end
   end
 
-  # This behavior is different from Red Shoes. Red Shoes doesn't expose
-  # the style hash on Shoes::App.
   describe "style" do
-    subject { Shoes::App.new }
-    it_behaves_like "object with style"
-  end
-
-  describe "strokewidth" do
-    it "defaults to 1" do
-      subject.style[:strokewidth].should eq(1)
-    end
-
-    it "passes default to objects" do
-      subject.line(0, 100, 100, 0).style[:strokewidth].should eq(1)
-    end
-
-    it "passes new values to objects" do
-      subject.strokewidth 10
-      subject.line(0, 100, 100, 0).style[:strokewidth].should eq(10)
-    end
-  end
-
-  describe "stroke" do
     let(:black) { Shoes::COLORS[:black] }
     let(:goldenrod) { Shoes::COLORS[:goldenrod] }
-    it "defaults to black" do
-      subject.style[:stroke].should eq(black)
+    let(:defaults) { {stroke: black, strokewidth: 1} }
+
+    it "sets defaults" do
+      expect(app.style).to eq(defaults)
     end
 
-    it "passes default to objects" do
-      subject.oval(100, 100, 100).style[:stroke].should eq(black)
+    it "merges new styles with existing styles" do
+      new_styles = { strokewidth: 4 }
+      app.style new_styles
+      expect(app.style).to eq(defaults.merge(new_styles))
     end
 
-    it "passes new value to objects" do
-      subject.stroke goldenrod
-      subject.oval(100, 100, 100).style[:stroke].should eq(goldenrod)
+    describe "strokewidth" do
+      it "defaults to 1" do
+        subject.style[:strokewidth].should eq(1)
+      end
+
+      it "passes default to objects" do
+        subject.line(0, 100, 100, 0).style[:strokewidth].should eq(1)
+      end
+
+      it "passes new values to objects" do
+        subject.strokewidth 10
+        subject.line(0, 100, 100, 0).style[:strokewidth].should eq(10)
+      end
+    end
+
+    describe "stroke" do
+      it "defaults to black" do
+        subject.style[:stroke].should eq(black)
+      end
+
+      it "passes default to objects" do
+        subject.oval(100, 100, 100).style[:stroke].should eq(black)
+      end
+
+      it "passes new value to objects" do
+        subject.stroke goldenrod
+        subject.oval(100, 100, 100).style[:stroke].should eq(goldenrod)
+      end
+    end
+
+    describe "default styles" do
+      it "is independent among Shoes::App instances" do
+        app1 = Shoes::App.new
+        app2 = Shoes::App.new
+
+        app1.strokewidth 10
+        app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
+
+        # .. but does not affect app2
+        app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
+      end
     end
   end
+  
+  describe "connecting with gui" do 
+    let(:gui) { app.instance_variable_get(:@__app__).gui }
 
-  describe "default styles" do
-    it "is independent among Shoes::App instances" do
-      app1 = Shoes::App.new
-      app2 = Shoes::App.new
+    describe "clipboard" do
+      it "gets clipboard" do
+        expect(gui).to receive(:clipboard)
+        subject.clipboard
+      end
 
-      app1.strokewidth 10
-      app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
-
-      # .. but does not affect app2
-      app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
-    end
-  end
-
-  describe "clipboard" do
-    it "gets clipboard" do
-      subject.gui.should_receive(:clipboard)
-      subject.clipboard
+      it "sets clipboard" do
+        expect(gui).to receive(:clipboard=).with("test")
+        subject.clipboard = "test"
+      end
     end
 
-    it "sets clipboard" do
-      subject.gui.should_receive(:clipboard=).with("test")
-      subject.clipboard = "test"
-    end
-  end
+    describe "quitting" do
+      it "#quit tells the GUI to quit" do
+        expect(gui).to receive :quit
+        subject.quit
+      end
 
-  describe "quitting" do
-    it "#quit tells the GUI to quit" do
-      expect(subject.gui).to receive :quit
-      subject.quit
-    end
-
-    it '#close tells the GUI to quit' do
-      expect(subject.gui).to receive :quit
-      subject.close
+      it '#close tells the GUI to quit' do
+        expect(gui).to receive :quit
+        subject.close
+      end
     end
   end
 
@@ -192,68 +216,100 @@ describe Shoes::App do
   end
 
   describe 'fullscreen' do
+    describe 'starting' do
+      let(:internal_app) { app.instance_variable_get(:@__app__) }
 
-    it 'does not starts as fullscreen by default' do
-      subject.should_not be_start_as_fullscreen
-    end
+      context 'with defaults' do
+        it 'does not start as fullscreen' do
+          expect(internal_app.start_as_fullscreen?).to be_false
+        end
+      end
 
-    describe 'with the fullscreen option' do
-      let(:opts) {{fullscreen: true}}
-      it 'starts as fullscreen ' do
-        subject.should be_start_as_fullscreen
+      describe 'with the fullscreen option' do
+        let(:opts) { {fullscreen: true} }
+
+        it 'starts as fullscreen ' do
+          expect(internal_app.start_as_fullscreen?).to be_true
+        end
       end
     end
 
     it 'is not in fullscreen by default' do
-      subject.should_not be_fullscreen
+      expect(app).not_to be_fullscreen
     end
 
     it 'can be turned into fullscreen' do
-      subject.fullscreen = true
-      subject.fullscreen.should be_true
+      app.fullscreen = true
+      expect(app).to be_fullscreen
     end
 
     describe 'going into fullscreen and back out again' do
+      let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       before :each do
-        subject.fullscreen = true
-        subject.fullscreen = false
+        app.fullscreen = true
+        app.fullscreen = false
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'is not in fullscreen', :fails_on_osx => true do
-        subject.fullscreen.should be_false
+        expect(app).not_to be_fullscreen
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'has its original width', :fails_on_osx => true do
-        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+        expect(app.width).to eq(defaults[:width])
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
       it 'has its original height', :fails_on_osx => true do
-        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
+        expect(app.height).to eq(defaults[:height])
       end
     end
-
   end
 
-  describe 'add_child' do
-
+  describe '#add_child' do
+    let(:internal_app) { app.instance_variable_get(:@__app__) }
     let(:child) {double 'child'}
 
     it 'adds the child to the top_slot when there is one' do
       top_slot_double = double 'top slot'
-      top_slot_double.should_receive(:add_child).with child
-      subject.stub top_slot: top_slot_double
-      subject.add_child child
+      internal_app.stub(top_slot: top_slot_double)
+      expect(top_slot_double).to receive(:add_child).with(child)
+      internal_app.add_child child
     end
 
     it 'adds the child to the own contents when there is no top_slot' do
-      subject.stub top_slot: nil
-      subject.add_child child
-      subject.contents.should include child
+      internal_app.stub top_slot: nil
+      internal_app.add_child child
+      internal_app.contents.should include child
     end
+  end
+
+  describe '#clear' do
+    let(:input_blk) {Proc.new {para 'Hello'}}
+    let(:internal_app) {subject.instance_variable_get(:@__app__)}
+
+    it 'deletes everything (regression)' do
+      subject.clear
+      expect(internal_app.top_slot.contents).to be_empty
+    end
+
+    context 'clear in the initial input_block' do
+      let(:input_blk) {
+        Proc.new do
+          para 'Hello there'
+          clear do
+            para 'see you'
+          end
+        end
+      }
+
+      it 'does not raise an error calling clear on a top_slot that is nil' do
+        expect {subject}.not_to raise_error
+      end
+    end
+
   end
 
 end

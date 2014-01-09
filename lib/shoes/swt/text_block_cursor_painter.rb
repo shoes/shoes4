@@ -92,8 +92,7 @@ class Shoes
       end
 
       def textcursor
-        @dsl.textcursor ||= @dsl.app.line(0, 0, 0, cursor_height, hidden: true,
-                                          strokewidth: 1, stroke: @dsl.app.black)
+        @dsl.textcursor cursor_height
       end
 
       # This could be smarter, basing height on the actual line the cursor's

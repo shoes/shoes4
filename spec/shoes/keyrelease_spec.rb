@@ -1,13 +1,12 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Keyrelease do
-  let(:input_blk) { Proc.new {} }
-  let(:app) { Shoes::App.new({}, &input_blk) }
-  let(:block) { proc{} }
-  subject{ Shoes::Keyrelease.new app, &block }
+  include_context "dsl app"
+
+  subject(:keyrelease) { Shoes::Keyrelease.new app, &input_block }
 
   it "should clear" do
-    subject.should respond_to :clear
+    expect(keyrelease).to respond_to(:clear)
   end
 
 end

@@ -1,9 +1,7 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Line do
-  let(:app) { Shoes::App.new }
-  let(:opts) { Hash.new }
-  let(:parent) { app }
+  include_context "dsl app"
 
   describe "basic" do
     let(:left) { 20 }
@@ -11,7 +9,7 @@ describe Shoes::Line do
     let(:width) { 280 }
     let(:height) { 407 }
 
-    subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), opts) }
+    subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), input_opts) }
     it_behaves_like "object with stroke"
     it_behaves_like "movable object"
     it_behaves_like "object with style"
@@ -28,22 +26,22 @@ describe Shoes::Line do
   end
 
   context "created left-to-right, top-to-bottom" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 15), Shoes::Point.new(100, 60), opts) }
+    subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 15), Shoes::Point.new(100, 60), input_opts) }
     it_behaves_like "basic line"
   end
 
   context "specified right-to-left, top-to-bottom" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 15), Shoes::Point.new(10, 60), opts) }
+    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 15), Shoes::Point.new(10, 60), input_opts) }
     it_behaves_like "basic line"
   end
 
   context "specified right-to-left, bottom-to-top" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 60), Shoes::Point.new(10, 15), opts) }
+    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 60), Shoes::Point.new(10, 15), input_opts) }
     it_behaves_like "basic line"
   end
 
   context "specified left-to-right, bottom-to-top" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 60), Shoes::Point.new(100, 15), opts) }
+    subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 60), Shoes::Point.new(100, 15), input_opts) }
     it_behaves_like "basic line"
   end
 end

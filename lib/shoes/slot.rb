@@ -1,7 +1,6 @@
 class Shoes
   class Slot
     include Common::Clickable
-    include Common::Clear
     include CommonMethods
     include DimensionsDelegations
 
@@ -37,8 +36,8 @@ class Shoes
       self.absolute_top   ||= 0
     end
 
-    def clear &blk
-      super
+    def clear(&blk)
+      contents.clear
       eval_block blk
     end
 

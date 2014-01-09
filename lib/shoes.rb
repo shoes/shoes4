@@ -70,7 +70,6 @@ require 'shoes/dimensions'
 require 'shoes/color'
 
 require 'shoes/common/changeable'
-require 'shoes/common/clear'
 require 'shoes/common/clickable'
 require 'shoes/common/common_methods'
 require 'shoes/common/fill'

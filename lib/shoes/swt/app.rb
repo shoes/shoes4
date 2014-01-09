@@ -8,13 +8,14 @@ class Shoes
       include Common::Container
       include Common::Clickable
 
-      attr_reader :dsl, :real, :shell, :started, :clickable_elements
+      attr_reader :dsl, :real, :shell, :clickable_elements
 
       def initialize dsl
         @clickable_elements = []
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background])
+        @started = false
         initialize_shell
         initialize_real
         ::Shoes::Swt.register self
@@ -105,6 +106,10 @@ class Shoes
 
       def add_clickable_element(element)
         @clickable_elements << element
+      end
+
+      def started?
+        @started
       end
 
       private

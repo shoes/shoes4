@@ -12,7 +12,6 @@ Shoes.app width: 400, height: 400 do
       t = title 'GAME OVER', align: 'center'
       p = para @ball.top < 0 ? "You win!" : "Computer wins", align: 'center'
       @anim.remove
-      app.gui.real.getLayout.layout
       t.move 0, 150
       p.move 0, 200
     end
