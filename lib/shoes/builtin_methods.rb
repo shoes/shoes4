@@ -17,22 +17,22 @@ class Shoes
 
     def info(message = '')
       Shoes::LOG << ['info', message]
-      puts "INFO: #{message}"
+      Shoes.logger.info message
     end
 
     def debug(message = '')
       Shoes::LOG << ['debug', message]
-      puts "DEBUG: #{message}"
+      Shoes.logger.debug message
     end
 
     def warn(message = '')
       Shoes::LOG << ['warn', message]
-      puts "WARN: #{message}"
+      Shoes.logger.warn message
     end
 
     def error(message = '')
       Shoes::LOG << ['error', message]
-      puts "ERROR: #{message}"
+      Shoes.logger.error message
     end
 
     alias_method :confirm?, :confirm

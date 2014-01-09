@@ -4,7 +4,6 @@ require "spec_helper"
 
 RSpec.configure do |config|
   config.before(:each) do
-    Shoes.logger.level = Logger::ERROR
     Swt.stub(:event_loop)
     Shoes::Swt::App.any_instance.stub(flush: true)
     Swt::Widgets::Shell.any_instance.stub(:open)
