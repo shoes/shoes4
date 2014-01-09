@@ -16,8 +16,10 @@ class Shoes
         @task = Proc.new do
           unless @app.real.disposed?
             eval_block
-            @dsl.increment_frame unless @dsl.stopped?
-            ::Swt.display.timer_exec(1000 / @dsl.framerate, @task) unless @dsl.removed?
+            unless @dsl.stopped?
+              @dsl.increment_frame 
+              ::Swt.display.timer_exec(1000 / @dsl.framerate, @task) unless @dsl.removed?
+            end
           end
         end
         ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
