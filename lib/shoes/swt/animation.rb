@@ -2,6 +2,8 @@ class Shoes
   module Swt
     class Animation
 
+      attr_reader :task
+
       # An Swt animation implementation
       #
       # @param [Shoes::Animation] dsl The Shoes DSL Animation this represents
@@ -14,12 +16,10 @@ class Shoes
         # Wrap the animation block so we can count frames.
         # Note that the task re-calls itself on each run.
         @task = Proc.new do
-          unless @app.real.disposed?
+          unless stop_animation?
             eval_block
-            unless @dsl.stopped?
-              @dsl.increment_frame 
-              ::Swt.display.timer_exec(1000 / @dsl.framerate, @task) unless @dsl.removed?
-            end
+            @dsl.increment_frame
+            ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
           end
         end
         ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
@@ -29,7 +29,11 @@ class Shoes
         @dsl.blk.call(@dsl.current_frame)
       end
 
-      attr_reader :task
+      private
+      def stop_animation?
+        @app.real.disposed? || @dsl.removed? || @dsl.stopped?
+      end
+
     end
   end
 end

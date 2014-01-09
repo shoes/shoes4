@@ -49,5 +49,20 @@ describe Shoes::Swt::Animation do
       dsl.should_receive(:increment_frame)
       task.call
     end
+
+    describe 'disabled' do
+      it 'does not call the block when stopped' do
+        dsl.stub :stopped? => true
+        task.call
+        expect(block).to_not have_received :call
+      end
+
+      it 'does not call the block when removed' do
+        dsl.stub :removed? => true
+        task.call
+        expect(block).to_not have_received :call
+      end
+    end
+
   end
 end
