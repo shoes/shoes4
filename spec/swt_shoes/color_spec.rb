@@ -6,7 +6,26 @@ describe Shoes::Swt::Color do
   it_behaves_like "an swt pattern"
 
   its(:class) { should eq(Shoes::Swt::Color) }
-  its(:real) { should eq(Swt::Graphics::Color.new(Shoes.display, 250, 128, 114)) }
+
+  describe "underlying SWT object" do
+    let(:real) { color.real }
+
+    it "is a native SWT color" do
+      expect(real.class).to eq(::Swt::Graphics::Color)
+    end
+
+    it "has same red value as Shoes color" do
+      expect(real.red).to eq(250)
+    end
+
+    it "has same green value as Shoes color" do
+      expect(real.green).to eq(128)
+    end
+
+    it "has same blue value as Shoes color" do
+      expect(real.blue).to eq(114)
+    end
+  end
 
   describe "#apply_as_fill" do
     let(:gc) { double("gc") }

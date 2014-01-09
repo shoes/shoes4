@@ -19,6 +19,8 @@ describe Shoes::Swt::TextBlockPainter do
 
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style) }
+  let(:blue) { Shoes::Color.new(0, 0, 255) }
+  let(:swt_blue) { Shoes::Swt::Color.new(blue).real }
 
   subject { Shoes::Swt::TextBlockPainter.new(dsl) }
 
@@ -84,10 +86,9 @@ describe Shoes::Swt::TextBlockPainter do
     end
 
     it "sets underline color" do
-      opts[:undercolor] = Shoes::Color.new(0, 0, 255)
-      swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
+      opts[:undercolor] = blue
 
-      expect(style).to receive(:underlineColor=).with(swt_color)
+      expect(style).to receive(:underlineColor=).with(swt_blue)
 
       subject.paintControl(event)
     end
@@ -115,10 +116,9 @@ describe Shoes::Swt::TextBlockPainter do
     end
 
     it "sets strikethrough color" do
-      opts[:strikecolor] = Shoes::Color.new(0, 0, 255)
-      swt_color = ::Swt::Color.new(Shoes.display, 0, 0, 255)
+      opts[:strikecolor] = blue
 
-      expect(style).to receive(:strikeoutColor=).with(swt_color)
+      expect(style).to receive(:strikeoutColor=).with(swt_blue)
 
       subject.paintControl(event)
     end
@@ -159,7 +159,7 @@ describe Shoes::Swt::TextBlockPainter do
   end
 
   context "colors" do
-    let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
+    let(:black) { Shoes::Swt::Color.new(Shoes::COLORS[:black]).real }
     let(:salmon) { Shoes::Swt::Color.new(Shoes::COLORS[:salmon]).real }
 
     describe "stroke" do
