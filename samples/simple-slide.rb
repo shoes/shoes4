@@ -5,7 +5,7 @@
 Shoes.app do
   def stop_anim
     @anim.stop
-    @anim = nil
+    @anim.remove
   end
 
   def slide_anim &blk
