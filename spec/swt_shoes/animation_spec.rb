@@ -21,7 +21,7 @@ describe Shoes::Swt::Animation do
   end
 
   it "gets framerate" do
-    dsl.should_receive(:framerate)
+    expect(dsl).to receive(:framerate)
     subject
   end
 
@@ -29,24 +29,24 @@ describe Shoes::Swt::Animation do
     let(:task) { subject.task }
 
     it "calls block" do
-      block.should_receive(:call)
+      expect(block).to receive(:call)
       task.call
     end
 
     it "gets framerate" do
-      dsl.should_receive(:framerate)
+      expect(dsl).to receive(:framerate)
       task.call
     end
 
     it "triggers redraw" do
       aspect = Shoes::Swt::RedrawingAspect.new app_real, double
-      app_real.should_receive(:flush)
+      expect(app_real).to receive(:flush)
       task.call
       aspect.remove_redraws
     end
 
     it "counts frames" do
-      dsl.should_receive(:increment_frame)
+      expect(dsl).to receive(:increment_frame)
       task.call
     end
 
