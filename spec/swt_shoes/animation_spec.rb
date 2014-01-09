@@ -1,18 +1,18 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Animation do
-  let(:dsl) { double('dsl', :stopped? => false, :removed? => false, :blk => block) }
-  let(:app) { double 'app', :real => app_real, top_slot: double('top_slot').as_null_object }
-  let(:block) { double 'block' }
+  let(:dsl) { double('dsl', :stopped? => false, :removed? => false,
+                     :framerate => 10, :current_frame => nil,
+                     :increment_frame => nil, :blk => block) }
+  let(:app) { double 'app', :real => app_real,
+                     top_slot: double('top_slot').as_null_object }
+  let(:block) { double 'block', call: nil }
   let(:display) { ::Swt.display }
-  let(:app_real) { double('app_real').as_null_object }
+  let(:app_real) { double('app_real', :disposed? => false).as_null_object }
   subject { Shoes::Swt::Animation.new dsl, app }
 
   before :each do
     display.stub(:timer_exec)
-    dsl.stub(:framerate) { 10 }
-    dsl.stub(:current_frame)
-    dsl.stub(:increment_frame)
   end
 
   it "triggers an Swt timer" do
@@ -27,11 +27,6 @@ describe Shoes::Swt::Animation do
 
   describe "task" do
     let(:task) { subject.task }
-
-    before :each do
-      app_real.stub(:disposed?) { false }
-      block.stub(:call)
-    end
 
     it "calls block" do
       block.should_receive(:call)
