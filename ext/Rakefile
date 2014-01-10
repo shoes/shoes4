@@ -1,0 +1,23 @@
+require 'rubygems'
+require 'fileutils'
+
+# Running JRuby on OS X requires options passed at the start. To pass those
+# options and avoid double JVM startup, we want 'shoes' to be a bash script on
+# Unix systems, but Rubygems only supports installing Ruby to the bin.
+
+# We work around this by installing our script as shoes-stub, then acting like
+# a "native extension" via this Rakefile, we manually generate the right script
+# (a copy of shoes-stub) in the Gem.bindir.
+
+# We also provide a Rubygems plugin to clean up this manual file on uninstall.
+# Post-install hooks didn't seem to work, though, hence the extension trick.
+
+task :default => ['install_script']
+
+task :install_script do
+  # Because `shoes` is bash, not Ruby, Rubygems can't generate our wrapper
+  # Instead let it install shoes-stub, then create the bin wrapper ourselves
+  source_path = File.join(File.dirname(__FILE__), "..", "bin", "shoes-stub")
+  dest_path = File.join(Gem.bindir, "shoes")
+  FileUtils.cp(source_path, dest_path)
+end

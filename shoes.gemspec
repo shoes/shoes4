@@ -14,9 +14,11 @@ Gem::Specification.new do |s|
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  #s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  s.executables = ['ruby-shoes']
+
+  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
+  s.executables   = ['shoes-stub', 'ruby-shoes']
+  s.extensions    = ['ext/Rakefile']
 
   s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.18"
