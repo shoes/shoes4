@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["steve@steveklabnik.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = %q{Shoes is the best little GUI toolkit for Ruby.}
-  s.description = %q{Shoes is the best little GUI toolkit for Ruby.}
+  s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.}
   s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
