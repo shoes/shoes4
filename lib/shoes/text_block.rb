@@ -124,7 +124,7 @@ class Shoes
     end
 
     def parse_font_opt(type)
-      size_regex = /(\d+)(px)?/
+      size_regex = /(\d+)(\s*px)?/
       style_regex = /none|bold|normal|oblique|italic/i # TODO: add more
 
       font_family = type.gsub(style_regex,'').gsub(size_regex,'').

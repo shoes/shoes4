@@ -83,6 +83,18 @@ describe Shoes::TextBlock do
       end
     end
 
+    context "with a font family string and size with ' px'" do
+      let(:opts) { { font: "Helvetica 33 px" } }
+
+      it "sets the font family" do
+        expect(text_block.font).to eq "Helvetica"
+      end
+
+      it "sets the font size" do
+        expect(text_block.font_size).to eq 33
+      end
+    end
+
     context "with a quoted font family string and size with 'px'" do
       let(:opts) { { font: '"Comic Sans" 13px' } }
 
