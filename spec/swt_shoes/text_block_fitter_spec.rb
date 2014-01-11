@@ -64,29 +64,59 @@ describe Shoes::Swt::TextBlockFitter do
   describe "fit it in" do
     let(:bounds) { double('bounds', width: 100, height: 50)}
     let(:layout) { double('layout', text: "something something",
-                          line_offsets:[], get_bounds: bounds) }
+                          line_count: 1, line_offsets:[], get_bounds: bounds) }
 
     before(:each) do
       text_block.stub(:generate_layout) { layout }
     end
 
-    it "should return first layout if it fits" do
-      with_current_position(25, 75, 130)
-      fitted_layouts = subject.fit_it_in
+    context "to one layout" do
+      it "should work" do
+        with_current_position(25, 75, 130)
+        fitted_layouts = subject.fit_it_in
 
-      expect(fitted_layouts.size).to eq(1)
-      expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+        expect(fitted_layouts.size).to eq(1)
+        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+      end
+
+      it "with one line, even if height is bigger" do
+        bounds.stub(width: 50)
+
+        with_current_position(25, 75, 95)
+        fitted_layouts = subject.fit_it_in
+
+        expect(fitted_layouts.size).to eq(1)
+        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+      end
     end
 
-    it "should overflow to second layout" do
-      bounds.stub(width: 50)
+    context "to two layouts" do
+      before(:each) do
+        layout.stub(line_count: 2,
+                    line_metrics: double(height: 15))
+        bounds.stub(width: 50)
+      end
+      it "should split text and overflow to second layout" do
+        layout.stub(line_offsets: [0, 10, layout.text.length])
 
-      with_current_position(25, 75, 95)
-      fitted_layouts = subject.fit_it_in
+        with_current_position(25, 75, 95)
+        fitted_layouts = subject.fit_it_in
 
-      expect(fitted_layouts.size).to eq(2)
-      expect_fitted_with(fitted_layouts.first, layout, 26, 76)
-      expect_fitted_with(fitted_layouts.last,  layout, 1, 126)
+        expect(fitted_layouts.size).to eq(2)
+        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+        expect_fitted_with(fitted_layouts.last,  layout, 1, 126)
+      end
+
+      it "should overflow all text to second layout" do
+        layout.stub(line_offsets: [0, 0, layout.text.length])
+
+        with_current_position(25, 75, 95)
+        fitted_layouts = subject.fit_it_in
+
+        expect(fitted_layouts.size).to eq(2)
+        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+        expect_fitted_with(fitted_layouts.last,  layout, 1, 95)
+      end
     end
   end
 

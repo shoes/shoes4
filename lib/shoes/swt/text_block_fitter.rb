@@ -46,7 +46,7 @@ class Shoes
       end
 
       def fits_in_one_layout?(layout, height)
-        return true if height == :unbounded
+        return true if height == :unbounded || layout.line_count == 1
         layout.get_bounds.height <= height
       end
 
@@ -59,10 +59,10 @@ class Shoes
       def fit_as_two_layouts(layout, height, width)
         first_text, second_text = split_text(layout, height)
         first_layout = generate_layout(width, first_text)
-        if second_text == ""
-          return fit_as_one_layout(first_layout)
-        end
 
+        return fit_as_one_layout(first_layout) if second_text.empty?
+
+        first_height = first_height(first_layout, first_text, height)
         second_layout = generate_second_layout(second_text)
 
         [
@@ -71,7 +71,7 @@ class Shoes
                                @dsl.absolute_top + @dsl.margin_top),
           FittedTextLayout.new(second_layout,
                                 parent.absolute_left + @dsl.margin_left,
-                                @dsl.absolute_top + @dsl.margin_top + first_layout.get_bounds.height)
+                                @dsl.absolute_top + @dsl.margin_top + first_height)
         ]
       end
 
@@ -110,6 +110,14 @@ class Shoes
           ending_offset = offsets[i+1]
         end
         [layout.text[0...ending_offset], layout.text[ending_offset..-1]]
+      end
+
+      # If first text is empty, height may be smaller than an actual line in
+      # the current font. Take our pre-existing allowed height instead.
+      def first_height(first_layout, first_text, height)
+        first_height = first_layout.get_bounds.height
+        first_height = height if first_text.empty?
+        first_height
       end
     end
 
