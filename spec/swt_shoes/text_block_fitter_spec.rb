@@ -22,17 +22,17 @@ describe Shoes::Swt::TextBlockFitter do
 
   describe "determining available space" do
     it "should offset by parent with current position" do
-      with_current_position(15, 5, 30)
+      when_positioned_at(x: 15, y: 5, next_line_start: 30)
       expect(subject.available_space).to eq([85, 24])
     end
 
     it "should move to next line with at very end of vertical space" do
-      with_current_position(15, 5, 5)
+      when_positioned_at(x: 15, y: 5, next_line_start: 5)
       expect(subject.available_space).to eq([85, :unbounded])
     end
 
     it "should move to next line when top is past the projected next line" do
-      with_current_position(15, 100, 5)
+      when_positioned_at(x: 15, y: 100, next_line_start: 5)
       expect(subject.available_space).to eq([85, :unbounded])
     end
   end
@@ -72,62 +72,58 @@ describe Shoes::Swt::TextBlockFitter do
 
     context "to one layout" do
       it "should work" do
-        with_current_position(25, 75, 130)
-        fitted_layouts = subject.fit_it_in
-
-        expect(fitted_layouts.size).to eq(1)
-        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 130)
+        expect_fitted_layouts(fitted_layouts, [26, 76])
       end
 
       it "with one line, even if height is bigger" do
         bounds.stub(width: 50)
-
-        with_current_position(25, 75, 95)
-        fitted_layouts = subject.fit_it_in
-
-        expect(fitted_layouts.size).to eq(1)
-        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
+        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
+        expect_fitted_layouts(fitted_layouts, [26, 76])
       end
     end
 
     context "to two layouts" do
       before(:each) do
-        layout.stub(line_count: 2,
-                    line_metrics: double(height: 15))
+        layout.stub(line_count: 2, line_metrics: double(height: 15))
         bounds.stub(width: 50)
       end
+
       it "should split text and overflow to second layout" do
-        layout.stub(line_offsets: [0, 10, layout.text.length])
-
-        with_current_position(25, 75, 95)
-        fitted_layouts = subject.fit_it_in
-
-        expect(fitted_layouts.size).to eq(2)
-        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
-        expect_fitted_with(fitted_layouts.last,  layout, 1, 126)
+        with_text_split("something ", "something")
+        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
+        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 126])
       end
 
       it "should overflow all text to second layout" do
-        layout.stub(line_offsets: [0, 0, layout.text.length])
-
-        with_current_position(25, 75, 95)
-        fitted_layouts = subject.fit_it_in
-
-        expect(fitted_layouts.size).to eq(2)
-        expect_fitted_with(fitted_layouts.first, layout, 26, 76)
-        expect_fitted_with(fitted_layouts.last,  layout, 1, 95)
+        with_text_split("", "something something")
+        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
+        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 95])
       end
     end
   end
 
-  def with_current_position(x, y, next_line_start)
+  def with_text_split(first, second)
+    dsl.stub(text: first + second)
+    layout.stub(line_offsets: [0, first.length, first.length + second.length])
+  end
+
+  def when_positioned_at(args)
+    x = args.fetch(:x)
+    y = args.fetch(:y)
+    next_line_start = args.fetch(:next_line_start)
+
     dsl.stub(absolute_left: x, absolute_top: y)
     current_position.stub(:next_line_start) { next_line_start }
   end
 
-  def expect_fitted_with(fitted_layout, layout, left, top)
-    expect(fitted_layout.layout).to eq(layout)
-    expect(fitted_layout.left).to eq(left)
-    expect(fitted_layout.top).to eq(top)
+  def when_fit_at(args)
+    when_positioned_at(args)
+    subject.fit_it_in
+  end
+
+  def expect_fitted_layouts(fitted_layouts, *coordinates)
+    actual = fitted_layouts.map {|fitted| [fitted.left, fitted.top] }
+    expect(coordinates).to eq(actual)
   end
 end
