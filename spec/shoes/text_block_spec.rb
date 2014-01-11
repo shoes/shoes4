@@ -44,27 +44,56 @@ describe Shoes::TextBlock do
   end
 
   describe "font" do
-    it "sets the default font to Arial" do
-      expect(text_block.font).to eql "Arial"
+    let(:size) { 99 }
+    let(:text_block) { Shoes::TextBlock.new(app, parent, ["Hello, world!"], size, opts) }
+
+    context "with defaults" do
+      let(:opts) { Hash.new }
+
+      it "sets the default font to Arial" do
+        expect(text_block.font).to eq "Arial"
+      end
+
+      it "sets the size from explicit argument" do
+        expect(text_block.font_size).to eq size
+      end
     end
 
-    it "should allow setting the font with :family" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], 99, { font: "Helvetica", app: app })
-      expect(s.font).to eql "Helvetica"
+    context "with a font family string" do
+      let(:opts) { { font: "Helvetica" } }
+
+      it "sets the font family" do
+        expect(text_block.font).to eq "Helvetica"
+      end
+
+      it "sets the size from explicit argument" do
+        expect(text_block.font_size).to eq size
+      end
     end
 
-    it "should allow setting the font size with :family" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], 99, { font: "Helvetica 33px", app: app })
-      expect(s.font).to eql "Helvetica"
-      expect(s.font_size).to eql 33
+    context "with a font family string and size with 'px'" do
+      let(:opts) { { font: "Helvetica 33px" } }
+
+      it "sets the font family" do
+        expect(text_block.font).to eq "Helvetica"
+      end
+
+      it "sets the font size" do
+        expect(text_block.font_size).to eq 33
+      end
     end
 
-    it "should accept fonts surrounded with questionmarks when using :family" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], 99, { font: '"Comic Sans" 13px', app: app })
-      expect(s.font).to eql "Comic Sans"
-      expect(s.font_size).to eql 13
-    end
+    context "with a quoted font family string and size with 'px'" do
+      let(:opts) { { font: '"Comic Sans" 13px' } }
 
+      it "sets the font family" do
+        expect(text_block.font).to eq "Comic Sans"
+      end
+
+      it "sets the size" do
+        expect(text_block.font_size).to eq 13
+      end
+    end
   end
 
   describe "stroke" do
