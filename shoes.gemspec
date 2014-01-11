@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
   s.executables   = ['shoes-stub', 'ruby-shoes']
-  s.extensions    = ['ext/Rakefile']
+  s.extensions    = ['ext/install/Rakefile']
 
   s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.18"
