@@ -419,7 +419,7 @@ EOS
       subtitle:     26,
       tagline:      18,
       caption:      14,
-      para:         12,
+      para:         16,
       inscription:  10
     }.freeze
 

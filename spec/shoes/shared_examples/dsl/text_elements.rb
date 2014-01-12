@@ -24,9 +24,9 @@ shared_examples_for "text element DSL methods" do
     text_block.font_size.should eql 14
   end
 
-  it "should set para font size to 12" do
+  it "should set para font size to 16" do
     text_block = dsl.para("hello!")
-    text_block.font_size.should eql 12
+    text_block.font_size.should eql 16
   end
 
   it "should set inscription font size to 10" do
