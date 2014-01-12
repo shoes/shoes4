@@ -8,7 +8,8 @@ describe Shoes::Slot do
   let(:top) { 66 }
   let(:width) { 111 }
   let(:height) { 333 }
-  subject(:slot) { Shoes::Slot.new(app, parent, left: left, top: top, width: width, height: height) }
+  let(:input_opts) { {left: left, top: top, width: width, height: height} }
+  subject(:slot) { Shoes::Slot.new(app, parent, input_opts) }
 
   it_behaves_like "object with dimensions"
 
