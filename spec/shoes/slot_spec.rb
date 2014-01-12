@@ -56,6 +56,19 @@ describe Shoes::Slot do
         expect(slot.contents.size).to eq 1
       end
     end
+  end
 
+  describe 'scrolling' do
+    subject(:slot) { Shoes::Slot.new(app, parent, input_opts) }
+
+    context 'when slot is scrollable' do
+      let(:input_opts) { { scroll: true } }
+      its(:scroll) { should be_true }
+    end
+
+    context 'when slot is not scrollable' do
+      let(:input_opts) { { scroll: false } }
+      its(:scroll) { should be_false }
+    end
   end
 end

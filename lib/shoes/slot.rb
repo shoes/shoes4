@@ -8,7 +8,7 @@ class Shoes
     NEXT_ELEMENT_ON_NEXT_LINE_OFFSET = Point.new(0, 1)
 
     attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
-                :leave_proc
+                :leave_proc, :scroll
 
     def initialize(app, parent, opts={}, &blk)
       init_attributes(app, parent, opts, blk)
@@ -26,6 +26,7 @@ class Shoes
       @blk            = blk
       @dimensions     = Dimensions.new parent, opts
       @fixed_height   = height || false
+      @scroll         = opts[:scroll]
       set_default_dimension_values
     end
 
