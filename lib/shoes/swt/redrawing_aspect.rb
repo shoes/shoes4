@@ -11,13 +11,13 @@ class Shoes
     class RedrawingAspect
 
       NEED_TO_UPDATE = {Animation                        => [:eval_block],
-                        ::Shoes::InternalApp             => [:execute_block],
                         Button                           => [:eval_block],
-                        TextBlockCursorPainter           => [:move_textcursor],
                         Common::Clickable::ClickListener => [:eval_block],
+                        ::Shoes::InternalApp             => [:execute_block],
                         KeypressListener                 => [:eval_block],
                         KeyreleaseListener               => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
+                        TextBlockCursorPainter           => [:move_textcursor],
                         Timer                            => [:eval_block]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
