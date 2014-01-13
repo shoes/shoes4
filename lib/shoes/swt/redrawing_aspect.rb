@@ -17,6 +17,7 @@ class Shoes
                         KeypressListener                 => [:eval_block],
                         KeyreleaseListener               => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
+                        TextBlock                        => [:update_position],
                         TextBlockCursorPainter           => [:move_textcursor],
                         Timer                            => [:eval_block]}
       # only the main thread may draw
@@ -60,7 +61,7 @@ class Shoes
       def update_gui
         unless app.disposed?
           app.flush
-          app.real.redraw
+          app.redraw
         end
       end
 

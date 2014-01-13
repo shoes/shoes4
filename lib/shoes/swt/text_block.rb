@@ -19,12 +19,8 @@ class Shoes
         @app.add_paint_listener @painter
       end
 
-      def redraw
-        app.redraw
-      end
-
+      # has a painter, nothing to do
       def update_position
-        redraw
       end
 
       def get_height
@@ -138,7 +134,6 @@ class Shoes
           @dsl.element_width, @dsl.element_height = get_size
         end
         @dsl.update_text_styles(values)
-        redraw
       end
 
       def contents
