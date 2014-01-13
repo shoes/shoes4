@@ -48,3 +48,6 @@ docs-*
 spec/test_app/pkg
 testing
 tmp/*
+
+# ignore built gem so you don't commit it accidentally
+*.gem
