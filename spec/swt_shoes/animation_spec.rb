@@ -1,15 +1,13 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Animation do
+  include_context 'swt app'
   let(:dsl) { double('dsl', :stopped? => false, :removed? => false,
                      :framerate => 10, :current_frame => nil,
                      :increment_frame => nil, :blk => block) }
-  let(:app) { double 'app', :real => app_real,
-                     top_slot: double('top_slot').as_null_object }
   let(:block) { double 'block', call: nil }
   let(:display) { ::Swt.display }
-  let(:app_real) { double('app_real', :disposed? => false).as_null_object }
-  subject { Shoes::Swt::Animation.new dsl, app }
+  subject { Shoes::Swt::Animation.new dsl, swt_app }
 
   before :each do
     display.stub(:timer_exec)
@@ -39,10 +37,10 @@ describe Shoes::Swt::Animation do
     end
 
     it "triggers redraw" do
-      aspect = Shoes::Swt::RedrawingAspect.new app_real, double
-      expect(app_real).to receive(:flush)
-      task.call
-      aspect.remove_redraws
+      with_redraws do
+        expect(swt_app).to receive(:flush)
+        task.call
+      end
     end
 
     it "counts frames" do

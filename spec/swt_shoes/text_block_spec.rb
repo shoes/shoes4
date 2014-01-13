@@ -14,14 +14,11 @@ describe Shoes::Swt::TextBlock do
   it_behaves_like "movable text", 10, 20
 
   describe "redrawing" do
-    it "delegates to the app" do
-      expect(swt_app).to receive(:redraw)
-      subject.redraw
-    end
-
     it "should redraw on updating position" do
-      expect(swt_app).to receive(:redraw)
-      subject.update_position
+      with_redraws do
+        expect(swt_app).to receive(:redraw)
+        subject.update_position
+      end
     end
   end
 
