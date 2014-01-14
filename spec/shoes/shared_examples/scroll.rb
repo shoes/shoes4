@@ -11,8 +11,12 @@ shared_examples_for "scrollable slot with overflowing content" do
     expect(subject.height).to eq(height)
   end
 
-  it "has scroll height larger than height" do
+  it "has scroll_height larger than height" do
     expect(subject.scroll_height).to be > height
+  end
+
+  it "has scroll_max = (scroll_height - height)" do
+    expect(subject.scroll_max).to eq(subject.scroll_height - subject.height)
   end
 
   it 'adjusts scroll_top' do

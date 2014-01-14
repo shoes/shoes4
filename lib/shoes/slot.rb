@@ -94,6 +94,10 @@ class Shoes
       contents_alignment
     end
 
+    def scroll_max
+      scroll_height - height
+    end
+
     def scroll_top
       @scroll_top
     end
