@@ -16,12 +16,16 @@ class Shoes
       Shoes::Color.create c
     end
 
+    def image_file?(arg)
+      arg =~ /\.gif|jpg|jpeg|png$/
+    end
+
     def pattern(*args)
       if args.length == 1
         arg = args.first
         case arg
         when String
-          File.exist?(arg) ? image_pattern(arg) : color(arg)
+          image_file?(arg)  ? image_pattern(arg) : color(arg)
         when Shoes::Color
           color(arg)
         when Range, Shoes::Gradient
@@ -369,7 +373,11 @@ EOS
     end
 
     def image_pattern path
-      Shoes::ImagePattern.new path
+      if File.exist?(path)
+        Shoes::ImagePattern.new path
+      else
+        raise ArgumentError, "Could not find file: #{path}"
+      end
     end
 
     # Sets the current stroke color

@@ -29,35 +29,35 @@ describe "Basic Element Methods" do
   describe "arc" do
     it "creates a Shoes::Arc" do
       app_gui.should_receive(:add_paint_listener)
-      app.arc(1, 2, 101, 201, 11, 21).should be_an_instance_of(Shoes::Arc)
+      expect(app.arc(1, 2, 101, 201, 11, 21)).to be_an_instance_of(Shoes::Arc)
     end
   end
 
   describe "rect" do
     it "creates a Shoes::Rect" do
       app_gui.should_receive(:add_paint_listener)
-      app.rect(10, 20, 10, 20, angle: 45).should be_an_instance_of(Shoes::Rect)
+      expect(app.rect(10, 20, 10, 20, angle: 45)).to be_an_instance_of(Shoes::Rect)
     end
   end
 
   describe "line" do
     it "creates a Shoes::Line" do
       app_gui.should_receive(:add_paint_listener)
-      app.line(1, 2, 101, 201).should be_an_instance_of(Shoes::Line)
+      expect(app.line(1, 2, 101, 201)).to be_an_instance_of(Shoes::Line)
     end
   end
 
   describe "oval" do
     it "creates a Shoes::Oval" do
       app_gui.should_receive(:add_paint_listener)
-      app.oval(30, 20, 100, 200).should be_an_instance_of(Shoes::Oval)
+      expect(app.oval(30, 20, 100, 200)).to be_an_instance_of(Shoes::Oval)
     end
   end
 
   describe "star" do
     it "creates a Shoes::Star" do
       app_gui.should_receive(:add_paint_listener)
-      app.star(30, 20).should be_an_instance_of(Shoes::Star)
+      expect(app.star(30, 20)).to be_an_instance_of(Shoes::Star)
     end
   end
 
@@ -71,7 +71,35 @@ describe "Basic Element Methods" do
 
     it "create a Shoes::Shape" do
       app_gui.should_receive(:add_paint_listener)
-      subject.should be_an_instance_of(Shoes::Shape)
+      expect(subject).to be_an_instance_of(Shoes::Shape)
+    end
+  end
+
+  describe 'background' do
+    context "with an invalid color" do
+      it 'raises an argument error' do
+        expect{ app.background('#ffq') }.to raise_error('Bad hex color: #ffq')
+      end
+    end
+
+    context 'with a valid color' do
+      it 'creates a Shoes::Background' do
+        app_gui.should_receive(:add_paint_listener)
+        expect(app.background('#fff')).to be_an_instance_of(Shoes::Background)
+      end
+    end
+
+    context 'with no valid image' do
+      it 'raises an argument error' do
+        expect{ app.background('fake-shoes.jpg') }.to raise_error('Could not find file: fake-shoes.jpg')
+      end
+    end
+
+    context 'with a valid image' do
+      it 'creates a Shoes::Background' do
+        app_gui.should_receive(:add_paint_listener)
+        expect(app.background('static/shoes-icon.png')).to be_an_instance_of(Shoes::Background)
+      end
     end
   end
 end
