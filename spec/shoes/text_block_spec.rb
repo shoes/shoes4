@@ -5,7 +5,8 @@ describe Shoes::TextBlock do
   include_context "dsl app"
 
   let(:text_link) { Shoes::Link.new(['Hello']) }
-  subject(:text_block) { Shoes::TextBlock.new(app, parent, ["#{text_link}, world!"], 99, {app: app}) }
+  let(:text) { ["#{text_link}, world!"] }
+  subject(:text_block) { Shoes::TextBlock.new(app, parent, text, 99, {app: app}) }
 
   describe "initialize" do
     it "creates gui object" do
@@ -14,13 +15,28 @@ describe Shoes::TextBlock do
   end
 
   describe "text" do
-    it "sets text when the object is created" do
-      expect(text_block.text).to eq "Hello, world!"
+    context "with an array of [Shoes::Link, String]" do
+      it "sets text" do
+        expect(text_block.text).to eq "Hello, world!"
+      end
+
+      it "changes the text" do
+        text_block.text = "Goodbye Cruel World"
+        expect(text_block.text).to eq "Goodbye Cruel World"
+      end
     end
 
-    it "allows us to change the text" do
-      text_block.text = "Goodbye Cruel World"
-      expect(text_block.text).to eq "Goodbye Cruel World"
+    context "with a single string" do
+      let(:text) { "Hello, world!" }
+
+      it "sets text" do
+        expect(text_block.text).to eq "Hello, world!"
+      end
+
+      it "changes the text" do
+        text_block.text = "Goodbye Cruel World"
+        expect(text_block.text).to eq "Goodbye Cruel World"
+      end
     end
   end
 

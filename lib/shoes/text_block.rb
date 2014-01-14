@@ -11,15 +11,16 @@ class Shoes
     attr_accessor :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
+      texts = Array(text)
       @parent             = parent
       @app                = app
       @opts               = opts
       @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size          = @opts[:size] || font_size
       @links              = []
-      @contents           = text
-      @text               = text.map(&:to_s).join
-      @text_styles        = gather_text_styles(self, text)
+      @contents           = texts
+      @text               = texts.map(&:to_s).join
+      @text_styles        = gather_text_styles(self, texts)
 
       @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
