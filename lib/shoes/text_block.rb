@@ -32,9 +32,7 @@ class Shoes
       @opts = @app.style.merge(@opts)
 
       @gui = Shoes.configuration.backend_for(self)
-      self.width, self.height = @gui.get_size
       @parent.add_child(self)
-      set_size left
 
       clickable_options(@opts)
     end
@@ -53,11 +51,6 @@ class Shoes
 
     def to_s
       self.text
-    end
-
-    def set_size left
-      self.width = (left + @parent.width <= app.width) ? @parent.width : app.width - left
-      self.height = @gui.get_height + margin_top + margin_bottom
     end
 
     # Since we flow, try to fit in almost any space

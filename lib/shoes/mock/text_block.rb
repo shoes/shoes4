@@ -2,20 +2,10 @@ class Shoes
   module Mock
     class TextBlock
       include Shoes::Mock::CommonMethods
-      WIDTH = 20
-      HEIGHT = 10
 
       def initialize(dsl, opts = nil)
         @dsl = dsl
         @opts = opts
-      end
-
-      def get_size(*opts)
-        [WIDTH, HEIGHT]
-      end
-
-      def get_height
-        HEIGHT
       end
 
       def redraw(*opts); end

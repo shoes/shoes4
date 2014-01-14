@@ -22,30 +22,11 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
-  describe "sizing methods" do
-    before(:each) do
-      stub_with_sizes(width, height)
-    end
-
-    it "should use layout to get size" do
-      expect(subject.get_size).to eq([width, height])
-    end
-
-    it "should use layout to get height" do
-      expect(subject.get_height).to eq(height)
-    end
-  end
-
   describe "generating layouts" do
     let(:layout) { create_layout(width, height) }
 
     before(:each) do
       stub_layout(layout)
-    end
-
-    it "should not shrink when no containing width" do
-      expect(layout).to receive(:setWidth).never
-      subject.generate_layout(nil, "text text")
     end
 
     it "should not strink when enough containing width" do
@@ -61,7 +42,7 @@ describe Shoes::Swt::TextBlock do
 
     it "should pass text along to layout" do
       expect(layout).to receive(:setText).with("text text")
-      subject.generate_layout(nil, "text text")
+      subject.generate_layout(0, "text text")
     end
   end
 
@@ -137,10 +118,6 @@ describe Shoes::Swt::TextBlock do
     double("layout",
            get_line_bounds: bounds, bounds: bounds,
            spacing: 0, text: text).as_null_object
-  end
-
-  def stub_with_sizes(width, height)
-    stub_layout(create_layout(width, height))
   end
 
   def stub_layout(layout)
