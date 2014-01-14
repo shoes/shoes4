@@ -27,6 +27,7 @@ class Shoes
       @dimensions     = Dimensions.new parent, opts
       @fixed_height   = height || false
       @scroll         = opts[:scroll]
+      @scroll_top     = 0
       set_default_dimension_values
     end
 
@@ -87,6 +88,18 @@ class Shoes
 
     def mouse_left
       @hovered = false
+    end
+
+    def scroll_height
+      contents_alignment
+    end
+
+    def scroll_top
+      @scroll_top
+    end
+
+    def scroll_top=(position)
+      @scroll_top = position
     end
 
     protected

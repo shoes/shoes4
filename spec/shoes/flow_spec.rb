@@ -89,4 +89,40 @@ describe Shoes::Flow do
       it_behaves_like 'taking care of margin'
     end
   end
+
+  describe 'scrolling' do
+    let(:height) { 200 }
+    let(:input_opts) { {left: 40, top: 20, width: 400, height: height} }
+    let(:opts) { input_opts.merge(scroll: scroll) }
+    subject(:flow) { Shoes::Flow.new(app, parent, opts) }
+
+    context 'when scrollable' do
+      let(:scroll) { true }
+
+      it_behaves_like "scrollable slot"
+
+      context 'when content overflows' do
+        let(:new_position) { 100 }
+
+        before :each do
+          200.times do
+            Shoes::TextBlock.new(app, flow, "Fourteen fat chimichangas", 18)
+          end
+          flow.scroll_top = new_position
+        end
+
+        it_behaves_like "scrollable slot with overflowing content"
+      end
+    end
+
+    context 'when slot is not scrollable' do
+      let(:scroll) { false }
+
+      its(:scroll) { should be_false }
+
+      it "initializes scroll_top to 0" do
+        expect(flow.scroll_top).to eq(0)
+      end
+    end
+  end
 end
