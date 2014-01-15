@@ -17,11 +17,12 @@ class Shoes
                         KeypressListener                 => [:eval_block],
                         KeyreleaseListener               => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
-                        #TextBlock                        => [:update_position],
                         TextBlockCursorPainter           => [:move_textcursor],
                         Timer                            => [:eval_block]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
+
+      CHANGED_POSITION = {TextBlock => [:update_position]}
 
       attr_reader :app
 
@@ -43,7 +44,8 @@ class Shoes
 
       def affected_classes
         classes = NEED_TO_UPDATE.keys +
-                  NEED_TO_ASYNC_UPDATE_GUI.keys
+                  NEED_TO_ASYNC_UPDATE_GUI.keys +
+                  CHANGED_POSITION.keys
         classes.uniq
       end
 
@@ -52,6 +54,7 @@ class Shoes
         after_every NEED_TO_ASYNC_UPDATE_GUI do
           @display.asyncExec do update_gui end
         end
+        after_every CHANGED_POSITION do app.redraw end
       end
 
       # If/when we run into performance problems we can do this a lot more fine

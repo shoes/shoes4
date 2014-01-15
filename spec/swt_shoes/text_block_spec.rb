@@ -15,7 +15,6 @@ describe Shoes::Swt::TextBlock do
 
   describe "redrawing" do
     it "should redraw on updating position" do
-      pending '#574'
       with_redraws do
         expect(swt_app).to receive(:redraw)
         subject.update_position
