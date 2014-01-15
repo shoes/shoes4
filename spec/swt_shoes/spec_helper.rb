@@ -8,6 +8,9 @@ RSpec.configure do |config|
     Shoes::Swt::App.any_instance.stub(flush: true)
     Swt::Widgets::Shell.any_instance.stub(:open)
     Swt::Widgets::MessageBox.any_instance.stub(:open)
+    # stubbed as otherwise all sorts of callbacks are added during certain specs,
+    # which then fail because some doubles are not made for the methods called
+    Shoes::Swt::RedrawingAspect.stub new: true
   end
 end
 
@@ -15,6 +18,7 @@ end
 # we don't really want that during test execution either way as it adds stuff to
 # methods that might break
 def with_redraws(&blk)
+  Shoes::Swt::RedrawingAspect.unstub :new
   aspect = Shoes::Swt::RedrawingAspect.new swt_app, double
   yield
   aspect.remove_redraws
