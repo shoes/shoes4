@@ -9,14 +9,16 @@ Gem::Specification.new do |s|
   s.email       = ["steve@steveklabnik.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = %q{Shoes is the best little GUI toolkit for Ruby.}
-  s.description = %q{Shoes is the best little GUI toolkit for Ruby.}
+  s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.}
   s.license     = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  #s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  s.executables = ['ruby-shoes']
+
+  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
+  s.executables   = ['shoes-stub', 'ruby-shoes']
+  s.extensions    = ['ext/install/Rakefile']
 
   s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.18"

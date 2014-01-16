@@ -1,0 +1,59 @@
+#!/usr/bin/env sh
+
+# This script is symlinked to be present as both bin/shoes and bin/shoes-stub
+# See ext/install/Rakefile for the full explanation of why we do that.
+
+# Don't try to cd on an empty $NEXT_DIR (link in same directory)
+mac_move_to_link_dir () {
+  # Skip if already in link directory
+  NEXT_DIR=$(dirname $1)
+  if [[ -n "$NEXT_DIR" ]]; then
+    cd $NEXT_DIR
+  fi
+}
+
+mac_readlink_f () {
+  # based on http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
+
+  # A relative or absolute path to a file, potentially a symlink
+  LINK=$1
+
+  if [ ! -L "$LINK" ] ; then
+    # Not a link, all good
+    echo $LINK
+    return
+  fi
+
+  # http://bosker.wordpress.com/2012/02/12/bash-scripters-beware-of-the-cdpath/
+  unset CDPATH
+
+  # Look up links until we find something that is not a symlink
+  while [ -L "$LINK" ] ; do
+    mac_move_to_link_dir $LINK
+    RELATIVE_LINK=$(basename $LINK)
+    LINK=$(readlink $RELATIVE_LINK)
+  done
+
+  # Now PATH is an unqualified file name, but we're in its directory, so turn
+  # it into an absolute path by prefixing with the current working directory.
+
+  PHYS_DIR=`pwd -P`
+  RESULT=$PHYS_DIR/$LINK
+  echo $RESULT
+}
+
+case "${MACHTYPE:-}" in
+  (*darwin*)
+    swt_opt="-J-XstartOnFirstThread"
+    SCRIPT=$(mac_readlink_f $0);;
+  (*)
+    # see http://stackoverflow.com/a/1638397/1810896
+    SCRIPT=$(readlink -f "$0");;
+esac
+
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+RUBYSHOES="$SCRIPTPATH/ruby-shoes"
+
+cmd="jruby --1.9 ${swt_opt:-} $RUBYSHOES $@"
+exec $cmd
