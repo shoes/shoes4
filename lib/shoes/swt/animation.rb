@@ -16,13 +16,12 @@ class Shoes
         # Wrap the animation block so we can count frames.
         # Note that the task re-calls itself on each run.
         @task = Proc.new do
-          unless stop_animation?
-            eval_block
-            @dsl.increment_frame
-            ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
+          unless animation_removed?
+            run_animation unless @dsl.stopped?
+            schedule_next_animation
           end
         end
-        ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
+        schedule_next_animation
       end
 
       def eval_block
@@ -30,10 +29,18 @@ class Shoes
       end
 
       private
-      def stop_animation?
-        @app.real.disposed? || @dsl.removed? || @dsl.stopped?
+      def animation_removed?
+        @app.real.disposed? || @dsl.removed?
       end
 
+      def schedule_next_animation
+        ::Swt.display.timer_exec(1000 / @dsl.framerate, @task)
+      end
+
+      def run_animation
+        eval_block
+        @dsl.increment_frame
+      end
     end
   end
 end

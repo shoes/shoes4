@@ -49,16 +49,36 @@ describe Shoes::Swt::Animation do
     end
 
     describe 'disabled' do
-      it 'does not call the block when stopped' do
-        dsl.stub :stopped? => true
-        task.call
-        expect(block).to_not have_received :call
+      describe 'stopped?' do
+        before :each do
+          dsl.stub :stopped? => true
+          task.call
+        end
+
+        it 'does not call the block' do
+          expect(block).to_not have_received :call
+        end
+
+        it 'continues calling the task' do
+          # one for initialize, one for the call in the task call
+          expect(display).to have_received(:timer_exec).exactly(2).times
+        end
       end
 
-      it 'does not call the block when removed' do
-        dsl.stub :removed? => true
-        task.call
-        expect(block).to_not have_received :call
+      describe 'removed?' do
+        before :each do
+          dsl.stub :removed? => true
+          task.call
+        end
+
+        it 'does not call the block when removed' do
+          expect(block).to_not have_received :call
+        end
+
+        it 'does not continue calling itself when removed' do
+          # one time is initialize
+          expect(display).to have_received(:timer_exec).exactly(1).times
+        end
       end
     end
 
