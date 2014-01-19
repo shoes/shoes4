@@ -58,6 +58,7 @@ class Shoes
           @display.asyncExec do update_gui end
         end
         after_every SAME_POSITION do |*args, element|
+          element = element.dsl if element.respond_to? :dsl
           redraw_area element.element_left, element.element_top,
                       element.element_width, element.element_height, false
         end

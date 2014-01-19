@@ -1,7 +1,9 @@
 shared_examples_for "togglable" do
   it "triggers redrawing on the app" do
-    expect(swt_app).to receive(:redraw)
-    subject.toggle
+    with_redraws do
+      expect(swt_app).to receive(:redraw)
+      subject.toggle
+    end
   end
 
   it "passes visibility to real object" do
