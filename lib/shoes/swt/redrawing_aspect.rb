@@ -22,7 +22,9 @@ class Shoes
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
-      CHANGED_POSITION = {TextBlock => [:update_position]}
+      # These need to trigger a redraw
+      SAME_POSITION    = {Common::Toggle  => [:toggle]}
+      CHANGED_POSITION = {TextBlock       => [:update_position]}
 
       attr_reader :app
 
@@ -45,6 +47,7 @@ class Shoes
       def affected_classes
         classes = NEED_TO_UPDATE.keys +
                   NEED_TO_ASYNC_UPDATE_GUI.keys +
+                  SAME_POSITION.keys +
                   CHANGED_POSITION.keys
         classes.uniq
       end
@@ -54,7 +57,13 @@ class Shoes
         after_every NEED_TO_ASYNC_UPDATE_GUI do
           @display.asyncExec do update_gui end
         end
-        after_every CHANGED_POSITION do app.redraw end
+        after_every SAME_POSITION do |*args, element|
+          redraw_area element.element_left, element.element_top,
+                      element.element_width, element.element_height, false
+        end
+        after_every CHANGED_POSITION do
+          app.redraw
+        end
       end
 
       # If/when we run into performance problems we can do this a lot more fine
@@ -65,6 +74,12 @@ class Shoes
         unless app.disposed?
           app.flush
           app.redraw
+        end
+      end
+
+      def redraw_area(left, top, width, height, include_children = true)
+        unless app.disposed?
+          app.redraw left, top, width, height, include_children
         end
       end
 
