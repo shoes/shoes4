@@ -24,7 +24,7 @@ class Shoes
 
       # These need to trigger a redraw
       SAME_POSITION    = {Common::Toggle  => [:toggle]}
-      CHANGED_POSITION = {TextBlock       => [:update_position]}
+      CHANGED_POSITION = {::Shoes::CommonMethods => [:_position]}
 
       attr_reader :app
 
@@ -59,23 +59,22 @@ class Shoes
         end
         after_every SAME_POSITION do |*args, element|
           element = element.dsl if element.respond_to? :dsl
-          redraw_area element.element_left, element.element_top,
-                      element.element_width, element.element_height, false
+          redraw_element element, false
         end
-        after_every CHANGED_POSITION do
-          app.redraw
+        # need to redraw old occupied area and newly occupied area
+        before_and_after_every CHANGED_POSITION do |*args, element|
+          redraw_element element
         end
       end
 
-      # If/when we run into performance problems we can do this a lot more fine
-      # grained, e.g. when an object moves we only have to redraw the old
-      # and the new position of the screen not everything but premature
-      # optimization etc. and it's not that easy for elements that are layouted
       def update_gui
-        unless app.disposed?
-          app.flush
-          app.redraw
-        end
+        app.flush unless app.disposed?
+      end
+
+      def redraw_element(element, include_children = true)
+        redraw_area element.element_left, element.element_top,
+                    element.element_width, element.element_height,
+                    include_children
       end
 
       def redraw_area(left, top, width, height, include_children = true)
@@ -86,6 +85,15 @@ class Shoes
 
       def after_every(hash, &blk)
         hash.each {|klass, methods| klass.after methods, &blk }
+      end
+
+      def before_and_after_every(hash, &blk)
+        before_every hash, &blk
+        after_every hash, &blk
+      end
+
+      def before_every(hash, &blk)
+        hash.each {|klass, methods| klass.before methods, &blk }
       end
     end
   end
