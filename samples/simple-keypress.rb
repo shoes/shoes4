@@ -1,11 +1,14 @@
 Shoes.app do
-  title 'come on press some keys'
+  s = stack do
+    title 'come on press some keys'
+  end
+
   keypress do |key|
-    para 'You pressed ' + key.to_s
+    s.append do para 'You pressed ' + key.to_s end
     p key
   end
   keyrelease do |key|
-    para 'You released ' + key.to_s
+    s.append do para 'You released ' + key.to_s end
     p key
   end
 end
