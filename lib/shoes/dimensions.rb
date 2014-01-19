@@ -102,11 +102,19 @@ class Shoes
     end
 
     def element_width=(value)
-      self.width = margin_left + value + margin_right
+      if value.nil?
+        self.width = nil
+      else
+        self.width = margin_left + value + margin_right
+      end
     end
 
     def element_height=(value)
-      self.height = margin_top + value + margin_bottom
+      if value.nil?
+        self.height = nil
+      else
+        self.height = margin_top + value + margin_bottom
+      end
     end
 
     def element_left

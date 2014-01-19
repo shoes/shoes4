@@ -238,7 +238,7 @@ describe Shoes::Dimensions do
     describe 'left' do
       it 'also has a setter for left' do
         subject.left = 66
-        subject.left.should eq 66
+        expect(subject.left).to eq 66
       end
     end
 
@@ -259,6 +259,16 @@ describe Shoes::Dimensions do
 
       it 'sets element_height to that value' do
         expect(subject.element_height).to eq element_height
+      end
+
+      it 'can set element_width to nil' do
+        subject.element_width = nil
+        expect(subject.element_width).to eq nil
+      end
+
+      it 'can set element_heightm to nil' do
+        subject.element_height = nil
+        expect(subject.element_height).to eq nil
       end
 
       describe 'with margins' do
