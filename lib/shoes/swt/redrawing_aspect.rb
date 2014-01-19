@@ -24,7 +24,9 @@ class Shoes
 
       # These need to trigger a redraw
       SAME_POSITION    = {Common::Toggle  => [:toggle]}
-      CHANGED_POSITION = {::Shoes::CommonMethods => [:_position]}
+      CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
+                          ::Shoes::Dimensions    => [:left=, :top=, :width=,
+                                                     :height=]}
 
       attr_reader :app
 
