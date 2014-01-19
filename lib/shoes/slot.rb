@@ -111,19 +111,30 @@ class Shoes
     end
 
     def position_element(element, current_position)
-      raise 'position_element is subclass responsibility'
+      raise 'position_element is a subclass responsibility'
     end
 
     def position_in_current_line(element, current_position)
-      element._position position_x(current_position.x, element),
-                        position_y(current_position.y, element)
+      position_element_at element,
+                          position_x(current_position.x, element),
+                          position_y(current_position.y, element)
       NEXT_ELEMENT_ON_SAME_LINE_OFFSET
     end
 
     def move_to_next_line(element, current_position)
-      element._position position_x(self.element_left, element),
-                        position_y(current_position.next_line_start, element)
+      position_element_at element,
+                          position_x(self.element_left, element),
+                          position_y(current_position.next_line_start, element)
       NEXT_ELEMENT_ON_NEXT_LINE_OFFSET
+    end
+
+    def position_element_at(element, x, y)
+      return if element_did_not_move?(element, x, y)
+      element._position x, y
+    end
+
+    def element_did_not_move?(element, x, y)
+      element.absolute_left == x && element.absolute_top == y
     end
 
     def update_current_position(current_position, element, position_modifier)
