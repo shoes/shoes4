@@ -189,7 +189,7 @@ class Shoes
 
     # similar controls as Shoes::Video (#video)
     def sound(soundfile, opts = {}, &blk)
-      Shoes::Sound.new self.gui, soundfile, opts, &blk
+      Shoes::Sound.new @__app__, soundfile, opts, &blk
     end
 
     # Creates an arc at (left, top)
