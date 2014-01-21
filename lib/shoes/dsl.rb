@@ -460,7 +460,7 @@ EOS
     end
 
     def span *texts, opts
-      Shoes::Span.new texts, opts
+      Shoes::Span.new texts, normalize_style(opts)
     end
 
     def mouse

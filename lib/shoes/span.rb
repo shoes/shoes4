@@ -1,6 +1,6 @@
 class Shoes
   class Span < Text
-    def initialize texts, options={}
+    def initialize(texts, options={})
       @opts = options
       super texts
     end

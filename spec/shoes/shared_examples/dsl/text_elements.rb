@@ -33,4 +33,11 @@ shared_examples_for "text element DSL methods" do
     text_block = dsl.inscription("hello!")
     text_block.font_size.should eql 10
   end
+
+  describe 'span' do
+    it 'should parse the color' do
+      span = dsl.span 'Hello', stroke: '#ccc'
+      expect(span.opts[:stroke]).to eq Shoes::Color.new 204, 204, 204
+    end
+  end
 end
