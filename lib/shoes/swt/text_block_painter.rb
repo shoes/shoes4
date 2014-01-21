@@ -192,6 +192,7 @@ class Shoes
       def self.color_from_dsl(dsl_color, default = nil)
         return nil if dsl_color.nil? and default.nil?
         return color_from_dsl default if dsl_color.nil?
+        dsl_color = ::Shoes::Color.create(dsl_color)
         # TODO: mark color for garbage collection
         ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
       end
