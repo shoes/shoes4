@@ -134,6 +134,19 @@ describe Shoes::TextBlock do
     end
   end
 
+  describe "width" do
+    it "should return width if explicitly set" do
+      s = Shoes::TextBlock.new(app, parent, ["text"], 42, { width: 120 } )
+      expect(s.width).to eql 120
+    end
+
+    it "should return calculated width if no width set" do
+      s = Shoes::TextBlock.new(app, parent, ["text"], 42)
+      s.calculated_width = 240
+      expect(s.width).to eql 240
+    end
+  end
+
   # Emulates samples/sample17.rb
   #
   #   Shoes.app width: 240, height: 95 do

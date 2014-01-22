@@ -6,7 +6,6 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-
     attr_reader   :gui, :parent, :text, :links, :app, :text_styles, :dimensions, :opts
     attr_accessor :calculated_width, :font, :font_size, :cursor, :textcursor
 
@@ -86,6 +85,10 @@ class Shoes
     def absolute_bottom
       return absolute_top + height if @absolute_bottom.nil?
       @absolute_bottom
+    end
+
+    def width
+      @dimensions.width || self.calculated_width
     end
 
     def contents_alignment(current_position=nil)
