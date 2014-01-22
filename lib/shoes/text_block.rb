@@ -91,6 +91,16 @@ class Shoes
       @dimensions.width || self.calculated_width
     end
 
+    # If an explicit width's set, it's used. If not, we look to the parent.
+    def containing_width
+      @dimensions.width || parent.width
+    end
+
+    # This is the width the text block initially wants to try and fit into.
+    def desired_width
+      parent.absolute_left + containing_width - self.absolute_left
+    end
+
     def contents_alignment(current_position=nil)
       @gui.contents_alignment(current_position)
     end

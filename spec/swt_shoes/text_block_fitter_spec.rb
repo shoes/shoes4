@@ -4,6 +4,7 @@ require 'shoes/swt/text_block_fitter'
 describe Shoes::Swt::TextBlockFitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
                      absolute_left: 25, absolute_top: 75,
+                     desired_width: 85,
                      margin_left: 1, margin_top: 1) }
 
   let(:parent_dsl) { double('parent_dsl',
@@ -87,6 +88,7 @@ describe Shoes::Swt::TextBlockFitter do
       before(:each) do
         layout.stub(line_count: 2, line_metrics: double(height: 15))
         bounds.stub(width: 50)
+        dsl.stub(containing_width: :unused)
       end
 
       it "should split text and overflow to second layout" do

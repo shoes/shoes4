@@ -135,16 +135,38 @@ describe Shoes::TextBlock do
   end
 
   describe "width" do
-    it "should return width if explicitly set" do
-      s = Shoes::TextBlock.new(app, parent, ["text"], 42, { width: 120 } )
-      expect(s.width).to eql 120
+    before(:each) do
+      parent.stub(:width)         { 300 }
+      parent.stub(:absolute_left) { 0 }
     end
 
-    it "should return calculated width if no width set" do
-      s = Shoes::TextBlock.new(app, parent, ["text"], 42)
-      s.calculated_width = 240
-      expect(s.width).to eql 240
+    context "when not explicitly set" do
+      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], 42) }
+
+      it "delgates to calculated width" do
+        subject.calculated_width = 240
+        expect(subject.width).to eql 240
+      end
+
+      it "bases desired width off parent" do
+        subject.absolute_left = 20
+        expect(subject.desired_width).to eql 280
+      end
     end
+
+    context "when explicitly set" do
+      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], 42, { width: 120 }) }
+
+      it "gets returned" do
+        expect(subject.width).to eql 120
+      end
+
+      it "is used for desired width" do
+        subject.absolute_left = 20
+        expect(subject.desired_width).to eql 100
+      end
+    end
+
   end
 
   # Emulates samples/sample17.rb

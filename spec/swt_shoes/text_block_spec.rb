@@ -85,34 +85,25 @@ describe Shoes::Swt::TextBlock do
 
         subject.contents_alignment(current_position)
       end
-
-      it "should set back width to dsl" do
-        expect(dsl).to receive(:calculated_width=).with(layout_width)
-        subject.contents_alignment(current_position)
-      end
     end
 
     describe "with two layouts" do
       before(:each) do
         dsl.stub(:parent) { double("dsl parent", absolute_left: 0) }
         dsl.stub(:absolute_bottom) { layout_height }
-
-        current_position.next_line_start = 0
-        fitter.stub(:fit_it_in) {
-          [:unused_layout, double("fitted_layout", layout: layout)]
-        }
       end
 
       it "should set position for fitting two layouts" do
+        current_position.next_line_start = 0
+
+        fitter.stub(:fit_it_in) {
+          [:unused_layout, double("fitted_layout", layout: layout)]
+        }
+
         expect(dsl).to receive(:absolute_right=).with(layout_width)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
         expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-        subject.contents_alignment(current_position)
-      end
-
-      it "should set back width to dsl" do
-        expect(dsl).to receive(:calculated_width=).with(layout_width)
         subject.contents_alignment(current_position)
       end
     end
