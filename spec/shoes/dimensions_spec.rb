@@ -134,6 +134,35 @@ describe Shoes::Dimensions do
       end
     end
 
+    describe 'with strings' do
+      describe 'with integer strings' do
+        subject {Shoes::Dimensions.new parent, "10", "10", "10", "10"}
+
+        its(:left) {should eq 10}
+        its(:top) {should eq 10}
+        its(:width) {should eq 10}
+        its(:height) {should eq 10}
+      end
+
+      describe 'with strings px' do
+        subject {Shoes::Dimensions.new parent, "10px", "10px", "0px", "100px"}
+
+        its(:left) {should eq 10}
+        its(:top) {should eq 10}
+        its(:width) {should eq 0}
+        its(:height) {should eq 100}
+      end
+
+      describe 'with invalid integer strings' do
+        subject {Shoes::Dimensions.new parent, "ppx", "xpo", "blob", "glob"}
+
+        its(:left) {should eq 0}
+        its(:top) {should eq 0}
+        its(:width) {should eq nil}
+        its(:height) {should eq nil}
+      end
+    end
+
     describe 'with negative width and height' do
       let(:width) { -50 }
       let(:height) { -50 }
