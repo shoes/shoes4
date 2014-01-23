@@ -183,20 +183,18 @@ class Shoes
       left.respond_to? :fetch
     end
 
-    def init_with_hash(dimensions_hash)
-      self.left   = dimensions_hash.fetch(:left, nil)
-      self.top    = dimensions_hash.fetch(:top, nil)
-      self.width  = dimensions_hash.fetch(:width, nil)
-      self.height = dimensions_hash.fetch(:height, nil)
-      general_options dimensions_hash
+    def init_with_hash(hash)
+      init_with_arguments hash.fetch(:left, nil), hash.fetch(:top, nil),
+                          hash.fetch(:width, nil), hash.fetch(:height, nil),
+                          hash
     end
 
     def init_with_arguments(left, top, width, height, opts)
+      general_options opts # order important for redrawing
       self.left   = left
       self.top    = top
       self.width  = width
       self.height = height
-      general_options opts
     end
 
     def init_margins(opts)

@@ -11,16 +11,6 @@ describe Shoes::Swt::TextBlock do
 
   it_behaves_like "paintable"
   it_behaves_like "togglable"
-  it_behaves_like "movable text", 10, 20
-
-  describe "redrawing" do
-    it "should redraw on updating position" do
-      with_redraws do
-        expect(swt_app).to receive(:redraw)
-        subject.update_position
-      end
-    end
-  end
 
   describe "generating layouts" do
     let(:layout) { create_layout(width, height) }

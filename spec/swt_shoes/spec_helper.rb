@@ -20,8 +20,11 @@ end
 def with_redraws(&blk)
   Shoes::Swt::RedrawingAspect.unstub :new
   aspect = Shoes::Swt::RedrawingAspect.new swt_app, double
-  yield
-  aspect.remove_redraws
+  begin
+    yield
+  ensure
+    aspect.remove_redraws
+  end
 end
 
 shared_examples = File.expand_path('../shared_examples/**/*.rb', __FILE__)

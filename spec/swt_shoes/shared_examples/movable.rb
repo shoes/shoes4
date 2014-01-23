@@ -34,13 +34,3 @@ shared_examples_for "movable shape" do |x, y|
     subject.update_position
   end
 end
-
-shared_examples_for "movable text" do |x, y|
-  it "redraws container" do
-    with_redraws do
-      swt_app.should_receive(:redraw).at_least(1).times
-      dsl.stub element_left: x, element_top: y
-      subject.update_position
-    end
-  end
-end

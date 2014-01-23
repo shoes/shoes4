@@ -43,13 +43,22 @@ shared_context 'element one with top and left' do
 end
 
 shared_examples_for 'positioning through :_position' do
-  it 'sends the child the :_position method to position it' do
-    element = Shoes::FakeElement.new nil, height: 100, width: 50
+
+  let(:element) {Shoes::FakeElement.new nil, height: 100, width: 50}
+
+  def add_child_and_align
     subject.add_child element
-    element.should_receive(:_position).and_call_original
-    # message expectation for _position seems to not execute the method, hence
-    # these values aren't set appropriately
-    element.stub absolute_right: 0, absolute_bottom: 0
+    subject.contents_alignment
+  end
+
+  it 'sends the child the :_position method to position it' do
+    expect(element).to receive(:_position).and_call_original
+    add_child_and_align
+  end
+
+  it 'does not send _position again if the position did not change' do
+    add_child_and_align
+    expect(element).not_to receive(:_position)
     subject.contents_alignment
   end
 end

@@ -22,7 +22,11 @@ class Shoes
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
-      CHANGED_POSITION = {TextBlock => [:update_position]}
+      # These need to trigger a redraw
+      SAME_POSITION    = {Common::Toggle  => [:toggle]}
+      CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
+                          ::Shoes::Dimensions    => [:left=, :top=, :width=,
+                                                     :height=]}
 
       attr_reader :app
 
@@ -45,6 +49,7 @@ class Shoes
       def affected_classes
         classes = NEED_TO_UPDATE.keys +
                   NEED_TO_ASYNC_UPDATE_GUI.keys +
+                  SAME_POSITION.keys +
                   CHANGED_POSITION.keys
         classes.uniq
       end
@@ -54,22 +59,43 @@ class Shoes
         after_every NEED_TO_ASYNC_UPDATE_GUI do
           @display.asyncExec do update_gui end
         end
-        after_every CHANGED_POSITION do app.redraw end
+        after_every SAME_POSITION do |*args, element|
+          element = element.dsl if element.respond_to? :dsl
+          redraw_element element, false
+        end
+        # need to redraw old occupied area and newly occupied area
+        before_and_after_every CHANGED_POSITION do |*args, element|
+          redraw_element element
+        end
       end
 
-      # If/when we run into performance problems we can do this a lot more fine
-      # grained, e.g. when an object moves we only have to redraw the old
-      # and the new position of the screen not everything but premature
-      # optimization etc. and it's not that easy for elements that are layouted
       def update_gui
+        app.flush unless app.disposed?
+      end
+
+      def redraw_element(element, include_children = true)
+        redraw_area element.element_left, element.element_top,
+                    element.element_width, element.element_height,
+                    include_children
+      end
+
+      def redraw_area(left, top, width, height, include_children = true)
         unless app.disposed?
-          app.flush
-          app.redraw
+          app.redraw left, top, width, height, include_children
         end
       end
 
       def after_every(hash, &blk)
         hash.each {|klass, methods| klass.after methods, &blk }
+      end
+
+      def before_and_after_every(hash, &blk)
+        before_every hash, &blk
+        after_every hash, &blk
+      end
+
+      def before_every(hash, &blk)
+        hash.each {|klass, methods| klass.before methods, &blk }
       end
     end
   end

@@ -34,12 +34,5 @@ class Shoes
                                            width:  @point_a.width(@point_b),
                                            height: @point_a.height(@point_b)
     end
-
-    def move(x, y)
-      self.left = x
-      self.top = y
-      @gui.update_position
-      self
-    end
   end
 end
