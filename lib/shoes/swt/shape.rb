@@ -3,6 +3,7 @@ class Shoes
     class Shape
       include Common::Fill
       include Common::Stroke
+      include Common::Shape
 
       # Creates a new Shoes::Swt::Shape
       #

@@ -35,6 +35,11 @@ class Shoes
       def update_position
       end
 
+      # Change the location without affecting layout
+      def displace(left, top)
+        @actual_left, @actual_top = left, top
+      end
+
       private
       def load_image(name_or_data)
         if url?(name_or_data)
@@ -122,10 +127,18 @@ class Shoes
         data
       end
 
+      def actual_left
+        @actual_left || dsl.element_left
+      end
+
+      def actual_top
+        @actual_top || dsl.element_top
+      end
+
       def add_paint_listener
         @painter = lambda do |event|
           graphics_context = event.gc
-          graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.element_left, dsl.element_top, dsl.element_width, dsl.element_height unless @dsl.hidden
+          graphics_context.drawImage @real, 0, 0, @full_width, @full_height, actual_left, actual_top, dsl.element_width, dsl.element_height unless @dsl.hidden
         end
         app.add_paint_listener(@painter)
       end

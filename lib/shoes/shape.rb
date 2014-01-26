@@ -22,7 +22,7 @@ class Shoes
       clickable_options(opts)
     end
 
-    attr_reader :app, :blk, :hidden
+    attr_reader :app, :blk, :gui, :hidden
     attr_reader :x, :y
 
     def left

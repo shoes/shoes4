@@ -4,6 +4,7 @@ class Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Clickable
+      include Common::Shape
       include Common::Toggle
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations

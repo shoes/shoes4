@@ -4,6 +4,7 @@ class Shoes
     class InputBox
       include Common::Child
       include Common::Clear
+      include Common::Move
       include Common::Toggle
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations

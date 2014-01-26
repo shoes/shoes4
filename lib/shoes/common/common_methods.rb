@@ -73,12 +73,8 @@ class Shoes
     # displace(left: a number, top: a number) » self
     # Displacing an element moves it.  But without changing the layout around it.
     def displace(left, top)
-      gui_container.setLocation(bounds.x + left, bounds.y + top)
-    end
-
-    private
-    def bounds
-      gui_container ||= gui_container.getBounds
+      gui.displace left, top
+      self
     end
 
   end
