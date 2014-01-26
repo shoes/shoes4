@@ -147,8 +147,17 @@ describe Shoes::Dimensions do
         its(:height) {should eq 100}
       end
 
+      describe 'white space with px is also ok' do
+        subject {Shoes::Dimensions.new parent, "10 px", "20   px", "30px", "55  px"}
+
+        its(:left) {should eq 10}
+        its(:top) {should eq 20}
+        its(:width) {should eq 30}
+        its(:height) {should eq 55}
+      end
+
       describe 'with invalid integer strings' do
-        subject {Shoes::Dimensions.new parent, "p100px", "xpo", "blob", "glob"}
+        subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "blob", "glob"}
 
         its(:left) {should eq 0}
         its(:top) {should eq 0}

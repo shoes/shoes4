@@ -240,29 +240,25 @@ class Shoes
       match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
       if match
         match[1].to_f / 100.0
+      elsif valid_integer_string?(result)
+        result.to_i
       else
-        if valid_integer_string?(result)
-          result.to_i
-        else
-          nil
-        end
+        nil
       end
     end
 
     def parse_input_value(input)
       if input.is_a?(Integer) || input.is_a?(Float)
         input
-      elsif input.is_a? String
+      elsif valid_integer_string?(input)
         input.to_i
-
-        # valid_integer_string?(input) ? input.to_i : nil
       else
         nil
       end
     end
 
-    def valid_integer_string?(result)
-      result.to_i != 0 || result.include?("0")
+    def valid_integer_string?(input)
+      input.is_a?(String) && input.match(/^\d+/)
     end
 
     def is_negative?(result)
