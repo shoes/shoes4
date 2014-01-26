@@ -23,7 +23,8 @@ class Shoes
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
       # These need to trigger a redraw
-      SAME_POSITION    = {Common::Toggle  => [:toggle]}
+      SAME_POSITION    = {Common::Toggle    => [:toggle],
+                          ::Shoes::TextBlock  => [:replace]}
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
                           ::Shoes::Dimensions    => [:left=, :top=, :width=,
                                                      :height=]
