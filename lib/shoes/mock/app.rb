@@ -35,6 +35,10 @@ class Shoes
 
       def clipboard=(text)
       end
+
+      def gutter
+        16
+      end
     end
   end
 end
