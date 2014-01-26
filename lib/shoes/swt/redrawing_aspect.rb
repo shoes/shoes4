@@ -26,7 +26,8 @@ class Shoes
       SAME_POSITION    = {Common::Toggle  => [:toggle]}
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
                           ::Shoes::Dimensions    => [:left=, :top=, :width=,
-                                                     :height=]}
+                                                     :height=]
+                          }
 
       attr_reader :app
 

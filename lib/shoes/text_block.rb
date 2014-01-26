@@ -109,6 +109,10 @@ class Shoes
       @textcursor ||= app.textcursor(line_height)
     end
 
+    def has_textcursor?
+      @textcursor
+    end
+
     private
 
     def gather_text_styles(parent, texts, styles={}, start_point=0)
