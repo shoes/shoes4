@@ -80,7 +80,22 @@ describe Shoes::Swt::Button do
   describe 'eval block' do
     it 'calls the block' do
       block.should_receive(:call).with(dsl)
-      subject.eval_block
+      subject.eval_block block
+    end
+  end
+
+  describe 'click' do
+    it 'adds listener to real object' do
+      expect(real).to receive(:addSelectionListener)
+      subject.click &block
+    end
+
+    it 'passes dsl object to block' do
+      expect(real).to receive(:addSelectionListener).twice do |&blk|
+        expect(block).to receive(:call).with(dsl)
+        blk.call
+      end
+      subject.click &block
     end
   end
 end
