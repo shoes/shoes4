@@ -112,6 +112,13 @@ class Shoes
         @started
       end
 
+      # This represents the space (potentially) occupied by a vertical
+      # scrollbar. Since the scrollbar may not be visible at the time this
+      # method is called, we don't rely on its reported value.
+      def gutter
+        16
+      end
+
       private
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar

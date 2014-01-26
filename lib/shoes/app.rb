@@ -210,6 +210,10 @@ class Shoes
       app.instance_eval &blk
     end
 
+    def gutter
+      gui.gutter
+    end
+
     private
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way
