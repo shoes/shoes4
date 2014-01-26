@@ -241,24 +241,30 @@ class Shoes
       if match
         match[1].to_f / 100.0
       elsif valid_integer_string?(result)
-        result.to_i
+        int_from_string(result)
       else
         nil
       end
+    end
+
+    def int_from_string(result)
+      (result.gsub(' ', '')).to_i
     end
 
     def parse_input_value(input)
       if input.is_a?(Integer) || input.is_a?(Float)
         input
       elsif valid_integer_string?(input)
-        input.to_i
+        int_from_string(input)
       else
         nil
       end
     end
 
+    NUMBER_REGEX = /^-?\s*\d+/
+
     def valid_integer_string?(input)
-      input.is_a?(String) && input.match(/^\d+/)
+      input.is_a?(String) && input.match(NUMBER_REGEX)
     end
 
     def is_negative?(result)

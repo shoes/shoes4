@@ -2,12 +2,16 @@ require 'shoes/spec_helper'
 
 describe Shoes::Dimensions do
 
+  let(:parent_top) {top}
+  let(:parent_width) {width}
+  let(:parent_height) {height}
+  let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top, parent_width, parent_height}
+
   let(:left) {10}
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
-  let(:parent) {double 'parent', width: 200, height: 250, left: 5, top: 12,
-                                 absolute_left: 25, absolute_top: 35}
+  let(:parent_left) {left}
   let(:opts) { {} }
   subject {Shoes::Dimensions.new parent, left, top, width, height, opts}
 
@@ -82,7 +86,6 @@ describe Shoes::Dimensions do
       its(:height) {should be_within(1).of 0.5 * parent.height}
 
       describe 'width/height change of the parent' do
-        let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
 
         # note that here the first assertion/call is necessary as otherwise
         # the subject will only lazily get initialized after the parent width
@@ -157,12 +160,23 @@ describe Shoes::Dimensions do
       end
 
       describe 'with invalid integer strings' do
-        subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "blob", "glob"}
+        subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob"}
 
         its(:left) {should eq 0}
         its(:top) {should eq 0}
         its(:width) {should be_nil}
         its(:height) {should be_nil}
+      end
+
+      describe 'with negative values' do
+        let(:parent_width) {200}
+        let(:parent_height) {300}
+        subject {Shoes::Dimensions.new parent, "- 100", "-20px", "- 50px", "- 80"}
+
+        its(:left) {should eq -100}
+        its(:top) {should eq -20}
+        its(:width) {should eq (parent_width - 50)}
+        its(:height) {should eq (parent_height - 80)}
       end
     end
 
