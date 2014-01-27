@@ -459,8 +459,8 @@ EOS
       Shoes::Link.new texts, &blk
     end
 
-    def span *texts, opts
-      Shoes::Span.new texts, normalize_style(opts)
+    def span *texts
+      Shoes::Span.new texts, normalize_style(pop_style(texts))
     end
 
     def mouse

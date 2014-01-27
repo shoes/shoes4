@@ -39,5 +39,19 @@ shared_examples_for "text element DSL methods" do
       span = dsl.span 'Hello', stroke: '#ccc'
       expect(span.opts[:stroke]).to eq Shoes::Color.new 204, 204, 204
     end
+
+    it 'should handle a splatted array of links' do
+      expect{dsl.span *[dsl.link('foo'), dsl.link('foo')]}.not_to raise_error
+    end
+
+    it 'should handle a splatted array of links and parse the color' do
+      span = dsl.span *[dsl.link('foo'), dsl.link('foo')], stroke: '#ccc'
+      expect(span.opts[:stroke]).to eq Shoes::Color.new 204, 204, 204
+    end
+
+    it 'should handle a splatted array of links with a block' do
+      link = dsl.link('foo') { "Bar" }
+      expect{dsl.span *[link, link]}.not_to raise_error
+    end
   end
 end
