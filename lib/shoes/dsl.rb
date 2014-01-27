@@ -460,6 +460,10 @@ EOS
     end
 
     def span *texts, opts
+      unless opts.class == Hash
+        texts << opts
+        opts = {}
+      end
       Shoes::Span.new texts, normalize_style(opts)
     end
 
