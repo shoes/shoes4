@@ -207,14 +207,4 @@ describe Shoes::TextBlock do
       expect(helper.ins.parent).to eq helper.strong
     end
   end
-
-  context "with nested text fragments with parameters" do
-    it 'removes the style hash from text' do
-      text_styles = %w(code del em ins sub sup strong)
-      text_styles.each do |m|
-        para = app.app.para(app.app.send(m, m, stroke: '#ccc'))
-        expect(para.text).to eq(m)
-      end
-    end
-  end
 end
