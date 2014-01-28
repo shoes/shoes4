@@ -181,6 +181,9 @@ describe Shoes::TextBlock do
   #   end
   #
   context "with nested text fragments" do
+    let(:para_with_styled_fragment) {
+      app.app.para(app.app.strong('test123', stroke: '#ccc'))
+    }
     let(:helper) {Sample17Helper.new(app)}
     let!(:para) { helper.create_para }
 
@@ -205,6 +208,11 @@ describe Shoes::TextBlock do
 
     it 'sets the parent of nested fragments correctly' do
       expect(helper.ins.parent).to eq helper.strong
+    end
+
+    it 'applies styles to fragments' do
+      # This is not related to sample17
+      expect(para_with_styled_fragment.text).to eq("test123")
     end
   end
 end
