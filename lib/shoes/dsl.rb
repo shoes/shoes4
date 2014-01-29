@@ -373,11 +373,7 @@ EOS
     end
 
     def image_pattern path
-      if File.exist?(path)
-        Shoes::ImagePattern.new path
-      else
-        raise ArgumentError, "Could not find file: #{path}"
-      end
+      Shoes::ImagePattern.new path if File.exist?(path)
     end
 
     # Sets the current stroke color

@@ -30,27 +30,27 @@ describe Shoes::App do
       let(:opts) { Hash.new }
 
       it "sets width", :qt do
-        subject.width.should == Shoes::App::DEFAULT_OPTIONS[:width]
+        expect(subject.width).to eq Shoes::App::DEFAULT_OPTIONS[:width]
       end
 
       it "sets height", :qt do
-        subject.height.should == Shoes::App::DEFAULT_OPTIONS[:height]
+        expect(subject.height).to eq Shoes::App::DEFAULT_OPTIONS[:height]
       end
 
       it "sets title", :qt do
-        subject.app_title.should == Shoes::App::DEFAULT_OPTIONS[:title]
+        expect(subject.app_title).to eq Shoes::App::DEFAULT_OPTIONS[:title]
       end
 
       it 'has an absolute_left of 0' do
-        subject.absolute_left.should eq 0
+        expect(subject.absolute_left).to eq 0
       end
 
       it 'has an absolute_top of 0' do
-        subject.absolute_top.should eq 0
+        expect(subject.absolute_top).to eq 0
       end
 
       it "is resizable", :qt do
-        subject.resizable.should be_true
+        expect(subject.resizable).to  be_true
       end
     end
 
@@ -58,19 +58,19 @@ describe Shoes::App do
       let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
 
       it "sets width", :qt do
-        subject.width.should == opts[:width]
+        expect(subject.width).to eq opts[:width]
       end
 
       it "sets height", :qt do
-        subject.height.should == opts[:height]
+        expect(subject.height).to eq opts[:height]
       end
 
       it "sets title", :qt do
-        subject.app_title.should == opts[:title]
+        expect(subject.app_title).to eq opts[:title]
       end
 
       it "sets resizable", :qt do
-        subject.resizable.should be_false
+        expect(subject.resizable).to be_false
       end
     end
 
@@ -82,8 +82,10 @@ describe Shoes::App do
       it "registers" do
         old_apps_length = Shoes.apps.length
         subject
-        Shoes.apps.length.should eq(old_apps_length + 1)
-        Shoes.apps.include?(subject).should be_true
+        expect(Shoes.apps.length).to eq(old_apps_length + 1)
+        # expect(Shoes.apps.include?(subject)).to be_true
+        expect(Shoes.apps).to include(subject)
+        # Shoes.apps.include?(subject).should be_true
       end
     end
   end

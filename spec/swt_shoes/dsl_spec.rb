@@ -90,8 +90,9 @@ describe "Basic Element Methods" do
     end
 
     context 'with no valid image' do
-      it 'raises an argument error' do
-        expect{ app.background('fake-shoes.jpg') }.to raise_error('Could not find file: fake-shoes.jpg')
+      it 'ignores the background' do
+        app_gui.should_receive(:add_paint_listener)
+        expect{ app.background('fake-shoes.jpg') }.not_to raise_error
       end
     end
 
