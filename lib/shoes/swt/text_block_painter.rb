@@ -19,22 +19,30 @@ class Shoes
         gcs_reset(paint_event.gc)
         return if @dsl.hidden?
 
-        @dsl.gui.fitted_layouts.each do |fitted_layout|
-          draw_from_layout(paint_event.gc, fitted_layout)
-        end
+        fitted_layouts = @dsl.gui.fitted_layouts
+        style_layouts(fitted_layouts)
+        draw_layouts(paint_event.gc, fitted_layouts)
         draw_text_cursor
       end
 
-      def draw_from_layout(gc, fitted_layout)
-        set_styles(fitted_layout)
-        fitted_layout.draw(gc)
+      def style_layouts(fitted_layouts)
+        fitted_layouts.each do |fitted_layout|
+          set_styles_from_options(fitted_layout)
+        end
+        set_styles_from_segments(fitted_layouts)
+      end
+
+      def draw_layouts(gc, fitted_layouts)
+        fitted_layouts.each do |fitted_layout|
+          fitted_layout.draw(gc)
+        end
       end
 
       def draw_text_cursor
         TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
       end
 
-      def set_styles(fitted_layout)
+      def set_styles_from_options(fitted_layout)
         text_layout = fitted_layout.layout
         text_layout.setJustify @opts[:justify]
         text_layout.setSpacing(@opts[:leading] || 4)
@@ -43,9 +51,8 @@ class Shoes
                                     when 'right'; ::Swt::SWT::RIGHT
                                     else ::Swt::SWT::LEFT
                                   end
-        style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
-        set_font_styles(fitted_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(fitted_layout, style[:fg], style[:bg])
+        style = apply_styles(default_text_styles, @opts)
+        set_style_on_layout(fitted_layout, style, 0..(@dsl.text.length - 1))
       end
 
       private
@@ -78,34 +85,35 @@ class Shoes
         # should not be required any longer.
       end
 
-      def set_text_styles(fitted_layout, foreground, background)
+      def set_styles_from_segments(fitted_layouts)
+        # TODO: Wrong, but keeps us moving forward for now
+        fitted_layout = fitted_layouts.first
 
         @dsl.text_styles.each do |range, text_styles|
-          defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
-          styles = text_styles.inject(defaults) do |current_styles, text|
+          styles = text_styles.inject(default_text_styles) do |current_styles, text|
             if text.is_a? ::Shoes::Span
               apply_styles(current_styles, text.opts)
             else
               make_link_style(fitted_layout, text, current_styles, range)
             end
           end
-          set_font_styles(fitted_layout, styles, range)
+          set_style_on_layout(fitted_layout, styles, range)
         end
       end
 
-      def set_font_styles(fitted_layout, styles, range)
+      def set_style_on_layout(fitted_layout, styles, range)
         font_style = styles[:font_detail]
         font = create_font font_style[:name], font_style[:size], font_style[:styles]
         style = create_style font, styles[:fg], styles[:bg], styles
         fitted_layout.layout.setStyle style, range.first, range.last
       end
 
-      def default_text_styles(foreground, background, strikecolor, undercolor)
+      def default_text_styles
         {
-          :fg          => foreground,
-          :bg          => background,
-          :strikecolor => strikecolor,
-          :undercolor  => undercolor,
+          :fg          => @opts[:fg],
+          :bg          => @opts[:bg],
+          :strikecolor => @opts[:strikecolor],
+          :undercolor  => @opts[:undercolor],
           :font_detail => {
             :name   => @dsl.font,
             :size   => @dsl.font_size,
