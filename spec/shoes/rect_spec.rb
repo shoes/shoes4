@@ -20,6 +20,13 @@ describe Shoes::Rect do
   let(:height) { 333 }
   subject(:rect) { Shoes::Rect.new(app, parent, left, top, width, height) }
 
+  describe '#style' do
+    it 'restyles handed in fill colors (even the weird ones)' do
+      subject.style fill: 'fff'
+      expect(subject.style[:fill]).to eq Shoes::Color.new 255, 255, 255
+    end
+  end
+
   it_behaves_like "basic rect"
   it_behaves_like "object with fill"
   it_behaves_like "object with stroke"

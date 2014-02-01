@@ -15,25 +15,11 @@ class Shoes
     include Common::Style
 
     def color(c)
-      Shoes::Color.create c
+      Shoes::Color::Helpers.color c
     end
 
     def pattern(*args)
-      if args.length == 1
-        arg = args.first
-        case arg
-        when String
-          File.exist?(arg) ? image_pattern(arg) : color(arg)
-        when Shoes::Color
-          color(arg)
-        when Range, Shoes::Gradient
-          gradient(arg)
-        else
-          raise ArgumentError, "Bad pattern: #{arg.inspect}"
-        end
-      else
-        gradient(*args)
-      end
+      Shoes::Color::Helpers.pattern *args
     end
 
     # Set default style for elements of a particular class, or for all
@@ -70,11 +56,7 @@ class Shoes
     end
 
     def normalize_style(orig_style)
-      normalized_style = {}
-      [:fill, :stroke].each do |s|
-        normalized_style[s] = pattern(orig_style[s]) if orig_style[s]
-      end
-      orig_style.merge(normalized_style)
+      Shoes::Common::Style.normalize_style orig_style
     end
 
     # Default styles for elements of klass
@@ -351,26 +333,10 @@ EOS
     # @overload gradient(range)
     #   @param [Range<String>] range min color to max color
     def gradient(*args)
-      case args.length
-      when 1
-        arg = args[0]
-        case arg
-        when Gradient
-          min, max = arg.color1, arg.color2
-        when Range
-          min, max = arg.first, arg.last
-        else
-          raise ArgumentError, "Can't make gradient out of #{arg.inspect}"
-        end
-      when 2
-        min, max = args[0], args[1]
-      else
-        raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
-      end
-      Shoes::Gradient.new(color(min), color(max))
+      Shoes::Color::Helpers.gradient *args
     end
 
-    def image_pattern path
+    def image_pattern(path)
       Shoes::ImagePattern.new path
     end
 
