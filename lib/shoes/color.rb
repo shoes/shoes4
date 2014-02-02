@@ -108,7 +108,7 @@ EOS
       end
     end
 
-    module Helpers
+    module DSLHelpers
       extend self
 
       def pattern(*args)
@@ -116,7 +116,7 @@ EOS
           arg = args.first
           case arg
             when String
-              File.exist?(arg) ? Shoes::ImagePattern.new(arg) : color(arg)
+              File.exist?(arg) ? image_pattern.new(arg) : color(arg)
             when Shoes::Color
               color arg
             when Range, Shoes::Gradient
@@ -133,6 +133,25 @@ EOS
         Shoes::Color.create(arg)
       end
 
+      def rgb(red, green, blue, alpha = Shoes::Color::OPAQUE)
+        Shoes::Color.new(red, green, blue, alpha)
+      end
+
+      # Creates a new Shoes::Gradient
+      #
+      # @overload gradient(from, to)
+      #   @param [Shoes::Color] from the starting color
+      #   @param [Shoes::Color] to the ending color
+      #
+      # @overload gradient(from, to)
+      #   @param [String] from a hex string representing the starting color
+      #   @param [String] to a hex string representing the ending color
+      #
+      # @overload gradient(range)
+      #   @param [Range<Shoes::Color>] range min color to max color
+      #
+      # @overload gradient(range)
+      #   @param [Range<String>] range min color to max color
       def gradient(*args)
         case args.length
           when 1
@@ -151,6 +170,10 @@ EOS
             raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
         end
         Shoes::Gradient.new(color(min), color(max))
+      end
+
+      def image_pattern(path)
+        Shoes::ImagePattern.new path
       end
     end
 

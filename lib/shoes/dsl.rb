@@ -13,14 +13,7 @@ class Shoes
   #                      a hash of default styles for elements of Class,
   module DSL
     include Common::Style
-
-    def color(c)
-      Shoes::Color::Helpers.color c
-    end
-
-    def pattern(*args)
-      Shoes::Color::Helpers.pattern *args
-    end
+    include Color::DSLHelpers
 
     # Set default style for elements of a particular class, or for all
     # elements, or return the current defaults for all elements
@@ -53,10 +46,6 @@ class Shoes
 
     def pop_style(opts)
       opts.last.class == Hash ? opts.pop : {}
-    end
-
-    def normalize_style(orig_style)
-      Shoes::Common::Style.normalize_style orig_style
     end
 
     # Default styles for elements of klass
@@ -310,34 +299,6 @@ EOS
     # Creates a new Shoes::Shape object
     def shape(shape_style = {}, &blk)
       Shoes::Shape.new(@__app__, @__app__.style.merge(shape_style), blk)
-    end
-
-    # Creates a new Shoes::Color object
-    def rgb(red, green, blue, alpha = Shoes::Color::OPAQUE)
-      Shoes::Color.new(red, green, blue, alpha)
-    end
-
-    # Creates a new Shoes::Gradient
-    #
-    # @overload gradient(from, to)
-    #   @param [Shoes::Color] from the starting color
-    #   @param [Shoes::Color] to the ending color
-    #
-    # @overload gradient(from, to)
-    #   @param [String] from a hex string representing the starting color
-    #   @param [String] to a hex string representing the ending color
-    #
-    # @overload gradient(range)
-    #   @param [Range<Shoes::Color>] range min color to max color
-    #
-    # @overload gradient(range)
-    #   @param [Range<String>] range min color to max color
-    def gradient(*args)
-      Shoes::Color::Helpers.gradient *args
-    end
-
-    def image_pattern(path)
-      Shoes::ImagePattern.new path
     end
 
     # Sets the current stroke color
