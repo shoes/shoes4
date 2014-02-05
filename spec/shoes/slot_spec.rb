@@ -8,7 +8,8 @@ describe Shoes::Slot do
   let(:top) { 66 }
   let(:width) { 111 }
   let(:height) { 333 }
-  subject(:slot) { Shoes::Slot.new(app, parent, left: left, top: top, width: width, height: height) }
+  let(:input_opts) { {left: left, top: top, width: width, height: height} }
+  subject(:slot) { Shoes::Slot.new(app, parent, input_opts) }
 
   it_behaves_like "object with dimensions"
 
@@ -35,26 +36,25 @@ describe Shoes::Slot do
     end
 
     it 'sends remove to all children' do
-      subject.contents.each do |element|
+      slot.contents.each do |element|
         expect(element).to receive(:remove).and_call_original
       end
-      subject.clear
+      slot.clear
     end
 
     it 'removes everything' do
-      subject.clear
-      expect(subject.contents).to be_empty
+      slot.clear
+      expect(slot.contents).to be_empty
     end
 
     describe 'with a block' do
       before :each do
-        subject.clear {add_text_block}
+        slot.clear {add_text_block}
       end
 
       it 'has one element afterwards' do
-        expect(subject.contents.size).to eq 1
+        expect(slot.contents.size).to eq 1
       end
     end
-
   end
 end
