@@ -374,7 +374,7 @@ EOS
 
     TEXT_STYLES.keys.each do |method|
       define_method method do |*texts|
-        style = normalize_style(pop_style(texts))
+        style = style_normalizer.normalize(pop_style(texts))
         opts = TEXT_STYLES[method].merge(style)
         Shoes::Span.new texts, opts
       end
