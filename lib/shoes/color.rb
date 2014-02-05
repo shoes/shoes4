@@ -109,8 +109,6 @@ EOS
     end
 
     module DSLHelpers
-      extend self
-
       def pattern(*args)
         if args.length == 1
           arg = args.first

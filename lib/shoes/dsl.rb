@@ -44,6 +44,10 @@ class Shoes
 
     private
 
+    def style_normalizer
+      @style_normalizer ||= Common::StyleNormalizer.new
+    end
+
     def pop_style(opts)
       opts.last.class == Hash ? opts.pop : {}
     end
@@ -68,7 +72,7 @@ class Shoes
     end
 
     def background(color, opts = {}, &blk)
-      create Shoes::Background, pattern(color), normalize_style(opts), blk
+      create Shoes::Background, pattern(color), style_normalizer.normalize(opts), blk
     end
 
     def edit_line(*args, &blk)
@@ -175,7 +179,7 @@ class Shoes
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      arc_style = normalize_style(opts)
+      arc_style = style_normalizer.normalize(opts)
       create Shoes::Arc, left, top, width, height, angle1, angle2, style.merge(arc_style)
     end
 
@@ -213,7 +217,7 @@ class Shoes
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts, &blk)
-      oval_style = normalize_style pop_style(opts)
+      oval_style = style_normalizer.normalize pop_style(opts)
       case opts.length
         when 3
           left, top, width = opts
@@ -261,7 +265,7 @@ EOS
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
     def rect(*args, &blk)
-      opts = normalize_style pop_style(args)
+      opts = style_normalizer.normalize pop_style(args)
       case args.length
       when 3
         left, top, width = args
@@ -292,7 +296,7 @@ EOS
     end
 
     def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
-      opts = normalize_style opts
+      opts = style_normalizer.normalize opts
       create Shoes::Star, left, top, points, outer, inner, opts, &blk
     end
 
@@ -387,7 +391,7 @@ EOS
     end
 
     def span *texts
-      Shoes::Span.new texts, normalize_style(pop_style(texts))
+      Shoes::Span.new texts, style_normalizer.normalize(pop_style(texts))
     end
 
     def mouse

@@ -12,19 +12,9 @@ class Shoes
         @style
       end
 
-      def normalize_style(orig_style)
-        normalized_style = {}
-        [:fill, :stroke].each do |s|
-          if orig_style[s]
-            normalized_style[s] = Shoes::Color::DSLHelpers.pattern(orig_style[s])
-          end
-        end
-        orig_style.merge(normalized_style)
-      end
-
       private
       def change_style(new_styles)
-        normalized_style = normalize_style new_styles
+        normalized_style = StyleNormalizer.new.normalize new_styles
         @style.merge! normalized_style
       end
     end
