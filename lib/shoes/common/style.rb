@@ -14,7 +14,8 @@ class Shoes
 
       private
       def change_style(new_styles)
-        @style.merge! new_styles
+        normalized_style = StyleNormalizer.new.normalize new_styles
+        @style.merge! normalized_style
       end
     end
   end
