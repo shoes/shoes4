@@ -17,6 +17,18 @@ class Shoes
         @layout.text
       end
 
+      def style_from(default_text_styles, opts)
+        layout.justify = opts[:justify]
+        layout.spacing = (opts[:leading] || 4)
+        layout.alignment = case opts[:align]
+                             when 'center'; ::Swt::SWT::CENTER
+                             when 'right'; ::Swt::SWT::RIGHT
+                             else ::Swt::SWT::LEFT
+                           end
+
+        set_style(TextStyleFactory.apply_styles(default_text_styles, opts))
+      end
+
       def set_style(styles, range=nil)
         range ||= 0..(text.length - 1)
         font_style = styles[:font_detail]

@@ -10,6 +10,12 @@ class Shoes
         @layouts = layouts
       end
 
+      def style_from(default_text_styles, opts)
+        @layouts.each do |layout|
+          layout.style_from(default_text_styles, opts)
+        end
+      end
+
       def draw(graphic_context)
         @layouts.each do |layout|
           layout.draw(graphic_context)

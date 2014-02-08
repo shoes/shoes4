@@ -13,9 +13,8 @@ describe Shoes::Swt::TextBlockPainter do
                      text_styles: {}, :hidden? => false).as_null_object
             }
 
-  let(:fitted_layout) { double("fitted layout", left: 0, top: 10,
-                               draw: nil, layout: text_layout) }
-  let(:text_layout) { double("text layout").as_null_object }
+  let(:fitted_layout) { Shoes::Swt::FittedTextLayout.new(text_layout, 0, 10) }
+  let(:text_layout) { double("text layout", text: "text").as_null_object }
 
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style) }
@@ -34,22 +33,22 @@ describe Shoes::Swt::TextBlockPainter do
   end
 
   it "sets justify" do
-    expect(text_layout).to receive(:setJustify).with(opts[:justify])
+    expect(text_layout).to receive(:justify=).with(opts[:justify])
     subject.paintControl(event)
   end
 
   it "sets spacing" do
-    expect(text_layout).to receive(:setSpacing).with(opts[:leading])
+    expect(text_layout).to receive(:spacing=).with(opts[:leading])
     subject.paintControl(event)
   end
 
   it "sets alignment" do
-    expect(text_layout).to receive(:setAlignment).with(anything)
+    expect(text_layout).to receive(:alignment=).with(anything)
     subject.paintControl(event)
   end
 
   it "sets text styles" do
-    expect(text_layout).to receive(:setStyle).with(anything, anything, anything).at_least(1).times
+    expect(text_layout).to receive(:set_style).with(anything, anything, anything).at_least(1).times
     subject.paintControl(event)
   end
 

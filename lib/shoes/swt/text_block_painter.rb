@@ -20,51 +20,20 @@ class Shoes
         return if @dsl.hidden?
 
         fitted_layouts = @dsl.gui.fitted_layouts
-        style_layouts(fitted_layouts)
-        draw_layouts(paint_event.gc, fitted_layouts)
-        draw_text_cursor
-      end
+        layouts = FittedTextLayoutCollection.new(fitted_layouts)
 
-      def style_layouts(fitted_layouts)
-        fitted_layouts.each do |fitted_layout|
-          set_styles_from_options(fitted_layout)
-        end
         set_styles_from_segments(fitted_layouts)
-      end
 
-      def draw_layouts(gc, fitted_layouts)
-        fitted_layouts.each do |fitted_layout|
-          fitted_layout.draw(gc)
-        end
+        layouts.style_from(default_text_styles, @opts)
+        layouts.draw(paint_event.gc)
+        draw_text_cursor
       end
 
       def draw_text_cursor
         TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
       end
 
-      def set_styles_from_options(fitted_layout)
-        text_layout = fitted_layout.layout
-        text_layout.setJustify @opts[:justify]
-        text_layout.setSpacing(@opts[:leading] || 4)
-        text_layout.setAlignment case @opts[:align]
-                                    when 'center'; ::Swt::SWT::CENTER
-                                    when 'right'; ::Swt::SWT::RIGHT
-                                    else ::Swt::SWT::LEFT
-                                  end
-        style = apply_styles(default_text_styles, @opts)
-        set_style_on_layout(fitted_layout, style, 0..(@dsl.text.length - 1))
-      end
-
       private
-
-      def apply_styles(styles, opts)
-        styles[:font_detail][:styles] = parse_font_style(opts)
-        styles[:font_detail][:name] = opts[:font] if opts[:font]
-        styles[:fg] = opts[:stroke]
-        styles[:bg] = opts[:fill]
-        styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
-        styles.merge(opts)
-      end
 
       def create_link(fitted_layout, text, range)
         layout = fitted_layout.layout
@@ -92,7 +61,7 @@ class Shoes
         @dsl.text_styles.each do |range, text_styles|
           styles = text_styles.inject(default_text_styles) do |current_styles, text|
             if text.is_a? ::Shoes::Span
-              apply_styles(current_styles, text.opts)
+              TextStyleFactory.apply_styles(current_styles, text.opts)
             else
               make_link_style(fitted_layout, text, current_styles, range)
             end
@@ -131,14 +100,6 @@ class Shoes
         styles
       end
 
-      def parse_font_style(opts)
-        font_styles = []
-        font_styles << ::Swt::SWT::BOLD if opts[:weight]
-        font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
-        font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
-        font_styles
-      end
-
       def create_font(name, size, styles)
         TextFontFactory.create_font(name, size, styles)
       end
@@ -153,13 +114,14 @@ class Shoes
         #TODO: mark font for garbage collection
         ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
       end
+
     end
 
     module TextStyleFactory
       UNDERLINE_STYLES = {
-          "single" => 0,
-          "double" => 1,
-          "error" => 2,
+        "single" => 0,
+        "double" => 1,
+        "error" => 2,
       }
 
       def self.create_style(font, foreground, background, opts)
@@ -172,6 +134,23 @@ class Shoes
         set_strikethrough(opts)
         set_strikecolor(opts)
         @style
+      end
+
+      def self.apply_styles(styles, opts)
+        styles[:font_detail][:styles] = parse_font_style(opts)
+        styles[:font_detail][:name] = opts[:font] if opts[:font]
+        styles[:fg] = opts[:stroke]
+        styles[:bg] = opts[:fill]
+        styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
+        styles.merge(opts)
+      end
+
+      def self.parse_font_style(opts)
+        font_styles = []
+        font_styles << ::Swt::SWT::BOLD if opts[:weight]
+        font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
+        font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
+        font_styles
       end
 
       attr_reader :style
