@@ -140,12 +140,18 @@ class Shoes
       end
 
       def create_font(name, size, styles)
-        #TODO: mark font for garbage collection
-        ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
+        TextFontFactory.create_font(name, size, styles)
       end
 
       def create_style(font, foreground, background, opts)
         TextStyleFactory.create_style(font, foreground, background, opts)
+      end
+    end
+
+    module TextFontFactory
+      def self.create_font(name, size, styles)
+        #TODO: mark font for garbage collection
+        ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
       end
     end
 
