@@ -22,7 +22,7 @@ class Shoes
       SPECIAL_KEY_NAMES[::Swt::SWT::ESC] = "escape"
       SPECIAL_KEY_NAMES[::Swt::SWT::CR]  = "\n"
 
-      MODIFIER_KEYS = %w[CTRL SHIFT ALT CAPS_LOCK].map do |key|
+      MODIFIER_KEYS = %w[CTRL SHIFT ALT CAPS_LOCK COMMAND].map do |key|
         get_swt_constant key
       end
 
