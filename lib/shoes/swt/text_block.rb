@@ -12,10 +12,11 @@ class Shoes
       attr_accessor :fitted_layouts
 
       def initialize(dsl)
-        @dsl = dsl
-        @app = dsl.app.gui
-        @opts = @dsl.opts
-        @painter = TextBlockPainter.new @dsl
+        @dsl            = dsl
+        @app            = dsl.app.gui
+        @opts           = @dsl.opts
+        @fitted_layouts = []
+        @painter        = TextBlockPainter.new @dsl
         @app.add_paint_listener @painter
       end
 
