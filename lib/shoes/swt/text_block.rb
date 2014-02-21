@@ -109,10 +109,8 @@ class Shoes
         clear_links
       end
 
-      def replace *values
+      def replace(*values)
         clear_links
-        # TODO We should never use instance_variable_set rather an accessor
-        @dsl.instance_variable_set :@text, values.map(&:to_s).join
         @dsl.update_text_styles(values)
       end
 

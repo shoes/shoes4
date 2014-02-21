@@ -41,10 +41,11 @@ class Shoes
     end
 
     def text=(*values)
-      @gui.replace *values[0]
+      replace *values[0]
     end
 
-    def replace *values
+    def replace(*values)
+      @text = values.map(&:to_s).join
       @gui.replace *values
     end
 
