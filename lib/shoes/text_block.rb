@@ -70,15 +70,6 @@ class Shoes
       @absolute_right
     end
 
-    def absolute_top=(value)
-      @absolute_top = value
-    end
-
-    def absolute_top
-      return @dimensions.absolute_top if @absolute_top.nil?
-      @absolute_top
-    end
-
     def absolute_bottom=(value)
       @absolute_bottom = value
     end
