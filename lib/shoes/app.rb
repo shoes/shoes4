@@ -122,6 +122,14 @@ class Shoes
       started? ? gui.height : @height
     end
 
+    def element_width
+      width
+    end
+
+    def element_height
+      height
+    end
+
     def font(path = Shoes::DEFAULT_TEXTBLOCK_FONT) 
       app.font path
     end
