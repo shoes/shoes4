@@ -227,7 +227,7 @@ class Shoes
     end
 
     def calculate_relative(name, result)
-      (result * @parent.send(name)).to_i
+      (result * @parent.public_send('element_' + name.to_s)).to_i
     end
 
     PERCENT_REGEX = /(-?\d+(\.\d+)*)%/

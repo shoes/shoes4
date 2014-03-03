@@ -5,6 +5,7 @@ describe Shoes::Swt::TextBlockFitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
                      absolute_left: 25, absolute_top: 75,
                      desired_width: 85,
+                     element_left: 26, element_top: 76,
                      margin_left: 1, margin_top: 1) }
 
   let(:parent_dsl) { double('parent_dsl',

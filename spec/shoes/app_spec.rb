@@ -85,6 +85,14 @@ describe Shoes::App do
           internal_app.resizable.should be_false
         end
       end
+
+      it 'initializes a flow with the right parameters' do
+        expect(Shoes::Flow).to receive(:new).with(anything, anything,
+                                                  {width:  opts[:width],
+                                                   height: opts[:height]}).
+                                                  and_call_original
+        subject
+      end
     end
 
     context "when registering" do

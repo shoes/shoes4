@@ -103,6 +103,25 @@ describe Shoes::Dimensions do
           subject.height.should be_within(1).of 400
         end
       end
+
+      describe 'a parent with margins' do
+        let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
+                                            parent_width, parent_height,
+                                            margin: 20}
+        subject {Shoes::Dimensions.new parent, left, top, 1.0, 1.0}
+
+
+        it 'uses the element_width to calculate its own relative width' do
+          expect(subject.width).to eq parent.element_width
+        end
+
+        it 'has a smaller width than the parent element (due to margins)' do
+          expect(subject.width).to be < parent.width
+        end
+
+        its(:height) {should eq parent.element_height}
+      end
+
     end
 
     describe 'with percentages' do
