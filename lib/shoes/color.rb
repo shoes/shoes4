@@ -342,11 +342,14 @@ EOS
     colors.each do |c, r, g, b|
       Shoes::COLORS[c] = Shoes::Color.new(r, g, b)
       define_method(c) do |alpha = Shoes::Color::OPAQUE|
-      color = Shoes::COLORS.fetch(c)
-      return color if alpha == Shoes::Color::OPAQUE
-      Shoes::Color.new(color.red, color.green, color.blue, alpha)
+        color = Shoes::COLORS.fetch(c)
+        return color if alpha == Shoes::Color::OPAQUE
+        Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
     end
 
+    def gray(level = 128, alpha = Shoes::Color::OPAQUE)
+      Shoes::Color.new(level, level, level, alpha)
+    end
   end
 end
