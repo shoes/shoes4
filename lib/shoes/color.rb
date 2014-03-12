@@ -332,10 +332,10 @@ EOS
       [:shoes_background, 253, 253, 253],
     ]
 
-    colors.each do |color, r, g, b|
-      Shoes::COLORS[color] = Shoes::Color.new(r, g, b)
-      define_method(color) do |alpha = Shoes::Color::OPAQUE|
-        color = Shoes::COLORS.fetch(color)
+    colors.each do |color_name, r, g, b|
+      Shoes::COLORS[color_name] = Shoes::Color.new(r, g, b)
+      define_method(color_name) do |alpha = Shoes::Color::OPAQUE|
+        color = Shoes::COLORS.fetch(color_name)
         return color if alpha == Shoes::Color::OPAQUE
         Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
