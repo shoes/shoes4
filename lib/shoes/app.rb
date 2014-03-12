@@ -87,7 +87,7 @@ class Shoes
                         :height     => 500,
                         :title      => "Shoes 4",
                         :resizable  => true,
-                        :background => Shoes::COLORS[:white] }.freeze
+                        :background => Shoes::COLORS[:gray93] }.freeze
 
     def initialize(app, opts, &blk)
       @app = app
