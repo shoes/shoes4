@@ -329,7 +329,7 @@ EOS
       [:whitesmoke, 245, 245, 245],
       [:yellow, 255, 255, 0],
       [:yellowgreen, 154, 205, 50],
-      [:shoes_background, 253, 253, 253],
+      [:shoes_background, 237, 237, 237],
     ]
 
     colors.each do |color_name, r, g, b|
