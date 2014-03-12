@@ -331,6 +331,7 @@ EOS
       [:yellowgreen, 154, 205, 50],
     ]
 
+    # TODO: gray0..100 documentation in the manual
     (0..100).each do |n|
       percent = n.to_f/100.0
       rgb_val = (255.0 * percent).round
@@ -339,13 +340,17 @@ EOS
     end
 
 
-    colors.each do |c, r, g, b|
-      Shoes::COLORS[c] = Shoes::Color.new(r, g, b)
-      define_method(c) do |alpha = Shoes::Color::OPAQUE|
-      color = Shoes::COLORS.fetch(c)
-      return color if alpha == Shoes::Color::OPAQUE
-      Shoes::Color.new(color.red, color.green, color.blue, alpha)
+    colors.each do |color, r, g, b|
+      Shoes::COLORS[color] = Shoes::Color.new(r, g, b)
+      define_method(color) do |alpha = Shoes::Color::OPAQUE|
+        color = Shoes::COLORS.fetch(color)
+        return color if alpha == Shoes::Color::OPAQUE
+        Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
+    end
+
+    def gray(level = 128, alpha = Shoes::Color::OPAQUE)
+      Shoes::Color.new(level, level, level, alpha)
     end
 
   end
