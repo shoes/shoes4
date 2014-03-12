@@ -268,6 +268,11 @@ describe "Shoes built in gray" do
   specify "float parameters should be normalised" do
     app.gray(1.0, 0.5).should eq(Shoes::Color.new( 255, 255, 255, 128 ))
   end
+
+  it 'hangles 0.93 right as well' do
+    result_93 = (0.93 * 255).to_i
+    expect(app.gray(0.93)).to eq(Shoes::Color.new(result_93, result_93, result_93))
+  end
 end
 
 # Differences between this implementation and Red Shoes
