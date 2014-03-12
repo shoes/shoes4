@@ -231,8 +231,8 @@ describe Shoes::Color do
 end
 
 describe "Shoes built-in colors" do
-  specify "there are 140" do
-    Shoes::COLORS.length.should eq(140)
+  specify "there are 349" do
+    Shoes::COLORS.length.should eq(349)
   end
 
   class MockApp
