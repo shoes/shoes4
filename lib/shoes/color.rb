@@ -207,6 +207,7 @@ EOS
       [:darkcyan, 0, 139, 139],
       [:darkgoldenrod, 184, 134, 11],
       [:darkgray, 169, 169, 169],
+      [:darkgrey, 169, 169, 169],
       [:darkgreen, 0, 100, 0],
       [:darkkhaki, 189, 183, 107],
       [:darkmagenta, 139, 0, 139],
@@ -218,11 +219,13 @@ EOS
       [:darkseagreen, 143, 188, 143],
       [:darkslateblue, 72, 61, 139],
       [:darkslategray, 47, 79, 79],
+      [:darkslategrey, 47, 79, 79],
       [:darkturquoise, 0, 206, 209],
       [:darkviolet, 148, 0, 211],
       [:deeppink, 255, 20, 147],
       [:deepskyblue, 0, 191, 255],
       [:dimgray, 105, 105, 105],
+      [:dimgrey, 105, 105, 105],
       [:dodgerblue, 30, 144, 255],
       [:firebrick, 178, 34, 34],
       [:floralwhite, 255, 250, 240],
@@ -233,6 +236,7 @@ EOS
       [:gold, 255, 215, 0],
       [:goldenrod, 218, 165, 32],
       [:gray, 128, 128, 128],
+      [:grey, 128, 128, 128],
       [:green, 0, 128, 0],
       [:greenyellow, 173, 255, 47],
       [:honeydew, 240, 255, 240],
@@ -251,11 +255,13 @@ EOS
       [:lightgoldenrodyellow, 250, 250, 210],
       [:lightgreen, 144, 238, 144],
       [:lightgray, 211, 211, 211],
+      [:lightgrey, 211, 211, 211],
       [:lightpink, 255, 182, 193],
       [:lightsalmon, 255, 160, 122],
       [:lightseagreen, 32, 178, 170],
       [:lightskyblue, 135, 206, 250],
       [:lightslategray, 119, 136, 153],
+      [:lightslategrey, 119, 136, 153],
       [:lightsteelblue, 176, 196, 222],
       [:lightyellow, 255, 255, 224],
       [:lime, 0, 255, 0],
@@ -308,6 +314,7 @@ EOS
       [:skyblue, 135, 206, 235],
       [:slateblue, 106, 90, 205],
       [:slategray, 112, 128, 144],
+      [:slategrey, 112, 128, 144],
       [:snow, 255, 250, 250],
       [:springgreen, 0, 255, 127],
       [:steelblue, 70, 130, 180],
@@ -324,17 +331,22 @@ EOS
       [:yellowgreen, 154, 205, 50],
     ]
 
+    (0..100).each do |n|
+      percent = n.to_f/100.0
+      rgb_val = (255.0 * percent).round
+      colors << ["gray#{n}".to_sym, rgb_val, rgb_val, rgb_val]
+      colors << ["grey#{n}".to_sym, rgb_val, rgb_val, rgb_val]
+    end
+
+
     colors.each do |c, r, g, b|
       Shoes::COLORS[c] = Shoes::Color.new(r, g, b)
       define_method(c) do |alpha = Shoes::Color::OPAQUE|
-        color = Shoes::COLORS.fetch(c)
-        return color if alpha == Shoes::Color::OPAQUE
-        Shoes::Color.new(color.red, color.green, color.blue, alpha)
+      color = Shoes::COLORS.fetch(c)
+      return color if alpha == Shoes::Color::OPAQUE
+      Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
     end
 
-    def gray(level = 128, alpha = Shoes::Color::OPAQUE)
-      Shoes::Color.new(level, level, level, alpha)
-    end
   end
 end
