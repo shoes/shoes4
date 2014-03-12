@@ -269,6 +269,10 @@ describe "Shoes built in gray" do
     result_93 = (0.93 * 255).to_i
     expect(app.gray(0.93)).to eq(Shoes::Color.new(result_93, result_93, result_93))
   end
+
+  it 'also has a grey alias for our BE friends' do
+    expect(app).to respond_to :grey
+  end
 end
 
 # Differences between this implementation and Red Shoes

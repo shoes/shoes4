@@ -345,5 +345,7 @@ EOS
       Shoes::Color.new(level, level, level, alpha)
     end
 
+    alias_method :grey, :gray
+
   end
 end
