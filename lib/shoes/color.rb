@@ -329,16 +329,8 @@ EOS
       [:whitesmoke, 245, 245, 245],
       [:yellow, 255, 255, 0],
       [:yellowgreen, 154, 205, 50],
+      [:shoes_background, 253, 253, 253],
     ]
-
-    # TODO: gray0..100 documentation in the manual
-    (0..100).each do |n|
-      percent = n.to_f/100.0
-      rgb_val = (255.0 * percent).round
-      colors << ["gray#{n}".to_sym, rgb_val, rgb_val, rgb_val]
-      colors << ["grey#{n}".to_sym, rgb_val, rgb_val, rgb_val]
-    end
-
 
     colors.each do |color, r, g, b|
       Shoes::COLORS[color] = Shoes::Color.new(r, g, b)
