@@ -558,14 +558,31 @@ describe Shoes::Dimensions do
   
   describe Shoes::ParentDimensions do
     describe 'takes parent values if not specified' do
+      let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
+                                          parent_width, parent_height,
+                                          margin: 20}
       subject {Shoes::ParentDimensions.new parent}
 
       its(:left) {should eq parent.left}
       its(:top) {should eq parent.top}
       its(:width) {should eq parent.width}
       its(:height) {should eq parent.height}
-      its(:absolute_left) {should eq parent.absolute_left}
-      its(:absolute_top) {should eq parent.absolute_top}
+      its(:margin_left) {should eq parent.margin_left}
+      its(:margin_top) {should eq parent.margin_top}
+      its(:margin_right) {should eq parent.margin_right}
+      its(:margin_bottom) {should eq parent.margin_bottom}
+
+      context 'with parent absolute_left/top set' do
+        before :each do
+          parent.absolute_left = left
+          parent.absolute_top  = top
+        end
+
+        its(:absolute_left) {should eq parent.absolute_left}
+        its(:absolute_top) {should eq parent.absolute_top}
+        its(:element_left) {should eq parent.element_left}
+        its(:element_top) {should eq parent.element_top}
+      end
     end
 
     describe 'otherwise it takes its own values' do
