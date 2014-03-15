@@ -22,6 +22,14 @@ class Shoes
         end
       end
 
+      def set_styles_from_segments(styles)
+        styles.each do |range, style|
+          ranges_for(range).each do |layout, inner_range|
+            layout.style(inner_range, style.opts)
+          end
+        end
+      end
+
       # If we've got segments that style us across different ranges, it might
       # be in either, or both, of the layouts. This method figures out which
       # layouts apply, and what the relative ranges within each layout to use.
