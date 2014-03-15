@@ -592,6 +592,16 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
+
+      it 'can also still handle special values like a negative width' do
+        subject.width = -10
+        expect(subject.width).to eq (parent.width - 10)
+      end
+
+      it 'can also still handle special values like a relative height' do
+        subject.height = 0.8
+        expect(subject.height).to be_within(1).of(0.8 * parent.height)
+      end
     end
   end
 end
