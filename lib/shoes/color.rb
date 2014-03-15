@@ -114,7 +114,7 @@ EOS
           arg = args.first
           case arg
             when String
-              File.exist?(arg) ? image_pattern.new(arg) : color(arg)
+              File.exist?(arg) ? image_pattern(arg) : color(arg)
             when Shoes::Color
               color arg
             when Range, Shoes::Gradient
