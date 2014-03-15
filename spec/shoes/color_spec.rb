@@ -363,5 +363,24 @@ describe Shoes::Color::DSLHelpers do
       image_pattern = subject.pattern(my_path)
       expect(image_pattern.path).to eq my_path
     end
+
+    it 'raises an argument error for bad input like a single number' do
+      expect {subject.pattern(1)}.to raise_error(ArgumentError)
+    end
+
+    it 'creates a gradient given 2 arguments' do
+      expect(subject).to receive(:gradient)
+      subject.pattern([10, 10, 10], [30, 30, 30])
+    end
+  end
+
+  describe '#gradient' do
+    it 'raises an argument error for no arguments supplied' do
+      expect{subject.gradient}.to raise_error ArgumentError
+    end
+
+    it 'raises an argument error for too many (> 2) args supplied' do
+      expect{subject.gradient 1, 2, 3}.to raise_error ArgumentError
+    end
   end
 end
