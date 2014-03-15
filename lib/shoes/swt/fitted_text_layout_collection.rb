@@ -6,11 +6,14 @@ class Shoes
       extend Forwardable
       def_delegators :@layouts, :length
 
-      def initialize(layouts)
+      attr_reader :default_text_styles
+
+      def initialize(layouts, default_text_styles)
         @layouts = layouts
+        @default_text_styles = default_text_styles
       end
 
-      def style_from(default_text_styles, opts)
+      def style_from(opts)
         @layouts.each do |layout|
           layout.style_from(default_text_styles, opts)
         end
@@ -22,11 +25,18 @@ class Shoes
         end
       end
 
-      def set_styles_from_segments(styles)
-        styles.each do |range, style|
+      def set_styles_from_segments(styles_by_range)
+        styles_by_range.each do |range, styles|
+          style = calculate_style(styles)
           ranges_for(range).each do |layout, inner_range|
-            layout.style(inner_range, style.opts)
+            layout.set_style(style, inner_range)
           end
+        end
+      end
+
+      def calculate_style(styles)
+        styles.inject(default_text_styles) do |current_style, style|
+          TextStyleFactory.apply_styles(current_style, style.opts)
         end
       end
 
