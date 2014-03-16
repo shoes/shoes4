@@ -21,11 +21,10 @@ class Shoes
 
         fitted_layouts = @dsl.gui.fitted_layouts
         layouts = FittedTextLayoutCollection.new(fitted_layouts, default_text_styles)
-
-        set_styles_from_segments(fitted_layouts)
-
         layouts.style_from(@opts)
+        layouts.style_segment_ranges(@dsl.text_styles)
         layouts.draw(paint_event.gc)
+
         draw_text_cursor
       end
 

@@ -25,7 +25,7 @@ class Shoes
         end
       end
 
-      def set_styles_from_segments(styles_by_range)
+      def style_segment_ranges(styles_by_range)
         styles_by_range.each do |range, styles|
           style = calculate_style(styles)
           ranges_for(range).each do |layout, inner_range|
