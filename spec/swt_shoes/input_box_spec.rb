@@ -21,6 +21,7 @@ describe Shoes::Swt::InputBox do
   it_behaves_like "movable element"
   it_behaves_like "clearable native element"
   it_behaves_like "togglable"
+  it_behaves_like "scrollable"
 
   describe "#initialize" do
     let(:event) {double 'Event', source: source}
