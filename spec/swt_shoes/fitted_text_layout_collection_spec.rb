@@ -35,6 +35,12 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       subject.style_segment_ranges(styles)
       expect(first_layout).to have_received(:set_style).with(style_with(stroke: :blue, fg: :blue), 0..1)
     end
+
+    it "only gets default styling if segment is missing opts" do
+      styles = [[0..1, [double("segment")]]]
+      subject.style_segment_ranges(styles)
+      expect(first_layout).to have_received(:set_style).with(default_text_styles, 0..1)
+    end
   end
 
   context "with two layouts" do

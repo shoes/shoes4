@@ -36,7 +36,12 @@ class Shoes
 
       def calculate_style(styles)
         styles.inject(default_text_styles) do |current_style, style|
-          TextStyleFactory.apply_styles(current_style, style.opts)
+          if style.respond_to?(:opts)
+            TextStyleFactory.apply_styles(current_style, style.opts)
+          else
+            # Didn't know how to style from the element, so punt
+            current_style
+          end
         end
       end
 
