@@ -33,7 +33,9 @@ describe Shoes::Swt::FittedTextLayoutCollection do
     it "applies segment styling" do
       styles = [[0..1, [double("segment", opts:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
-      expect(first_layout).to have_received(:set_style).with(style_with(stroke: :blue, fg: :blue), 0..1)
+
+      expected_style = style_with(stroke: :blue, fg: :blue)
+      expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
     end
 
     it "only gets default styling if segment is missing opts" do
@@ -77,22 +79,28 @@ describe Shoes::Swt::FittedTextLayoutCollection do
     it "applies segment styling in first layout" do
       styles = [[0..2, [double("segment", opts:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
-      expect(first_layout).to have_received(:set_style).with(style_with(stroke: :blue, fg: :blue), 0..2)
+
+      expected_style = style_with(stroke: :blue, fg: :blue)
+      expect(first_layout).to have_received(:set_style).with(expected_style, 0..2)
       expect(second_layout).to_not have_received(:set_style)
     end
 
     it "applies segment styling in second layout" do
       styles = [[5..7, [double("segment", opts:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
+
+      expected_style = style_with(stroke: :blue, fg: :blue)
       expect(first_layout).to_not have_received(:set_style)
-      expect(second_layout).to have_received(:set_style).with(style_with(stroke: :blue, fg: :blue), 0..2)
+      expect(second_layout).to have_received(:set_style).with(expected_style, 0..2)
     end
 
     it "applies segment styling in both layouts" do
       styles = [[2..7, [double("segment", opts:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
-      expect(first_layout).to have_received(:set_style).with(style_with(stroke: :blue, fg: :blue), 2..5)
-      expect(second_layout).to have_received(:set_style).with(style_with(stroke: :blue, fg: :blue), 0..2)
+
+      expected_style = style_with(stroke: :blue, fg: :blue)
+      expect(first_layout).to have_received(:set_style).with(expected_style, 2..5)
+      expect(second_layout).to have_received(:set_style).with(expected_style, 0..2)
     end
   end
 
