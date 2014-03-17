@@ -52,8 +52,8 @@ class Shoes
 
       def fit_as_one_layout(layout)
         [FittedTextLayout.new(layout,
-                              @dsl.absolute_left + @dsl.margin_left,
-                              @dsl.absolute_top + @dsl.margin_top)]
+                              @dsl.element_left,
+                              @dsl.element_top)]
       end
 
       def fit_as_two_layouts(layout, height, width)
@@ -67,16 +67,16 @@ class Shoes
 
         [
           FittedTextLayout.new(first_layout,
-                               @dsl.absolute_left + @dsl.margin_left,
-                               @dsl.absolute_top + @dsl.margin_top),
+                               @dsl.element_left,
+                               @dsl.element_top),
           FittedTextLayout.new(second_layout,
                                 parent.absolute_left + @dsl.margin_left,
-                                @dsl.absolute_top + @dsl.margin_top + first_height)
+                                @dsl.element_top + first_height)
         ]
       end
 
       def generate_second_layout(second_text)
-        second_layout = generate_layout(@dsl.containing_width, second_text)
+        generate_layout(@dsl.containing_width, second_text)
       end
 
       def available_space

@@ -11,14 +11,6 @@ describe Shoes::Configuration do
         Shoes.logger.instance_of?(Shoes::Logger::Ruby).should == true
       end
     end
-
-    describe ":log4j" do
-      before { Shoes.configuration.logger = :log4j }
-
-      it "uses Log4j" do
-        Shoes.logger.instance_of?(Shoes::Logger::Log4j).should == true
-      end
-    end
   end
 
   describe "backend" do

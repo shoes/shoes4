@@ -13,7 +13,10 @@ end
 describe Shoes::Border do
   include_context "dsl app"
   let(:parent) { double 'parent', absolute_left: left, absolute_top: top,
-                 width: width, height: height, add_child: true }
+                 width: width, height: height, add_child: true,
+                 element_width: width, element_height: height,
+                 margin_left: 0, margin_top: 0, margin_right: 0,
+                 margin_bottom: 0}
   let(:opts){ {left: left, top: top, width: width, height: height} }
 
   let(:left) { 10 }

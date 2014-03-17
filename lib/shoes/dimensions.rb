@@ -32,10 +32,10 @@
 
 class Shoes
   class Dimensions
-    attr_writer   :width, :height
+    attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
+                  :margin_bottom
     attr_reader   :parent
-    attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
-                  :margin_top, :margin_bottom
+    attr_accessor :absolute_left, :absolute_top
     protected :parent # we shall not mess with parent,see #495
 
 
@@ -198,13 +198,20 @@ class Shoes
     end
 
     def init_margins(opts)
-      margin = opts.fetch(:margin, 0)
-      margin = [margin, margin, margin, margin] if margin.is_a? Integer
+      margin = opts[:margin]
+      margin = [margin, margin, margin, margin] unless margin.is_a? Array
       margin_left, margin_top, margin_right, margin_bottom = margin
       @margin_left   = opts.fetch(:margin_left, margin_left)
       @margin_top    = opts.fetch(:margin_top, margin_top)
       @margin_right  = opts.fetch(:margin_right, margin_right)
       @margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
+    end
+
+    [:margin_left, :margin_top, :margin_right, :margin_bottom].each do |method|
+      define_method method do
+        instance_variable_name = ('@' + method.to_s).to_sym
+        instance_variable_get(instance_variable_name) || 0
+      end
     end
 
     def general_options(opts)
@@ -227,7 +234,7 @@ class Shoes
     end
 
     def calculate_relative(name, result)
-      (result * @parent.send(name)).to_i
+      (result * @parent.public_send('element_' + name.to_s)).to_i
     end
 
     PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
@@ -305,38 +312,28 @@ class Shoes
     end
   end
 
-  # for objects that are more defined by their parents
+  # for objects that are more defined by their parents, delegates method calls
+  # to crucial methods to the parent if the instance variable isn't set
   class ParentDimensions < Dimensions
-    def left
-      if @left
-        super
-      else
-        parent.left
+
+    SIMPLE_DELEGATE_METHODS = [:width, :height, :absolute_left, :absolute_top,
+                               :margin_left, :margin_top, :margin_right,
+                               :margin_bottom, :top, :left]
+
+    SIMPLE_DELEGATE_METHODS.each do |method|
+      define_method method do
+        if value_modified?(method)
+          super
+        else
+          parent.public_send(method)
+        end
       end
     end
 
-    def top
-      if @top
-        super
-      else
-        parent.top
-      end
-    end
-
-    def width
-      super || parent.width
-    end
-
-    def height
-      super || parent.height
-    end
-
-    def absolute_left
-      super || parent.absolute_left
-    end
-
-    def absolute_top
-      super || parent.absolute_top
+    private
+    def value_modified?(method)
+      instance_variable = ('@' + method.to_s).to_sym
+      instance_variable_get(instance_variable)
     end
   end
 

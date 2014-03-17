@@ -18,7 +18,8 @@ class Shoes
                         KeyreleaseListener               => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
                         TextBlockCursorPainter           => [:move_textcursor],
-                        Timer                            => [:eval_block]}
+                        Timer                            => [:eval_block],
+                        ::Shoes::Common::Changeable      => [:call_change_listeners]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 

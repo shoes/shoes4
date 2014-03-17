@@ -107,6 +107,74 @@ EOS
         match && match[1]
       end
     end
+
+    module DSLHelpers
+      def pattern(*args)
+        if args.length == 1
+          arg = args.first
+          case arg
+            when String
+              File.exist?(arg) ? image_pattern(arg) : color(arg)
+            when Shoes::Color
+              color arg
+            when Range, Shoes::Gradient
+              gradient(arg)
+            else
+              raise ArgumentError, "Bad pattern: #{arg.inspect}"
+          end
+        else
+          gradient(*args)
+        end
+      end
+
+      def color(arg)
+        Shoes::Color.create(arg)
+      end
+
+      def rgb(red, green, blue, alpha = Shoes::Color::OPAQUE)
+        Shoes::Color.new(red, green, blue, alpha)
+      end
+
+      # Creates a new Shoes::Gradient
+      #
+      # @overload gradient(from, to)
+      #   @param [Shoes::Color] from the starting color
+      #   @param [Shoes::Color] to the ending color
+      #
+      # @overload gradient(from, to)
+      #   @param [String] from a hex string representing the starting color
+      #   @param [String] to a hex string representing the ending color
+      #
+      # @overload gradient(range)
+      #   @param [Range<Shoes::Color>] range min color to max color
+      #
+      # @overload gradient(range)
+      #   @param [Range<String>] range min color to max color
+      def gradient(*args)
+        case args.length
+          when 1
+            arg = args[0]
+            case arg
+              when Gradient
+                min, max = arg.color1, arg.color2
+              when Range
+                min, max = arg.first, arg.last
+              else
+                raise ArgumentError, "Can't make gradient out of #{arg.inspect}"
+            end
+          when 2
+            min, max = args[0], args[1]
+          else
+            raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
+        end
+        Shoes::Gradient.new(color(min), color(max))
+      end
+
+      def image_pattern(path)
+        Shoes::ImagePattern.new path
+      end
+    end
+
   end
 
   # Create all of the built-in Shoes colors
@@ -141,6 +209,7 @@ EOS
       [:darkcyan, 0, 139, 139],
       [:darkgoldenrod, 184, 134, 11],
       [:darkgray, 169, 169, 169],
+      [:darkgrey, 169, 169, 169],
       [:darkgreen, 0, 100, 0],
       [:darkkhaki, 189, 183, 107],
       [:darkmagenta, 139, 0, 139],
@@ -152,11 +221,13 @@ EOS
       [:darkseagreen, 143, 188, 143],
       [:darkslateblue, 72, 61, 139],
       [:darkslategray, 47, 79, 79],
+      [:darkslategrey, 47, 79, 79],
       [:darkturquoise, 0, 206, 209],
       [:darkviolet, 148, 0, 211],
       [:deeppink, 255, 20, 147],
       [:deepskyblue, 0, 191, 255],
       [:dimgray, 105, 105, 105],
+      [:dimgrey, 105, 105, 105],
       [:dodgerblue, 30, 144, 255],
       [:firebrick, 178, 34, 34],
       [:floralwhite, 255, 250, 240],
@@ -167,6 +238,7 @@ EOS
       [:gold, 255, 215, 0],
       [:goldenrod, 218, 165, 32],
       [:gray, 128, 128, 128],
+      [:grey, 128, 128, 128],
       [:green, 0, 128, 0],
       [:greenyellow, 173, 255, 47],
       [:honeydew, 240, 255, 240],
@@ -185,11 +257,13 @@ EOS
       [:lightgoldenrodyellow, 250, 250, 210],
       [:lightgreen, 144, 238, 144],
       [:lightgray, 211, 211, 211],
+      [:lightgrey, 211, 211, 211],
       [:lightpink, 255, 182, 193],
       [:lightsalmon, 255, 160, 122],
       [:lightseagreen, 32, 178, 170],
       [:lightskyblue, 135, 206, 250],
       [:lightslategray, 119, 136, 153],
+      [:lightslategrey, 119, 136, 153],
       [:lightsteelblue, 176, 196, 222],
       [:lightyellow, 255, 255, 224],
       [:lime, 0, 255, 0],
@@ -242,6 +316,7 @@ EOS
       [:skyblue, 135, 206, 235],
       [:slateblue, 106, 90, 205],
       [:slategray, 112, 128, 144],
+      [:slategrey, 112, 128, 144],
       [:snow, 255, 250, 250],
       [:springgreen, 0, 255, 127],
       [:steelblue, 70, 130, 180],
@@ -256,12 +331,13 @@ EOS
       [:whitesmoke, 245, 245, 245],
       [:yellow, 255, 255, 0],
       [:yellowgreen, 154, 205, 50],
+      [:shoes_background, 237, 237, 237],
     ]
 
-    colors.each do |c, r, g, b|
-      Shoes::COLORS[c] = Shoes::Color.new(r, g, b)
-      define_method(c) do |alpha = Shoes::Color::OPAQUE|
-        color = Shoes::COLORS.fetch(c)
+    colors.each do |color_name, r, g, b|
+      Shoes::COLORS[color_name] = Shoes::Color.new(r, g, b)
+      define_method(color_name) do |alpha = Shoes::Color::OPAQUE|
+        color = Shoes::COLORS.fetch(color_name)
         return color if alpha == Shoes::Color::OPAQUE
         Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
@@ -270,5 +346,8 @@ EOS
     def gray(level = 128, alpha = Shoes::Color::OPAQUE)
       Shoes::Color.new(level, level, level, alpha)
     end
+
+    alias_method :grey, :gray
+
   end
 end

@@ -38,10 +38,13 @@ Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
   end
 
   def load_list
-    @list.replace *(NOTES.map { |note|
+    note_list = NOTES.map do |note|
       [link(note.first) { @note = load_note(note); load_list }, "\n"]
-    }.flatten +
-      [link("+ Add a new Note") { NOTES << (@note = load_note); load_list }])
+    end.flatten + [link("+ Add a new Note") do
+      NOTES << (@note = load_note)
+      load_list
+    end]
+    @list.replace *note_list
   end
 
   def load_note(note = ['New Note', ''])
