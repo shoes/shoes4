@@ -113,6 +113,8 @@ EOS
   COLORS = {}
 
   module DSL
+    extend self
+
     colors = [
       [:aliceblue, 240, 248, 255],
       [:antiquewhite, 250, 235, 215],

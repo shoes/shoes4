@@ -9,6 +9,10 @@ class Shoes
                   :end_x, :end_y, :clickabled,
                   :parent
 
+    def opts
+      { underline: true, fg: ::Shoes::DSL.blue }
+    end
+
     def in_bounds?(x, y)
       (start_x..end_x).include?(x) and (start_y..end_y).include?(y)
     end

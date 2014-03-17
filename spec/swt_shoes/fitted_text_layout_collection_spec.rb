@@ -41,6 +41,14 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       subject.style_segment_ranges(styles)
       expect(first_layout).to have_received(:set_style).with(default_text_styles, 0..1)
     end
+
+    it "styles links" do
+      styles = [[0..1, [Shoes::Link.new(["linky"])]]]
+      subject.style_segment_ranges(styles)
+
+      expected_style = style_with(underline: true, fg: ::Shoes::DSL.blue)
+      expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
+    end
   end
 
   context "with two layouts" do
