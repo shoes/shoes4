@@ -68,6 +68,11 @@ class Shoes
     end
 
     alias_method :fullscreen?, :fullscreen
+
+    # class definitions are evaluated top to bottom, want to have all of them
+    # so define at bottom
+    DELEGATE_METHODS = (Shoes::App.public_instance_methods(false) +
+      Shoes::DSL.public_instance_methods).freeze
   end
 
 
