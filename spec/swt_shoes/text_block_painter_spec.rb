@@ -6,11 +6,11 @@ describe Shoes::Swt::TextBlockPainter do
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
   let(:gui) { double("gui", fitted_layouts: [fitted_layout])}
   let(:dsl) { double("dsl", app: shoes_app, gui: gui,
-                     text: "hello world", cursor: nil,
+                     text: text, cursor: nil,
                      opts: opts, element_width: 200, element_height: 180,
                      element_left: 0, element_top: 10, font: "font",
                      font_size: 16, margin_left: 0, margin_top: 0,
-                     text_styles: {}, :hidden? => false).as_null_object
+                     text_styles: text_styles, :hidden? => false).as_null_object
             }
 
   let(:fitted_layout) { Shoes::Swt::FittedTextLayout.new(text_layout, 0, 10) }
@@ -19,7 +19,9 @@ describe Shoes::Swt::TextBlockPainter do
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style) }
   let(:blue) { Shoes::Color.new(0, 0, 255) }
-  let(:swt_blue) { Shoes::Swt::Color.new(blue).real }
+  let(:swt_blue) { Shoes::Swt::Color.new(blue).real}
+  let(:text_styles) {{}}
+  let(:text) {'hello world'}
 
   subject { Shoes::Swt::TextBlockPainter.new(dsl) }
 
@@ -207,8 +209,13 @@ describe Shoes::Swt::TextBlockPainter do
     # right now, which I'm not too fond of... :)
     let(:text_styles) {[[0...text.length, [Shoes::Span.new([text], size: 50)]]]}
     it 'sets the font size to 50' do
-      pending "fixes on multi-layout branch"
-      expect(::Swt::Font).to receive(:new).with(anything, anything, dsl.font_size, anything)
+      pending "Moved more towards a working spec but behavior is broken atm"
+      # weirdly I had to add at_least(1).times on the branch because now it
+      # seems to be called 3 times... seems weird to me
+      expect(::Swt::Font).to receive(:new).
+                             with(anything, anything, dsl.font_size, anything).
+                             at_least(1).times
+      # that still breaks and no time to fix it right now, sorry //Tobi
       expect(::Swt::Font).to receive(:new).with(anything, anything, 50, anything)
       subject.paintControl event
     end
