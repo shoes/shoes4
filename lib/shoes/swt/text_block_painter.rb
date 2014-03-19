@@ -19,46 +19,20 @@ class Shoes
         gcs_reset(paint_event.gc)
         return if @dsl.hidden?
 
-        @dsl.gui.fitted_layouts.each do |fitted_layout|
-          draw_from_layout(paint_event.gc, fitted_layout)
-        end
-        draw_text_cursor
-      end
+        fitted_layouts = @dsl.gui.fitted_layouts
+        layouts = FittedTextLayoutCollection.new(fitted_layouts, default_text_styles)
+        layouts.style_from(@opts)
+        layouts.style_segment_ranges(@dsl.text_styles)
+        layouts.draw(paint_event.gc)
 
-      def draw_from_layout(gc, fitted_layout)
-        set_styles(fitted_layout)
-        fitted_layout.draw(gc)
+        draw_text_cursor
       end
 
       def draw_text_cursor
         TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
       end
 
-      def set_styles(fitted_layout)
-        text_layout = fitted_layout.layout
-        text_layout.setJustify @opts[:justify]
-        text_layout.setSpacing(@opts[:leading] || 4)
-        text_layout.setAlignment case @opts[:align]
-                                    when 'center'; ::Swt::SWT::CENTER
-                                    when 'right'; ::Swt::SWT::RIGHT
-                                    else ::Swt::SWT::LEFT
-                                  end
-        style = apply_styles(default_text_styles(nil, nil, @opts[:strikecolor], @opts[:undercolor]), @opts)
-        set_font_styles(fitted_layout, style, 0..(@dsl.text.length - 1))
-        set_text_styles(fitted_layout, style[:fg], style[:bg])
-      end
-
       private
-
-      def apply_styles(styles, opts)
-        styles[:font_detail][:styles] = parse_font_style(opts)
-        styles[:font_detail][:name] = opts[:font] if opts[:font]
-        styles[:font_detail][:size] = opts[:size] if opts[:size]
-        styles[:fg] = opts[:stroke]
-        styles[:bg] = opts[:fill]
-        styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
-        styles.merge(opts)
-      end
 
       def create_link(fitted_layout, text, range)
         layout = fitted_layout.layout
@@ -79,33 +53,35 @@ class Shoes
         # should not be required any longer.
       end
 
-      def set_text_styles(fitted_layout, foreground, background)
+      def set_styles_from_segments(fitted_layouts)
+        # TODO: Wrong, but keeps us moving forward for now
+        fitted_layout = fitted_layouts.first
+
         @dsl.text_styles.each do |range, text_styles|
-          defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
-          styles = text_styles.inject(defaults) do |current_styles, text|
+          styles = text_styles.inject(default_text_styles) do |current_styles, text|
             if text.is_a? ::Shoes::Span
-              apply_styles(current_styles, text.opts)
+              TextStyleFactory.apply_styles(current_styles, text.opts)
             else
               make_link_style(fitted_layout, text, current_styles, range)
             end
           end
-          set_font_styles(fitted_layout, styles, range)
+          set_style_on_layout(fitted_layout, styles, range)
         end
       end
 
-      def set_font_styles(fitted_layout, styles, range)
+      def set_style_on_layout(fitted_layout, styles, range)
         font_style = styles[:font_detail]
         font = create_font font_style[:name], font_style[:size], font_style[:styles]
         style = create_style font, styles[:fg], styles[:bg], styles
         fitted_layout.layout.setStyle style, range.first, range.last
       end
 
-      def default_text_styles(foreground, background, strikecolor, undercolor)
+      def default_text_styles
         {
-          :fg          => foreground,
-          :bg          => background,
-          :strikecolor => strikecolor,
-          :undercolor  => undercolor,
+          :fg          => @opts[:fg],
+          :bg          => @opts[:bg],
+          :strikecolor => @opts[:strikecolor],
+          :undercolor  => @opts[:undercolor],
           :font_detail => {
             :name   => @dsl.font,
             :size   => @dsl.font_size,
@@ -123,17 +99,8 @@ class Shoes
         styles
       end
 
-      def parse_font_style(opts)
-        font_styles = []
-        font_styles << ::Swt::SWT::BOLD if opts[:weight]
-        font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
-        font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
-        font_styles
-      end
-
       def create_font(name, size, styles)
-        #TODO: mark font for garbage collection
-        ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
+        TextFontFactory.create_font(name, size, styles)
       end
 
       def create_style(font, foreground, background, opts)
@@ -141,11 +108,19 @@ class Shoes
       end
     end
 
+    module TextFontFactory
+      def self.create_font(name, size, styles)
+        #TODO: mark font for garbage collection
+        ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
+      end
+
+    end
+
     module TextStyleFactory
       UNDERLINE_STYLES = {
-          "single" => 0,
-          "double" => 1,
-          "error" => 2,
+        "single" => 0,
+        "double" => 1,
+        "error" => 2,
       }
 
       def self.create_style(font, foreground, background, opts)
@@ -158,6 +133,23 @@ class Shoes
         set_strikethrough(opts)
         set_strikecolor(opts)
         @style
+      end
+
+      def self.apply_styles(styles, opts)
+        styles[:font_detail][:styles] = parse_font_style(opts)
+        styles[:font_detail][:name] = opts[:font] if opts[:font]
+        styles[:fg] = opts[:stroke]
+        styles[:bg] = opts[:fill]
+        styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
+        styles.merge(opts)
+      end
+
+      def self.parse_font_style(opts)
+        font_styles = []
+        font_styles << ::Swt::SWT::BOLD if opts[:weight]
+        font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
+        font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
+        font_styles
       end
 
       attr_reader :style
