@@ -39,7 +39,7 @@ describe Shoes::Download do
     context 'with a block' do
       it 'calls the block with a result' do
         eventually do
-          expect(download.gui).to receive(:eval_block).with(result, input_block)
+          expect(download.gui).to receive(:eval_block).with(input_block, result)
         end
       end
     end
