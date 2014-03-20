@@ -14,6 +14,9 @@ class Shoes
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @blk = blk
 
+      @displace_left = 0
+      @displace_top  = 0
+
       # GUI
       @gui = Shoes.backend_for(self, @style)
 
@@ -24,6 +27,7 @@ class Shoes
 
     attr_reader :app, :blk, :gui, :hidden
     attr_reader :x, :y
+    attr_accessor :displace_left, :displace_top
 
     def left
       @left || 0
