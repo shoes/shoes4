@@ -320,6 +320,13 @@ describe Shoes::App do
 
   end
 
+  describe 'DELEGATE_METHODS' do
+    subject {Shoes::App::DELEGATE_METHODS}
+
+    it {should_not include :new, :initialize}
+    it {should include :para, :rect, :stack, :flow, :image, :location}
+    it {should_not include :pop_style, :style_normalizer, :create}
+  end
 end
 
 describe "App registry" do

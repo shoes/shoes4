@@ -59,4 +59,8 @@ describe 'Shoes.url' do
     Shoes.app do visit '/visit_me' end
   end
 
+  it 'instances report class as klazz (regression, do not ask...)' do
+    expect(klazz.new.class).to eq klazz
+  end
+
 end
