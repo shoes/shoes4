@@ -69,10 +69,12 @@ class Shoes
 
     alias_method :fullscreen?, :fullscreen
 
+    DELEGATE_BLACKLIST = [:parent]
+
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
-    DELEGATE_METHODS = (Shoes::App.public_instance_methods(false) +
-      Shoes::DSL.public_instance_methods).freeze
+    DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
+      Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
   end
 
 
