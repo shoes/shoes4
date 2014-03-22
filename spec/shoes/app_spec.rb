@@ -323,9 +323,21 @@ describe Shoes::App do
   describe 'DELEGATE_METHODS' do
     subject {Shoes::App::DELEGATE_METHODS}
 
-    it {should_not include :new, :initialize}
-    it {should include :para, :rect, :stack, :flow, :image, :location}
-    it {should_not include :pop_style, :style_normalizer, :create}
+    describe 'does not include general ruby object methods' do
+      it {should_not include :new, :initialize}
+    end
+
+    describe 'it has access to Shoes app and DSL methods' do
+      it {should include :para, :rect, :stack, :flow, :image, :location}
+    end
+
+    describe 'it does not have access to private methods' do
+      it {should_not include :pop_style, :style_normalizer, :create}
+    end
+
+    describe 'there are blacklisted methods which it should not include' do
+      it {should_not include :parent}
+    end
   end
 end
 
