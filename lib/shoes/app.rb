@@ -69,6 +69,13 @@ class Shoes
 
     alias_method :fullscreen?, :fullscreen
 
+    # inspect normally recursively inspects the values of all instance
+    # variables... as the app has a reference to EVERYTHING this turns
+    # out to be quite a lot/so much that the app runs out of memory #504
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @__app__=So much stuff literally breaks the memory limit. Look at it selectively.>"
+    end
+
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = (Shoes::App.public_instance_methods(false) +
