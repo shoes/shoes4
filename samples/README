@@ -9,6 +9,7 @@ simple-animate.rb
 simple-arc.rb
 simple-bounce.rb
 simple-brightness-transitions.rb
+simple-button-animate.rb
 simple-calc.rb
 simple-calc-2.rb
 simple-color-selector.rb
@@ -16,6 +17,7 @@ simple-color-transitions.rb
 simple-curve.rb
 simple-dialogs.rb
 simple-dialogs-outside.rb
+simple-displace.rb
 simple-draw.rb
 simple-editor.rb
 simple-face.rb
