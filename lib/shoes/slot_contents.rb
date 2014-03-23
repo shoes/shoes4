@@ -39,6 +39,10 @@ class Shoes
       @contents.clear
     end
 
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @prepending=#{@prepending} @prepending_index=#{@prepending_index} @contents=#{@contents.size} items that are too much to show or there might be an out of memory error.>"
+    end
+
     private
     def append_element(element)
       @contents << element

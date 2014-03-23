@@ -273,5 +273,10 @@ class Shoes
       end
       @app.instance_eval &console
     end
+
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
+    end
+
   end
 end
