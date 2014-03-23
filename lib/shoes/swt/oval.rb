@@ -4,6 +4,7 @@ class Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Clickable
+      include Common::PainterUpdatesPosition
       include Common::Toggle
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
@@ -22,6 +23,10 @@ class Shoes
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
         clickable blk if blk
+      end
+
+      def update_position
+        # No-op, since it has its own painter
       end
 
       class Painter < Common::Painter

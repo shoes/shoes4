@@ -35,7 +35,8 @@ class Shoes
     attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
                   :margin_bottom
     attr_reader   :parent
-    attr_accessor :absolute_left, :absolute_top
+    attr_accessor :absolute_left, :absolute_top,
+                  :displace_left, :displace_top
     protected :parent # we shall not mess with parent,see #495
 
 
@@ -119,12 +120,12 @@ class Shoes
 
     def element_left
       return nil if absolute_left.nil?
-      absolute_left + margin_left
+      absolute_left + margin_left + displace_left
     end
 
     def element_top
       return nil if absolute_top.nil?
-      absolute_top + margin_top
+      absolute_top + margin_top + displace_top
     end
 
     def element_right
@@ -190,6 +191,8 @@ class Shoes
     end
 
     def init_with_arguments(left, top, width, height, opts)
+      @displace_left = 0
+      @displace_top  = 0
       general_options opts # order important for redrawing
       self.left   = parse_input_value left
       self.top    = parse_input_value top

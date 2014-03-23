@@ -28,7 +28,8 @@ class Shoes
                           ::Shoes::TextBlock  => [:replace]}
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
                           ::Shoes::Dimensions    => [:left=, :top=, :width=,
-                                                     :height=]
+                                                     :height=,
+                                                     :displace_left=, :displace_top=],
                           }
 
       attr_reader :app

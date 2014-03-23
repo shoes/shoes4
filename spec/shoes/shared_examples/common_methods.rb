@@ -5,6 +5,23 @@ shared_examples_for "movable object" do
     subject.left.should eq(300)
     subject.top.should eq(200)
   end
+
+  describe "displacing" do
+    it "displaces backend object" do
+      expect(subject.gui).to receive(:update_position)
+      subject.displace(300, 200)
+    end
+
+    it "does not change reported values of #left and #top" do
+      # no error from calling set location with nil values due to unset values
+      subject.gui.stub :update_position
+      original_left = subject.left
+      original_top = subject.top
+      subject.displace(300, 200)
+      expect(subject.left).to eq(original_left)
+      expect(subject.top).to eq(original_top)
+    end
+  end
 end
 
 shared_examples_for "clearable object" do

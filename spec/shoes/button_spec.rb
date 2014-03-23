@@ -2,12 +2,14 @@ require "shoes/spec_helper"
 
 describe Shoes::Button do
   include_context "dsl app"
-  let(:input_opts) { {:left => left, :top => top, :width => width, :height => height, :margin => 143, :state => "disabled"} }
+  let(:input_opts) { {:left => left, :top => top, :width => width,
+                      :height => height, :margin => margin, :state => "disabled"} }
 
   let(:left)   { 13 }
   let(:top)    { 44 }
   let(:width)  { 131 }
   let(:height) { 137 }
+  let(:margin) { 14 }
 
   subject(:button) { Shoes::Button.new(app, parent, "text", input_opts, input_block) }
 
