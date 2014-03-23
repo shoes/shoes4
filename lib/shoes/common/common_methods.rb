@@ -75,9 +75,8 @@ class Shoes
     def displace(left, top)
       self.displace_left = left
       self.displace_top = top
-      gui.displace left, top
+      gui.update_position
       self
     end
-
   end
 end

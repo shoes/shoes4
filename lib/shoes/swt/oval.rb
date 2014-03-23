@@ -25,6 +25,10 @@ class Shoes
         clickable blk if blk
       end
 
+      def update_position
+        # No-op, since it has its own painter
+      end
+
       class Painter < Common::Painter
         def clipping
           clipping = ::Swt::Path.new(Shoes.display)
