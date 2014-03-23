@@ -3,7 +3,6 @@ class Shoes
     class SwtButton
       include Common::Clear
       include Common::Toggle
-      include Common::Move
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 

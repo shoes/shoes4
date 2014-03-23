@@ -6,9 +6,6 @@ class Shoes
 
       def update_position
       end
-
-      def displace(left, top)
-      end
     end
   end
 end

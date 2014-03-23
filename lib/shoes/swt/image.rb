@@ -6,6 +6,7 @@ class Shoes
       include Common::Child
       include Common::Resource
       include Common::Clickable
+      include Common::PainterUpdatesPosition
       include Common::Toggle
       include Common::Clear
       include ::Shoes::BackendDimensionsDelegations
@@ -27,16 +28,6 @@ class Shoes
 
       def update_image
         load_image(@dsl.file_path)
-      end
-
-      # it has a painter and therefore this does not need to do anything,
-      # as it was already changed on the DSL layer
-      # We might want to revisit that though.
-      def update_position
-      end
-
-      def displace(left, top)
-        # No-op, since painter takes care of this
       end
 
       private

@@ -5,9 +5,6 @@ class Shoes
 
       def enabled(value)
       end
-
-      def displace(left, top)
-      end
     end
   end
 end

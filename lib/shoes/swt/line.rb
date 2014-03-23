@@ -2,9 +2,8 @@ class Shoes
   module Swt
     class Line
       include Common::Stroke
-      include Common::Shape
       include Common::Toggle
-      include Common::Clear
+      include Common::PainterUpdatesPosition
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :dsl, :app
