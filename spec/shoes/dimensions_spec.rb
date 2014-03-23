@@ -542,6 +542,48 @@ describe Shoes::Dimensions do
     end
   end
 
+  describe 'displace' do
+
+    before :each do
+      # need to have a rough positon
+      subject.absolute_left = left
+      subject.absolute_top  = top
+    end
+
+    describe 'displace_left' do
+      let(:displace_left) {3}
+      it 'modifies the value of element_left' do
+        expect do
+          subject.displace_left = displace_left
+        end.to change{subject.element_left}.by(displace_left)
+      end
+
+      it 'does not modify the value of absolute_left' do
+        expect do
+          subject.displace_left = displace_left
+        end.not_to change {subject.absolute_left}
+      end
+    end
+    
+    describe 'displace_top' do
+      let(:displace_top) {7}
+
+      it 'modifies the value of element_top' do
+        expect do
+          subject.displace_top = displace_top
+        end.to change{subject.element_top}.by(displace_top)
+      end
+
+      it 'does not modify the value of absolute_top' do
+        expect do
+          subject.displace_top = displace_top
+        end.not_to change {subject.absolute_top}
+      end
+    end
+
+
+  end
+
   describe Shoes::AbsoluteDimensions do
     subject {Shoes::AbsoluteDimensions.new left, top, width, height}
     describe 'not adapting floats to parent values' do
