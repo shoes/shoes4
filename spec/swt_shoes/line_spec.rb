@@ -20,6 +20,8 @@ describe Shoes::Swt::Line do
   it_behaves_like "paintable"
   it_behaves_like "togglable"
 
+  it {should respond_to :clear}
+
   describe "painter" do
     include_context "painter context"
 
