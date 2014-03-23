@@ -41,10 +41,11 @@ class Shoes
     end
 
     def text=(*values)
-      @gui.replace *values[0]
+      replace *values[0]
     end
 
-    def replace *values
+    def replace(*values)
+      @text = values.map(&:to_s).join
       @gui.replace *values
     end
 
@@ -67,15 +68,6 @@ class Shoes
     def absolute_right
       return @dimensions.absolute_right if @absolute_right.nil?
       @absolute_right
-    end
-
-    def absolute_top=(value)
-      @absolute_top = value
-    end
-
-    def absolute_top
-      return @dimensions.absolute_top if @absolute_top.nil?
-      @absolute_top
     end
 
     def absolute_bottom=(value)

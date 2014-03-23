@@ -7,7 +7,7 @@ class Shoes
     NEXT_ELEMENT_ON_SAME_LINE_OFFSET = Point.new(1, 0)
     NEXT_ELEMENT_ON_NEXT_LINE_OFFSET = Point.new(0, 1)
 
-    attr_reader :parent, :gui, :contents, :blk, :app, :dimensions, :hover_proc,
+    attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
                 :leave_proc
 
     def initialize(app, parent, opts={}, &blk)
@@ -86,6 +86,10 @@ class Shoes
 
     def mouse_left
       @hovered = false
+    end
+
+    def app
+      @app.app #return the Shoes::App not the internal app
     end
 
     protected

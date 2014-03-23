@@ -68,6 +68,11 @@ class Shoes
     end
 
     alias_method :fullscreen?, :fullscreen
+
+    # class definitions are evaluated top to bottom, want to have all of them
+    # so define at bottom
+    DELEGATE_METHODS = (Shoes::App.public_instance_methods(false) +
+      Shoes::DSL.public_instance_methods).freeze
   end
 
 
@@ -81,12 +86,13 @@ class Shoes
   class InternalApp
     include Common::Style
     include Common::Clickable
+    include DimensionsDelegations
 
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
                         :title      => "Shoes 4",
                         :resizable  => true,
-                        :background => Shoes::COLORS[:white] }.freeze
+                        :background => Shoes::COLORS.fetch(:shoes_background) }.freeze
 
     def initialize(app, opts, &blk)
       @app = app
@@ -104,7 +110,7 @@ class Shoes
       add_console
     end
 
-    attr_reader :gui, :top_slot, :contents, :app,
+    attr_reader :gui, :top_slot, :contents, :app, :dimensions,
                 :mouse_motion, :owner, :element_styles
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
@@ -115,14 +121,14 @@ class Shoes
     end
 
     def width
-      started? ? gui.width : @width
+      started? ? gui.width : @dimensions.width
     end
 
     def height
-      started? ? gui.height : @height
+      started? ? gui.height : @dimensions.height
     end
 
-    def font(path = Shoes::DEFAULT_TEXTBLOCK_FONT) 
+    def font(path = Shoes::DEFAULT_TEXTBLOCK_FONT)
       app.font path
     end
 
@@ -177,11 +183,6 @@ class Shoes
       @gui.quit
     end
 
-    def left; 0 end
-    def top; 0 end
-    def absolute_left; 0 end
-    def absolute_top; 0 end
-
     def scroll_top
       gui.scroll_top
     end
@@ -214,7 +215,7 @@ class Shoes
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way
       # top_slot already exists and methods may be called on it
-      @top_slot = Flow.new self, self, width: @width, height: @height
+      @top_slot = Flow.new self, self, width: width, height: height
       @top_slot.append &execution_blk
     end
 
@@ -247,13 +248,14 @@ class Shoes
     def set_attributes_from_options(opts)
       opts = DEFAULT_OPTIONS.merge(opts)
 
-      @width               = opts[:width]
-      @height              = opts[:height]
       @app_title           = opts[:title]
       @resizable           = opts[:resizable]
       @start_as_fullscreen = opts[:fullscreen]
       @opts                = opts
       @owner               = opts[:owner]
+      @dimensions          = AbsoluteDimensions.new opts
+      self.absolute_left   = 0
+      self.absolute_top    = 0
     end
 
     def add_console

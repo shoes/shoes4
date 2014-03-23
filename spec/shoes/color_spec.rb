@@ -231,10 +231,6 @@ describe Shoes::Color do
 end
 
 describe "Shoes built-in colors" do
-  specify "there are 140" do
-    Shoes::COLORS.length.should eq(140)
-  end
-
   class MockApp
     include Shoes::DSL
   end
@@ -267,6 +263,15 @@ describe "Shoes built in gray" do
 
   specify "float parameters should be normalised" do
     app.gray(1.0, 0.5).should eq(Shoes::Color.new( 255, 255, 255, 128 ))
+  end
+
+  it 'hangles 0.93 right as well' do
+    result_93 = (0.93 * 255).to_i
+    expect(app.gray(0.93)).to eq(Shoes::Color.new(result_93, result_93, result_93))
+  end
+
+  it 'also has a grey alias for our BE friends' do
+    expect(app).to respond_to :grey
   end
 end
 
@@ -340,6 +345,42 @@ describe "differences from Red Shoes" do
       specify "1.0 does not become 0" do
         Shoes::Color.new(1.0, 1.0, 1.0).should_not eq(Shoes::Color.new(0, 0, 0))
       end
+    end
+  end
+end
+
+describe Shoes::Color::DSLHelpers do
+  class ColorDSLHelperTest
+    include Shoes::Color::DSLHelpers
+  end
+
+  subject {ColorDSLHelperTest.new}
+
+  describe '#pattern' do
+    it 'creates an image pattern when fed a string for which a file exists' do
+      File.stub(exist?: true)
+      my_path = '/some/path/to/image.png'
+      image_pattern = subject.pattern(my_path)
+      expect(image_pattern.path).to eq my_path
+    end
+
+    it 'raises an argument error for bad input like a single number' do
+      expect {subject.pattern(1)}.to raise_error(ArgumentError)
+    end
+
+    it 'creates a gradient given 2 arguments' do
+      expect(subject).to receive(:gradient)
+      subject.pattern([10, 10, 10], [30, 30, 30])
+    end
+  end
+
+  describe '#gradient' do
+    it 'raises an argument error for no arguments supplied' do
+      expect{subject.gradient}.to raise_error ArgumentError
+    end
+
+    it 'raises an argument error for too many (> 2) args supplied' do
+      expect{subject.gradient 1, 2, 3}.to raise_error ArgumentError
     end
   end
 end

@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.executables   = ['shoes-stub', 'ruby-shoes']
   s.extensions    = ['ext/install/Rakefile']
 
-  s.add_dependency "log4jruby"
   s.add_dependency "swt", "~>0.18"
   s.add_dependency "furoshiki", ">=0.1.2"
   s.add_dependency "nokogiri" # For converting the manual to HTML

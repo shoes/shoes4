@@ -12,7 +12,7 @@ shared_examples_for "persistent stroke" do
   include_context "style context"
 
   it "passes to element" do
-    element.stroke.should eq(stroke_color)
+    expect(element.stroke).to eq(stroke_color)
   end
 end
 
@@ -20,7 +20,7 @@ shared_examples_for "persistent fill" do
   include_context "style context"
 
   it "passes to element" do
-    element.fill.should eq(fill_color)
+    expect(element.fill).to eq(fill_color)
   end
 end
 
@@ -28,7 +28,7 @@ shared_examples_for "arc DSL method" do
   let(:arc) { dsl.arc(13, 44, 200, 300, 0, Shoes::TWO_PI) }
 
   it "creates a Shoes::Arc" do
-    arc.should be_an_instance_of(Shoes::Arc)
+    expect(arc).to be_an_instance_of(Shoes::Arc)
   end
 
   it "raises an ArgumentError" do

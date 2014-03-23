@@ -18,10 +18,9 @@ describe Shoes::Swt::Flow do
     end
 
     it "sets readers" do
-      flow = subject
-      flow.parent.should == parent
-      flow.dsl.should == dsl
-      flow.real.should == parent_real
+      expect(subject.parent).to eq parent
+      expect(subject.dsl).to eq dsl
+      expect(subject.real).to eq parent_real
     end
   end
 end
