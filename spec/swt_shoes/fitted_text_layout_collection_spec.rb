@@ -48,7 +48,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       styles = [[0..1, [Shoes::Link.new(["linky"])]]]
       subject.style_segment_ranges(styles)
 
-      expected_style = style_with(underline: true, fg: ::Shoes::DSL.blue)
+      expected_style = style_with(underline: true, fg: ::Shoes::COLORS[:blue])
       expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
     end
   end
@@ -61,17 +61,17 @@ describe Shoes::Swt::FittedTextLayoutCollection do
     end
 
     it "picks range in first layout" do
-      result = subject.ranges_for(0..2)
+      result = subject.layout_ranges(0..2)
       expect(result).to eql([[first_layout, 0..2]])
     end
 
     it "picks range in second layout" do
-      result = subject.ranges_for(5..7)
+      result = subject.layout_ranges(5..7)
       expect(result).to eql([[second_layout, 0..2]])
     end
 
     it "spans both layouts" do
-      result = subject.ranges_for(2..7)
+      result = subject.layout_ranges(2..7)
       expect(result).to eql([[first_layout, 2..5],
                              [second_layout,  0..2]])
     end

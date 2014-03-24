@@ -1,5 +1,3 @@
-require 'forwardable'
-
 class Shoes
   module Swt
     class FittedTextLayoutCollection
@@ -28,7 +26,7 @@ class Shoes
       def style_segment_ranges(styles_by_range)
         styles_by_range.each do |range, styles|
           style = calculate_style(styles)
-          ranges_for(range).each do |layout, inner_range|
+          layout_ranges(range).each do |layout, inner_range|
             layout.set_style(style, inner_range)
           end
         end
@@ -48,18 +46,18 @@ class Shoes
       # If we've got segments that style us across different ranges, it might
       # be in either, or both, of the layouts. This method figures out which
       # layouts apply, and what the relative ranges within each layout to use.
-      def ranges_for(range)
+      def layout_ranges(text_range)
         result = []
         first_text = @layouts.first.layout.text
-        slice = first_text[range]
+        slice = first_text[text_range]
         if slice.nil? || slice.empty?
           result << [@layouts.last,
-                     (range.first - first_text.length..range.last - first_text.length)]
-        elsif slice.length < range.count
-          result << [@layouts.first, (range.first..first_text.length)]
-          result << [@layouts.last,  (0..range.count - slice.length - 1)]
+                     (text_range.first - first_text.length..text_range.last - first_text.length)]
+        elsif slice.length < text_range.count
+          result << [@layouts.first, (text_range.first..first_text.length)]
+          result << [@layouts.last,  (0..text_range.count - slice.length - 1)]
         else
-          result << [@layouts.first, range]
+          result << [@layouts.first, text_range]
         end
         result
       end

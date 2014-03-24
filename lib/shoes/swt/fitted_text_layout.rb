@@ -1,12 +1,14 @@
 class Shoes
   module Swt
     class FittedTextLayout
-      attr_reader :layout, :left, :top
+      DEFAULT_SPACING = 4
 
-      def initialize(layout, left, top)
+      attr_reader :layout, :element_left, :element_top
+
+      def initialize(layout, element_left, element_top)
         @layout = layout
-        @left = left
-        @top = top
+        @element_left = element_left
+        @element_top = element_top
       end
 
       def get_location(cursor)
@@ -19,7 +21,7 @@ class Shoes
 
       def style_from(default_text_styles, opts)
         layout.justify = opts[:justify]
-        layout.spacing = (opts[:leading] || 4)
+        layout.spacing = (opts[:leading] || DEFAULT_SPACING)
         layout.alignment = case opts[:align]
                              when 'center'; ::Swt::SWT::CENTER
                              when 'right'; ::Swt::SWT::RIGHT
@@ -29,16 +31,14 @@ class Shoes
         set_style(TextStyleFactory.apply_styles(default_text_styles, opts))
       end
 
-      def set_style(styles, range=nil)
-        range ||= 0..(text.length - 1)
-        font_style = styles[:font_detail]
-        font = TextFontFactory.create_font(font_style[:name], font_style[:size], font_style[:styles])
+      def set_style(styles, range=(0...text.length))
+        font = TextFontFactory.create_font(styles[:font_detail])
         style = TextStyleFactory.create_style(font, styles[:fg], styles[:bg], styles)
-        layout.set_style(style, range.first, range.last)
+        layout.set_style(style, range.min, range.max)
       end
 
       def draw(graphics_context)
-        layout.draw(graphics_context, left, top)
+        layout.draw(graphics_context, element_left, element_top)
       end
     end
   end

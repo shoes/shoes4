@@ -126,7 +126,7 @@ describe Shoes::Swt::TextBlockFitter do
   end
 
   def expect_fitted_layouts(fitted_layouts, *coordinates)
-    actual = fitted_layouts.map {|fitted| [fitted.left, fitted.top] }
+    actual = fitted_layouts.map {|fitted| [fitted.element_left, fitted.element_top] }
     expect(coordinates).to eq(actual)
   end
 end

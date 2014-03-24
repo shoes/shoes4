@@ -10,7 +10,7 @@ class Shoes
                   :parent
 
     def opts
-      { underline: true, fg: ::Shoes::DSL.blue }
+      { underline: true, fg: ::Shoes::COLORS[:blue] }
     end
 
     def in_bounds?(x, y)

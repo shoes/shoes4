@@ -70,8 +70,7 @@ class Shoes
       end
 
       def set_style_on_layout(fitted_layout, styles, range)
-        font_style = styles[:font_detail]
-        font = create_font font_style[:name], font_style[:size], font_style[:styles]
+        font = create_font styles[:font_detail]
         style = create_style font, styles[:fg], styles[:bg], styles
         fitted_layout.layout.setStyle style, range.first, range.last
       end
@@ -99,8 +98,8 @@ class Shoes
         styles
       end
 
-      def create_font(name, size, styles)
-        TextFontFactory.create_font(name, size, styles)
+      def create_font(font_styles)
+        TextFontFactory.create_font(font_styles)
       end
 
       def create_style(font, foreground, background, opts)
@@ -109,9 +108,13 @@ class Shoes
     end
 
     module TextFontFactory
-      def self.create_font(name, size, styles)
+      def self.create_font(font_style)
+        name = font_style[:name]
+        size = font_style[:size]
+        styles = font_style[:styles].reduce { |result, s| result | s }
+
         #TODO: mark font for garbage collection
-        ::Swt::Font.new Shoes.display, name, size, styles.reduce { |result, s| result | s }
+        ::Swt::Font.new Shoes.display, name, size, styles
       end
 
     end
