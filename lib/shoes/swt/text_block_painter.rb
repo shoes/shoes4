@@ -53,6 +53,7 @@ class Shoes
       def apply_styles(styles, opts)
         styles[:font_detail][:styles] = parse_font_style(opts)
         styles[:font_detail][:name] = opts[:font] if opts[:font]
+        styles[:font_detail][:size] = opts[:size] if opts[:size]
         styles[:fg] = opts[:stroke]
         styles[:bg] = opts[:fill]
         styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
@@ -79,7 +80,6 @@ class Shoes
       end
 
       def set_text_styles(fitted_layout, foreground, background)
-
         @dsl.text_styles.each do |range, text_styles|
           defaults = default_text_styles(foreground, background, @dsl.opts[:strikecolor], @dsl.opts[:undercolor])
           styles = text_styles.inject(defaults) do |current_styles, text|

@@ -36,29 +36,30 @@ describe Shoes::App do
 
       it "sets width", :qt do
         subject.width.should == defaults[:width]
+        expect(subject.width).to eq defaults[:width]
       end
 
       it "sets height", :qt do
-        subject.height.should == defaults[:height]
+        expect(subject.height).to eq defaults[:height]
       end
 
       it 'has an absolute_left of 0' do
-        subject.absolute_left.should eq 0
+        expect(subject.absolute_left).to eq 0
       end
 
       it 'has an absolute_top of 0' do
-        subject.absolute_top.should eq 0
+        expect(subject.absolute_top).to eq 0
       end
 
       describe "internal app state" do
         let(:internal_app) { app.instance_variable_get(:@__app__) }
 
         it "sets title", :qt do
-          internal_app.app_title.should == defaults[:title]
+          expect(internal_app.app_title).to eq defaults[:title]
         end
 
         it "is resizable", :qt do
-          internal_app.resizable.should be_true
+          expect(internal_app.resizable).to be_true
         end
       end
     end
@@ -67,23 +68,31 @@ describe Shoes::App do
       let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
 
       it "sets width", :qt do
-        subject.width.should == opts[:width]
+        expect(subject.width).to eq opts[:width]
       end
 
       it "sets height", :qt do
-        subject.height.should == opts[:height]
+        expect(subject.height).to eq opts[:height]
       end
 
       describe "internal app state" do
         let(:internal_app) { app.instance_variable_get(:@__app__) }
 
         it "sets title", :qt do
-          internal_app.app_title.should == opts[:title]
+          expect(internal_app.app_title).to eq opts[:title]
         end
 
         it "sets resizable", :qt do
-          internal_app.resizable.should be_false
+          expect(internal_app.resizable).to be_false
         end
+      end
+
+      it 'initializes a flow with the right parameters' do
+        expect(Shoes::Flow).to receive(:new).with(anything, anything,
+                                                  {width:  opts[:width],
+                                                   height: opts[:height]}).
+                                                  and_call_original
+        subject
       end
     end
 
@@ -95,8 +104,8 @@ describe Shoes::App do
       it "registers" do
         old_apps_length = Shoes.apps.length
         subject
-        Shoes.apps.length.should eq(old_apps_length + 1)
-        Shoes.apps.include?(subject).should be_true
+        expect(Shoes.apps.length).to eq(old_apps_length + 1)
+        expect(Shoes.apps).to include(subject)
       end
     end
   end
@@ -329,6 +338,14 @@ describe Shoes::App do
         expect(app.gutter).to eq(16)
       end
     end
+  end
+
+  describe 'DELEGATE_METHODS' do
+    subject {Shoes::App::DELEGATE_METHODS}
+
+    it {should_not include :new, :initialize}
+    it {should include :para, :rect, :stack, :flow, :image, :location}
+    it {should_not include :pop_style, :style_normalizer, :create}
   end
 end
 

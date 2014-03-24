@@ -4,6 +4,7 @@ class Shoes
     class InputBox
       include Common::Child
       include Common::Clear
+      include Common::PainterUpdatesPosition
       include Common::Toggle
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
@@ -62,7 +63,7 @@ class Shoes
     end
 
     class EditBox < InputBox
-      DEFAULT_STYLES = ::Swt::SWT::MULTI | ::Swt::SWT::BORDER | ::Swt::SWT::WRAP
+      DEFAULT_STYLES = ::Swt::SWT::MULTI | ::Swt::SWT::BORDER | ::Swt::SWT::WRAP | ::Swt::SWT::V_SCROLL
       def initialize(dsl, parent)
         super(dsl, parent, DEFAULT_STYLES)
       end

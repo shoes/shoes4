@@ -6,16 +6,18 @@ describe Shoes::Swt::TextBlockPainter do
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
   let(:gui) { double("gui", fitted_layouts: [fitted_layout])}
   let(:dsl) { double("dsl", app: shoes_app, gui: gui,
-                     text: "hello world", cursor: nil,
+                     text: text, cursor: nil,
                      opts: opts, element_width: 200, element_height: 180,
                      element_left: 0, element_top: 10, font: "font",
                      font_size: 16, margin_left: 0, margin_top: 0,
-                     text_styles: {}, :hidden? => false).as_null_object
+                     text_styles: text_styles, :hidden? => false).as_null_object
             }
 
   let(:fitted_layout) { double("fitted layout", left: 0, top: 10,
                                draw: nil, layout: text_layout) }
   let(:text_layout) { double("text layout").as_null_object }
+  let(:text_styles) {[]}
+  let(:text) {"hello world"}
 
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style) }
@@ -156,6 +158,7 @@ describe Shoes::Swt::TextBlockPainter do
 
       subject.paintControl(event)
     end
+
   end
 
   context "colors" do
@@ -199,6 +202,17 @@ describe Shoes::Swt::TextBlockPainter do
       pending "creative testing energy"
       expect(::Swt::TextStyle).to receive(:new).exactly(42).times
       subject.paintControl(event)
+    end
+  end
+
+  describe 'text_styles' do
+    # this text_styles relies a lot on the internal structure of TextBlock/Painter
+    # right now, which I'm not too fond of... :)
+    let(:text_styles) {[[0...text.length, [Shoes::Span.new([text], size: 50)]]]}
+    it 'sets the font size to 50' do
+      expect(::Swt::Font).to receive(:new).with(anything, anything, dsl.font_size, anything)
+      expect(::Swt::Font).to receive(:new).with(anything, anything, 50, anything)
+      subject.paintControl event
     end
   end
 end

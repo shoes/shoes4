@@ -32,10 +32,11 @@
 
 class Shoes
   class Dimensions
-    attr_writer   :width, :height
+    attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
+                  :margin_bottom
     attr_reader   :parent
-    attr_accessor :absolute_left, :absolute_top, :margin_left, :margin_right,
-                  :margin_top, :margin_bottom
+    attr_accessor :absolute_left, :absolute_top,
+                  :displace_left, :displace_top
     protected :parent # we shall not mess with parent,see #495
 
 
@@ -119,12 +120,12 @@ class Shoes
 
     def element_left
       return nil if absolute_left.nil?
-      absolute_left + margin_left
+      absolute_left + margin_left + displace_left
     end
 
     def element_top
       return nil if absolute_top.nil?
-      absolute_top + margin_top
+      absolute_top + margin_top + displace_top
     end
 
     def element_right
@@ -190,21 +191,30 @@ class Shoes
     end
 
     def init_with_arguments(left, top, width, height, opts)
+      @displace_left = 0
+      @displace_top  = 0
       general_options opts # order important for redrawing
-      self.left   = left
-      self.top    = top
+      self.left   = parse_input_value left
+      self.top    = parse_input_value top
       self.width  = width
       self.height = height
     end
 
     def init_margins(opts)
-      margin = opts.fetch(:margin, 0)
-      margin = [margin, margin, margin, margin] if margin.is_a? Integer
+      margin = opts[:margin]
+      margin = [margin, margin, margin, margin] unless margin.is_a? Array
       margin_left, margin_top, margin_right, margin_bottom = margin
       @margin_left   = opts.fetch(:margin_left, margin_left)
       @margin_top    = opts.fetch(:margin_top, margin_top)
       @margin_right  = opts.fetch(:margin_right, margin_right)
       @margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
+    end
+
+    [:margin_left, :margin_top, :margin_right, :margin_bottom].each do |method|
+      define_method method do
+        instance_variable_name = ('@' + method.to_s).to_sym
+        instance_variable_get(instance_variable_name) || 0
+      end
     end
 
     def general_options(opts)
@@ -227,7 +237,7 @@ class Shoes
     end
 
     def calculate_relative(name, result)
-      (result * @parent.send(name)).to_i
+      (result * @parent.public_send('element_' + name.to_s)).to_i
     end
 
     PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
@@ -240,10 +250,31 @@ class Shoes
       match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
       if match
         match[1].to_f / 100.0
+      elsif valid_integer_string?(result)
+        int_from_string(result)
       else
-        # Shoes eats invalid values, so this protects against non-% strings
         nil
       end
+    end
+
+    def int_from_string(result)
+      (result.gsub(' ', '')).to_i
+    end
+
+    def parse_input_value(input)
+      if input.is_a?(Integer) || input.is_a?(Float)
+        input
+      elsif valid_integer_string?(input)
+        int_from_string(input)
+      else
+        nil
+      end
+    end
+
+    NUMBER_REGEX = /^-?\s*\d+/
+
+    def valid_integer_string?(input)
+      input.is_a?(String) && input.match(NUMBER_REGEX)
     end
 
     def is_negative?(result)
@@ -284,38 +315,28 @@ class Shoes
     end
   end
 
-  # for objects that are more defined by their parents
+  # for objects that are more defined by their parents, delegates method calls
+  # to crucial methods to the parent if the instance variable isn't set
   class ParentDimensions < Dimensions
-    def left
-      if @left
-        super
-      else
-        parent.left
+
+    SIMPLE_DELEGATE_METHODS = [:width, :height, :absolute_left, :absolute_top,
+                               :margin_left, :margin_top, :margin_right,
+                               :margin_bottom, :top, :left]
+
+    SIMPLE_DELEGATE_METHODS.each do |method|
+      define_method method do
+        if value_modified?(method)
+          super
+        else
+          parent.public_send(method)
+        end
       end
     end
 
-    def top
-      if @top
-        super
-      else
-        parent.top
-      end
-    end
-
-    def width
-      super || parent.width
-    end
-
-    def height
-      super || parent.height
-    end
-
-    def absolute_left
-      super || parent.absolute_left
-    end
-
-    def absolute_top
-      super || parent.absolute_top
+    private
+    def value_modified?(method)
+      instance_variable = ('@' + method.to_s).to_sym
+      instance_variable_get(instance_variable)
     end
   end
 

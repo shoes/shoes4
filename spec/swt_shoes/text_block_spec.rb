@@ -12,6 +12,11 @@ describe Shoes::Swt::TextBlock do
   it_behaves_like "paintable"
   it_behaves_like "togglable"
 
+  # reported nil, caused trouble in simple-downloader.rb
+  it 'initially responds with empty fitted layouts' do
+    expect(subject.fitted_layouts).to be_empty
+  end
+
   describe "generating layouts" do
     let(:layout) { create_layout(width, height) }
 

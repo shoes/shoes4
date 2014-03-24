@@ -9,6 +9,7 @@ simple-animate.rb
 simple-arc.rb
 simple-bounce.rb
 simple-brightness-transitions.rb
+simple-button-animate.rb
 simple-calc.rb
 simple-calc-2.rb
 simple-color-selector.rb
@@ -16,6 +17,7 @@ simple-color-transitions.rb
 simple-curve.rb
 simple-dialogs.rb
 simple-dialogs-outside.rb
+simple-displace.rb
 simple-draw.rb
 simple-editor.rb
 simple-face.rb
@@ -38,13 +40,13 @@ good-clock-adjusted.rb
 good-follow.rb
 good-potato-chopping.rb
 good-reminder.rb
-# good-vjot-adjusted.rb
+good-vjot.rb
 
 expert-definr.rb
 # expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
 # expert-othello-adjusted.rb
-expert-pong-adjusted.rb
+expert-pong.rb
 expert-tankspank-adjusted.rb
 expert-snake.rb
 

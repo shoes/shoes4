@@ -4,7 +4,7 @@ require 'shoes/swt/text_block_cursor_painter'
 describe Shoes::Swt::TextBlockCursorPainter do
   include_context "swt app"
 
-  let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor) }
+  let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor, has_textcursor?: true) }
   let(:textcursor) { double("textcursor", left:0, top: 0) }
   let(:text_layout) { double("text layout",
                              get_line_bounds: double("line bounds", height: 10)) }
@@ -21,7 +21,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
     end
 
     it "shouldn't do anything without text cursor" do
-      dsl.stub(:textcursor) { nil}
+      dsl.stub(:has_textcursor?) { nil}
       subject.draw
       expect(dsl).to_not have_received(:textcursor=)
     end

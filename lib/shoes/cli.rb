@@ -81,7 +81,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
         exit(0)
       end
       package(args.shift) unless @packages.empty?
-      execute_app(args.first) unless args.empty?
+      execute_app(args.first)
     end
 
     # Convenience class representing a backend:wrapper pair

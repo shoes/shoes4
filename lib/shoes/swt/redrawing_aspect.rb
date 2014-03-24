@@ -18,15 +18,19 @@ class Shoes
                         KeyreleaseListener               => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
                         TextBlockCursorPainter           => [:move_textcursor],
-                        Timer                            => [:eval_block]}
+                        Timer                            => [:eval_block],
+                        ::Shoes::Common::Changeable      => [:call_change_listeners]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
       # These need to trigger a redraw
-      SAME_POSITION    = {Common::Toggle  => [:toggle]}
+      SAME_POSITION    = {Common::Toggle    => [:toggle],
+                          ::Shoes::TextBlock  => [:replace]}
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
                           ::Shoes::Dimensions    => [:left=, :top=, :width=,
-                                                     :height=]}
+                                                     :height=,
+                                                     :displace_left=, :displace_top=],
+                          }
 
       attr_reader :app
 

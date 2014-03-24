@@ -21,14 +21,17 @@ class Shoes
   #   end
   #
   class Widget
-    def self.inherited klass, &blk
+
+    attr_accessor :parent
+
+    def self.inherited(klass, &blk)
       dsl_method = dsl_method_name(klass)
       Shoes::App.class_eval do
         define_method(dsl_method) do |*args, &blk|
           klass.send :class_variable_set, :@@__app__, self
-          klass.new(*args, &blk).tap do |s|
-            s.define_singleton_method(:parent){current_slot}
-          end
+          widget_instance = klass.new(*args, &blk)
+          widget_instance.parent = @__app__.current_slot
+          widget_instance
         end
       end
 

@@ -2,12 +2,16 @@ require 'shoes/spec_helper'
 
 describe Shoes::Dimensions do
 
+  let(:parent_top) {top}
+  let(:parent_width) {width}
+  let(:parent_height) {height}
+  let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top, parent_width, parent_height}
+
   let(:left) {10}
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
-  let(:parent) {double 'parent', width: 200, height: 250, left: 5, top: 12,
-                                 absolute_left: 25, absolute_top: 35}
+  let(:parent_left) {left}
   let(:opts) { {} }
   subject {Shoes::Dimensions.new parent, left, top, width, height, opts}
 
@@ -82,7 +86,6 @@ describe Shoes::Dimensions do
       its(:height) {should be_within(1).of 0.5 * parent.height}
 
       describe 'width/height change of the parent' do
-        let(:parent) {Shoes::Dimensions.new nil, left, top, width, height}
 
         # note that here the first assertion/call is necessary as otherwise
         # the subject will only lazily get initialized after the parent width
@@ -100,6 +103,25 @@ describe Shoes::Dimensions do
           subject.height.should be_within(1).of 400
         end
       end
+
+      describe 'a parent with margins' do
+        let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
+                                            parent_width, parent_height,
+                                            margin: 20}
+        subject {Shoes::Dimensions.new parent, left, top, 1.0, 1.0}
+
+
+        it 'uses the element_width to calculate its own relative width' do
+          expect(subject.width).to eq parent.element_width
+        end
+
+        it 'has a smaller width than the parent element (due to margins)' do
+          expect(subject.width).to be < parent.width
+        end
+
+        its(:height) {should eq parent.element_height}
+      end
+
     end
 
     describe 'with percentages' do
@@ -121,16 +143,59 @@ describe Shoes::Dimensions do
         its(:height) {should be_within(1).of 0.9 * parent.height}
       end
 
-      describe 'with invalid strings' do
-        subject {Shoes::Dimensions.new parent, left, top, "boo", "hoo"}
-        its(:width) {should be_nil}
-        its(:height) {should be_nil}
-      end
-
       describe 'with padded strings' do
         subject {Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n"}
         its(:width) {should be_within(1).of 0.5 * parent.width}
         its(:height) {should be_within(1).of 0.5 * parent.height}
+      end
+    end
+
+    describe 'with strings' do
+      describe 'with integer strings' do
+        subject {Shoes::Dimensions.new parent, "22", "20", "10", "10"}
+
+        its(:left) {should eq 22}
+        its(:top) {should eq 20}
+        its(:width) {should eq 10}
+        its(:height) {should eq 10}
+      end
+
+      describe 'with strings px' do
+        subject {Shoes::Dimensions.new parent, "10px", "10px", "0px", "100px"}
+
+        its(:left) {should eq 10}
+        its(:top) {should eq 10}
+        its(:width) {should eq 0}
+        its(:height) {should eq 100}
+      end
+
+      describe 'white space with px is also ok' do
+        subject {Shoes::Dimensions.new parent, "10 px", "20   px", "30px", "55  px"}
+
+        its(:left) {should eq 10}
+        its(:top) {should eq 20}
+        its(:width) {should eq 30}
+        its(:height) {should eq 55}
+      end
+
+      describe 'with invalid integer strings' do
+        subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob"}
+
+        its(:left) {should eq 0}
+        its(:top) {should eq 0}
+        its(:width) {should be_nil}
+        its(:height) {should be_nil}
+      end
+
+      describe 'with negative values' do
+        let(:parent_width) {200}
+        let(:parent_height) {300}
+        subject {Shoes::Dimensions.new parent, "- 100", "-20px", "- 50px", "- 80"}
+
+        its(:left) {should eq -100}
+        its(:top) {should eq -20}
+        its(:width) {should eq (parent_width - 50)}
+        its(:height) {should eq (parent_height - 80)}
       end
     end
 
@@ -477,6 +542,48 @@ describe Shoes::Dimensions do
     end
   end
 
+  describe 'displace' do
+
+    before :each do
+      # need to have a rough positon
+      subject.absolute_left = left
+      subject.absolute_top  = top
+    end
+
+    describe 'displace_left' do
+      let(:displace_left) {3}
+      it 'modifies the value of element_left' do
+        expect do
+          subject.displace_left = displace_left
+        end.to change{subject.element_left}.by(displace_left)
+      end
+
+      it 'does not modify the value of absolute_left' do
+        expect do
+          subject.displace_left = displace_left
+        end.not_to change {subject.absolute_left}
+      end
+    end
+    
+    describe 'displace_top' do
+      let(:displace_top) {7}
+
+      it 'modifies the value of element_top' do
+        expect do
+          subject.displace_top = displace_top
+        end.to change{subject.element_top}.by(displace_top)
+      end
+
+      it 'does not modify the value of absolute_top' do
+        expect do
+          subject.displace_top = displace_top
+        end.not_to change {subject.absolute_top}
+      end
+    end
+
+
+  end
+
   describe Shoes::AbsoluteDimensions do
     subject {Shoes::AbsoluteDimensions.new left, top, width, height}
     describe 'not adapting floats to parent values' do
@@ -493,14 +600,31 @@ describe Shoes::Dimensions do
   
   describe Shoes::ParentDimensions do
     describe 'takes parent values if not specified' do
+      let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
+                                          parent_width, parent_height,
+                                          margin: 20}
       subject {Shoes::ParentDimensions.new parent}
 
       its(:left) {should eq parent.left}
       its(:top) {should eq parent.top}
       its(:width) {should eq parent.width}
       its(:height) {should eq parent.height}
-      its(:absolute_left) {should eq parent.absolute_left}
-      its(:absolute_top) {should eq parent.absolute_top}
+      its(:margin_left) {should eq parent.margin_left}
+      its(:margin_top) {should eq parent.margin_top}
+      its(:margin_right) {should eq parent.margin_right}
+      its(:margin_bottom) {should eq parent.margin_bottom}
+
+      context 'with parent absolute_left/top set' do
+        before :each do
+          parent.absolute_left = left
+          parent.absolute_top  = top
+        end
+
+        its(:absolute_left) {should eq parent.absolute_left}
+        its(:absolute_top) {should eq parent.absolute_top}
+        its(:element_left) {should eq parent.element_left}
+        its(:element_top) {should eq parent.element_top}
+      end
     end
 
     describe 'otherwise it takes its own values' do
@@ -510,6 +634,16 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
+
+      it 'can also still handle special values like a negative width' do
+        subject.width = -10
+        expect(subject.width).to eq (parent.width - 10)
+      end
+
+      it 'can also still handle special values like a relative height' do
+        subject.height = 0.8
+        expect(subject.height).to be_within(1).of(0.8 * parent.height)
+      end
     end
   end
 end

@@ -218,4 +218,13 @@ describe Shoes::Swt::KeypressListener do
     end
   end
 
+  describe 'Mac command key' do
+    it 'fixes crash of shift option command #584' do
+      event = double 'key event', stateMask: 196608,
+                                  keyCode: 4194304,
+                                  character: "don't care atm"
+      expect {subject.key_pressed(event)}.not_to raise_error
+    end
+  end
+
 end
