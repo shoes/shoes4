@@ -51,6 +51,18 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       expected_style = style_with(underline: true, fg: ::Shoes::COLORS[:blue])
       expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
     end
+
+    context "layout ranges" do
+      it "picks within the first range" do
+        result = subject.layout_ranges(0..2)
+        expect(result).to eql([[first_layout, 0..2]])
+      end
+
+      it "picks the full first range if too large value requested" do
+        result = subject.layout_ranges(0..first_layout.text.length + 10)
+        expect(result).to eql([[first_layout, 0..first_layout.text.length]])
+      end
+    end
   end
 
   context "with two layouts" do

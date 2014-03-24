@@ -14,7 +14,7 @@ describe Shoes::Swt::TextBlockPainter do
             }
 
   let(:fitted_layout) { Shoes::Swt::FittedTextLayout.new(text_layout, 0, 10) }
-  let(:text_layout) { double("text layout", text: "text").as_null_object }
+  let(:text_layout) { double("text layout", text: text).as_null_object }
 
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style) }
@@ -209,14 +209,11 @@ describe Shoes::Swt::TextBlockPainter do
     # right now, which I'm not too fond of... :)
     let(:text_styles) {[[0...text.length, [Shoes::Span.new([text], size: 50)]]]}
     it 'sets the font size to 50' do
-      pending "Moved more towards a working spec but behavior is broken atm"
-      # weirdly I had to add at_least(1).times on the branch because now it
-      # seems to be called 3 times... seems weird to me
       expect(::Swt::Font).to receive(:new).
-                             with(anything, anything, dsl.font_size, anything).
-                             at_least(1).times
-      # that still breaks and no time to fix it right now, sorry //Tobi
-      expect(::Swt::Font).to receive(:new).with(anything, anything, 50, anything)
+                             with(anything, anything, dsl.font_size, anything)
+      expect(::Swt::Font).to receive(:new).
+                             with(anything, anything, 50, anything)
+
       subject.paintControl event
     end
   end

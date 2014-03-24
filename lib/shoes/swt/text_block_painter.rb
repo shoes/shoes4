@@ -141,6 +141,7 @@ class Shoes
       def self.apply_styles(styles, opts)
         styles[:font_detail][:styles] = parse_font_style(opts)
         styles[:font_detail][:name] = opts[:font] if opts[:font]
+        styles[:font_detail][:size] = opts[:size] if opts[:size]
         styles[:fg] = opts[:stroke]
         styles[:bg] = opts[:fill]
         styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]

@@ -55,7 +55,11 @@ class Shoes
                      (text_range.first - first_text.length..text_range.last - first_text.length)]
         elsif slice.length < text_range.count
           result << [@layouts.first, (text_range.first..first_text.length)]
-          result << [@layouts.last,  (0..text_range.count - slice.length - 1)]
+          # If first == last, then requested range was longer than our one and
+          # only layout, so just stick with full range of the first layout.
+          if @layouts.first != @layouts.last
+            result << [@layouts.last,  (0..text_range.count - slice.length - 1)]
+          end
         else
           result << [@layouts.first, text_range]
         end
