@@ -47,23 +47,36 @@ class Shoes
       # be in either, or both, of the layouts. This method figures out which
       # layouts apply, and what the relative ranges within each layout to use.
       def layout_ranges(text_range)
-        result = []
         first_text = @layouts.first.layout.text
         slice = first_text[text_range]
+
         if slice.nil? || slice.empty?
-          result << [@layouts.last,
-                     (text_range.first - first_text.length..text_range.last - first_text.length)]
+          results_in_last_layout(text_range, first_text)
         elsif slice.length < text_range.count
-          result << [@layouts.first, (text_range.first..first_text.length)]
-          # If first == last, then requested range was longer than our one and
-          # only layout, so just stick with full range of the first layout.
-          if @layouts.first != @layouts.last
-            result << [@layouts.last,  (0..text_range.count - slice.length - 1)]
-          end
+          results_spanning_layouts(text_range, first_text, slice)
         else
-          result << [@layouts.first, text_range]
+          results_in_first_layout(text_range)
+        end
+      end
+
+      def results_in_first_layout(text_range)
+        [[@layouts.first, text_range]]
+      end
+
+      def results_spanning_layouts(text_range, first_text, slice)
+        result = []
+        result << [@layouts.first, (text_range.first..first_text.length)]
+        # If first == last, then requested range was longer than our one and
+        # only layout, so just stick with full range of the first layout.
+        if @layouts.first != @layouts.last
+          result << [@layouts.last,  (0..text_range.count - slice.length - 1)]
         end
         result
+      end
+
+      def results_in_last_layout(text_range, first_text)
+        [[@layouts.last,
+         (text_range.first - first_text.length..text_range.last - first_text.length)]]
       end
     end
   end
