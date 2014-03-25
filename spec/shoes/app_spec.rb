@@ -35,6 +35,7 @@ describe Shoes::App do
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets width", :qt do
+        subject.width.should == defaults[:width]
         expect(subject.width).to eq defaults[:width]
       end
 
@@ -318,6 +319,25 @@ describe Shoes::App do
       end
     end
 
+  end
+
+  describe "#gutter" do
+    context "when app has a scrollbar" do
+      let(:input_opts) { {width: 100, height: 100} }
+      let(:input_block) { Proc.new { para "Round peg, square hole" * 200 } }
+
+      it "has gutter of 16" do
+        expect(app.gutter).to eq(16)
+      end
+    end
+
+    context "when app has no scrollbar" do
+      let(:input_block) { Proc.new { para "Round peg, square hole" } }
+
+      it "has gutter of 16" do
+        expect(app.gutter).to eq(16)
+      end
+    end
   end
 
   describe 'DELEGATE_METHODS' do

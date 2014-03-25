@@ -459,5 +459,9 @@ EOS
     def download name, args={}, &blk
       create Shoes::Download, name, args, &blk
     end
+
+    def gutter
+      @__app__.gutter
+    end
   end
 end
