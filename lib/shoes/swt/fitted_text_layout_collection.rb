@@ -23,19 +23,19 @@ class Shoes
         end
       end
 
-      def style_segment_ranges(styles_by_range)
-        styles_by_range.each do |range, styles|
-          style = calculate_style(styles)
+      def style_segment_ranges(elements_by_range)
+        elements_by_range.each do |range, elements|
+          style = calculate_style(elements)
           layout_ranges(range).each do |layout, inner_range|
             layout.set_style(style, inner_range)
           end
         end
       end
 
-      def calculate_style(styles)
-        styles.inject(default_text_styles) do |current_style, style|
-          if style.respond_to?(:opts)
-            TextStyleFactory.apply_styles(current_style, style.opts)
+      def calculate_style(elements)
+        elements.inject(default_text_styles) do |current_style, element|
+          if element.respond_to?(:opts)
+            TextStyleFactory.apply_styles(current_style, element.opts)
           else
             # Didn't know how to style from the element, so punt
             current_style
