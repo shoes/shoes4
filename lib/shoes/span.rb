@@ -2,7 +2,7 @@ class Shoes
   class Span < Text
     def initialize(texts, options={})
       @opts = options
-      super texts
+      super texts, options.delete(:color)
     end
 
     def opts
