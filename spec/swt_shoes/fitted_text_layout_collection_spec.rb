@@ -44,12 +44,22 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       expect(first_layout).to have_received(:set_style).with(default_text_styles, 0..1)
     end
 
-    it "styles links" do
-      styles = [[0..1, [Shoes::Link.new(["linky"])]]]
-      subject.style_segment_ranges(styles)
+    context "links" do
+      it "styles links" do
+        styles = [[0..1, [Shoes::Link.new(["linky"])]]]
+        subject.style_segment_ranges(styles)
 
-      expected_style = style_with(underline: true, fg: ::Shoes::COLORS[:blue])
-      expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
+        expected_style = style_with(underline: true, fg: ::Shoes::COLORS[:blue])
+        expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
+      end
+
+      it "creates a link segment" do
+        link = Shoes::Link.new(["f"])
+        styles = [[0..1, [link]]]
+        subject.create_links(styles)
+
+        expect(link.link_segments).to have(1).item
+      end
     end
 
     context "layout ranges" do
@@ -113,6 +123,14 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       expected_style = style_with(stroke: :blue, fg: :blue)
       expect(first_layout).to have_received(:set_style).with(expected_style, 2..5)
       expect(second_layout).to have_received(:set_style).with(expected_style, 0..2)
+    end
+
+    it "creates link segments in both layouts" do
+      link = Shoes::Link.new(["rstres"])
+      styles = [[2..7, [link]]]
+      subject.create_links(styles)
+
+      expect(link.link_segments).to have(2).items
     end
   end
 

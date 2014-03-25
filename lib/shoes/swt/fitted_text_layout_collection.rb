@@ -43,6 +43,18 @@ class Shoes
         end
       end
 
+      def create_links(elements_by_range)
+        elements_by_range.each do |range, elements|
+          elements.each do |element|
+            if element.is_a?(::Shoes::Link)
+              layout_ranges(range).each do |layout, inner_range|
+                element.link_segments << ::Shoes::Swt::LinkSegment.new(element, layout, inner_range)
+              end
+            end
+          end
+        end
+      end
+
       # If we've got segments that style us across different ranges, it might
       # be in either, or both, of the layouts. This method figures out which
       # layouts apply, and what the relative ranges within each layout to use.

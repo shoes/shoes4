@@ -4,11 +4,12 @@ class Shoes
 
     def initialize texts, color=nil, opts={}, &blk
       @blk = blk
+      @link_segments = []
       opts = DEFAULT_OPTS.merge(opts).merge(:color => color)
       super texts, opts
     end
 
-    attr_reader :blk
+    attr_reader :blk, :link_segments
     attr_accessor :click_listener, :line_height, :start_x, :start_y,
                   :end_x, :end_y, :clickabled
 
