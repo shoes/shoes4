@@ -1,15 +1,22 @@
 class Shoes
   class Download
 
-    attr_reader :progress, :length, :gui
+    attr_reader :progress, :content_length, :length, :gui
+    UPDATE_STEPS = 50
 
-    def initialize app, parent, url, args, &blk
-      @args = args
+    def initialize(app, parent, url, opts = {}, &blk)
+      @opts = opts
       @blk = blk
       @gui = Shoes.configuration.backend_for(self)
-      @finished = false
       start_download url
+      
+      @transferred = 0
     end
+
+    def join_thread
+      @thread.join
+    end
+
 
     def started?
       @started
@@ -18,17 +25,13 @@ class Shoes
     def finished?
       @finished
     end
-#unused? delete?
-    def join_thread
-      @thread.join
-    end
 
     def transferred
-      @progress
+      @transferred
     end
 
     def percent
-      (@progress.to_f / @length.to_f * 100.0).round
+      @transferred * 100 / @content_length
     end
 
     def abort
@@ -38,50 +41,48 @@ class Shoes
     private
     def start_download url
       require 'open-uri'
-
       @thread = Thread.new do
-        
-        $async_has_finished = true
+        uri_opts = {}
+        uri_opts[:content_length_proc] = content_length_proc
+        uri_opts[:progress_proc] = progress_proc if @opts[:progress]
 
-        options = {
-    
-          content_length_proc: #fired before download starts
-          lambda do |length| 
-            download_started(length) 
-            eval_block(@args[:start], self) if @args[:start]
-          end,
+        download_file(url, uri_opts)
+      end
+    end
 
-          progress_proc: #fired with each transfer
-          lambda do |size|
-            @progress = size
-            if $async_has_finished && @args[:progress]
-              $async_has_finished = false
-              eval_block(@args[:progress], self)
-            end
-          end
-        }
+    def content_length_proc
+      lambda do |content_length| 
+        download_started(content_length) 
+        eval_block(@opts[:progress], self) if @opts[:progress]
+      end
+    end
 
-        options[:method] =  @args[:method] if @args[:method]
-        options[:headers] = @args[:headers] if  @args[:headers]
-        options[:body] =    @args[:body] if @args[:body]
-
-        open url, options do |download|
-          download_data = download.read
-          save_to_file(@args[:save], download_data) if @args[:save]
-          finish_download download_data
+    def progress_proc
+      lambda do |size|
+        if (size - self.transferred) > (content_length / UPDATE_STEPS)
+          eval_block(@opts[:progress], self)
+          @transferred = size
         end
       end
+    end
 
+    def download_file(url, uri_opts)
+      open url, uri_opts do |download|
+        download_data = download.read
+        save_to_file(@opts[:save], download_data) if @opts[:save]
+        finish_download download_data
+      end
     end
 
     def finish_download download_data
       @finished = true
       result   = StringIO.new(download_data)
-      #one last progress fire in case final asyncEvent didn't catch the 100%
-      eval_block(@args[:progress], self) if @args[:progress]
-      eval_block(@blk, result) if @blk
-      eval_block(@args[:finish], self) if @args[:finish]
 
+      @transferred = @content_length #last progress_proc may not catch this event
+      eval_block(@opts[:progress], self) if @opts[:progress]
+
+      eval_block(@blk, result) if @blk
+      eval_block(@opts[:finish], self) if @opts[:finish]
     end
 
     def eval_block(blk, result)
@@ -92,8 +93,9 @@ class Shoes
       open(file_path, 'wb') { |fw| fw.print download_data }
     end
 
-    def download_started(length)
-      @length = length
+    def download_started(content_length)
+      @content_length = content_length
+      @length = content_length
       @started = true
     end
   end
