@@ -191,7 +191,6 @@ class Shoes
         @shell.addControlListener ShellControlListener.new(self)
         @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
         @shell.addListener(::Swt::SWT::Close, unregister_app)
-        #@shell.addListener(::Swt::SWT::Resize, call_resize_block)
       end
 
       def unregister_app
@@ -199,12 +198,6 @@ class Shoes
           ::Shoes::Swt.unregister(self)
         end
       end
-
-     # def call_resize_block
-     #   proc do
-     #     dsl.resize.each{|blk| blk.call}
-     #   end
-     # end
 
       def attach_real_event_listeners
         @real.addMouseMoveListener MouseMoveListener.new(self)

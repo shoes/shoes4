@@ -34,7 +34,6 @@ class Shoes
     # @overload style()
     #   @return [Hash] the default style for all elements
     def style(klass_or_styles = nil, styles = {})
-        p "this block runneth!"
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
         @__app__.element_styles[klass] = styles
