@@ -224,6 +224,19 @@ describe Shoes::App do
     end
   end
 
+  describe '#resize' do
+    let(:input_blk) {Proc.new do resize do para 'Resizing!' end end}
+
+    it 'understands resize' do
+      subject.should respond_to :resize
+    end
+    
+    it 'should receive a call to what is called in the resize block' do
+      Shoes::App.any_instance.should_receive :para
+      subject
+    end
+  end
+
   describe 'fullscreen' do
     describe 'starting' do
       let(:internal_app) { app.instance_variable_get(:@__app__) }

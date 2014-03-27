@@ -56,7 +56,7 @@ class Shoes
     def to_s
       'Shoes App: ' + @__app__.app_title
     end
-
+    
     %w(
       width height owner started? location left top absolute_left
       absolute_top rotate click release clear fullscreen fullscreen=
@@ -120,7 +120,7 @@ class Shoes
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
-                :mouse_motion, :owner, :element_styles
+                :mouse_motion, :owner, :element_styles, :resize
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
                   :width, :height, :start_as_fullscreen, :location
@@ -255,6 +255,7 @@ class Shoes
       @mouse_button         = 0
       @mouse_pos            = [0, 0]
       @mouse_hover_controls = []
+      @resize               = []
       @rotate               = 0
     end
 

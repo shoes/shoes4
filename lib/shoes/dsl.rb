@@ -34,6 +34,7 @@ class Shoes
     # @overload style()
     #   @return [Hash] the default style for all elements
     def style(klass_or_styles = nil, styles = {})
+        p "this block runneth!"
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
         @__app__.element_styles[klass] = styles
@@ -402,6 +403,10 @@ EOS
 
     def motion &blk
       @__app__.mouse_motion << blk
+    end
+    
+    def resize &blk
+      @__app__.resize << blk
     end
 
     # hover and leave just delegate to the current slot as hover and leave
