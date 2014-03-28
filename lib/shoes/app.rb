@@ -120,7 +120,7 @@ class Shoes
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
-                :mouse_motion, :owner, :element_styles, :resize
+                :mouse_motion, :owner, :element_styles, :resize_callbacks
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
                   :width, :height, :start_as_fullscreen, :location
@@ -255,7 +255,7 @@ class Shoes
       @mouse_button         = 0
       @mouse_pos            = [0, 0]
       @mouse_hover_controls = []
-      @resize               = []
+      @resize_callbacks     = []
       @rotate               = 0
     end
 
