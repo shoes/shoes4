@@ -2289,6 +2289,12 @@ was released.
 
 To catch the actual mouse click, use the [[Events.click]] event.
 
+=== resize { |self| ... } » self ===
+
+The resize block runs whenever the app is resized. Be careful with this one, since
+the block will be fired with every pixel of motion, even a simple resize may call
+the block dozens of times.
+
 === start { |self| ... } » self ===
 
 The first time the slot is drawn, the start event fires.  The block is handed

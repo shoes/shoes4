@@ -224,6 +224,12 @@ describe Shoes::App do
     end
   end
 
+  describe '#resize' do
+    it 'understands resize' do
+      subject.should respond_to :resize
+    end
+  end
+
   describe 'fullscreen' do
     describe 'starting' do
       let(:internal_app) { app.instance_variable_get(:@__app__) }
