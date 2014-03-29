@@ -47,6 +47,7 @@ class Shoes
         elements_by_range.each do |range, elements|
           elements.each do |element|
             if element.is_a?(::Shoes::Link)
+              element.link_segments.clear
               layout_ranges(range).each do |layout, inner_range|
                 element.link_segments << ::Shoes::Swt::LinkSegment.new(element, layout, inner_range)
               end

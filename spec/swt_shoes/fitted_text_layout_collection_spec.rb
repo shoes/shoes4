@@ -132,6 +132,16 @@ describe Shoes::Swt::FittedTextLayoutCollection do
 
       expect(link.link_segments).to have(2).items
     end
+
+    it "clears links before re-creating them" do
+      link = Shoes::Link.new(["rstres"])
+      styles = [[2..7, [link]]]
+
+      subject.create_links(styles)
+      subject.create_links(styles)
+
+      expect(link.link_segments).to have(2).items
+    end
   end
 
   def create_layout(name, text)
