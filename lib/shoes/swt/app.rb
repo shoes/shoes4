@@ -219,7 +219,7 @@ class Shoes
         @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
         @app.real.layout
-        @app.dsl.resize.each{|blk| blk.call}
+        @app.dsl.resize_callbacks.each{|blk| blk.call}
       end
 
       def controlMoved(e)

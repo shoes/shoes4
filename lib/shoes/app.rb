@@ -224,6 +224,10 @@ class Shoes
       gui.gutter
     end
 
+    def add_resize_callback(blk)
+      @resize_callbacks << blk
+    end
+
     private
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way

@@ -405,7 +405,7 @@ EOS
     end
     
     def resize(&blk)
-      @__app__.resize << blk
+      @__app__.add_resize_callback blk
     end
 
     # hover and leave just delegate to the current slot as hover and leave
