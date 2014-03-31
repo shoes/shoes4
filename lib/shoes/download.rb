@@ -1,22 +1,22 @@
 class Shoes
   class Download
 
-    attr_reader :progress, :content_length, :length, :gui
-    UPDATE_STEPS = 50
+    attr_reader :progress, :content_length, :length, :gui, :transferred
+    UPDATE_STEPS = 100
 
     def initialize(app, parent, url, opts = {}, &blk)
       @opts = opts
       @blk = blk
+      @transferred = 0
+      
       @gui = Shoes.configuration.backend_for(self)
       start_download url
-      
-      @transferred = 0
     end
-
+    
+    # This method is needed for the specs
     def join_thread
       @thread.join
     end
-
 
     def started?
       @started
@@ -24,10 +24,6 @@ class Shoes
 
     def finished?
       @finished
-    end
-
-    def transferred
-      @transferred
     end
 
     def percent
@@ -58,8 +54,18 @@ class Shoes
     end
 
     def progress_proc
+      #This proc gets called after every packet transfer. That means on average it gets called 
+      #about ten times faster than the gui can handle updating. So we check two things before 
+      #firing its contents: 
+      #    1) Just update each 1 percent (UPDATE_STEPS = 100) 
+      #    2) Depending on file size and internet speed, that 
+      #       still could be too fast. So we also have a variable
+      #       which gets toggled off while waiting for an asyncEvent.
+      #       I decided to make the toggled variable an array just so
+      #       that I could use language like queue and empty?.
       lambda do |size|
-        if (size - self.transferred) > (content_length / UPDATE_STEPS)
+        if (size - self.transferred) > (content_length / UPDATE_STEPS) && @gui.async_queue.empty?
+          @gui.async_queue << "asyncEvent"
           eval_block(@opts[:progress], self)
           @transferred = size
         end
@@ -77,7 +83,6 @@ class Shoes
     def finish_download download_data
       @finished = true
       result   = StringIO.new(download_data)
-
       @transferred = @content_length #last progress_proc may not catch this event
       eval_block(@opts[:progress], self) if @opts[:progress]
 
