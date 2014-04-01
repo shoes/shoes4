@@ -1,10 +1,12 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Link do
+  let(:app) { double("app", gui: double("gui").as_null_object) }
+
   context "initialize" do
     let(:texts) { ["text", "goes", "first"] }
 
-    subject { Shoes::Link.new(texts, :color) }
+    subject { Shoes::Link.new(texts, :color, { app: app }) }
 
     it "should set up text" do
       subject.texts.should eql(texts)
@@ -23,8 +25,8 @@ describe Shoes::Link do
     end
 
     context "overriding options" do
-      subject { Shoes::Link.new(texts, :colors,
-                                :underline => false, :bg => Shoes::COLORS[:green]) }
+      subject { Shoes::Link.new(texts, :colors, app: app,
+                                underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
         subject.opts.should include(:fg => Shoes::COLORS[:blue])

@@ -389,7 +389,7 @@ EOS
     end
 
     def link *texts, &blk
-      Shoes::Link.new texts, &blk
+      Shoes::Link.new texts, nil, { app: @__app__ }, &blk
     end
 
     def span *texts

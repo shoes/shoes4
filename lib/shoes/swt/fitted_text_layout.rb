@@ -11,8 +11,8 @@ class Shoes
         @element_top = element_top
       end
 
-      def get_location(cursor)
-        @layout.get_location(cursor, false)
+      def get_location(cursor, trailing=false)
+        @layout.get_location(cursor, trailing)
       end
 
       def text
