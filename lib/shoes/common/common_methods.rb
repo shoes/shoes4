@@ -7,18 +7,6 @@ class Shoes
   # gui_container - the "real" framework implementation object
   module CommonMethods
 
-    #TODO: make this attr_accessor :identifier ??
-    # Needs to be inheritable
-    #def identifier
-    #  @identifier
-    #end
-
-    #TODO: make this attr_accessor :native_widget ??
-    # Needs to be inheritable
-    #def native_widget
-    #  gui_container
-    #end
-
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
       @hidden = false
