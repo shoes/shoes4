@@ -179,6 +179,11 @@ class Shoes
       [margin_left, margin_top, margin_right, margin_bottom]
     end
 
+    def margin=(val_or_arr)
+      @margin_left, @margin_top, @margin_right, @margin_bottom =  val_or_arr if val_or_arr.is_a? Array
+     @margin_left, @margin_top, @margin_right, @margin_bottom = [val_or_arr, val_or_arr, val_or_arr, val_or_arr] if val_or_arr.is_a? Integer
+    end
+
     private
     def hash_as_argument?(left)
       left.respond_to? :fetch

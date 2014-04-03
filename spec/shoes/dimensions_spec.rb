@@ -501,6 +501,16 @@ describe Shoes::Dimensions do
         subject.margin_right = 7
         subject.margin.should == [margin, margin, 7, margin]
       end
+      
+      it 'adapts margins when margin is changed with single value' do
+        subject.margin = 7
+        subject.margin.should == [7, 7, 7, 7]
+      end
+      
+      it 'adapts margin when margin is changed with array' do
+        subject.margin = [7, 7, 7, 7]
+        subject.margin.should == [7, 7, 7, 7]
+      end
     end
 
     describe 'creation with all distinct margin values' do
