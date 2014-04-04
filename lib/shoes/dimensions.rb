@@ -179,9 +179,9 @@ class Shoes
       [margin_left, margin_top, margin_right, margin_bottom]
     end
 
-    def margin=(val_or_arr)
-      @margin_left, @margin_top, @margin_right, @margin_bottom =  val_or_arr if val_or_arr.is_a? Array
-      @margin_left, @margin_top, @margin_right, @margin_bottom = [val_or_arr, val_or_arr, val_or_arr, val_or_arr] if val_or_arr.is_a? Integer
+    def margin=(margin)
+      margin = [margin, margin, margin, margin] unless margin.is_a? Array
+      @margin_left, @margin_top, @margin_right, @margin_bottom =  margin
     end
 
     private
@@ -206,9 +206,7 @@ class Shoes
     end
 
     def init_margins(opts)
-      margin = opts[:margin]
-      margin = [margin, margin, margin, margin] unless margin.is_a? Array
-      margin_left, margin_top, margin_right, margin_bottom = margin
+      self.margin    = opts[:margin]
       @margin_left   = opts.fetch(:margin_left, margin_left)
       @margin_top    = opts.fetch(:margin_top, margin_top)
       @margin_right  = opts.fetch(:margin_right, margin_right)
