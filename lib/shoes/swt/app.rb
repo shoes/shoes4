@@ -22,6 +22,11 @@ class Shoes
         attach_event_listeners
         initialize_scroll_bar
         @redrawing_aspect = RedrawingAspect.new self, Shoes.display
+        
+        #swt client area includes scroll bar on OSX Lion and beyond (Darwin 11.0.0+)
+        system = `uname -s`
+        release = `uname -r`
+        @osx_lion_or_later = system =~ /Darwin/ && release.to_f > 11.0
       end
 
       def open
@@ -45,7 +50,11 @@ class Shoes
       end
 
       def width
-        @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+        if @osx_lion_or_later 
+          @shell.client_area.width
+        else
+          @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+        end
       end
 
       def height
@@ -69,7 +78,7 @@ class Shoes
       def main_app?
         ::Shoes::Swt.main_app.equal? self
       end
-      
+
       def flush
         if @dsl.top_slot
           @real.layout
@@ -79,7 +88,7 @@ class Shoes
       def scroll_top
         @real.getLocation.y
       end
-      
+
       def scroll_top=(n)
         @real.setLocation 0, -n
         @shell.getVerticalBar.setSelection n
@@ -169,7 +178,7 @@ class Shoes
 
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell, 
-          ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
+                                              ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout init_shoes_layout
       end
