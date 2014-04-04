@@ -22,11 +22,7 @@ class Shoes
         attach_event_listeners
         initialize_scroll_bar
         @redrawing_aspect = RedrawingAspect.new self, Shoes.display
-        
-        #swt client area includes scroll bar on OSX Lion and beyond (Darwin 11.0.0+)
-        system = `uname -s`
-        release = `uname -r`
-        @osx_lion_or_later = system =~ /Darwin/ && release.to_f > 11.0
+        @overlay_scrollbar = @shell.getScrollbarsMode() == 2
       end
 
       def open
@@ -50,7 +46,7 @@ class Shoes
       end
 
       def width
-        if @osx_lion_or_later 
+        if @overlay_scrollbar
           @shell.client_area.width
         else
           @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
