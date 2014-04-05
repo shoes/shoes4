@@ -48,7 +48,8 @@ class Shoes
     # while 20..120 is 101. E.g.:
     # (20..119).size => 100
     PIXEL_COUNTING_ADJUSTMENT = -1
-
+    # extracted as constant to avoid frequent allocations
+    LEFT_TOP = ['left', 'top']
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -60,28 +61,21 @@ class Shoes
       end
     end
 
-    def left=(value)
-      return if value.nil?
-      @left = value
-      @absolute_x_position = true
-    end
+    %w(left top right bottom).each do |side|
+      define_method side + '=' do |value|
+        return if value.nil?
+        instance_variable_set '@' + side, value
+        instance_variable_set ('@absolute_' + side + '_position'), true
+      end
 
-    def top=(value)
-      return if value.nil?
-      @top = value
-      @absolute_y_position = true
-    end
-
-    def left
-      value = @left || 0
-      value = adjust_left_for_center value if left_top_as_center?
-      value
-    end
-
-    def top
-      value = @top || 0
-      value = adjust_top_for_center(value) if left_top_as_center?
-      value
+      define_method side do
+        value = instance_variable_get('@' + side) || 0
+        if LEFT_TOP.include?(side) && left_top_as_center?
+          send 'adjust_' + side + '_for_center', value
+        else
+          value
+        end
+      end
     end
 
     def width
@@ -138,26 +132,18 @@ class Shoes
       element_top + element_height + PIXEL_COUNTING_ADJUSTMENT
     end
 
+    # absolute_left/top/right/bottom_position are set in the meta programmed
+    # code for left=/top=/right=/bottom= in case you are looking for them
     def absolute_x_position?
-      @absolute_x_position
+      @absolute_left_position || @absolute_right_position
     end
 
     def absolute_y_position?
-      @absolute_y_position
+      @absolute_top_position || @absolute_bottom_position
     end
 
     def absolutely_positioned?
       absolute_x_position? || absolute_y_position?
-    end
-
-    def right
-      return left if width.nil?
-      left + width + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def bottom
-      return top if height.nil?
-      top + height + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def absolute_right
