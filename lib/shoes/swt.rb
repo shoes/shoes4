@@ -102,9 +102,12 @@ require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
 require 'shoes/swt/timer'
 
-require 'shoes/swt/text_block_fitter'
 require 'shoes/swt/fitted_text_layout'
 require 'shoes/swt/fitted_text_layout_collection'
+require 'shoes/swt/text_block_cursor_painter'
+require 'shoes/swt/text_block_fitter'
+require 'shoes/swt/text_font_factory'
+require 'shoes/swt/text_style_factory'
 
 # redrawing aspect needs to know all the classes
 require 'shoes/swt/redrawing_aspect'

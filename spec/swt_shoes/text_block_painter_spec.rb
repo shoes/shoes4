@@ -191,19 +191,6 @@ describe Shoes::Swt::TextBlockPainter do
     end
   end
 
-  context "with text fragments" do
-
-    let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
-    let(:white) { ::Swt::Color.new Shoes.display, 255, 255, 255 }
-    let(:font) { ::Swt::Graphics::Font.new Shoes.display, "Arial", 12, ::Swt::SWT::NORMAL }
-
-    it "creates a text style" do
-      pending "creative testing energy"
-      expect(::Swt::TextStyle).to receive(:new).exactly(42).times
-      subject.paintControl(event)
-    end
-  end
-
   describe 'text_styles' do
     # this text_styles relies a lot on the internal structure of TextBlock/Painter
     # right now, which I'm not too fond of... :)
