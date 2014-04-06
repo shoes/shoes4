@@ -114,7 +114,7 @@ EOS
           arg = args.first
           case arg
             when String
-              File.exist?(arg) ? image_pattern(arg) : color(arg)
+              image_file?(arg) ? image_pattern(arg) : color(arg)
             when Shoes::Color
               color arg
             when Range, Shoes::Gradient
@@ -170,8 +170,12 @@ EOS
         Shoes::Gradient.new(color(min), color(max))
       end
 
+      def image_file?(arg)
+        arg =~ /\.gif|jpg|jpeg|png$/
+      end
+
       def image_pattern(path)
-        Shoes::ImagePattern.new path
+        Shoes::ImagePattern.new path if File.exist?(path)
       end
     end
 

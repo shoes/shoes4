@@ -6,6 +6,11 @@ class Shoes
   end
 
   module URL
+    extend Forwardable
+
+    def_delegators :app, *(Shoes::App::DELEGATE_METHODS)
+
+    attr_accessor :app
 
     def self.included(base_class)
       base_class.extend URLDefiner
@@ -15,30 +20,17 @@ class Shoes
       @urls ||= {}
     end
 
-    attr_accessor :app
-
-    def method_missing(method, *args, &blk)
-      if app_should_handle_method? method
-        app.send(method, *args, &blk)
-      else
-        super
-      end
-    end
-
-    private
-    def app_should_handle_method? method_name
-      !self.respond_to?(method_name) && app.respond_to?(method_name)
-    end
   end
 
   module URLDefiner
-    def url page, method
+    def url(page, method)
       page = convert_page_to_regex(page)
       url_class = self
 
       Shoes::URL.urls[page] = proc do |app, arg|
         new_url_instance = url_class.new
         new_url_instance.app = app
+
         if arg
           new_url_instance.send(method, arg)
         else

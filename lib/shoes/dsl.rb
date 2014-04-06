@@ -153,11 +153,11 @@ class Shoes
       Shoes::Animation.new @__app__, opts, blk
     end
 
-    def every n=1, &blk
+    def every(n=1, &blk)
       animate 1.0/n, &blk
     end
 
-    def timer n=1, &blk
+    def timer(n=1, &blk)
       n *= 1000
       Timer.new @__app__, n, &blk
     end
@@ -335,7 +335,7 @@ EOS
     end
 
     # Sets the current line cap style
-    def cap line_cap
+    def cap(line_cap)
       @__app__.style[:cap] = line_cap
     end
 
@@ -400,8 +400,12 @@ EOS
       [@__app__.mouse_button, @__app__.mouse_pos[0], @__app__.mouse_pos[1]]
     end
 
-    def motion &blk
+    def motion(&blk)
       @__app__.mouse_motion << blk
+    end
+    
+    def resize(&blk)
+      @__app__.add_resize_callback blk
     end
 
     # hover and leave just delegate to the current slot as hover and leave
@@ -414,11 +418,11 @@ EOS
       @__app__.current_slot.leave(blk)
     end
 
-    def keypress &blk
+    def keypress(&blk)
       Shoes::Keypress.new @__app__, &blk
     end
 
-    def keyrelease &blk
+    def keyrelease(&blk)
       Shoes::Keyrelease.new @__app__, &blk
     end
 
@@ -426,7 +430,7 @@ EOS
       blk.call if blk
     end
 
-    def visit url
+    def visit(url)
       match_data = nil
       url_data = Shoes::URL.urls.find {|page, _| match_data = page.match url}
       if url_data
@@ -456,8 +460,12 @@ EOS
       @__app__.clipboard = str
     end
 
-    def download name, args={}, &blk
+    def download(name, args={}, &blk)
       create Shoes::Download, name, args, &blk
+    end
+
+    def gutter
+      @__app__.gutter
     end
   end
 end

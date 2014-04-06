@@ -21,4 +21,14 @@ describe Shoes::Widget do
     app.should_receive(:banner).with("Pickles!")
     app.smile("Pickles!")
   end
+
+  it 'sets the current slot as the parent' do
+    slot = nil
+    widget = nil
+    Shoes.app do
+      slot = instance_variable_get(:@__app__).current_slot
+      widget = smile 'lalala'
+    end
+    expect(widget.parent).to eq slot
+  end
 end

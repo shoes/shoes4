@@ -1,10 +1,16 @@
-require 'nokogiri'
+# This example tries Nokogiri (used in Shoes 4), but falls back to
+# Hpricot for Shoes 3 compatibility
+begin
+  require 'nokogiri'
+rescue Exception => e
+  require 'hpricot'
+end
 
 class Comic
   attr_reader :rss, :title
 
   def initialize(body)
-    @rss = Nokogiri::XML(body)
+    @rss = defined?(Nokogiri) ? Nokogiri::XML(body) : Hpricot(body)
     @title = @rss.at("//channel/title").inner_text
   end
 
@@ -23,7 +29,8 @@ Shoes.app width: 800, height: 600 do
   @title = "Web Funnies"
   @feeds = [
     "http://xkcd.com/rss.xml",
-    "http://feedproxy.google.com/DilbertDailyStrip?format=xml",
+    # No longer contains images
+    #"http://feedproxy.google.com/DilbertDailyStrip?format=xml",
     "http://www.smbc-comics.com/rss.php",
     "http://www.daybydaycartoon.com/index.xml",
     "http://www.questionablecontent.net/QCRSS.xml",
@@ -38,7 +45,9 @@ Shoes.app width: 800, height: 600 do
     @feeds.each do |feed|
       download feed do |dl|
         stack width: "100%", margin: 10, border: 1 do
-          c = Comic.new dl.read
+          # Fall back to Shoes 3 syntax if necessary
+          body = dl.respond_to?(:read) ? dl.read : dl.response.body
+          c = Comic.new body
           stack margin_right: gutter do
             background "#333", curve: 4
             caption c.title, stroke: "#CD9", margin: 4

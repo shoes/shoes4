@@ -92,6 +92,10 @@ class Shoes
       @app.app #return the Shoes::App not the internal app
     end
 
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @contents=#{@contents.inspect} and so much stuff literally breaks the memory limit. Look at it selectively.>"
+    end
+
     protected
     CurrentPosition = Struct.new(:x, :y, :next_line_start)
 

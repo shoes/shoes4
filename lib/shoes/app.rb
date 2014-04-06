@@ -56,7 +56,7 @@ class Shoes
     def to_s
       'Shoes App: ' + @__app__.app_title
     end
-
+    
     %w(
       width height owner started? location left top absolute_left
       absolute_top rotate click release clear fullscreen fullscreen=
@@ -68,6 +68,20 @@ class Shoes
     end
 
     alias_method :fullscreen?, :fullscreen
+
+    # inspect normally recursively inspects the values of all instance
+    # variables... as the app has a reference to EVERYTHING this turns
+    # out to be quite a lot/so much that the app runs out of memory #504
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @__app__=So much stuff literally breaks the memory limit. Look at it selectively.>"
+    end
+
+    DELEGATE_BLACKLIST = [:parent]
+
+    # class definitions are evaluated top to bottom, want to have all of them
+    # so define at bottom
+    DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
+      Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
   end
 
 
@@ -106,7 +120,7 @@ class Shoes
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
-                :mouse_motion, :owner, :element_styles
+                :mouse_motion, :owner, :element_styles, :resize_callbacks
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
                   :width, :height, :start_as_fullscreen, :location
@@ -206,6 +220,14 @@ class Shoes
       app.instance_eval &blk
     end
 
+    def gutter
+      gui.gutter
+    end
+
+    def add_resize_callback(blk)
+      @resize_callbacks << blk
+    end
+
     private
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way
@@ -237,6 +259,7 @@ class Shoes
       @mouse_button         = 0
       @mouse_pos            = [0, 0]
       @mouse_hover_controls = []
+      @resize_callbacks     = []
       @rotate               = 0
     end
 
@@ -261,5 +284,10 @@ class Shoes
       end
       @app.instance_eval &console
     end
+
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
+    end
+
   end
 end

@@ -21,25 +21,47 @@ class Shoes
   #   end
   #
   class Widget
-    def self.inherited klass, &blk
+    extend Forwardable
+
+    # Delegate missing methods to app, so you can use the Shoes DSL
+    # inside the widget.
+    def_delegators :app, *Shoes::App::DELEGATE_METHODS
+
+    attr_accessor :parent
+    attr_writer   :app
+
+    class << self
+      attr_accessor :app
+    end
+
+    # lookup a bit more complicated as during initialize we do
+    # not have @app yet...
+    def app
+      @app || self.class.app
+    end
+
+    def self.inherited(klass, &blk)
       dsl_method = dsl_method_name(klass)
       Shoes::App.class_eval do
         define_method(dsl_method) do |*args, &blk|
-          klass.send :class_variable_set, :@@__app__, self
-          klass.new(*args, &blk).tap do |s|
-            s.define_singleton_method(:parent){current_slot}
-          end
-        end
-      end
-
-      # Delegate missing methods to app, so you can use the Shoes DSL
-      # inside the widget.
-      klass.class_eval do
-        define_method :method_missing do |*args, &blk|
-          klass.send(:class_variable_get, :@@__app__).send *args, &blk
+          # we set app 2 times because widgets execute most of their code
+          # straight in initialize. I dunno if there is a good way of setting
+          # an @app instance variable before initialize is executed. We could
+          # hand it over in #initialize but that would break the interface
+          # and people would have to set it themselves or make sure to call
+          # super so for not it's like this.
+          # Setting the ref on the instance is important as we might have
+          # instances of the same widget in different Shoes::Apps so each one
+          # needs to save the reference to the one it was started with
+          klass.app              = self
+          widget_instance        = klass.new(*args, &blk)
+          widget_instance.app    = self
+          widget_instance.parent = @__app__.current_slot
+          widget_instance
         end
       end
     end
+
 
     private
     def self.dsl_method_name(klass)

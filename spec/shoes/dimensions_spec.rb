@@ -501,6 +501,16 @@ describe Shoes::Dimensions do
         subject.margin_right = 7
         subject.margin.should == [margin, margin, 7, margin]
       end
+      
+      it 'adapts margins when margin is changed with single value' do
+        subject.margin = 7
+        subject.margin.should == [7, 7, 7, 7]
+      end
+      
+      it 'adapts margin when margin is changed with array' do
+        subject.margin = [7, 7, 7, 7]
+        subject.margin.should == [7, 7, 7, 7]
+      end
     end
 
     describe 'creation with all distinct margin values' do
@@ -540,6 +550,48 @@ describe Shoes::Dimensions do
         it_behaves_like 'all distinct margins'
       end
     end
+  end
+
+  describe 'displace' do
+
+    before :each do
+      # need to have a rough positon
+      subject.absolute_left = left
+      subject.absolute_top  = top
+    end
+
+    describe 'displace_left' do
+      let(:displace_left) {3}
+      it 'modifies the value of element_left' do
+        expect do
+          subject.displace_left = displace_left
+        end.to change{subject.element_left}.by(displace_left)
+      end
+
+      it 'does not modify the value of absolute_left' do
+        expect do
+          subject.displace_left = displace_left
+        end.not_to change {subject.absolute_left}
+      end
+    end
+    
+    describe 'displace_top' do
+      let(:displace_top) {7}
+
+      it 'modifies the value of element_top' do
+        expect do
+          subject.displace_top = displace_top
+        end.to change{subject.element_top}.by(displace_top)
+      end
+
+      it 'does not modify the value of absolute_top' do
+        expect do
+          subject.displace_top = displace_top
+        end.not_to change {subject.absolute_top}
+      end
+    end
+
+
   end
 
   describe Shoes::AbsoluteDimensions do

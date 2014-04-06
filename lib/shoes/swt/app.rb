@@ -112,6 +112,14 @@ class Shoes
         @started
       end
 
+      # This represents the space (potentially) occupied by a vertical
+      # scrollbar. Since the scrollbar may not be visible at the time this
+      # method is called, we don't rely on its reported value.
+      def gutter
+        # 16
+        @shell.getVerticalBar.getSize.x
+      end
+
       private
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
@@ -211,6 +219,7 @@ class Shoes
         @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
         @app.real.layout
+        @app.dsl.resize_callbacks.each{|blk| blk.call}
       end
 
       def controlMoved(e)

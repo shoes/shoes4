@@ -13,10 +13,10 @@ shared_examples_for "object with relative dimensions" do
   let(:relative_opts) { {left: left, top: top, width: relative_width, height: relative_height} }
 
   it "should initialize based on parent dimensions" do
-    subject.left.should == left
-    subject.top.should == top
-    subject.width.should == parent.width / 2
-    subject.height.should == parent.height / 2
+    expect(subject.left).to eq left
+    expect(subject.top).to eq top
+    expect(subject.width).to be_within(1).of(parent.width / 2)
+    expect(subject.height).to be_within(1).of(parent.height / 2)
   end
 end
 
