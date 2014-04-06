@@ -46,9 +46,9 @@ class Shoes
       def create_links(elements_by_range)
         elements_by_range.each do |range, elements|
           elements.each do |element|
-            if element.respond_to?(:gui) &&
-               element.gui && element.gui.respond_to?(:apply_ranges)
-              element.gui.apply_ranges(layout_ranges(range))
+            if element.respond_to?(:gui) && element.gui &&
+               element.gui.respond_to?(:create_links_in)
+              element.gui.create_links_in(layout_ranges(range))
             end
           end
         end

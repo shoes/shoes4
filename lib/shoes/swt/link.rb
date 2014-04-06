@@ -11,7 +11,7 @@ class Shoes
         clickable self, dsl.blk
       end
 
-      def apply_ranges(layout_ranges)
+      def create_links_in(layout_ranges)
         @link_segments.clear
         layout_ranges.each do |layout, range|
           @link_segments << LinkSegment.new(layout, range)

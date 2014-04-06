@@ -24,8 +24,8 @@ class Shoes
         layout.spacing = (opts[:leading] || DEFAULT_SPACING)
         layout.alignment = case opts[:align]
                              when 'center'; ::Swt::SWT::CENTER
-                             when 'right'; ::Swt::SWT::RIGHT
-                             else ::Swt::SWT::LEFT
+                             when 'right';  ::Swt::SWT::RIGHT
+                             else           ::Swt::SWT::LEFT
                            end
 
         set_style(TextStyleFactory.apply_styles(default_text_styles, opts))
