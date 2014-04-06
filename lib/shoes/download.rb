@@ -1,7 +1,7 @@
 class Shoes
   class Download
 
-    attr_reader :progress, :content_length, :length, :gui, :transferred
+    attr_reader :progress, :content_length, :length, :gui, :transferred, :response
     UPDATE_STEPS = 100
 
     def initialize(app, parent, url, opts = {}, &blk)
@@ -27,7 +27,11 @@ class Shoes
     end
 
     def percent
+      if @content_length
       @transferred * 100 / @content_length
+      else
+        raise ArgumentError, "Can't call percent if content-length header is missing. Check to see if your file is downloadable."
+      end
     end
 
     def abort
@@ -38,11 +42,10 @@ class Shoes
     def start_download url
       require 'open-uri'
       @thread = Thread.new do
-        uri_opts = {}
-        uri_opts[:content_length_proc] = content_length_proc
-        uri_opts[:progress_proc] = progress_proc if @opts[:progress]
+        @opts[:content_length_proc] = content_length_proc
+        @opts[:progress_proc] = progress_proc if @opts[:progress]
 
-        download_file(url, uri_opts)
+        download_file(url, @opts)
       end
     end
 
@@ -64,29 +67,35 @@ class Shoes
       #       I decided to make the toggled variable an array just so
       #       that I could use language like queue and empty?.
       lambda do |size|
-        if (size - self.transferred) > (content_length / UPDATE_STEPS) && @gui.async_queue.empty?
-          @gui.async_queue << "asyncEvent"
-          eval_block(@opts[:progress], self)
-          @transferred = size
+        if content_length #if the requested url has no content-length header, then don't fire the progress
+          if (size - self.transferred) > (content_length / UPDATE_STEPS) && @gui.async_queue.empty?
+            @gui.async_queue << "asyncEvent"
+            eval_block(@opts[:progress], self)
+            @transferred = size
+          end
+        else
+          raise ArgumentError, "Can't call :progress if content-length header is missing. Check to see if your file is downloadable."
         end
       end
     end
 
-    def download_file(url, uri_opts)
-      open url, uri_opts do |download|
-        download_data = download.read
-        save_to_file(@opts[:save], download_data) if @opts[:save]
-        finish_download download_data
+    def download_file(url, opts)
+      ShoesHTTP.download(url, opts) do |download|
+        response = download
+        save_to_file(@opts[:save], response.body) if @opts[:save]
+        finish_download(response)
       end
     end
 
-    def finish_download download_data
+    def finish_download(response)
       @finished = true
-      result   = StringIO.new(download_data)
-      @transferred = @content_length #last progress_proc may not catch this event
-      eval_block(@opts[:progress], self) if @opts[:progress]
+      @response = response
 
-      eval_block(@blk, result) if @blk
+      @transferred = @content_length #last progress_proc may not catch this event
+      eval_block(@opts[:progress], self) if @opts[:progress] #so give it one more shot
+
+      #finish and block are the same
+      eval_block(@blk, self) if @blk
       eval_block(@opts[:finish], self) if @opts[:finish]
     end
 
@@ -94,7 +103,7 @@ class Shoes
       @gui.eval_block(blk, result)
     end
 
-    def save_to_file file_path, download_data
+    def save_to_file(file_path, download_data)
       open(file_path, 'wb') { |fw| fw.print download_data }
     end
 
@@ -103,5 +112,6 @@ class Shoes
       @length = content_length
       @started = true
     end
+
   end
 end
