@@ -57,13 +57,11 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       end
 
       it "creates a link segment" do
-        pending "time and energy"
-
         link = create_link("f")
         styles = [[0..1, [link]]]
         subject.create_links(styles)
 
-        expect(link.link_segments).to have(1).item
+        expect(link.gui.link_segments).to have(1).item
       end
     end
 
@@ -134,29 +132,31 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       let(:link) { create_link("rstres") }
 
       it "creates link segments in both layouts" do
-        pending "time and energy"
         styles = [[2..7, [link]]]
         subject.create_links(styles)
 
-        expect(link.link_segments).to have(2).items
+        expect(link.gui.link_segments).to have(2).items
       end
 
       it "clears links before re-creating them" do
-        pending "time and energy"
         styles = [[2..7, [link]]]
 
         subject.create_links(styles)
         subject.create_links(styles)
 
-        expect(link.link_segments).to have(2).items
+        expect(link.gui.link_segments).to have(2).items
       end
     end
   end
 
   def create_layout(name, text)
-    layout = Shoes::Swt::FittedTextLayout.new(double(name, :text => text), 0, 0)
+    bounds = double("bounds", height: 0)
+    inner_layout = double(name, text: text, get_line_bounds: bounds)
+
+    layout = Shoes::Swt::FittedTextLayout.new(inner_layout, 0, 0)
     layout.stub(:draw)
     layout.stub(:set_style)
+    layout.stub(:get_location).and_return(double("position", x: 0, y: 0))
     layout
   end
 

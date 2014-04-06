@@ -3,7 +3,7 @@ class Shoes
     class Link
       include Common::Clickable
 
-      attr_reader :app
+      attr_reader :app, :link_segments
 
       def initialize(dsl, app, opts={})
         @app = app
