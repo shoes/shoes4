@@ -1,6 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::FittedTextLayoutCollection do
+  include_context "swt app"
+
   let(:first_layout) { create_layout("first", "first") }
   let(:second_layout) { create_layout("second", "rest") }
 
@@ -159,7 +161,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
   end
 
   def create_link(text)
-    Shoes::Link.new([text], :color, { app: double("app").as_null_object })
+    Shoes::Link.new(shoes_app, parent, [text])
   end
 
   def style_with(opts={})

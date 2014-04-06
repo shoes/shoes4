@@ -6,7 +6,7 @@ describe Shoes::Link do
   context "initialize" do
     let(:texts) { ["text", "goes", "first"] }
 
-    subject { Shoes::Link.new(texts, :color, { app: app }) }
+    subject { Shoes::Link.new(app, app, texts, {color: :blue}) }
 
     it "should set up text" do
       subject.texts.should eql(texts)
@@ -14,7 +14,7 @@ describe Shoes::Link do
     end
 
     it "should set color" do
-      subject.color.should eql(:color)
+      subject.color.should eql(:blue)
     end
 
     it "should default opts" do
@@ -25,7 +25,7 @@ describe Shoes::Link do
     end
 
     context "overriding options" do
-      subject { Shoes::Link.new(texts, :colors, app: app,
+      subject { Shoes::Link.new(app, app, texts,
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do

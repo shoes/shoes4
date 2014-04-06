@@ -1,16 +1,18 @@
 class Shoes
   class Link < Span
-    attr_reader :app, :gui, :blk
+    attr_reader :app, :parent, :gui, :blk
 
     DEFAULT_OPTS = { underline: true, fg: ::Shoes::COLORS[:blue] }
 
-    def initialize texts, color=nil, opts={}, &blk
+    def initialize(app, parent, texts, opts={}, &blk)
+      @app = app
+      @parent = parent
       @blk = blk
-      @app = opts.delete(:app)
-      opts = DEFAULT_OPTS.merge(opts).merge(:color => color)
-      super texts, opts
 
+      opts = DEFAULT_OPTS.merge(opts)
       @gui = Shoes.backend_for(self, opts)
+
+      super texts, opts
     end
 
   end

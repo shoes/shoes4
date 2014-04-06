@@ -388,11 +388,11 @@ EOS
       Shoes::Span.new texts, { fill: pattern(color) }
     end
 
-    def link *texts, &blk
-      Shoes::Link.new texts, nil, { app: @__app__ }, &blk
+    def link(*texts, &blk)
+      create Shoes::Link, texts, &blk
     end
 
-    def span *texts
+    def span(*texts)
       Shoes::Span.new texts, style_normalizer.normalize(pop_style(texts))
     end
 
