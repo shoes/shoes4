@@ -15,14 +15,14 @@ class Shoes
         gcs_reset(paint_event.gc)
         return if @dsl.hidden?
 
-        fitted_layouts = @dsl.gui.fitted_layouts
-        layouts = FittedTextLayoutCollection.new(fitted_layouts, default_text_styles)
-        layouts.style_from(@opts)
-        layouts.style_segment_ranges(@dsl.text_styles)
-        layouts.create_links(@dsl.text_styles)
-        layouts.draw(paint_event.gc)
-
+        draw_layouts(paint_event.gc)
         draw_text_cursor
+      end
+
+      def draw_layouts(gc)
+        layouts = FittedTextLayoutCollection.new(@dsl.gui.fitted_layouts,
+                                                 default_text_styles)
+        layouts.paint_control(@dsl, gc)
       end
 
       def draw_text_cursor

@@ -11,6 +11,13 @@ class Shoes
         @default_text_styles = default_text_styles
       end
 
+      def paint_control(dsl, gc)
+        style_from(dsl.opts)
+        style_segment_ranges(dsl.text_styles)
+        create_links(dsl.text_styles)
+        draw(gc)
+      end
+
       def style_from(opts)
         @layouts.each do |layout|
           layout.style_from(default_text_styles, opts)
