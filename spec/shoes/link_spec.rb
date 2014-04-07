@@ -1,7 +1,9 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Link do
-  let(:app) { double("app", gui: double("gui").as_null_object) }
+  let(:gui) { double("gui").as_null_object }
+  let(:app) { double("app", gui: gui) }
+  let(:internal_app) { double("internal app", app: app, gui: gui) }
 
   context "initialize" do
     let(:texts) { ["text", "goes", "first"] }
@@ -38,6 +40,25 @@ describe Shoes::Link do
 
       it "should include other options" do
         subject.opts.should include(:bg => Shoes::COLORS[:green])
+      end
+    end
+
+    context "with a block" do
+      let(:callable) { double("callable") }
+      subject { Shoes::Link.new(internal_app, nil, texts) { callable.call } }
+
+      it "sets up for the click" do
+        expect(callable).to receive(:call)
+        subject.blk.call
+      end
+    end
+
+    context "with click option" do
+      subject { Shoes::Link.new(internal_app, nil, texts, click: "/url") }
+
+      it "should visit the url" do
+        expect(app).to receive(:visit).with("/url")
+        subject.blk.call
       end
     end
   end
