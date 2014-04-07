@@ -22,7 +22,6 @@ class Shoes
         attach_event_listeners
         initialize_scroll_bar
         @redrawing_aspect = RedrawingAspect.new self, Shoes.display
-        @overlay_scrollbar = @shell.getScrollbarsMode() == 2
       end
 
       def open
@@ -44,9 +43,13 @@ class Shoes
       def app
         self
       end
+      
+      def overlay_scrollbars?
+        @shell.getScrollbarsMode() == ::Swt::SWT::SCROLLBAR_OVERLAY
+      end
 
       def width
-        if @overlay_scrollbar
+        if overlay_scrollbars?
           @shell.client_area.width
         else
           @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
