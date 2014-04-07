@@ -34,7 +34,7 @@ class Shoes
     end
 
     private
-    def start_download url
+    def start_download(url)
       require 'open-uri'
       @thread = Thread.new do
         uri_opts = {}
@@ -66,7 +66,7 @@ class Shoes
       end
     end
 
-    def finish_download download_data
+    def finish_download(download_data)
       @finished = true
       @response = StringIO.new(download_data)
 
@@ -83,7 +83,7 @@ class Shoes
       @gui.eval_block(blk, result)
     end
 
-    def save_to_file file_path, download_data
+    def save_to_file(file_path, download_data)
       open(file_path, 'wb') { |fw| fw.print download_data }
     end
 
