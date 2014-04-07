@@ -47,8 +47,8 @@ class Shoes
           finish_download download_data
         end
       end
-
     end
+    
     def content_length_proc
       lambda do |content_length| 
         download_started(content_length) 
@@ -66,7 +66,6 @@ class Shoes
       end
     end
 
-
     def finish_download download_data
       @finished = true
       result   = StringIO.new(download_data)
@@ -78,7 +77,6 @@ class Shoes
       #:finish and block are the same
       eval_block(@blk, self) if @blk
       eval_block(@opts[:finish], self) if @opts[:finish]
-
     end
 
     def eval_block(blk, result)

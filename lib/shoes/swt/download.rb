@@ -19,7 +19,6 @@ class Shoes
       def busy?
         @busy
       end
-
     end
   end
 end

@@ -34,7 +34,7 @@ describe Shoes::Download do
   end
 
   describe 'after it is finished' do
-    let(:result) { duck_type(:read) }
+    let(:result) {download}
 
     context 'with a block' do
       it 'calls the block with a result' do
