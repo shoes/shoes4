@@ -1,7 +1,7 @@
 class Shoes
   class Download
 
-    attr_reader :progress, :content_length, :gui, :transferred, :length #length is preserved for Shoes3 compatibility
+    attr_reader :progress, :response, :content_length, :gui, :transferred, :length #length is preserved for Shoes3 compatibility
     UPDATE_STEPS = 100
 
     def initialize(app, parent, url, opts = {}, &blk)
@@ -68,7 +68,7 @@ class Shoes
 
     def finish_download download_data
       @finished = true
-      result   = StringIO.new(download_data)
+      @response = StringIO.new(download_data)
 
       #In case final asyncEvent didn't catch the 100%
       @transferred = @content_length
