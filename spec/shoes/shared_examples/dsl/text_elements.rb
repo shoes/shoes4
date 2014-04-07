@@ -55,6 +55,19 @@ shared_examples_for "text element DSL methods" do
     end
   end
 
+  describe 'link' do
+    it 'handles multiple texts' do
+      link = dsl.link('one', 'two')
+      expect(link.to_s).to eql('onetwo')
+    end
+
+    it 'handles trailing options' do
+      link = dsl.link('one', 'two', stroke: '#ccc')
+      expect(link.to_s).to eql('onetwo')
+      expect(link.opts[:stroke]).to eq Shoes::Color.new 204, 204, 204
+    end
+  end
+
   describe 'para' do
     context "with nested text fragments with parameters" do
       Shoes::DSL::TEXT_STYLES.keys.each do |style|

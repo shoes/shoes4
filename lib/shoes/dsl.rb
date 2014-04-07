@@ -389,7 +389,7 @@ EOS
     end
 
     def link(*texts, &blk)
-      create Shoes::Link, texts, &blk
+      create Shoes::Link, texts, style_normalizer.normalize(pop_style(texts)), &blk
     end
 
     def span(*texts)
@@ -403,7 +403,7 @@ EOS
     def motion(&blk)
       @__app__.mouse_motion << blk
     end
-    
+
     def resize(&blk)
       @__app__.add_resize_callback blk
     end
