@@ -62,14 +62,10 @@ class Shoes
     end
 
     %w(left top right bottom).each do |side|
-      define_method side + '=' do |value|
-        return if value.nil?
-        instance_variable_set '@' + side, value
-        instance_variable_set ('@absolute_' + side + '_position'), true
-      end
+      attr_writer side.to_sym
 
       define_method side do
-        value = instance_variable_get('@' + side) || 0
+        value = instance_variable_get('@' + side)
         if LEFT_TOP.include?(side) && left_top_as_center?
           send 'adjust_' + side + '_for_center', value
         else
@@ -135,11 +131,11 @@ class Shoes
     # absolute_left/top/right/bottom_position are set in the meta programmed
     # code for left=/top=/right=/bottom= in case you are looking for them
     def absolute_x_position?
-      @absolute_left_position || @absolute_right_position
+      left || right
     end
 
     def absolute_y_position?
-      @absolute_top_position || @absolute_bottom_position
+      top || bottom
     end
 
     def absolutely_positioned?

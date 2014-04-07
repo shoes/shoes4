@@ -40,8 +40,8 @@ describe Shoes::Dimensions do
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
 
-      its(:left) {should eq 0}
-      its(:top) {should eq 0}
+      its(:left) {should eq nil}
+      its(:top) {should eq nil}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
       its(:absolutely_positioned?) {should be_false}
@@ -183,8 +183,8 @@ describe Shoes::Dimensions do
       describe 'with invalid integer strings' do
         subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob"}
 
-        its(:left) {should eq 0}
-        its(:top) {should eq 0}
+        its(:left) {should eq nil}
+        its(:top) {should eq nil}
         its(:width) {should be_nil}
         its(:height) {should be_nil}
       end
