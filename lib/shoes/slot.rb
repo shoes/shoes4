@@ -157,7 +157,11 @@ class Shoes
 
     def position_x(relative_x, element)
       if element.absolute_x_position?
-        self.absolute_left + element.left
+        if element.left
+          self.absolute_left + element.left
+        elsif element.right
+          self.absolute_right - (element.right + element.width)
+        end
       else
         relative_x
       end
@@ -165,7 +169,13 @@ class Shoes
 
     def position_y(relative_y, element)
       if element.absolute_y_position?
-        self.absolute_top + element.top
+        if element.top
+          self.absolute_top + element.top
+        elsif element.bottom
+          # TODO: slots grow... to really position it relative to the bottom
+          # we probably need to position it after everything has been positioned
+          self.absolute_bottom - (element.bottom + element.height)
+        end
       else
         relative_y
       end

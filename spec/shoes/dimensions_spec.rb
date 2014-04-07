@@ -239,6 +239,15 @@ describe Shoes::Dimensions do
 
         its(:width) {should eq nil}
       end
+
+      describe 'with right and bottom' do
+        subject {Shoes::Dimensions.new parent, right: right, bottom: bottom}
+
+        its(:right) {should eq right}
+        its(:bottom) {should eq bottom}
+        its(:absolute_x_position?) {should be_true}
+        its(:absolute_y_position?) {should be_true}
+      end
     end
 
     describe 'absolute_left and _top' do

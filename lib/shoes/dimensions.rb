@@ -204,6 +204,8 @@ class Shoes
 
     def general_options(opts)
       @left_top_as_center = opts.fetch(:center, false)
+      self.right = parse_input_value opts[:right]
+      self.bottom = parse_input_value opts[:bottom]
       init_margins opts
     end
 
