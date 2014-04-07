@@ -1,10 +1,10 @@
 class Shoes
   module Swt
     class Download
-
+      
+      attr_accessor :busy
       def initialize(_dsl)
-        #A fake async_queue to help us not overload it.
-        @async_queue = []
+        @busy = false
       end
 
       # This exists to guarantee the callback block for download completion
@@ -12,12 +12,12 @@ class Shoes
       def eval_block(blk, result)
         ::Swt.display.asyncExec do
           blk.call result
-          @async_queue.shift
+          @busy = false
         end
       end
 
-      def async_queue
-        @async_queue
+      def busy?
+        @busy
       end
 
     end
