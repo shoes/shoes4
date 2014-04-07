@@ -8,7 +8,7 @@ class Shoes
       def initialize(dsl, app, opts={})
         @app = app
         @link_segments = []
-        clickable self, dsl.blk
+        clickable self, Proc.new { dsl.execute_link }
       end
 
       def create_links_in(layout_ranges)

@@ -49,7 +49,7 @@ describe Shoes::Link do
 
       it "sets up for the click" do
         expect(callable).to receive(:call)
-        subject.blk.call
+        subject.execute_link
       end
     end
 
@@ -58,7 +58,21 @@ describe Shoes::Link do
 
       it "should visit the url" do
         expect(app).to receive(:visit).with("/url")
-        subject.blk.call
+        subject.execute_link
+      end
+    end
+
+    context "calling click explicitly" do
+      let(:original_block)    { double("original") }
+      let(:replacement_block) { double("replacement") }
+      subject { Shoes::Link.new(internal_app, nil, texts) { original_block.call } }
+
+      it "replaces original block" do
+        expect(original_block).to_not receive(:call)
+        expect(replacement_block).to receive(:call)
+
+        subject.click { replacement_block.call }
+        subject.execute_link
       end
     end
   end
