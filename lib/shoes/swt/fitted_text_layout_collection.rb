@@ -11,11 +11,11 @@ class Shoes
         @default_text_styles = default_text_styles
       end
 
-      def paint_control(dsl, gc)
+      def paint_control(dsl, graphic_context)
         style_from(dsl.opts)
         style_segment_ranges(dsl.text_styles)
         create_links(dsl.text_styles)
-        draw(gc)
+        draw(graphic_context)
       end
 
       def style_from(opts)
@@ -53,12 +53,17 @@ class Shoes
       def create_links(elements_by_range)
         elements_by_range.each do |range, elements|
           elements.each do |element|
-            if element.respond_to?(:gui) && element.gui &&
-               element.gui.respond_to?(:create_links_in)
+            if supports_links?(element)
               element.gui.create_links_in(layout_ranges(range))
             end
           end
         end
+      end
+
+      def supports_links?(element)
+        element.respond_to?(:gui) &&
+          element.gui &&
+          element.gui.respond_to?(:create_links_in)
       end
 
       # If we've got segments that style us across different ranges, it might

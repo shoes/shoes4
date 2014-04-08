@@ -19,10 +19,10 @@ class Shoes
         draw_text_cursor
       end
 
-      def draw_layouts(gc)
+      def draw_layouts(graphic_context)
         layouts = FittedTextLayoutCollection.new(@dsl.gui.fitted_layouts,
                                                  default_text_styles)
-        layouts.paint_control(@dsl, gc)
+        layouts.paint_control(@dsl, graphic_context)
       end
 
       def draw_text_cursor
