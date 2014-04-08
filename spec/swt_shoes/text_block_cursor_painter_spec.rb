@@ -40,7 +40,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
     let(:first_layout) { double("first layout", text: "first",
                                 get_location: position,
                                 get_line_bounds: text_layout, height: 10,
-                                left: left, top: top) }
+                                element_left: left, element_top: top) }
 
     before(:each) do
       textcursor.stub(:move)
@@ -87,7 +87,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
     context "with two layouts" do
       let(:second_layout) { double("second layout", text: "second",
                                    get_location: position,
-                                   left: left, top: top + 100) }
+                                   element_left: left, element_top: top + 100) }
       before(:each) do
         dsl.stub(:text).and_return(first_layout.text + second_layout.text)
         fitted_layouts << second_layout
