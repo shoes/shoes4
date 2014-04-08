@@ -98,8 +98,9 @@ class Shoes
       end
 
       def results_in_last_layout(text_range, first_text)
-        [[@layouts.last,
-         (text_range.first - first_text.length..text_range.last - first_text.length)]]
+        range_start = text_range.first - first_text.length
+        range_end   = text_range.last - first_text.length
+        [[@layouts.last, (range_start..range_end)]]
       end
     end
   end
