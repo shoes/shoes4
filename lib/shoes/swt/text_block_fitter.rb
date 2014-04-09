@@ -120,27 +120,5 @@ class Shoes
         first_height
       end
     end
-
-    class FittedTextLayout
-      attr_reader :layout, :left, :top
-
-      def initialize(layout, left, top)
-        @layout = layout
-        @left = left
-        @top = top
-      end
-
-      def get_location(cursor)
-        @layout.get_location(cursor, false)
-      end
-
-      def text
-        @layout.text
-      end
-
-      def draw(graphics_context)
-        layout.draw(graphics_context, left, top)
-      end
-    end
   end
 end

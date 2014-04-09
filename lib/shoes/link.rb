@@ -1,16 +1,19 @@
 class Shoes
-  class Link < Text
-    def initialize texts, color=nil, &blk
-      @blk = blk
-      super texts, color
-    end
-    attr_reader :blk
-    attr_accessor :click_listener, :line_height, :start_x, :start_y,
-                  :end_x, :end_y, :clickabled,
-                  :parent
+  class Link < Span
+    attr_reader :app, :parent, :gui, :blk
 
-    def in_bounds?(x, y)
-      (start_x..end_x).include?(x) and (start_y..end_y).include?(y)
+    DEFAULT_OPTS = { underline: true, fg: ::Shoes::COLORS[:blue] }
+
+    def initialize(app, parent, texts, opts={}, &blk)
+      @app = app
+      @parent = parent
+      @blk = blk
+
+      opts = DEFAULT_OPTS.merge(opts)
+      @gui = Shoes.backend_for(self, opts)
+
+      super texts, opts
     end
+
   end
 end

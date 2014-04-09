@@ -389,7 +389,7 @@ EOS
     end
 
     def link(*texts, &blk)
-      Shoes::Link.new texts, &blk
+      create Shoes::Link, texts, &blk
     end
 
     def span(*texts)

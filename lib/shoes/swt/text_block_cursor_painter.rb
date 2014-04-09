@@ -26,7 +26,7 @@ class Shoes
 
       def new_position(layout)
         position = layout.get_location(relative_cursor)
-        [layout.left + position.x, layout.top + position.y]
+        [layout.element_left + position.x, layout.element_top + position.y]
       end
 
       def move_textcursor(x, y)
