@@ -1,36 +1,32 @@
 class PhotoFrame < Shoes
-  SPACE = "    "
-  url '/', :index
+  url '/',        :index
+  url '/cy',      :cy
   url '/loogink', :loogink
-  url '/cy', :cy
 
   def index
-    eval(['loogink', 'cy'][rand 2])
+    eval(['loogink', 'cy'].sample)
   end
 
   def loogink
-    background tomato
-    inscription 'Shoes 4'
-    flow width: 70 # space
-    image File.join(Shoes::DIR, 'samples/loogink.png')
-    para SPACE
-    para SPACE, fg(strong('She is Loogink.'), white),
-      '->', link(strong('Cy')){visit '/cy'}
-    p location
+    display tomato, white, "Loogink", "Cy", "She is Loogink"
   end
 
   def cy
-    background paleturquoise
-    inscription 'Shoes 4'
-    flow width: 70 # space
-    image File.join(Shoes::DIR, 'samples/cy.png')
-    para SPACE
-    para SPACE, fg(strong('He is Cy.'), gray), '  ->', 
-      link(strong('loogink')){visit '/loogink'}
-    p location
+    display paleturquoise, gray, "Cy", "Loogink", "He is Cy"
+  end
+
+  def display(bg_color, fg_color, name, other, message)
+    background bg_color
+    stack do
+      inscription 'Shoes 4', left: 80
+      image File.join(Shoes::DIR, "samples/#{name.downcase}.png"),
+        left: 75, top: 25
+      para fg(strong(message), fg_color),
+        '  ->',
+        link(strong(other), click:"/#{other.downcase}"),
+        left: 35, top: 85
+    end
   end
 end
 
 Shoes.app width: 200, height: 120, title: 'Photo Frame'
-
-# TODO: Remove SPACE and use margin style option.
