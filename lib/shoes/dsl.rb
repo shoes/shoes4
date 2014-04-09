@@ -57,6 +57,11 @@ class Shoes
       @__app__.element_styles.fetch(klass, {}).merge(styles)
     end
 
+    def normalize_style_for_element(clazz, texts)
+      style = style_normalizer.normalize(pop_style(texts))
+      style_for_element(clazz, style)
+    end
+
     def create(element, *args, &blk)
       element.new(@__app__, @__app__.current_slot, *args, &blk)
     end
@@ -389,11 +394,13 @@ EOS
     end
 
     def link(*texts, &blk)
-      create Shoes::Link, texts, style_normalizer.normalize(pop_style(texts)), &blk
+      opts = normalize_style_for_element(Shoes::Link, texts)
+      create Shoes::Link, texts, opts, &blk
     end
 
     def span(*texts)
-      Shoes::Span.new texts, style_normalizer.normalize(pop_style(texts))
+      opts = normalize_style_for_element(Shoes::Span, texts)
+      Shoes::Span.new texts, opts
     end
 
     def mouse
