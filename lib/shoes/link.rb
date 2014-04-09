@@ -1,5 +1,7 @@
 class Shoes
   class Link < Span
+    include CommonMethods
+
     attr_reader :app, :parent, :gui, :blk
 
     DEFAULT_OPTS = { underline: true, fg: ::Shoes::COLORS[:blue] }
