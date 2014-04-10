@@ -8,6 +8,11 @@ class Shoes
       def initialize(dsl, app, opts={})
         @app = app
         @link_segments = []
+
+        # Important to capture a block that executes the DSL's current block,
+        # not just the block the DSL had when initializing, since a `click`
+        # call can change the block but won't update the clickable listener.
+        # See issue #639 for how we'd like to fix this in clickable.
         clickable self, Proc.new { dsl.execute_link }
       end
 
