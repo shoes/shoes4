@@ -70,6 +70,7 @@ class Shoes
       # be in either, or both, of the layouts. This method figures out which
       # layouts apply, and what the relative ranges within each layout to use.
       def layout_ranges(text_range)
+        return [] unless @layouts.first # TODO WTF #636
         first_text = @layouts.first.layout.text
         slice = first_text[text_range]
 
