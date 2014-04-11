@@ -6,15 +6,6 @@ class Shoes
   #
   # gui_container - the "real" framework implementation object
   module CommonMethods
-    def self.included(mod)
-      # Ruby 1.9 changed scoping rules such that in Shoes.app we can't see
-      # the Shoes::* class names without qualification.
-      #
-      # This bit of funny business restores an alias at the top level for any
-      # of the primary DSL types that we mark with CommonMethods
-      unqualified_name = mod.name.gsub("Shoes::", "")
-      Object.const_set(unqualified_name, mod)
-    end
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
