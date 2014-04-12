@@ -3,7 +3,7 @@ require "swt_shoes/spec_helper"
 describe Shoes::Swt::App do
   let(:opts) { {:background => Shoes::COLORS[:salmon], :resizable => true} }
   let(:app) { double('app', :opts => opts,
-                            :width => 0,
+                            :width => width,
                             :height => 0,
                             :app_title => 'double') }
 
@@ -13,6 +13,7 @@ describe Shoes::Swt::App do
                                         :width => 0,
                                         :height => 0,
                                         :app_title => 'double') }
+  let(:width) {0}
 
   subject { Shoes::Swt::App.new(app) }
 

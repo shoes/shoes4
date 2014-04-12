@@ -48,7 +48,7 @@ class Shoes
         if overlay_scrollbars?
           @shell.client_area.width
         else
-          @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+          width_adjusted_for_scrollbars
         end
       end
 
@@ -210,6 +210,14 @@ class Shoes
 
       def overlay_scrollbars?
         @shell.scrollbars_mode == ::Swt::SWT::SCROLLBAR_OVERLAY
+      end
+
+      def width_adjusted_for_scrollbars
+        if @shell.getVerticalBar.getVisible
+          @shell.client_area.width + @shell.getVerticalBar.getSize.x
+        else
+          @shell.client_area.width
+        end
       end
 
     end
