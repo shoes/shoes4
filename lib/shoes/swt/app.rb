@@ -44,10 +44,6 @@ class Shoes
         self
       end
       
-      def overlay_scrollbars?
-        @shell.getScrollbarsMode() == ::Swt::SWT::SCROLLBAR_OVERLAY
-      end
-
       def width
         if overlay_scrollbars?
           @shell.client_area.width
@@ -210,6 +206,10 @@ class Shoes
       def attach_real_event_listeners
         @real.addMouseMoveListener MouseMoveListener.new(self)
         @real.addMouseListener MouseListener.new(self)
+      end
+
+      def overlay_scrollbars?
+        @shell.scrollbars_mode == ::Swt::SWT::SCROLLBAR_OVERLAY
       end
 
     end
