@@ -104,6 +104,25 @@ describe Shoes::Swt::TextBlockFitter do
         expect_fitted_layouts(fitted_layouts, [26, 76], [1, 95])
       end
     end
+
+    context "to empty first layout" do
+      before(:each) do
+        dsl.stub(containing_width: 100)
+        layout.stub(:text= => nil)
+      end
+
+      it "rolls to second layout when 0 remaining width" do
+        dsl.stub(desired_width: 0)
+        fitted_layouts = when_fit_at(x: 0, y: 75, next_line_start: 95)
+        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 96])
+      end
+
+      it "rolls to second layout when negative remaining width" do
+        dsl.stub(desired_width: -1)
+        fitted_layouts = when_fit_at(x: 0, y: 75, next_line_start: 95)
+        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 96])
+      end
+    end
   end
 
   def with_text_split(first, second)

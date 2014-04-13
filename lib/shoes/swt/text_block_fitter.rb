@@ -36,13 +36,20 @@ class Shoes
       #
       def fit_it_in
         width, height = available_space
-        layout = generate_layout(width, @dsl.text)
+        if no_space_in_first_layout?(width)
+          return fit_with_empty_first_layout(height)
+        end
 
+        layout = generate_layout(width, @dsl.text)
         if fits_in_one_layout?(layout, height)
           fit_as_one_layout(layout)
         else
           fit_as_two_layouts(layout, height, width)
         end
+      end
+
+      def no_space_in_first_layout?(width)
+        width <= 0
       end
 
       def fits_in_one_layout?(layout, height)
@@ -60,8 +67,23 @@ class Shoes
         first_text, second_text = split_text(layout, height)
         first_layout = generate_layout(width, first_text)
 
-        return fit_as_one_layout(first_layout) if second_text.empty?
+        if second_text.empty?
+          fit_as_one_layout(first_layout)
+        else
+          generate_two_layouts(first_layout, first_text, second_text, height)
+        end
+      end
 
+      def fit_with_empty_first_layout(height)
+        # Although we purposefully empty it out, still need the first layout
+        layout = generate_layout(1, @dsl.text)
+        layout.text = ""
+
+        height += ::Shoes::Slot::NEXT_ELEMENT_ON_NEXT_LINE_OFFSET.y
+        return generate_two_layouts(layout, "", @dsl.text, height)
+      end
+
+      def generate_two_layouts(first_layout, first_text, second_text, height)
         first_height = first_height(first_layout, first_text, height)
         second_layout = generate_second_layout(second_text)
 
