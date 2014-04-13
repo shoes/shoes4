@@ -13,16 +13,15 @@ describe Shoes::Swt::TextBlockPainter do
                      text_styles: text_styles, :hidden? => false).as_null_object
             }
 
-  let(:fitted_layout) { double("fitted layout", left: 0, top: 10,
-                               draw: nil, layout: text_layout) }
-  let(:text_layout) { double("text layout").as_null_object }
-  let(:text_styles) {[]}
-  let(:text) {"hello world"}
+  let(:fitted_layout) { Shoes::Swt::FittedTextLayout.new(text_layout, 0, 10) }
+  let(:text_layout) { double("text layout", text: text).as_null_object }
 
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style) }
   let(:blue) { Shoes::Color.new(0, 0, 255) }
-  let(:swt_blue) { Shoes::Swt::Color.new(blue).real }
+  let(:swt_blue) { Shoes::Swt::Color.new(blue).real}
+  let(:text_styles) {{}}
+  let(:text) {'hello world'}
 
   subject { Shoes::Swt::TextBlockPainter.new(dsl) }
 
@@ -36,22 +35,22 @@ describe Shoes::Swt::TextBlockPainter do
   end
 
   it "sets justify" do
-    expect(text_layout).to receive(:setJustify).with(opts[:justify])
+    expect(text_layout).to receive(:justify=).with(opts[:justify])
     subject.paintControl(event)
   end
 
   it "sets spacing" do
-    expect(text_layout).to receive(:setSpacing).with(opts[:leading])
+    expect(text_layout).to receive(:spacing=).with(opts[:leading])
     subject.paintControl(event)
   end
 
   it "sets alignment" do
-    expect(text_layout).to receive(:setAlignment).with(anything)
+    expect(text_layout).to receive(:alignment=).with(anything)
     subject.paintControl(event)
   end
 
   it "sets text styles" do
-    expect(text_layout).to receive(:setStyle).with(anything, anything, anything).at_least(1).times
+    expect(text_layout).to receive(:set_style).with(anything, anything, anything).at_least(1).times
     subject.paintControl(event)
   end
 
@@ -192,26 +191,16 @@ describe Shoes::Swt::TextBlockPainter do
     end
   end
 
-  context "with text fragments" do
-
-    let(:black) { ::Swt::Color.new Shoes.display, 0, 0, 0 }
-    let(:white) { ::Swt::Color.new Shoes.display, 255, 255, 255 }
-    let(:font) { ::Swt::Graphics::Font.new Shoes.display, "Arial", 12, ::Swt::SWT::NORMAL }
-
-    it "creates a text style" do
-      pending "creative testing energy"
-      expect(::Swt::TextStyle).to receive(:new).exactly(42).times
-      subject.paintControl(event)
-    end
-  end
-
   describe 'text_styles' do
     # this text_styles relies a lot on the internal structure of TextBlock/Painter
     # right now, which I'm not too fond of... :)
     let(:text_styles) {[[0...text.length, [Shoes::Span.new([text], size: 50)]]]}
     it 'sets the font size to 50' do
-      expect(::Swt::Font).to receive(:new).with(anything, anything, dsl.font_size, anything)
-      expect(::Swt::Font).to receive(:new).with(anything, anything, 50, anything)
+      expect(::Swt::Font).to receive(:new).
+                             with(anything, anything, dsl.font_size, anything)
+      expect(::Swt::Font).to receive(:new).
+                             with(anything, anything, 50, anything)
+
       subject.paintControl event
     end
   end
