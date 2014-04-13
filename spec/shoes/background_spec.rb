@@ -1,15 +1,5 @@
 require 'shoes/spec_helper'
 
-shared_examples_for "basic background" do
-  it "retains app" do
-    expect(background.app).to eq(app)
-  end
-
-  it "creates gui object" do
-    expect(background.gui).not_to be_nil
-  end
-end
-
 describe Shoes::Background do
   include_context "dsl app"
 
@@ -22,7 +12,14 @@ describe Shoes::Background do
   let(:input_opts){ {left: left, top: top, width: width, height: height, color: blue} }
   subject(:background) { Shoes::Background.new(app, parent, blue, input_opts) }
 
-  it_behaves_like "basic background"
+  it "retains app" do
+    expect(background.app).to eq(app)
+  end
+
+  it "creates gui object" do
+    expect(background.gui).not_to be_nil
+  end
+
   it_behaves_like "object with style"
   it_behaves_like "object with dimensions"
 
