@@ -1,11 +1,11 @@
 class Shoes
   module Common
     module Clickable
-      def click &blk
+      def click(&blk)
         @gui.click &blk
       end
 
-      def release &blk
+      def release(&blk)
         @gui.release &blk
       end
 

@@ -50,4 +50,11 @@ shared_examples 'clickable backend' do
       subject.release do ; end
     end
   end
+
+  it 'only hands the dsl object to the app' do
+    subject.click do ; end
+    # at least is used for link - because it already triggers it in intialize
+    expect(swt_app).to have_received(:add_clickable_element).with(subject.dsl).
+                           at_least(1).times
+  end
 end

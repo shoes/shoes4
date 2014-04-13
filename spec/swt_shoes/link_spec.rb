@@ -4,14 +4,16 @@ describe Shoes::Swt::Link do
   include_context "swt app"
   let(:dsl) { Shoes::Link.new shoes_app, parent, ["linky"] }
 
-  subject { Shoes::Swt::Link.new(dsl, shoes_app) }
+  subject { Shoes::Swt::Link.new(dsl, swt_app) }
 
   it "marks itself clickable" do
-    expect(shoes_app).to receive(:add_listener)
-    expect(shoes_app).to receive(:add_clickable_element)
+    expect(swt_app).to receive(:add_listener)
+    expect(swt_app).to receive(:add_clickable_element)
 
     subject
   end
+
+  its(:dsl) {should eq dsl}
 
   context "creating link segments" do
     let(:bounds)       { double("bounds", height: 0) }
