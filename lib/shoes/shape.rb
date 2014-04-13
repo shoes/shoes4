@@ -66,6 +66,10 @@ class Shoes
       true
     end
 
+    def takes_up_space?
+      true
+    end
+
     # Moves the shape
     #
     # @param [Integer] left The new left value

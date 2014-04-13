@@ -115,7 +115,7 @@ class Shoes
       return current_position unless element.needs_to_be_positioned?
       position_modifier = position_element element, current_position
       element.contents_alignment(current_position) if element.respond_to? :contents_alignment
-      if takes_up_space?(element)
+      if element.takes_up_space?
         update_current_position(current_position, element, position_modifier)
       else
         current_position
@@ -197,10 +197,6 @@ class Shoes
       fitting_width = element.width
       fitting_width = element.fitting_width if element.respond_to?(:fitting_width)
       current_x + fitting_width - 1 <= element_right
-    end
-
-    def takes_up_space?(element)
-      not (element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border))
     end
 
     def determine_slot_height(last_position)

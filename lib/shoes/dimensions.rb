@@ -172,6 +172,10 @@ class Shoes
       true
     end
 
+    def takes_up_space?
+      true
+    end
+
     private
     def hash_as_argument?(left)
       left.respond_to? :fetch

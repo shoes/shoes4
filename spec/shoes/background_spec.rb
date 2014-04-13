@@ -43,4 +43,6 @@ describe Shoes::Background do
       it {should be_needs_to_be_positioned}
     end
   end
+
+  it {should_not be_takes_up_space}
 end
