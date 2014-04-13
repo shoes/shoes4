@@ -35,4 +35,15 @@ describe Shoes::Background do
     subject { Shoes::Background.new(app, parent, blue, negative_opts) }
     it_behaves_like "object with negative dimensions"
   end
+
+  describe '#needs_to_be_positioned?' do
+    context 'without absolute dimensions' do
+      let(:input_opts) {{}}
+      it {should_not be_needs_to_be_positioned}
+    end
+
+    context 'with absolute dimensions' do
+      it {should be_needs_to_be_positioned}
+    end
+  end
 end

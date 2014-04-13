@@ -166,6 +166,12 @@ class Shoes
       @margin_left, @margin_top, @margin_right, @margin_bottom =  margin
     end
 
+    # used by positioning code in slot and there to be overwritten if something
+    # does not need to be positioned like a background or so
+    def needs_to_be_positioned?
+      true
+    end
+
     private
     def hash_as_argument?(left)
       left.respond_to? :fetch

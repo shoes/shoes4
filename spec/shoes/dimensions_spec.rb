@@ -615,8 +615,9 @@ describe Shoes::Dimensions do
       end
     end
 
-
   end
+
+  it {should be_needs_to_be_positioned}
 
   describe Shoes::AbsoluteDimensions do
     subject {Shoes::AbsoluteDimensions.new left, top, width, height}

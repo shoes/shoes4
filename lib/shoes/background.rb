@@ -22,5 +22,9 @@ class Shoes
       @gui = Shoes.backend_for(self, opts, &blk)
     end
 
+    def needs_to_be_positioned?
+      absolutely_positioned?
+    end
+
   end
 end

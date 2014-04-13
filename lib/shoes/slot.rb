@@ -112,6 +112,7 @@ class Shoes
     end
 
     def positioning(element, current_position)
+      return current_position unless element.needs_to_be_positioned?
       position_modifier = position_element element, current_position
       element.contents_alignment(current_position) if element.respond_to? :contents_alignment
       if takes_up_space?(element)

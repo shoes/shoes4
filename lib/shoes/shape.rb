@@ -62,6 +62,10 @@ class Shoes
     alias_method :element_width, :width
     alias_method :element_height, :height
 
+    def needs_to_be_positioned?
+      true
+    end
+
     # Moves the shape
     #
     # @param [Integer] left The new left value
