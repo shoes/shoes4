@@ -22,11 +22,6 @@ class Shoes
       end
 
       class Painter < RectPainter
-        def fill_setup(gc)
-          @obj.apply_fill gc
-          true
-        end
-
         def draw_setup(gc)
           # don't draw
         end
