@@ -43,9 +43,13 @@ class Shoes
       def app
         self
       end
-
+      
       def width
-        @shell.getVerticalBar.getVisible ? (@shell.client_area.width + @shell.getVerticalBar.getSize.x) : @shell.client_area.width
+        if overlay_scrollbars?
+          @shell.client_area.width
+        else
+          width_adjusted_for_scrollbars
+        end
       end
 
       def height
@@ -69,7 +73,7 @@ class Shoes
       def main_app?
         ::Shoes::Swt.main_app.equal? self
       end
-      
+
       def flush
         if @dsl.top_slot
           @real.layout
@@ -79,7 +83,7 @@ class Shoes
       def scroll_top
         @real.getLocation.y
       end
-      
+
       def scroll_top=(n)
         @real.setLocation 0, -n
         @shell.getVerticalBar.setSelection n
@@ -202,6 +206,18 @@ class Shoes
       def attach_real_event_listeners
         @real.addMouseMoveListener MouseMoveListener.new(self)
         @real.addMouseListener MouseListener.new(self)
+      end
+
+      def overlay_scrollbars?
+        @shell.scrollbars_mode == ::Swt::SWT::SCROLLBAR_OVERLAY
+      end
+
+      def width_adjusted_for_scrollbars
+        if @shell.getVerticalBar.getVisible
+          @shell.client_area.width + @shell.getVerticalBar.getSize.x
+        else
+          @shell.client_area.width
+        end
       end
 
     end
