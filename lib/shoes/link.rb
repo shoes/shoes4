@@ -33,5 +33,9 @@ class Shoes
       @blk.call
     end
 
+    def in_bounds?(x, y)
+      @gui.in_bounds?(x, y)
+    end
+
   end
 end
