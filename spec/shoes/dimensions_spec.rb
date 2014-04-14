@@ -11,6 +11,8 @@ describe Shoes::Dimensions do
   let(:top) {20}
   let(:width) {100}
   let(:height) {150}
+  let(:right) {17}
+  let(:bottom) {23}
   let(:parent_left) {left}
   let(:opts) { {} }
   subject {Shoes::Dimensions.new parent, left, top, width, height, opts}
@@ -38,8 +40,8 @@ describe Shoes::Dimensions do
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
 
-      its(:left) {should eq 0}
-      its(:top) {should eq 0}
+      its(:left) {should eq nil}
+      its(:top) {should eq nil}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
       its(:absolutely_positioned?) {should be_false}
@@ -181,8 +183,8 @@ describe Shoes::Dimensions do
       describe 'with invalid integer strings' do
         subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob"}
 
-        its(:left) {should eq 0}
-        its(:top) {should eq 0}
+        its(:left) {should eq nil}
+        its(:top) {should eq nil}
         its(:width) {should be_nil}
         its(:height) {should be_nil}
       end
@@ -236,6 +238,15 @@ describe Shoes::Dimensions do
                                                 height: height }
 
         its(:width) {should eq nil}
+      end
+
+      describe 'with right and bottom' do
+        subject {Shoes::Dimensions.new parent, right: right, bottom: bottom}
+
+        its(:right) {should eq right}
+        its(:bottom) {should eq bottom}
+        its(:absolute_x_position?) {should be_true}
+        its(:absolute_y_position?) {should be_true}
       end
     end
 
@@ -300,11 +311,19 @@ describe Shoes::Dimensions do
 
 
   describe 'setting ' do
-    describe 'left' do
-      it 'also has a setter for left' do
-        subject.left = 66
-        expect(subject.left).to eq 66
-      end
+    it 'has a setter for left' do
+      subject.left = 66
+      expect(subject.left).to eq 66
+    end
+
+    it 'has a setter for right' do
+      subject.right = 77
+      expect(subject.right).to eq 77
+    end
+
+    it 'has a setter for bottom' do
+      subject.bottom = 87
+      expect(subject.bottom).to eq 87
     end
 
     describe 'element_*' do
@@ -359,13 +378,12 @@ describe Shoes::Dimensions do
   end
 
   describe 'centered (e.g. left and top are seen as coords for the center)' do
+    
     describe '5 arguments' do
       subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, :center => true}
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}
-      its(:right) {should eq 119}
-      its(:bottom) {should eq 59}
       its(:width) {should eq 40}
       its(:height) {should eq 20}
 
@@ -391,22 +409,15 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}
-      its(:right) {should eq 119}
-      its(:bottom) {should eq 59}
       its(:width) {should eq 40}
       its(:height) {should eq 20}
     end
   end
 
   describe 'additional dimension methods' do
-    its(:right) {should eq left + width - 1}
-    its(:bottom) {should eq top + height - 1}
-
     describe 'without height and width' do
       let(:width) {nil}
       let(:height) {nil}
-      its(:right) {should eq left}
-      its(:bottom) {should eq top}
     end
   end
 
@@ -460,25 +471,38 @@ describe Shoes::Dimensions do
     subject {Shoes::Dimensions.new parent}
     its(:absolutely_positioned?) {should be_false}
 
-    describe 'changing left' do
-      before :each do
-        subject.left = left
-      end
-
+    shared_examples_for 'absolute_x_position' do
       its(:absolute_x_position?) {should be_true}
       its(:absolute_y_position?) {should be_false}
       its(:absolutely_positioned?) {should be_true}
     end
 
-    describe 'changing top' do
-      before :each do
-        subject.top = top
-      end
+    describe 'changing left' do
+      before :each do subject.left = left end
+      it_behaves_like 'absolute_x_position'
+    end
 
+    describe 'chaning right' do
+      before :each do subject.right = right end
+      it_behaves_like 'absolute_x_position'
+    end
+
+    shared_examples_for 'absolute_y_position' do
       its(:absolute_x_position?) {should be_false}
       its(:absolute_y_position?) {should be_true}
       its(:absolutely_positioned?) {should be_true}
     end
+
+    describe 'changing top' do
+      before :each do subject.top = top end
+      it_behaves_like 'absolute_y_position'
+    end
+
+    describe 'changing bottom' do
+      before :each do subject.bottom = bottom end
+      it_behaves_like 'absolute_y_position'
+    end
+
   end
 
   describe 'margins' do
@@ -591,8 +615,10 @@ describe Shoes::Dimensions do
       end
     end
 
-
   end
+
+  it {should be_needs_to_be_positioned}
+  it {should be_takes_up_space}
 
   describe Shoes::AbsoluteDimensions do
     subject {Shoes::AbsoluteDimensions.new left, top, width, height}

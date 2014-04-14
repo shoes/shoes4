@@ -1,10 +1,11 @@
 class Shoes
   class Background
+    include DimensionsDelegations
     include CommonMethods
+    include Common::BackgroundElement
     include Common::Style
     include Common::Fill
     include Common::Stroke
-    include DimensionsDelegations
 
     attr_reader :app, :gui, :parent, :corners, :angle, :dimensions
 
@@ -22,5 +23,8 @@ class Shoes
       @gui = Shoes.backend_for(self, opts, &blk)
     end
 
+    def needs_to_be_positioned?
+      absolutely_positioned?
+    end
   end
 end

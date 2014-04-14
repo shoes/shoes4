@@ -41,4 +41,7 @@ describe Shoes::Border do
     subject { Shoes::Border.new(app, parent, blue, negative_opts) }
     it_behaves_like "object with negative dimensions"
   end
+
+  it {should_not be_takes_up_space}
+  it {should_not be_needs_to_be_positioned}
 end

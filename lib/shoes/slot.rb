@@ -112,10 +112,14 @@ class Shoes
     end
 
     def positioning(element, current_position)
-      return current_position unless takes_up_space?(element)
+      return current_position unless element.needs_to_be_positioned?
       position_modifier = position_element element, current_position
       element.contents_alignment(current_position) if element.respond_to? :contents_alignment
-      update_current_position(current_position, element, position_modifier)
+      if element.takes_up_space?
+        update_current_position(current_position, element, position_modifier)
+      else
+        current_position
+      end
     end
 
     def position_element(element, current_position)
@@ -157,17 +161,35 @@ class Shoes
 
     def position_x(relative_x, element)
       if element.absolute_x_position?
-        self.absolute_left + element.left
+        absolute_x_position(element)
       else
         relative_x
       end
     end
 
+    def absolute_x_position(element)
+      if element.left
+        self.absolute_left + element.left
+      elsif element.right
+        self.absolute_right - (element.right + element.width)
+      end
+    end
+
     def position_y(relative_y, element)
       if element.absolute_y_position?
-        self.absolute_top + element.top
+        absolute_y_position(element)
       else
         relative_y
+      end
+    end
+
+    def absolute_y_position(element)
+      if element.top
+        self.absolute_top + element.top
+      elsif element.bottom
+        # TODO: slots grow... to really position it relative to the bottom
+        # we probably need to position it after everything has been positioned
+        self.absolute_bottom - (element.bottom + element.height)
       end
     end
 
@@ -175,10 +197,6 @@ class Shoes
       fitting_width = element.width
       fitting_width = element.fitting_width if element.respond_to?(:fitting_width)
       current_x + fitting_width - 1 <= element_right
-    end
-
-    def takes_up_space?(element)
-      not (element.is_a?(Shoes::Background) or element.is_a?(Shoes::Border))
     end
 
     def determine_slot_height(last_position)

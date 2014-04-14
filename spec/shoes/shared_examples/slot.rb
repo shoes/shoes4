@@ -10,6 +10,7 @@ shared_examples_for "Slot" do
 
   it_behaves_like 'prepending'
   it_behaves_like 'clearing'
+  it_behaves_like 'element one positioned with bottom and right'
 end
 
 shared_context 'one slot child' do
@@ -42,6 +43,12 @@ shared_context 'element one with top and left' do
   let(:ele_opts) {{left: ele_left, top: ele_top}}
 end
 
+shared_context 'element one with bottom and right' do
+  let(:ele_bottom) {24}
+  let(:ele_right) {49}
+  let(:ele_opts) {{right: ele_right, bottom: ele_bottom}}
+end
+
 shared_examples_for 'positioning through :_position' do
 
   let(:element) {Shoes::FakeElement.new nil, height: 100, width: 50}
@@ -61,6 +68,14 @@ shared_examples_for 'positioning through :_position' do
     expect(element).not_to receive(:_position)
     subject.contents_alignment
   end
+
+  it 'does not position an element if it does not need positioning' do
+    my_element = element
+    my_element.stub needs_to_be_positioned?: false
+    expect(my_element).not_to receive :_position
+    subject.add_child my_element
+    subject.contents_alignment
+  end
 end
 
 shared_examples_for 'element one positioned with top and left' do
@@ -70,6 +85,20 @@ shared_examples_for 'element one positioned with top and left' do
 
   it 'positions the element at its top value' do
     element.absolute_top.should eq subject.absolute_top + ele_top
+  end
+end
+
+shared_examples_for 'element one positioned with bottom and right' do
+  include_context 'one slot child'
+  include_context 'contents_alignment'
+  include_context 'element one with bottom and right'
+
+  it 'positions the element from its right' do
+    expect(element.absolute_right).to eq (subject.absolute_right - ele_right - 1)
+  end
+
+  it 'positions the element from its bottom' do
+    expect(element.absolute_bottom).to eq (subject.absolute_bottom - ele_bottom - 1)
   end
 end
 
