@@ -228,8 +228,10 @@ class Shoes
 
       def attach_key_event_listener(listen_for, listener_class)
         ::Swt.display.add_filter(listen_for) do |evt|
-          @key_listeners[listener_class].each do |listener|
-            listener.handle_key_event(evt)
+          if evt.widget.shell == @shell
+            @key_listeners[listener_class].each do |listener|
+              listener.handle_key_event(evt)
+            end
           end
         end
       end
