@@ -950,29 +950,6 @@ In this case, you can still get the headers for the downloaded file, but
 `response.body` will be `nil`, since the data wasn't saved to memory.  You will
 need to open the file to get the downloaded goods.
 
-If you need to send certain headers or actions to the web server, you can use
-the `:method`, `:headers` and `:body` styles to customize the HTTP request.
-(And, if you need to go beyond these, you can always break out Ruby's OpenURI
-class.)
-
-{{{
- #!ruby
- Shoes.app do
-   stack do
-     title "GET Google", size: 16
-     @status = para "One moment..."
-
-     download "http://www.google.com/search?q=shoes", 
-         method: "GET" do |dump|
-       @status.text = dump.response.body
-     end
-   end
- end
-}}}
-
-As you can see from the above example, Shoes makes use of the "GET" method to
-query google's search engine.
-
 === location() » a string ===
 
 Gets a string containing the URL of the current app.

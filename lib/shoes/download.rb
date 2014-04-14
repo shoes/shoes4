@@ -1,15 +1,30 @@
 class Shoes
+    class HttpResponse
+     # Struct might be better? 
+     attr_accessor :headers, :body, :status
+     def initalize
+       @headers = {}
+       @body = ''
+       @status = []
+     end
+  end
+
   class Download
 
-    attr_reader :progress, :response, :content_length, :gui, :transferred, :length #length is preserved for Shoes3 compatibility
+    attr_reader :progress, :response, :content_length, :gui, :transferred
+    # length and percent is preserved for Shoes3 compatibility
+    attr_reader :length, :percent
     UPDATE_STEPS = 100
 
     def initialize(app, parent, url, opts = {}, &blk)
       @opts = opts
       @blk = blk
       @gui = Shoes.configuration.backend_for(self)
+
+      @response = HttpResponse.new
       @finished = false
       @transferred = 0
+      @length = 0
       start_download url
     end
 
@@ -41,10 +56,13 @@ class Shoes
         uri_opts[:content_length_proc] = content_length_proc
         uri_opts[:progress_proc] = progress_proc if @opts[:progress]
 
-        open url, uri_opts do |download|
-          download_data = download.read
-          save_to_file(@opts[:save], download_data) if @opts[:save]
-          finish_download download_data
+        open url, uri_opts do |f|
+          # everything has been downloaded at this point. f is a tempfile
+          @response.body = f.read
+          @response.status = f.status
+          @response.headers = f.meta
+          save_to_file(@opts[:save]) if @opts[:save]
+          finish_download f
         end
       end
     end
@@ -61,6 +79,7 @@ class Shoes
         if (size - self.transferred) > (content_length / UPDATE_STEPS) && !@gui.busy?
           @gui.busy = true
           eval_block(@opts[:progress], self)
+          sleep @opts[:pause] if @opts[:pause]
           @transferred = size
         end
       end
@@ -68,10 +87,9 @@ class Shoes
 
     def finish_download(download_data)
       @finished = true
-      @response = StringIO.new(download_data)
 
-      #In case final asyncEvent didn't catch the 100%
-      @transferred = @content_length
+      #In case backend didn't catch the 100%
+      @percent = 100
       eval_block(@opts[:progress], self) if @opts[:progress]
 
       #:finish and block are the same
@@ -83,13 +101,14 @@ class Shoes
       @gui.eval_block(blk, result)
     end
 
-    def save_to_file(file_path, download_data)
-      open(file_path, 'wb') { |fw| fw.print download_data }
+    def save_to_file(file_path)
+      open(file_path, 'wb') { |fw| fw.print @response.body }
     end
 
     def download_started(content_length)
       @length = content_length
       @content_length = content_length
+      @percent = 0
       @started = true
     end
   end
