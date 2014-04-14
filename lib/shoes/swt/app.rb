@@ -124,6 +124,14 @@ class Shoes
         @shell.getVerticalBar.getSize.x
       end
 
+      def add_key_listener(listener)
+        @key_listeners[listener.class] << listener
+      end
+
+      def remove_key_listener(listener)
+        @key_listeners[listener.class].delete(listener)
+      end
+
       private
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
@@ -172,7 +180,7 @@ class Shoes
       end
 
       def initialize_real
-        @real = ::Swt::Widgets::Composite.new(@shell, 
+        @real = ::Swt::Widgets::Composite.new(@shell,
           ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout init_shoes_layout
@@ -189,6 +197,7 @@ class Shoes
       def attach_event_listeners
         attach_shell_event_listeners
         attach_real_event_listeners
+        attach_key_event_listeners
       end
 
       def attach_shell_event_listeners
@@ -206,6 +215,23 @@ class Shoes
       def attach_real_event_listeners
         @real.addMouseMoveListener MouseMoveListener.new(self)
         @real.addMouseListener MouseListener.new(self)
+      end
+
+      def attach_key_event_listeners
+        @key_listeners = {
+          Keypress   => [],
+          Keyrelease => [],
+        }
+        attach_key_event_listener(::Swt::SWT::KeyDown, Keypress)
+        attach_key_event_listener(::Swt::SWT::KeyUp,   Keyrelease)
+      end
+
+      def attach_key_event_listener(listen_for, listener_class)
+        ::Swt.display.add_filter(listen_for) do |evt|
+          @key_listeners[listener_class].each do |listener|
+            listener.handle_key_event(evt)
+          end
+        end
       end
 
       def overlay_scrollbars?

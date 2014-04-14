@@ -26,18 +26,11 @@ class Shoes
         get_swt_constant key
       end
 
-      def initialize(blk)
+      def initialize(dsl, app, &blk)
         @block = blk
+        @app = app
+        @app.add_key_listener(self)
       end
-
-      # implemented by subclasses
-      def key_pressed(event)
-      end
-
-      def key_released(event)
-      end
-
-      private
 
       def handle_key_event(event)
         modifiers = modifier_keys(event)
@@ -46,6 +39,12 @@ class Shoes
         key_string = key_string.to_sym if should_be_symbol?(event, modifiers)
         eval_block key_string unless character.empty?
       end
+
+      def clear
+        @app.remove_key_listener(@key_listener)
+      end
+
+      private
 
       def eval_block(key_string)
         @block.call key_string
@@ -113,16 +112,10 @@ class Shoes
       end
     end
 
-    class KeypressListener < KeyListener
-      def key_pressed(event)
-        handle_key_event(event)
-      end
+    class Keypress < KeyListener
     end
 
-    class KeyreleaseListener < KeyListener
-      def key_released(event)
-        handle_key_event(event)
-      end
+    class Keyrelease < KeyListener
     end
   end
 end
