@@ -556,8 +556,8 @@ describe Shoes::Dimensions do
 
     before :each do
       # need to have a rough positon
-      subject.absolute_left = left
-      subject.absolute_top  = top
+      subject.absolute_left = 0
+      subject.absolute_top  = 0
     end
 
     describe 'displace_left' do
@@ -573,8 +573,15 @@ describe Shoes::Dimensions do
           subject.displace_left = displace_left
         end.not_to change {subject.absolute_left}
       end
+
+      context 'via opts' do
+        subject { Shoes::Dimensions.new(nil, 0, 0, 0, 0, displace_left: 10)}
+        it 'modifies element_left' do
+          expect(subject.element_left).to eql(10)
+        end
+      end
     end
-    
+
     describe 'displace_top' do
       let(:displace_top) {7}
 
@@ -589,8 +596,14 @@ describe Shoes::Dimensions do
           subject.displace_top = displace_top
         end.not_to change {subject.absolute_top}
       end
-    end
 
+      context 'via opts' do
+        subject { Shoes::Dimensions.new(nil, 0, 0, 0, 0, displace_top: 10)}
+        it 'modifies element_top' do
+          expect(subject.element_top).to eql(10)
+        end
+      end
+    end
 
   end
 
