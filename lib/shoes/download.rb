@@ -56,13 +56,12 @@ class Shoes
         uri_opts[:content_length_proc] = content_length_proc
         uri_opts[:progress_proc] = progress_proc if @opts[:progress]
 
-        open url, uri_opts do |f|
-          # everything has been downloaded at this point. f is a tempfile
-          @response.body = f.read
-          @response.status = f.status
-          @response.headers = f.meta
+        open url, uri_opts do |download_data|
+          @response.body = download_data.read
+          @response.status = download_data.status
+          @response.headers = download_data.meta
           save_to_file(@opts[:save]) if @opts[:save]
-          finish_download f
+          finish_download download_data
         end
       end
     end
@@ -79,7 +78,6 @@ class Shoes
         if (size - self.transferred) > (content_length / UPDATE_STEPS) && !@gui.busy?
           @gui.busy = true
           eval_block(@opts[:progress], self)
-          sleep @opts[:pause] if @opts[:pause]
           @transferred = size
         end
       end
@@ -89,7 +87,7 @@ class Shoes
       @finished = true
 
       #In case backend didn't catch the 100%
-      @percent = 100
+      @transferred = @content_length
       eval_block(@opts[:progress], self) if @opts[:progress]
 
       #:finish and block are the same
