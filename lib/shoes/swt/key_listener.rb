@@ -44,6 +44,30 @@ class Shoes
         @app.remove_key_listener(@key_listener)
       end
 
+      BUTTON_EXCLUDES = ["\n", " "]
+      COMBO_EXCLUDES  = %w[up down] + BUTTON_EXCLUDES
+
+      # For a variety of SWT controls, certain characters should not be passed
+      # to Shoes key listeners, since they're already handled by the controls.
+      #
+      #   * Buttons ignore activating key press (enter, space depending on OS)
+      #   * Text boxes ignore all key presses
+      #   * Combo boxes ignore up/down and activating key presses
+      def ignore_event?(event)
+        char = character_key(event)
+        case event.widget
+        when Java::OrgEclipseSwtWidgets::Button
+          BUTTON_EXCLUDES.include?(char)
+        when Java::OrgEclipseSwtWidgets::Text
+          true
+        when Java::OrgEclipseSwtWidgets::Combo
+          COMBO_EXCLUDES.include?(char)
+        else
+          # Default? Don't ignore it!
+          false
+        end
+      end
+
       private
 
       def eval_block(key_string)

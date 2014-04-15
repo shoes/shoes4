@@ -228,12 +228,17 @@ class Shoes
 
       def attach_key_event_listener(listen_for, listener_class)
         ::Swt.display.add_filter(listen_for) do |evt|
-          if evt.widget.shell == @shell
+          if for_this_shell?(evt)
             @key_listeners[listener_class].each do |listener|
+              break if listener.ignore_event?(evt)
               listener.handle_key_event(evt)
             end
           end
         end
+      end
+
+      def for_this_shell?(evt)
+        evt.widget.shell == @shell
       end
 
       def overlay_scrollbars?
