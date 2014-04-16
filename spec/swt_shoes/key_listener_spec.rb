@@ -1,7 +1,11 @@
 # encoding: UTF-8
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::KeypressListener do
+describe Shoes::Swt::Keypress do
+  let(:app) { double('app', add_key_listener: nil) }
+  let(:dsl) { double('dsl') }
+  let(:block) { proc{ |key| key} }
+  let(:key_listener) {Shoes::Swt::Keypress.new(dsl, app, &block)}
 
   describe '.get_swt_constant' do
     it 'gets the swt constant' do
@@ -9,19 +13,35 @@ describe Shoes::Swt::KeypressListener do
     end
   end
 
+  describe "subclasses" do
+
+    describe "Subclass Keypress" do
+      it "adds key listener on creation" do
+        app.should_receive(:add_key_listener)
+        Shoes::Swt::Keypress.new dsl, app, &block
+      end
+    end
+
+    describe "Subclass Keyrelease" do
+      it "adds key listener on creation" do
+        app.should_receive(:add_key_listener)
+        Shoes::Swt::Keyrelease.new dsl, app, &block
+      end
+    end
+  end
+
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
 
-  let(:block) {double}
-  subject {Shoes::Swt::KeypressListener.new block}
+  subject {key_listener}
 
   def test_character_press(character, state_modifier = 0, result_char = character)
     expect(block).to receive(:call).with(result_char)
     event = double  character: character.ord,
                   stateMask: 0 | state_modifier,
                   keyCode: character.downcase.ord
-    subject.key_pressed(event)
+    subject.handle_key_event(event)
   end
 
   def test_alt_character_press(character, state_mask_modifier = 0)
@@ -82,7 +102,7 @@ describe Shoes::Swt::KeypressListener do
       event = double  character: '÷'.ord,
                       stateMask: ALT,
                       keyCode: '/'.ord
-      subject.key_pressed(event)
+      subject.handle_key_event(event)
     end
   end
 
@@ -93,7 +113,7 @@ describe Shoes::Swt::KeypressListener do
       event = double character: 'something weird like \x00',
                      stateMask: CTRL | modifier,
                      keyCode:   character.downcase.ord
-      subject.key_pressed(event)
+      subject.handle_key_event(event)
     end
 
     it ':ctrl_a' do
@@ -133,7 +153,7 @@ describe Shoes::Swt::KeypressListener do
     def test_receive_nothing_with_modifier(modifier, last_key_press = modifier)
       expect(block).not_to receive :call
       event = double stateMask: modifier, keyCode: last_key_press, character: 0
-      subject.key_pressed(event)
+      subject.handle_key_event(event)
     end
 
     it 'shift' do
@@ -170,7 +190,7 @@ describe Shoes::Swt::KeypressListener do
       event = double stateMask: modifier,
                    keyCode: code,
                    character: 0
-      subject.key_pressed(event)
+      subject.handle_key_event(event)
     end
 
     it '"\n"' do
@@ -223,7 +243,77 @@ describe Shoes::Swt::KeypressListener do
       event = double 'key event', stateMask: 196608,
                                   keyCode: 4194304,
                                   character: "don't care atm"
-      expect {subject.key_pressed(event)}.not_to raise_error
+      expect {subject.handle_key_event(event)}.not_to raise_error
+    end
+  end
+
+  describe '#ignore_event?' do
+
+    let(:character) {'a'}
+    let(:event) {double 'key event',
+                        widget: widget,
+                        stateMask: 0,
+                        keyCode:  keyCode,
+                        character: character.ord }
+    let(:shell){Java::OrgEclipseSwtWidgets::Shell.new}
+    let(:style) {0}
+    let(:keyCode) {character.downcase.ord}
+
+
+    subject{key_listener.ignore_event? event}
+
+    shared_examples_for 'ignores space and enter' do
+      describe 'with a space' do
+        let(:character) {' '}
+        it {should be_true}
+      end
+
+      describe 'with enter' do
+        let(:keyCode) {::Swt::SWT::CR}
+        it {should be_true}
+      end
+    end
+
+    shared_examples_for 'accepts normal characters' do
+      describe 'with a normal character' do
+        let(:character) {'a'}
+        it{should be_false}
+      end
+    end
+
+    context 'on a Shell' do
+      let(:widget){shell}
+      it {should be_false}
+
+      describe 'even with enter' do
+        let(:keyCode) {::Swt::SWT::CR}
+        it {should be_false}
+      end
+    end
+
+    context 'on a Text' do
+      let(:widget){Java::OrgEclipseSwtWidgets::Text.new(shell, style)}
+      it {should be_true}
+    end
+
+    context 'on a button' do
+      let(:widget) {Java::OrgEclipseSwtWidgets::Button.new(shell, style)}
+
+      it_behaves_like 'ignores space and enter'
+      it_behaves_like 'accepts normal characters'
+    end
+
+    context 'on a Combo' do
+      let(:widget) {Java::OrgEclipseSwtWidgets::Combo.new(shell, style)}
+
+      it_behaves_like 'ignores space and enter'
+
+      describe 'with up' do
+        let(:keyCode) {::Swt::SWT::ARROW_UP}
+        it{should be_true}
+      end
+
+      it_behaves_like 'accepts normal characters'
     end
   end
 
