@@ -5,6 +5,7 @@ describe Shoes::Swt::Keypress do
   let(:app) { double('app', add_key_listener: nil) }
   let(:dsl) { double('dsl') }
   let(:block) { proc{ |key| key} }
+  let(:key_listener) {Shoes::Swt::Keypress.new(dsl, app, &block)}
 
   describe '.get_swt_constant' do
     it 'gets the swt constant' do
@@ -33,7 +34,7 @@ describe Shoes::Swt::Keypress do
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
 
-  subject {Shoes::Swt::Keypress.new(dsl, app, &block)}
+  subject {key_listener}
 
   def test_character_press(character, state_modifier = 0, result_char = character)
     expect(block).to receive(:call).with(result_char)
@@ -243,6 +244,76 @@ describe Shoes::Swt::Keypress do
                                   keyCode: 4194304,
                                   character: "don't care atm"
       expect {subject.handle_key_event(event)}.not_to raise_error
+    end
+  end
+
+  describe '#ignore_event?' do
+
+    let(:character) {'a'}
+    let(:event) {double 'key event',
+                        widget: widget,
+                        stateMask: 0,
+                        keyCode:  keyCode,
+                        character: character.ord }
+    let(:shell){Java::OrgEclipseSwtWidgets::Shell.new}
+    let(:style) {0}
+    let(:keyCode) {character.downcase.ord}
+
+
+    subject{key_listener.ignore_event? event}
+
+    shared_examples_for 'ignores space and enter' do
+      describe 'with a space' do
+        let(:character) {' '}
+        it {should be_true}
+      end
+
+      describe 'with enter' do
+        let(:keyCode) {::Swt::SWT::CR}
+        it {should be_true}
+      end
+    end
+
+    shared_examples_for 'accepts normal characters' do
+      describe 'with a normal character' do
+        let(:character) {'a'}
+        it{should be_false}
+      end
+    end
+
+    context 'on a Shell' do
+      let(:widget){shell}
+      it {should be_false}
+
+      describe 'even with enter' do
+        let(:keyCode) {::Swt::SWT::CR}
+        it {should be_false}
+      end
+    end
+
+    context 'on a Text' do
+      let(:widget){Java::OrgEclipseSwtWidgets::Text.new(shell, style)}
+      it {should be_true}
+    end
+
+    context 'on a button' do
+      let(:widget) {Java::OrgEclipseSwtWidgets::Button.new(shell, style)}
+
+      it_behaves_like 'ignores space and enter'
+      it_behaves_like 'accepts normal characters'
+    end
+
+    context 'on a Combo' do
+      let(:widget) {Java::OrgEclipseSwtWidgets::Combo.new(shell, style)}
+
+      it_behaves_like 'ignores space and enter'
+
+      describe 'with up' do
+        let(:keyCode) {::Swt::SWT::ARROW_UP}
+        it{should be_true}
+      end
+
+      it_behaves_like 'accepts normal characters'
     end
   end
 
