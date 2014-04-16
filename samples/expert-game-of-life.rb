@@ -198,14 +198,14 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
 
   def play
     @animate = true
-    @run_button.style(displace_top: -100)
-    @stop_button.style(displace_top: 0)
+    @run_button.hide
+    @stop_button.show
   end
 
   def stop
     @animate = false
-    @stop_button.style(displace_top: -100)
-    @run_button.style(displace_top: 0)
+    @stop_button.hide
+    @run_button.show
   end
 
   def clear
@@ -213,9 +213,10 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
     @new_world.clear
   end
 
-  flow(displace_left: 650) do
-    @run_button  = button('Run',  displace_top: 0,                         width: 100){ play }
-    @stop_button = button('Stop', displace_top: -100, displace_left: -100, width: 100){ stop }
+  stack(displace_left: 650) do
+    @run_button  = button('Run',  width: 100){ play }
+    @stop_button = button('Stop', width: 100){ stop }
+    @stop_button.hide
   end
 
   stack(displace_left: 650) do
