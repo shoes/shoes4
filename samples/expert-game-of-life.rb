@@ -52,9 +52,12 @@ class Cell
       end
     end
   end
-  
+
   def draw
-    @shoes_cell.style(fill: live? ? '#000' : '#fff')
+    fill = live? ? '#000000' : '#ffffff'
+    if @shoes_cell.fill.hex != fill
+      @shoes_cell.style(fill: fill)
+    end
   end
 
   def iterate
