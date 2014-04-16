@@ -1,3 +1,6 @@
+#
+# Smiling face by Coraline Clark (age 5), 2013
+#
 Shoes.app do
   stack :top => 150 do
     @oval = oval  200, 1, 200, 200, :fill => mintcream
