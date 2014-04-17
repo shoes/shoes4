@@ -188,8 +188,8 @@ class Shoes
     end
 
     def init_with_arguments(left, top, width, height, opts)
-      @displace_left = 0
-      @displace_top  = 0
+      @displace_left = opts.fetch(:displace_left, 0)
+      @displace_top  = opts.fetch(:displace_top, 0)
       general_options opts # order important for redrawing
       self.left   = parse_input_value left
       self.top    = parse_input_value top

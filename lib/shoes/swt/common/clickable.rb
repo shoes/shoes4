@@ -21,10 +21,12 @@ class Shoes
         end
 
         private
-        def add_listener_for(object = self, event, block)
-          listener = ClickListener.new(object, block)
-          object.click_listener = listener
-          app.add_clickable_element object
+        def add_listener_for(swt_object = self, event, block)
+          # dsl objects take care of in bounds checking etc.
+          dsl_object = swt_object.dsl
+          listener = ClickListener.new(dsl_object, block)
+          swt_object.click_listener = listener
+          app.add_clickable_element dsl_object
           app.add_listener event, listener
         end
 

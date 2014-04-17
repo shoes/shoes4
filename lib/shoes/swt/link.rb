@@ -3,11 +3,12 @@ class Shoes
     class Link
       include Common::Clickable
 
-      attr_reader :app, :link_segments
+      attr_reader :app, :link_segments, :dsl
 
       def initialize(dsl, app, opts={})
         @app = app
         @link_segments = []
+        @dsl = dsl
 
         # Important to capture a block that executes the DSL's current block,
         # not just the block the DSL had when initializing, since a `click`

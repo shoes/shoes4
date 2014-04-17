@@ -14,8 +14,8 @@ class Shoes
                         Button                           => [:eval_block],
                         Common::Clickable::ClickListener => [:eval_block],
                         ::Shoes::InternalApp             => [:execute_block],
-                        KeypressListener                 => [:eval_block],
-                        KeyreleaseListener               => [:eval_block],
+                        Keypress                         => [:eval_block],
+                        Keyrelease                       => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
                         TextBlockCursorPainter           => [:move_textcursor],
                         Timer                            => [:eval_block],
@@ -24,8 +24,10 @@ class Shoes
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
       # These need to trigger a redraw
-      SAME_POSITION    = {Common::Toggle    => [:toggle],
-                          ::Shoes::TextBlock  => [:replace]}
+      SAME_POSITION    = {Common::Toggle         => [:toggle],
+                          ::Shoes::Common::Style => [:style],
+                          ::Shoes::TextBlock     => [:replace]}
+
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
                           ::Shoes::Dimensions    => [:left=, :top=, :width=,
                                                      :height=,
