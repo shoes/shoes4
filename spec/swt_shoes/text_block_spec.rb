@@ -19,6 +19,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "generating layouts" do
     let(:layout) { create_layout(width, height) }
+    let(:font) { double("font", disposed?: false) }
 
     before(:each) do
       stub_layout(layout)
@@ -38,6 +39,22 @@ describe Shoes::Swt::TextBlock do
     it "should pass text along to layout" do
       expect(layout).to receive(:setText).with("text text")
       subject.generate_layout(0, "text text")
+    end
+
+    it "should dispose the created font" do
+      expect(font).to receive(:dispose)
+      subject.generate_layout(0, "text text")
+      subject.dispose
+    end
+
+    context "when font is already disposed" do
+      let(:font) { double("font", disposed?: true) }
+
+      it "should dispose the created font" do
+        expect(font).not_to receive(:dispose)
+        subject.generate_layout(0, "text text")
+        subject.dispose
+      end
     end
   end
 
@@ -116,7 +133,7 @@ describe Shoes::Swt::TextBlock do
   end
 
   def stub_layout(layout)
-    ::Swt::Font.stub(:new) { double("font") }
+    ::Swt::Font.stub(:new) { font }
     ::Swt::TextStyle.stub(:new) { double("text_style") }
     ::Swt::TextLayout.stub(:new) { layout }
   end

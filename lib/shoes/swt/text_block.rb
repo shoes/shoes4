@@ -24,17 +24,25 @@ class Shoes
       def update_position
       end
 
+      # Resources created here need to be disposed (see #dispose). Note that
+      # this only applies to the ::Swt::Font object. The ::Swt::TextLayout and
+      # ::Swt::TextStyle objects do not need to be disposed, because they are
+      # not backed by system resources. They are just plain Java objects.
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
         layout.setText text
         layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
+        @font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
                                ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new font, nil, nil
+        style = ::Swt::TextStyle.new @font, nil, nil
         layout.setStyle style, 0, text.length - 1
         shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
 
         layout
+      end
+
+      def dispose
+        @font.dispose unless @font.disposed?
       end
 
       def shrink_layout_to(layout, width)

@@ -4,7 +4,7 @@ describe Shoes::Swt::TextBlockPainter do
   include_context "swt app"
 
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
-  let(:gui) { double("gui", fitted_layouts: [fitted_layout])}
+  let(:gui) { double("gui", fitted_layouts: [fitted_layout], dispose: nil) }
   let(:dsl) { double("dsl", app: shoes_app, gui: gui,
                      text: text, cursor: nil,
                      opts: opts, element_width: 200, element_height: 180,
@@ -51,6 +51,11 @@ describe Shoes::Swt::TextBlockPainter do
 
   it "sets text styles" do
     expect(text_layout).to receive(:set_style).with(anything, anything, anything).at_least(1).times
+    subject.paintControl(event)
+  end
+
+  it "disposes gui" do
+    expect(gui).to receive(:dispose)
     subject.paintControl(event)
   end
 

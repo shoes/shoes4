@@ -17,6 +17,7 @@ class Shoes
 
         draw_layouts(paint_event.gc)
         draw_text_cursor
+        dispose
       end
 
       def draw_layouts(graphic_context)
@@ -27,6 +28,10 @@ class Shoes
 
       def draw_text_cursor
         TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
+      end
+
+      def dispose
+        @dsl.gui.dispose
       end
 
       private
