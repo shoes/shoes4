@@ -11,6 +11,7 @@ class Shoes
       def initialize(color)
         @dsl = color
         @real = ::Swt::Graphics::Color.new(Shoes.display, @dsl.red, @dsl.green, @dsl.blue)
+        mark_for_disposal(@real)
       end
 
       attr_reader :dsl
