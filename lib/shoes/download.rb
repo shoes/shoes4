@@ -12,8 +12,6 @@ class Shoes
   class Download
 
     attr_reader :progress, :response, :content_length, :gui, :transferred
-    # length and percent is preserved for Shoes3 compatibility
-    attr_reader :length, :percent
     UPDATE_STEPS = 100
 
     def initialize(app, parent, url, opts = {}, &blk)
@@ -24,7 +22,7 @@ class Shoes
       @response = HttpResponse.new
       @finished = false
       @transferred = 0
-      @length = 0
+      @content_length = 1 # non zero initialized to avoid Zero Div Errors
       start_download url
     end
 
@@ -35,7 +33,8 @@ class Shoes
     def finished?
       @finished
     end
-    #join_thread is needed for the specs
+
+    # needed for the specs (jay multi threading and specs)
     def join_thread
       @thread.join
     end
@@ -46,6 +45,11 @@ class Shoes
 
     def abort
       @thread.exit if @thread
+    end
+
+    # shoes 3 compatibility
+    def length
+      @content_length
     end
 
     private
@@ -104,10 +108,8 @@ class Shoes
     end
 
     def download_started(content_length)
-      @length = content_length
       @content_length = content_length
-      @percent = 0
-      @started = true
+      @started        = true
     end
   end
 end
