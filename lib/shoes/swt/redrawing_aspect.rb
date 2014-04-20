@@ -25,7 +25,7 @@ class Shoes
 
       # These need to trigger a redraw
       SAME_POSITION    = {Common::Toggle         => [:toggle],
-                          ::Shoes::Common::Style => [:style],
+                          ::Shoes::Common::Style => [:update_style],
                           ::Shoes::TextBlock     => [:replace]}
 
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
