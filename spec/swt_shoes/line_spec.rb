@@ -28,6 +28,10 @@ describe Shoes::Swt::Line do
     let(:shape) { Shoes::Swt::Line.new(dsl, swt_app) }
     subject { Shoes::Swt::Line::Painter.new(shape) }
 
+    before(:each) do
+      dsl.stub(positioned?: true)
+    end
+
     it_behaves_like "stroke painter"
 
     specify "draws line" do
