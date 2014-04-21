@@ -15,7 +15,6 @@ notifications:
   irc: "irc.freenode.org#shoes"
   email:
     recipients:
-      - steve@steveklabnik.com
       - davor@davor.se
       - wasnotrice@gmail.com
       - tobias.pfeiffer@student.hpi.uni-potsdam.de
