@@ -150,8 +150,9 @@ describe Shoes::Swt::FittedTextLayoutCollection do
   end
 
   def create_layout(name, text)
-    bounds = double("bounds", height: 0)
-    inner_layout = double(name, text: text, get_line_bounds: bounds)
+    bounds = double("bounds", x: 0, y: 0, height: 0)
+    inner_layout = double(name, text: text,
+                          line_bounds: bounds, line_count: 1)
 
     layout = Shoes::Swt::FittedTextLayout.new(inner_layout, 0, 0)
     layout.stub(:draw)

@@ -17,7 +17,9 @@ describe Shoes::Swt::Link do
 
   context "creating link segments" do
     let(:bounds)       { double("bounds", height: 0) }
-    let(:inner_layout) { double("inner layout", get_line_bounds: bounds) }
+    let(:inner_layout) { double("inner layout",
+                                get_line_bounds: bounds, line_count: 1,
+                                line_bounds: double(x: 0, y: 0, height: 0)) }
     let(:layout)       { double("layout",
                                 get_location: double("position", x: 0, y: 0),
                                 element_left: 0, element_top: 0,
