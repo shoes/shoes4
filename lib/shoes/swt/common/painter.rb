@@ -13,7 +13,7 @@ class Shoes
         def paint_control(event)
           graphics_context = event.gc
           gcs_reset graphics_context
-          unless @obj.dsl.hidden
+          unless @obj.dsl.hidden && @obj.dsl.positioned?
             graphics_context.set_antialias ::Swt::SWT::ON
             graphics_context.set_line_cap(LINECAP[@obj.dsl.style[:cap]] || LINECAP[:rect])
             graphics_context.set_transform(@obj.transform)
@@ -31,6 +31,11 @@ class Shoes
               draw graphics_context if draw_setup(graphics_context)
             end
           end
+        rescue => e
+          # Really important to rescue here. Failures that escape this method
+          # cause odd-ball hangs with no backtraces. See #559 for an example.
+          #
+          # Should we log instead of silently swallowing it?
         end
 
         # Override in subclass and return something falsy if not using fill
