@@ -2,9 +2,9 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::LinkSegment do
   let(:range)         { (2..10) }
-  let(:width)         { 20 }
-  let(:height)        { 14 }
-  let(:layout)        { double('swt layout', width: width, line_count: 10) }
+  let(:line_width)    { 20 }
+  let(:line_height)   { 14 }
+  let(:layout)        { double('swt layout', width: line_width, line_count: 10) }
   let(:fitted_layout) { double('fitted layout', layout: layout,
                                element_left: 0, element_top: 0) }
 
@@ -18,45 +18,45 @@ describe Shoes::Swt::LinkSegment do
   it "sets bounds on single line" do
     stub_start_and_end_locations([0, 0], [10, 0])
 
-    expect_bounded_box(0, 0, 10, 14)
+    expect_bounded_box(0, 0, 10, line_height)
   end
 
   # xxxxxxxxxxxxxxxxxxxx
   # xxxxx...............
   it "sets bounds wrapping to second line" do
-    stub_start_and_end_locations([0, 0], [5, 14])
+    stub_start_and_end_locations([0, 0], [5, line_height])
 
-    expect_bounded_box(0, 0, 20, 14)
-    expect_bounded_box(0, 14, 5, 28)
+    expect_bounded_box(0, 0,           line_width, line_height)
+    expect_bounded_box(0, line_height, 5,          2*line_height)
   end
 
   # .....xxxxxxxxxxxxxxx
   # xxxxxxxxxxxxxxxxxxxx
   # xxxxx...............
   it "sets bounds wrapping over three lines" do
-    stub_start_and_end_locations([5, 0], [5, 28])
+    stub_start_and_end_locations([5, 0], [5, 2*line_height])
 
-    expect_bounded_box(5, 0,  20, 14)
-    expect_bounded_box(0, 14, 20, 28)
-    expect_bounded_box(0, 28, 5,  42)
+    expect_bounded_box(5, 0,             line_width, line_height)
+    expect_bounded_box(0, line_height,   line_width, 2*line_height)
+    expect_bounded_box(0, 2*line_height, 5,          3*line_height)
   end
 
   # ....................
   # .....xxxxxxxxxx.....
   it "sets bounds with single line beginning further down" do
-    stub_start_and_end_locations([5, 14], [15, 14])
+    stub_start_and_end_locations([5, line_height], [15, line_height])
 
-    expect_bounded_box(5, 14, 15, 28)
+    expect_bounded_box(5, line_height, 15, 2*line_height)
   end
 
   # ....................
   # ...............xxxxx
   # xxxxx...............
   it "sets bounds with two lines beginning further down" do
-    stub_start_and_end_locations([15, 14], [5, 28])
+    stub_start_and_end_locations([15, line_height], [5, 2*line_height])
 
-    expect_bounded_box(15, 14, 15, 28)
-    expect_bounded_box(0,  28, 5,  42)
+    expect_bounded_box(15, line_height,   15, 2*line_height)
+    expect_bounded_box(0,  2*line_height, 5,  3*line_height)
   end
 
   # ....................
@@ -64,11 +64,11 @@ describe Shoes::Swt::LinkSegment do
   # xxxxxxxxxxxxxxxxxxxx
   # xxxxx...............
   it "sets bounds with three lines beginning further down" do
-    stub_start_and_end_locations([15, 14], [5, 42])
+    stub_start_and_end_locations([15, line_height], [5, 3*line_height])
 
-    expect_bounded_box(15, 14, 15, 28)
-    expect_bounded_box(0,  28, 20, 42)
-    expect_bounded_box(0,  42, 5,  56)
+    expect_bounded_box(15, line_height,   15,         2*line_height)
+    expect_bounded_box(0,  2*line_height, line_width, 3*line_height)
+    expect_bounded_box(0,  3*line_height, 5,          4*line_height)
   end
 
   def expect_bounded_box(left, top, right, bottom)
@@ -94,8 +94,10 @@ describe Shoes::Swt::LinkSegment do
   def stub_line_bounds(index)
     layout.stub(:line_bounds).with(index) {
       double("line #{index}",
-             x: 0, y: index * height,
-             width: width, height: height)
+             x: 0,
+             y: index * line_height,
+             width: line_width,
+             height: line_height)
     }
   end
 end

@@ -6,10 +6,8 @@ class Shoes
         @range = range
         @fitted_layout = fitted_layout
 
-        lines = lines_for_link(layout, start_position, end_position)
-
-        add_regions_for_lines(lines)
-        offset_regions!(fitted_layout.element_left, fitted_layout.element_top)
+        add_regions_for_lines(lines_for_link)
+        offset_regions(fitted_layout.element_left, fitted_layout.element_top)
       end
 
       def add_regions_for_lines(lines)
@@ -17,32 +15,35 @@ class Shoes
         last_line  = lines.pop
 
         if last_line.nil?
-          add_region_for_single_line(start_position, end_position, first_line)
+          add_region_for_single_line(first_line)
         else
-          add_regions_for_first_and_last_lines(start_position, end_position,
-                                               first_line, last_line)
+          add_regions_for_first_and_last_lines(first_line, last_line)
           add_regions_for_remaining_lines(lines)
         end
       end
 
-      def lines_for_link(layout, start_position, end_position)
-        bounds = []
-        0.upto(layout.line_count-1) do |i|
-          bounds << layout.line_bounds(i)
-        end
-
-        bounds.select do |bound|
-          bound.y >= start_position.y && bound.y <= end_position.y
+      def lines_for_link
+        line_bounds.select do |bound|
+          line_in_bounds?(bound)
         end
       end
 
-      def add_region_for_single_line(start_position, end_position, first_line)
+      def line_bounds
+        (0..layout.line_count-1).map do |index|
+          layout.line_bounds(index)
+        end
+      end
+
+      def line_in_bounds?(bound)
+        bound.y >= start_position.y && bound.y <= end_position.y
+      end
+
+      def add_region_for_single_line(first_line)
         add_region(start_position.x, start_position.y,
                    end_position.x,   end_position.y + first_line.height)
       end
 
-      def add_regions_for_first_and_last_lines(start_position, end_position,
-                                              first_line, last_line)
+      def add_regions_for_first_and_last_lines(first_line, last_line)
         add_region(start_position.x, start_position.y,
                    layout.width,     start_position.y + first_line.height)
         add_region(0,              end_position.y,
@@ -60,7 +61,7 @@ class Shoes
         @regions << Region.new(left, top, right, bottom)
       end
 
-      def offset_regions!(left, top)
+      def offset_regions(left, top)
         @regions.each do |region|
           region.offset_by!(left, top)
         end
