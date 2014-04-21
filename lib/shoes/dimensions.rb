@@ -128,15 +128,6 @@ class Shoes
       element_top + element_height + PIXEL_COUNTING_ADJUSTMENT
     end
 
-    def positioned?
-      if element_left.nil? || element_top.nil? ||
-         element_right.nil? || element_bottom.nil?
-        false
-      else
-        true
-      end
-    end
-
     # absolute_left/top/right/bottom_position are set in the meta programmed
     # code for left=/top=/right=/bottom= in case you are looking for them
     def absolute_x_position?
@@ -159,6 +150,10 @@ class Shoes
     def absolute_bottom
       return absolute_top if height.nil?
       absolute_top + height + PIXEL_COUNTING_ADJUSTMENT
+    end
+
+    def positioned?
+      absolute_left && absolute_top
     end
 
     def in_bounds?(x, y)

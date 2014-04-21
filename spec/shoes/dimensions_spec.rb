@@ -284,6 +284,10 @@ describe Shoes::Dimensions do
         expect(subject.element_top).to eq subject.absolute_top
       end
 
+      it 'considers itself positioned' do
+        expect(subject.positioned?).to be_true
+      end
+
       describe 'with margins' do
         include_context 'margins'
         include_context 'element dimensions set'

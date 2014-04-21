@@ -13,7 +13,7 @@ class Shoes
         def paint_control(event)
           graphics_context = event.gc
           gcs_reset graphics_context
-          unless @obj.dsl.hidden && @obj.dsl.positioned?
+          if @obj.dsl.visible? && @obj.dsl.positioned?
             graphics_context.set_antialias ::Swt::SWT::ON
             graphics_context.set_line_cap(LINECAP[@obj.dsl.style[:cap]] || LINECAP[:rect])
             graphics_context.set_transform(@obj.transform)
