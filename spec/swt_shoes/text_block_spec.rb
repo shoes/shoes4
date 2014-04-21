@@ -41,6 +41,52 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
+  describe "in bounds checking" do
+    let(:layout_width)  { 10 }
+    let(:layout_height) { 10 }
+    let(:left_offset)   { 5 }
+    let(:top_offset)    { 5 }
+
+    it "checks boundaries with first layout" do
+      subject.fitted_layouts = [
+        create_layout_with_bounds(0, 0, layout_width, layout_height)
+      ]
+      expect(subject.in_bounds?(1, 1)).to be_true
+    end
+
+    it "checks boundaries with multiple layouts" do
+      subject.fitted_layouts = [
+        create_layout_with_bounds(0, 0,             layout_width, layout_height),
+        create_layout_with_bounds(0, layout_height, layout_width, 2*layout_height)
+      ]
+      expect(subject.in_bounds?(1, 1)).to be_true
+      expect(subject.in_bounds?(1, layout_height + 1)).to be_true
+    end
+
+    it "offsets left" do
+      subject.fitted_layouts = [
+        create_layout_with_bounds(0, 0, layout_width, layout_height, left_offset)
+      ]
+      expect(subject.in_bounds?(layout_width + left_offset - 1, 0)).to be_true
+    end
+
+    it "offsets top" do
+      subject.fitted_layouts = [
+        create_layout_with_bounds(0, 0, layout_width, layout_height, 0, top_offset)
+      ]
+      expect(subject.in_bounds?(0, layout_height + top_offset - 1)).to be_true
+    end
+
+    def create_layout_with_bounds(x, y, width, height, element_left=0, element_top=0)
+      bounds = Java::OrgEclipseSwtGraphics::Rectangle.new(x, y, width, height)
+
+      double("fitted layout",
+             layout: double("layout", bounds: bounds),
+             element_left: element_left,
+             element_top:  element_top)
+    end
+  end
+
   describe "contents alignment" do
     let(:layout_width) { 100 }
     let(:layout_height) { 200 }

@@ -36,6 +36,10 @@ class Shoes
       clickable_options(@opts)
     end
 
+    def in_bounds?(*args)
+      @gui.in_bounds?(*args)
+    end
+
     def update_text_styles(texts)
       @text_styles = gather_text_styles(self, texts)
     end
