@@ -53,11 +53,21 @@ describe Shoes::Link do
       end
     end
 
-    context "with click option" do
+    context "with click option as text" do
       subject { Shoes::Link.new(internal_app, nil, texts, click: "/url") }
 
       it "should visit the url" do
         expect(app).to receive(:visit).with("/url")
+        subject.execute_link
+      end
+    end
+
+    context "with click option as Proc" do
+      let(:block) { double("block", call: nil) }
+      subject { Shoes::Link.new(internal_app, nil, texts, click: block) }
+
+      it "calls the block" do
+        expect(block).to receive(:call)
         subject.execute_link
       end
     end
