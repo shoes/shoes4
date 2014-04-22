@@ -253,6 +253,7 @@ describe Shoes::Dimensions do
     describe 'absolute_left and _top' do
       its(:absolute_left) {should eq nil}
       its(:absolute_top) {should eq nil}
+      it {should_not be_positioned}
     end
 
     describe 'absolute extra values' do
