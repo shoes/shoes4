@@ -152,6 +152,10 @@ class Shoes
       absolute_top + height + PIXEL_COUNTING_ADJUSTMENT
     end
 
+    def positioned?
+      absolute_left && absolute_top
+    end
+
     def in_bounds?(x, y)
       absolute_left <= x and x <= absolute_right and
       absolute_top <= y and y <= absolute_bottom

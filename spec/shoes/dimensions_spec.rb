@@ -253,6 +253,7 @@ describe Shoes::Dimensions do
     describe 'absolute_left and _top' do
       its(:absolute_left) {should eq nil}
       its(:absolute_top) {should eq nil}
+      it {should_not be_positioned}
     end
 
     describe 'absolute extra values' do
@@ -282,6 +283,10 @@ describe Shoes::Dimensions do
 
       it 'has an element top which is the same' do
         expect(subject.element_top).to eq subject.absolute_top
+      end
+
+      it 'considers itself positioned' do
+        expect(subject.positioned?).to be_true
       end
 
       describe 'with margins' do
