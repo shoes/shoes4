@@ -70,6 +70,10 @@ class Shoes
       true
     end
 
+    def positioned?
+      absolute_left && absolute_top
+    end
+
     # Moves the shape
     #
     # @param [Integer] left The new left value

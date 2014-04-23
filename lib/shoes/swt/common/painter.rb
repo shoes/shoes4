@@ -20,7 +20,8 @@ class Shoes
           # Really important to rescue here. Failures that escape this method
           # cause odd-ball hangs with no backtraces. See #559 for an example.
           #
-          # Should we log instead of silently swallowing it?
+          puts 'SWALLOWED PAINT EXCEPTION - go take care of it' + e.to_s
+          puts 'Unfortunately we have to swallow it because it causes odd failures :('
         end
 
         def paint_object(graphics_context)
