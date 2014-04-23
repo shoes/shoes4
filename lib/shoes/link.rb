@@ -19,8 +19,12 @@ class Shoes
       if blk
         @blk = blk
       elsif opts.include?(:click)
-        # Slightly awkward, but we need App, not InternalApp, to call visit
-        @blk = Proc.new { app.app.visit(opts[:click]) }
+        if opts[:click].respond_to?(:call)
+          @blk = opts[:click]
+        else
+          # Slightly awkward, but we need App, not InternalApp, to call visit
+          @blk = Proc.new { app.app.visit(opts[:click]) }
+        end
       end
     end
 

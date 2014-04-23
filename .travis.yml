@@ -15,7 +15,6 @@ notifications:
   irc: "irc.freenode.org#shoes"
   email:
     recipients:
-      - steve@steveklabnik.com
       - davor@davor.se
       - wasnotrice@gmail.com
       - tobias.pfeiffer@student.hpi.uni-potsdam.de
@@ -23,6 +22,7 @@ notifications:
       - james@jamesrgifford.com
       - peter.fitzgibbons@gmail.com
       - fism88@gmail.com
+      - jason@jasonclark.net
     on_success: change # [always|never|change] # default: change
     on_failure: change # [always|never|change] # default: always
 before_script:
