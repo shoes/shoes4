@@ -115,8 +115,29 @@ class Shoes
       def available_space
         width = @dsl.desired_width
         height = next_line_start - @dsl.absolute_top - 1
-        height = :unbounded if on_new_line?
+
+        if on_new_line?
+          height = :unbounded
+
+          # Try to find a parent container we fit in.
+          # If that doesn't work, just bail with [0,0] so we don't crash.
+          width = width_from_ancestor if width <= 0
+          return [0, 0] if width < 0
+        end
+
         [width, height]
+      end
+
+      # If we're positioned outside our containing width, look up the parent
+      # chain until we find a width that accomodates us.
+      def width_from_ancestor
+        width = -1
+        current_ancestor = @dsl.parent
+        until width > 0 || !current_ancestor.respond_to?(:parent)
+          current_ancestor = current_ancestor.parent
+          width = @dsl.desired_width(current_ancestor.width)
+        end
+        width
       end
 
       def next_line_start
