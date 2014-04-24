@@ -29,6 +29,17 @@ class Shoes
       # --------------------------
       #           ^
       #
+      # If there wasn't any available space in the first layout (very narrow)
+      # then we'll make an empty first layout and flow to the second:
+      #
+      # --------------------------
+      # | big big big big button||  < empty layout 1 still present
+      # --------------------------
+      # | text layout 2 goes here|
+      # | in space               |
+      # --------------------------
+      #           ^
+      #
       # When flowing, the position for the next element gets set to the end of
       # the text in the second layout (shown as ^ in the diagram).
       #
