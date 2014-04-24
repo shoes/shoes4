@@ -86,15 +86,17 @@ class Shoes
       end
 
       def set_absolutes_for_one_layout
-        @dsl.absolute_right = @dsl.absolute_left + last_bounds.width
-        @dsl.absolute_bottom = @dsl.absolute_top + layout_height(first_layout)
+        @dsl.absolute_right = @dsl.absolute_left + last_bounds.width + margin_right
+        @dsl.absolute_bottom = @dsl.absolute_top + layout_height(first_layout) +
+                                margin_top + margin_bottom
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(first_layout)
         @dsl.calculated_width = first_layout.bounds.width
       end
 
       def set_absolutes_for_two_layouts(next_line_start)
-        @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width
-        @dsl.absolute_bottom = next_line_start + layout_height(last_layout)
+        @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width + margin_right
+        @dsl.absolute_bottom = next_line_start + layout_height(last_layout) +
+                                margin_top + margin_bottom
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(last_layout)
         @dsl.calculated_width = last_layout.bounds.width
       end
