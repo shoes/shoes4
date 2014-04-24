@@ -5,7 +5,7 @@ describe Shoes::TextBlock do
   include_context "dsl app"
 
   let(:text_link) { Shoes::Link.new(app, parent, ['Hello']) }
-  let(:text) { ["#{text_link}, world!"] }
+  let(:text) { [text_link, ", world!"] }
   subject(:text_block) { Shoes::TextBlock.new(app, parent, text, 99, {app: app}) }
 
   describe "initialize" do
@@ -56,6 +56,12 @@ describe Shoes::TextBlock do
     it "allows two arguments" do
       text_block.replace "Goodbye Cruel World, ", text_link
       expect(text_block.text).to eq("Goodbye Cruel World, Hello")
+    end
+  end
+
+  describe "#contents" do
+    it "returns text elements" do
+      expect(text_block.contents).to eql([text_link, ", world!"])
     end
   end
 

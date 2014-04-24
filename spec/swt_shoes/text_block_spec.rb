@@ -104,8 +104,8 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
-  it "should test links, contents and clearing" do
-    pending "Waiting on re-enabling links and implementing contents"
+  it "should test links and clearing" do
+    pending "Waiting on link clearing"
   end
 
   def create_layout(width, height, text="layout text")
