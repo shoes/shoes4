@@ -6,7 +6,7 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader   :gui, :parent, :text, :links, :app, :text_styles, :dimensions, :opts
+    attr_reader   :gui, :parent, :text, :contents, :links, :app, :text_styles, :dimensions, :opts
     attr_accessor :calculated_width, :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
