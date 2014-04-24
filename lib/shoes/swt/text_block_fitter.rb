@@ -47,13 +47,15 @@ class Shoes
       #
       def fit_it_in
         width, height = available_space
-        return fit_as_empty_first_layout(height) if no_space_in_first_layout?(width)
-
-        layout = generate_layout(width, @dsl.text)
-        if fits_in_one_layout?(layout, height)
-          fit_as_one_layout(layout)
+        if no_space_in_first_layout?(width)
+          fit_as_empty_first_layout(height)
         else
-          fit_as_two_layouts(layout, height, width)
+          layout = generate_layout(width, @dsl.text)
+          if fits_in_one_layout?(layout, height)
+            fit_as_one_layout(layout)
+          else
+            fit_as_two_layouts(layout, height, width)
+          end
         end
       end
 
