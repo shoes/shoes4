@@ -175,6 +175,27 @@ describe Shoes::TextBlock do
 
   end
 
+  context "cursor management" do
+    let(:textcursor) { double("textcursor") }
+
+    before(:each) do
+      app.stub(:textcursor) { textcursor }
+    end
+
+    it "creates a textcursor" do
+      expect(subject.textcursor).to eq(textcursor)
+      expect(app).to have_received(:textcursor)
+    end
+
+    it "only creates textcursor" do
+      original = subject.textcursor
+      app.stub(:textcursor) { double("new cursor") }
+
+      expect(subject.textcursor).to eq(original)
+      expect(app).to have_received(:textcursor).once
+    end
+  end
+
   # Emulates samples/sample17.rb
   #
   #   Shoes.app width: 240, height: 95 do
