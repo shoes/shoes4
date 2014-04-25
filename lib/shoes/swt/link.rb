@@ -17,6 +17,11 @@ class Shoes
         clickable self, Proc.new { dsl.execute_link }
       end
 
+      def clear
+        @link_segments.clear
+        remove_listener_for(self)
+      end
+
       def create_links_in(layout_ranges)
         @link_segments.clear
         layout_ranges.each do |layout, range|

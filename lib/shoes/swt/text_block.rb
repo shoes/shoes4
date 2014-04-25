@@ -106,27 +106,18 @@ class Shoes
 
       def clear
         super
-        clear_links
+        clear_contents
       end
 
       def replace(*values)
-        clear_links
+        clear_contents
         @dsl.update_text_styles(values)
-      end
-
-      def contents
       end
 
       private
 
-      def clear_links
-        @dsl.links.each do |link|
-          app.clickable_elements.delete link
-          ln = link.click_listener
-          app.remove_listener ::Swt::SWT::MouseDown, ln if ln
-          app.remove_listener ::Swt::SWT::MouseUp, ln if ln
-        end
-        @dsl.links.clear
+      def clear_contents
+        @dsl.links.each(&:clear)
       end
     end
 

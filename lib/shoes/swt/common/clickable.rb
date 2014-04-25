@@ -30,6 +30,12 @@ class Shoes
           app.add_listener event, listener
         end
 
+        def remove_listener_for(swt_object = self, event)
+          dsl_object = swt_object.dsl
+          app.clickable_elements.delete(dsl_object)
+          app.remove_listener ::Swt::SWT::MouseDown, swt_object.click_listener
+          app.remove_listener ::Swt::SWT::MouseUp, swt_object.click_listener
+        end
 
         class ClickListener
           include ::Swt::Widgets::Listener

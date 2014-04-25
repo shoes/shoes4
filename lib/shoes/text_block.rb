@@ -6,7 +6,7 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader   :gui, :parent, :text, :contents, :links, :app, :text_styles, :dimensions, :opts
+    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts
     attr_accessor :calculated_width, :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
@@ -16,7 +16,6 @@ class Shoes
       @opts               = opts
       @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size          = @opts[:size] || font_size
-      @links              = []
       @contents           = texts
       @text               = texts.map(&:to_s).join
       @text_styles        = gather_text_styles(self, texts)
@@ -103,6 +102,12 @@ class Shoes
 
     def has_textcursor?
       @textcursor
+    end
+
+    def links
+      @contents.select do |element|
+        element.is_a?(Shoes::Link)
+      end
     end
 
     private
