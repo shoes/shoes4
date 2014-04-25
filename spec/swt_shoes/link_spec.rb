@@ -28,6 +28,8 @@ describe Shoes::Swt::Link do
     before(:each) do
       shoes_app.stub(:add_listener)
       shoes_app.stub(:add_clickable_element)
+
+      swt_app.stub(:clickable_elements) { [] }
     end
 
     it "clears existing" do
@@ -42,6 +44,16 @@ describe Shoes::Swt::Link do
                                 [layout, [0..5]]
                               ])
       expect(subject.link_segments.count).to eql(2)
+    end
+
+    it "clears links" do
+      # One remove call each for mouse down, mouse up
+      expect(swt_app).to receive(:remove_listener).twice
+
+      subject.create_links_in([[layout, 0..10]])
+      subject.clear
+
+      expect(subject.link_segments).to be_empty
     end
   end
 end

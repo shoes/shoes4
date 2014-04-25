@@ -114,8 +114,23 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
-  it "should test links and clearing" do
-    pending "Waiting on link clearing"
+  context "links" do
+    let(:link)     { Shoes::Link.new(shoes_app, subject, ["link"])  }
+
+    before(:each) do
+      dsl.stub(:links) { [link] }
+      swt_app.stub(:remove_listener)
+    end
+
+    it "clears links" do
+      expect(link).to receive(:clear)
+      subject.clear
+    end
+
+    it "clears links on replace" do
+      expect(link).to receive(:clear)
+      subject.replace("text")
+    end
   end
 
   def create_layout(width, height, text="layout text")
