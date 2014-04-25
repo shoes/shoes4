@@ -41,6 +41,16 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
+  describe "bounds checking" do
+    it "delegates to fitted layout" do
+      layout = create_layout(0,0)
+      subject.fitted_layouts = [layout]
+      expect(layout).to receive(:in_bounds?)
+
+      subject.in_bounds?(1,1)
+    end
+  end
+
   describe "contents alignment" do
     let(:layout_width) { 100 }
     let(:layout_height) { 200 }

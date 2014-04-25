@@ -24,6 +24,12 @@ class Shoes
       def update_position
       end
 
+      def in_bounds?(x, y)
+        fitted_layouts.any? do |fitted|
+          fitted.in_bounds?(x, y)
+        end
+      end
+
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
         layout.setText text
