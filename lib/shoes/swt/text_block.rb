@@ -26,10 +26,7 @@ class Shoes
 
       def in_bounds?(x, y)
         fitted_layouts.any? do |fitted|
-          bounds = fitted.layout.bounds
-          bounds.x += fitted.element_left
-          bounds.y += fitted.element_top
-          bounds.contains?(x, y)
+          fitted.in_bounds?(x, y)
         end
       end
 
