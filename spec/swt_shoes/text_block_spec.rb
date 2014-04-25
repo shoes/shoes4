@@ -5,7 +5,10 @@ describe Shoes::Swt::TextBlock do
 
   let(:height) { 100 }
   let(:width)  { 200 }
-  let(:dsl) { double("dsl", app: shoes_app).as_null_object }
+  let(:margin) { 10 }
+  let(:dsl) { double("dsl", app: shoes_app,
+                     margin_left: 0, margin_right: 0,
+                     margin_top: 0, margin_bottom: 0).as_null_object }
 
   subject { Shoes::Swt::TextBlock.new(dsl) }
 
@@ -24,18 +27,18 @@ describe Shoes::Swt::TextBlock do
       stub_layout(layout)
     end
 
-    it "should not strink when enough containing width" do
+    it "should not shrink when enough containing width" do
       expect(layout).to receive(:setWidth).never
       subject.generate_layout(width + 10, "text text")
     end
 
-    it "should shrink when too long for containing width" do
+    it "shrinks when too long for containing width" do
       containing_width = width - 10
       expect(layout).to receive(:setWidth).with(containing_width)
       subject.generate_layout(containing_width, "text text")
     end
 
-    it "should pass text along to layout" do
+    it "passes text along to layout" do
       expect(layout).to receive(:setText).with("text text")
       subject.generate_layout(0, "text text")
     end
@@ -73,7 +76,7 @@ describe Shoes::Swt::TextBlock do
         layout.stub(:line_count)   { 1 }
       end
 
-      it "should position for single line of text" do
+      it "positions single line of text" do
         expect(dsl).to receive(:absolute_right=).with(layout_width + 50)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
         expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
@@ -81,7 +84,18 @@ describe Shoes::Swt::TextBlock do
         subject.contents_alignment(current_position)
       end
 
-      it "should push to next line if ends in newline" do
+      it "positions single line with margin" do
+        dsl.stub(margin_left: margin, margin_right: margin,
+                 margin_top: margin, margin_bottom: margin)
+
+        expect(dsl).to receive(:absolute_right=).with(layout_width + 50 + margin)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin)
+        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
+
+        subject.contents_alignment(current_position)
+      end
+
+      it "pushes to next line if ends in newline" do
         layout.stub(:text) { "text\n" }
 
         expect(dsl).to receive(:absolute_right=).with(50)
@@ -96,17 +110,28 @@ describe Shoes::Swt::TextBlock do
       before(:each) do
         dsl.stub(:parent) { double("dsl parent", absolute_left: 0) }
         dsl.stub(:absolute_bottom) { layout_height }
-      end
 
-      it "should set position for fitting two layouts" do
         current_position.next_line_start = 0
 
         fitter.stub(:fit_it_in) {
           [:unused_layout, double("fitted_layout", layout: layout)]
         }
+      end
 
+      it "positions in two layouts" do
         expect(dsl).to receive(:absolute_right=).with(layout_width)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
+
+        subject.contents_alignment(current_position)
+      end
+
+      it "positions in two layouts with margins" do
+        dsl.stub(margin_left: margin, margin_right: margin,
+                 margin_top: margin, margin_bottom: margin)
+
+        expect(dsl).to receive(:absolute_right=).with(layout_width + margin)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin)
         expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
         subject.contents_alignment(current_position)

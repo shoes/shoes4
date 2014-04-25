@@ -88,7 +88,7 @@ class Shoes
 
     # If an explicit width's set, it's used. If not, we look to the parent.
     def containing_width
-      @dimensions.width || parent.width
+      (@dimensions.width || parent.width) - (margin_left + margin_right)
     end
 
     # This is the width the text block initially wants to try and fit into.
