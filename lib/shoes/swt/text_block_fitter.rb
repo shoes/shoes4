@@ -50,12 +50,7 @@ class Shoes
         if no_space_in_first_layout?(width)
           fit_as_empty_first_layout(height)
         else
-          layout = generate_layout(width, @dsl.text)
-          if fits_in_one_layout?(layout, height)
-            fit_as_one_layout(layout)
-          else
-            fit_as_two_layouts(layout, height, width)
-          end
+          fit_into_full_layouts(width, height)
         end
       end
 
@@ -66,6 +61,15 @@ class Shoes
       def fits_in_one_layout?(layout, height)
         return true if height == :unbounded || layout.line_count == 1
         layout.get_bounds.height <= height
+      end
+
+      def fit_into_full_layouts(width, height)
+        layout = generate_layout(width, @dsl.text)
+        if fits_in_one_layout?(layout, height)
+          fit_as_one_layout(layout)
+        else
+          fit_as_two_layouts(layout, height, width)
+        end
       end
 
       def fit_as_one_layout(layout)
