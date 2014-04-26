@@ -29,6 +29,17 @@ class Shoes
       # --------------------------
       #           ^
       #
+      # If there wasn't any available space in the first layout (very narrow)
+      # then we'll make an empty first layout and flow to the second:
+      #
+      # --------------------------
+      # | big big big big button||  < empty layout 1 still present
+      # --------------------------
+      # | text layout 2 goes here|
+      # | in space               |
+      # --------------------------
+      #           ^
+      #
       # When flowing, the position for the next element gets set to the end of
       # the text in the second layout (shown as ^ in the diagram).
       #
@@ -36,13 +47,10 @@ class Shoes
       #
       def fit_it_in
         width, height = available_space
-        return fit_as_empty_first_layout(height) if no_space_in_first_layout?(width)
-
-        layout = generate_layout(width, @dsl.text)
-        if fits_in_one_layout?(layout, height)
-          fit_as_one_layout(layout)
+        if no_space_in_first_layout?(width)
+          fit_as_empty_first_layout(height)
         else
-          fit_as_two_layouts(layout, height, width)
+          fit_into_full_layouts(width, height)
         end
       end
 
@@ -53,6 +61,15 @@ class Shoes
       def fits_in_one_layout?(layout, height)
         return true if height == :unbounded || layout.line_count == 1
         layout.get_bounds.height <= height
+      end
+
+      def fit_into_full_layouts(width, height)
+        layout = generate_layout(width, @dsl.text)
+        if fits_in_one_layout?(layout, height)
+          fit_as_one_layout(layout)
+        else
+          fit_as_two_layouts(layout, height, width)
+        end
       end
 
       def fit_as_one_layout(layout)
@@ -102,8 +119,31 @@ class Shoes
       def available_space
         width = @dsl.desired_width
         height = next_line_start - @dsl.absolute_top - 1
-        height = :unbounded if on_new_line?
+
+        if on_new_line?
+          height = :unbounded
+
+          # Try to find a parent container we fit in.
+          # If that doesn't work, just bail with [0,0] so we don't crash.
+          width = width_from_ancestor if width <= 0
+          return [0, 0] if width < 0
+        end
+
         [width, height]
+      end
+
+      # If we're positioned outside our containing width, look up the parent
+      # chain until we find a width that accomodates us.
+      def width_from_ancestor
+        width = -1
+        current_ancestor = @dsl.parent
+        until width > 0 || current_ancestor.nil?
+          width = @dsl.desired_width(current_ancestor.width)
+
+          break unless current_ancestor.respond_to?(:parent)
+          current_ancestor = current_ancestor.parent
+        end
+        width
       end
 
       def next_line_start

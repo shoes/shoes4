@@ -8,9 +8,18 @@ describe Shoes::Swt::TextBlockFitter do
                      element_left: 26, element_top: 76,
                      margin_left: 1, margin_top: 1) }
 
-  let(:parent_dsl) { double('parent_dsl',
+  let(:parent_dsl) { double('parent_dsl', parent: grandparent_dsl,
                             absolute_left: 0, absolute_right: 100,
-                            width: 100, height: 200) }
+                            width: parent_width, height: 200) }
+
+  let(:grandparent_dsl) { double('grandparent_dsl', parent: app,
+                                 width: grandparent_width) }
+
+  let(:app) { double('app', width: app_width) }
+
+  let(:parent_width)      { 100 }
+  let(:grandparent_width) { 1000 }
+  let(:app_width)         { 2000 }
 
   let(:text_block) { double('text_block', dsl: dsl) }
 
@@ -36,6 +45,31 @@ describe Shoes::Swt::TextBlockFitter do
     it "should move to next line when top is past the projected next line" do
       when_positioned_at(x: 15, y: 100, next_line_start: 5)
       expect(subject.available_space).to eq([85, :unbounded])
+    end
+
+    context "positioned outside parent" do
+      before(:each) do
+        dsl.stub(:desired_width) { -1 }
+      end
+
+      it "bumps to parent width when at end of vertical space" do
+        when_positioned_at(x: 110, y: 5, next_line_start: 5)
+        dsl.stub(:desired_width).with(grandparent_width) { 890 }
+
+        expect(subject.available_space).to eq([890, :unbounded])
+      end
+
+      it "bumps out until it fits" do
+        when_positioned_at(x:1010, y: 5, next_line_start: 5)
+        dsl.stub(:desired_width).with(app_width) { 990 }
+
+        expect(subject.available_space).to eq([990, :unbounded])
+      end
+
+      it "just gives up if it still won't fit" do
+        when_positioned_at(x:1010, y: 5, next_line_start: 5)
+        expect(subject.available_space).to eq([0, 0])
+      end
     end
   end
 

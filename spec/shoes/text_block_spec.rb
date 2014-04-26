@@ -158,6 +158,11 @@ describe Shoes::TextBlock do
         subject.absolute_left = 20
         expect(subject.desired_width).to eql 280
       end
+
+      it "can base desired off explicit containing width" do
+        subject.absolute_left = 20
+        expect(subject.desired_width(1000)).to eql(980)
+      end
     end
 
     context "when explicitly set" do
