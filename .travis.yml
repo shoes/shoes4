@@ -22,7 +22,7 @@ notifications:
       - james@jamesrgifford.com
       - peter.fitzgibbons@gmail.com
       - fism88@gmail.com
-      - jason@jasonclark.net
+      - jason@jasonrclark.net
     on_success: change # [always|never|change] # default: change
     on_failure: change # [always|never|change] # default: always
 before_script:
