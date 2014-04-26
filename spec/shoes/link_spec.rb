@@ -22,7 +22,7 @@ describe Shoes::Link do
     it "should default opts" do
       subject.opts.should eql({
         :underline=>true,
-        :fg=>Shoes::COLORS[:blue]
+        :stroke=>Shoes::COLORS[:blue]
       })
     end
 
@@ -31,7 +31,7 @@ describe Shoes::Link do
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
-        subject.opts.should include(:fg => Shoes::COLORS[:blue])
+        subject.opts.should include(:stroke => Shoes::COLORS[:blue])
       end
 
       it "should override defaults" do

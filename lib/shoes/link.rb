@@ -2,7 +2,7 @@ class Shoes
   class Link < Span
     attr_reader :app, :parent, :gui
 
-    DEFAULT_OPTS = { underline: true, fg: ::Shoes::COLORS[:blue] }
+    DEFAULT_OPTS = { underline: true, stroke: ::Shoes::COLORS[:blue] }
 
     def initialize(app, parent, texts, opts={}, &blk)
       @app = app
