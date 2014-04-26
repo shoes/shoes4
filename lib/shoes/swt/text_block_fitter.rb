@@ -133,9 +133,11 @@ class Shoes
       def width_from_ancestor
         width = -1
         current_ancestor = @dsl.parent
-        until width > 0 || !current_ancestor.respond_to?(:parent)
-          current_ancestor = current_ancestor.parent
+        until width > 0 || current_ancestor.nil?
           width = @dsl.desired_width(current_ancestor.width)
+
+          break unless current_ancestor.respond_to?(:parent)
+          current_ancestor = current_ancestor.parent
         end
         width
       end
