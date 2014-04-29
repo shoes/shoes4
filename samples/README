@@ -23,6 +23,7 @@ simple-draw.rb
 simple-editor.rb
 simple-face.rb
 simple-flow-wrap.rb
+simple-font.rb
 simple-fullscreen.rb
 simple-guess-game.rb
 simple-keypress.rb
@@ -37,6 +38,7 @@ simple-stripes.rb
 simple-timer.rb
 
 good-arc.rb
+good-clock.rb
 good-clock-adjusted.rb
 good-follow.rb
 good-potato-chopping.rb
@@ -50,7 +52,7 @@ expert-minesweeper-adjusted.rb
 # expert-othello-adjusted.rb
 expert-pong.rb
 expert-snake.rb
-expert-tankspank-adjusted.rb
+expert-tankspank.rb
 
 
 class-book-adjusted.rb
