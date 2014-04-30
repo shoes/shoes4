@@ -26,7 +26,10 @@ describe Shoes::Swt::FittedTextLayout do
     Shoes::Swt::TextStyleFactory.stub(:create_style) { style }
   end
 
-  subject { Shoes::Swt::FittedTextLayout.new(layout, element_left, element_top) }
+  subject do
+    fitted = Shoes::Swt::FittedTextLayout.new(layout)
+    fitted.position_at(element_left, element_top)
+  end
 
   context "setting style" do
     it "on full range" do

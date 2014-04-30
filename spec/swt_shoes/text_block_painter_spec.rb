@@ -13,7 +13,10 @@ describe Shoes::Swt::TextBlockPainter do
                      text_styles: text_styles, :hidden? => false).as_null_object
             }
 
-  let(:fitted_layout) { Shoes::Swt::FittedTextLayout.new(text_layout, 0, 10) }
+  let(:fitted_layout) do
+    fitted = Shoes::Swt::FittedTextLayout.new(text_layout)
+    fitted.position_at(0, 10)
+  end
   let(:text_layout) { double("text layout", text: text).as_null_object }
 
   let(:event) { double("event").as_null_object }

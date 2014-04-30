@@ -5,18 +5,22 @@ class Shoes
 
       attr_reader :layout, :element_left, :element_top
 
-      def initialize(layout, element_left, element_top)
+      extend Forwardable
+      def_delegators :@layout, :get_bounds, :text, :text=,
+                              :line_count, :line_metrics, :line_offsets
+
+      def initialize(layout)
         @layout = layout
+      end
+
+      def position_at(element_left, element_top)
         @element_left = element_left
         @element_top = element_top
+        self
       end
 
       def get_location(cursor, trailing=false)
         @layout.get_location(cursor, trailing)
-      end
-
-      def text
-        @layout.text
       end
 
       def style_from(default_text_styles, opts)
