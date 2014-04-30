@@ -7,7 +7,8 @@ class Shoes
         "error" => 2,
       }
 
-      def self.create_style(font, foreground, background, opts)
+      def self.create_style(disposer, font, foreground, background, opts)
+        @current_disposer = disposer
         fg = swt_color(foreground, ::Shoes::COLORS[:black])
         bg = swt_color(background)
         @style = ::Swt::TextStyle.new font, fg, bg
@@ -69,8 +70,9 @@ class Shoes
       def self.color_from_dsl(dsl_color, default = nil)
         return nil if dsl_color.nil? and default.nil?
         return color_from_dsl default if dsl_color.nil?
-        # TODO: mark color for garbage collection
-        ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
+
+        @current_disposer.mark_to_dispose(
+          ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue))
       end
     end
   end

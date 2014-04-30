@@ -11,10 +11,18 @@ class Shoes
 
       def initialize(layout)
         @layout = layout
+        @to_dispose = [layout]
       end
 
       def dispose
-        @layout.dispose unless @layout.disposed?
+        @to_dispose.each do |element|
+          element.dispose unless element.disposed?
+        end
+      end
+
+      def mark_to_dispose(element)
+        @to_dispose << element
+        element
       end
 
       def position_at(element_left, element_top)
@@ -40,8 +48,8 @@ class Shoes
       end
 
       def set_style(styles, range=(0...text.length))
-        font = TextFontFactory.create_font(styles[:font_detail])
-        style = TextStyleFactory.create_style(font, styles[:fg], styles[:bg], styles)
+        font = TextFontFactory.create_font(self, styles[:font_detail])
+        style = TextStyleFactory.create_style(self, font, styles[:fg], styles[:bg], styles)
         layout.set_style(style, range.min, range.max)
       end
 

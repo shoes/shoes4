@@ -32,15 +32,19 @@ class Shoes
 
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
+        fitted = FittedTextLayout.new(layout)
+
+        font = TextFontFactory.create_font(fitted, name: @dsl.font,
+                                           size: @dsl.font_size,
+                                           styles:[::Swt::SWT::NORMAL])
+        style = TextStyleFactory.create_style(fitted, font, nil, nil, {})
+
         layout.setText text
         layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
-                               ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new font, nil, nil
         layout.setStyle style, 0, text.length - 1
         shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
 
-        FittedTextLayout.new(layout)
+        fitted
       end
 
       def shrink_layout_to(layout, width)
