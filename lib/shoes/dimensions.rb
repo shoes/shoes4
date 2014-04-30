@@ -33,7 +33,7 @@
 class Shoes
   class Dimensions
     attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
-                  :margin_bottom
+                  :margin_bottom, :top, :left, :right, :bottom
     attr_reader   :parent
     attr_accessor :absolute_left, :absolute_top,
                   :displace_left, :displace_top
@@ -48,8 +48,6 @@ class Shoes
     # while 20..120 is 101. E.g.:
     # (20..119).size => 100
     PIXEL_COUNTING_ADJUSTMENT = -1
-    # extracted as constant to avoid frequent allocations
-    LEFT_TOP = ['left', 'top']
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
                    height = nil, opts = {})
@@ -62,16 +60,40 @@ class Shoes
     end
 
     %w(left top right bottom).each do |side|
-      attr_writer side.to_sym
 
+      define_method "absolute_#{side}_position?" do
+        not instance_variable_get('@' + side).nil?
+      end
+    end
+
+    %w(left top).each do |side|
       define_method side do
-        value = instance_variable_get('@' + side)
-        if LEFT_TOP.include?(side) && left_top_as_center?
+        instance_value = instance_variable_get('@' + side)
+        value = instance_value || relative_to_parent_start(side)
+        if left_top_as_center?
           send 'adjust_' + side + '_for_center', value
         else
           value
         end
       end
+    end
+
+    %w(right bottom).each do |side|
+      define_method side do
+        instance_variable_get('@' + side) || relative_to_parent_end(side)
+      end
+    end
+
+    def absolute_x_position?
+      absolute_left_position? || absolute_right_position?
+    end
+
+    def absolute_y_position?
+      absolute_top_position? || absolute_bottom_position?
+    end
+
+    def absolutely_positioned?
+      absolute_x_position? || absolute_y_position?
     end
 
     def width
@@ -126,20 +148,6 @@ class Shoes
     def element_bottom
       return nil if element_top.nil? || element_height.nil?
       element_top + element_height + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    # absolute_left/top/right/bottom_position are set in the meta programmed
-    # code for left=/top=/right=/bottom= in case you are looking for them
-    def absolute_x_position?
-      left || right
-    end
-
-    def absolute_y_position?
-      top || bottom
-    end
-
-    def absolutely_positioned?
-      absolute_x_position? || absolute_y_position?
     end
 
     def absolute_right
@@ -306,6 +314,30 @@ class Shoes
       else
         top_value
       end
+    end
+
+    def relative_to_parent_start(side)
+      own_side, parent_side = extract_absolute_sides(side)
+      if own_side && parent_side
+        own_side - parent_side
+      else
+        nil
+      end
+    end
+
+    def relative_to_parent_end(side)
+      value = relative_to_parent_start side
+      return nil if value.nil?
+      # end is reversed e.g. we have to subtract our side from the parent_side
+      # e.g. our right from parent right - negating it imitates that
+      - value
+    end
+
+    def extract_absolute_sides(side)
+      absolute_side = "absolute_#{side}"
+      parent_side   = parent.public_send(absolute_side)
+      own_side      = send(absolute_side)
+      return own_side, parent_side
     end
   end
 
