@@ -317,7 +317,7 @@ class Shoes
     end
 
     def relative_to_parent_start(side)
-      own_side, parent_side = extract_absolute_sides(side)
+      own_side, parent_side = extract_element_sides(side)
       if own_side && parent_side
         own_side - parent_side
       else
@@ -333,8 +333,8 @@ class Shoes
       - value
     end
 
-    def extract_absolute_sides(side)
-      absolute_side = "absolute_#{side}"
+    def extract_element_sides(side)
+      absolute_side = "element_#{side}"
       parent_side   = parent.public_send(absolute_side)
       own_side      = send(absolute_side)
       return own_side, parent_side

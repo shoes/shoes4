@@ -651,10 +651,10 @@ describe Shoes::Dimensions do
   it {should be_takes_up_space}
 
   describe 'left/top/right/bottom not set so get them relative to parent' do
-    let(:parent) {double 'parent', absolute_left: parent_left,
-                       absolute_top: parent_top,
-                       absolute_right: parent_right,
-                       absolute_bottom: parent_bottom}
+    let(:parent) {double 'parent', element_left: parent_left,
+                       element_top: parent_top,
+                       element_right: parent_right,
+                       element_bottom: parent_bottom}
     let(:parent_right) {parent_left + 20}
     let(:parent_bottom) {parent_top + 30}
 
@@ -665,14 +665,15 @@ describe Shoes::Dimensions do
 
     describe 'positioned at the start' do
       before :each do
+        # there is no setter for element_* but with no margin it's the same
         subject.absolute_left = parent_left
         subject.absolute_top = parent_top
       end
 
       its(:left) {should eq 0}
       its(:top) {should eq 0}
-      its(:right) {should eq parent_right - subject.absolute_right}
-      its(:bottom) {should eq parent_bottom - subject.absolute_bottom}
+      its(:right) {should eq parent_right - subject.element_right}
+      its(:bottom) {should eq parent_bottom - subject.element_bottom}
     end
 
     describe 'positioned with an offset' do
@@ -685,8 +686,8 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq TEST_OFFSET}
       its(:top) {should eq TEST_OFFSET}
-      its(:right) {should eq parent_right - subject.absolute_right}
-      its(:bottom) {should eq parent_bottom - subject.absolute_bottom}
+      its(:right) {should eq parent_right - subject.element_right}
+      its(:bottom) {should eq parent_bottom - subject.element_bottom}
     end
   end
 
