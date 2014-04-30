@@ -59,12 +59,13 @@ describe Shoes::Swt::TextBlock do
     let(:layout_height) { 200 }
     let(:line_height) { 10 }
     let(:layout) { create_layout(layout_width, layout_height) }
+    let(:fitted_layout) { double("fitted_layout", layout: layout) }
     let(:fitter) { double("fitter") }
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
       ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
-      fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
+      fitter.stub(:fit_it_in) { [fitted_layout] }
       layout.stub(:line_metrics) { double("line_metrics", height: line_height)}
     end
 
@@ -101,6 +102,13 @@ describe Shoes::Swt::TextBlock do
         expect(dsl).to receive(:absolute_right=).with(50)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
         expect(dsl).to receive(:absolute_top=).with(layout_height)
+
+        subject.contents_alignment(current_position)
+      end
+
+      it "disposes of prior layouts" do
+        subject.contents_alignment(current_position)
+        expect(fitted_layout).to receive(:dispose)
 
         subject.contents_alignment(current_position)
       end

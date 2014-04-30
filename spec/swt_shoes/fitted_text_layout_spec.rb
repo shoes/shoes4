@@ -31,6 +31,20 @@ describe Shoes::Swt::FittedTextLayout do
     fitted.position_at(element_left, element_top)
   end
 
+  context "disposal" do
+    it "disposes of underlying layout" do
+      layout.stub(:disposed?) { false }
+      expect(layout).to receive(:dispose)
+      subject.dispose
+    end
+
+    it "doesn't overdispose" do
+      layout.stub(:disposed?) { true }
+      expect(layout).to_not receive(:dispose)
+      subject.dispose
+    end
+  end
+
   context "setting style" do
     it "on full range" do
       subject.set_style(style_hash)

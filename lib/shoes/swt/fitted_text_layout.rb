@@ -13,6 +13,10 @@ class Shoes
         @layout = layout
       end
 
+      def dispose
+        @layout.dispose unless @layout.disposed?
+      end
+
       def position_at(element_left, element_top)
         @element_left = element_left
         @element_top = element_top
