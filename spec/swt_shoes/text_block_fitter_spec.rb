@@ -103,6 +103,7 @@ describe Shoes::Swt::TextBlockFitter do
                           line_count: 1, line_offsets:[], get_bounds: bounds) }
 
     before(:each) do
+      layout.stub(:position_at) { layout }
       text_block.stub(:generate_layout) { layout }
     end
 
@@ -179,7 +180,9 @@ describe Shoes::Swt::TextBlockFitter do
   end
 
   def expect_fitted_layouts(fitted_layouts, *coordinates)
-    actual = fitted_layouts.map {|fitted| [fitted.element_left, fitted.element_top] }
-    expect(coordinates).to eq(actual)
+    fitted_layouts.each_with_index do |fitted, index|
+      x, y = coordinates[index]
+      expect(fitted).to have_received(:position_at).with(x, y)
+    end
   end
 end

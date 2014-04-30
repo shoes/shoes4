@@ -151,8 +151,7 @@ class Shoes
       end
 
       def generate_layout(width, text)
-        layout = @text_block.generate_layout(width, text)
-        FittedTextLayout.new(layout)
+        @text_block.generate_layout(width, text)
       end
 
       def split_text(layout, height)

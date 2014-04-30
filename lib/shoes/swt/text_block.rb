@@ -40,7 +40,7 @@ class Shoes
         layout.setStyle style, 0, text.length - 1
         shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
 
-        layout
+        FittedTextLayout.new(layout)
       end
 
       def shrink_layout_to(layout, width)
