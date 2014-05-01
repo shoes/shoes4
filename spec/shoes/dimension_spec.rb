@@ -20,16 +20,6 @@ describe Shoes::Dimension do
       it {should_not be_absolute_position}
     end
 
-    # describe 'with start and extent' do
-    #   subject {Shoes::Dimension.new nil, start, extent}
-    #
-    #
-    #   its(:start) {should eq start}
-    #   its(:extent) {should eq extent}
-    #   its(:end) {should eq start + extent}
-    #   it {should be_absolute_position}
-    # end
-
     describe 'with a parent and being positioned itself' do
 
       let(:parent_dimension) {double 'parent_dimension',
@@ -51,9 +41,60 @@ describe Shoes::Dimension do
   end
 
   describe 'extent' do
+    let(:parent_extent) {200}
+    let(:parent) {double 'parent', extent: parent_extent}
+
+    subject {Shoes::Dimension.new parent}
+
     it 'gets and sets' do
       subject.extent = extent
       expect(subject.extent).to eq extent
+    end
+
+    describe 'negative values' do
+      it 'subtracts them from the parent' do
+        subject.extent = -70
+        expect(subject.extent).to eq parent_extent - 70
+      end
+    end
+
+    describe 'relative values' do
+      it 'takes them relative to the parent for smaller values' do
+        subject.extent = 0.8
+        expect(subject.extent).to be_within(1).of 0.8 * parent_extent
+      end
+
+      it 'takes them relative to the parent for bigger values' do
+        subject.extent = 1.3
+        expect(subject.extent).to be_within(1).of 1.3 * parent_extent
+      end
+    end
+
+    describe 'string values' do
+      it 'handles pure number strings' do
+        subject.extent = '100'
+        expect(subject.extent).to eq 100
+      end
+
+      it 'handles px strings' do
+        subject.extent = '80px'
+        expect(subject.extent).to eq 80
+      end
+
+      it 'takes care of some px white space' do
+        subject.extent = '70 px'
+        expect(subject.extent).to eq 70
+      end
+
+      it 'also handles negative values' do
+        subject.extent = '-50px'
+        expect(subject.extent).to eq parent_extent - 50
+      end
+
+      it 'returns nil for invalid strings' do
+        subject.extent = 'hell0'
+        expect(subject.extent).to be_nil
+      end
     end
   end
 
