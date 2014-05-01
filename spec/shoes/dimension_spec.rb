@@ -19,6 +19,9 @@ describe Shoes::Dimension do
       its(:start) {should eq nil}
       its(:end) {should eq nil}
       its(:extent) {should eq nil}
+      its(:margin_start) {should eq 0}
+      its(:margin_end) {should eq 0}
+      its(:displace_start) {should eq 0}
       it {should_not be_positioned}
       it {should_not be_absolute_position}
       it {should_not be_start_as_center}
@@ -99,6 +102,11 @@ describe Shoes::Dimension do
       it 'also handles negative values' do
         subject.extent = '-50px'
         expect(subject.extent).to eq parent_extent - 50
+      end
+
+      it 'handles percent as relative value' do
+        subject.extent = '75%'
+        expect(subject.extent).to be_within(1).of 0.75 * parent_extent
       end
 
       it 'returns nil for invalid strings' do
@@ -213,6 +221,12 @@ describe Shoes::Dimension do
     it {should_not be_in_bounds 0}
     it {should_not be_in_bounds 150}
     it {should_not be_in_bounds 123178}
+  end
+
+  it 'can displace the placement' do
+    subject.displace_start = 5
+    subject.absolute_start = 10
+    expect(subject.element_start).to eq 15
   end
 
 end
