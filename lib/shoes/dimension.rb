@@ -15,8 +15,9 @@ class Shoes
     # (20..119).size => 100
     PIXEL_COUNTING_ADJUSTMENT = -1
 
-    def initialize(parent)
-      @parent = parent
+    def initialize(parent, start_as_center = false)
+      @parent          = parent
+      @start_as_center = start_as_center
     end
 
     def start
@@ -183,7 +184,7 @@ class Shoes
     def adjust_start_for_center(value)
       my_extent = extent
       if my_extent && my_extent > 0
-        value - start / 2
+        value - my_extent / 2
       else
         nil
       end

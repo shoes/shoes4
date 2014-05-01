@@ -7,6 +7,9 @@ describe Shoes::Dimension do
   let(:extent) {21}
   let(:parent_element_start) {34}
   let(:parent_element_end) {83}
+  let(:parent_dimension) {double 'parent_dimension',
+                                 element_start: parent_element_start,
+                                 element_end: parent_element_end }
 
 
   describe 'initialization' do
@@ -18,14 +21,10 @@ describe Shoes::Dimension do
       its(:extent) {should eq nil}
       it {should_not be_positioned}
       it {should_not be_absolute_position}
+      it {should_not be_start_as_center}
     end
 
     describe 'with a parent and being positioned itself' do
-
-      let(:parent_dimension) {double 'parent_dimension',
-                                     element_start: parent_element_start,
-                                     element_end: parent_element_end }
-
       subject {Shoes::Dimension.new parent_dimension}
 
       TESTING_OFFSET = 11
@@ -37,6 +36,17 @@ describe Shoes::Dimension do
 
       its(:start) {should eq TESTING_OFFSET}
       its(:end) {should eq parent_element_end - subject.element_end}
+    end
+
+    describe 'start as center' do
+      subject {Shoes::Dimension.new parent_dimension, true}
+      it {should be_start_as_center}
+
+      it 'takes start as the center' do
+        subject.extent = 100
+        subject.start = 60
+        expect(subject.start).to eq 10
+      end
     end
   end
 
