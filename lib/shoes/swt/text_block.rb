@@ -25,24 +25,22 @@ class Shoes
       end
 
       # Resources created here need to be disposed (see #dispose). Note that
-      # this only applies to the ::Swt::Font object. The ::Swt::TextLayout and
-      # ::Swt::TextStyle objects do not need to be disposed, because they are
-      # not backed by system resources. They are just plain Java objects.
+      # this applies to the ::Swt::Font object and the ::Swt::TextLayout object. The
+      # ::Swt::TextStyle object does not need to be disposed, because ti is
+      # not backed by system resources.
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
         layout.setText text
         layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        @font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
+        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
                                ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new @font, nil, nil
+        style = ::Swt::TextStyle.new font, nil, nil
         layout.setStyle style, 0, text.length - 1
         shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
 
-        layout
-      end
+        font.dispose
 
-      def dispose
-        @font.dispose unless @font.disposed?
+        layout
       end
 
       def shrink_layout_to(layout, width)
@@ -54,8 +52,9 @@ class Shoes
       end
 
       def contents_alignment(current_position)
-        fitter = TextBlockFitter.new(self, current_position)
-        @fitted_layouts = fitter.fit_it_in
+        dispose_existing_layouts
+
+        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
 
         if fitted_layouts.one?
           set_absolutes_for_one_layout
@@ -135,6 +134,10 @@ class Shoes
           app.remove_listener ::Swt::SWT::MouseUp, ln if ln
         end
         @dsl.links.clear
+      end
+
+      def dispose_existing_layouts
+        @fitted_layouts.map(&:dispose)
       end
     end
 

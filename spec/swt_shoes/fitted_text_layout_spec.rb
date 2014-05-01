@@ -2,6 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::FittedTextLayout do
   let(:layout) { double("layout", text: "the text", set_style: nil) }
+  let(:font_factory) { double("font factory", create_font: font, dispose: nil) }
   let(:font)   { double("font") }
   let(:style)  { double("style") }
 
@@ -18,7 +19,7 @@ describe Shoes::Swt::FittedTextLayout do
   }
 
   before(:each) do
-    Shoes::Swt::TextFontFactory.stub(:create_font) { font }
+    Shoes::Swt::TextFontFactory.stub(:new) { font_factory }
     Shoes::Swt::TextStyleFactory.stub(:create_style) { style }
   end
 
@@ -32,5 +33,12 @@ describe Shoes::Swt::FittedTextLayout do
   it "should allow setting style with a range" do
     subject.set_style(style_hash, 1..2)
     expect(layout).to have_received(:set_style).with(style, 1, 2)
+  end
+
+  describe "dispose" do
+    it "should dispose its Swt fonts" do
+      subject.dispose
+      expect(font_factory).to have_received(:dispose)
+    end
   end
 end

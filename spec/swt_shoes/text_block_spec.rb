@@ -19,7 +19,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "generating layouts" do
     let(:layout) { create_layout(width, height) }
-    let(:font) { double("font", disposed?: false) }
+    let(:font) { double("font", disposed?: false, dispose: nil) }
 
     before(:each) do
       stub_layout(layout)
@@ -44,17 +44,6 @@ describe Shoes::Swt::TextBlock do
     it "should dispose the created font" do
       expect(font).to receive(:dispose)
       subject.generate_layout(0, "text text")
-      subject.dispose
-    end
-
-    context "when font is already disposed" do
-      let(:font) { double("font", disposed?: true) }
-
-      it "should dispose the created font" do
-        expect(font).not_to receive(:dispose)
-        subject.generate_layout(0, "text text")
-        subject.dispose
-      end
     end
   end
 
@@ -64,11 +53,13 @@ describe Shoes::Swt::TextBlock do
     let(:line_height) { 10 }
     let(:layout) { create_layout(layout_width, layout_height) }
     let(:fitter) { double("fitter") }
+    let(:fitted_layout) { double("fitted_layout", layout: layout) }
+    let(:second_fitted_layout) { double("second_fitted_layout", layout: layout) }
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
       ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
-      fitter.stub(:fit_it_in) { [double("fitted_layout", layout: layout)] }
+      fitter.stub(:fit_it_in).and_return([fitted_layout], [second_fitted_layout])
       layout.stub(:line_metrics) { double("line_metrics", height: line_height)}
     end
 
@@ -96,6 +87,18 @@ describe Shoes::Swt::TextBlock do
         expect(dsl).to receive(:absolute_top=).with(layout_height)
 
         subject.contents_alignment(current_position)
+      end
+
+      context "on the second call" do
+        before(:each) do
+          subject.contents_alignment(current_position)
+        end
+
+        it "should only ask old fitted layout to dispose Swt resources" do
+          expect(fitted_layout).to receive(:dispose)
+          expect(second_fitted_layout).not_to receive(:dispose)
+          subject.contents_alignment(current_position)
+        end
       end
     end
 
