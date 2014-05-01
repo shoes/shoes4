@@ -2,10 +2,11 @@ require 'shoes/spec_helper'
 
 describe Shoes::Dimensions do
 
+  let(:parent_left) {left}
   let(:parent_top) {top}
   let(:parent_width) {width}
   let(:parent_height) {height}
-  let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top, parent_width, parent_height}
+  let(:parent) {Shoes::AbsoluteDimensions.new parent_left, parent_top, parent_width, parent_height}
 
   let(:left) {10}
   let(:top) {20}
@@ -13,7 +14,6 @@ describe Shoes::Dimensions do
   let(:height) {150}
   let(:right) {17}
   let(:bottom) {23}
-  let(:parent_left) {left}
   let(:opts) { {} }
   subject {Shoes::Dimensions.new parent, left, top, width, height, opts}
 
@@ -40,13 +40,17 @@ describe Shoes::Dimensions do
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
 
-      its(:left) {should eq nil}
-      its(:top) {should eq nil}
+      its(:left) {should be_nil}
+      its(:top) {should be_nil}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
       its(:absolutely_positioned?) {should be_false}
       its(:absolute_x_position?) {should be_false}
       its(:absolute_y_position?) {should be_false}
+      its(:absolute_left_position?) {should be_false}
+      its(:absolute_top_position?) {should be_false}
+      its(:absolute_right_position?) {should be_false}
+      its(:absolute_bottom_position?) {should be_false}
       its(:margin)      {should == [0, 0, 0, 0]}
       its(:margin_left) {should == 0}
       its(:margin_top) {should == 0}
@@ -66,6 +70,10 @@ describe Shoes::Dimensions do
       its(:absolutely_positioned?) {should be_true}
       its(:absolute_x_position?) {should be_true}
       its(:absolute_y_position?) {should be_true}
+      its(:absolute_left_position?) {should be_true}
+      its(:absolute_top_position?) {should be_true}
+      its(:absolute_right_position?) {should be_false}
+      its(:absolute_bottom_position?) {should be_false}
     end
 
     describe 'with 4 arguments' do
@@ -183,8 +191,8 @@ describe Shoes::Dimensions do
       describe 'with invalid integer strings' do
         subject {Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob"}
 
-        its(:left) {should eq nil}
-        its(:top) {should eq nil}
+        its(:left) {should be_nil}
+        its(:top) {should be_nil}
         its(:width) {should be_nil}
         its(:height) {should be_nil}
       end
@@ -247,12 +255,17 @@ describe Shoes::Dimensions do
         its(:bottom) {should eq bottom}
         its(:absolute_x_position?) {should be_true}
         its(:absolute_y_position?) {should be_true}
+        its(:absolute_left_position?) {should be_false}
+        its(:absolute_top_position?) {should be_false}
+        its(:absolute_right_position?) {should be_true}
+        its(:absolute_bottom_position?) {should be_true}
       end
     end
 
     describe 'absolute_left and _top' do
       its(:absolute_left) {should eq nil}
       its(:absolute_top) {should eq nil}
+      it {should_not be_positioned}
     end
 
     describe 'absolute extra values' do
@@ -282,6 +295,10 @@ describe Shoes::Dimensions do
 
       it 'has an element top which is the same' do
         expect(subject.element_top).to eq subject.absolute_top
+      end
+
+      it 'considers itself positioned' do
+        expect(subject.positioned?).to be_true
       end
 
       describe 'with margins' do
@@ -632,6 +649,47 @@ describe Shoes::Dimensions do
 
   it {should be_needs_to_be_positioned}
   it {should be_takes_up_space}
+
+  describe 'left/top/right/bottom not set so get them relative to parent' do
+    let(:parent) {double 'parent', element_left: parent_left,
+                       element_top: parent_top,
+                       element_right: parent_right,
+                       element_bottom: parent_bottom}
+    let(:parent_right) {parent_left + 20}
+    let(:parent_bottom) {parent_top + 30}
+
+    let(:width) {3}
+    let(:height) {5}
+
+    subject {Shoes::Dimensions.new parent, width: width, height: height}
+
+    describe 'positioned at the start' do
+      before :each do
+        # there is no setter for element_* but with no margin it's the same
+        subject.absolute_left = parent_left
+        subject.absolute_top = parent_top
+      end
+
+      its(:left) {should eq 0}
+      its(:top) {should eq 0}
+      its(:right) {should eq parent_right - subject.element_right}
+      its(:bottom) {should eq parent_bottom - subject.element_bottom}
+    end
+
+    describe 'positioned with an offset' do
+      TEST_OFFSET = 7
+
+      before :each do
+        subject.absolute_left = parent_left + TEST_OFFSET
+        subject.absolute_top = parent_top + TEST_OFFSET
+      end
+
+      its(:left) {should eq TEST_OFFSET}
+      its(:top) {should eq TEST_OFFSET}
+      its(:right) {should eq parent_right - subject.element_right}
+      its(:bottom) {should eq parent_bottom - subject.element_bottom}
+    end
+  end
 
   describe Shoes::AbsoluteDimensions do
     subject {Shoes::AbsoluteDimensions.new left, top, width, height}

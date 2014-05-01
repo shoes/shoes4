@@ -43,6 +43,11 @@ class Shoes
         layout.draw(graphics_context, element_left, element_top)
       end
 
+      # x,y in app coordinates, so translate for layout's element-local values
+      def in_bounds?(x, y)
+        layout.bounds.contains?(x - element_left, y - element_top)
+      end
+
       def dispose
         @font_factory.dispose
         @style_factory.dispose

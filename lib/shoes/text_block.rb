@@ -6,7 +6,7 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader   :gui, :parent, :text, :links, :app, :text_styles, :dimensions, :opts
+    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts
     attr_accessor :calculated_width, :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
@@ -16,7 +16,6 @@ class Shoes
       @opts               = opts
       @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size          = @opts[:size] || font_size
-      @links              = []
       @contents           = texts
       @text               = texts.map(&:to_s).join
       @text_styles        = gather_text_styles(self, texts)
@@ -34,6 +33,10 @@ class Shoes
       @parent.add_child(self)
 
       clickable_options(@opts)
+    end
+
+    def in_bounds?(*args)
+      @gui.in_bounds?(*args)
     end
 
     def update_text_styles(texts)
@@ -85,12 +88,12 @@ class Shoes
 
     # If an explicit width's set, it's used. If not, we look to the parent.
     def containing_width
-      @dimensions.width || parent.width
+      (@dimensions.width || parent.width) - (margin_left + margin_right)
     end
 
     # This is the width the text block initially wants to try and fit into.
-    def desired_width
-      parent.absolute_left + containing_width - self.absolute_left
+    def desired_width(containing=containing_width)
+      parent.absolute_left + containing - self.absolute_left
     end
 
     def contents_alignment(current_position=nil)
@@ -103,6 +106,12 @@ class Shoes
 
     def has_textcursor?
       @textcursor
+    end
+
+    def links
+      @contents.select do |element|
+        element.is_a?(Shoes::Link)
+      end
     end
 
     private

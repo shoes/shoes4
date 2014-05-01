@@ -25,7 +25,7 @@ class Shoes
 
       # These need to trigger a redraw
       SAME_POSITION    = {Common::Toggle         => [:toggle],
-                          ::Shoes::Common::Style => [:style],
+                          ::Shoes::Common::Style => [:update_style],
                           ::Shoes::TextBlock     => [:replace]}
 
       CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
@@ -33,6 +33,16 @@ class Shoes
                                                      :height=,
                                                      :displace_left=, :displace_top=],
                           }
+
+      # These methods trigger SWT painting listeners, so we need to be sure
+      # that positioning has run properly before allowing them to continue.
+      NEED_CONTENTS_ALIGNMENT = {
+                          ::Shoes::Swt::Dialog    => [:ask_color,
+                                                      :dialog_chooser,
+                                                      :open_message_box],
+                          ::Shoes::Swt::AskDialog => [:open]
+                          }
+
 
       attr_reader :app
 
@@ -55,6 +65,7 @@ class Shoes
       def affected_classes
         classes = NEED_TO_UPDATE.keys +
                   NEED_TO_ASYNC_UPDATE_GUI.keys +
+                  NEED_CONTENTS_ALIGNMENT.keys +
                   SAME_POSITION.keys +
                   CHANGED_POSITION.keys
         classes.uniq
@@ -72,6 +83,9 @@ class Shoes
         # need to redraw old occupied area and newly occupied area
         before_and_after_every CHANGED_POSITION do |*args, element|
           redraw_element element
+        end
+        before_every NEED_CONTENTS_ALIGNMENT do |*args|
+          app.dsl.top_slot.contents_alignment
         end
       end
 

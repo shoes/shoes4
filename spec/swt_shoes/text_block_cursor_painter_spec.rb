@@ -193,19 +193,10 @@ describe Shoes::Swt::TextBlockCursorPainter do
       fitted_layouts << first_layout
     end
 
-    it "should create textcursor if missing" do
-      pending "Mocks aren't set up right"
-      dsl.stub(:textcursor) { nil }
+    it "delegates to dsl" do
+      dsl.stub(:textcursor) { textcursor }
       result = subject.textcursor
       expect(result).to eq(textcursor)
-      expect(shoes_app).to have_received(:textcursor).and_return(textcursor)
-    end
-
-    it "should just return textcursor if already there" do
-      result = subject.textcursor
-      expect(result).to eq(textcursor)
-      expect(shoes_app).to_not have_received(:textcursor)
     end
   end
-
 end

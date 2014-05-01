@@ -2,7 +2,7 @@ class Shoes
   class Link < Span
     attr_reader :app, :parent, :gui
 
-    DEFAULT_OPTS = { underline: true, fg: ::Shoes::COLORS[:blue] }
+    DEFAULT_OPTS = { underline: true, stroke: ::Shoes::COLORS[:blue] }
 
     def initialize(app, parent, texts, opts={}, &blk)
       @app = app
@@ -19,8 +19,12 @@ class Shoes
       if blk
         @blk = blk
       elsif opts.include?(:click)
-        # Slightly awkward, but we need App, not InternalApp, to call visit
-        @blk = Proc.new { app.app.visit(opts[:click]) }
+        if opts[:click].respond_to?(:call)
+          @blk = opts[:click]
+        else
+          # Slightly awkward, but we need App, not InternalApp, to call visit
+          @blk = Proc.new { app.app.visit(opts[:click]) }
+        end
       end
     end
 
@@ -35,6 +39,10 @@ class Shoes
 
     def in_bounds?(x, y)
       @gui.in_bounds?(x, y)
+    end
+
+    def clear
+      @gui.clear
     end
 
   end

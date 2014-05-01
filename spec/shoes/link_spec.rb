@@ -22,7 +22,7 @@ describe Shoes::Link do
     it "should default opts" do
       subject.opts.should eql({
         :underline=>true,
-        :fg=>Shoes::COLORS[:blue]
+        :stroke=>Shoes::COLORS[:blue]
       })
     end
 
@@ -31,7 +31,7 @@ describe Shoes::Link do
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
-        subject.opts.should include(:fg => Shoes::COLORS[:blue])
+        subject.opts.should include(:stroke => Shoes::COLORS[:blue])
       end
 
       it "should override defaults" do
@@ -53,11 +53,21 @@ describe Shoes::Link do
       end
     end
 
-    context "with click option" do
+    context "with click option as text" do
       subject { Shoes::Link.new(internal_app, nil, texts, click: "/url") }
 
       it "should visit the url" do
         expect(app).to receive(:visit).with("/url")
+        subject.execute_link
+      end
+    end
+
+    context "with click option as Proc" do
+      let(:block) { double("block", call: nil) }
+      subject { Shoes::Link.new(internal_app, nil, texts, click: block) }
+
+      it "calls the block" do
+        expect(block).to receive(:call)
         subject.execute_link
       end
     end

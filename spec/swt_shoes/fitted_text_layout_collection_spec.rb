@@ -52,7 +52,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
         styles = [[0..1, [create_link("linky")]]]
         subject.style_segment_ranges(styles)
 
-        expected_style = style_with(underline: true, fg: ::Shoes::COLORS[:blue])
+        expected_style = style_with(underline: true, stroke: ::Shoes::COLORS[:blue])
         expect(first_layout).to have_received(:set_style).with(expected_style, 0..1)
       end
 
@@ -150,8 +150,9 @@ describe Shoes::Swt::FittedTextLayoutCollection do
   end
 
   def create_layout(name, text)
-    bounds = double("bounds", height: 0)
-    inner_layout = double(name, text: text, get_line_bounds: bounds)
+    bounds = double("bounds", x: 0, y: 0, height: 0)
+    inner_layout = double(name, text: text,
+                          line_bounds: bounds, line_count: 1)
 
     layout = Shoes::Swt::FittedTextLayout.new(inner_layout, 0, 0)
     layout.stub(:draw)
