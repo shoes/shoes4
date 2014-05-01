@@ -89,15 +89,33 @@ describe Shoes::Swt::TextBlock do
         subject.contents_alignment(current_position)
       end
 
+      it "should not dispose any layouts" do
+        expect(fitted_layout).not_to receive(:dispose)
+        expect(second_fitted_layout).not_to receive(:dispose)
+
+        subject.contents_alignment(current_position)
+      end
+
       context "on the second call" do
         before(:each) do
           subject.contents_alignment(current_position)
         end
 
-        it "should only ask old fitted layout to dispose Swt resources" do
+        it "should only dispose old fitted layout" do
           expect(fitted_layout).to receive(:dispose)
           expect(second_fitted_layout).not_to receive(:dispose)
+
           subject.contents_alignment(current_position)
+        end
+
+        it "should dispose all layouts on clear" do
+          swt_app.stub(:remove_listener)
+
+          expect(fitted_layout).to receive(:dispose)
+          expect(second_fitted_layout).to receive(:dispose)
+
+          subject.contents_alignment(current_position)
+          subject.clear
         end
       end
     end
