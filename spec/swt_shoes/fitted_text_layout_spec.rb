@@ -3,6 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::FittedTextLayout do
   let(:layout) { double("layout", text: "the text", set_style: nil) }
   let(:font_factory) { double("font factory", create_font: font, dispose: nil) }
+  let(:style_factory) { double("style factory", create_style: style, dispose: nil) }
   let(:font)   { double("font") }
   let(:style)  { double("style") }
 
@@ -20,7 +21,7 @@ describe Shoes::Swt::FittedTextLayout do
 
   before(:each) do
     Shoes::Swt::TextFontFactory.stub(:new) { font_factory }
-    Shoes::Swt::TextStyleFactory.stub(:create_style) { style }
+    Shoes::Swt::TextStyleFactory.stub(:new) { style_factory }
   end
 
   subject { Shoes::Swt::FittedTextLayout.new(layout, 0, 0) }
@@ -39,6 +40,11 @@ describe Shoes::Swt::FittedTextLayout do
     it "should dispose its Swt fonts" do
       subject.dispose
       expect(font_factory).to have_received(:dispose)
+    end
+
+    it "should dispose its Swt colors" do
+      subject.dispose
+      expect(style_factory).to have_received(:dispose)
     end
   end
 end

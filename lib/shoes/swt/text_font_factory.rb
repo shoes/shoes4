@@ -11,7 +11,10 @@ class Shoes
         styles = font_style[:styles].reduce { |result, s| result | s }
 
         font = ::Swt::Graphics::Font.new Shoes.display, name, size, styles
+
+        # Hold a reference to the font so we can dispose it when the time comes
         @fonts << font
+
         font
       end
 
