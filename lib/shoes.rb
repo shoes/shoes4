@@ -65,6 +65,7 @@ class Shoes
 end
 
 require 'shoes/version'
+require 'shoes/dimension'
 require 'shoes/dimensions'
 
 require 'shoes/color'
