@@ -18,6 +18,7 @@ class Shoes
         @to_dispose.each do |element|
           element.dispose unless element.disposed?
         end
+        @to_dispose.clear
       end
 
       def mark_to_dispose(element)

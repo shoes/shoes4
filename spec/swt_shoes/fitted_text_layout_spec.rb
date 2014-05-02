@@ -43,6 +43,14 @@ describe Shoes::Swt::FittedTextLayout do
       expect(layout).to_not receive(:dispose)
       subject.dispose
     end
+
+    it "doesn't keep the objects around" do
+      layout.stub(:disposed?) { false }
+      expect(layout).to receive(:dispose).once
+
+      subject.dispose
+      subject.dispose
+    end
   end
 
   context "setting style" do
