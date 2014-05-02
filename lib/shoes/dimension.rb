@@ -76,11 +76,11 @@ class Shoes
     end
 
     def absolute_start_position?
-      @start
+      not @start.nil?
     end
 
     def absolute_end_position?
-      @end
+      not @end.nil?
     end
 
     def absolute_position?
