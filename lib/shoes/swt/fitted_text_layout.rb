@@ -23,7 +23,6 @@ class Shoes
 
       def mark_to_dispose(element)
         @to_dispose << element
-        element
       end
 
       def position_at(element_left, element_top)

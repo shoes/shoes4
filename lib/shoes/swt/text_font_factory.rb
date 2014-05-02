@@ -6,7 +6,9 @@ class Shoes
         size = font_style[:size]
         styles = font_style[:styles].reduce { |result, s| result | s }
 
-        disposer.mark_to_dispose(::Swt::Font.new(Shoes.display, name, size, styles))
+        font = ::Swt::Font.new(Shoes.display, name, size, styles)
+        disposer.mark_to_dispose(font)
+        font
       end
     end
   end

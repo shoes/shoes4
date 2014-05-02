@@ -71,8 +71,9 @@ class Shoes
         return nil if dsl_color.nil? and default.nil?
         return color_from_dsl default if dsl_color.nil?
 
-        @current_disposer.mark_to_dispose(
-          ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue))
+        color = ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
+        @current_disposer.mark_to_dispose(color)
+        color
       end
     end
   end
