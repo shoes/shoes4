@@ -7,12 +7,18 @@ describe Shoes::Download do
 
   let(:name) { "http://www.google.com/logos/nasa50th.gif" }
   let(:response_body) { "NASA 50th logo" }
+  let(:response_status) {["200", "OK"]}
+  let(:response_headers) {Hash.new(:date => "today's date")}
   let(:opts) { {save: "nasa50th.gif"} }
   subject(:download) { Shoes::Download.new app, parent, name, opts, &input_block }
+    
+  let(:percent) {download.percent}
+  let(:length) {download.length}
+  let(:content_length) {download.content_length}
 
   before do
     stub_request(:get, name)
-      .to_return(:status => 200, :body => response_body, :headers => {})
+      .to_return(:status => response_status, :body => response_body, :headers => response_headers)
   end
 
   after do
@@ -27,17 +33,21 @@ describe Shoes::Download do
   it 'starts' do
     eventually { expect(download).to be_started }
   end
-
+  
   it 'understands percent' do
-    expect(download).to respond_to{:percent}
+    eventually{ expect(percent).to eql(0)}
   end
 
   it 'understands abort' do
-    expect(download).to respond_to{:abort}
+    expect(download).to respond_to(:abort)
   end
 
-  it "understands length and content_length and they're the same" do
-    expect(download.content_length).to eql(download.length)
+  it "understands content_length" do
+    expect(content_length).to eql(1)
+  end
+  
+  it "understands length" do
+    expect(length).to eql(1)
   end
 
   it 'creates the file specified by save' do
@@ -55,21 +65,17 @@ describe Shoes::Download do
         eventually { expect(download.gui).to receive(:eval_block).with(input_block, result) }
       end
 
-      it 'creates an HttpResponse' do
-        eventually{expect(response).to be_an_instance_of(Shoes::HttpResponse)}
-      end
-
-      describe 'HttpResponse object' do
+      describe 'response object' do
         it 'has headers hash' do
-          eventually { expect(response.headers).to be_an_instance_of(Hash)}
+          eventually { expect(response.headers).to eql(response_headers)}
         end
-        
+
         it 'has body text' do
-          eventually { expect(response.body).to be_an_instance_of(String)}
+          eventually { expect(response.body).to eql(response_body)}
         end
 
         it 'has status array' do
-          eventually { expect(response.status).to be_an_instance_of(Array)}
+          eventually { expect(response.status).to eql(response_status)}
         end
       end
     end
