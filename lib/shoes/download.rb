@@ -1,12 +1,12 @@
 class Shoes
-    class HttpResponse
-     # Struct might be better? 
-     attr_accessor :headers, :body, :status
-     def initalize
-       @headers = {}
-       @body = ''
-       @status = []
-     end
+  class HttpResponse
+    # Struct might be better?
+    attr_accessor :headers, :body, :status
+    def initalize
+      @headers = {}
+      @body = ''
+      @status = []
+    end
   end
 
   class Download
@@ -69,20 +69,22 @@ class Shoes
         end
       end
     end
-    
+
     def content_length_proc
-      lambda do |content_length| 
-        download_started(content_length) 
+      lambda do |content_length|
+        download_started(content_length)
         eval_block(@opts[:progress], self) if @opts[:progress]
       end
     end
 
     def progress_proc
       lambda do |size|
-        if (size - self.transferred) > (content_length / UPDATE_STEPS) && !@gui.busy?
-          @gui.busy = true
-          eval_block(@opts[:progress], self)
-          @transferred = size
+        if !content_length.nil? &&
+          (size - self.transferred) > (content_length / UPDATE_STEPS) &&
+          !@gui.busy?
+            @gui.busy = true
+            eval_block(@opts[:progress], self)
+            @transferred = size
         end
       end
     end
