@@ -6,6 +6,8 @@ describe Shoes::Swt::FittedTextLayout do
   let(:element_left) { 0 }
   let(:element_top)  { 0 }
 
+  let(:font_factory) { double("font factory", create_font: font, dispose: nil) }
+  let(:style_factory) { double("style factory", create_style: style, dispose: nil) }
   let(:font)   { double("font") }
   let(:style)  { double("style") }
 
@@ -22,8 +24,8 @@ describe Shoes::Swt::FittedTextLayout do
   }
 
   before(:each) do
-    Shoes::Swt::TextFontFactory.stub(:create_font) { font }
-    Shoes::Swt::TextStyleFactory.stub(:create_style) { style }
+    Shoes::Swt::TextFontFactory.stub(:new) { font_factory }
+    Shoes::Swt::TextStyleFactory.stub(:new) { style_factory }
   end
 
   subject { Shoes::Swt::FittedTextLayout.new(layout, element_left, element_top) }
@@ -75,6 +77,18 @@ describe Shoes::Swt::FittedTextLayout do
       bounds.y = y
       bounds.width = width
       bounds.height = height
+    end
+  end
+
+  describe "dispose" do
+    it "should dispose its Swt fonts" do
+      subject.dispose
+      expect(font_factory).to have_received(:dispose)
+    end
+
+    it "should dispose its Swt colors" do
+      subject.dispose
+      expect(style_factory).to have_received(:dispose)
     end
   end
 end

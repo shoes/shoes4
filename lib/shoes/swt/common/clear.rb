@@ -6,6 +6,11 @@ class Shoes
           app.remove_paint_listener @painter
           remove_click_listeners
           @real.dispose unless @real.nil? || @real.disposed?
+          dispose
+        end
+
+        # Classes should override to dispose of any Swt resources they create
+        def dispose
         end
 
         private

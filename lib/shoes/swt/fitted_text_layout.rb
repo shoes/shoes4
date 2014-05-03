@@ -9,6 +9,8 @@ class Shoes
         @layout = layout
         @element_left = element_left
         @element_top = element_top
+        @font_factory = TextFontFactory.new
+        @style_factory = TextStyleFactory.new
       end
 
       def get_location(cursor, trailing=false)
@@ -32,8 +34,8 @@ class Shoes
       end
 
       def set_style(styles, range=(0...text.length))
-        font = TextFontFactory.create_font(styles[:font_detail])
-        style = TextStyleFactory.create_style(font, styles[:fg], styles[:bg], styles)
+        font = @font_factory.create_font(styles[:font_detail])
+        style = @style_factory.create_style(font, styles[:fg], styles[:bg], styles)
         layout.set_style(style, range.min, range.max)
       end
 
@@ -44,6 +46,11 @@ class Shoes
       # x,y in app coordinates, so translate for layout's element-local values
       def in_bounds?(x, y)
         layout.bounds.contains?(x - element_left, y - element_top)
+      end
+
+      def dispose
+        @font_factory.dispose
+        @style_factory.dispose
       end
     end
   end

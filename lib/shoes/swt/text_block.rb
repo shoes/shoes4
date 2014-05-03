@@ -20,6 +20,10 @@ class Shoes
         @app.add_paint_listener @painter
       end
 
+      def dispose
+        @fitted_layouts.map &:dispose
+      end
+
       # has a painter, nothing to do
       def update_position
       end
@@ -30,6 +34,14 @@ class Shoes
         end
       end
 
+      # Resources created here need to be disposed (see #dispose). Note that
+      # this applies to the ::Swt::Font object and the ::Swt::TextLayout object. The
+      # ::Swt::TextStyle object does not need to be disposed, because it is
+      # not backed by system resources.
+      #
+      # This method is only called by TextBlockFitter, and then only from
+      # #contents_alignment, so any layouts generated here end up in
+      # @fitted_layouts
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
         layout.setText text
@@ -39,6 +51,8 @@ class Shoes
         style = ::Swt::TextStyle.new font, nil, nil
         layout.setStyle style, 0, text.length - 1
         shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
+
+        font.dispose
 
         layout
       end
@@ -52,8 +66,9 @@ class Shoes
       end
 
       def contents_alignment(current_position)
-        fitter = TextBlockFitter.new(self, current_position)
-        @fitted_layouts = fitter.fit_it_in
+        dispose_existing_layouts
+
+        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
 
         if fitted_layouts.one?
           set_absolutes_for_one_layout
@@ -126,6 +141,10 @@ class Shoes
 
       def clear_contents
         @dsl.links.each(&:clear)
+      end
+
+      def dispose_existing_layouts
+        @fitted_layouts.map(&:dispose)
       end
     end
 
