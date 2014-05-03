@@ -29,10 +29,6 @@ class Shoes
         TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
       end
 
-      def dispose
-        @dsl.gui.dispose
-      end
-
       private
 
       def default_text_styles
