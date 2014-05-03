@@ -15,7 +15,7 @@ class Shoes
     # (20..119).size => 100
     PIXEL_COUNTING_ADJUSTMENT = -1
 
-    def initialize(parent, start_as_center = false)
+    def initialize(parent = nil, start_as_center = false)
       @parent          = parent
       @start_as_center = start_as_center
     end
@@ -113,7 +113,7 @@ class Shoes
     end
 
     def calculate_relative(result)
-      (result * @parent.extent).to_i
+      (result * @parent.element_extent).to_i
     end
 
     PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
@@ -133,28 +133,18 @@ class Shoes
       end
     end
 
-    def int_from_string(result)
-      (result.gsub(' ', '')).to_i
-    end
-
-    def parse_input_value(input)
-      if input.is_a?(Integer) || input.is_a?(Float)
-        input
-      elsif valid_integer_string?(input)
-        int_from_string(input)
-      else
-        nil
-      end
+    def is_negative?(result)
+      result && result < 0
     end
 
     NUMBER_REGEX = /^-?\s*\d+/
 
-    def valid_integer_string?(input)
-      input.is_a?(String) && input.match(NUMBER_REGEX)
+    def int_from_string(result)
+      (result.gsub(' ', '')).to_i
     end
 
-    def is_negative?(result)
-      result && result < 0
+    def valid_integer_string?(input)
+      input.is_a?(String) && input.match(NUMBER_REGEX)
     end
 
     def calculate_negative(result)

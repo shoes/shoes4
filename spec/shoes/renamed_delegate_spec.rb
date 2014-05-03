@@ -30,7 +30,7 @@ describe RenamedDelegate do
   end
 
   TestClass.renamed_delegate_to :delegate,
-                                ToDelegate.public_instance_methods(true),
+                                ToDelegate.public_instance_methods(false),
                                 {'key' => 'shoes', 'something' => 'awesome'}
 
   let(:delegate) {double('delegate').as_null_object}

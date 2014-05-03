@@ -32,9 +32,11 @@
 
 class Shoes
   class Dimensions
+    extend RenamedDelegate
+
     attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
                   :margin_bottom, :top, :left, :right, :bottom
-    attr_reader   :parent
+    attr_reader   :parent, :x_dimension, :y_dimension
     attr_accessor :absolute_left, :absolute_top,
                   :displace_left, :displace_top
     protected :parent # we shall not mess with parent,see #495
@@ -59,31 +61,6 @@ class Shoes
       end
     end
 
-    %w(left top right bottom).each do |side|
-
-      define_method "absolute_#{side}_position?" do
-        not instance_variable_get('@' + side).nil?
-      end
-    end
-
-    %w(left top).each do |side|
-      define_method side do
-        instance_value = instance_variable_get('@' + side)
-        value = instance_value || relative_to_parent_start(side)
-        if left_top_as_center?
-          send 'adjust_' + side + '_for_center', value
-        else
-          value
-        end
-      end
-    end
-
-    %w(right bottom).each do |side|
-      define_method side do
-        instance_variable_get('@' + side) || relative_to_parent_end(side)
-      end
-    end
-
     def absolute_x_position?
       absolute_left_position? || absolute_right_position?
     end
@@ -94,70 +71,6 @@ class Shoes
 
     def absolutely_positioned?
       absolute_x_position? || absolute_y_position?
-    end
-
-    def width
-      calculate_dimension(:width)
-    end
-
-    def height
-      calculate_dimension(:height)
-    end
-
-    def element_width
-      return nil if width.nil?
-      width - (margin_left + margin_right)
-    end
-
-    def element_height
-      return nil if height.nil?
-      height - (margin_bottom + margin_top)
-    end
-
-    def element_width=(value)
-      if value.nil?
-        self.width = nil
-      else
-        self.width = margin_left + value + margin_right
-      end
-    end
-
-    def element_height=(value)
-      if value.nil?
-        self.height = nil
-      else
-        self.height = margin_top + value + margin_bottom
-      end
-    end
-
-    def element_left
-      return nil if absolute_left.nil?
-      absolute_left + margin_left + displace_left
-    end
-
-    def element_top
-      return nil if absolute_top.nil?
-      absolute_top + margin_top + displace_top
-    end
-
-    def element_right
-      return nil if element_left.nil? || element_width.nil?
-      element_left + element_width + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def element_bottom
-      return nil if element_top.nil? || element_height.nil?
-      element_top + element_height + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def absolute_right
-      return absolute_left if width.nil?
-      absolute_left + width + PIXEL_COUNTING_ADJUSTMENT
-    end
-
-    def absolute_bottom
-      return absolute_top if height.nil?
-      absolute_top + height + PIXEL_COUNTING_ADJUSTMENT
     end
 
     def positioned?
@@ -175,7 +88,8 @@ class Shoes
 
     def margin=(margin)
       margin = [margin, margin, margin, margin] unless margin.is_a? Array
-      @margin_left, @margin_top, @margin_right, @margin_bottom =  margin
+      self.margin_left, self.margin_top,
+      self.margin_right, self.margin_bottom =  margin
     end
 
     # used by positioning code in slot and there to be overwritten if something
@@ -187,6 +101,18 @@ class Shoes
     def takes_up_space?
       true
     end
+
+    def self.setup_delegations
+      methods_to_rename = Dimension.public_instance_methods false
+      renamed_delegate_to :x_dimension, methods_to_rename, 'start'  => 'left',
+                                                           'end'    => 'right',
+                                                           'extent' => 'width'
+      renamed_delegate_to :y_dimension, methods_to_rename, 'start'  => 'top',
+                                                           'end'    => 'bottom',
+                                                           'extent' => 'height'
+    end
+
+    setup_delegations
 
     private
     def hash_as_argument?(left)
@@ -200,70 +126,36 @@ class Shoes
     end
 
     def init_with_arguments(left, top, width, height, opts)
-      @displace_left = opts.fetch(:displace_left, 0)
-      @displace_top  = opts.fetch(:displace_top, 0)
+      @left_top_as_center = opts.fetch(:center, false)
+      init_x_and_y_dimensions
       general_options opts # order important for redrawing
+      self.displace_left = opts.fetch(:displace_left, nil)
+      self.displace_top  = opts.fetch(:displace_top, nil)
       self.left   = parse_input_value left
       self.top    = parse_input_value top
       self.width  = width
       self.height = height
     end
 
-    def init_margins(opts)
-      self.margin    = opts[:margin]
-      @margin_left   = opts.fetch(:margin_left, margin_left)
-      @margin_top    = opts.fetch(:margin_top, margin_top)
-      @margin_right  = opts.fetch(:margin_right, margin_right)
-      @margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
-    end
-
-    [:margin_left, :margin_top, :margin_right, :margin_bottom].each do |method|
-      define_method method do
-        instance_variable_name = ('@' + method.to_s).to_sym
-        instance_variable_get(instance_variable_name) || 0
-      end
+    def init_x_and_y_dimensions
+      parent_x_dimension = @parent? @parent.x_dimension : nil
+      parent_y_dimension = @parent? @parent.y_dimension : nil
+      @x_dimension = Dimension.new parent_x_dimension, @left_top_as_center
+      @y_dimension = Dimension.new parent_y_dimension, @left_top_as_center
     end
 
     def general_options(opts)
-      @left_top_as_center = opts.fetch(:center, false)
       self.right = parse_input_value opts[:right]
       self.bottom = parse_input_value opts[:bottom]
       init_margins opts
     end
 
-    def calculate_dimension(name)
-      result = instance_variable_get("@#{name}".to_sym)
-      if @parent
-        result = calculate_from_string(result) if is_string?(result)
-        result = calculate_relative(name, result) if is_relative?(result)
-        result = calculate_negative(name, result) if is_negative?(result)
-      end
-      result
-    end
-
-    def is_relative?(result)
-      result.is_a?(Float)
-    end
-
-    def calculate_relative(name, result)
-      (result * @parent.public_send('element_' + name.to_s)).to_i
-    end
-
-    PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
-
-    def is_string?(result)
-      result.is_a?(String)
-    end
-
-    def calculate_from_string(result)
-      match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
-      if match
-        match[1].to_f / 100.0
-      elsif valid_integer_string?(result)
-        int_from_string(result)
-      else
-        nil
-      end
+    def init_margins(opts)
+      self.margin        = opts[:margin]
+      self.margin_left   = opts.fetch(:margin_left, margin_left)
+      self.margin_top    = opts.fetch(:margin_top, margin_top)
+      self.margin_right  = opts.fetch(:margin_right, margin_right)
+      self.margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
     end
 
     def int_from_string(result)
@@ -286,59 +178,7 @@ class Shoes
       input.is_a?(String) && input.match(NUMBER_REGEX)
     end
 
-    def is_negative?(result)
-      result && result < 0
-    end
 
-    def calculate_negative(name, result)
-      @parent.send(name) + result
-    end
-
-    def left_top_as_center?
-      @left_top_as_center
-    end
-
-    def adjust_left_for_center(left_value)
-      my_width = width
-      if my_width && my_width > 0
-        left_value - my_width / 2
-      else
-        left_value
-      end
-    end
-
-    def adjust_top_for_center(top_value)
-      my_height = height
-      if my_height && my_height > 0
-        top_value - my_height / 2
-      else
-        top_value
-      end
-    end
-
-    def relative_to_parent_start(side)
-      own_side, parent_side = extract_element_sides(side)
-      if own_side && parent_side
-        own_side - parent_side
-      else
-        nil
-      end
-    end
-
-    def relative_to_parent_end(side)
-      value = relative_to_parent_start side
-      return nil if value.nil?
-      # end is reversed e.g. we have to subtract our side from the parent_side
-      # e.g. our right from parent right - negating it imitates that
-      - value
-    end
-
-    def extract_element_sides(side)
-      absolute_side = "element_#{side}"
-      parent_side   = parent.public_send(absolute_side)
-      own_side      = send(absolute_side)
-      return own_side, parent_side
-    end
   end
 
   # for objects that do not depend on their parent (get 1.04 as real values)

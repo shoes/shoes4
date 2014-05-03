@@ -115,11 +115,12 @@ describe Shoes::Dimensions do
       end
 
       describe 'a parent with margins' do
-        let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
-                                            parent_width, parent_height,
-                                            margin: 20}
+        let(:parent) {Shoes::AbsoluteDimensions.new parent_left,
+                                                    parent_top,
+                                                    parent_width,
+                                                    parent_height,
+                                                    margin: 20}
         subject {Shoes::Dimensions.new parent, left, top, 1.0, 1.0}
-
 
         it 'uses the element_width to calculate its own relative width' do
           expect(subject.width).to eq parent.element_width
@@ -651,10 +652,13 @@ describe Shoes::Dimensions do
   it {should be_takes_up_space}
 
   describe 'left/top/right/bottom not set so get them relative to parent' do
-    let(:parent) {double 'parent', element_left: parent_left,
-                       element_top: parent_top,
-                       element_right: parent_right,
-                       element_bottom: parent_bottom}
+    let(:parent) {double 'parent', x_dimension: x_dimension,
+                                   y_dimension: y_dimension}
+
+    let(:x_dimension) {double 'parent x dimension', element_start: parent_left,
+                                                    element_end: parent_right}
+    let(:y_dimension) {double 'parent y dimension', element_start: parent_top,
+                                                    element_end: parent_bottom}
     let(:parent_right) {parent_left + 20}
     let(:parent_bottom) {parent_top + 30}
 
