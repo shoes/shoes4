@@ -191,25 +191,11 @@ class Shoes
   # for objects that are more defined by their parents, delegates method calls
   # to crucial methods to the parent if the instance variable isn't set
   class ParentDimensions < Dimensions
-
-    SIMPLE_DELEGATE_METHODS = [:width, :height, :absolute_left, :absolute_top,
-                               :margin_left, :margin_top, :margin_right,
-                               :margin_bottom, :top, :left]
-
-    SIMPLE_DELEGATE_METHODS.each do |method|
-      define_method method do
-        if value_modified?(method)
-          super
-        else
-          parent.public_send(method)
-        end
-      end
-    end
-
-    private
-    def value_modified?(method)
-      instance_variable = ('@' + method.to_s).to_sym
-      instance_variable_get(instance_variable)
+    def init_x_and_y_dimensions
+      @x_dimension = ParentDimension.new @parent.x_dimension,
+                                         @left_top_as_center
+      @y_dimension = ParentDimension.new @parent.y_dimension,
+                                         @left_top_as_center
     end
   end
 

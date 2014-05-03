@@ -55,7 +55,8 @@ describe Shoes::Dimension do
 
   describe 'extent' do
     let(:parent_extent) {200}
-    let(:parent) {double 'parent', extent: parent_extent}
+    let(:parent) {double 'parent', element_extent: parent_extent,
+                                   extent: parent_extent}
 
     subject {Shoes::Dimension.new parent}
 
@@ -229,4 +230,75 @@ describe Shoes::Dimension do
     expect(subject.element_start).to eq 15
   end
 
+  # if a value is not modified the parent value is used, if a value is modified
+  # that one is used
+  describe '*_modified? is needed for ParentDimensions' do
+
+    it 'is false if no value has been set' do
+      expect(subject.extent_modified?).to be_false
+    end
+
+    it 'is true if the value has been set' do
+      subject.extent = 6
+      expect(subject.extent_modified?).to be_true
+    end
+
+  end
+
+  describe Shoes::ParentDimension do
+    let(:parent) {Shoes::Dimension.new}
+    let(:parent_start) {7}
+    let(:parent_extent) {27}
+    let(:margin) {5}
+
+    subject {Shoes::ParentDimension.new parent}
+
+    before :each do
+      parent.start        = parent_start
+      parent.extent       = parent_extent
+      parent.margin_start = margin
+      parent.margin_end   = margin
+    end
+
+    describe 'it takes its parent values if no values are set' do
+      its(:start) {should eq parent_start}
+      its(:extent) {should eq parent_extent}
+      its(:margin_start) {should eq margin}
+      its(:margin_end) {should eq margin}
+
+      context 'with parent absolute_start set' do
+        before :each do
+          parent.absolute_start = 11
+        end
+
+        its(:absolute_start) {should eq 11}
+        its(:element_start) {should eq parent.element_start}
+        its(:element_end) {should eq parent.element_end}
+      end
+    end
+
+    describe 'otherwise it takes its own values' do
+      before :each do
+        subject.start = start
+        subject.extent = extent
+        subject.absolute_start = 17
+      end
+
+      its(:start) {should eq start}
+      its(:extent) {should eq extent}
+      its(:absolute_start) {should eq 17}
+
+      it 'can still handle special values like a negative extent' do
+        subject.extent = -10
+        expect(subject.extent).to eq parent.extent - 10
+      end
+
+      it 'can also still handle special values like relative values' do
+        subject.extent = 0.8
+        expect(subject.extent).to be_within(1).of(0.8 * parent.element_extent)
+      end
+    end
+  end
+
 end
+
