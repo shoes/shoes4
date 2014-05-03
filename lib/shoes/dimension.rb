@@ -41,6 +41,12 @@ class Shoes
       result
     end
 
+    def extent=(value)
+      @extent = value
+      @extent = parse_from_string @extent if is_string? @extent
+      @extent
+    end
+
     def absolute_end
       return absolute_start if extent.nil?
       absolute_start + extent + PIXEL_COUNTING_ADJUSTMENT
@@ -107,18 +113,12 @@ class Shoes
 
     def self.define_int_parsing_writer(name)
       define_method "#{name}=" do |value|
-        instance_variable_set("@#{name}", parse_input_value(value))
+        instance_variable_set("@#{name}", parse_int_value(value))
       end
     end
 
     %w(start end margin_start margin_end displace_start).each do |method|
       define_int_parsing_writer method
-    end
-
-    def extent=(value)
-      @extent = value
-      @extent = parse_from_string @extent if is_string? @extent
-      @extent
     end
 
     private
@@ -130,11 +130,11 @@ class Shoes
       (result * @parent.element_extent).to_i
     end
 
-    PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
-
     def is_string?(result)
       result.is_a?(String)
     end
+
+    PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
 
     def parse_from_string(result)
       match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
@@ -151,7 +151,7 @@ class Shoes
       result && result < 0
     end
 
-    def parse_input_value(input)
+    def parse_int_value(input)
       if input.is_a?(Integer) || input.is_a?(Float)
         input
       elsif valid_integer_string?(input)
@@ -161,11 +161,11 @@ class Shoes
       end
     end
 
-    NUMBER_REGEX = /^-?\s*\d+/
-
     def int_from_string(result)
       (result.gsub(' ', '')).to_i
     end
+
+    NUMBER_REGEX = /^-?\s*\d+/
 
     def valid_integer_string?(input)
       input.is_a?(String) && input.match(NUMBER_REGEX)

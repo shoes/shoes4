@@ -54,7 +54,7 @@ describe Shoes::Dimension do
   end
 
   describe 'extent' do
-    let(:parent_extent) {200}
+    let(:parent_extent) {600}
     let(:parent) {double 'parent', element_extent: parent_extent,
                                    extent: parent_extent}
 
@@ -76,6 +76,11 @@ describe Shoes::Dimension do
       it 'takes them relative to the parent for smaller values' do
         subject.extent = 0.8
         expect(subject.extent).to be_within(1).of 0.8 * parent_extent
+      end
+
+      it 'handles negative relative values' do
+        subject.extent = -0.3
+        expect(subject.extent).to be_within(1).of 0.7 * parent_extent
       end
 
       it 'takes them relative to the parent for bigger values' do
@@ -108,6 +113,16 @@ describe Shoes::Dimension do
       it 'handles percent as relative value' do
         subject.extent = '75%'
         expect(subject.extent).to be_within(1).of 0.75 * parent_extent
+      end
+
+      it 'handles negative percent values' do
+        subject.extent = '-10%'
+        expect(subject.extent).to be_within(1).of 0.9 * parent_extent
+      end
+
+      it 'handles percent values with floats' do
+        subject.extent = '20.5%'
+        expect(subject.extent).to be_within(1).of 0.205 * parent_extent
       end
 
       it 'returns nil for invalid strings' do
@@ -145,8 +160,8 @@ describe Shoes::Dimension do
   describe 'absolute_end' do
     it 'is the sum of start and extent' do
       subject.absolute_start = 7
-      subject.extent = extent
-      expect(subject.extent).to eq extent
+      subject.extent = 22
+      expect(subject.absolute_end).to eq 29 - 1 # pixel counting adjustment
     end
   end
 
