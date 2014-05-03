@@ -62,11 +62,11 @@ class Shoes
     end
 
     def absolute_x_position?
-      absolute_left_position? || absolute_right_position?
+      x_dimension.absolute_position?
     end
 
     def absolute_y_position?
-      absolute_top_position? || absolute_bottom_position?
+      y_dimension.absolute_position?
     end
 
     def absolutely_positioned?
@@ -74,12 +74,11 @@ class Shoes
     end
 
     def positioned?
-      absolute_left && absolute_top
+      x_dimension.positioned? && y_dimension.positioned?
     end
 
     def in_bounds?(x, y)
-      absolute_left <= x and x <= absolute_right and
-      absolute_top <= y and y <= absolute_bottom
+      x_dimension.in_bounds?(x) && y_dimension.in_bounds?(y)
     end
 
     def margin
