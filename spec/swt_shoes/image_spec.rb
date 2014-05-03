@@ -7,7 +7,6 @@ describe Shoes::Swt::Image do
   IMAGE_HEIGHT = 1
 
   let(:blk) { double("block") }
-  let(:parent_dsl) { double("parent dsl", add_child: nil, contents: [], gui: parent) }
   let(:dsl) { Shoes::Image.new shoes_app, parent_dsl, image, opts}
   let(:opts) {{left: left, top: top, width: width, height: height}}
   let(:left) { 100 }

@@ -10,5 +10,8 @@ shared_context "swt app" do
                          flush: true, redraw: true) }
   let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0) }
   let(:parent) { double('parent', app: swt_app, add_child: true, real: true) }
+  let(:parent_dsl) {double("parent dsl", add_child: true, contents: [],
+                           gui: parent, x_dimension: double.as_null_object,
+                           y_dimension: double.as_null_object)}
 end
 
