@@ -54,11 +54,6 @@ describe Shoes::Swt::TextBlockPainter do
     subject.paintControl(event)
   end
 
-  it "disposes gui" do
-    expect(gui).to receive(:dispose)
-    subject.paintControl(event)
-  end
-
   context "rise option" do
     it "sets default rise value to nil" do
       expect(style).to receive(:rise=).with(nil)
