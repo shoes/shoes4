@@ -131,10 +131,10 @@ class Shoes
       general_options opts # order important for redrawing
       self.displace_left = opts.fetch(:displace_left, nil)
       self.displace_top  = opts.fetch(:displace_top, nil)
-      self.left   = parse_input_value left
-      self.top    = parse_input_value top
-      self.width  = width
-      self.height = height
+      self.left          = left
+      self.top           = top
+      self.width         = width
+      self.height        = height
     end
 
     def init_x_and_y_dimensions
@@ -145,8 +145,8 @@ class Shoes
     end
 
     def general_options(opts)
-      self.right = parse_input_value opts[:right]
-      self.bottom = parse_input_value opts[:bottom]
+      self.right =  opts[:right]
+      self.bottom = opts[:bottom]
       init_margins opts
     end
 
@@ -157,28 +157,6 @@ class Shoes
       self.margin_right  = opts.fetch(:margin_right, margin_right)
       self.margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
     end
-
-    def int_from_string(result)
-      (result.gsub(' ', '')).to_i
-    end
-
-    def parse_input_value(input)
-      if input.is_a?(Integer) || input.is_a?(Float)
-        input
-      elsif valid_integer_string?(input)
-        int_from_string(input)
-      else
-        nil
-      end
-    end
-
-    NUMBER_REGEX = /^-?\s*\d+/
-
-    def valid_integer_string?(input)
-      input.is_a?(String) && input.match(NUMBER_REGEX)
-    end
-
-
   end
 
   # for objects that do not depend on their parent (get 1.04 as real values)

@@ -1,7 +1,6 @@
 class Shoes
   class Dimension
-    attr_writer :extent, :margin_start, :margin_end, :start, :end,
-                :displace_start
+    attr_writer :extent
     attr_reader :parent
     attr_accessor :absolute_start
     protected :parent # we shall not mess with parent,see #495
@@ -36,7 +35,6 @@ class Shoes
     def extent
       result = @extent
       if @parent
-        result = calculate_from_string(result) if is_string?(result)
         result = calculate_relative(result) if is_relative?(result)
         result = calculate_negative(result) if is_negative?(result)
       end
@@ -113,6 +111,22 @@ class Shoes
       end
     end
 
+    def self.define_int_parsing_writer(name)
+      define_method "#{name}=" do |value|
+        instance_variable_set("@#{name}", parse_input_value(value))
+      end
+    end
+
+    %w(start end margin_start margin_end displace_start).each do |method|
+      define_int_parsing_writer method
+    end
+
+    def extent=(value)
+      @extent = value
+      @extent = parse_from_string @extent if is_string? @extent
+      @extent
+    end
+
     private
     def is_relative?(result)
       result.is_a?(Float)
@@ -128,7 +142,7 @@ class Shoes
       result.is_a?(String)
     end
 
-    def calculate_from_string(result)
+    def parse_from_string(result)
       match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
       if match
         match[1].to_f / 100.0
@@ -141,6 +155,16 @@ class Shoes
 
     def is_negative?(result)
       result && result < 0
+    end
+
+    def parse_input_value(input)
+      if input.is_a?(Integer) || input.is_a?(Float)
+        input
+      elsif valid_integer_string?(input)
+        int_from_string(input)
+      else
+        nil
+      end
     end
 
     NUMBER_REGEX = /^-?\s*\d+/
