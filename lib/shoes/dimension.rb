@@ -97,17 +97,11 @@ class Shoes
     # set to nil if it's not modified and then return a default value on the
     # getter... reason being that for ParentDimensions we need to be able to
     # figure out if a value has been modified or if we should consulte the
-    # parent value - therefore we also have the value_modified? methods
+    # parent value - see ParentDimension implementation
     [:margin_start, :margin_end, :displace_start].each do |method|
       define_method method do
         instance_variable_name = '@' + method.to_s
         instance_variable_get(instance_variable_name) || 0
-      end
-    end
-
-    %w(extent start end absolute_start margin_start margin_end).each do |value|
-      define_method "#{value}_modified?" do
-        not instance_variable_get("@#{value}").nil?
       end
     end
 

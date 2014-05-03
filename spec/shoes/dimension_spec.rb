@@ -230,19 +230,6 @@ describe Shoes::Dimension do
     expect(subject.element_start).to eq 15
   end
 
-  # if a value is not modified the parent value is used, if a value is modified
-  # that one is used
-  describe '*_modified? is needed for ParentDimensions' do
-    it 'is false if no value has been set' do
-      expect(subject.extent_modified?).to be_false
-    end
-
-    it 'is true if the value has been set' do
-      subject.extent = 6
-      expect(subject.extent_modified?).to be_true
-    end
-  end
-
   describe 'start/end/margin and other values parse simple string values' do
     it 'parses a normal number' do
       subject.start = '50'
