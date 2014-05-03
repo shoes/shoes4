@@ -33,7 +33,7 @@ describe Shoes::Download do
   it 'starts' do
     eventually { expect(download).to be_started }
   end
-  
+
   it 'understands percent' do
     eventually{ expect(percent).to eql(0)}
   end
@@ -45,7 +45,7 @@ describe Shoes::Download do
   it "understands content_length" do
     expect(content_length).to eql(1)
   end
-  
+
   it "understands length" do
     expect(length).to eql(1)
   end
