@@ -20,6 +20,10 @@ class Shoes
         @app.add_paint_listener @painter
       end
 
+      def dispose
+        @fitted_layouts.map &:dispose
+      end
+
       # has a painter, nothing to do
       def update_position
       end
@@ -30,14 +34,24 @@ class Shoes
         end
       end
 
+      # Resources created here need to be disposed (see #dispose). Note that
+      # this applies to the ::Swt::Font object and the ::Swt::TextLayout
+      # object. The ::Swt::TextStyle object does not need to be disposed,
+      # because it is not backed by system resources. This is tracked via the
+      # use of the instance factories on the FittedTextLayout, which gets
+      # disposed of properly by the TextBlock and TextBlockFitter code.
+      #
+      # This method is only called by TextBlockFitter, and then only from
+      # #contents_alignment, so any layouts generated here end up in
+      # @fitted_layouts
       def generate_layout(width, text)
         layout = ::Swt::TextLayout.new Shoes.display
         fitted = FittedTextLayout.new(layout)
 
-        font = TextFontFactory.create_font(fitted, name: @dsl.font,
+        font = fitted.font_factory.create_font(name: @dsl.font,
                                            size: @dsl.font_size,
                                            styles:[::Swt::SWT::NORMAL])
-        style = TextStyleFactory.create_style(fitted, font, nil, nil, {})
+        style = fitted.style_factory.create_style(font, nil, nil, {})
 
         layout.setText text
         layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
@@ -56,7 +70,8 @@ class Shoes
       end
 
       def contents_alignment(current_position)
-        fit_layouts(current_position)
+        dispose_existing_layouts
+        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
 
         if fitted_layouts.one?
           set_absolutes_for_one_layout
@@ -67,13 +82,6 @@ class Shoes
         if trailing_newline?
           bump_absolutes_to_next_line
         end
-      end
-
-      def fit_layouts(current_position)
-
-        dispose_of_layouts
-
-        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
       end
 
       def first_layout
@@ -135,16 +143,16 @@ class Shoes
       private
 
       def clear_contents
-        dispose_of_layouts
+        dispose_existing_layouts
         clear_links
-      end
-
-      def dispose_of_layouts
-        @fitted_layouts.each(&:dispose)
       end
 
       def clear_links
         @dsl.links.each(&:clear)
+      end
+
+      def dispose_existing_layouts
+        @fitted_layouts.map(&:dispose)
       end
     end
 

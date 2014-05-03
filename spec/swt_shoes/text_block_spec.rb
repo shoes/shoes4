@@ -22,6 +22,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "generating layouts" do
     let(:layout) { create_layout(width, height) }
+    let(:font) { double("font", disposed?: false, dispose: nil) }
 
     before(:each) do
       stub_layout(layout)
@@ -59,13 +60,14 @@ describe Shoes::Swt::TextBlock do
     let(:layout_height) { 200 }
     let(:line_height) { 10 }
     let(:layout) { create_layout(layout_width, layout_height) }
-    let(:fitted_layout) { double("fitted_layout", layout: layout) }
     let(:fitter) { double("fitter") }
+    let(:fitted_layout) { double("fitted_layout", disposed?: false, layout: layout) }
+    let(:second_fitted_layout) { double("second_fitted_layout", disposed?: false, layout: layout) }
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
       ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
-      fitter.stub(:fit_it_in) { [fitted_layout] }
+      fitter.stub(:fit_it_in).and_return([fitted_layout], [second_fitted_layout])
       layout.stub(:line_metrics) { double("line_metrics", height: line_height)}
     end
 
@@ -111,6 +113,36 @@ describe Shoes::Swt::TextBlock do
         expect(fitted_layout).to receive(:dispose)
 
         subject.contents_alignment(current_position)
+      end
+
+      it "should not dispose any layouts" do
+        expect(fitted_layout).not_to receive(:dispose)
+        expect(second_fitted_layout).not_to receive(:dispose)
+
+        subject.contents_alignment(current_position)
+      end
+
+      context "on the second call" do
+        before(:each) do
+          subject.contents_alignment(current_position)
+        end
+
+        it "should only dispose old fitted layout" do
+          expect(fitted_layout).to receive(:dispose)
+          expect(second_fitted_layout).not_to receive(:dispose)
+
+          subject.contents_alignment(current_position)
+        end
+
+        it "should dispose all layouts on clear" do
+          swt_app.stub(:remove_listener)
+
+          expect(fitted_layout).to receive(:dispose).at_least(1).times
+          expect(second_fitted_layout).to receive(:dispose).at_least(1).times
+
+          subject.contents_alignment(current_position)
+          subject.clear
+        end
       end
     end
 

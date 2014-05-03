@@ -23,6 +23,7 @@ simple-draw.rb
 simple-editor.rb
 simple-face.rb
 simple-flow-wrap.rb
+simple-font.rb
 simple-fullscreen.rb
 simple-guess-game.rb
 simple-keypress.rb
@@ -37,20 +38,21 @@ simple-stripes.rb
 simple-timer.rb
 
 good-arc.rb
+good-clock.rb
 good-clock-adjusted.rb
 good-follow.rb
 good-potato-chopping.rb
 good-reminder.rb
 good-vjot.rb
 
-# expert-definr.rb
+expert-definr.rb
 expert-game-of-life-adjusted.rb
 # expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
 # expert-othello-adjusted.rb
 expert-pong.rb
 expert-snake.rb
-expert-tankspank-adjusted.rb
+expert-tankspank.rb
 
 
 class-book-adjusted.rb
@@ -69,7 +71,6 @@ sample14.rb
 sample15.rb
 sample16.rb
 sample17.rb
-sample19.rb
 sample21.rb
 sample23.rb
 sample24.rb

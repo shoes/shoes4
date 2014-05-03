@@ -3,7 +3,8 @@ class Shoes
     class FittedTextLayout
       DEFAULT_SPACING = 4
 
-      attr_reader :layout, :element_left, :element_top
+      attr_reader :layout, :element_left, :element_top,
+                  :font_factory, :style_factory
 
       extend Forwardable
       def_delegators :@layout, :get_bounds, :text, :text=,
@@ -11,18 +12,14 @@ class Shoes
 
       def initialize(layout)
         @layout = layout
-        @to_dispose = [layout]
+        @font_factory = TextFontFactory.new
+        @style_factory = TextStyleFactory.new
       end
 
       def dispose
-        @to_dispose.each do |element|
-          element.dispose unless element.disposed?
-        end
-        @to_dispose.clear
-      end
-
-      def mark_to_dispose(element)
-        @to_dispose << element
+        @layout.dispose unless @layout.disposed?
+        @font_factory.dispose unless @layout.disposed?
+        @style_factory.dispose unless @layout.disposed?
       end
 
       def position_at(element_left, element_top)
@@ -48,8 +45,8 @@ class Shoes
       end
 
       def set_style(styles, range=(0...text.length))
-        font = TextFontFactory.create_font(self, styles[:font_detail])
-        style = TextStyleFactory.create_style(self, font, styles[:fg], styles[:bg], styles)
+        font = @font_factory.create_font(styles[:font_detail])
+        style = @style_factory.create_style(font, styles[:fg], styles[:bg], styles)
         layout.set_style(style, range.min, range.max)
       end
 
