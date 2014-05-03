@@ -8,10 +8,10 @@ describe Shoes::Download do
   let(:name) { "http://www.google.com/logos/nasa50th.gif" }
   let(:response_body) { "NASA 50th logo" }
   let(:response_status) {["200", "OK"]}
-  let(:response_headers) {Hash.new(:date => "today's date")}
+  let(:response_headers) { { "content-length" => "42" }}
   let(:opts) { {save: "nasa50th.gif"} }
   subject(:download) { Shoes::Download.new app, parent, name, opts, &input_block }
-    
+
   let(:percent) {download.percent}
   let(:length) {download.length}
   let(:content_length) {download.content_length}
@@ -53,6 +53,35 @@ describe Shoes::Download do
   it 'creates the file specified by save' do
     download
     eventually { expect(File.exist?(opts[:save])).to be_true }
+  end
+
+  context 'with a progress proc' do
+    let(:progress_proc) {Proc.new {}}
+    let(:opts) { {save: "nasa50th.gif", progress: progress_proc} }
+    subject(:download) { Shoes::Download.new app, parent, name, opts}
+
+    it 'calls the progress proc from start, download and finish' do
+      eventually {
+        expect(download.gui).to receive(:eval_block).
+                                  with(progress_proc, download).
+                                  exactly(3).times
+      }
+    end
+
+    context 'without content length' do
+      before do
+        stub_request(:get, name)
+          .to_return(:headers => {}, :status => response_status, :body => response_body)
+      end
+
+      it 'does not fail on progress, but called from content length and finish' do
+        eventually {
+          expect(download.gui).to receive(:eval_block).
+          with(progress_proc, download).
+          twice
+        }
+      end
+    end
   end
 
   describe 'after it is finished' do

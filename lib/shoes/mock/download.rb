@@ -8,6 +8,11 @@ class Shoes
       def eval_block(*_)
       end
 
+      attr_accessor :busy
+
+      def busy?
+      end
+
     end
   end
 end

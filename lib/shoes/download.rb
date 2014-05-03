@@ -79,10 +79,12 @@ class Shoes
 
     def progress_proc
       lambda do |size|
-        if (size - self.transferred) > (content_length / UPDATE_STEPS) && !@gui.busy?
-          @gui.busy = true
-          eval_block(@opts[:progress], self)
-          @transferred = size
+        if !content_length.nil? &&
+          (size - self.transferred) > (content_length / UPDATE_STEPS) &&
+          !@gui.busy?
+            @gui.busy = true
+            eval_block(@opts[:progress], self)
+            @transferred = size
         end
       end
     end
