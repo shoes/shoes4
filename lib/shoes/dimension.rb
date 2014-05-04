@@ -62,11 +62,11 @@ class Shoes
     end
     
     def element_extent=(value)
-      if value.nil?
-        self.extent = nil
-      else
-        self.extent = margin_start + value + margin_end
-      end
+      self.extent = if value.nil?
+                      nil
+                    else
+                      margin_start + value + margin_end
+                    end
     end
 
     def element_start

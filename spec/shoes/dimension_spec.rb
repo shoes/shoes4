@@ -194,7 +194,6 @@ describe Shoes::Dimension do
       end
 
       context 'extent set' do
-
         let(:extent) {67}
 
         before :each do
@@ -209,6 +208,19 @@ describe Shoes::Dimension do
           expect(subject.element_end).to eq absolute_start + extent -
                                               margin_end - ONE_PIXEL
         end
+      end
+
+      context 'element_extent set' do
+        let(:element_extent) {77}
+
+        before :each do
+          subject.element_extent = element_extent
+        end
+
+        its(:element_extent) {should eq element_extent}
+        its(:extent) {should eq element_extent + margin_start + margin_end}
+        its(:element_end) {should eq subject.element_start + element_extent -
+                                       ONE_PIXEL}
       end
     end
   end
