@@ -11,6 +11,7 @@ describe Shoes::Dimension do
                                  element_start: parent_element_start,
                                  element_end: parent_element_end }
 
+  ONE_PIXEL = 1
 
   describe 'initialization' do
     describe 'without arguments (even no parent)' do
@@ -75,17 +76,17 @@ describe Shoes::Dimension do
     describe 'relative values' do
       it 'takes them relative to the parent for smaller values' do
         subject.extent = 0.8
-        expect(subject.extent).to be_within(1).of 0.8 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.8 * parent_extent
       end
 
       it 'handles negative relative values' do
         subject.extent = -0.3
-        expect(subject.extent).to be_within(1).of 0.7 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.7 * parent_extent
       end
 
       it 'takes them relative to the parent for bigger values' do
         subject.extent = 1.3
-        expect(subject.extent).to be_within(1).of 1.3 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 1.3 * parent_extent
       end
     end
 
@@ -112,17 +113,17 @@ describe Shoes::Dimension do
 
       it 'handles percent as relative value' do
         subject.extent = '75%'
-        expect(subject.extent).to be_within(1).of 0.75 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.75 * parent_extent
       end
 
       it 'handles negative percent values' do
         subject.extent = '-10%'
-        expect(subject.extent).to be_within(1).of 0.9 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.9 * parent_extent
       end
 
       it 'handles percent values with floats' do
         subject.extent = '20.5%'
-        expect(subject.extent).to be_within(1).of 0.205 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.205 * parent_extent
       end
 
       it 'returns nil for invalid strings' do
@@ -161,7 +162,7 @@ describe Shoes::Dimension do
     it 'is the sum of start and extent' do
       subject.absolute_start = 7
       subject.extent = 22
-      expect(subject.absolute_end).to eq 29 - 1 # pixel counting adjustment
+      expect(subject.absolute_end).to eq 29 - ONE_PIXEL # pixel counting adjustment
     end
   end
 
@@ -201,12 +202,12 @@ describe Shoes::Dimension do
         end
 
         it 'does not influence absolute_end' do
-          expect(subject.absolute_end).to eq absolute_start + extent - 1
+          expect(subject.absolute_end).to eq absolute_start + extent - ONE_PIXEL
         end
 
         it 'does influence element_end' do
           expect(subject.element_end).to eq absolute_start + extent -
-                                              margin_end - 1
+                                              margin_end - ONE_PIXEL
         end
       end
     end
@@ -215,7 +216,7 @@ describe Shoes::Dimension do
   describe 'in_bounds?' do
     let(:absolute_start) {20}
     let(:extent) {100}
-    let(:absolute_end) {20 + 100 -1} # -1 due to pixel counting adjustment
+    let(:absolute_end) {20 + 100 -ONE_PIXEL} # -1 due to pixel counting adjustment
 
     before :each do
       subject.absolute_start = absolute_start
@@ -226,13 +227,14 @@ describe Shoes::Dimension do
 
     it {should be_in_bounds absolute_start}
     it {should be_in_bounds absolute_end}
-    it {should be_in_bounds absolute_start + 1}
-    it {should be_in_bounds absolute_end - 1}
+    it {should be_in_bounds absolute_start + ONE_PIXEL}
+    it {should be_in_bounds absolute_end - ONE_PIXEL}
     it {should be_in_bounds 40}
     it {should be_in_bounds 105}
     it {should be_in_bounds 20.021}
-    it {should_not be_in_bounds absolute_end + 1}
-    it {should_not be_in_bounds absolute_start - 1}
+    it {should_not be_in_bounds absolute_end + ONE_PIXEL}
+    it {should_not be_in_bounds absolute_start - ONE_PIXEL
+    }
     it {should_not be_in_bounds -5}
     it {should_not be_in_bounds 0}
     it {should_not be_in_bounds 150}
@@ -322,7 +324,7 @@ describe Shoes::Dimension do
 
       it 'can also still handle special values like relative values' do
         subject.extent = 0.8
-        expect(subject.extent).to be_within(1).of(0.8 * parent.element_extent)
+        expect(subject.extent).to be_within(ONE_PIXEL).of(0.8 * parent.element_extent)
       end
     end
   end
