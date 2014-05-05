@@ -54,6 +54,9 @@ expert-pong.rb
 expert-snake.rb
 expert-tankspank.rb
 
+# examples from the nobody knows shoes book
+nks_poem.rb
+
 
 class-book-adjusted.rb
 
