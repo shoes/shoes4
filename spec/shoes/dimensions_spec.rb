@@ -36,6 +36,8 @@ describe Shoes::Dimensions do
     end
   end
 
+  ONE_PIXEL = 1
+
   describe 'initialization' do
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
@@ -92,8 +94,8 @@ describe Shoes::Dimensions do
 
       its(:left) {should eq left}
       its(:top) {should eq top}
-      its(:width) {should be_within(1).of 0.5 * parent.width}
-      its(:height) {should be_within(1).of 0.5 * parent.height}
+      its(:width) {should be_within(ONE_PIXEL).of 0.5 * parent.width}
+      its(:height) {should be_within(ONE_PIXEL).of 0.5 * parent.height}
 
       describe 'width/height change of the parent' do
 
@@ -102,24 +104,25 @@ describe Shoes::Dimensions do
         # is already adjusted and therefore wrong impls WILL PASS the tests
         # (jay for red/green/refactor :-) )
         it 'adapts width' do
-          subject.width.should be_within(1).of 0.5 * parent.width
+          subject.width.should be_within(ONE_PIXEL).of 0.5 * parent.width
           parent.width = 700
-          subject.width.should be_within(1).of 350
+          subject.width.should be_within(ONE_PIXEL).of 350
         end
 
         it 'adapts height' do
-          subject.height.should be_within(1).of 0.5 * parent.height
+          subject.height.should be_within(ONE_PIXEL).of 0.5 * parent.height
           parent.height = 800
-          subject.height.should be_within(1).of 400
+          subject.height.should be_within(ONE_PIXEL).of 400
         end
       end
 
       describe 'a parent with margins' do
-        let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
-                                            parent_width, parent_height,
-                                            margin: 20}
+        let(:parent) {Shoes::AbsoluteDimensions.new parent_left,
+                                                    parent_top,
+                                                    parent_width,
+                                                    parent_height,
+                                                    margin: 20}
         subject {Shoes::Dimensions.new parent, left, top, 1.0, 1.0}
-
 
         it 'uses the element_width to calculate its own relative width' do
           expect(subject.width).to eq parent.element_width
@@ -137,26 +140,26 @@ describe Shoes::Dimensions do
     describe 'with percentages' do
       describe 'with whole integers' do
         subject {Shoes::Dimensions.new parent, left, top, "50%", "50%"}
-        its(:width) {should be_within(1).of 0.5 * parent.width}
-        its(:height) {should be_within(1).of 0.5 * parent.height}
+        its(:width) {should be_within(ONE_PIXEL).of 0.5 * parent.width}
+        its(:height) {should be_within(ONE_PIXEL).of 0.5 * parent.height}
       end
 
       describe 'with floats' do
         subject {Shoes::Dimensions.new parent, left, top, "50.0%", "50.00%"}
-        its(:width) {should be_within(1).of 0.5 * parent.width}
-        its(:height) {should be_within(1).of 0.5 * parent.height}
+        its(:width) {should be_within(ONE_PIXEL).of 0.5 * parent.width}
+        its(:height) {should be_within(ONE_PIXEL).of 0.5 * parent.height}
       end
 
       describe 'with negatives' do
         subject {Shoes::Dimensions.new parent, left, top, "-10.0%", "-10.00%"}
-        its(:width) {should be_within(1).of 0.9 * parent.width}
-        its(:height) {should be_within(1).of 0.9 * parent.height}
+        its(:width) {should be_within(ONE_PIXEL).of 0.9 * parent.width}
+        its(:height) {should be_within(ONE_PIXEL).of 0.9 * parent.height}
       end
 
       describe 'with padded strings' do
         subject {Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n"}
-        its(:width) {should be_within(1).of 0.5 * parent.width}
-        its(:height) {should be_within(1).of 0.5 * parent.height}
+        its(:width) {should be_within(ONE_PIXEL).of 0.5 * parent.width}
+        its(:height) {should be_within(ONE_PIXEL).of 0.5 * parent.height}
       end
     end
 
@@ -222,8 +225,8 @@ describe Shoes::Dimensions do
       let(:width) {-0.2}
       let(:height) {-0.2}
 
-      its(:width) {should be_within(1).of 0.8 * parent.width}
-      its(:height) {should be_within(1).of 0.8 * parent.height}
+      its(:width) {should be_within(ONE_PIXEL).of 0.8 * parent.width}
+      its(:height) {should be_within(ONE_PIXEL).of 0.8 * parent.height}
     end
 
     describe 'with a hash' do
@@ -282,11 +285,11 @@ describe Shoes::Dimensions do
       # into account so 20..119 is 100 while 20..120 is 101. E.g.:
       # (20..119).size => 100
       it 'has an appropriate absolute_right' do
-        expect(subject.absolute_right).to eq width + absolute_left - 1
+        expect(subject.absolute_right).to eq width + absolute_left - ONE_PIXEL
       end
 
       it 'has an appropriate absolute_bottom' do
-        expect(subject.absolute_bottom).to eq height + absolute_top - 1
+        expect(subject.absolute_bottom).to eq height + absolute_top - ONE_PIXEL
       end
 
       it 'has an element left which is the same' do
@@ -315,12 +318,12 @@ describe Shoes::Dimensions do
 
         it 'returns an element_right' do
           expect(subject.element_right).to eq subject.element_left +
-                                                  element_width - 1
+                                                  element_width - ONE_PIXEL
         end
 
         it 'returns an element_bottom' do
           expect(subject.element_bottom).to eq subject.element_top +
-                                                   element_height - 1
+                                                   element_height - ONE_PIXEL
         end
       end
     end
@@ -452,7 +455,8 @@ describe Shoes::Dimensions do
 
       it {should be_in_bounds 30, 40}
       it {should be_in_bounds left, top}
-      it {should be_in_bounds left + width - 1, top + height - 1}
+      it {should be_in_bounds left + width - ONE_PIXEL,
+                              top + height - ONE_PIXEL}
       it {should_not be_in_bounds left + width, top + height}
       it {should_not be_in_bounds 30, top + height}
       it {should_not be_in_bounds left + width, 40}
@@ -478,7 +482,9 @@ describe Shoes::Dimensions do
       it {should_not be_in_bounds 149, 75}
       it {should be_in_bounds 200, absolute_top}
       it {should be_in_bounds absolute_left, absolute_top}
-      it {should be_in_bounds absolute_left + width - 1, absolute_top + height - 1}
+      it {should be_in_bounds absolute_left + width - ONE_PIXEL,
+                              absolute_top + height - ONE_PIXEL
+      }
       it {should_not be_in_bounds 80, 400}
     end
   end
@@ -554,7 +560,7 @@ describe Shoes::Dimensions do
     end
 
     describe 'creation with all distinct margin values' do
-      let(:margin_left) {1}
+      let(:margin_left) {3}
       let(:margin_top) {7}
       let(:margin_right) {11}
       let(:margin_bottom) {17}
@@ -651,10 +657,13 @@ describe Shoes::Dimensions do
   it {should be_takes_up_space}
 
   describe 'left/top/right/bottom not set so get them relative to parent' do
-    let(:parent) {double 'parent', element_left: parent_left,
-                       element_top: parent_top,
-                       element_right: parent_right,
-                       element_bottom: parent_bottom}
+    let(:parent) {double 'parent', x_dimension: x_dimension,
+                                   y_dimension: y_dimension}
+
+    let(:x_dimension) {double 'parent x dimension', element_start: parent_left,
+                                                    element_end: parent_right}
+    let(:y_dimension) {double 'parent y dimension', element_start: parent_top,
+                                                    element_end: parent_bottom}
     let(:parent_right) {parent_left + 20}
     let(:parent_bottom) {parent_top + 30}
 
@@ -749,7 +758,7 @@ describe Shoes::Dimensions do
 
       it 'can also still handle special values like a relative height' do
         subject.height = 0.8
-        expect(subject.height).to be_within(1).of(0.8 * parent.height)
+        expect(subject.height).to be_within(ONE_PIXEL).of(0.8 * parent.height)
       end
     end
   end
