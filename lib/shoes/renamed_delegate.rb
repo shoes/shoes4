@@ -2,11 +2,12 @@ module RenamedDelegate
   include Forwardable
 
   def renamed_delegate_to(getter, methods, renamings)
-    words_to_substitute = renamings.keys
-    methods.each do |method_name|
-      sub = words_to_substitute.detect {|word| method_name.to_s.include? word}
-      if sub
-        renamed_method_name = method_name.to_s.gsub(sub, renamings[sub])
+    methods.each do |method|
+      method_name = method.to_s
+      renamed_method_name = renamings.inject(method_name) do |name, (word, sub)|
+        name.gsub word, sub
+      end
+      if renamed_method_name != method_name
         def_delegator getter, method_name, renamed_method_name
       end
     end

@@ -17,6 +17,9 @@ describe RenamedDelegate do
 
     def method_something
     end
+
+    def key_something
+    end
   end
 
   class TestClass
@@ -55,6 +58,10 @@ describe RenamedDelegate do
 
   it 'delegates method_awesome to method_something' do
     test_renaming :method_awesome, :method_something
+  end
+
+  it 'also applies multiple renamings' do
+    test_renaming :shoes_awesome, :key_something
   end
 
   it 'does not define a method for methods without renamings' do
