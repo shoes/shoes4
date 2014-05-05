@@ -134,6 +134,14 @@ class Shoes
       result.is_a?(String)
     end
 
+    def is_negative?(result)
+      result && result < 0
+    end
+
+    def calculate_negative(result)
+      @parent.element_extent + result
+    end
+
     PERCENT_REGEX = /(-?\d+(\.\d+)*)%/
 
     def parse_from_string(result)
@@ -145,10 +153,6 @@ class Shoes
       else
         nil
       end
-    end
-
-    def is_negative?(result)
-      result && result < 0
     end
 
     def parse_int_value(input)
@@ -169,10 +173,6 @@ class Shoes
 
     def valid_integer_string?(input)
       input.is_a?(String) && input.match(NUMBER_REGEX)
-    end
-
-    def calculate_negative(result)
-      @parent.extent + result
     end
 
     def relative_to_parent_start

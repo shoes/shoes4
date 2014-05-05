@@ -55,8 +55,9 @@ describe Shoes::Dimension do
   end
 
   describe 'extent' do
-    let(:parent_extent) {600}
-    let(:parent) {double 'parent', element_extent: parent_extent,
+    let(:parent_element_extent) {600}
+    let(:parent_extent) {580}
+    let(:parent) {double 'parent', element_extent: parent_element_extent,
                                    extent: parent_extent}
 
     subject {Shoes::Dimension.new parent}
@@ -67,26 +68,29 @@ describe Shoes::Dimension do
     end
 
     describe 'negative values' do
-      it 'subtracts them from the parent' do
+      it 'subtracts them from the parent taking margins into account' do
         subject.extent = -70
-        expect(subject.extent).to eq parent_extent - 70
+        expect(subject.extent).to eq parent_element_extent - 70
       end
     end
 
-    describe 'relative values' do
+    describe 'relative values from the parent taking margins into account' do
       it 'takes them relative to the parent for smaller values' do
         subject.extent = 0.8
-        expect(subject.extent).to be_within(ONE_PIXEL).of 0.8 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.8 *
+                                                          parent_element_extent
       end
 
       it 'handles negative relative values' do
         subject.extent = -0.3
-        expect(subject.extent).to be_within(ONE_PIXEL).of 0.7 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.7 *
+                                                          parent_element_extent
       end
 
       it 'takes them relative to the parent for bigger values' do
         subject.extent = 1.3
-        expect(subject.extent).to be_within(ONE_PIXEL).of 1.3 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 1.3 *
+                                                          parent_element_extent
       end
     end
 
@@ -108,22 +112,25 @@ describe Shoes::Dimension do
 
       it 'also handles negative values' do
         subject.extent = '-50px'
-        expect(subject.extent).to eq parent_extent - 50
+        expect(subject.extent).to eq parent_element_extent - 50
       end
 
       it 'handles percent as relative value' do
         subject.extent = '75%'
-        expect(subject.extent).to be_within(ONE_PIXEL).of 0.75 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.75 *
+                                                          parent_element_extent
       end
 
       it 'handles negative percent values' do
         subject.extent = '-10%'
-        expect(subject.extent).to be_within(ONE_PIXEL).of 0.9 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.9 *
+                                                           parent_element_extent
       end
 
       it 'handles percent values with floats' do
         subject.extent = '20.5%'
-        expect(subject.extent).to be_within(ONE_PIXEL).of 0.205 * parent_extent
+        expect(subject.extent).to be_within(ONE_PIXEL).of 0.205 *
+                                                           parent_element_extent
       end
 
       it 'returns nil for invalid strings' do
@@ -167,6 +174,7 @@ describe Shoes::Dimension do
   end
 
   describe 'margins' do
+
     let(:margin_start) {11}
     let(:margin_end) {17}
 
@@ -331,7 +339,7 @@ describe Shoes::Dimension do
 
       it 'can still handle special values like a negative extent' do
         subject.extent = -10
-        expect(subject.extent).to eq parent.extent - 10
+        expect(subject.extent).to eq (parent_extent - 2 * margin) - 10
       end
 
       it 'can also still handle special values like relative values' do
