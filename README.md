@@ -1,4 +1,4 @@
-shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.png?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://codeclimate.com/github/shoes/shoes4.png)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://coveralls.io/repos/shoes/shoes4/badge.png?branch=master)](https://coveralls.io/r/shoes/shoes4)[![Dependency Status](https://gemnasium.com/shoes/shoes4.png)](https://gemnasium.com/shoes/shoes4)
+shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4/badge/master.svg)](https://coveralls.io/r/shoes/shoes4)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
 ======
 
 Shoes 4 : the next version of Shoes
@@ -54,7 +54,7 @@ If you got rvm, rbenv or something like that installed it might complain that yo
 4. You're ready to go!
 
 Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
-    
+
 Running a Shoes App
 -------------------
 
@@ -76,7 +76,7 @@ This does not work yet on Mac as jruby (the JVM) needs some additional parameter
 jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
 ```
 
-Another alternative yet is to put `require 'shoes'` at the top of your applications, then you can simply do 
+Another alternative yet is to put `require 'shoes'` at the top of your applications, then you can simply do
 
 ```
 jruby path/to/file.rb
@@ -105,8 +105,8 @@ Now, you can package an app. But first, looky here:
 - The packager will include ***everything*** in the directory of your shoes script and below, unless you tell it not to.
 - The packager will probably not work properly if it detects a `.gemspec` or a `Gemfile`. It uses Warbler, which always looks for those files. If you run the specs, you may notice some warnings like this:
 
-> warning: Bundler `path' components are not currently supported.
-> The `shoes-4.0.0.pre1' component was not bundled.
+> warning: Bundler \`path' components are not currently supported.
+> The \`shoes-4.0.0.pre1' component was not bundled.
 > Your application may fail to boot!
 
 That's Warbler talking. Actually, we sneak the Shoes gem in anyway, but don't tell.
@@ -134,7 +134,7 @@ Oh, and you can also just run your Shoes apps with `bin/shoes`.
 Want to contribute?
 -------------------
 
-That's awesome, thank you! 
+That's awesome, thank you!
 
 You can go ahead an try to fix one of our [issues](https://github.com/shoes/shoes4/issues).
 We have introduced a new tag 'Newcomer Friendly' for issues we believe are suitable to get started with shoes contributing. These issues either are relatively easy to accomplish or don't depend on a lot of other shoes code (e.g. completely new features) so that it's easier to get started.
