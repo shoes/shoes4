@@ -11,8 +11,19 @@ class Shoes
     SHOES_ICON = shoes_icon.freeze
   end
 
-  def self.app(opts={}, &blk)
-    Shoes::App.new(opts, &blk)
+  # Instantiates a new shoes app
+  #
+  # @param opts [Hash] A hash of options used instantiate the Shoes::App object with
+  # @param block [Proc] The block containing the DSL instructions for the actual app
+  # @example
+  #   Shoes.app(title: "Chunky") do
+  #     para "Bacon is awesome!"
+  #   end
+  # @return A new instance of Shoes::App
+  # @see Shoes::App#initialize
+
+  def self.app(options={}, &block)
+    Shoes::App.new(options, &block)
   end
 
 
