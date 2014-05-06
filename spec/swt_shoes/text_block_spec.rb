@@ -180,10 +180,4 @@ describe Shoes::Swt::TextBlock do
            spacing: 0, text: text).as_null_object
   end
 
-  def stub_layout(layout)
-    ::Swt::Font.stub(:new) { double("font") }
-    ::Swt::TextStyle.stub(:new) { double("text_style").as_null_object }
-    ::Swt::TextLayout.stub(:new) { layout }
-  end
-
 end

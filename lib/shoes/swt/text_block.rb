@@ -34,10 +34,6 @@ class Shoes
         end
       end
 
-      def generate_layout(width, text)
-        FittedTextLayout.new(@dsl, text, width)
-      end
-
       def contents_alignment(current_position)
         dispose_existing_layouts
         @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
