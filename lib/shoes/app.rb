@@ -13,12 +13,14 @@ class Shoes
 
   # Instantiates a new Shoes app
   #
-  # @param opts [Hash] A hash of options used instantiate the Shoes::App object with
-  # @param block [Proc] The block containing the DSL instructions for the actual app
+  # @param opts [Hash] A hash of options used instantiate the Shoes::App object with.
+  # @param block [Proc] The block containing the DSL instructions for the actual app.
+  #
   # @example
   #   Shoes.app(title: "Chunky") do
   #     para "Bacon is awesome!"
   #   end
+  #
   # @return A new instance of Shoes::App
   # @see Shoes::App#initialize
 
@@ -39,13 +41,15 @@ class Shoes
 
     # Instantiates a new Shoes app.
     #
-    # @param [Hash] opts the options to initialize the app with.
+    # @param  opts [Hash] The options to initialize the app with.
+    # @param  blk  [Proc] The block containing the DSL instructions to be executed within the app.
+    #
     # @option opts [String]  :title      ("Shoes 4") The title of the window
     # @option opts [Boolean] :resizable  (true)      Whether the window is resizable
     # @option opts [Boolean] :fullscreen (false)     Whether the app should start in fullscreen
     # @option opts [Fixnum]  :width      (600)       The width of the app window
     # @option opts [Fixnum]  :height     (500)       The height of the app window
-    # @param [Proc] blk The block containing the DSL instructions to be executed within the app.
+    #
     # @see Dimension#initialize
  
     def initialize(opts={}, &blk)
