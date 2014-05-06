@@ -1,17 +1,15 @@
-shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4/badge/master.svg)](https://coveralls.io/r/shoes/shoes4)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
-======
+# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4/badge/master.svg)](https://coveralls.io/r/shoes/shoes4)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
 
 Shoes 4 : the next version of Shoes
 
-Still in development
---------------------
+## Still in development
+
 Hi there, thanks for checking by! Shoes4 is still in development. It doesn't support all of the shoes DSL just yet.
 But if you want to check it out, that's awesome! If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
 
 But hey, make sure to check back later, because shoes4 is the future!
 
-Installing Shoes4 from github
------------------------------
+## Installing Shoes4 from github
 
 There isn't a shoes4 gem release (yet) - in the meantime check out these instructions to get shoes4 running on your computer.
 
@@ -55,8 +53,7 @@ If you got rvm, rbenv or something like that installed it might complain that yo
 
 Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
 
-Running a Shoes App
--------------------
+## Running a Shoes App
 
 Shoes 4 comes with a command-line app runner. Just pass it the filename of your Shoes app.
 
@@ -66,30 +63,22 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
 There is also a simple ruby starter script which you may use as follows:
 
-```
-bin/ruby-shoes samples/simple-sound.rb
-```
+    $ bin/ruby-shoes samples/simple-sound.rb
 
 This does not work yet on Mac as jruby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
 
-```
-jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
-```
+    $ jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
 
 Another alternative yet is to put `require 'shoes'` at the top of your applications, then you can simply do
 
-```
-jruby path/to/file.rb
-```
+    $ jruby path/to/file.rb
 
-Want to see what shoes can do?
-------------------------------
+## Want to see what shoes can do?
 
 You can run `rake samples` and random samples we believe are working will be run until you quit with Ctr + C. Some of them are really simple, while others are more complex or even games!
 If you notice any issue with those samples please [let us know](https://github.com/shoes/shoes4/issues/new)!
 
-Packaging a Shoes App
----------------------
+## Packaging a Shoes App
 
 Packaging is just a baby, so be gentle.
 
@@ -131,8 +120,7 @@ The packager will find your instructions using any of those commands. Again, you
 
 Oh, and you can also just run your Shoes apps with `bin/shoes`.
 
-Want to contribute?
--------------------
+## Want to contribute?
 
 That's awesome, thank you!
 
@@ -156,8 +144,7 @@ It sometimes is also a good way to refactor some code or write some specs in ord
 
 Refer to the following section for information on how to run the specs, that were mentioned before :-)
 
-Running Specs
--------------
+## Running Specs
 
 Shoes 4 is developed in a TDD style. You should be writing and running the specs :)
 
@@ -186,8 +173,7 @@ There are rake tasks for running specs. Some examples:
 
 **Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
 
-Contact
--------
+## Contact
 
 Want to get in touch with the shoes community? That's great! You can get in touch here:
 
