@@ -2,9 +2,9 @@ class Shoes
   module Common
     class StyleNormalizer
       include Color::DSLHelpers
-      def normalize(orig_style)
+      def normalize(styles, supported_styles)
         normalized_style = {}
-        [:fill, :stroke].each do |s|
+        supported_styles.each do |s|
           if orig_style[s]
             normalized_style[s] = pattern(orig_style[s])
           end

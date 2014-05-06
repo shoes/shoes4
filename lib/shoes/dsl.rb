@@ -184,8 +184,8 @@ class Shoes
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      arc_style = style_normalizer.normalize(opts)
-      create Shoes::Arc, left, top, width, height, angle1, angle2, style.merge(arc_style)
+      #arc_style = style_normalizer.normalize(opts)
+      create Shoes::Arc, left, top, width, height, angle1, angle2, opts#style.merge(arc_style)
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)

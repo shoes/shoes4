@@ -14,23 +14,24 @@ class Shoes
       #
       # @param [Shoes::Arc] dsl The DSL object represented by this implementation
       # @param [Shoes::Swt::App] app The implementation object of the Shoes app
-      def initialize(dsl, app, opts = {})
+      def initialize(dsl, app, style)
         @dsl = dsl
         @app = app
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
+        @style = style
       end
 
       def angle1
-        radians_to_degrees dsl.angle1
+        radians_to_degrees @style[:angle1]
       end
 
       def angle2
-        radians_to_degrees dsl.angle2
+        radians_to_degrees @style[:angle2]
       end
 
       def wedge?
-        dsl.wedge?
+        @style[:wedge]
       end
 
       private
