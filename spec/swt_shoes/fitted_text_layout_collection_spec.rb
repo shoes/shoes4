@@ -154,11 +154,13 @@ describe Shoes::Swt::FittedTextLayoutCollection do
     inner_layout = double(name, text: text,
                           line_bounds: bounds, line_count: 1)
 
-    layout = Shoes::Swt::FittedTextLayout.new(inner_layout)
+    dsl = double("dsl", font: "", font_size: 16, opts:{})
+    layout = Shoes::Swt::FittedTextLayout.new(dsl, text, 1)
     layout.position_at(0, 0)
     layout.stub(:draw)
     layout.stub(:set_style)
     layout.stub(:get_location).and_return(double("position", x: 0, y: 0))
+    layout.stub(:layout).and_return(inner_layout)
     layout
   end
 

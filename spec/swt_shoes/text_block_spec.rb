@@ -20,31 +20,6 @@ describe Shoes::Swt::TextBlock do
     expect(subject.fitted_layouts).to be_empty
   end
 
-  describe "generating layouts" do
-    let(:layout) { create_layout(width, height) }
-    let(:font) { double("font", disposed?: false, dispose: nil) }
-
-    before(:each) do
-      stub_layout(layout)
-    end
-
-    it "should not shrink when enough containing width" do
-      expect(layout).to receive(:setWidth).never
-      subject.generate_layout(width + 10, "text text")
-    end
-
-    it "shrinks when too long for containing width" do
-      containing_width = width - 10
-      expect(layout).to receive(:setWidth).with(containing_width)
-      subject.generate_layout(containing_width, "text text")
-    end
-
-    it "passes text along to layout" do
-      expect(layout).to receive(:setText).with("text text")
-      subject.generate_layout(0, "text text")
-    end
-  end
-
   describe "bounds checking" do
     it "delegates to fitted layout" do
       layout = create_layout(0,0)

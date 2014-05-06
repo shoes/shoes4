@@ -2,11 +2,17 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::FittedTextLayout do
   let(:layout) { double("layout", text: "the text",
+                        :alignment= => nil, :justify= => nil, :spacing= => nil,
+                        :text= => nil, setWidth: nil,
                         disposed?: false, dispose: nil,
                         set_style: nil, bounds: bounds) }
   let(:bounds) { Java::OrgEclipseSwtGraphics::Rectangle.new(0, 0, 0, 0) }
   let(:element_left) { 0 }
   let(:element_top)  { 0 }
+  let(:layout_width)  { 10 }
+  let(:layout_height) { 10 }
+  let(:left_offset)   { 5 }
+  let(:top_offset)    { 5 }
 
   let(:font_factory) { double("font factory", create_font: font, dispose: nil) }
   let(:style_factory) { double("style factory", create_style: style, dispose: nil) }
@@ -25,13 +31,16 @@ describe Shoes::Swt::FittedTextLayout do
     }
   }
 
+  let(:dsl) { double("dsl", font: "", font_size: 16, opts:{}) }
+
   before(:each) do
-    Shoes::Swt::TextFontFactory.stub(:new) { font_factory }
+    ::Swt::TextLayout.stub(:new)            { layout }
+    Shoes::Swt::TextFontFactory.stub(:new)  { font_factory }
     Shoes::Swt::TextStyleFactory.stub(:new) { style_factory }
   end
 
   subject do
-    fitted = Shoes::Swt::FittedTextLayout.new(layout)
+    fitted = Shoes::Swt::FittedTextLayout.new(dsl, "text", layout_width)
     fitted.position_at(element_left, element_top)
   end
 
@@ -52,7 +61,9 @@ describe Shoes::Swt::FittedTextLayout do
   context "setting style" do
     it "on full range" do
       subject.set_style(style_hash)
-      expect(layout).to have_received(:set_style).with(style, 0, layout.text.length - 1)
+      expect(layout).to have_received(:set_style).
+                          with(style, 0, layout.text.length - 1).
+                          at_least(1).times
     end
 
     it "with a range" do
@@ -61,12 +72,18 @@ describe Shoes::Swt::FittedTextLayout do
     end
   end
 
-  context "bounds checking" do
-    let(:layout_width)  { 10 }
-    let(:layout_height) { 10 }
-    let(:left_offset)   { 5 }
-    let(:top_offset)    { 5 }
+  describe "shrinking on initialization" do
+    it "should not shrink when enough containing width" do
+      expect(subject.layout).to_not have_received(:setWidth)
+    end
 
+    it "shrinks when too long for container" do
+      bounds.width = layout_width + 10
+      expect(subject.layout).to have_received(:setWidth).with(layout_width)
+    end
+  end
+
+  context "bounds checking" do
     before(:each) do
       set_bounds(0, 0, layout_width, layout_height)
     end
