@@ -51,11 +51,12 @@ $untracked_disposals = {}
 end.call
 
 at_exit do
-  $callers.each do |k, v|
-    if v > 0
-      puts "#{v} => #{k}"
-      puts
-    end
+  count_for_class_and_backtrace = ->(hash) do
+    hash.map do |k, v|
+      if v > 0
+        "#{v} => #{k}"
+      end
+    end.compact.join("\n\n")
   end
 
   totals = ->(hash) do
@@ -69,9 +70,15 @@ at_exit do
     end.compact.join("\n")
   end
 
-  puts "Totals:"
+  puts "Undisposed resources:"
+  puts count_for_class_and_backtrace.call($callers)
+  puts
+  puts "Resources disposed without being tracked:"
+  puts count_for_class_and_backtrace.call($untracked_disposals)
+  puts
+  puts "Undisposed resource totals:"
   puts totals.call($callers)
   puts
-  puts "Untracked disposals:"
+  puts "Untracked disposal totals:"
   puts totals.call($untracked_disposals)
 end
