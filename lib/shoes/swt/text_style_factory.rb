@@ -13,6 +13,7 @@ class Shoes
 
       def dispose
         @colors.each { |color| color.dispose unless color.disposed? }
+        @colors.clear
       end
 
       def create_style(font, foreground, background, opts)

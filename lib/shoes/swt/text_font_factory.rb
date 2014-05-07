@@ -20,6 +20,7 @@ class Shoes
 
       def dispose
         @fonts.each { |font| font.dispose unless font.disposed? }
+        @fonts.clear
       end
     end
   end

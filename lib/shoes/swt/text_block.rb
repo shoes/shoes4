@@ -21,7 +21,7 @@ class Shoes
       end
 
       def dispose
-        @fitted_layouts.map &:dispose
+        dispose_existing_layouts
       end
 
       # has a painter, nothing to do
@@ -118,6 +118,7 @@ class Shoes
 
       def dispose_existing_layouts
         @fitted_layouts.map(&:dispose)
+        @fitted_layouts.clear
       end
     end
 
