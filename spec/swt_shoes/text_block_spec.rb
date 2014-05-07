@@ -20,36 +20,6 @@ describe Shoes::Swt::TextBlock do
     expect(subject.fitted_layouts).to be_empty
   end
 
-  describe "generating layouts" do
-    let(:layout) { create_layout(width, height) }
-    let(:font) { double("font", disposed?: false, dispose: nil) }
-
-    before(:each) do
-      stub_layout(layout)
-    end
-
-    it "should not shrink when enough containing width" do
-      expect(layout).to receive(:setWidth).never
-      subject.generate_layout(width + 10, "text text")
-    end
-
-    it "shrinks when too long for containing width" do
-      containing_width = width - 10
-      expect(layout).to receive(:setWidth).with(containing_width)
-      subject.generate_layout(containing_width, "text text")
-    end
-
-    it "passes text along to layout" do
-      expect(layout).to receive(:setText).with("text text")
-      subject.generate_layout(0, "text text")
-    end
-
-    it "should dispose the created font" do
-      expect(font).to receive(:dispose)
-      subject.generate_layout(0, "text text")
-    end
-  end
-
   describe "bounds checking" do
     it "delegates to fitted layout" do
       layout = create_layout(0,0)
@@ -66,8 +36,8 @@ describe Shoes::Swt::TextBlock do
     let(:line_height) { 10 }
     let(:layout) { create_layout(layout_width, layout_height) }
     let(:fitter) { double("fitter") }
-    let(:fitted_layout) { double("fitted_layout", layout: layout) }
-    let(:second_fitted_layout) { double("second_fitted_layout", layout: layout) }
+    let(:fitted_layout) { double("fitted_layout", disposed?: false, layout: layout) }
+    let(:second_fitted_layout) { double("second_fitted_layout", disposed?: false, layout: layout) }
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
@@ -113,6 +83,13 @@ describe Shoes::Swt::TextBlock do
         subject.contents_alignment(current_position)
       end
 
+      it "disposes of prior layouts" do
+        subject.contents_alignment(current_position)
+        expect(fitted_layout).to receive(:dispose)
+
+        subject.contents_alignment(current_position)
+      end
+
       it "should not dispose any layouts" do
         expect(fitted_layout).not_to receive(:dispose)
         expect(second_fitted_layout).not_to receive(:dispose)
@@ -135,8 +112,8 @@ describe Shoes::Swt::TextBlock do
         it "should dispose all layouts on clear" do
           swt_app.stub(:remove_listener)
 
-          expect(fitted_layout).to receive(:dispose)
-          expect(second_fitted_layout).to receive(:dispose)
+          expect(fitted_layout).to receive(:dispose).at_least(1).times
+          expect(second_fitted_layout).to receive(:dispose).at_least(1).times
 
           subject.contents_alignment(current_position)
           subject.clear
@@ -201,12 +178,6 @@ describe Shoes::Swt::TextBlock do
     double("layout",
            get_line_bounds: bounds, bounds: bounds,
            spacing: 0, text: text).as_null_object
-  end
-
-  def stub_layout(layout)
-    ::Swt::Font.stub(:new) { font }
-    ::Swt::TextStyle.stub(:new) { double("text_style") }
-    ::Swt::TextLayout.stub(:new) { layout }
   end
 
 end

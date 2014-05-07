@@ -149,7 +149,7 @@ describe Shoes::TextBlock do
     context "when not explicitly set" do
       subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], 42) }
 
-      it "delgates to calculated width" do
+      it "delegates to calculated width" do
         subject.calculated_width = 240
         expect(subject.width).to eql 240
       end

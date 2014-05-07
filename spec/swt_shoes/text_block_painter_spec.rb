@@ -4,7 +4,7 @@ describe Shoes::Swt::TextBlockPainter do
   include_context "swt app"
 
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
-  let(:gui) { double("gui", fitted_layouts: [fitted_layout], dispose: nil) }
+  let(:gui) { double("gui", dispose: nil) }
   let(:dsl) { double("dsl", app: shoes_app, gui: gui,
                      text: text, cursor: nil,
                      opts: opts, element_width: 200, element_height: 180,
@@ -13,11 +13,21 @@ describe Shoes::Swt::TextBlockPainter do
                      text_styles: text_styles, :hidden? => false).as_null_object
             }
 
-  let(:fitted_layout) { Shoes::Swt::FittedTextLayout.new(text_layout, 0, 10) }
+  let(:fitted_layout) do
+    ::Swt::Font.stub(:new)       { font }
+    ::Swt::TextLayout.stub(:new) { text_layout }
+    ::Swt::TextStyle.stub(:new)  { style }
+
+    fitted = Shoes::Swt::FittedTextLayout.new(dsl, text, 200)
+    fitted.position_at(0, 10)
+  end
+
   let(:text_layout) { double("text layout", text: text).as_null_object }
 
   let(:event) { double("event").as_null_object }
-  let(:style) { double(:style) }
+  let(:style) { double(:style).as_null_object }
+  let(:font)  { double(:font).as_null_object }
+
   let(:blue) { Shoes::Color.new(0, 0, 255) }
   let(:swt_blue) { Shoes::Swt::Color.new(blue).real}
   let(:text_styles) {{}}
@@ -26,7 +36,11 @@ describe Shoes::Swt::TextBlockPainter do
   subject { Shoes::Swt::TextBlockPainter.new(dsl) }
 
   before :each do
-    ::Swt::TextStyle.stub(:new) { style.as_null_object }
+    ::Swt::TextStyle.stub(:new)  { style.as_null_object }
+
+    # Can't stub this in during initial let because of circular reference
+    # fitted_layouts -> dsl -> gui -> fitted_layouts...
+    gui.stub(fitted_layouts: [fitted_layout])
   end
 
   it "draws" do

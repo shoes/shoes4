@@ -34,40 +34,8 @@ class Shoes
         end
       end
 
-      # Resources created here need to be disposed (see #dispose). Note that
-      # this applies to the ::Swt::Font object and the ::Swt::TextLayout object. The
-      # ::Swt::TextStyle object does not need to be disposed, because it is
-      # not backed by system resources.
-      #
-      # This method is only called by TextBlockFitter, and then only from
-      # #contents_alignment, so any layouts generated here end up in
-      # @fitted_layouts
-      def generate_layout(width, text)
-        layout = ::Swt::TextLayout.new Shoes.display
-        layout.setText text
-        layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
-                               ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new font, nil, nil
-        layout.setStyle style, 0, text.length - 1
-        shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
-
-        font.dispose
-
-        layout
-      end
-
-      def shrink_layout_to(layout, width)
-        layout.setWidth(width)
-      end
-
-      def layout_fits_in?(layout, width)
-        layout.bounds.width <= width
-      end
-
       def contents_alignment(current_position)
         dispose_existing_layouts
-
         @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
 
         if fitted_layouts.one?
@@ -140,6 +108,11 @@ class Shoes
       private
 
       def clear_contents
+        dispose_existing_layouts
+        clear_links
+      end
+
+      def clear_links
         @dsl.links.each(&:clear)
       end
 
