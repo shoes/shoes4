@@ -9,7 +9,9 @@ class Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's stroke color
         def stroke
-          dsl.stroke ? ::Shoes.configuration.backend_for(dsl.stroke) : nil
+          stroke_color = dsl.stroke ? ::Shoes.configuration.backend_for(dsl.stroke) : nil
+          mark_to_dispose(stroke_color)
+          stroke_color
         end
 
         # This object's stroke alpha value

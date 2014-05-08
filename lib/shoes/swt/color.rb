@@ -13,6 +13,10 @@ class Shoes
         @real = ::Swt::Graphics::Color.new(Shoes.display, @dsl.red, @dsl.green, @dsl.blue)
       end
 
+      def dispose
+        @real.dispose unless @real.disposed?
+      end
+
       attr_reader :dsl
 
       # @return [Integer] the alpha value, from 0 (transparent) to 255 (opaque)
