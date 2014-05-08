@@ -2,14 +2,16 @@ require 'spec_helper'
 
 describe Shoes::Dimension do
 
-  subject {Shoes::Dimension.new nil}
+  subject {Shoes::Dimension.new parent_dimension}
   let(:start) {10}
   let(:extent) {21}
   let(:parent_element_start) {34}
   let(:parent_element_end) {83}
-  let(:parent_dimension) {double 'parent_dimension',
-                                 element_start: parent_element_start,
-                                 element_end: parent_element_end }
+  let(:parent_element_extent) {600}
+  let(:parent_dimension) { double 'parent_dimension',
+                                  element_start:  parent_element_start,
+                                  element_end:    parent_element_end,
+                                  element_extent: parent_element_extent }
 
   ONE_PIXEL = 1
 
@@ -149,6 +151,19 @@ describe Shoes::Dimension do
 
     its(:start) {should eq start}
     it {should be_absolute_position}
+
+    it 'can set a start relative to parent element_extent' do
+      subject.start = 0.3
+      expected = 0.3 * parent_element_extent
+      expect(subject.start).to be_within(ONE_PIXEL).of expected
+    end
+
+    # might be surprising if people do calculations that result in a float
+    # and all of a sudden they have 10.4 and the button is nowhere to be found
+    it 'uses literal float values for values over 1.0' do
+      subject.start = 1.01
+      expect(subject.start).to eq 1.01
+    end
   end
 
   describe 'absolute_start' do
