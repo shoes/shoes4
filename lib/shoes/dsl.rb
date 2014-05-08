@@ -316,16 +316,16 @@ EOS
     #
     # color - a Shoes::Color
     def stroke(color)
-      @__app__.style[:stroke] = pattern(color)
+      Common::Style::DEFAULTS[:stroke] = pattern(color)
     end
 
     def nostroke
-      @__app__.style[:stroke] = nil
+      Common::Style::DEFAULTS[:stroke] = nil
     end
 
     # Sets the stroke width, in pixels
     def strokewidth(width)
-      @__app__.style[:strokewidth] = width
+      Common::Style::DEFAULTS[:strokewidth] = width
     end
 
     # Sets the current fill color

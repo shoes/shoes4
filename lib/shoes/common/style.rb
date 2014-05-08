@@ -1,27 +1,3 @@
-=begin
-class Class
-  def style_accessor(*styles)
-    styles.each do |style|
-      name = style.to_s
-
-      #getter
-      self.class_eval %Q{
-        def #{name}
-          @style[#{style}]
-        end
-      }
-
-      #setter
-      self.class_eval %Q{
-        def #{name}=(val)
-          @style[#{style}]=val
-        end
-      }
-    end
-  end
-end
-=end
-
 class Shoes
   module Common
     # Style methods.
@@ -30,17 +6,75 @@ class Shoes
       DEFAULTS = {
         fill:        Shoes::COLORS[:black],
         stroke:      Shoes::COLORS[:black],
-        strokewidth: 1
+        strokewidth: 1,
+        wedge:       false
       }
 
-      def style_init(styles={})
-        @supported_styles = []
-        @style = styles
+      StyleGroups = {
+        art_styles:    [:click, :fill, :stroke, :strokewidth],
+        common_styles: [:displace_left, :displace_top, :hidden],
+        dimensions:    [:bottom, :height, :left, :right, :top, :margin, 
+                        :margin_bottom, :margin_left, :margin_right, 
+                        :margin_top, :width]
+      }
 
-        styles.each do |key, value|
-          @supported_styles << key
+      def style_with(*styles)
+
+        @supported_styles = []
+
+        #unpack style groups
+        styles.each do |style|
+          if StyleGroups[style]
+            StyleGroups[style].each{|style| @supported_styles << style}
+          else
+            @supported_styles << style
+          end
         end
+
+        #define getter and setter methods for each style
+        ObjectSpace.each_object(Class) do |klass|
+          if klass == self.class
+            @style = Hash.new
+
+            @supported_styles.each do |style|
+              #Skip dimensions since they already have setters and getters defined
+              unless StyleGroups[:dimensions].include?(style)
+                #getter
+                self.instance_eval %Q{
+                def #{style}
+                  @style[:#{style}]
+                end
+                }
+
+                #setter
+                self.instance_eval %Q{
+                def #{style}=(val)
+                  @style[:#{style}]=val
+                end
+                }
+              end
+
+              #Now set style from global defaults dimensions or class defaults
+              case
+              when StyleGroups[:dimensions].include?(style)
+                #if dimension, load from dimensions
+                @style[style] = self.send(style)
+
+              when @app.element_styles[klass] && @app.element_styles[klass].include?(style)
+                #check for style at the element level
+                @style[style] = @app.element_styles[klass][style]
+
+              when DEFAULTS[style] != nil
+                #check styles at the default level
+                @style[style] = DEFAULTS[style]
+              end
+
+            end
+          end
+        end
+
       end
+
 
       # Adds style, or just returns current style if no argument
       # Returns the updated style
