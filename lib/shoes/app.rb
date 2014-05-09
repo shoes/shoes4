@@ -143,7 +143,7 @@ class Shoes
       execution_blk = create_execution_block(blk)
       eval_block execution_blk
 
-      add_console
+      setup_global_keypresses
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
@@ -255,6 +255,14 @@ class Shoes
       @resize_callbacks << blk
     end
 
+    def self.global_keypresses
+      @global_keypresses ||= {}
+    end
+
+    def self.add_global_keypress(key, &blk)
+      self.global_keypresses[key] = blk
+    end
+
     private
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way
@@ -303,13 +311,17 @@ class Shoes
       self.absolute_top    = 0
     end
 
-    def add_console
-      console = Proc.new do 
+    def setup_global_keypresses
+      ::Shoes::InternalApp.add_global_keypress(:"alt_/") do
+        ::Shoes::Logger.setup
+      end
+
+      @app.instance_eval do
         keypress do |key|
-          ::Shoes::Logger.setup if key == :"alt_/"
+          blk = ::Shoes::InternalApp.global_keypresses[key]
+          self.instance_eval(&blk) unless blk.nil?
         end
       end
-      @app.instance_eval &console
     end
 
     def inspect
