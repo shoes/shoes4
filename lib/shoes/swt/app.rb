@@ -36,6 +36,8 @@ class Shoes
       end
 
       def quit
+        @image.dispose
+        @background.dispose
         @shell.dispose
       end
 
@@ -43,7 +45,7 @@ class Shoes
       def app
         self
       end
-      
+
       def width
         if overlay_scrollbars?
           @shell.client_area.width
@@ -172,8 +174,10 @@ class Shoes
       end
 
       def initialize_shell
+        @image = ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
+
         @shell = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
-        @shell.image = ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
+        @shell.image = @image
         @shell.text = (@dsl.app_title)
         @shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
         @shell.background = @background.real
