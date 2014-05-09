@@ -10,16 +10,8 @@ class Shoes
           dispose
         end
 
-        def mark_to_dispose(resource)
-          @to_dispose ||= []
-          @to_dispose << resource
-        end
-
         def dispose_held_resources
-          return unless @to_dispose
-
-          @to_dispose.each(&:dispose)
-          @to_dispose.clear
+          @color_factory.dispose unless @color_factory.nil?
         end
 
         # Classes should override to dispose of any Swt resources they create

@@ -9,9 +9,8 @@ class Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's fill color
         def fill
-          fill_color = dsl.fill ? ::Shoes.configuration.backend_for(dsl.fill) : nil
-          mark_to_dispose(fill_color)
-          fill_color
+          @color_factory ||= ::Shoes::Swt::ColorFactory.new
+          @color_factory.create(dsl.fill)
         end
 
         # This object's fill alpha value
