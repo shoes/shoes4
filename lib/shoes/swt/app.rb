@@ -238,7 +238,7 @@ class Shoes
       end
 
       def for_this_shell?(evt)
-        evt.widget.shell == @shell
+        evt.widget.shell == @shell unless evt.widget.disposed?
       end
 
       def overlay_scrollbars?
