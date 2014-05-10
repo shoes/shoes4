@@ -58,8 +58,6 @@ Note: If you got rvm, rbenv or something like that installed it might complain t
 
 3. You're ready to go!
 
-Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
-
 ## Running a Shoes App
 
 Shoes 4 comes with a command-line app runner. Just pass it the filename of your Shoes app.
