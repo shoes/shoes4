@@ -7,51 +7,56 @@ Shoes 4 : the next version of Shoes
 Hi there, thanks for checking by! Shoes4 is still in development. It doesn't support all of the shoes DSL just yet.
 But if you want to check it out, that's awesome! If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
 
-But hey, make sure to check back later, because shoes4 is the future!
+There is a first preview release now :)
 
-## Installing Shoes4 from github
+## Installing Shoes4
 
-There isn't a shoes4 gem release (yet) - in the meantime check out these instructions to get shoes4 running on your computer.
+There are two ways to get your hands on shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
 
-### *nix
+
+### Get a JDK and JRuby
+
+So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
+
+    $ rvm install jruby
+
+### Installing Shoes4 as a gem
+
+    gem install shoes --pre
+
+
+### Installing Shoes4 from github
+
+If you want to be on the bleeding edge or want to contribute code you need to install it straight from the github repository.
+
+#### *nix (Mac OSX/Linux)
 
 1. Fork the repository and clone your fork, or
 
         $ git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org). Installing JRuby can be done easily for instance by using [rvm](http://rvm.io/):
-
-        $ rvm install jruby
-
-**Note:** Please make sure that you either install jruby-1.7.0 or higher or you set jruby to [always run in 1.9 mode](http://stackoverflow.com/questions/4755900/how-to-make-jruby-1-6-default-to-ruby-1-9). This is required in order for shoes4 to work.
-If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date mostly. You should be able to run it with the before mentioned versions either way. We recommend up to date versions though.
-
-3. Set up your local environment
+2. Set up your local environment
 
         $ cd shoes4
         $ gem install bundler && bundle install
 
-4. You're ready to go!
+Note: If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. We recommend up to date versions though.
 
-### Windows
+3. You're ready to go!
+
+#### Windows
 
 1. Fork the repository and clone your fork, or
 
         C:\tmp> git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org) (Windows Executable)
-
-3. Set up your local environment
-
-**JRuby 1.7**
+2. Set up your local environment
 
         C:\tmp>cd shoes4
         C:\tmp\shoes4>jruby -S gem install bundler
         C:\tmp\shoes4>jruby -S bundle install
 
-4. You're ready to go!
-
-Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
+3. You're ready to go!
 
 ## Running a Shoes App
 
@@ -65,7 +70,7 @@ There is also a simple ruby starter script which you may use as follows:
 
     $ bin/ruby-shoes samples/simple-sound.rb
 
-This does not work yet on Mac as jruby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
+This does not work yet on Mac as JRuby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
 
     $ jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
 
@@ -82,14 +87,12 @@ If you notice any issue with those samples please [let us know](https://github.c
 
 Packaging is just a baby, so be gentle.
 
-If this is your first time running the packager, you'll want to `bundle install` to pull in a couple of additional gems.
-
-In order to package an app, you need to have the Shoes gem installed in your environment.
+In order to package an app, you need to have the Shoes gem installed in your environment. If you didn't do the gem installation you can always generate a gem and install it from the current source:
 
     $ rake gem
     $ gem install pkg/shoes-4.0.0.pre1.gem
 
-Now, you can package an app. But first, looky here:
+Now, you can package an app. But first, look here:
 
 - The packager will include ***everything*** in the directory of your shoes script and below, unless you tell it not to.
 - The packager will probably not work properly if it detects a `.gemspec` or a `Gemfile`. It uses Warbler, which always looks for those files. If you run the specs, you may notice some warnings like this:
@@ -130,11 +133,11 @@ Please feel free to tackle any issue - we will help you if needed. The tag is ju
 
 Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. In order to do so you can run `rake non_samples` to run a random sample we think does not work. If you just want to list the non working samples you can also run `rake list_non_samples`.
 
-With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section above). So make sure that you don't break any tests  :-)
+With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section below). So make sure that you don't break any tests :-)
 
 We write our specs in rspec and are currently in the process of migrating from the old `should` syntax to the [new `expect` syntax](http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax). We basically say that whenever you touch a spec it'd be good if you converted it to the new syntax. Also new specs should be written in the new expect syntax.
 
-If you feel unsure about testing or your implementation just open an issue or a pull request. We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
+If you feel unsure about testing or your implementation just open an issue or a pull request. Pull requests don't need to be done - they are great discussion starters! We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
 
 In fact we greatly appreciate early pull requests to review code and help you find your way around Shoes4! =)
 
@@ -171,7 +174,7 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt[Shape]           # Run integration and isolation specs for Shape, using the Swt backend
     $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
 
-**Note:** For Windows, `C:\tmp\shoes4>jruby --1.9 -S rake spec`
+**Note:** For Windows, `C:\tmp\shoes4>jruby -S rake spec`
 
 ## Contact
 
@@ -180,4 +183,4 @@ Want to get in touch with the shoes community? That's great! You can get in touc
 * You can join the mailing list, simply send an email to shoes@librelist.com - you can also check out [the archives](http://librelist.com/browser/shoes/)
 * We also have an irc channel #shoes on freenode - a lot of people are idling there so it might take some time to react
 
-However we try to keep most discussions about the development in this repository/its issues list so everyone can see them and look them up.
+However we try to keep most discussions about the development in this repository/its issues so everyone can see them and look them up.
