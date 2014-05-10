@@ -120,10 +120,10 @@ class Shoes
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
-      :mouse_motion, :owner, :element_styles, :resize_callbacks
+                :mouse_motion, :owner, :element_styles, :resize_callbacks
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
-      :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
-      :width, :height, :start_as_fullscreen, :location
+                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
+                  :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
       top_slot.clear &blk

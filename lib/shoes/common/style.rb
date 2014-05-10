@@ -20,13 +20,11 @@ class Shoes
       def style(new_styles = nil)
         update_style(new_styles) if need_to_update_style?(new_styles)
         @style
-      end
-      
+      end 
       
       module StyleWith
         def style_with(*styles)
           
-          attr_reader :supported_styles
           @@supported_styles = []
           
           #unpack style groups
@@ -66,16 +64,12 @@ class Shoes
         #Now set style from dimensions, global-styles or element-styles
         self.singleton_class.supported_styles.each do |style|
           case
-          when STYLE_GROUPS[:dimensions].include?(style)
-            #if dimension, load from dimensions
-            @style[style] = self.send(style)
-
-          when @app.element_styles[klass] && @app.element_styles[klass].include?(style)
-            #check for style at the element level
-            @style[style] = @app.element_styles[klass][style]
-
-          when @app.style[style]
-            @style[style] = @app.style[style]
+          when style_is_dimension?(style)
+            set_dimension_style(style)
+          when is_element_style?(style, klass)
+            set_element_style(style, klass)
+          when has_default?(style)
+            set_default_style(style)
           end
         end
       end
@@ -90,9 +84,8 @@ class Shoes
         @style.merge! normalized_style
 
         #call dimensions setter if style is a dimension
-        new_styles.each do |style|
-          next unless STYLE_GROUPS[:dimensions].include?(style[0])
-          self.send("#{style[0]}=".to_sym, style[1])
+        new_styles.each do |key, value|
+          next unless STYLE_GROUPS[:dimensions].include?(key)
         end
       end
 
@@ -106,6 +99,30 @@ class Shoes
         new_styles.each_pair.any? do |key, value|
           @style[key] != value
         end
+      end
+      
+      def style_is_dimension?(style)
+        STYLE_GROUPS[:dimensions].include?(style)
+      end
+      
+      def set_dimension_style(style)
+        @style[style] = self.send(style)
+      end
+
+      def is_element_style?(style, klass)
+        @app.element_styles[klass] && @app.element_styles[klass].include?(style)
+      end
+
+      def set_element_style(style, klass)
+        @style[style] = @app.element_styles[klass][style]
+      end
+
+      def has_default?(style)
+        @app.style[style]
+      end
+      
+      def set_default_style(style)
+        @style[style] = @app.style[style]
       end
     end
   end
