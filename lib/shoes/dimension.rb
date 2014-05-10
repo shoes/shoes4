@@ -120,11 +120,8 @@ class Shoes
     private
     def basic_start_value
       value = @start
-      if value
-        value = calculate_relative value if is_relative?(value)
-      else
-        value = report_relative_to_parent_start
-      end
+      value = calculate_relative value if is_relative?(value)
+      value = report_relative_to_parent_start if value.nil?
       value
     end
 
