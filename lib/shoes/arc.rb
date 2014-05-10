@@ -8,13 +8,14 @@ class Shoes
     include DimensionsDelegations
 
     attr_reader :app, :parent, :dimensions
+    style_with :angle1, :angle2, :art_styles, :cap, :center, :dimensions, :radius, :wedge
 
     def initialize(app, parent, left, top, width, height, angle1, angle2, opts = {})
       @app                 = app
       @parent              = parent
       @dimensions          = Dimensions.new app, left, top, width, height, opts
-
-      style_with :angle1, :angle2, :art_styles, :cap, :center, :dimensions, :radius, :wedge
+      
+      style_init
       @style[:angle1] = angle1
       @style[:angle2] = angle2
       @style.merge!(opts)

@@ -19,19 +19,19 @@ class Shoes
         @app = app
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-        @style = style
+#        @style = style
       end
 
       def angle1
-        radians_to_degrees @style[:angle1]
+        radians_to_degrees @dsl.style[:angle1]
       end
 
       def angle2
-        radians_to_degrees @style[:angle2]
+        radians_to_degrees @dsl.style[:angle2]
       end
 
       def wedge?
-        @style[:wedge]
+        @dsl.style[:wedge]
       end
 
       private

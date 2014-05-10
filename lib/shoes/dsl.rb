@@ -315,36 +315,27 @@ EOS
     # Arguments
     #
     # color - a Shoes::Color
-    def stroke(color)
-      Common::Style::DEFAULTS[:stroke] = pattern(color)
+
+    [:fill, :stroke, :strokewidth].each do |style|
+
+      if [:fill, :stroke].include?(style)
+        define_method style.to_s do |val|
+          @__app__.style[style] = pattern(val)
+        end
+      else
+        define_method style.to_s do |val|
+          @__app__.style[style] = val
+        end
+      end
     end
 
     def nostroke
-      Common::Style::DEFAULTS[:stroke] = nil
-    end
-
-    # Sets the stroke width, in pixels
-    def strokewidth(width)
-      Common::Style::DEFAULTS[:strokewidth] = width
-    end
-
-    # Sets the current fill color
-    #
-    # @param [Shoes::Color,Shoes::Gradient] pattern the pattern to set as fill
-    def fill(pattern)
-      @__app__.style[:fill] = pattern(pattern)
+      @__app__.style[:stroke] = nil
     end
 
     def nofill
       @__app__.style[:fill] = nil
     end
-
-    # Sets the current line cap style
-    def cap(line_cap)
-      @__app__.style[:cap] = line_cap
-    end
-
-
 
     # Text blocks
     # normally constants belong to the top, I put them here because they are

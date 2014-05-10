@@ -81,7 +81,7 @@ class Shoes
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
-      Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
+                         Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
   end
 
 
@@ -120,10 +120,10 @@ class Shoes
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
-                :mouse_motion, :owner, :element_styles, :resize_callbacks
+      :mouse_motion, :owner, :element_styles, :resize_callbacks
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
-                  :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
-                  :width, :height, :start_as_fullscreen, :location
+      :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
+      :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
       top_slot.clear &blk
@@ -159,8 +159,15 @@ class Shoes
 
     def default_styles
       {
-        :stroke      => Shoes::COLORS[:black],
-        :strokewidth => 1
+        fill:        Shoes::COLORS[:black],
+        stroke:      Shoes::COLORS[:black],
+        strokewidth: 1 
+      }
+    end
+
+    def default_element_styles
+      {
+        arc: {wedge: false}
       }
     end
 
@@ -253,7 +260,7 @@ class Shoes
 
     def set_initial_attributes
       @style                = default_styles
-      @element_styles       = {}
+      @element_styles       = default_element_styles
       @contents             = []
       @mouse_motion         = []
       @mouse_button         = 0
