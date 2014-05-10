@@ -7,49 +7,53 @@ Shoes 4 : the next version of Shoes
 Hi there, thanks for checking by! Shoes4 is still in development. It doesn't support all of the shoes DSL just yet.
 But if you want to check it out, that's awesome! If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
 
-But hey, make sure to check back later, because shoes4 is the future!
+There is a first preview release now :)
 
-## Installing Shoes4 from github
+## Installing Shoes4
 
-There isn't a shoes4 gem release (yet) - in the meantime check out these instructions to get shoes4 running on your computer.
+There are two ways to get your hands on shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
 
-### *nix
+So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with OpenJDK) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
+
+    $ rvm install jruby
+
+### Installing Shoes4 as a gem
+
+    gem install shoes --pre
+
+
+### Installing Shoes4 from github
+
+If you want to be on the bleeding edge or want to contribute code you need to install it straight from the github repository.
+
+#### *nix (Mac OSX/Linux)
 
 1. Fork the repository and clone your fork, or
 
         $ git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org). Installing JRuby can be done easily for instance by using [rvm](http://rvm.io/):
-
-        $ rvm install jruby
-
-**Note:** Please make sure that you either install jruby-1.7.0 or higher or you set jruby to [always run in 1.9 mode](http://stackoverflow.com/questions/4755900/how-to-make-jruby-1-6-default-to-ruby-1-9). This is required in order for shoes4 to work.
-If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date mostly. You should be able to run it with the before mentioned versions either way. We recommend up to date versions though.
-
-3. Set up your local environment
+2. Set up your local environment
 
         $ cd shoes4
         $ gem install bundler && bundle install
 
-4. You're ready to go!
+Note: If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. We recommend up to date versions though.
 
-### Windows
+3. You're ready to go!
+
+#### Windows
 
 1. Fork the repository and clone your fork, or
 
         C:\tmp> git clone git://github.com/shoes/shoes4.git
 
-2. Install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) and [JRuby](http://jruby.org) (Windows Executable)
-
-3. Set up your local environment
-
-**JRuby 1.7**
+2. Set up your local environment
 
         C:\tmp>cd shoes4
         C:\tmp\shoes4>jruby -S gem install bundler
         C:\tmp\shoes4>jruby -S bundle install
 
-4. You're ready to go!
+3. You're ready to go!
 
 Refer to the [RubyInstaller DevKit](https://github.com/oneclick/rubyinstaller/wiki/Development-Kit) if you are having issues building native gems. You might be forced to download and install [MinGW](http://www.mingw.org/) if your system is missing GCC or make.
 
@@ -65,7 +69,7 @@ There is also a simple ruby starter script which you may use as follows:
 
     $ bin/ruby-shoes samples/simple-sound.rb
 
-This does not work yet on Mac as jruby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
+This does not work yet on Mac as JRuby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
 
     $ jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
 
@@ -81,8 +85,6 @@ If you notice any issue with those samples please [let us know](https://github.c
 ## Packaging a Shoes App
 
 Packaging is just a baby, so be gentle.
-
-If this is your first time running the packager, you'll want to `bundle install` to pull in a couple of additional gems.
 
 In order to package an app, you need to have the Shoes gem installed in your environment.
 
