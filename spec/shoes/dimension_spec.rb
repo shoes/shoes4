@@ -89,10 +89,14 @@ describe Shoes::Dimension do
                                                           parent_element_extent
       end
 
-      it 'takes them relative to the parent for bigger values' do
+      it 'equal parent extent for 1.0' do
+        subject.extent = 1.0
+        expect(subject.extent).to eq parent_element_extent
+      end
+
+      it 'does not take them relative to the parent for bigger values' do
         subject.extent = 1.3
-        expect(subject.extent).to be_within(ONE_PIXEL).of 1.3 *
-                                                          parent_element_extent
+        expect(subject.extent).to eq 1.3
       end
     end
 

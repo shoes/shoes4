@@ -121,7 +121,7 @@ class Shoes
     def basic_start_value
       value = @start
       if value
-        value = calculate_relative value if is_relative?(value) && value <= 1
+        value = calculate_relative value if is_relative?(value)
       else
         value = report_relative_to_parent_start
       end
@@ -129,7 +129,11 @@ class Shoes
     end
 
     def is_relative?(result)
-      result.is_a?(Float)
+      # as the value is relative to the parent values bigger than one don't
+      # make much sense and are problematic. E.g. through calculations users
+      # might end up with values like 5.14 meaning 5 pixel which would get
+      # interpreted as 514% of the parent
+      result.is_a?(Float) && result <= 1
     end
 
     def calculate_relative(result)
