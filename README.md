@@ -22,8 +22,13 @@ So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/
 
 ### Installing Shoes4 as a gem
 
-    gem install shoes --pre
+#### *nix (Mac OSX/Linux)
 
+    $ gem install shoes --pre
+
+#### Windows
+
+    C:\tmp> jruby -S gem install shoes --pre
 
 ### Installing Shoes4 from github
 
@@ -64,7 +69,7 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
     $ bin/shoes samples/simple-sound.rb
 
-**Note:** For Windows, `C:\tmp\shoes4>bin\shoes samples\simple-sound.rb`
+**Note:** For Windows, `C:\tmp\shoes4>bin\shoes samples\simple-sound.rb` If you installed Shoes4 as a gem, just do `C:\tmp> shoes path\to\file.rb`
 
 There is also a simple ruby starter script which you may use as follows:
 
