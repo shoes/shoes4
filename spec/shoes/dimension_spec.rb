@@ -168,6 +168,15 @@ describe Shoes::Dimension do
       subject.start = 1.01
       expect(subject.start).to eq 1.01
     end
+
+    context 'without a parent' do
+      let(:parent_dimension) {nil}
+
+      it 'just takes the relative value' do
+        subject.start = 0.8
+        expect(subject.start).to eq 0.8
+      end
+    end
   end
 
   describe 'absolute_start' do

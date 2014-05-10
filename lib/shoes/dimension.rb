@@ -130,7 +130,9 @@ class Shoes
       # make much sense and are problematic. E.g. through calculations users
       # might end up with values like 5.14 meaning 5 pixel which would get
       # interpreted as 514% of the parent
-      result.is_a?(Float) && result <= 1
+      # Also check for existance of parent because otherwise relative
+      # calculation makes no sense
+      result.is_a?(Float) && result <= 1 && @parent
     end
 
     def calculate_relative(result)
