@@ -6,9 +6,9 @@ class Shoes
       STYLE_GROUPS = {
         art_styles:    [:click, :fill, :stroke, :strokewidth],
         common_styles: [:displace_left, :displace_top, :hidden],
-        dimensions:    [:bottom, :height, :left, :right, :top, :margin, 
+        dimensions:    [:bottom, :height, :left, :margin, 
                         :margin_bottom, :margin_left, :margin_right, 
-                        :margin_top, :width],
+                        :margin_top, :right, :top, :width],
         text_styles:   [:align, :click, :emphasis, :family, :fill, :font, 
                         :justify, :kerning, :leading, :rise, :size, :stretch, 
                         :strikecolor, :strikethrough, :stroke, :undercolor, 

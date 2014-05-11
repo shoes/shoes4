@@ -29,7 +29,7 @@ class Shoes
     # @return [Boolean] if fill should be a wedge shape, rather than a chord
     #   Defaults to false
     def wedge?
-      @wedge
+      @style[:wedge]
     end
   end
 end
