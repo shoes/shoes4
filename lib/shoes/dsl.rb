@@ -310,22 +310,19 @@ EOS
       Shoes::Shape.new(@__app__, @__app__.style.merge(shape_style), blk)
     end
 
-    # Sets the current stroke color
-    #
-    # Arguments
-    #
-    # color - a Shoes::Color
+    # Define app-level setter methods
+    PATTERN_STYLES = [:fill, :stroke]
+    OTHER_STYLES = [:cap, :family, :fill, :font, :strikecolor, :stroke, :undercolor, :wrap]
 
-    [:fill, :stroke, :strokewidth].each do |style|
+    PATTERN_STYLES.each do |style|
+      define_method style.to_s do |val|
+        @__app__.style[style] = pattern(val)
+      end
+    end
 
-      if [:fill, :stroke].include?(style)
-        define_method style.to_s do |val|
-          @__app__.style[style] = pattern(val)
-        end
-      else
-        define_method style.to_s do |val|
-          @__app__.style[style] = val
-        end
+    OTHER_STYLES.each do |style|
+      define_method style.to_s do |val|
+        @__app__.style[style] = val
       end
     end
 

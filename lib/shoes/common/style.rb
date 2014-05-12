@@ -15,10 +15,10 @@ class Shoes
                         :underline, :smallcaps, :weight, :wrap]
       }
      
-      # Adds style, or just returns current style if no argument
-      # Returns the updated style
+      # Adds styles, or just returns current style if no argument
       def style(new_styles = nil)
         update_style(new_styles) if need_to_update_style?(new_styles)
+        update_dimensions
         @style
       end 
       
@@ -63,14 +63,9 @@ class Shoes
 
         #Now set style from dimensions, global-styles or element-styles
         self.singleton_class.supported_styles.each do |style|
-          case
-          when style_is_dimension?(style)
-            set_dimension_style(style)
-          when is_element_style?(style, klass)
-            set_element_style(style, klass)
-          when has_default?(style)
-            set_default_style(style)
-          end
+          @style[style] = self.send(style)
+          @style[style] = @app.element_styles[self.class][style] if @style[style].nil? && @app.element_styles[self.class]
+          @style[style] = @app.default_styles[style] if @style[style].nil? 
         end
       end
 
@@ -81,11 +76,20 @@ class Shoes
       private
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
+        set_dimensions(new_styles)
         @style.merge! normalized_style
+      end
 
-        #call dimensions setter if style is a dimension
+      def set_dimensions(new_styles)
         new_styles.each do |key, value|
           next unless STYLE_GROUPS[:dimensions].include?(key)
+          self.send(key.to_s+"=", value)
+        end
+      end
+
+      def update_dimensions #so that hash matches actual values
+        STYLE_GROUPS[:dimensions].each do |style|
+       #   @style[style] = self.send() #getting problems here
         end
       end
 
@@ -93,37 +97,14 @@ class Shoes
         new_styles && style_changed?(new_styles)
       end
 
-      # check necessary because update_style trigger a redraw in the redrawing
+      # check necessary because update_style triggers a redraw in the redrawing
       # aspect and we want to avoid unnecessary redraws
       def style_changed?(new_styles)
         new_styles.each_pair.any? do |key, value|
           @style[key] != value
         end
       end
-      
-      def style_is_dimension?(style)
-        STYLE_GROUPS[:dimensions].include?(style)
-      end
-      
-      def set_dimension_style(style)
-        @style[style] = self.send(style)
-      end
 
-      def is_element_style?(style, klass)
-        @app.element_styles[klass] && @app.element_styles[klass].include?(style)
-      end
-
-      def set_element_style(style, klass)
-        @style[style] = @app.element_styles[klass][style]
-      end
-
-      def has_default?(style)
-        @app.style[style]
-      end
-      
-      def set_default_style(style)
-        @style[style] = @app.style[style]
-      end
     end
   end
 end
