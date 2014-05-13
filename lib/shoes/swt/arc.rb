@@ -22,15 +22,15 @@ class Shoes
       end
 
       def angle1
-        radians_to_degrees dsl.style[:angle1]
+        radians_to_degrees dsl.angle1
       end
 
       def angle2
-        radians_to_degrees dsl.style[:angle2]
+        radians_to_degrees dsl.angle2
       end
 
       def wedge?
-        dsl.style[:wedge]
+        dsl.wedge
       end
 
       private

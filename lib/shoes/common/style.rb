@@ -15,10 +15,10 @@ class Shoes
         dimensions:    [:bottom, :height, :left, :margin, 
                         :margin_bottom, :margin_left, :margin_right, 
                         :margin_top, :right, :top, :width],
-                        text_styles:   [:align, :click, :emphasis, :family, :fill, :font, 
-                                        :justify, :kerning, :leading, :rise, :size, :stretch, 
-                                        :strikecolor, :strikethrough, :stroke, :undercolor, 
-                                        :underline, :smallcaps, :weight, :wrap]
+        text_styles:   [:align, :click, :emphasis, :family, :fill, :font, 
+                        :justify, :kerning, :leading, :rise, :size, :stretch, 
+                        :strikecolor, :strikethrough, :stroke, :undercolor, 
+                        :underline, :smallcaps, :weight, :wrap]
       }
 
       # Adds styles, or just returns current style if no argument
@@ -99,7 +99,7 @@ class Shoes
 
       def update_dimensions #so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          #   @style[style] = self.send(style.to_s) #getting problems here
+        #  @style[style] = self.send(style.to_s) #getting problems here
         end
       end
 

@@ -22,11 +22,5 @@ class Shoes
 
       clickable_options(opts)
     end
-
-    # @return [Boolean] if fill should be a wedge shape, rather than a chord
-    #   Defaults to false
-    def wedge?
-      @style[:wedge]
-    end
   end
 end
