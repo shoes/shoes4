@@ -144,6 +144,7 @@ class Shoes
       eval_block execution_blk
 
       setup_global_keypresses
+      register_console_keypress
     end
 
     attr_reader :gui, :top_slot, :contents, :app, :dimensions,
@@ -312,13 +313,15 @@ class Shoes
     end
 
     def setup_global_keypresses
-      self.class.add_global_keypress(:"alt_/") do
-        Logger.setup
-      end
-
       @app.keypress do |key|
         blk = self.class.global_keypresses[key]
         self.instance_eval(&blk) unless blk.nil?
+      end
+    end
+
+    def register_console_keypress
+      self.class.add_global_keypress(:"alt_/") do
+        Logger.setup
       end
     end
 
