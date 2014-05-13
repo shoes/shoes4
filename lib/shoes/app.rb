@@ -312,12 +312,12 @@ class Shoes
     end
 
     def setup_global_keypresses
-      ::Shoes::InternalApp.add_global_keypress(:"alt_/") do
-        ::Shoes::Logger.setup
+      self.class.add_global_keypress(:"alt_/") do
+        Logger.setup
       end
 
       @app.keypress do |key|
-        blk = ::Shoes::InternalApp.global_keypresses[key]
+        blk = self.class.global_keypresses[key]
         self.instance_eval(&blk) unless blk.nil?
       end
     end
