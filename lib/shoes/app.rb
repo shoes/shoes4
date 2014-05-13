@@ -158,17 +158,7 @@ class Shoes
     end
 
     def default_styles
-      {
-        fill:        Shoes::COLORS[:black],
-        stroke:      Shoes::COLORS[:black],
-        strokewidth: 1 
-      }
-    end
-
-    def default_element_styles
-      {
-        arc: {wedge: false}
-      }
+      Common::Style::DEFAULT_STYLES
     end
 
     def in_bounds?(x, y)
@@ -260,7 +250,7 @@ class Shoes
 
     def set_initial_attributes
       @style                = default_styles
-      @element_styles       = default_element_styles
+      @element_styles       = {}
       @contents             = []
       @mouse_motion         = []
       @mouse_button         = 0

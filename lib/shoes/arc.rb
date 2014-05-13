@@ -9,19 +9,16 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions
     style_with :angle1, :angle2, :art_styles, :cap, :center, :dimensions, :radius, :wedge
+    STYLES = {wedge: false}
 
     def initialize(app, parent, left, top, width, height, angle1, angle2, opts = {})
       @app                 = app
       @parent              = parent
-      @dimensions          = Dimensions.new app, left, top, width, height, opts
+      @dimensions          = Dimensions.new parent, left, top, width, height, opts
       
-      style_init
-      @style[:angle1] = angle1
-      @style[:angle2] = angle2
-      @style.merge!(opts)
-
+      style_init(opts, angle1: angle1, angle2: angle2)
       @parent.add_child self
-      @gui = Shoes.backend_for(self, @style)
+      @gui = Shoes.backend_for(self)
 
       clickable_options(opts)
     end

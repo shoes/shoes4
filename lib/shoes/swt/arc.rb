@@ -14,7 +14,7 @@ class Shoes
       #
       # @param [Shoes::Arc] dsl The DSL object represented by this implementation
       # @param [Shoes::Swt::App] app The implementation object of the Shoes app
-      def initialize(dsl, app, style)
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
         @painter = Painter.new(self)
