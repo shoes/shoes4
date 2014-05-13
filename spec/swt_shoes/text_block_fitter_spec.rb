@@ -22,13 +22,14 @@ describe Shoes::Swt::TextBlockFitter do
   let(:app_width)         { 2000 }
 
   let(:text_block) { double('text_block', dsl: dsl) }
+  let(:layout)     { double('layout') }
 
   let(:current_position) { double('current_position') }
 
   subject { Shoes::Swt::TextBlockFitter.new(text_block, current_position) }
 
   before(:each) do
-    text_block.stub(:generate_layout)
+    Shoes::Swt::FittedTextLayout.stub(:new) { layout }
   end
 
   describe "determining available space" do
@@ -73,13 +74,6 @@ describe Shoes::Swt::TextBlockFitter do
     end
   end
 
-  describe "layout generation" do
-    it "should be delegated to the text block" do
-      expect(text_block).to receive(:generate_layout).with(150, "Test")
-      subject.generate_layout(150, "Test")
-    end
-  end
-
   describe "finding what didn't fit" do
     it "should tell split text by offsets and heights" do
       layout = double('layout', line_offsets: [0, 5, 9], text: "Text Split")
@@ -103,7 +97,7 @@ describe Shoes::Swt::TextBlockFitter do
                           line_count: 1, line_offsets:[], get_bounds: bounds) }
 
     before(:each) do
-      text_block.stub(:generate_layout) { layout }
+      layout.stub(:position_at) { layout }
     end
 
     context "to one layout" do
@@ -179,7 +173,9 @@ describe Shoes::Swt::TextBlockFitter do
   end
 
   def expect_fitted_layouts(fitted_layouts, *coordinates)
-    actual = fitted_layouts.map {|fitted| [fitted.element_left, fitted.element_top] }
-    expect(coordinates).to eq(actual)
+    fitted_layouts.each_with_index do |fitted, index|
+      x, y = coordinates[index]
+      expect(fitted).to have_received(:position_at).with(x, y)
+    end
   end
 end

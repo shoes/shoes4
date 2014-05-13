@@ -1,13 +1,22 @@
 class Shoes
   module Swt
-    module TextStyleFactory
+    class TextStyleFactory
       UNDERLINE_STYLES = {
         "single" => 0,
         "double" => 1,
         "error" => 2,
       }
 
-      def self.create_style(font, foreground, background, opts)
+      def initialize
+        @colors = []
+      end
+
+      def dispose
+        @colors.each { |color| color.dispose unless color.disposed? }
+        @colors.clear
+      end
+
+      def create_style(font, foreground, background, opts)
         fg = swt_color(foreground, ::Shoes::COLORS[:black])
         bg = swt_color(background)
         @style = ::Swt::TextStyle.new font, fg, bg
@@ -37,40 +46,42 @@ class Shoes
         font_styles
       end
 
-      attr_reader :style
-
       private
-      def self.set_rise(opts)
+      def set_rise(opts)
         @style.rise = opts[:rise]
       end
 
-      def self.set_underline(opts)
+      def set_underline(opts)
         @style.underline = opts[:underline].nil? || opts[:underline] == "none" ? false : true
         @style.underlineStyle = UNDERLINE_STYLES[opts[:underline]]
       end
 
-      def self.set_undercolor(opts)
+      def set_undercolor(opts)
         @style.underlineColor = color_from_dsl opts[:undercolor]
       end
 
-      def self.set_strikethrough(opts)
+      def set_strikethrough(opts)
         @style.strikeout = opts[:strikethrough].nil? || opts[:strikethrough] == "none" ? false : true
       end
 
-      def self.set_strikecolor(opts)
+      def set_strikecolor(opts)
         @style.strikeoutColor = color_from_dsl opts[:strikecolor]
       end
 
-      def self.swt_color(color, default = nil)
+      def swt_color(color, default = nil)
         return color if color.is_a? ::Swt::Color
         color_from_dsl color, default
       end
 
-      def self.color_from_dsl(dsl_color, default = nil)
+      def color_from_dsl(dsl_color, default = nil)
         return nil if dsl_color.nil? and default.nil?
         return color_from_dsl default if dsl_color.nil?
-        # TODO: mark color for garbage collection
-        ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
+        color = ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
+
+        # Hold a reference to the color so we can dispose it when the time comes
+        @colors << color
+
+        color
       end
     end
   end

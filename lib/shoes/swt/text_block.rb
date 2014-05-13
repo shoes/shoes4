@@ -20,6 +20,10 @@ class Shoes
         @app.add_paint_listener @painter
       end
 
+      def dispose
+        dispose_existing_layouts
+      end
+
       # has a painter, nothing to do
       def update_position
       end
@@ -30,30 +34,9 @@ class Shoes
         end
       end
 
-      def generate_layout(width, text)
-        layout = ::Swt::TextLayout.new Shoes.display
-        layout.setText text
-        layout.setSpacing(@opts[:leading] || DEFAULT_SPACING)
-        font = ::Swt::Font.new Shoes.display, @dsl.font, @dsl.font_size,
-                               ::Swt::SWT::NORMAL
-        style = ::Swt::TextStyle.new font, nil, nil
-        layout.setStyle style, 0, text.length - 1
-        shrink_layout_to(layout, width) unless layout_fits_in?(layout, width)
-
-        layout
-      end
-
-      def shrink_layout_to(layout, width)
-        layout.setWidth(width)
-      end
-
-      def layout_fits_in?(layout, width)
-        layout.bounds.width <= width
-      end
-
       def contents_alignment(current_position)
-        fitter = TextBlockFitter.new(self, current_position)
-        @fitted_layouts = fitter.fit_it_in
+        dispose_existing_layouts
+        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
 
         if fitted_layouts.one?
           set_absolutes_for_one_layout
@@ -125,7 +108,17 @@ class Shoes
       private
 
       def clear_contents
+        dispose_existing_layouts
+        clear_links
+      end
+
+      def clear_links
         @dsl.links.each(&:clear)
+      end
+
+      def dispose_existing_layouts
+        @fitted_layouts.map(&:dispose)
+        @fitted_layouts.clear
       end
     end
 

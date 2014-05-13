@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/clean'
 require 'rubygems/package_task'
 require 'rspec/core/rake_task'
+require 'bundler/gem_tasks'
 
 PACKAGE_DIR = 'pkg'
 SAMPLES_DIR = "samples"

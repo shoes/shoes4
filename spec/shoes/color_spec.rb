@@ -199,7 +199,9 @@ describe Shoes::Color do
     end
 
     describe "comparable" do
-      let(:color_1) { Shoes::Color.new(255, 69, 0) } # orangered
+      let(:color_1) { Shoes::Color.new(255, 69, 0) }
+      let(:red) {Shoes::Color.new 255, 0, 0}
+      let(:green) {Shoes::Color.new 0, 255, 0}
 
       it "is equal when values are equal" do
         color_2 = Shoes::Color.new(255, 69, 0)
@@ -214,6 +216,14 @@ describe Shoes::Color do
       it "is greater than when lighter" do
         color_2 = Shoes::Color.new(255, 68, 0)
         color_1.should be > color_2
+      end
+
+      it 'does not claim for full red and full green to be equal' do
+        expect(red).not_to eq green
+      end
+
+      it 'claims that a color is the same as itself' do
+        expect(green).to eq green
       end
 
       context "same rgb values" do

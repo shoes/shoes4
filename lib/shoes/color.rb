@@ -58,11 +58,12 @@ EOS
     end
 
     def <=>(other)
-      raise ArgumentError, "can't compare #{self.class.name} with #{other.class.name}" unless other.class.ancestors.include?(self.class)
-      # If they are the same color, defer to alpha
-      return @alpha <=> other.alpha if @red == other.red && @green == other.green && @blue == other.blue
-      # Else use the sum of color values
-      return @red + @green + @blue <=> other.red + other.green + other.blue
+      raise_class_mismatch_error(other) unless other.is_a?(self.class)
+      if same_base_color?(other)
+        @alpha <=> other.alpha
+      else
+        less_or_greater_than other
+      end
     end
 
     # @return [String] a hex represenation of this color
@@ -78,6 +79,25 @@ EOS
       return 255 if rgb > 255
       return 0 if rgb < 0
       rgb
+    end
+
+    def raise_class_mismatch_error other
+      raise ArgumentError,
+            "can't compare #{self.class.name} with #{other.class.name}"
+    end
+
+    def same_base_color? other
+      @red == other.red && @green == other.green && @blue == other.blue
+    end
+
+    def less_or_greater_than(other)
+      own_sum   = @red + @green + @blue
+      other_sum = other.red + other.green + other.blue
+      if own_sum > other_sum
+        1
+      else
+        -1
+      end
     end
 
     class HexConverter

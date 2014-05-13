@@ -43,7 +43,7 @@ good-clock-adjusted.rb
 good-follow.rb
 good-potato-chopping.rb
 good-reminder.rb
-good-vjot.rb
+# good-vjot.rb see #255
 
 expert-definr.rb
 expert-game-of-life-adjusted.rb
@@ -53,6 +53,9 @@ expert-minesweeper-adjusted.rb
 expert-pong.rb
 expert-snake.rb
 expert-tankspank.rb
+
+# examples from the nobody knows shoes book
+nks_poem.rb
 
 
 class-book-adjusted.rb
