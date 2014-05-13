@@ -258,6 +258,16 @@ describe Shoes::Dimension do
         its(:element_end) {should eq subject.element_start + element_extent -
                                        ONE_PIXEL}
       end
+
+      describe 'relative margins' do
+        let(:margin_start) {0.1}
+        let(:margin_end) {0.2}
+
+        its(:margin_start) {should be_within(ONE_PIXEL).of 0.1 *
+                                                          parent_element_extent}
+        its(:margin_end) {should be_within(ONE_PIXEL).of 0.2 *
+                                                         parent_element_extent}
+      end
     end
   end
 

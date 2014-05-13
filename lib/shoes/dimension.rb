@@ -103,7 +103,9 @@ class Shoes
     [:margin_start, :margin_end, :displace_start].each do |method|
       define_method method do
         instance_variable_name = '@' + method.to_s
-        instance_variable_get(instance_variable_name) || 0
+        value = instance_variable_get(instance_variable_name) || 0
+        value = calculate_relative value if is_relative? value
+        value
       end
     end
 
