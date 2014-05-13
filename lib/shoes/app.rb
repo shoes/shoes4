@@ -316,11 +316,9 @@ class Shoes
         ::Shoes::Logger.setup
       end
 
-      @app.instance_eval do
-        keypress do |key|
-          blk = ::Shoes::InternalApp.global_keypresses[key]
-          self.instance_eval(&blk) unless blk.nil?
-        end
+      @app.keypress do |key|
+        blk = ::Shoes::InternalApp.global_keypresses[key]
+        self.instance_eval(&blk) unless blk.nil?
       end
     end
 
