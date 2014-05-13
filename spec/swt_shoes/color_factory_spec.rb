@@ -1,7 +1,8 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::ColorFactory do
-  let(:blue) { Shoes::COLORS[:blue] }
+  let(:blue)     { Shoes::COLORS[:blue] }
+  let(:gradient) { Shoes::Gradient.new(blue, blue) }
 
   subject(:factory) { Shoes::Swt::ColorFactory.new }
 
@@ -33,5 +34,16 @@ describe Shoes::Swt::ColorFactory do
 
     new_color = factory.create(blue)
     expect(color).to_not eql(new_color)
+  end
+
+  it "allows gradients through" do
+    expect(factory.create(gradient)).to_not be_nil
+  end
+
+  it "safely disposes of non-disposable elements" do
+    factory.create(gradient)
+    expect(gradient).to receive(:dispose).never
+
+    factory.dispose
   end
 end
