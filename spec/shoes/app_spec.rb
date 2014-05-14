@@ -346,6 +346,25 @@ describe Shoes::App do
     end
   end
 
+  describe "#parent" do
+    context "when parent is top slot" do
+      let(:input_block) {Proc.new{flow{@parent = parent}}}
+      let(:internal_app) {subject.instance_variable_get(:@__app__)}
+    
+      it "#parent returns the top_slot" do
+        expect @parent == internal_app.top_slot
+      end
+    end
+
+    context "when parent is not top slot" do
+      let(:input_block) {Proc.new{stack{flow{@parent = parent}}}}
+      it 'returns the current parent' do
+        expect @parent.class == Shoes::Stack
+      end
+    end
+
+  end
+
   describe 'DELEGATE_METHODS' do
     subject {Shoes::App::DELEGATE_METHODS}
 

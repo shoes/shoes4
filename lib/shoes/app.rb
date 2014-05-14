@@ -84,6 +84,10 @@ class Shoes
       'Shoes App: ' + @__app__.app_title
     end
     
+    def parent
+      @__app__.current_slot.parent
+    end
+
     %w(
       width height owner started? location left top absolute_left
       absolute_top rotate click release clear fullscreen fullscreen=
