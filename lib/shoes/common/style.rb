@@ -46,16 +46,17 @@ class Shoes
             end
           end
 
+          @supported_styles.reject!{|style| STYLE_GROUPS[:dimensions].include?(style)}
+          
           #define setter and getter unless its a dimension
           @supported_styles.map(&:to_sym).each do |style|
-            next if STYLE_GROUPS[:dimensions].include?(style)
 
             define_method style.to_s do
               @style[style]
             end
 
             define_method "#{style}=" do |new_style|
-              @style[style] = validate_style(new_style)
+              @style[style] = new_style
             end
 
           end
@@ -77,13 +78,6 @@ class Shoes
 
       private
 
-      def validate_style(style)
-        style
-        # TODO add code which knows which styles are supposed to get what kinds
-        # of data. And raises an exception when the wrong kind is given
-        #
-      end
-
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
         set_dimensions(new_styles)
@@ -99,7 +93,7 @@ class Shoes
 
       def update_dimensions #so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-        #  @style[style] = self.send(style.to_s) #getting problems here
+          @style[style] = self.send(style.to_s) #getting problems here
         end
       end
 
