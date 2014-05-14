@@ -348,18 +348,30 @@ describe Shoes::App do
 
   describe "#parent" do
     context "when parent is top slot" do
-      let(:input_block) {Proc.new{flow{@parent = parent}}}
-      let(:internal_app) {subject.instance_variable_get(:@__app__)}
-    
-      it "#parent returns the top_slot" do
-        expect @parent == internal_app.top_slot
+      it "returns the top_slot if no slot is wrapped around" do
+        my_parent = nil
+        app = Shoes.app do
+          flow do
+            my_parent = parent
+          end
+        end
+        expect(my_parent).to eq app.instance_variable_get(:@__app__).top_slot
       end
     end
 
-    context "when parent is not top slot" do
-      let(:input_block) {Proc.new{stack{flow{@parent = parent}}}}
+    context "when parent is not the top slot" do
       it 'returns the current parent' do
-        expect @parent.class == Shoes::Stack
+        my_parent = nil
+        my_stack  = nil
+        app = Shoes.app do
+          my_stack = stack do
+            flow do
+              my_parent = parent
+            end
+          end
+        end
+
+        expect(my_parent).to eq my_stack
       end
     end
 
