@@ -346,6 +346,37 @@ describe Shoes::App do
     end
   end
 
+  describe "#parent" do
+    context "when parent is top slot" do
+      it "returns the top_slot if no slot is wrapped around" do
+        my_parent = nil
+        app = Shoes.app do
+          flow do
+            my_parent = parent
+          end
+        end
+        expect(my_parent).to eq app.instance_variable_get(:@__app__).top_slot
+      end
+    end
+
+    context "when parent is not the top slot" do
+      it 'returns the current parent' do
+        my_parent = nil
+        my_stack  = nil
+        app = Shoes.app do
+          my_stack = stack do
+            flow do
+              my_parent = parent
+            end
+          end
+        end
+
+        expect(my_parent).to eq my_stack
+      end
+    end
+
+  end
+
   describe 'DELEGATE_METHODS' do
     subject {Shoes::App::DELEGATE_METHODS}
 
