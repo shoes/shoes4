@@ -15,8 +15,9 @@ class Shoes
       attr_reader :layout, :element_left, :element_top
 
       extend Forwardable
-      def_delegators :@layout, :get_bounds, :text, :text=,
-                               :line_count, :line_metrics, :line_offsets
+      def_delegators :@layout, :text, :text=,
+                               :bounds, :get_bounds, :width,
+                               :line_bounds, :line_count, :line_metrics, :line_offsets
 
       def initialize(dsl, text, width)
         @dsl = dsl
@@ -77,8 +78,20 @@ class Shoes
         layout.setWidth(width)
       end
 
+      def layout_height
+        layout.bounds.height - layout.spacing
+      end
+
       def layout_fits_in?(width)
         layout.bounds.width <= width
+      end
+
+      def last_line_height
+        layout.line_metrics(layout.line_count - 1).height
+      end
+
+      def last_line_width
+        layout.line_bounds(layout.line_count - 1).width
       end
 
       def draw(graphics_context)

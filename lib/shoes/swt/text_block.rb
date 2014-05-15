@@ -44,53 +44,44 @@ class Shoes
           set_absolutes_for_two_layouts(current_position.next_line_start)
         end
 
-        @dsl.calculated_width = last_layout.bounds.width
-        @dsl.calculated_height = @fitted_layouts.inject(0) do |total, layout|
-          total += layout.get_bounds.height
-        end
-
         if trailing_newline?
           bump_absolutes_to_next_line
         end
+
+        @dsl.calculated_width = @fitted_layouts.last.width
+        @dsl.calculated_height = @fitted_layouts.inject(0) do |total, layout|
+          total += layout.bounds.height
+        end
       end
 
-      def first_layout
-        fitted_layouts.first.layout
+      def layout_height
+        fitted_layouts.last.layout_height
       end
 
-      def last_layout
-        fitted_layouts.last.layout
+      def last_line_width
+        fitted_layouts.last.last_line_width
       end
 
-      def last_bounds
-        line_count = last_layout.line_count
-        last_layout.get_line_bounds(line_count - 1)
-      end
-
-      def layout_height(layout)
-        layout.bounds.height - layout.spacing
-      end
-
-      def line_height(layout)
-        layout.line_metrics(layout.line_count - 1).height
+      def last_line_height
+        fitted_layouts.last.last_line_height
       end
 
       def trailing_newline?
-        last_layout.text.end_with?("\n")
+        @dsl.text.end_with?("\n")
       end
 
       def set_absolutes_for_one_layout
-        @dsl.absolute_right = @dsl.absolute_left + last_bounds.width + margin_right
-        @dsl.absolute_bottom = @dsl.absolute_top + layout_height(first_layout) +
+        @dsl.absolute_right = @dsl.absolute_left + last_line_width + margin_right
+        @dsl.absolute_bottom = @dsl.absolute_top + layout_height +
                                 margin_top + margin_bottom
-        @dsl.absolute_top = @dsl.absolute_bottom - line_height(first_layout)
+        @dsl.absolute_top = @dsl.absolute_bottom - last_line_height
       end
 
       def set_absolutes_for_two_layouts(next_line_start)
-        @dsl.absolute_right =  @dsl.parent.absolute_left + last_bounds.width + margin_right
-        @dsl.absolute_bottom = next_line_start + layout_height(last_layout) +
+        @dsl.absolute_right =  @dsl.parent.absolute_left + last_line_width + margin_right
+        @dsl.absolute_bottom = next_line_start + layout_height +
                                 margin_top + margin_bottom
-        @dsl.absolute_top = @dsl.absolute_bottom - line_height(last_layout)
+        @dsl.absolute_top = @dsl.absolute_bottom - last_line_height
       end
 
       def bump_absolutes_to_next_line
