@@ -10,15 +10,11 @@ class Shoes
     attr_accessor :calculated_width, :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
-      texts = Array(text)
       @parent             = parent
       @app                = app
       @opts               = opts
       @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
       @font_size          = @opts[:size] || font_size
-      @contents           = texts
-      @text               = texts.map(&:to_s).join
-      @text_styles        = gather_text_styles(self, texts)
 
       @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
@@ -32,6 +28,9 @@ class Shoes
       @gui = Shoes.configuration.backend_for(self)
       @parent.add_child(self)
 
+      # Important to use accessor and do this after the backend exists!
+      self.text = Array(text)
+
       clickable_options(@opts)
     end
 
@@ -39,17 +38,18 @@ class Shoes
       @gui.in_bounds?(*args)
     end
 
-    def update_text_styles(texts)
+    def text=(*texts)
+      replace *texts[0]
+    end
+
+    def replace(*texts)
+      # Order here matters as well--backend#replace shouldn't rely on DSL state
+      # but the texts that it's passed if it needs information at this point.
+      @gui.replace *texts
+
+      @text        = texts.map(&:to_s).join
+      @contents    = texts
       @text_styles = gather_text_styles(self, texts)
-    end
-
-    def text=(*values)
-      replace *values[0]
-    end
-
-    def replace(*values)
-      @text = values.map(&:to_s).join
-      @gui.replace *values
     end
 
     def to_s
@@ -109,6 +109,8 @@ class Shoes
     end
 
     def links
+      return [] unless @contents
+
       @contents.select do |element|
         element.is_a?(Shoes::Link)
       end
