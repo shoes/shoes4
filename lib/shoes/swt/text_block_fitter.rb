@@ -60,7 +60,7 @@ class Shoes
 
       def fits_in_one_layout?(layout, height)
         return true if height == :unbounded || layout.line_count == 1
-        layout.get_bounds.height <= height
+        layout.bounds.height <= height
       end
 
       def fit_into_full_layouts(width, height)
@@ -171,7 +171,7 @@ class Shoes
       # If first text is empty, height may be smaller than an actual line in
       # the current font. Take our pre-existing allowed height instead.
       def first_height(first_layout, first_text, height)
-        first_height = first_layout.get_bounds.height
+        first_height = first_layout.bounds.height
         first_height = height if first_text.empty?
         first_height
       end

@@ -94,7 +94,7 @@ describe Shoes::Swt::TextBlockFitter do
   describe "fit it in" do
     let(:bounds) { double('bounds', width: 100, height: 50)}
     let(:layout) { double('layout', text: "something something",
-                          line_count: 1, line_offsets:[], get_bounds: bounds) }
+                          line_count: 1, line_offsets:[], bounds: bounds) }
 
     before(:each) do
       layout.stub(:position_at) { layout }

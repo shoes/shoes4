@@ -16,7 +16,7 @@ class Shoes
 
       extend Forwardable
       def_delegators :@layout, :text, :text=,
-                               :bounds, :get_bounds, :width,
+                               :bounds, :width,
                                :line_bounds, :line_count, :line_metrics, :line_offsets
 
       def initialize(dsl, text, width)

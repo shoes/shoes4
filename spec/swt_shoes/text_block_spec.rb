@@ -182,6 +182,6 @@ describe Shoes::Swt::TextBlock do
     double(name, disposed?: false,
            width: width, layout_height: height,
            last_line_width: width, last_line_height: line_height,
-           bounds: bounds, get_bounds: bounds)
+           bounds: bounds)
   end
 end
