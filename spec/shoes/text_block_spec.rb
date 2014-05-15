@@ -154,6 +154,11 @@ describe Shoes::TextBlock do
         expect(subject.width).to eql 240
       end
 
+      it "delegates to calculated height" do
+        subject.calculated_height = 240
+        expect(subject.height).to eql 240
+      end
+
       it "bases desired width off parent" do
         subject.absolute_left = 20
         expect(subject.desired_width).to eql 280

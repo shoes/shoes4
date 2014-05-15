@@ -7,7 +7,8 @@ class Shoes
     include DimensionsDelegations
 
     attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts
-    attr_accessor :calculated_width, :font, :font_size, :cursor, :textcursor
+    attr_accessor :calculated_width, :calculated_height, :font, :font_size,
+                  :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
       texts = Array(text)
@@ -84,6 +85,10 @@ class Shoes
 
     def width
       @dimensions.width || self.calculated_width
+    end
+
+    def height
+      @dimensions.height || self.calculated_height
     end
 
     # If an explicit width's set, it's used. If not, we look to the parent.

@@ -44,6 +44,11 @@ class Shoes
           set_absolutes_for_two_layouts(current_position.next_line_start)
         end
 
+        @dsl.calculated_width = last_layout.bounds.width
+        @dsl.calculated_height = @fitted_layouts.inject(0) do |total, layout|
+          total += layout.get_bounds.height
+        end
+
         if trailing_newline?
           bump_absolutes_to_next_line
         end
@@ -79,7 +84,6 @@ class Shoes
         @dsl.absolute_bottom = @dsl.absolute_top + layout_height(first_layout) +
                                 margin_top + margin_bottom
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(first_layout)
-        @dsl.calculated_width = first_layout.bounds.width
       end
 
       def set_absolutes_for_two_layouts(next_line_start)
@@ -87,7 +91,6 @@ class Shoes
         @dsl.absolute_bottom = next_line_start + layout_height(last_layout) +
                                 margin_top + margin_bottom
         @dsl.absolute_top = @dsl.absolute_bottom - line_height(last_layout)
-        @dsl.calculated_width = last_layout.bounds.width
       end
 
       def bump_absolutes_to_next_line

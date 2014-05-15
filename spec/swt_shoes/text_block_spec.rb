@@ -35,9 +35,14 @@ describe Shoes::Swt::TextBlock do
     let(:layout_height) { 200 }
     let(:line_height) { 10 }
     let(:layout) { create_layout(layout_width, layout_height) }
+    let(:unused_layout) { create_layout(0, 0) }
     let(:fitter) { double("fitter") }
-    let(:fitted_layout) { double("fitted_layout", disposed?: false, layout: layout) }
-    let(:second_fitted_layout) { double("second_fitted_layout", disposed?: false, layout: layout) }
+    let(:fitted_layout) { double("fitted_layout",
+                                 disposed?: false,
+                                 layout: layout, get_bounds: layout.bounds) }
+    let(:second_fitted_layout) { double("second_fitted_layout",
+                                        disposed?: false,
+                                        layout: layout, get_bounds: layout.bounds) }
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
@@ -129,7 +134,10 @@ describe Shoes::Swt::TextBlock do
         current_position.next_line_start = 0
 
         fitter.stub(:fit_it_in) {
-          [:unused_layout, double("fitted_layout", layout: layout)]
+          [double("unused fitted layout",
+                  layout: unused_layout, get_bounds: unused_layout.bounds),
+           double("fitted_layout",
+                  layout: layout, get_bounds: layout.bounds)]
         }
       end
 
