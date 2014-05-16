@@ -56,7 +56,7 @@ describe Shoes::Dimension do
     end
   end
 
-  describe 'extent' do
+  describe '#extent' do
     let(:parent_element_extent) {600}
     let(:parent_extent) {580}
     let(:parent) {double 'parent', element_extent: parent_element_extent,
@@ -146,7 +146,7 @@ describe Shoes::Dimension do
     end
   end
 
-  describe 'start' do
+  describe '#start' do
     let(:start) {23}
 
     before :each do
@@ -169,7 +169,7 @@ describe Shoes::Dimension do
       expect(subject.start).to eq 1.01
     end
 
-    context 'without a parent' do
+    context '#without a parent' do
       let(:parent_dimension) {nil}
 
       it 'just takes the relative value' do
@@ -179,7 +179,19 @@ describe Shoes::Dimension do
     end
   end
 
-  describe 'absolute_start' do
+  describe 'with no parent but set dimensions' do
+    subject {Shoes::Dimension.new}
+
+    before :each do
+      subject.absolute_start = 23
+      subject.extent = 45
+    end
+
+    its(:end) {should be_nil}
+    its(:start) {should be_nil}
+  end
+
+  describe '#absolute_start' do
     let(:absolute_start) {8}
 
     before :each do
@@ -193,7 +205,7 @@ describe Shoes::Dimension do
     it {should be_positioned}
   end
 
-  describe 'absolute_end' do
+  describe '#absolute_end' do
     it 'is the sum of start and extent' do
       subject.absolute_start = 7
       subject.extent = 22
@@ -201,7 +213,7 @@ describe Shoes::Dimension do
     end
   end
 
-  describe 'margins' do
+  describe '#margins' do
 
     let(:margin_start) {11}
     let(:margin_end) {17}
@@ -271,7 +283,7 @@ describe Shoes::Dimension do
     end
   end
 
-  describe 'in_bounds?' do
+  describe '#in_bounds?' do
     let(:absolute_start) {20}
     let(:extent) {100}
     let(:absolute_end) {20 + 100 -ONE_PIXEL} # -1 due to pixel counting adjustment

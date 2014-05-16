@@ -100,9 +100,8 @@ class Shoes
         clear_contents
       end
 
-      def replace(*values)
+      def replace(*_)
         clear_contents
-        @dsl.update_text_styles(values)
       end
 
       private
