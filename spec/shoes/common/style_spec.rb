@@ -19,14 +19,14 @@ describe Shoes::Common::Style do
   its(:style) { should eq (default_styles.merge({key: 'value'})) }
 
   describe 'changing the style through #style(hash)' do
-    let(:changed_style) {default_styles.merge({key: 'changed value'})}
+    let(:changed_style) { {key: 'changed value'} }
 
     before :each do
       subject.style changed_style
     end
 
     it 'returns the changed style' do
-      expect(subject.style).to eq changed_style
+      expect(subject.style).to eq default_styles.merge changed_style
     end
 
     it 'does update values for new values' do

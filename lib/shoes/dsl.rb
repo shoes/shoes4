@@ -312,7 +312,7 @@ EOS
 
     # Define app-level setter methods
     PATTERN_STYLES = [:fill, :stroke]
-    OTHER_STYLES = [:cap, :family, :fill, :font, :strikecolor, :stroke, :undercolor, :wrap]
+    OTHER_STYLES = [:cap, :strokewidth]
 
     PATTERN_STYLES.each do |style|
       define_method style.to_s do |val|

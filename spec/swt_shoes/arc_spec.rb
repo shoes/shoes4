@@ -27,9 +27,9 @@ describe Shoes::Swt::Arc do
       subject.angle2.should eq(90.0)
     end
 
-    specify "delegates #wedge? to dsl object" do
-      dsl.should_receive(:wedge?) { false }
-      subject.should_not be_wedge
+    specify "delegates #wedge to dsl object" do
+      dsl.should_receive(:wedge) { false }
+      expect(subject).to_not be_wedge
     end
   end
 

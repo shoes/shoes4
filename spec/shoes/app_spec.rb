@@ -108,13 +108,8 @@ describe Shoes::App do
       end
     end
   end
-  #### WORK HERE
-  #I'm thinking defaults.each check if set and get from default
-  # Then check the patter and other setters
-  # then no fill nostroke ... done?
-  describe "style defaults" do
-    let(:black) { Shoes::COLORS[:black] }
-    let(:goldenrod) { Shoes::COLORS[:goldenrod] }
+  
+  describe "style with defaults" do
     let(:defaults) { Shoes::Common::Style::DEFAULT_STYLES }
 
     defaults = Shoes::Common::Style::DEFAULT_STYLES
@@ -124,9 +119,8 @@ describe Shoes::App do
     end
 
     it "merges new styles with existing styles" do
-      new_styles = { strokewidth: 4 }
-      app.style new_styles
-      expect(app.style).to eq(defaults.merge(new_styles))
+      subject.style strokewidth: 4
+      expect(subject.style).to eq(defaults.merge(strokewidth: 4))
     end
 
     defaults.each do |key, value|
@@ -139,10 +133,6 @@ describe Shoes::App do
           expect(subject.line(0, 100, 100, 0).style[key]).to eq(value)
         end
 
-        it "passes new values to objects" do
-          subject.public_send("#{key}=", 10)
-          expect(subject.line(0, 100, 100, 0).style[key]).to eq(10)
-        end
       end
     end
 
@@ -152,15 +142,38 @@ describe Shoes::App do
         app1 = Shoes::App.new
         app2 = Shoes::App.new
 
-        app1.strokewidth = 10
+        app1.strokewidth 10
         app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
-
+        
         # .. but does not affect app2
         app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
+     
       end
     end
   end
-  ### NO MORE
+
+  describe "app-level style setter" do
+    let(:black) { Shoes::COLORS[:black] }
+    
+    pattern_styles = Shoes::DSL::PATTERN_STYLES
+    other_styles = Shoes::DSL::OTHER_STYLES
+
+    pattern_styles.each do |style|
+      it "sets #{style} for objects" do
+        subject.public_send(style, black)
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq(black) 
+      end
+    end
+
+    other_styles.each do |style|
+      it "sets #{style} for objects" do
+        subject.public_send(style, 'val')
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq('val') 
+      end
+    end
+
+  end
+
   describe "connecting with gui" do 
     let(:gui) { app.instance_variable_get(:@__app__).gui }
 

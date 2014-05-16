@@ -86,9 +86,9 @@ class Shoes
         @style.merge! normalized_style
       end
 
-      def set_dimensions(new_styles)
+      def set_dimensions(new_styles) #if style given as hash
+        new_styles.delete_if{|key, value| !self.respond_to?("#{key}=")}
         new_styles.each do |key, value|
-          next unless STYLE_GROUPS[:dimensions].include?(key)
           self.send(key.to_s+"=", value)
         end
       end

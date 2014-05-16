@@ -190,7 +190,7 @@ class Shoes
     end
 
     def default_styles
-      Common::Style::DEFAULT_STYLES
+      Common::Style::DEFAULT_STYLES.clone
     end
 
     def in_bounds?(x, y)
