@@ -24,7 +24,7 @@ describe Shoes::App do
 
     it "initializes style hash", :qt do
       style = Shoes::App.new.style
-      style.class.should eq(Hash)
+      expect(style.class).to eq(Hash)
     end
 
     context "console" do
@@ -35,7 +35,6 @@ describe Shoes::App do
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets width", :qt do
-        subject.width.should == defaults[:width]
         expect(subject.width).to eq defaults[:width]
       end
 
@@ -91,7 +90,7 @@ describe Shoes::App do
         expect(Shoes::Flow).to receive(:new).with(anything, anything,
                                                   {width:  opts[:width],
                                                    height: opts[:height]}).
-                                                  and_call_original
+        and_call_original
         subject
       end
     end
@@ -109,13 +108,18 @@ describe Shoes::App do
       end
     end
   end
-
-  describe "style" do
+  #### WORK HERE
+  #I'm thinking defaults.each check if set and get from default
+  # Then check the patter and other setters
+  # then no fill nostroke ... done?
+  describe "style defaults" do
     let(:black) { Shoes::COLORS[:black] }
     let(:goldenrod) { Shoes::COLORS[:goldenrod] }
-    let(:defaults) { {stroke: black, strokewidth: 1} }
+    let(:defaults) { Shoes::Common::Style::DEFAULT_STYLES }
 
-    it "sets defaults" do
+    defaults = Shoes::Common::Style::DEFAULT_STYLES
+
+    it "sets app defaults" do
       expect(app.style).to eq(defaults)
     end
 
@@ -125,42 +129,30 @@ describe Shoes::App do
       expect(app.style).to eq(defaults.merge(new_styles))
     end
 
-    describe "strokewidth" do
-      it "defaults to 1" do
-        subject.style[:strokewidth].should eq(1)
-      end
+    defaults.each do |key, value|
+      describe "#{key}" do
+        it "defaults to #{value}" do
+          subject.style[key].should eq(value)
+        end
 
-      it "passes default to objects" do
-        subject.line(0, 100, 100, 0).style[:strokewidth].should eq(1)
-      end
+        it "passes default to objects" do
+          expect(subject.line(0, 100, 100, 0).style[key]).to eq(value)
+        end
 
-      it "passes new values to objects" do
-        subject.strokewidth 10
-        subject.line(0, 100, 100, 0).style[:strokewidth].should eq(10)
+        it "passes new values to objects" do
+          subject.public_send("#{key}=", 10)
+          expect(subject.line(0, 100, 100, 0).style[key]).to eq(10)
+        end
       end
     end
 
-    describe "stroke" do
-      it "defaults to black" do
-        subject.style[:stroke].should eq(black)
-      end
-
-      it "passes default to objects" do
-        subject.oval(100, 100, 100).style[:stroke].should eq(black)
-      end
-
-      it "passes new value to objects" do
-        subject.stroke goldenrod
-        subject.oval(100, 100, 100).style[:stroke].should eq(goldenrod)
-      end
-    end
 
     describe "default styles" do
-      it "is independent among Shoes::App instances" do
+      it "are independent among Shoes::App instances" do
         app1 = Shoes::App.new
         app2 = Shoes::App.new
 
-        app1.strokewidth 10
+        app1.strokewidth = 10
         app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
 
         # .. but does not affect app2
@@ -168,7 +160,7 @@ describe Shoes::App do
       end
     end
   end
-  
+  ### NO MORE
   describe "connecting with gui" do 
     let(:gui) { app.instance_variable_get(:@__app__).gui }
 

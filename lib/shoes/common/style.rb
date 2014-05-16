@@ -24,7 +24,7 @@ class Shoes
       # Adds styles, or just returns current style if no argument
       def style(new_styles = nil)
         update_style(new_styles) if need_to_update_style?(new_styles)
-        update_dimensions
+        update_dimensions if styles_with_dimensions?
         @style
       end 
 
@@ -63,8 +63,10 @@ class Shoes
         end
       end
 
-      def style_init(opts, new_styles)
-        default_element_styles = self.class::STYLES || {}
+      def style_init(opts, new_styles = {})
+        
+        default_element_styles = {}
+        default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
         @style = @app.style.merge(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
@@ -93,8 +95,12 @@ class Shoes
 
       def update_dimensions #so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          @style[style] = self.send(style.to_s) #getting problems here
+          @style[style] = self.send(style.to_s)
         end
+      end
+
+      def styles_with_dimensions?
+        STYLE_GROUPS[:dimensions].any? {|dimension| @style.has_key? dimension}
       end
 
       def need_to_update_style?(new_styles)

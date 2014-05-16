@@ -22,3 +22,26 @@ shared_examples_for "object with style" do
     end
   end
 end
+
+all_the_styles = %w[align angle attach autoplay bottom cap center change checked choose 
+                    click curve displace_left displace_top emphasis family fill font 
+                    group height hidden inner items justify kerning leading left margin 
+                    margin_bottom margin_left margin_right margin_top outer points radius 
+                    right rise scroll secret size state stretch strikecolor strikethrough 
+                    stroke strokewidth text top undercolor underline variant weight width 
+                    wrap]
+
+
+all_the_styles.map(&:to_sym).each do |style|
+  shared_examples_for "object that styles with #{style}" do
+    
+    it "has #{style} setter" do
+      expect(subject).to respond_to("#{style}=".to_sym)
+    end
+
+    it "has #{style} getter" do
+      expect(subject).to respond_to(style)
+    end
+    
+  end
+end
