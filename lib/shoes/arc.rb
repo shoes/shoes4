@@ -8,7 +8,7 @@ class Shoes
     include DimensionsDelegations
 
     attr_reader :app, :parent, :dimensions
-    style_with :angle1, :angle2, :art_styles, :cap, :center, :dimensions, :radius, :wedge
+    style_with :angle1, :angle2, :art_styles, :center, :dimensions, :radius, :wedge
     STYLES = {wedge: false}
 
     def initialize(app, parent, left, top, width, height, angle1, angle2, opts = {})

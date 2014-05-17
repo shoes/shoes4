@@ -10,7 +10,7 @@ class Shoes
       }
 
       STYLE_GROUPS = {
-        art_styles:    [:click, :fill, :stroke, :strokewidth],
+        art_styles:    [:cap, :click, :fill, :stroke, :strokewidth],
         common_styles: [:displace_left, :displace_top, :hidden],
         dimensions:    [:bottom, :height, :left, :margin, 
                         :margin_bottom, :margin_left, :margin_right, 
@@ -18,7 +18,8 @@ class Shoes
         text_styles:   [:align, :click, :emphasis, :family, :fill, :font, 
                         :justify, :kerning, :leading, :rise, :size, :stretch, 
                         :strikecolor, :strikethrough, :stroke, :undercolor, 
-                        :underline, :smallcaps, :weight, :wrap]
+                        :underline, :weight, :wrap],
+        others:        [:angle1, :angle2, :center, :radius, :wedge]
       }
 
       # Adds styles, or just returns current style if no argument
@@ -46,10 +47,12 @@ class Shoes
             end
           end
 
-          @supported_styles.reject!{|style| STYLE_GROUPS[:dimensions].include?(style)}
+          needs_accessors = @supported_styles.reject do |style| 
+            STYLE_GROUPS[:dimensions].include?(style)
+          end
           
-          #define setter and getter unless its a dimension
-          @supported_styles.map(&:to_sym).each do |style|
+          #define accessors for styles that need them
+          needs_accessors.map(&:to_sym).each do |style|
 
             define_method style.to_s do
               @style[style]

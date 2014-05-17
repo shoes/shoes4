@@ -90,7 +90,7 @@ describe Shoes::App do
         expect(Shoes::Flow).to receive(:new).with(anything, anything,
                                                   {width:  opts[:width],
                                                    height: opts[:height]}).
-        and_call_original
+                                                  and_call_original
         subject
       end
     end
@@ -110,20 +110,20 @@ describe Shoes::App do
   end
   
   describe "style with defaults" do
-    let(:defaults) { Shoes::Common::Style::DEFAULT_STYLES }
-
-    defaults = Shoes::Common::Style::DEFAULT_STYLES
+    let(:default_styles) { Shoes::Common::Style::DEFAULT_STYLES }
 
     it "sets app defaults" do
-      expect(app.style).to eq(defaults)
+      expect(app.style).to eq(default_styles)
     end
 
     it "merges new styles with existing styles" do
       subject.style strokewidth: 4
-      expect(subject.style).to eq(defaults.merge(strokewidth: 4))
+      expect(subject.style).to eq(default_styles.merge(strokewidth: 4))
     end
+    
+    default_styles = Shoes::Common::Style::DEFAULT_STYLES
 
-    defaults.each do |key, value|
+    default_styles.each do |key, value|
       describe "#{key}" do
         it "defaults to #{value}" do
           subject.style[key].should eq(value)
@@ -144,7 +144,7 @@ describe Shoes::App do
 
         app1.strokewidth 10
         app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
-        
+
         # .. but does not affect app2
         app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
      
@@ -153,15 +153,15 @@ describe Shoes::App do
   end
 
   describe "app-level style setter" do
-    let(:black) { Shoes::COLORS[:black] }
+    let(:goldenrod) { Shoes::COLORS[:goldenrod] }
     
     pattern_styles = Shoes::DSL::PATTERN_STYLES
     other_styles = Shoes::DSL::OTHER_STYLES
 
     pattern_styles.each do |style|
       it "sets #{style} for objects" do
-        subject.public_send(style, black)
-        expect(subject.line(0, 100, 100, 0).style[style]).to eq(black) 
+        subject.public_send(style, goldenrod)
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq(goldenrod) 
       end
     end
 
