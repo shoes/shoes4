@@ -66,7 +66,7 @@ class Shoes
         end
       end
 
-      def style_init(opts, new_styles = {})
+      def style_init(arg_styles, new_styles = {})
         
         default_element_styles = {}
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
@@ -74,7 +74,7 @@ class Shoes
         @style = @app.style.merge(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
-        @style.merge!(opts)
+        @style.merge!(arg_styles)
       end
 
       def self.included(klass)
