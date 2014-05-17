@@ -5,10 +5,10 @@ class Shoes
     include CommonMethods
     include Common::Clickable
     include DimensionsDelegations
+    include TextBlockDimensionsDelegations
 
     attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts
-    attr_accessor :calculated_width, :calculated_height, :font, :font_size,
-                  :cursor, :textcursor
+    attr_accessor :font, :font_size, :cursor, :textcursor
 
     def initialize(app, parent, text, font_size, opts = {})
       texts = Array(text)
@@ -24,7 +24,7 @@ class Shoes
       @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
 
-      @dimensions   = Dimensions.new parent, opts
+      @dimensions   = TextBlockDimensions.new parent, opts
 
       handle_opts @opts
 
@@ -55,50 +55,6 @@ class Shoes
 
     def to_s
       self.text
-    end
-
-    # Since we flow, try to fit in almost any space
-    def fitting_width
-      10
-    end
-
-    # We take over a bunch of the absolute_* measurements since the jagged
-    # shape of a flowed TextBlock doesn't follow the usual rules for dimensions
-    # when we get to positioning (which is the main use of these values).
-    def absolute_right=(value)
-      @absolute_right = value
-    end
-
-    def absolute_right
-      return @dimensions.absolute_right if @absolute_right.nil?
-      @absolute_right
-    end
-
-    def absolute_bottom=(value)
-      @absolute_bottom = value
-    end
-
-    def absolute_bottom
-      return absolute_top + height if @absolute_bottom.nil?
-      @absolute_bottom
-    end
-
-    def width
-      @dimensions.width || self.calculated_width
-    end
-
-    def height
-      @dimensions.height || self.calculated_height
-    end
-
-    # If an explicit width's set, it's used. If not, we look to the parent.
-    def containing_width
-      (@dimensions.width || parent.width) - (margin_left + margin_right)
-    end
-
-    # This is the width the text block initially wants to try and fit into.
-    def desired_width(containing=containing_width)
-      parent.absolute_left + containing - self.absolute_left
     end
 
     def contents_alignment(current_position=nil)

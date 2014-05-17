@@ -1,8 +1,13 @@
 require 'shoes/spec_helper'
 
 describe Shoes::TextBlockDimensions do
-  let(:old_dimension) { Shoes::Dimensions.new(nil, 0, 10, 5, 10) }
-  subject             { Shoes::TextBlockDimensions.new(nil, 0, 10, 5, 10) }
+  let(:left)   { 0 }
+  let(:top)    { 10 }
+  let(:width)  { 5 }
+  let(:height) { 10 }
+
+  let(:old_dimension) { Shoes::Dimensions.new(nil, left, top, width, height) }
+  subject             { Shoes::TextBlockDimensions.new(nil, left, top, width, height) }
 
   before(:each) do
     old_dimension.absolute_left = subject.absolute_left = 0
@@ -43,5 +48,27 @@ describe Shoes::TextBlockDimensions do
       subject.calculated_height = 200
       expect(subject.height).to eq(200)
     end
+  end
+
+  context "containing width" do
+    it "uses immediate width if it can" do
+      expect(subject.containing_width).to eq(5)
+    end
+
+    it "applies margins" do
+      subject.margin = 1
+      expect(subject.containing_width).to eq(3)
+    end
+
+    context "with parent" do
+      let(:parent) { double(width: 100, x_dimension: double("x"),
+                                        y_dimension: double("y")) }
+      subject { Shoes::TextBlockDimensions.new(parent, left, top, nil, height) }
+
+      it "delegates to parent if no width of its own" do
+        expect(subject.containing_width).to eq(100)
+      end
+    end
+
   end
 end
