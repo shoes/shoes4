@@ -65,9 +65,11 @@ class Shoes
 end
 
 require 'shoes/version'
+
 require 'shoes/renamed_delegate'
 require 'shoes/dimension'
 require 'shoes/dimensions'
+require 'shoes/text_block_dimensions'
 
 require 'shoes/color'
 
