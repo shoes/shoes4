@@ -17,6 +17,11 @@ describe Shoes::Swt::Line do
     its(:dsl) { should be(dsl) }
   end
 
+  it "properly disposes" do
+    expect(subject.transform).to receive(:dispose)
+    subject.dispose
+  end
+
   it_behaves_like "paintable"
   it_behaves_like "togglable"
 

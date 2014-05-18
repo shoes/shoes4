@@ -24,6 +24,10 @@ class Shoes
         @app.add_paint_listener(@painter)
       end
 
+      def dispose
+        @transform.dispose unless @transform.disposed?
+      end
+
       def angle
         @dsl.angle
       end
