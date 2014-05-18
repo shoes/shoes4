@@ -64,10 +64,14 @@ class Shoes
         def set_rotate graphics_context, angle, left, top
           angle, left, top = angle.to_i, left.to_i, top.to_i
           if block_given?
-            tr = ::Swt::Transform.new Shoes.display
-            reset_rotate tr, graphics_context, angle, left, top
-            yield
-            reset_rotate tr, graphics_context, -angle, left, top
+            begin
+              tr = ::Swt::Transform.new Shoes.display
+              reset_rotate tr, graphics_context, angle, left, top
+              yield
+              reset_rotate tr, graphics_context, -angle, left, top
+            ensure
+              tr.dispose unless tr.nil? || tr.disposed?
+            end
           end
         end
 

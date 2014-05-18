@@ -5,7 +5,12 @@ describe Shoes::Swt::Common::Painter do
   let(:dsl) {double 'dsl', visible?: true, positioned?: true}
   let(:event) {double 'paint event', gc: graphics_context}
   let(:graphics_context) {double 'graphics_context'}
+  let(:transform) {double 'transform'}
   subject {Shoes::Swt::Common::Painter.new object}
+
+  before do
+    ::Swt::Transform.stub(:new) { transform }
+  end
 
   describe '#paint_control' do
     it 'should attempts to paint the object' do
@@ -23,6 +28,16 @@ describe Shoes::Swt::Common::Painter do
       dsl.stub positioned?: false
       expect(subject).not_to receive(:paint_object)
       subject.paint_control event
+    end
+
+  end
+
+  context "set_rotate" do
+    it "disposes of transform" do
+      expect(transform).to receive(:dispose)
+      subject.set_rotate do
+        #no-op
+      end
     end
   end
 
