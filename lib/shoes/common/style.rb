@@ -47,6 +47,7 @@ class Shoes
             end
           end
 
+          #It would be better to check 'self.respond_to?(style) here, but for now that throws an error
           needs_accessors = @supported_styles.reject do |style| 
             STYLE_GROUPS[:dimensions].include?(style)
           end
