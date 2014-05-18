@@ -29,16 +29,30 @@ class Shoes
         @style
       end 
 
+      def style_init(arg_styles, new_styles = {})
+
+        default_element_styles = {}
+        default_element_styles = self.class::STYLES if defined? self.class::STYLES
+
+        @style = @app.style.merge(default_element_styles)
+        @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
+        @style.merge!(new_styles)
+        @style.merge!(arg_styles)
+      end
+
       module StyleWith
         def style_with(*styles)
-
-          def self.supported_styles
-            @supported_styles
-          end
-
           @supported_styles = []
 
-          #unpack style groups
+          unpack_style_groups(styles)
+          define_accessor_methods
+        end
+
+        def supported_styles
+          @supported_styles
+        end
+        
+        def unpack_style_groups(styles)
           styles.each do |style|
             if STYLE_GROUPS[style]
               STYLE_GROUPS[style].each{|style| @supported_styles << style}
@@ -46,16 +60,18 @@ class Shoes
               @supported_styles << style
             end
           end
+        end
 
-          #It would be better to check 'self.respond_to?(style) here, but for now that throws an error
-          needs_accessors = @supported_styles.reject do |style| 
-            STYLE_GROUPS[:dimensions].include?(style)
+        def define_accessor_methods
+
+          needs_accessors = @supported_styles.reject do |style|
+            self.method_defined?(style)
           end
-          
+
           #define accessors for styles that need them
           needs_accessors.map(&:to_sym).each do |style|
 
-            define_method style.to_s do
+            define_method style do
               @style[style]
             end
 
@@ -65,17 +81,6 @@ class Shoes
 
           end
         end
-      end
-
-      def style_init(arg_styles, new_styles = {})
-        
-        default_element_styles = {}
-        default_element_styles = self.class::STYLES if defined? self.class::STYLES
-
-        @style = @app.style.merge(default_element_styles)
-        @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
-        @style.merge!(new_styles)
-        @style.merge!(arg_styles)
       end
 
       def self.included(klass)
@@ -89,11 +94,11 @@ class Shoes
         set_dimensions(new_styles)
         @style.merge! normalized_style
       end
-
-      def set_dimensions(new_styles) #if style given as hash
-        new_styles.delete_if{|key, value| !self.respond_to?("#{key}=")}
+      
+      #if dimension is set via style, pass info on to the dimensions setter
+      def set_dimensions(new_styles)
         new_styles.each do |key, value|
-          self.send(key.to_s+"=", value)
+          self.send(key.to_s+"=", value) if STYLE_GROUPS[:dimensions].include?(key)
         end
       end
 

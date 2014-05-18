@@ -28,7 +28,7 @@ describe Shoes::Swt::Arc do
     end
 
     specify "delegates #wedge to dsl object" do
-      dsl.should_receive(:wedge) { false }
+      dsl.should_receive(:wedge?) { false }
       expect(subject).to_not be_wedge
     end
   end

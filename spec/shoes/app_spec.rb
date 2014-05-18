@@ -155,8 +155,8 @@ describe Shoes::App do
   describe "app-level style setter" do
     let(:goldenrod) { Shoes::COLORS[:goldenrod] }
     
-    pattern_styles = Shoes::DSL::PATTERN_STYLES
-    other_styles = Shoes::DSL::OTHER_STYLES
+    pattern_styles = Shoes::DSL::PATTERN_APP_STYLES
+    other_styles = Shoes::DSL::OTHER_APP_STYLES
 
     pattern_styles.each do |style|
       it "sets #{style} for objects" do

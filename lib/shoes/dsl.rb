@@ -184,7 +184,6 @@ class Shoes
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      #arc_style = style_normalizer.normalize(opts)
       create Shoes::Arc, left, top, width, height, angle1, angle2, opts#style.merge(arc_style)
     end
 
@@ -311,16 +310,16 @@ EOS
     end
 
     # Define app-level setter methods
-    PATTERN_STYLES = [:fill, :stroke]
-    OTHER_STYLES = [:cap, :strokewidth]
+    PATTERN_APP_STYLES = [:fill, :stroke]
+    OTHER_APP_STYLES = [:cap, :strokewidth]
 
-    PATTERN_STYLES.each do |style|
+    PATTERN_APP_STYLES.each do |style|
       define_method style.to_s do |val|
         @__app__.style[style] = pattern(val)
       end
     end
 
-    OTHER_STYLES.each do |style|
+    OTHER_APP_STYLES.each do |style|
       define_method style.to_s do |val|
         @__app__.style[style] = val
       end

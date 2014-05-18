@@ -30,7 +30,7 @@ class Shoes
       end
 
       def wedge?
-        dsl.wedge
+        dsl.wedge?
       end
 
       private

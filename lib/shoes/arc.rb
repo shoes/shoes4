@@ -22,5 +22,9 @@ class Shoes
 
       clickable_options(styles)
     end
+
+    def wedge?
+      wedge
+    end
   end
 end
