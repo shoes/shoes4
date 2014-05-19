@@ -1,9 +1,9 @@
 class Changelog
   def generate(categories = nil)
     categories ||= [
-      { token: 'Changelog: feature', heading: 'New features'},
-      { token: 'Changelog: improvement', heading: 'Improvements'},
-      { token: 'Changelog: bugfix', heading: 'Bug Fixes'}
+      { pattern: 'Changelog: feature', heading: 'New features'},
+      { pattern: 'Changelog: improvement', heading: 'Improvements'},
+      { pattern: 'Changelog: bugfix', heading: 'Bug Fixes'}
     ]
 
     last_sha = `git rev-list --tags --max-count=1`.chomp
@@ -12,15 +12,16 @@ class Changelog
     categorized_commits = []
 
     changes = categories.inject([]) do |list, category|
-      commits = commits_for_category(category, commit_range)
-      categorized_commits.concat(commits)
-      list << changes_for_category(category, commits)
+      commits = commits_matching(category[:pattern], commit_range)
+      categorized_commits.concat Array(commits)
+      list << changes_under_heading(category[:heading], commits)
     end
 
     # TODO: Add anything marked 'Changelog' without a parameter
-    all_changes = { token: 'Changelog', heading: 'Miscellaneous' }
-    all_change_commits_command = filter_log_by_category_command("[Cc]hangelog")
-    all_change_commits = commit
+    all_change_commits = commits_matching('Changelog', commit_range)
+    misc_change_commits = all_change_commits.reject {|commit| categorized_commits.include? commit }
+    changes << changes_under_heading('Miscellaneous', misc_change_commits)
+
 
     if changes.any?
       changes << contributors(commit_range)
@@ -35,17 +36,19 @@ class Changelog
     "#{title_with_count}\n#{underline}\n\n"
   end
 
-  def changes_for_category(category, commit_range)
+  def commits_matching(pattern, commit_range)
     grep_placeholder = '{TOKEN}'
-    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s [%h]' #{commit_range}"
-    grep_pattern = "[Cc]hangelog: #{category[:token]}"
-    log_command = log_command_template.gsub(grep_placeholder, grep_pattern)
+    log_command_template = "git log --regexp-ignore-case --grep '#{grep_placeholder}' --format='* %s [%h]' #{commit_range}"
+    log_command = log_command_template.gsub(grep_placeholder, pattern)
 
-    commits =`#{log_command}`.split("\n")
-    raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
+    commits =`#{log_command}`.split("\n").tap do
+      raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
+    end
+  end
 
+  def changes_under_heading(title, commits)
     if commits.any?
-      heading = heading(category[:heading], commits.length)
+      heading = heading(title, commits.length)
       heading << commits.join("\n")
     end
   end
