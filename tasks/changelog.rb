@@ -13,9 +13,14 @@ class Changelog
     changes = categories.inject('') do |list, category|
       grep_pattern = "[Cc]hangelog: #{category[:token]}"
       log_command = log_command_template.gsub(grep_placeholder, grep_pattern)
-      list << heading(category[:heading])
-      list << `#{log_command}`
+      heading = heading(category[:heading])
+      commits =`#{log_command}`
       raise "Error scanning git log. Using <#{log_command}" unless $?.success?
+
+      if commits.strip != ''
+        list << heading << commits
+      end
+
       list
     end
 
