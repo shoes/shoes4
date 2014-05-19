@@ -15,16 +15,13 @@ class Changelog
     end
 
     if changes.any?
-      contributors = `git shortlog --numbered --summary #{commit_range}`.split("\n")
-      heading = heading("Contributors", contributors.length)
-      names = contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
-      changes << "\n\n#{heading}#{names}\n"
+      changes << contributors(commit_range)
     end
 
     # TODO: Anything marked 'Changelog' without a parameter
     # changes << log_command.gsub(grep_placeholder, "[Cc]hangelog")
 
-    changes.join("\n")
+    changes.compact.join("\n\n")
   end
 
   def heading(title, count, underline_char = '-')
@@ -45,9 +42,14 @@ class Changelog
     if commits.any?
       heading = heading(category[:heading], commits.length)
       heading << commits.join("\n")
-    else
-      ''
     end
+  end
+
+  def contributors(commit_range)
+    contributors = `git shortlog --numbered --summary #{commit_range}`.split("\n")
+    heading = heading("Contributors", contributors.length)
+    names = contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
+    "#{heading}#{names}"
   end
 end
 
