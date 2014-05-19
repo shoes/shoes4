@@ -14,12 +14,11 @@ class Changelog
       list << changes_for_category(category, commit_range)
     end
 
+    # TODO: Add anything marked 'Changelog' without a parameter
+
     if changes.any?
       changes << contributors(commit_range)
     end
-
-    # TODO: Anything marked 'Changelog' without a parameter
-    # changes << log_command.gsub(grep_placeholder, "[Cc]hangelog")
 
     changes.compact.join("\n\n")
   end
