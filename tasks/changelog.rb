@@ -8,7 +8,7 @@ class Changelog
 
     last_release = `git describe #{`git rev-list --tags --max-count=1`}`
     grep_placeholder = '{TOKEN}'
-    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s (%an) [%h]' --since #{last_release}"
+    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s [%h]' --since #{last_release}"
 
     changes = categories.inject('') do |list, category|
       grep_pattern = "[Cc]hangelog: #{category[:token]}"
@@ -22,6 +22,12 @@ class Changelog
       end
 
       list
+    end
+
+    if changes.length > 0
+      contributors = `git shortlog --numbered --summary --since #{last_release}`.split("\n")
+      changes << "\n\n" << heading("Contributors", contributors.length)
+      changes << contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
     end
 
     # TODO: Anything marked 'Changelog' without a parameter
