@@ -48,7 +48,7 @@ class Changelog
     contributors = `git shortlog --numbered --summary #{commit_range}`.split("\n")
     heading = heading("Contributors", contributors.length)
     names = contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
-    "#{heading}#{names}"
+    heading << names
   end
 end
 
