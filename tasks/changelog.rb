@@ -6,15 +6,17 @@ class Changelog
       { token: 'bugfix', heading: 'Bug Fixes'}
     ]
 
-    last_release = `git describe #{`git rev-list --tags --max-count=1`}`
+    last_sha = `git rev-list --tags --max-count=1`.chomp
+    last_release = `git describe #{last_sha}`.chomp
+    commit_range = "#{last_release}..master"
     grep_placeholder = '{TOKEN}'
-    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s [%h]' --since #{last_release}"
+    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s [%h]' #{commit_range}"
 
     changes = categories.inject('') do |list, category|
       grep_pattern = "[Cc]hangelog: #{category[:token]}"
       log_command = log_command_template.gsub(grep_placeholder, grep_pattern)
       commits =`#{log_command}`.split("\n")
-      raise "Error scanning git log. Using <#{log_command}" unless $?.success?
+      raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
 
       if commits.any?
         heading = heading(category[:heading], commits.length)
@@ -25,7 +27,7 @@ class Changelog
     end
 
     if changes.length > 0
-      contributors = `git shortlog --numbered --summary --since #{last_release}`.split("\n")
+      contributors = `git shortlog --numbered --summary #{commit_range}`.split("\n")
       changes << "\n\n" << heading("Contributors", contributors.length)
       changes << contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
     end
