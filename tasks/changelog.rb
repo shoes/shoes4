@@ -1,20 +1,26 @@
 class Changelog
   def generate(categories = nil)
     categories ||= [
-      { token: 'feature', heading: 'New features'},
-      { token: 'improvement', heading: 'Improvements'},
-      { token: 'bugfix', heading: 'Bug Fixes'}
+      { token: 'Changelog: feature', heading: 'New features'},
+      { token: 'Changelog: improvement', heading: 'Improvements'},
+      { token: 'Changelog: bugfix', heading: 'Bug Fixes'}
     ]
 
     last_sha = `git rev-list --tags --max-count=1`.chomp
     last_release = `git describe #{last_sha}`.chomp
     commit_range = "#{last_release}..master"
+    categorized_commits = []
 
     changes = categories.inject([]) do |list, category|
-      list << changes_for_category(category, commit_range)
+      commits = commits_for_category(category, commit_range)
+      categorized_commits.concat(commits)
+      list << changes_for_category(category, commits)
     end
 
     # TODO: Add anything marked 'Changelog' without a parameter
+    all_changes = { token: 'Changelog', heading: 'Miscellaneous' }
+    all_change_commits_command = filter_log_by_category_command("[Cc]hangelog")
+    all_change_commits = commit
 
     if changes.any?
       changes << contributors(commit_range)
