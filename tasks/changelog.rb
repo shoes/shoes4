@@ -1,12 +1,19 @@
 class Changelog
-  def generate(categories = nil)
-    categories ||= [
-      { pattern: 'Changelog: feature', heading: 'New features'},
-      { pattern: 'Changelog: improvement', heading: 'Improvements'},
-      { pattern: 'Changelog: bugfix', heading: 'Bug Fixes'}
-    ]
+  CATEGORY_MAPPING = [
+    {pattern: 'Changelog: feature', heading: 'New features'},
+    {pattern: 'Changelog: improvement', heading: 'Improvements'},
+    {pattern: 'Changelog: bugfix', heading: 'Bug Fixes'}
+  ]
 
+  def generate(categories = CATEGORY_MAPPING)
     commit_range = commits_on_master_since_last_release
+    changes = categorize_commits(categories, commit_range)
+    changes << contributors(commit_range) if changes.any?
+    changes.compact.join("\n\n")
+  end
+
+  private
+  def categorize_commits(categories, commit_range)
     categorized_commits = []
 
     changes = categories.inject([]) do |list, category|
@@ -16,12 +23,7 @@ class Changelog
     end
 
     changes << misc_changes(commit_range, categorized_commits)
-
-    if changes.any?
-      changes << contributors(commit_range)
-    end
-
-    changes.compact.join("\n\n")
+    changes
   end
 
   def heading(title, count, underline_char = '-')
