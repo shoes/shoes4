@@ -20,6 +20,11 @@ describe Shoes::Swt::Shape do
   it_behaves_like "Swt::Shape"
   it_behaves_like "paintable"
 
+  it "properly disposes" do
+    expect(subject.transform).to receive(:dispose)
+    subject.dispose
+  end
+
   describe "Swt element" do
     let(:element) { double("element") }
 
