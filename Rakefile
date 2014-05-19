@@ -4,6 +4,8 @@ require 'rubygems/package_task'
 require 'rspec/core/rake_task'
 require 'bundler/gem_tasks'
 
+require_relative 'tasks/changelog'
+
 PACKAGE_DIR = 'pkg'
 SAMPLES_DIR = "samples"
 
