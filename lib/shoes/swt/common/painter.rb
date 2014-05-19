@@ -65,21 +65,21 @@ class Shoes
           angle, left, top = angle.to_i, left.to_i, top.to_i
           if block_given?
             begin
-              tr = ::Swt::Transform.new Shoes.display
-              reset_rotate tr, graphics_context, angle, left, top
+              transform = ::Swt::Transform.new Shoes.display
+              reset_rotate transform, graphics_context, angle, left, top
               yield
-              reset_rotate tr, graphics_context, -angle, left, top
+              reset_rotate transform, graphics_context, -angle, left, top
             ensure
-              tr.dispose unless tr.nil? || tr.disposed?
+              transform.dispose unless transform.nil? || transform.disposed?
             end
           end
         end
 
-        def reset_rotate tr, graphics_context, angle, left, top
-          tr.translate left, top
-          tr.rotate angle
-          tr.translate -left, -top
-          graphics_context.setTransform tr
+        def reset_rotate transform, graphics_context, angle, left, top
+          transform.translate left, top
+          transform.rotate angle
+          transform.translate -left, -top
+          graphics_context.setTransform transform
         end
       end
     end
