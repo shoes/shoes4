@@ -6,22 +6,16 @@ class Changelog
       { pattern: 'Changelog: bugfix', heading: 'Bug Fixes'}
     ]
 
-    last_sha = `git rev-list --tags --max-count=1`.chomp
-    last_release = `git describe #{last_sha}`.chomp
-    commit_range = "#{last_release}..master"
+    commit_range = commits_on_master_since_last_release
     categorized_commits = []
 
     changes = categories.inject([]) do |list, category|
       commits = commits_matching(category[:pattern], commit_range)
-      categorized_commits.concat Array(commits)
+      categorized_commits.concat commits
       list << changes_under_heading(category[:heading], commits)
     end
 
-    # TODO: Add anything marked 'Changelog' without a parameter
-    all_change_commits = commits_matching('Changelog', commit_range)
-    misc_change_commits = all_change_commits.reject {|commit| categorized_commits.include? commit }
-    changes << changes_under_heading('Miscellaneous', misc_change_commits)
-
+    changes << misc_changes(commit_range, categorized_commits)
 
     if changes.any?
       changes << contributors(commit_range)
@@ -46,6 +40,11 @@ class Changelog
     end
   end
 
+  def misc_changes(commit_range, categorized_commits)
+    misc_change_commits = commits_matching('Changelog', commit_range).reject {|commit| categorized_commits.include? commit }
+    changes_under_heading('Miscellaneous', misc_change_commits)
+  end
+
   def changes_under_heading(title, commits)
     if commits.any?
       heading = heading(title, commits.length)
@@ -58,6 +57,12 @@ class Changelog
     heading = heading("Contributors", contributors.length)
     names = contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
     heading << names
+  end
+
+  def commits_on_master_since_last_release
+    last_sha = `git rev-list --tags --max-count=1`.chomp
+    last_release = `git describe #{last_sha}`.chomp
+    commit_range = "#{last_release}..master"
   end
 end
 
