@@ -19,6 +19,11 @@ class Shoes
       @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
       @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
 
+      #TODO
+      # Workaround until common styling is applied to TextBlock since we get
+      # the app-default fill => black styling here otherwise.
+      @opts[:fill] = nil unless @opts.include?(:fill)
+
       @dimensions   = Dimensions.new parent, opts
 
       handle_opts @opts

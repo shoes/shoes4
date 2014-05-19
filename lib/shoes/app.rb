@@ -112,7 +112,7 @@ class Shoes
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
-      Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
+                         Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
   end
 
 
@@ -190,10 +190,7 @@ class Shoes
     end
 
     def default_styles
-      {
-        :stroke      => Shoes::COLORS[:black],
-        :strokewidth => 1
-      }
+      Common::Style::DEFAULT_STYLES.clone
     end
 
     def in_bounds?(x, y)

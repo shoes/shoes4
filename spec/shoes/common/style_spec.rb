@@ -1,28 +1,32 @@
 require 'spec_helper'
 
 describe Shoes::Common::Style do
-
+  include_context "dsl app"
+  
   class StyleTester
     include Shoes::Common::Style
+    style_with :key
 
-    def initialize(style = {})
-      @style = style
+    def initialize(app, style = {})
+      @app = app #needed for style init
+      style_init(key: 'value')
     end
   end
 
-  subject {StyleTester.new}
+  subject {StyleTester.new(app)}
+  let(:default_styles) {Shoes::Common::Style::DEFAULT_STYLES}
 
-  its(:style) {should eq Hash.new}
+  its(:style) { should eq (default_styles.merge({key: 'value'})) }
 
-  describe 'changing the style trhough #style(hash)' do
-    let(:changed_style) {{key: 'value'}}
+  describe 'changing the style through #style(hash)' do
+    let(:changed_style) { {key: 'changed value'} }
 
     before :each do
       subject.style changed_style
     end
 
     it 'returns the changed style' do
-      expect(subject.style).to eq changed_style
+      expect(subject.style).to eq default_styles.merge changed_style
     end
 
     it 'does update values for new values' do
