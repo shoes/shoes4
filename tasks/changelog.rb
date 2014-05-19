@@ -9,21 +9,9 @@ class Changelog
     last_sha = `git rev-list --tags --max-count=1`.chomp
     last_release = `git describe #{last_sha}`.chomp
     commit_range = "#{last_release}..master"
-    grep_placeholder = '{TOKEN}'
-    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s [%h]' #{commit_range}"
 
     changes = categories.inject('') do |list, category|
-      grep_pattern = "[Cc]hangelog: #{category[:token]}"
-      log_command = log_command_template.gsub(grep_placeholder, grep_pattern)
-      commits =`#{log_command}`.split("\n")
-      raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
-
-      if commits.any?
-        heading = heading(category[:heading], commits.length)
-        list << heading << commits.join("\n")
-      end
-
-      list
+      list << changes_for_category(category, commit_range)
     end
 
     if changes.length > 0
@@ -42,6 +30,23 @@ class Changelog
     title_with_count = "#{title} (#{count})"
     underline = underline_char * title_with_count.length
     "#{title_with_count}\n#{underline}\n\n"
+  end
+
+  def changes_for_category(category, commit_range)
+    grep_placeholder = '{TOKEN}'
+    log_command_template = "git log --grep '#{grep_placeholder}' --format='* %s [%h]' #{commit_range}"
+    grep_pattern = "[Cc]hangelog: #{category[:token]}"
+    log_command = log_command_template.gsub(grep_placeholder, grep_pattern)
+
+    commits =`#{log_command}`.split("\n")
+    raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
+
+    if commits.any?
+      heading = heading(category[:heading], commits.length)
+      heading << commits.join("\n")
+    else
+      ''
+    end
   end
 end
 
