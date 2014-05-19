@@ -13,12 +13,12 @@ class Changelog
     changes = categories.inject('') do |list, category|
       grep_pattern = "[Cc]hangelog: #{category[:token]}"
       log_command = log_command_template.gsub(grep_placeholder, grep_pattern)
-      heading = heading(category[:heading])
-      commits =`#{log_command}`
+      commits =`#{log_command}`.split("\n")
       raise "Error scanning git log. Using <#{log_command}" unless $?.success?
 
-      if commits.strip != ''
-        list << heading << commits
+      if commits.any?
+        heading = heading(category[:heading], commits.length)
+        list << heading << commits.join("\n")
       end
 
       list
@@ -30,9 +30,10 @@ class Changelog
     changes
   end
 
-  def heading(title, underline_char = '-')
-    underline = underline_char * title.length
-    "#{title}\n#{underline}\n\n"
+  def heading(title, count, underline_char = '-')
+    title_with_count = "#{title} (#{count})"
+    underline = underline_char * title_with_count.length
+    "#{title_with_count}\n#{underline}\n\n"
   end
 end
 
