@@ -10,20 +10,21 @@ class Changelog
     last_release = `git describe #{last_sha}`.chomp
     commit_range = "#{last_release}..master"
 
-    changes = categories.inject('') do |list, category|
+    changes = categories.inject([]) do |list, category|
       list << changes_for_category(category, commit_range)
     end
 
-    if changes.length > 0
+    if changes.any?
       contributors = `git shortlog --numbered --summary #{commit_range}`.split("\n")
-      changes << "\n\n" << heading("Contributors", contributors.length)
-      changes << contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
+      heading = heading("Contributors", contributors.length)
+      names = contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
+      changes << "\n\n#{heading}#{names}\n"
     end
 
     # TODO: Anything marked 'Changelog' without a parameter
     # changes << log_command.gsub(grep_placeholder, "[Cc]hangelog")
 
-    changes
+    changes.join("\n")
   end
 
   def heading(title, count, underline_char = '-')
