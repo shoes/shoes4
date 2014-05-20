@@ -60,9 +60,10 @@ describe Shoes::TextBlockDimensions do
       expect(subject.containing_width).to eq(3)
     end
 
-    context "with parent" do
-      let(:parent) { double(width: 100, x_dimension: double("x"),
-                                        y_dimension: double("y")) }
+    describe "with parent" do
+      let(:parent) { double('parent', element_width: 100,
+                            x_dimension: double("x"),
+                            y_dimension: double("y")) }
       subject { Shoes::TextBlockDimensions.new(parent, left, top, nil, height) }
 
       it "delegates to parent if no width of its own" do

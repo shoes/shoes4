@@ -37,7 +37,7 @@ class Shoes
     # If an explicit width's set, use that when asking how much space we need.
     # If not, we look to the parent.
     def containing_width
-      (x_dimension.extent || parent.width) - (margin_left + margin_right)
+      element_width || parent.element_width
     end
   end
 

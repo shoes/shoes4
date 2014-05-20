@@ -142,7 +142,7 @@ describe Shoes::TextBlock do
 
   describe "width" do
     before(:each) do
-      parent.stub(:width)         { 300 }
+      parent.stub(:element_width) { 300 }
       parent.stub(:absolute_left) { 0 }
     end
 
