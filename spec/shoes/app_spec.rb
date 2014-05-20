@@ -24,7 +24,7 @@ describe Shoes::App do
 
     it "initializes style hash", :qt do
       style = Shoes::App.new.style
-      style.class.should eq(Hash)
+      expect(style.class).to eq(Hash)
     end
 
     context "console" do
@@ -35,7 +35,6 @@ describe Shoes::App do
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets width", :qt do
-        subject.width.should == defaults[:width]
         expect(subject.width).to eq defaults[:width]
       end
 
@@ -109,54 +108,37 @@ describe Shoes::App do
       end
     end
   end
+  
+  describe "style with defaults" do
+    let(:default_styles) { Shoes::Common::Style::DEFAULT_STYLES }
 
-  describe "style" do
-    let(:black) { Shoes::COLORS[:black] }
-    let(:goldenrod) { Shoes::COLORS[:goldenrod] }
-    let(:defaults) { {stroke: black, strokewidth: 1} }
-
-    it "sets defaults" do
-      expect(app.style).to eq(defaults)
+    it "sets app defaults" do
+      expect(app.style).to eq(default_styles)
     end
 
     it "merges new styles with existing styles" do
-      new_styles = { strokewidth: 4 }
-      app.style new_styles
-      expect(app.style).to eq(defaults.merge(new_styles))
+      subject.style strokewidth: 4
+      expect(subject.style).to eq(default_styles.merge(strokewidth: 4))
+    end
+    
+    default_styles = Shoes::Common::Style::DEFAULT_STYLES
+
+    default_styles.each do |key, value|
+      describe "#{key}" do
+        it "defaults to #{value}" do
+          subject.style[key].should eq(value)
+        end
+
+        it "passes default to objects" do
+          expect(subject.line(0, 100, 100, 0).style[key]).to eq(value)
+        end
+
+      end
     end
 
-    describe "strokewidth" do
-      it "defaults to 1" do
-        subject.style[:strokewidth].should eq(1)
-      end
-
-      it "passes default to objects" do
-        subject.line(0, 100, 100, 0).style[:strokewidth].should eq(1)
-      end
-
-      it "passes new values to objects" do
-        subject.strokewidth 10
-        subject.line(0, 100, 100, 0).style[:strokewidth].should eq(10)
-      end
-    end
-
-    describe "stroke" do
-      it "defaults to black" do
-        subject.style[:stroke].should eq(black)
-      end
-
-      it "passes default to objects" do
-        subject.oval(100, 100, 100).style[:stroke].should eq(black)
-      end
-
-      it "passes new value to objects" do
-        subject.stroke goldenrod
-        subject.oval(100, 100, 100).style[:stroke].should eq(goldenrod)
-      end
-    end
 
     describe "default styles" do
-      it "is independent among Shoes::App instances" do
+      it "are independent among Shoes::App instances" do
         app1 = Shoes::App.new
         app2 = Shoes::App.new
 
@@ -165,10 +147,33 @@ describe Shoes::App do
 
         # .. but does not affect app2
         app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
+     
       end
     end
   end
-  
+
+  describe "app-level style setter" do
+    let(:goldenrod) { Shoes::COLORS[:goldenrod] }
+    
+    pattern_styles = Shoes::DSL::PATTERN_APP_STYLES
+    other_styles = Shoes::DSL::OTHER_APP_STYLES
+
+    pattern_styles.each do |style|
+      it "sets #{style} for objects" do
+        subject.public_send(style, goldenrod)
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq(goldenrod) 
+      end
+    end
+
+    other_styles.each do |style|
+      it "sets #{style} for objects" do
+        subject.public_send(style, 'val')
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq('val') 
+      end
+    end
+
+  end
+
   describe "connecting with gui" do 
     let(:gui) { app.instance_variable_get(:@__app__).gui }
 
@@ -344,6 +349,37 @@ describe Shoes::App do
         expect(app.gutter).to eq(16)
       end
     end
+  end
+
+  describe "#parent" do
+    context "when parent is top slot" do
+      it "returns the top_slot if no slot is wrapped around" do
+        my_parent = nil
+        app = Shoes.app do
+          flow do
+            my_parent = parent
+          end
+        end
+        expect(my_parent).to eq app.instance_variable_get(:@__app__).top_slot
+      end
+    end
+
+    context "when parent is not the top slot" do
+      it 'returns the current parent' do
+        my_parent = nil
+        my_stack  = nil
+        app = Shoes.app do
+          my_stack = stack do
+            flow do
+              my_parent = parent
+            end
+          end
+        end
+
+        expect(my_parent).to eq my_stack
+      end
+    end
+
   end
 
   describe 'DELEGATE_METHODS' do

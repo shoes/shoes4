@@ -78,6 +78,11 @@ class Shoes
 
       def fit_as_two_layouts(layout, height, width)
         first_text, second_text = split_text(layout, height)
+
+        # Since we regenerate layouts, we must dispose of first try here.
+        layout.dispose
+        layout = nil
+
         first_layout = generate_layout(width, first_text)
 
         if second_text.empty?

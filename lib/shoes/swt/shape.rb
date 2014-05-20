@@ -20,6 +20,10 @@ class Shoes
         @app.add_paint_listener @painter
       end
 
+      def dispose
+        @transform.dispose unless @transform.nil? || @transform.disposed?
+      end
+
       attr_reader :dsl, :app
       attr_reader :element, :transform
       attr_reader :painter

@@ -184,8 +184,7 @@ class Shoes
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      arc_style = style_normalizer.normalize(opts)
-      create Shoes::Arc, left, top, width, height, angle1, angle2, style.merge(arc_style)
+      create Shoes::Arc, left, top, width, height, angle1, angle2, opts#style.merge(arc_style)
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
@@ -310,41 +309,29 @@ EOS
       Shoes::Shape.new(@__app__, @__app__.style.merge(shape_style), blk)
     end
 
-    # Sets the current stroke color
-    #
-    # Arguments
-    #
-    # color - a Shoes::Color
-    def stroke(color)
-      @__app__.style[:stroke] = pattern(color)
+    # Define app-level setter methods
+    PATTERN_APP_STYLES = [:fill, :stroke]
+    OTHER_APP_STYLES = [:cap, :strokewidth]
+
+    PATTERN_APP_STYLES.each do |style|
+      define_method style.to_s do |val|
+        @__app__.style[style] = pattern(val)
+      end
+    end
+
+    OTHER_APP_STYLES.each do |style|
+      define_method style.to_s do |val|
+        @__app__.style[style] = val
+      end
     end
 
     def nostroke
       @__app__.style[:stroke] = nil
     end
 
-    # Sets the stroke width, in pixels
-    def strokewidth(width)
-      @__app__.style[:strokewidth] = width
-    end
-
-    # Sets the current fill color
-    #
-    # @param [Shoes::Color,Shoes::Gradient] pattern the pattern to set as fill
-    def fill(pattern)
-      @__app__.style[:fill] = pattern(pattern)
-    end
-
     def nofill
       @__app__.style[:fill] = nil
     end
-
-    # Sets the current line cap style
-    def cap(line_cap)
-      @__app__.style[:cap] = line_cap
-    end
-
-
 
     # Text blocks
     # normally constants belong to the top, I put them here because they are

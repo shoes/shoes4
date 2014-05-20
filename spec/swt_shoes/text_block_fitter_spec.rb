@@ -122,12 +122,16 @@ describe Shoes::Swt::TextBlockFitter do
 
       it "should split text and overflow to second layout" do
         with_text_split("something ", "something")
+        expect(layout).to receive(:dispose).once
+
         fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
         expect_fitted_layouts(fitted_layouts, [26, 76], [1, 126])
       end
 
       it "should overflow all text to second layout" do
         with_text_split("", "something something")
+        expect(layout).to receive(:dispose).once
+
         fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
         expect_fitted_layouts(fitted_layouts, [26, 76], [1, 95])
       end

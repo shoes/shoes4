@@ -57,6 +57,16 @@ describe Shoes::TextBlock do
       text_block.replace "Goodbye Cruel World, ", text_link
       expect(text_block.text).to eq("Goodbye Cruel World, Hello")
     end
+
+    it "updates contents" do
+      text_block.replace("Later Gator")
+      expect(text_block.contents).to eq(["Later Gator"])
+    end
+
+    it "updates text styles" do
+      text_block.replace "Later Gator"
+      expect(text_block.text_styles).to be_empty
+    end
   end
 
   describe "#contents" do

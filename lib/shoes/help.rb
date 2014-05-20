@@ -529,7 +529,7 @@ class Manual < Shoes
   PEND = PNUMS.length
   TOC, TOC_LIST = [], []
   COLORS = Shoes::COLORS
-  VERSION = '4.0.0.pre0'
+  VERSION = Shoes::VERSION
 end
 
 Shoes.app title: 'The Shoes 4 Manual', width: 720, height: 640

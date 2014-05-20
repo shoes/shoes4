@@ -6,7 +6,7 @@ describe Shoes::Shape do
   subject { Shoes::Shape.new(app) {} }
 
   it_behaves_like "object with stroke"
-  it_behaves_like "object with style"
+  #it_behaves_like "object with style"
   it_behaves_like "movable object"
 
   describe "octagon" do
