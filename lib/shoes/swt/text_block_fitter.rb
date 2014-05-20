@@ -160,7 +160,7 @@ class Shoes
 
         offsets = layout.line_offsets
         offsets[0...-1].each_with_index do |_, i|
-          height_so_far += layout.line_metrics(i).height
+          height_so_far += layout.line_bounds(i).height
           break if height_so_far > height
 
           ending_offset = offsets[i+1]

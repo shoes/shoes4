@@ -87,7 +87,7 @@ class Shoes
       end
 
       def last_line_height
-        layout.line_metrics(layout.line_count - 1).height
+        layout.line_bounds(layout.line_count - 1).height
       end
 
       def last_line_width
