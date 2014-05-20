@@ -14,7 +14,7 @@ describe Shoes::TextBlockDimensions do
     old_dimension.absolute_top  = subject.absolute_top  = 0
   end
 
-  context "positions" do
+  describe "positions" do
     it "inherits from base" do
       expect(subject.absolute_right).to eq(old_dimension.absolute_right)
       expect(subject.absolute_bottom).to eq(old_dimension.absolute_bottom)
@@ -31,7 +31,7 @@ describe Shoes::TextBlockDimensions do
     end
   end
 
-  context "calculated sizes" do
+  describe "calculated sizes" do
     it "inherits from base" do
       expect(subject.width).to  eq(5)
       expect(subject.height).to eq(10)
@@ -50,7 +50,7 @@ describe Shoes::TextBlockDimensions do
     end
   end
 
-  context "containing width" do
+  describe "containing width" do
     it "uses immediate width if it can" do
       expect(subject.containing_width).to eq(5)
     end
