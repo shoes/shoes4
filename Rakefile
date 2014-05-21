@@ -155,7 +155,7 @@ namespace :samples do
   end
 
   def run_sample(sample_name, index, total)
-    print "Running #{sample_name} (#{index + 1} of #{total})...quit to run next sample"
+    puts "Running #{sample_name} (#{index + 1} of #{total})...quit to run next sample"
     system "bin/shoes #{sample_name}"
   end
 
