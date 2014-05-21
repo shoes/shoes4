@@ -152,7 +152,7 @@ describe Shoes::TextBlock do
 
   describe "width" do
     before(:each) do
-      parent.stub(:width)         { 300 }
+      parent.stub(:element_width) { 300 }
       parent.stub(:absolute_left) { 0 }
     end
 
@@ -162,6 +162,11 @@ describe Shoes::TextBlock do
       it "delegates to calculated width" do
         subject.calculated_width = 240
         expect(subject.width).to eql 240
+      end
+
+      it "delegates to calculated height" do
+        subject.calculated_height = 240
+        expect(subject.height).to eql 240
       end
 
       it "bases desired width off parent" do

@@ -6,7 +6,7 @@ describe Shoes::Swt::TextBlock do
   let(:height) { 100 }
   let(:width)  { 200 }
   let(:margin) { 10 }
-  let(:dsl) { double("dsl", app: shoes_app,
+  let(:dsl) { double("dsl", app: shoes_app, text: "text",
                      margin_left: 0, margin_right: 0,
                      margin_top: 0, margin_bottom: 0).as_null_object }
 
@@ -22,7 +22,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "bounds checking" do
     it "delegates to fitted layout" do
-      layout = create_layout(0,0)
+      layout = double()
       subject.fitted_layouts = [layout]
       expect(layout).to receive(:in_bounds?)
 
@@ -34,16 +34,19 @@ describe Shoes::Swt::TextBlock do
     let(:layout_width) { 100 }
     let(:layout_height) { 200 }
     let(:line_height) { 10 }
-    let(:layout) { create_layout(layout_width, layout_height) }
+
+    let(:bounds) { double("bounds", height: layout_height, width: layout_width) }
+    let(:unused_bounds) { double("unused bounds", height: 0, width: 0) }
+
     let(:fitter) { double("fitter") }
-    let(:fitted_layout) { double("fitted_layout", disposed?: false, layout: layout) }
-    let(:second_fitted_layout) { double("second_fitted_layout", disposed?: false, layout: layout) }
+    let(:fitted_layout) { create_layout }
+    let(:second_fitted_layout) { create_layout }
+
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
       ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
       fitter.stub(:fit_it_in).and_return([fitted_layout], [second_fitted_layout])
-      layout.stub(:line_metrics) { double("line_metrics", height: line_height)}
     end
 
     describe "with single layout" do
@@ -51,7 +54,6 @@ describe Shoes::Swt::TextBlock do
         dsl.stub(:absolute_left)   { 50 }
         dsl.stub(:absolute_top)    { 0 }
         dsl.stub(:absolute_bottom) { layout_height }
-        layout.stub(:line_count)   { 1 }
       end
 
       it "positions single line of text" do
@@ -74,7 +76,7 @@ describe Shoes::Swt::TextBlock do
       end
 
       it "pushes to next line if ends in newline" do
-        layout.stub(:text) { "text\n" }
+        dsl.stub(:text) { "text\n" }
 
         expect(dsl).to receive(:absolute_right=).with(50)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
@@ -129,7 +131,8 @@ describe Shoes::Swt::TextBlock do
         current_position.next_line_start = 0
 
         fitter.stub(:fit_it_in) {
-          [:unused_layout, double("fitted_layout", layout: layout)]
+          [create_layout("unused fitted layout"),
+           create_layout("fitted_layout")]
         }
       end
 
@@ -173,11 +176,12 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
-  def create_layout(width, height, text="layout text")
-    bounds = double("bounds", height: height, width: width)
-    double("layout",
-           get_line_bounds: bounds, bounds: bounds,
-           spacing: 0, text: text).as_null_object
+  def create_layout(name="fitted layout", width=layout_width,
+                    height=layout_height, line_height=line_height)
+    bounds = double("bounds", width: width, height: height)
+    double(name, disposed?: false,
+           width: width, layout_height: height,
+           last_line_width: width, last_line_height: line_height,
+           bounds: bounds)
   end
-
 end
