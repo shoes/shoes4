@@ -1,8 +1,9 @@
 class Shoes
   module Swt
     class TextBlockCursorPainter
-      def initialize(dsl, fitted_layouts)
+      def initialize(dsl, collection, fitted_layouts)
         @dsl = dsl
+        @collection = collection
         @fitted_layouts = fitted_layouts
       end
 
@@ -15,7 +16,7 @@ class Shoes
       end
 
       def draw_textcursor
-        layout = choose_layout
+        layout = @collection.layout_at_text_position(@dsl.cursor)
         x, y = new_position(layout)
 
         # It's important to only move when necessary to avoid constant redraws
@@ -40,16 +41,6 @@ class Shoes
 
       def last_layout
         @fitted_layouts.last
-      end
-
-      # Only works with one or two layouts, but that's what we've got
-      # -1 positions us at the very end, regardless text length
-      def choose_layout
-        if cursor_fits_in_first_layout?
-          first_layout
-        else
-          last_layout
-        end
       end
 
       # Again, assumes one or two layout system

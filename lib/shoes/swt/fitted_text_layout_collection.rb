@@ -32,7 +32,7 @@ class Shoes
       end
 
       def draw_cursor(dsl)
-        TextBlockCursorPainter.new(dsl, @layouts).draw
+        TextBlockCursorPainter.new(dsl, self, @layouts).draw
       end
 
       def style_segment_ranges(elements_by_range)
@@ -69,6 +69,12 @@ class Shoes
         element.respond_to?(:gui) &&
           element.gui &&
           element.gui.respond_to?(:create_links_in)
+      end
+
+      def layout_at_text_position(index)
+        return @layouts.last if index < 0
+
+        layout_ranges(index..index).first.first
       end
 
       # If we've got segments that style us across different ranges, it might
