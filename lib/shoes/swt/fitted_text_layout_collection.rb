@@ -16,6 +16,7 @@ class Shoes
         style_segment_ranges(dsl.text_styles)
         create_links(dsl.text_styles)
         draw(graphic_context)
+        draw_cursor(dsl)
       end
 
       def style_from(opts)
@@ -28,6 +29,10 @@ class Shoes
         @layouts.each do |layout|
           layout.draw(graphic_context)
         end
+      end
+
+      def draw_cursor(dsl)
+        TextBlockCursorPainter.new(dsl, @layouts).draw
       end
 
       def style_segment_ranges(elements_by_range)

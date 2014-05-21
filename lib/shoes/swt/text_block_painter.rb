@@ -16,17 +16,12 @@ class Shoes
         return if @dsl.hidden?
 
         draw_layouts(paint_event.gc)
-        draw_text_cursor
       end
 
       def draw_layouts(graphic_context)
         layouts = FittedTextLayoutCollection.new(@dsl.gui.fitted_layouts,
                                                  default_text_styles)
         layouts.paint_control(@dsl, graphic_context)
-      end
-
-      def draw_text_cursor
-        TextBlockCursorPainter.new(@dsl, @dsl.gui.fitted_layouts).draw
       end
 
       private
