@@ -4,14 +4,15 @@ class Shoes
       extend Forwardable
       def_delegators :@layouts, :length
 
-      attr_reader :default_text_styles
+      attr_reader :dsl, :default_text_styles
 
-      def initialize(layouts, default_text_styles)
+      def initialize(dsl, layouts, default_text_styles)
+        @dsl = dsl
         @layouts = layouts
         @default_text_styles = default_text_styles
       end
 
-      def paint_control(dsl, graphic_context)
+      def paint_control(graphic_context)
         style_from(dsl.opts)
         style_segment_ranges(dsl.text_styles)
         create_links(dsl.text_styles)

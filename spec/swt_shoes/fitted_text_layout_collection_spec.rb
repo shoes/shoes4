@@ -5,6 +5,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
 
   let(:first_layout) { create_layout("first", "first") }
   let(:second_layout) { create_layout("second", "rest") }
+  let(:dsl) { double("dsl", font: "", font_size: 16, opts:{}) }
 
   let(:gc) { double("gc") }
   let(:default_text_styles) {
@@ -22,7 +23,9 @@ describe Shoes::Swt::FittedTextLayoutCollection do
   }
 
   context "with one layout" do
-    subject { Shoes::Swt::FittedTextLayoutCollection.new([first_layout], default_text_styles) }
+    subject { Shoes::Swt::FittedTextLayoutCollection.new(dsl,
+                                                         [first_layout],
+                                                         default_text_styles) }
 
     it "should have length" do
       expect(subject.length).to eq(1)
@@ -79,7 +82,9 @@ describe Shoes::Swt::FittedTextLayoutCollection do
   end
 
   context "with two layouts" do
-    subject { Shoes::Swt::FittedTextLayoutCollection.new([first_layout, second_layout], default_text_styles) }
+    subject { Shoes::Swt::FittedTextLayoutCollection.new(dsl,
+                                                         [first_layout, second_layout],
+                                                         default_text_styles) }
 
     it "should have length" do
       expect(subject.length).to eq(2)
@@ -154,7 +159,6 @@ describe Shoes::Swt::FittedTextLayoutCollection do
     inner_layout = double(name, text: text,
                           line_bounds: bounds, line_count: 1)
 
-    dsl = double("dsl", font: "", font_size: 16, opts:{})
     layout = Shoes::Swt::FittedTextLayout.new(dsl, text, 1)
     layout.position_at(0, 0)
     layout.stub(:draw)

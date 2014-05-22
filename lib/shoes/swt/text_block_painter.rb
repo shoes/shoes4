@@ -19,9 +19,10 @@ class Shoes
       end
 
       def draw_layouts(graphic_context)
-        layouts = FittedTextLayoutCollection.new(@dsl.gui.fitted_layouts,
+        layouts = FittedTextLayoutCollection.new(@dsl,
+                                                 @dsl.gui.fitted_layouts,
                                                  default_text_styles)
-        layouts.paint_control(@dsl, graphic_context)
+        layouts.paint_control(graphic_context)
       end
 
       private
