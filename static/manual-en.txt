@@ -1725,14 +1725,14 @@ Draw circular form using a style hash.  The following styles are supported:
 
 These styles may also be altered using the `style` method on the Shape object.
 
-=== rect(top, left, width, height, corners = 0) » Shoes::Shape ===
+=== rect(left, top, width, height, corners = 0) » Shoes::Shape ===
 
-Draws a rectangle starting from coordinates (top, left) with dimensions of
+Draws a rectangle starting from coordinates (left, top) with dimensions of
 width x height.  Optionally, you may give the rectangle rounded corners with a
 fifth argument: the radius of the corners in pixels.
 
 Alternate Call:
-rect(top, left, sidelength): Will draw a square with sides having the given length
+rect(left, top, sidelength): Will draw a square with sides having the given length
 
 
 As with all other shapes, the rectangle is drawn using the stroke and fill colors.
@@ -1754,8 +1754,8 @@ method for a rectangle which defaults to filling its parent box.
 
 Draw a rectangle using a style hash.  The following styles are supported:
 
- * `top`: the y-coordinate for the rectangle.
  * `left`: the x-coordinate for the rectangle.
+ * `top`: the y-coordinate for the rectangle.
  * `curve`: the pixel radius of the rectangle's corners.
  * `width`: a specific pixel width for the rectangle.
  * `height`: a specific pixel height for the rectangle.
