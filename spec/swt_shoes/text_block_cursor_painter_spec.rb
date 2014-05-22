@@ -8,14 +8,12 @@ describe Shoes::Swt::TextBlockCursorPainter do
   let(:textcursor) { double("textcursor", left:0, top: 0) }
   let(:text_layout) { double("text layout",
                              get_line_bounds: double("line bounds", height: 10)) }
-  let(:fitted_layouts) { [] }
   let(:layout_collection) { double('layout collection',
                                    cursor_height: 12,
                                    relative_text_position: 0)}
 
   subject { Shoes::Swt::TextBlockCursorPainter.new(dsl,
-                                                   layout_collection,
-                                                   fitted_layouts) }
+                                                   layout_collection) }
 
   describe "missing cursor" do
     before(:each) do
@@ -50,8 +48,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
     before(:each) do
       textcursor.stub(:move)
       textcursor.stub(:show)
-      dsl.stub(:text).and_return(first_layout.text)
-      fitted_layouts << first_layout
     end
 
     context "with two layouts" do
@@ -60,7 +56,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
                                    element_left: left, element_top: top + 100) }
       before(:each) do
         dsl.stub(:text).and_return(first_layout.text + second_layout.text)
-        fitted_layouts << second_layout
       end
 
       context "when moving" do
@@ -120,7 +115,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
 
     before(:each) do
       shoes_app.stub(:textcursor)
-      fitted_layouts << first_layout
     end
 
     it "delegates to dsl" do

@@ -1,10 +1,9 @@
 class Shoes
   module Swt
     class TextBlockCursorPainter
-      def initialize(dsl, collection, fitted_layouts)
+      def initialize(dsl, collection)
         @dsl = dsl
         @collection = collection
-        @fitted_layouts = fitted_layouts
       end
 
       def draw
