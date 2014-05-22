@@ -17,18 +17,19 @@ class Shoes
 
       def draw_textcursor
         layout = @collection.layout_at_text_position(@dsl.cursor)
-        x, y = new_position(layout)
+        relative_cursor = @collection.relative_text_position(@dsl.cursor)
+        position = layout.get_location(relative_cursor)
 
-        # It's important to only move when necessary to avoid constant redraws
+        move_if_necessary(layout.element_left + position.x,
+                          layout.element_top + position.y)
+
+      end
+
+      # It's important to only move when necessary to avoid constant redraws
+      def move_if_necessary(x, y)
         unless textcursor.left == x && textcursor.top == y
           move_textcursor(x, y)
         end
-      end
-
-      def new_position(layout)
-        relative_cursor = @collection.relative_text_position(@dsl.cursor)
-        position = layout.get_location(relative_cursor)
-        [layout.element_left + position.x, layout.element_top + position.y]
       end
 
       def move_textcursor(x, y)
