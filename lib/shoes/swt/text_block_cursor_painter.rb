@@ -37,18 +37,8 @@ class Shoes
         textcursor.show
       end
 
-      def first_layout
-        @fitted_layouts.first
-      end
-
       def textcursor
-        @dsl.textcursor cursor_height
-      end
-
-      # This could be smarter, basing height on the actual line the cursor's
-      # in. For now, just use the first line's height.
-      def cursor_height
-        first_layout.layout.get_line_bounds(0).height
+        @dsl.textcursor @collection.cursor_height
       end
 
       def remove_textcursor

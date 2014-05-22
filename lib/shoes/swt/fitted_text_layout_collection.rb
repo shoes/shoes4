@@ -147,6 +147,12 @@ class Shoes
       def relative_in_last_layout(index)
         index - @layouts.first.text.length
       end
+
+      # This could be smarter, basing height on the actual line the cursor's
+      # in. For now, just use the first line's height.
+      def cursor_height
+        @layouts.first.line_bounds(0).height
+      end
     end
   end
 end

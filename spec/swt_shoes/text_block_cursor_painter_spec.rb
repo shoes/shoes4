@@ -9,7 +9,9 @@ describe Shoes::Swt::TextBlockCursorPainter do
   let(:text_layout) { double("text layout",
                              get_line_bounds: double("line bounds", height: 10)) }
   let(:fitted_layouts) { [] }
-  let(:layout_collection) { double('layout collection', relative_text_position: 0)}
+  let(:layout_collection) { double('layout collection',
+                                   cursor_height: 12,
+                                   relative_text_position: 0)}
 
   subject { Shoes::Swt::TextBlockCursorPainter.new(dsl,
                                                    layout_collection,
@@ -62,10 +64,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
       end
 
       context "when moving" do
-        before :each do
-          subject.stub(:cursor_height) { 12 }
-        end
-
         context "in the first layout" do
           before :each do
             dsl.stub(:cursor) { 1 }
