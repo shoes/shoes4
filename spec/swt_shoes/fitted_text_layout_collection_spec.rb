@@ -22,10 +22,14 @@ describe Shoes::Swt::FittedTextLayoutCollection do
     }
   }
 
-  context "with one layout" do
+  describe "with one layout" do
     subject { Shoes::Swt::FittedTextLayoutCollection.new(dsl,
                                                          [first_layout],
                                                          default_text_styles) }
+
+    before do
+      dsl.stub(:text) { first_layout.text }
+    end
 
     it "should have length" do
       expect(subject.length).to eq(1)
@@ -50,7 +54,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       expect(first_layout).to have_received(:set_style).with(default_text_styles, 0..1)
     end
 
-    context "links" do
+    describe "links" do
       it "styles links" do
         styles = [[0..1, [create_link("linky")]]]
         subject.style_segment_ranges(styles)
@@ -68,7 +72,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       end
     end
 
-    context "layout ranges" do
+    describe "layout ranges" do
       it "picks within the first range" do
         result = subject.layout_ranges(0..2)
         expect(result).to eql([[first_layout, 0..2]])
@@ -79,12 +83,50 @@ describe Shoes::Swt::FittedTextLayoutCollection do
         expect(result).to eql([[first_layout, 0..first_layout.text.length]])
       end
     end
+
+    describe "relative text positions" do
+      it "should choose the layout" do
+        expect(subject.relative_text_position(0)).to eq(0)
+      end
+
+      it "should choose layout nearing end" do
+        cursor = first_layout.text.length - 1
+        expect(subject.relative_text_position(cursor)).to eq(cursor)
+      end
+
+      it "should choose layout at end" do
+        cursor = first_layout.text.length
+        expect_relative_position_at_end_of(cursor, first_layout)
+      end
+
+      it "should choose the layout when just past end" do
+        cursor = first_layout.text.length + 1
+        expect_relative_position_at_end_of(cursor, first_layout)
+      end
+
+      it "should choose right past end" do
+        cursor = first_layout.text.length + 3
+        expect_relative_position_at_end_of(cursor, first_layout)
+      end
+
+      it "should chooose the layout for -1" do
+        expect_relative_position_at_end_of(-1, first_layout)
+      end
+
+      it "should allow crazy positions past the end" do
+        expect_relative_position_at_end_of(1000, first_layout)
+      end
+    end
   end
 
-  context "with two layouts" do
+  describe "with two layouts" do
     subject { Shoes::Swt::FittedTextLayoutCollection.new(dsl,
                                                          [first_layout, second_layout],
                                                          default_text_styles) }
+
+    before do
+      dsl.stub(:text) { first_layout.text + second_layout.text }
+    end
 
     it "should have length" do
       expect(subject.length).to eq(2)
@@ -133,7 +175,7 @@ describe Shoes::Swt::FittedTextLayoutCollection do
       expect(second_layout).to have_received(:set_style).with(expected_style, 0..2)
     end
 
-    context "links" do
+    describe "links" do
       let(:link) { create_link("rstres") }
 
       it "creates link segments in both layouts" do
@@ -150,6 +192,35 @@ describe Shoes::Swt::FittedTextLayoutCollection do
         subject.create_links(styles)
 
         expect(link.gui.link_segments).to have(2).items
+      end
+    end
+
+    describe "relative text positions" do
+      it "should choose the first layout" do
+        expect(subject.relative_text_position(0)).to eq(0)
+      end
+
+      it "should choose first layout nearing end" do
+        cursor = first_layout.text.length - 1
+        expect(subject.relative_text_position(cursor)).to eq(cursor)
+      end
+
+      it "should choose second layout at end" do
+        cursor = first_layout.text.length
+        expect(subject.relative_text_position(cursor)).to eq(0)
+      end
+
+      it "should choose the second layout" do
+        cursor = first_layout.text.length + 1
+        expect(subject.relative_text_position(cursor)).to eq(1)
+      end
+
+      it "should chooose the second layout for -1" do
+        expect_relative_position_at_end_of(-1, second_layout)
+      end
+
+      it "should allow crazy positions past the end" do
+        expect_relative_position_at_end_of(1000, second_layout)
       end
     end
   end
@@ -174,5 +245,9 @@ describe Shoes::Swt::FittedTextLayoutCollection do
 
   def style_with(opts={})
     default_text_styles.merge(opts)
+  end
+
+  def expect_relative_position_at_end_of(cursor, layout)
+    expect(subject.relative_text_position(cursor)).to eq(layout.text.length)
   end
 end

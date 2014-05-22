@@ -74,7 +74,6 @@ class Shoes
 
       def layout_at_text_position(index)
         return @layouts.last if index < 0
-
         layout_ranges(index..index).first.first
       end
 
@@ -114,6 +113,39 @@ class Shoes
         range_start = text_range.first - first_text.length
         range_end   = text_range.last - first_text.length
         [[@layouts.last, (range_start..range_end)]]
+      end
+
+      # Returns the relative position within the appropriate layout for index
+      # in the overall DSL text
+      def relative_text_position(index)
+        if at_end?(index)
+          relative_end_position
+        elsif relative_in_first_layout?(index)
+          relative_in_first_layout(index)
+        else
+          relative_in_last_layout(index)
+        end
+      end
+
+      def relative_in_first_layout?(index)
+        index >= 0 &&
+          (@layouts.one? || index < @layouts.first.text.length)
+      end
+
+      def at_end?(index)
+        index < 0 || index > @dsl.text.length
+      end
+
+      def relative_end_position
+        @layouts.last.text.length
+      end
+
+      def relative_in_first_layout(index)
+        index
+      end
+
+      def relative_in_last_layout(index)
+        index - @layouts.first.text.length
       end
     end
   end

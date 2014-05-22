@@ -9,7 +9,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
   let(:text_layout) { double("text layout",
                              get_line_bounds: double("line bounds", height: 10)) }
   let(:fitted_layouts) { [] }
-  let(:layout_collection) { double('layout collection')}
+  let(:layout_collection) { double('layout collection', relative_text_position: 0)}
 
   subject { Shoes::Swt::TextBlockCursorPainter.new(dsl,
                                                    layout_collection,
@@ -52,39 +52,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
       fitted_layouts << first_layout
     end
 
-    context "with one layout" do
-      it "should choose the layout" do
-        position_cursor(0)
-        expect(subject.relative_cursor).to eq(0)
-      end
-
-      it "should choose layout at very end" do
-        cursor = first_layout.text.length
-        position_cursor(cursor)
-        expect(subject.relative_cursor).to eq(cursor)
-      end
-
-      it "should choose the layout when just past end" do
-        position_cursor(first_layout.text.length + 1)
-        expect_cursor_at_end_of(first_layout)
-      end
-
-      it "should chooose the layout for -1" do
-        position_cursor(-1)
-        expect_cursor_at_end_of(first_layout)
-      end
-
-      it "should choose right past end" do
-        position_cursor(first_layout.text.length + 3)
-        expect_cursor_at_end_of(first_layout)
-      end
-
-      it "should allow crazy positions past the end" do
-        position_cursor(1_000)
-        expect_cursor_at_end_of(first_layout)
-      end
-    end
-
     context "with two layouts" do
       let(:second_layout) { double("second layout", text: "second",
                                    get_location: position,
@@ -94,32 +61,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
         fitted_layouts << second_layout
       end
 
-      it "should choose the first layout" do
-        position_cursor(0)
-        expect(subject.relative_cursor).to eq(0)
-      end
-
-      it "should choose first layout at very end" do
-        cursor = first_layout.text.length
-        position_cursor(cursor)
-        expect(subject.relative_cursor).to eq(cursor)
-      end
-
-      it "should choose the second layout" do
-        position_cursor(first_layout.text.length + 1)
-        expect(subject.relative_cursor).to eq(1)
-      end
-
-      it "should chooose the second layout for -1" do
-        position_cursor(-1)
-        expect_cursor_at_end_of(second_layout)
-      end
-
-      it "should allow crazy positions past the end" do
-        position_cursor(1_000)
-        expect_cursor_at_end_of(second_layout)
-      end
-
       context "when moving" do
         before :each do
           subject.stub(:cursor_height) { 12 }
@@ -127,7 +68,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
 
         context "in the first layout" do
           before :each do
-            position_cursor(1)
+            dsl.stub(:cursor) { 1 }
             layout_collection.stub(:layout_at_text_position) { first_layout }
           end
 
@@ -151,7 +92,7 @@ describe Shoes::Swt::TextBlockCursorPainter do
 
         context "in the second layout" do
           before :each do
-            position_cursor(-1)
+            dsl.stub(:cursor) { -1 }
             layout_collection.stub(:layout_at_text_position) { second_layout }
           end
 
@@ -173,14 +114,6 @@ describe Shoes::Swt::TextBlockCursorPainter do
           end
         end
       end
-    end
-
-    def position_cursor(index)
-      dsl.stub(:cursor) { index }
-    end
-
-    def expect_cursor_at_end_of(layout)
-      expect(subject.relative_cursor).to eq(layout.text.length)
     end
   end
 
