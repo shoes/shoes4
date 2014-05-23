@@ -33,7 +33,7 @@ class Shoes
       end
 
       def draw_cursor
-        TextBlockCursorPainter.new(dsl, self).draw
+        TextBlock::CursorPainter.new(dsl, self).draw
       end
 
       def style_segment_ranges(elements_by_range)

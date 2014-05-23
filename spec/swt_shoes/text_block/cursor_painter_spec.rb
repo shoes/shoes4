@@ -1,7 +1,7 @@
 require 'swt_shoes/spec_helper'
-require 'shoes/swt/text_block_cursor_painter'
+#require 'shoes/swt/text_block_cursor_painter'
 
-describe Shoes::Swt::TextBlockCursorPainter do
+describe Shoes::Swt::TextBlock::CursorPainter do
   include_context "swt app"
 
   let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor, has_textcursor?: true) }
@@ -12,8 +12,8 @@ describe Shoes::Swt::TextBlockCursorPainter do
                                    cursor_height: 12,
                                    relative_text_position: 0)}
 
-  subject { Shoes::Swt::TextBlockCursorPainter.new(dsl,
-                                                   layout_collection) }
+  subject { Shoes::Swt::TextBlock::CursorPainter.new(dsl,
+                                                     layout_collection) }
 
   describe "missing cursor" do
     before(:each) do

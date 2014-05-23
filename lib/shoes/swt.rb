@@ -106,7 +106,7 @@ require 'shoes/swt/timer'
 
 require 'shoes/swt/text_block/fitted_text_layout'
 require 'shoes/swt/text_block/fitted_text_layout_collection'
-require 'shoes/swt/text_block/text_block_cursor_painter'
+require 'shoes/swt/text_block/cursor_painter'
 require 'shoes/swt/text_block/text_block_fitter'
 require 'shoes/swt/text_block/text_font_factory'
 require 'shoes/swt/text_block/text_style_factory'
