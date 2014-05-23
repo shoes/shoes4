@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::TextBlockPainter do
+describe Shoes::Swt::TextBlock::Painter do
   include_context "swt app"
 
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
@@ -33,7 +33,7 @@ describe Shoes::Swt::TextBlockPainter do
   let(:text_styles) {{}}
   let(:text) {'hello world'}
 
-  subject { Shoes::Swt::TextBlockPainter.new(dsl) }
+  subject { Shoes::Swt::TextBlock::Painter.new(dsl) }
 
   before :each do
     ::Swt::TextStyle.stub(:new)  { style.as_null_object }

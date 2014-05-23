@@ -71,7 +71,7 @@ require 'shoes/swt/rect_painter.rb'
 require 'shoes/swt/swt_button'
 require 'shoes/swt/check_button'
 require 'shoes/swt/radio_group'
-require 'shoes/swt/text_block/text_block_painter'
+require 'shoes/swt/text_block/painter'
 
 require 'shoes/swt/app'
 require 'shoes/swt/animation'

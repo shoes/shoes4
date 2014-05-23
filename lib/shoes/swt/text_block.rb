@@ -16,7 +16,7 @@ class Shoes
         @app            = dsl.app.gui
         @opts           = @dsl.opts
         @fitted_layouts = []
-        @painter        = TextBlockPainter.new @dsl
+        @painter        = Painter.new @dsl
         @app.add_paint_listener @painter
       end
 
