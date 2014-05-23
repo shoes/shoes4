@@ -1,13 +1,13 @@
 class Shoes
   module Swt
     class TextBlockCursorPainter
-      def initialize(dsl, collection)
-        @dsl = dsl
+      def initialize(text_block_dsl, collection)
+        @text_block_dsl = text_block_dsl
         @collection = collection
       end
 
       def draw
-        if @dsl.cursor
+        if @text_block_dsl.cursor
           draw_textcursor
         else
           remove_textcursor
@@ -15,8 +15,8 @@ class Shoes
       end
 
       def draw_textcursor
-        layout = @collection.layout_at_text_position(@dsl.cursor)
-        relative_cursor = @collection.relative_text_position(@dsl.cursor)
+        layout = @collection.layout_at_text_position(@text_block_dsl.cursor)
+        relative_cursor = @collection.relative_text_position(@text_block_dsl.cursor)
         position = layout.get_location(relative_cursor)
 
         move_if_necessary(layout.element_left + position.x,
@@ -37,14 +37,14 @@ class Shoes
       end
 
       def textcursor
-        @dsl.textcursor @collection.cursor_height
+        @text_block_dsl.textcursor @collection.cursor_height
       end
 
       def remove_textcursor
-        return unless @dsl.has_textcursor?
+        return unless @text_block_dsl.has_textcursor?
 
-        @dsl.textcursor.remove
-        @dsl.textcursor = nil
+        @text_block_dsl.textcursor.remove
+        @text_block_dsl.textcursor = nil
       end
     end
   end
