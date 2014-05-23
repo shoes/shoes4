@@ -4,18 +4,20 @@ class Shoes
       extend Forwardable
       def_delegators :@layouts, :length
 
-      attr_reader :default_text_styles
+      attr_reader :dsl, :default_text_styles
 
-      def initialize(layouts, default_text_styles)
+      def initialize(dsl, layouts, default_text_styles)
+        @dsl = dsl
         @layouts = layouts
         @default_text_styles = default_text_styles
       end
 
-      def paint_control(dsl, graphic_context)
+      def paint_control(graphic_context)
         style_from(dsl.opts)
         style_segment_ranges(dsl.text_styles)
         create_links(dsl.text_styles)
         draw(graphic_context)
+        draw_cursor
       end
 
       def style_from(opts)
@@ -28,6 +30,10 @@ class Shoes
         @layouts.each do |layout|
           layout.draw(graphic_context)
         end
+      end
+
+      def draw_cursor
+        TextBlockCursorPainter.new(dsl, self).draw
       end
 
       def style_segment_ranges(elements_by_range)
@@ -66,6 +72,11 @@ class Shoes
           element.gui.respond_to?(:create_links_in)
       end
 
+      def layout_at_text_position(index)
+        return @layouts.last if index < 0
+        layout_ranges(index..index).first.first
+      end
+
       # If we've got segments that style us across different ranges, it might
       # be in either, or both, of the layouts. This method figures out which
       # layouts apply, and what the relative ranges within each layout to use.
@@ -102,6 +113,45 @@ class Shoes
         range_start = text_range.first - first_text.length
         range_end   = text_range.last - first_text.length
         [[@layouts.last, (range_start..range_end)]]
+      end
+
+      # Returns the relative position within the appropriate layout for index
+      # in the overall DSL text
+      def relative_text_position(index)
+        if at_end?(index)
+          relative_end_position
+        elsif relative_in_first_layout?(index)
+          relative_in_first_layout(index)
+        else
+          relative_in_last_layout(index)
+        end
+      end
+
+      def relative_in_first_layout?(index)
+        index >= 0 &&
+          (@layouts.one? || index < @layouts.first.text.length)
+      end
+
+      def at_end?(index)
+        index < 0 || index > @dsl.text.length
+      end
+
+      def relative_end_position
+        @layouts.last.text.length
+      end
+
+      def relative_in_first_layout(index)
+        index
+      end
+
+      def relative_in_last_layout(index)
+        index - @layouts.first.text.length
+      end
+
+      # This could be smarter, basing height on the actual line the cursor's
+      # in. For now, just use the first line's height.
+      def cursor_height
+        @layouts.first.line_bounds(0).height
       end
     end
   end

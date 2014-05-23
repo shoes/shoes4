@@ -1,13 +1,13 @@
 class Shoes
   module Swt
     class TextBlockCursorPainter
-      def initialize(dsl, fitted_layouts)
-        @dsl = dsl
-        @fitted_layouts = fitted_layouts
+      def initialize(text_block_dsl, collection)
+        @text_block_dsl = text_block_dsl
+        @collection = collection
       end
 
       def draw
-        if @dsl.cursor
+        if @text_block_dsl.cursor
           draw_textcursor
         else
           remove_textcursor
@@ -15,18 +15,20 @@ class Shoes
       end
 
       def draw_textcursor
-        layout = choose_layout
-        x, y = new_position(layout)
+        layout = @collection.layout_at_text_position(@text_block_dsl.cursor)
+        relative_cursor = @collection.relative_text_position(@text_block_dsl.cursor)
+        position = layout.get_location(relative_cursor)
 
-        # It's important to only move when necessary to avoid constant redraws
+        move_if_necessary(layout.element_left + position.x,
+                          layout.element_top + position.y)
+
+      end
+
+      # It's important to only move when necessary to avoid constant redraws
+      def move_if_necessary(x, y)
         unless textcursor.left == x && textcursor.top == y
           move_textcursor(x, y)
         end
-      end
-
-      def new_position(layout)
-        position = layout.get_location(relative_cursor)
-        [layout.element_left + position.x, layout.element_top + position.y]
       end
 
       def move_textcursor(x, y)
@@ -34,78 +36,15 @@ class Shoes
         textcursor.show
       end
 
-      def first_layout
-        @fitted_layouts.first
-      end
-
-      def last_layout
-        @fitted_layouts.last
-      end
-
-      # Only works with one or two layouts, but that's what we've got
-      # -1 positions us at the very end, regardless text length
-      def choose_layout
-        if cursor_fits_in_first_layout?
-          first_layout
-        else
-          last_layout
-        end
-      end
-
-      # Again, assumes one or two layout system
-      def relative_cursor
-        if cursor_at_end?
-          relative_cursor_at_end
-        elsif cursor_fits_in_first_layout?
-          relative_cursor_in_first_layout
-        else
-          relative_cursor_in_last_layout
-        end
-      end
-
-      def cursor_fits_in_first_layout?
-        @dsl.cursor <= first_layout.text.length && @dsl.cursor >= 0
-      end
-
-      def cursor_at_end?
-        cursor_negative? || cursor_past_all_text?
-      end
-
-      def cursor_negative?
-        @dsl.cursor < 0
-      end
-
-      def cursor_past_all_text?
-        @dsl.cursor > @dsl.text.length
-      end
-
-      def relative_cursor_at_end
-        last_layout.text.length
-      end
-
-      def relative_cursor_in_first_layout
-        @dsl.cursor
-      end
-
-      def relative_cursor_in_last_layout
-        @dsl.cursor - first_layout.text.length
-      end
-
       def textcursor
-        @dsl.textcursor cursor_height
-      end
-
-      # This could be smarter, basing height on the actual line the cursor's
-      # in. For now, just use the first line's height.
-      def cursor_height
-        first_layout.layout.get_line_bounds(0).height
+        @text_block_dsl.textcursor @collection.cursor_height
       end
 
       def remove_textcursor
-        return unless @dsl.has_textcursor?
+        return unless @text_block_dsl.has_textcursor?
 
-        @dsl.textcursor.remove
-        @dsl.textcursor = nil
+        @text_block_dsl.textcursor.remove
+        @text_block_dsl.textcursor = nil
       end
     end
   end
