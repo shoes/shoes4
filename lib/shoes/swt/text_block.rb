@@ -36,7 +36,7 @@ class Shoes
 
       def contents_alignment(current_position)
         dispose_existing_layouts
-        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
+        @fitted_layouts = Fitter.new(self, current_position).fit_it_in
 
         set_absolutes_on_dsl(current_position)
         set_calculated_sizes

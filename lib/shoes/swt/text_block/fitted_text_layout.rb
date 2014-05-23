@@ -5,8 +5,8 @@ class Shoes
     # need to be disposed, because it is not backed by system resources.
     #
     # The instance factories and our own instances will track these resources
-    # and ensure that they get properly disposed when TextBlock or
-    # TextBlockFitter tell us we're done.
+    # and ensure that they get properly disposed when TextBlock or Fitter tell
+    # us we're done.
     #
     # These are only expected to be called when we're doing #contents_alignment
     class FittedTextLayout

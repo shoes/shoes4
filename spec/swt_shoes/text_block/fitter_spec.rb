@@ -1,7 +1,6 @@
 require 'swt_shoes/spec_helper'
-require 'shoes/swt/text_block_fitter'
 
-describe Shoes::Swt::TextBlockFitter do
+describe Shoes::Swt::TextBlock::Fitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
                      absolute_left: 25, absolute_top: 75,
                      desired_width: 85,
@@ -26,7 +25,7 @@ describe Shoes::Swt::TextBlockFitter do
 
   let(:current_position) { double('current_position') }
 
-  subject { Shoes::Swt::TextBlockFitter.new(text_block, current_position) }
+  subject { Shoes::Swt::TextBlock::Fitter.new(text_block, current_position) }
 
   before(:each) do
     Shoes::Swt::FittedTextLayout.stub(:new) { layout }

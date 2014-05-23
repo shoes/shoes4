@@ -45,7 +45,7 @@ describe Shoes::Swt::TextBlock do
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
-      ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
+      ::Shoes::Swt::TextBlock::Fitter.stub(:new) { fitter }
       fitter.stub(:fit_it_in).and_return([fitted_layout], [second_fitted_layout])
     end
 
