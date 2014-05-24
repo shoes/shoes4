@@ -4,7 +4,7 @@ describe Shoes::Configuration do
   context ":swt" do
     describe "#backend" do
       it "sets backend" do
-        Shoes.configuration.backend.should == Shoes::Swt
+        expect(Shoes.configuration.backend).to eq(Shoes::Swt)
       end
     end
 

@@ -11,8 +11,8 @@ describe Shoes::Progress do
 
   subject(:progress) { Shoes::Progress.new(app, parent, input_opts, input_block) }
 
-  it { should respond_to :fraction }
-  it { should respond_to :fraction= }
+  it { is_expected.to respond_to :fraction }
+  it { is_expected.to respond_to :fraction= }
 
   it_behaves_like "object with dimensions"
 

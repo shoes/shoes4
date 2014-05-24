@@ -37,7 +37,7 @@ describe Shoes::Swt::Dialog do
 
     it 'returns nil' do
       double_message_box
-      @dialog.alert('Nothing').should be_nil
+      expect(@dialog.alert('Nothing')).to be_nil
     end
   end
 
@@ -49,35 +49,35 @@ describe Shoes::Swt::Dialog do
 
     it 'is true when YES was pressed' do
       double_message_box_returning ::Swt::SWT::YES
-      subject.confirm.should be_truthy
+      expect(subject.confirm).to be_truthy
     end
 
     it 'is false when NO was pressed' do
       double_message_box_returning ::Swt::SWT::NO
-      subject.confirm.should be_falsey
+      expect(subject.confirm).to be_falsey
     end
 
     it 'is false when an arbitary number is returned' do
       double_message_box_returning 42
-      subject.confirm.should be_falsey
+      expect(subject.confirm).to be_falsey
     end
   end
 
   describe 'dialog_chooser' do
     it 'responds to it' do
-      @dialog.should respond_to :dialog_chooser
+      expect(@dialog).to respond_to :dialog_chooser
     end
   end
 
   describe 'ask' do
     it 'responds to it' do
-      @dialog.should respond_to :ask
+      expect(@dialog).to respond_to :ask
     end
   end
 
   describe 'ask_color' do
     it 'responds to it' do
-      @dialog.should respond_to :ask_color
+      expect(@dialog).to respond_to :ask_color
     end
   end
 
@@ -86,19 +86,19 @@ describe Shoes::Swt::Dialog do
 
       it 'returns nil' do
         double_message_box
-        main_object.alert('Something').should be_nil
+        expect(main_object.alert('Something')).to be_nil
       end
     end
 
     describe '#confirm' do
       it 'returns true when YES was clicked' do
         double_message_box_returning ::Swt::SWT::YES
-        main_object.confirm('1 + 1 = 2').should be_truthy
+        expect(main_object.confirm('1 + 1 = 2')).to be_truthy
       end
 
       it 'returns false when NO was clicked' do
         double_message_box_returning ::Swt::SWT::NO
-        main_object.confirm('1 + 1 = 3').should be_falsey
+        expect(main_object.confirm('1 + 1 = 3')).to be_falsey
       end
     end
   end

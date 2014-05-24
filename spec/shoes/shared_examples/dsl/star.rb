@@ -4,7 +4,7 @@ shared_examples_for "star DSL method" do
   end
 
   it "raises an ArgumentError with just one argument" do
-    lambda { dsl.star(30) }.should raise_error(ArgumentError)
+    expect { dsl.star(30) }.to raise_error(ArgumentError)
   end
 
   describe 'instantiation' do

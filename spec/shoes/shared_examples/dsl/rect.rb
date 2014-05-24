@@ -1,13 +1,13 @@
 shared_examples_for "rectangle dimensions" do
   it "makes a Shoes::Rect" do
-    rect.should be_an_instance_of(Shoes::Rect)
+    expect(rect).to be_an_instance_of(Shoes::Rect)
   end
 
   it "sets proper dimensions" do
-    rect.left.should eq(left)
-    rect.top.should eq(top)
-    rect.width.should eq(width)
-    rect.height.should eq(height)
+    expect(rect.left).to eq(left)
+    expect(rect.top).to eq(top)
+    expect(rect.width).to eq(width)
+    expect(rect.height).to eq(height)
   end
 end
 
@@ -17,7 +17,7 @@ shared_examples_for "rect DSL method" do
   let(:curve)  { 12 }
 
   it "raises an ArgumentError" do
-    lambda { dsl.rect(30) }.should raise_exception(ArgumentError)
+    expect { dsl.rect(30) }.to raise_exception(ArgumentError)
   end
 
   context 'unequal sides' do
@@ -30,7 +30,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        rect.corners.should eq(0)
+        expect(rect.corners).to eq(0)
       end
     end
 
@@ -40,7 +40,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "sets corner radius" do
-        rect.corners.should eq(curve)
+        expect(rect.corners).to eq(curve)
       end
     end
 
@@ -50,7 +50,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        rect.corners.should eq(0)
+        expect(rect.corners).to eq(0)
       end
     end
 
@@ -60,7 +60,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "sets corner radius" do
-        rect.corners.should eq(curve)
+        expect(rect.corners).to eq(curve)
       end
     end
   end
@@ -75,7 +75,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        rect.corners.should eq(0)
+        expect(rect.corners).to eq(0)
       end
     end
 
@@ -85,7 +85,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        rect.corners.should eq(0)
+        expect(rect.corners).to eq(0)
       end
     end
   end

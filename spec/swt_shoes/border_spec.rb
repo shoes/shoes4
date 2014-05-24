@@ -15,8 +15,8 @@ describe Shoes::Swt::Border do
   subject { Shoes::Swt::Border.new dsl, swt_app }
 
   context "#initialize" do
-    it { should be_an_instance_of(Shoes::Swt::Border) }
-    its(:dsl) { should be(dsl) }
+    it { is_expected.to be_an_instance_of(Shoes::Swt::Border) }
+    its(:dsl) { is_expected.to be(dsl) }
   end
 
   it_behaves_like "paintable"

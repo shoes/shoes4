@@ -79,7 +79,7 @@ describe Shoes::Swt::TextBlockFitter do
       layout = double('layout', line_offsets: [0, 5, 9], text: "Text Split")
       layout.stub(:line_bounds) { double('line_bounds', height: 50)}
 
-      subject.split_text(layout, 55).should eq(["Text ", "Split"])
+      expect(subject.split_text(layout, 55)).to eq(["Text ", "Split"])
     end
 
     it "should be able to split text when too small" do
@@ -87,7 +87,7 @@ describe Shoes::Swt::TextBlockFitter do
       layout.stub(:line_bounds).with(0) { double('line_bounds', height: 21)}
       layout.stub(:line_bounds).with(1) { raise "Boom" }
 
-      subject.split_text(layout, 33).should eq(["Text Split", ""])
+      expect(subject.split_text(layout, 33)).to eq(["Text Split", ""])
     end
   end
 

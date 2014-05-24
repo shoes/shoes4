@@ -1,9 +1,9 @@
 shared_examples_for "object with dimensions" do
   it "should initialize" do
-    subject.left.should == left
-    subject.top.should == top
-    subject.width.should == width
-    subject.height.should == height
+    expect(subject.left).to eq(left)
+    expect(subject.top).to eq(top)
+    expect(subject.width).to eq(width)
+    expect(subject.height).to eq(height)
   end
 end
 
@@ -24,9 +24,9 @@ shared_examples_for "object with negative dimensions" do
   let(:negative_opts) { {left: left, top: top, width: -width, height: -height} }
 
   it "should initialize based on parent dimensions" do
-    subject.left.should == left
-    subject.top.should == top
-    subject.width.should == parent.width - width
-    subject.height.should == parent.height - height
+    expect(subject.left).to eq(left)
+    expect(subject.top).to eq(top)
+    expect(subject.width).to eq(parent.width - width)
+    expect(subject.height).to eq(parent.height - height)
   end
 end

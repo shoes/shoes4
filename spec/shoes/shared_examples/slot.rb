@@ -2,10 +2,10 @@ require 'shoes/spec_helper'
 
 shared_examples_for "Slot" do
   it "should be able to append" do
-    subject.contents.should be_empty
+    expect(subject.contents).to be_empty
     our_subject = subject
     app.execute_block Proc.new { our_subject.append {para "foo"} }
-    subject.contents.size.should eq(1)
+    expect(subject.contents.size).to eq(1)
   end
 
   it_behaves_like 'prepending'
@@ -80,11 +80,11 @@ end
 
 shared_examples_for 'element one positioned with top and left' do
   it 'positions the element at its left value' do
-    element.absolute_left.should eq subject.absolute_left + ele_left
+    expect(element.absolute_left).to eq subject.absolute_left + ele_left
   end
 
   it 'positions the element at its top value' do
-    element.absolute_top.should eq subject.absolute_top + ele_top
+    expect(element.absolute_top).to eq subject.absolute_top + ele_top
   end
 end
 
@@ -106,15 +106,15 @@ shared_examples_for 'positions the first element in the top left' do
   include_context 'one slot child'
   include_context 'contents_alignment'
   it 'positions a single object at the same top as self' do
-    element.absolute_top.should eq subject.element_top
+    expect(element.absolute_top).to eq subject.element_top
   end
 
   it 'positions a single object at the same left as self' do
-    element.absolute_left.should eq subject.element_left
+    expect(element.absolute_left).to eq subject.element_left
   end
 
   it 'has a slot height of the element height' do
-    subject.height.should eq element.height
+    expect(subject.height).to eq element.height
   end
 
   describe 'top and left' do
@@ -128,19 +128,19 @@ shared_examples_for 'arranges elements underneath each other' do
   include_context 'contents_alignment'
 
   it 'positions an element beneath a previous element' do
-    element2.absolute_top.should eq element.absolute_bottom + 1
+    expect(element2.absolute_top).to eq element.absolute_bottom + 1
   end
 
   it 'still positions it at the start of the line (e.g. self.left)' do
-    element2.absolute_left.should eq subject.absolute_left
+    expect(element2.absolute_left).to eq subject.absolute_left
   end
 
   it 'has a stack height according to its contents' do
-    subject.height.should eq (element.height + element2.height)
+    expect(subject.height).to eq (element.height + element2.height)
   end
 
   it 'has an absolute_bottom of top + height' do
-    subject.absolute_bottom.should eq (subject.absolute_top + subject.height - 1)
+    expect(subject.absolute_bottom).to eq (subject.absolute_top + subject.height - 1)
   end
 
   describe 'element one with top and left' do
@@ -149,11 +149,11 @@ shared_examples_for 'arranges elements underneath each other' do
 
     describe 'positions element2 disregarding element1' do
       it 'has the same absolute left as the slot' do
-        element2.absolute_left.should eq subject.absolute_left
+        expect(element2.absolute_left).to eq subject.absolute_left
       end
 
       it 'has the same absolute top as the slot' do
-        element2.absolute_top.should eq subject.absolute_top
+        expect(element2.absolute_top).to eq subject.absolute_top
       end
     end
   end
@@ -163,13 +163,13 @@ shared_examples_for 'set height and contents alignment' do
   include_context 'two slot children'
 
   it 'contents_alignment returns the height of the content' do
-    subject.contents_alignment.should eq (element.height + element2.height)
+    expect(subject.contents_alignment).to eq (element.height + element2.height)
   end
 
   it 'still has the same height though' do
     old_height = subject.height
     subject.contents_alignment
-    subject.height.should eq old_height
+    expect(subject.height).to eq old_height
   end
 end
 
@@ -178,15 +178,15 @@ shared_examples_for 'taking care of margin' do
   include_context 'contents_alignment'
 
   it 'respects the left margin for the first element' do
-    element.absolute_left.should eq input_opts[:margin]
+    expect(element.absolute_left).to eq input_opts[:margin]
   end
 
   it 'respects the left margin for the second element' do
-    element2.absolute_left.should eq input_opts[:margin]
+    expect(element2.absolute_left).to eq input_opts[:margin]
   end
 
   it 'respects the top margin for the first element' do
-    element.absolute_top.should eq input_opts[:margin]
+    expect(element.absolute_top).to eq input_opts[:margin]
   end
 end
 
@@ -203,11 +203,11 @@ shared_examples_for 'prepending' do
     end
 
     it 'as the first' do
-      subject.contents.first.should eq prepend1
+      expect(subject.contents.first).to eq prepend1
     end
 
     it 'has a total of 3 elements then' do
-      subject.contents.size.should == 3
+      expect(subject.contents.size).to eq(3)
     end
   end
 
@@ -220,15 +220,15 @@ shared_examples_for 'prepending' do
     end
 
     it 'has prepend1 as the first child' do
-      subject.contents.first.should eq prepend1
+      expect(subject.contents.first).to eq prepend1
     end
 
     it 'has prepend2 as the second child' do
-      subject.contents[1].should eq prepend2
+      expect(subject.contents[1]).to eq prepend2
     end
 
     it 'has a total of 4 children' do
-      subject.contents.size.should == 4
+      expect(subject.contents.size).to eq(4)
     end
   end
 
@@ -239,15 +239,15 @@ shared_examples_for 'prepending' do
     end
 
     it 'has the last prepended element as the first' do
-      subject.contents.first.should eq prepend2
+      expect(subject.contents.first).to eq prepend2
     end
 
     it 'has the first prepended element as the second' do
-      subject.contents[1].should eq prepend1
+      expect(subject.contents[1]).to eq prepend1
     end
 
     it 'has a total of 4 children' do
-      subject.contents.size.should == 4
+      expect(subject.contents.size).to eq(4)
     end
   end
 end
@@ -258,7 +258,7 @@ shared_examples_for 'clearing' do
   describe '#clear' do
     it 'removes all contents' do
       subject.clear
-      subject.contents.should be_empty
+      expect(subject.contents).to be_empty
     end
   end
 
@@ -266,7 +266,7 @@ shared_examples_for 'clearing' do
     it 'removees the element' do
       element.parent = subject
       element.remove
-      subject.contents.should_not include element
+      expect(subject.contents).not_to include element
     end
   end
 end

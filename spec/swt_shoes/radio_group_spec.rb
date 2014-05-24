@@ -9,7 +9,7 @@ describe Shoes::Swt::RadioGroup do
 
   describe "#initialize" do
     it "sets name" do
-      subject.name.should == "Group Name"
+      expect(subject.name).to eq("Group Name")
     end
   end
 
@@ -25,11 +25,11 @@ describe Shoes::Swt::RadioGroup do
       end
 
       it "only one button is added" do
-        subject.length.should == 1
+        expect(subject.length).to eq(1)
       end
 
       it "the correct button is added" do
-        subject.include?(radio).should == true
+        expect(subject.include?(radio)).to eq(true)
       end
     end
   end
@@ -46,7 +46,7 @@ describe Shoes::Swt::RadioGroup do
 
     it "removes one button" do
       subject.remove(radio)
-      subject.length.should == 0
+      expect(subject.length).to eq(0)
     end
   end
 

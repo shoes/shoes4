@@ -13,12 +13,12 @@ shared_examples "an element that can respond to change" do
         called = true
       end
       subject.call_change_listeners
-      called.should be_truthy
+      expect(called).to be_truthy
     end
 
     it "should pass the element itself to the callback" do
       subject.change do |element|
-        element.should == subject
+        expect(element).to eq(subject)
       end
       subject.call_change_listeners
     end

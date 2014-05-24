@@ -18,9 +18,9 @@ describe Shoes::InputBox do
   it_behaves_like "an element that can respond to change"
   it_behaves_like "object with state"
 
-  it { should respond_to :focus }
-  it { should respond_to :text  }
-  it { should respond_to :text= }
+  it { is_expected.to respond_to :focus }
+  it { is_expected.to respond_to :text  }
+  it { is_expected.to respond_to :text= }
 
   it 'forwards calls to highlight_text to the backend' do
     expect(subject.gui).to receive(:highlight_text).with(4, 20)

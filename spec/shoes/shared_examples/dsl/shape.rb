@@ -10,12 +10,12 @@ shared_examples_for "shape DSL method" do
   }
 
   it "creates a Shoes::Shape" do
-    shape.should be_an_instance_of(Shoes::Shape)
+    expect(shape).to be_an_instance_of(Shoes::Shape)
   end
 
   it "receives style from app" do
     green = Shoes::COLORS.fetch :green
     dsl.style[:stroke] = green
-    shape.stroke.should eq(green)
+    expect(shape.stroke).to eq(green)
   end
 end

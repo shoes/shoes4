@@ -5,6 +5,6 @@ describe Shoes::Swt::Sound do
   let(:filepath) { double('filepath') }
   subject { Shoes::Swt::Sound.new(dsl, filepath) }
 
-  its(:dsl) { should be(parent) }
-  its(:filepath) { should be(filepath) }
+  its(:dsl) { is_expected.to be(parent) }
+  its(:filepath) { is_expected.to be(filepath) }
 end

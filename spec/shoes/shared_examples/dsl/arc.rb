@@ -32,7 +32,7 @@ shared_examples_for "arc DSL method" do
   end
 
   it "raises an ArgumentError" do
-    lambda { dsl.arc(30) }.should raise_exception(ArgumentError)
+    expect { dsl.arc(30) }.to raise_exception(ArgumentError)
   end
 
   it_behaves_like "persistent fill" do

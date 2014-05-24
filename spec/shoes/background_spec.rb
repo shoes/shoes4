@@ -36,13 +36,13 @@ describe Shoes::Background do
   describe '#needs_to_be_positioned?' do
     context 'without absolute dimensions' do
       let(:input_opts) {{}}
-      it {should_not be_needs_to_be_positioned}
+      it {is_expected.not_to be_needs_to_be_positioned}
     end
 
     context 'with absolute dimensions' do
-      it {should be_needs_to_be_positioned}
+      it {is_expected.to be_needs_to_be_positioned}
     end
   end
 
-  it {should_not be_takes_up_space}
+  it {is_expected.not_to be_takes_up_space}
 end

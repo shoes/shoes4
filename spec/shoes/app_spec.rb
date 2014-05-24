@@ -6,9 +6,9 @@ describe Shoes::App do
   subject(:app) { Shoes::App.new(opts, &input_blk) }
 
   it_behaves_like "DSL container"
-  it { should respond_to :clipboard }
-  it { should respond_to :clipboard= }
-  it { should respond_to :owner }
+  it { is_expected.to respond_to :clipboard }
+  it { is_expected.to respond_to :clipboard= }
+  it { is_expected.to respond_to :owner }
 
   # For Shoes 3 compatibility
   it "exposes self as #app" do
@@ -126,7 +126,7 @@ describe Shoes::App do
     default_styles.each do |key, value|
       describe "#{key}" do
         it "defaults to #{value}" do
-          subject.style[key].should eq(value)
+          expect(subject.style[key]).to eq(value)
         end
 
         it "passes default to objects" do
@@ -143,10 +143,10 @@ describe Shoes::App do
         app2 = Shoes::App.new
 
         app1.strokewidth 10
-        app1.line(0, 100, 100, 0).style[:strokewidth].should == 10
+        expect(app1.line(0, 100, 100, 0).style[:strokewidth]).to eq(10)
 
         # .. but does not affect app2
-        app2.line(0, 100, 100, 0).style[:strokewidth].should_not == 10
+        expect(app2.line(0, 100, 100, 0).style[:strokewidth]).not_to eq(10)
      
       end
     end
@@ -212,7 +212,7 @@ describe Shoes::App do
     it 'starts with self as the execution context' do
       my_self = nil
       app = Shoes.app do my_self = self end
-      my_self.should eq app
+      expect(my_self).to eq app
     end
   end
 
@@ -220,7 +220,7 @@ describe Shoes::App do
     let(:input_blk) {Proc.new do append do para 'Hi' end end}
 
     it 'understands append' do
-      subject.should respond_to :append
+      expect(subject).to respond_to :append
     end
 
     it 'should receive a call to what is called in the append block' do
@@ -231,7 +231,7 @@ describe Shoes::App do
 
   describe '#resize' do
     it 'understands resize' do
-      subject.should respond_to :resize
+      expect(subject).to respond_to :resize
     end
   end
 
@@ -302,7 +302,7 @@ describe Shoes::App do
     it 'adds the child to the own contents when there is no top_slot' do
       internal_app.stub top_slot: nil
       internal_app.add_child child
-      internal_app.contents.should include child
+      expect(internal_app.contents).to include child
     end
   end
 
@@ -386,19 +386,19 @@ describe Shoes::App do
     subject {Shoes::App::DELEGATE_METHODS}
 
     describe 'does not include general ruby object methods' do
-      it {should_not include :new, :initialize}
+      it {is_expected.not_to include :new, :initialize}
     end
 
     describe 'it has access to Shoes app and DSL methods' do
-      it {should include :para, :rect, :stack, :flow, :image, :location}
+      it {is_expected.to include :para, :rect, :stack, :flow, :image, :location}
     end
 
     describe 'it does not have access to private methods' do
-      it {should_not include :pop_style, :style_normalizer, :create}
+      it {is_expected.not_to include :pop_style, :style_normalizer, :create}
     end
 
     describe 'there are blacklisted methods which it should not include' do
-      it {should_not include :parent}
+      it {is_expected.not_to include :parent}
     end
   end
 end
@@ -412,11 +412,11 @@ describe "App registry" do
 
   it "only exposes a copy" do
     subject << double("app")
-    Shoes.apps.length.should eq(0)
+    expect(Shoes.apps.length).to eq(0)
   end
 
   context "with no apps" do
-    it { should be_empty }
+    it { is_expected.to be_empty }
   end
 
   context "with one app" do
@@ -427,7 +427,7 @@ describe "App registry" do
 
     its(:length) { should eq(1) }
     it "marks first app as main app" do
-      Shoes.main_app.should be(app)
+      expect(Shoes.main_app).to be(app)
     end
   end
 
@@ -441,7 +441,7 @@ describe "App registry" do
 
     its(:length) { should eq(2) }
     it "marks first app as main app" do
-      Shoes.main_app.should be(app_1)
+      expect(Shoes.main_app).to be(app_1)
     end
   end
 end

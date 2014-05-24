@@ -1,6 +1,6 @@
 shared_examples_for "clearable" do
   it "should respond to clear" do
-    subject.should respond_to :clear
+    expect(subject).to respond_to :clear
   end
 
   it "should remove paint listener" do
@@ -22,7 +22,7 @@ end
 
 shared_examples_for "clearable native element" do
   it "should respond to clear" do
-    subject.should respond_to :clear
+    expect(subject).to respond_to :clear
   end
 
   it "should dispose real when real is not disposed" do

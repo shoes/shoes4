@@ -1,6 +1,6 @@
 shared_examples "checkable" do
-  it { should respond_to :checked= }
-  it { should respond_to :checked? }
-  it { should respond_to :focus }
-  it { should respond_to :click }
+  it { is_expected.to respond_to :checked= }
+  it { is_expected.to respond_to :checked? }
+  it { is_expected.to respond_to :focus }
+  it { is_expected.to respond_to :click }
 end

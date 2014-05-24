@@ -18,7 +18,7 @@ describe Shoes::Line do
   end
 
   shared_examples_for "basic line" do
-    it { should be_kind_of(Shoes::Line) }
+    it { is_expected.to be_kind_of(Shoes::Line) }
     its(:top) { should eq(15) }
     its(:left) { should eq(10) }
     its(:width) { should eq(90) }

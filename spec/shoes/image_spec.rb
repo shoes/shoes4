@@ -14,7 +14,7 @@ describe Shoes::Image do
 
     subject(:image) { Shoes::Image.new(app, parent, filename, left: left, top: top, width: width, height: height) }
 
-    it { should be_instance_of(Shoes::Image) }
+    it { is_expected.to be_instance_of(Shoes::Image) }
 
     it "should update image path" do
       subject.path = updated_filename
