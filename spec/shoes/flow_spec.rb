@@ -33,11 +33,6 @@ describe Shoes::Flow do
     expect(f.height).to eq(0)
   end
 
-  it "clears with an optional block" do
-    expect(flow).to receive(:clear).with(&input_block)
-    flow.clear &input_block
-  end
-
   describe "positioning" do
     it_behaves_like 'positioning through :_position'
     it_behaves_like 'positions the first element in the top left'
