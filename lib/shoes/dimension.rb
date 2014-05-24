@@ -56,7 +56,7 @@ class Shoes
         extent - (margin_start + margin_end)
       end
     end
-    
+
     def element_extent=(value)
       self.extent = if value.nil?
                       nil
@@ -98,7 +98,7 @@ class Shoes
     # For... reasons it is important to have the value of the instance variable
     # set to nil if it's not modified and then return a default value on the
     # getter... reason being that for ParentDimensions we need to be able to
-    # figure out if a value has been modified or if we should consulte the
+    # figure out if a value has been modified or if we should consult the
     # parent value - see ParentDimension implementation
     [:margin_start, :margin_end, :displace_start].each do |method|
       define_method method do

@@ -27,7 +27,6 @@ describe Shoes::Dimension do
       its(:displace_start) {should eq 0}
       it {should_not be_positioned}
       it {should_not be_absolute_position}
-      it {should_not be_start_as_center}
     end
 
     describe 'with a parent and being positioned itself' do
@@ -46,7 +45,6 @@ describe Shoes::Dimension do
 
     describe 'start as center' do
       subject {Shoes::Dimension.new parent_dimension, true}
-      it {should be_start_as_center}
 
       it 'takes start as the center' do
         subject.extent = 100
