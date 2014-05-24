@@ -31,6 +31,15 @@ shared_context 'two slot children' do
   end
 end
 
+shared_context 'three slot children' do
+  include_context 'two slot children'
+  let(:element3) {Shoes::FakeElement.new(nil, height: 50, width: 20)}
+
+  before :each do
+    subject.add_child element3
+  end
+end
+
 shared_context 'contents_alignment' do
   before :each do
     subject.contents_alignment

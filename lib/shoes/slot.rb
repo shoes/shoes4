@@ -4,9 +4,6 @@ class Shoes
     include CommonMethods
     include DimensionsDelegations
 
-    NEXT_ELEMENT_ON_SAME_LINE_OFFSET = Point.new(1, 0)
-    NEXT_ELEMENT_ON_NEXT_LINE_OFFSET = Point.new(0, 1)
-
     attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
                 :leave_proc
 
@@ -113,10 +110,10 @@ class Shoes
 
     def positioning(element, current_position)
       return current_position unless element.needs_to_be_positioned?
-      position_modifier = position_element element, current_position
+      position_element element, current_position
       element.contents_alignment(current_position) if element.respond_to? :contents_alignment
       if element.takes_up_space?
-        update_current_position(current_position, element, position_modifier)
+        update_current_position(current_position, element)
       else
         current_position
       end
@@ -127,17 +124,16 @@ class Shoes
     end
 
     def position_in_current_line(element, current_position)
+      x_modifier = same_line_x_modifier current_position
       position_element_at element,
-                          position_x(current_position.x, element),
+                          position_x(current_position.x + x_modifier, element),
                           position_y(current_position.y, element)
-      NEXT_ELEMENT_ON_SAME_LINE_OFFSET
     end
 
     def move_to_next_line(element, current_position)
       position_element_at element,
                           position_x(self.element_left, element),
                           position_y(current_position.next_line_start, element)
-      NEXT_ELEMENT_ON_NEXT_LINE_OFFSET
     end
 
     def position_element_at(element, x, y)
@@ -149,10 +145,10 @@ class Shoes
       element.absolute_left == x && element.absolute_top == y
     end
 
-    def update_current_position(current_position, element, position_modifier)
+    def update_current_position(current_position, element)
       return current_position if element.absolutely_positioned?
-      current_position.x = element.absolute_right + position_modifier.x
-      current_position.y = element.absolute_top + position_modifier.y
+      current_position.x = element.absolute_right
+      current_position.y = element.absolute_top
       if current_position.next_line_start < element.absolute_bottom + 1
         current_position.next_line_start = element.absolute_bottom + 1
       end
@@ -191,6 +187,24 @@ class Shoes
         # we probably need to position it after everything has been positioned
         self.absolute_bottom - (element.bottom + element.height)
       end
+    end
+
+    # When we position in the same line we need to move the next element one
+    # pixel to the right because otherwise the elements slightly overlap
+    # see #499
+    # However for the very first element in a line (well only the first, others)
+    # are positioned with move_to_next_line) - we don't want to bump it to the
+    # right because then it'd be one pixel too much to the right...
+    def same_line_x_modifier(current_position)
+      if first_element_on_line?(current_position)
+        0
+      else
+        1
+      end
+    end
+
+    def first_element_on_line? current_position
+      current_position.x == element_left
     end
 
     def fits_on_the_same_line?(element, current_x)
