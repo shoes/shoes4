@@ -198,17 +198,6 @@ class Shoes
       end
     end
 
-    # When we position in the same line we need to move the next element one
-    # pixel to the right because otherwise the elements slightly overlap
-    # see #499
-    # However for the very first element in a line (well only the first, others)
-    # are positioned with move_to_next_line) - we don't want to bump it to the
-    # right because then it'd be one pixel too much to the right...
-
-    def first_element_on_line? current_position
-      current_position.x == element_left
-    end
-
     def fits_on_the_same_line?(element, current_x)
       fitting_width = element.width
       fitting_width = element.fitting_width if element.respond_to?(:fitting_width)
