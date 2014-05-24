@@ -1,6 +1,6 @@
 shared_examples_for "creating gradient" do
   it "returns correct gradient" do
-    expect(gradient.to_s).to eq("<Shoes::Gradient #ff0000->#0000ff>")
+    gradient.to_s.should eq("<Shoes::Gradient #ff0000->#0000ff>")
   end
 end
 
@@ -47,6 +47,6 @@ shared_examples_for "gradient DSL method" do
   end
 
   it "fails on bad input" do
-    expect { dsl.gradient(100) }.to raise_error(ArgumentError)
+    lambda { dsl.gradient(100) }.should raise_error(ArgumentError)
   end
 end

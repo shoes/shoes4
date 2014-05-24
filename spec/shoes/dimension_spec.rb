@@ -13,7 +13,7 @@ describe Shoes::Dimension do
                                   element_end:    parent_element_end,
                                   element_extent: parent_element_extent }
 
-  ONE_PIXEL = 1 unless const_defined?(:ONE_PIXEL) && ONE_PIXEL == 1
+  ONE_PIXEL = 1
 
   describe 'initialization' do
     describe 'without arguments (even no parent)' do
@@ -25,8 +25,9 @@ describe Shoes::Dimension do
       its(:margin_start) {should eq 0}
       its(:margin_end) {should eq 0}
       its(:displace_start) {should eq 0}
-      it {is_expected.not_to be_positioned}
-      it {is_expected.not_to be_absolute_position}
+      it {should_not be_positioned}
+      it {should_not be_absolute_position}
+      it {should_not be_start_as_center}
     end
 
     describe 'with a parent and being positioned itself' do
@@ -45,6 +46,7 @@ describe Shoes::Dimension do
 
     describe 'start as center' do
       subject {Shoes::Dimension.new parent_dimension, true}
+      it {should be_start_as_center}
 
       it 'takes start as the center' do
         subject.extent = 100
@@ -152,7 +154,7 @@ describe Shoes::Dimension do
     end
 
     its(:start) {should eq start}
-    it {is_expected.to be_absolute_position}
+    it {should be_absolute_position}
 
     it 'can set a start relative to parent element_extent' do
       subject.start = 0.3
@@ -200,7 +202,7 @@ describe Shoes::Dimension do
       expect(subject.absolute_start).to eq absolute_start
     end
 
-    it {is_expected.to be_positioned}
+    it {should be_positioned}
   end
 
   describe '#absolute_end' do
@@ -293,20 +295,20 @@ describe Shoes::Dimension do
 
     its(:absolute_end) {should eq absolute_end}
 
-    it {is_expected.to be_in_bounds absolute_start}
-    it {is_expected.to be_in_bounds absolute_end}
-    it {is_expected.to be_in_bounds absolute_start + ONE_PIXEL}
-    it {is_expected.to be_in_bounds absolute_end - ONE_PIXEL}
-    it {is_expected.to be_in_bounds 40}
-    it {is_expected.to be_in_bounds 105}
-    it {is_expected.to be_in_bounds 20.021}
-    it {is_expected.not_to be_in_bounds absolute_end + ONE_PIXEL}
-    it {is_expected.not_to be_in_bounds absolute_start - ONE_PIXEL
+    it {should be_in_bounds absolute_start}
+    it {should be_in_bounds absolute_end}
+    it {should be_in_bounds absolute_start + ONE_PIXEL}
+    it {should be_in_bounds absolute_end - ONE_PIXEL}
+    it {should be_in_bounds 40}
+    it {should be_in_bounds 105}
+    it {should be_in_bounds 20.021}
+    it {should_not be_in_bounds absolute_end + ONE_PIXEL}
+    it {should_not be_in_bounds absolute_start - ONE_PIXEL
     }
-    it {is_expected.not_to be_in_bounds -5}
-    it {is_expected.not_to be_in_bounds 0}
-    it {is_expected.not_to be_in_bounds 150}
-    it {is_expected.not_to be_in_bounds 123178}
+    it {should_not be_in_bounds -5}
+    it {should_not be_in_bounds 0}
+    it {should_not be_in_bounds 150}
+    it {should_not be_in_bounds 123178}
   end
 
   it 'can displace the placement' do

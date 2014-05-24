@@ -37,7 +37,7 @@ describe Shoes::Swt::Dialog do
 
     it 'returns nil' do
       double_message_box
-      expect(@dialog.alert('Nothing')).to be_nil
+      @dialog.alert('Nothing').should be_nil
     end
   end
 
@@ -49,35 +49,35 @@ describe Shoes::Swt::Dialog do
 
     it 'is true when YES was pressed' do
       double_message_box_returning ::Swt::SWT::YES
-      expect(subject.confirm).to be_truthy
+      subject.confirm.should be_true
     end
 
     it 'is false when NO was pressed' do
       double_message_box_returning ::Swt::SWT::NO
-      expect(subject.confirm).to be_falsey
+      subject.confirm.should be_false
     end
 
     it 'is false when an arbitary number is returned' do
       double_message_box_returning 42
-      expect(subject.confirm).to be_falsey
+      subject.confirm.should be_false
     end
   end
 
   describe 'dialog_chooser' do
     it 'responds to it' do
-      expect(@dialog).to respond_to :dialog_chooser
+      @dialog.should respond_to :dialog_chooser
     end
   end
 
   describe 'ask' do
     it 'responds to it' do
-      expect(@dialog).to respond_to :ask
+      @dialog.should respond_to :ask
     end
   end
 
   describe 'ask_color' do
     it 'responds to it' do
-      expect(@dialog).to respond_to :ask_color
+      @dialog.should respond_to :ask_color
     end
   end
 
@@ -86,19 +86,19 @@ describe Shoes::Swt::Dialog do
 
       it 'returns nil' do
         double_message_box
-        expect(main_object.alert('Something')).to be_nil
+        main_object.alert('Something').should be_nil
       end
     end
 
     describe '#confirm' do
       it 'returns true when YES was clicked' do
         double_message_box_returning ::Swt::SWT::YES
-        expect(main_object.confirm('1 + 1 = 2')).to be_truthy
+        main_object.confirm('1 + 1 = 2').should be_true
       end
 
       it 'returns false when NO was clicked' do
         double_message_box_returning ::Swt::SWT::NO
-        expect(main_object.confirm('1 + 1 = 3')).to be_falsey
+        main_object.confirm('1 + 1 = 3').should be_false
       end
     end
   end

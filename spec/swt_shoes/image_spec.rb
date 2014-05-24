@@ -53,27 +53,27 @@ describe Shoes::Swt::Image do
   describe 'dimensions' do
 
     it 'has the given width' do
-      expect(subject.width).to eq(IMAGE_WIDTH)
+      subject.width.should == IMAGE_WIDTH
     end
 
     it 'has the given height' do
-      expect(subject.height).to eq(IMAGE_HEIGHT)
+      subject.height.should == IMAGE_HEIGHT
     end
 
     it 'can change its width' do
       subject.width = 7
-      expect(subject.width).to eq(7)
+      subject.width.should == 7
     end
 
     it 'can change its height' do
       subject.height = 7
-      expect(subject.height).to eq(7)
+      subject.height.should == 7
     end
 
     describe 'with a given width' do
       let(:width) {(IMAGE_WIDTH * 5.8).to_i}
       it 'scales the height' do
-        expect(subject.height).to eq((IMAGE_HEIGHT * 5.8).to_i)
+        subject.height.should == (IMAGE_HEIGHT * 5.8).to_i
       end
     end
 
@@ -81,7 +81,7 @@ describe Shoes::Swt::Image do
       let(:height) {IMAGE_HEIGHT * 4}
 
       it 'scales the width' do
-        expect(subject.width).to eq(IMAGE_WIDTH * 4)
+        subject.width.should == IMAGE_WIDTH * 4
       end
     end
 
@@ -89,11 +89,11 @@ describe Shoes::Swt::Image do
       let(:width) {1}
       let(:height) {2}
       it 'sets the given width' do
-        expect(subject.width).to eq(1)
+        subject.width.should == 1
       end
 
       it 'sets the given height' do
-        expect(subject.height).to eq(2)
+        subject.height.should == 2
       end
     end
   end

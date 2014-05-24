@@ -11,16 +11,16 @@ describe Shoes::Link do
     subject { Shoes::Link.new(app, app, texts, {color: :blue}) }
 
     it "should set up text" do
-      expect(subject.texts).to eql(texts)
-      expect(subject.to_s).to  eql("textgoesfirst")
+      subject.texts.should eql(texts)
+      subject.to_s.should  eql("textgoesfirst")
     end
 
     it "should set color" do
-      expect(subject.color).to eql(:blue)
+      subject.color.should eql(:blue)
     end
 
     it "should default opts" do
-      expect(subject.opts).to eql({
+      subject.opts.should eql({
         :underline=>true,
         :stroke=>Shoes::COLORS[:blue]
       })
@@ -31,15 +31,15 @@ describe Shoes::Link do
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
-        expect(subject.opts).to include(:stroke => Shoes::COLORS[:blue])
+        subject.opts.should include(:stroke => Shoes::COLORS[:blue])
       end
 
       it "should override defaults" do
-        expect(subject.opts).to include(:underline => false)
+        subject.opts.should include(:underline => false)
       end
 
       it "should include other options" do
-        expect(subject.opts).to include(:bg => Shoes::COLORS[:green])
+        subject.opts.should include(:bg => Shoes::COLORS[:green])
       end
     end
 

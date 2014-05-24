@@ -13,12 +13,12 @@ describe Shoes::BuiltinMethods do
   describe 'Shoes.p' do
     it 'adds a debug to the log with an inspected object' do
       Shoes.p 'message'
-      expect(Shoes::LOG).to include ['debug', 'message'.inspect]
+      Shoes::LOG.should include ['debug', 'message'.inspect]
     end
 
     it 'also handles object the way they should be handled' do
       Shoes.p []
-      expect(Shoes::LOG).to include ['debug', '[]']
+      Shoes::LOG.should include ['debug', '[]']
     end
   end
 

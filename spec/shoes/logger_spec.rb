@@ -14,7 +14,7 @@ describe Shoes::Logger do
     before { Shoes::Logger.register(:awesome_logger, awesome_logger) }
 
     it "retrieves a registered logger" do
-      expect(Shoes::Logger.get(:awesome_logger)).to equal(awesome_logger)
+      Shoes::Logger.get(:awesome_logger).should equal(awesome_logger)
     end
   end
 

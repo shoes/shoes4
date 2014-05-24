@@ -10,11 +10,11 @@ describe Shoes::Widget do
   let(:app) { Shoes::App.new }
 
   it "creates dsl method on App" do
-    expect(app).to respond_to(:smile)
+    app.should respond_to(:smile)
   end
 
   it "generates instances of its subclass" do
-    expect(app.smile("Cheese!")).to be_instance_of(Smile)
+    app.smile("Cheese!").should be_instance_of(Smile)
   end
 
   it "passes missing methods to app" do

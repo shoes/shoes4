@@ -10,11 +10,11 @@ describe Shoes::Swt::Shape do
     let(:ancestors) { subject.class.ancestors.map(&:name) }
 
     it "uses Shoes::Swt" do
-      expect(ancestors).to include('Shoes::Swt::Shape')
+      ancestors.should include('Shoes::Swt::Shape')
       subject
     end
 
-    its(:dsl) { is_expected.to be(dsl) }
+    its(:dsl) { should be(dsl) }
   end
 
   it_behaves_like "Swt::Shape"
