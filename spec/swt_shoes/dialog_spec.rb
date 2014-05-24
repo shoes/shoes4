@@ -54,12 +54,12 @@ describe Shoes::Swt::Dialog do
 
     it 'is false when NO was pressed' do
       double_message_box_returning ::Swt::SWT::NO
-      subject.confirm.should be_false
+      subject.confirm.should be_falsey
     end
 
     it 'is false when an arbitary number is returned' do
       double_message_box_returning 42
-      subject.confirm.should be_false
+      subject.confirm.should be_falsey
     end
   end
 
@@ -98,7 +98,7 @@ describe Shoes::Swt::Dialog do
 
       it 'returns false when NO was clicked' do
         double_message_box_returning ::Swt::SWT::NO
-        main_object.confirm('1 + 1 = 3').should be_false
+        main_object.confirm('1 + 1 = 3').should be_falsey
       end
     end
   end

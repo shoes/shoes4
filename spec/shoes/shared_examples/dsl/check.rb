@@ -6,6 +6,6 @@ shared_examples_for 'check DSL method' do
   end
 
   it 'should be unchecked by default' do
-    checkbox.checked?.should be_false
+    checkbox.checked?.should be_falsey
   end
 end

@@ -46,13 +46,13 @@ describe Shoes::Dimensions do
       its(:top) {should be_nil}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
-      its(:absolutely_positioned?) {should be_false}
-      its(:absolute_x_position?) {should be_false}
-      its(:absolute_y_position?) {should be_false}
-      its(:absolute_left_position?) {should be_false}
-      its(:absolute_top_position?) {should be_false}
-      its(:absolute_right_position?) {should be_false}
-      its(:absolute_bottom_position?) {should be_false}
+      its(:absolutely_positioned?) {should be_falsey}
+      its(:absolute_x_position?) {should be_falsey}
+      its(:absolute_y_position?) {should be_falsey}
+      its(:absolute_left_position?) {should be_falsey}
+      its(:absolute_top_position?) {should be_falsey}
+      its(:absolute_right_position?) {should be_falsey}
+      its(:absolute_bottom_position?) {should be_falsey}
       its(:margin)      {should == [0, 0, 0, 0]}
       its(:margin_left) {should == 0}
       its(:margin_top) {should == 0}
@@ -74,8 +74,8 @@ describe Shoes::Dimensions do
       its(:absolute_y_position?) {should be_true}
       its(:absolute_left_position?) {should be_true}
       its(:absolute_top_position?) {should be_true}
-      its(:absolute_right_position?) {should be_false}
-      its(:absolute_bottom_position?) {should be_false}
+      its(:absolute_right_position?) {should be_falsey}
+      its(:absolute_bottom_position?) {should be_falsey}
     end
 
     describe 'with 4 arguments' do
@@ -258,8 +258,8 @@ describe Shoes::Dimensions do
         its(:bottom) {should eq bottom}
         its(:absolute_x_position?) {should be_true}
         its(:absolute_y_position?) {should be_true}
-        its(:absolute_left_position?) {should be_false}
-        its(:absolute_top_position?) {should be_false}
+        its(:absolute_left_position?) {should be_falsey}
+        its(:absolute_top_position?) {should be_falsey}
         its(:absolute_right_position?) {should be_true}
         its(:absolute_bottom_position?) {should be_true}
       end
@@ -491,11 +491,11 @@ describe Shoes::Dimensions do
 
   describe 'absolute positioning' do
     subject {Shoes::Dimensions.new parent}
-    its(:absolutely_positioned?) {should be_false}
+    its(:absolutely_positioned?) {should be_falsey}
 
     shared_examples_for 'absolute_x_position' do
       its(:absolute_x_position?) {should be_true}
-      its(:absolute_y_position?) {should be_false}
+      its(:absolute_y_position?) {should be_falsey}
       its(:absolutely_positioned?) {should be_true}
     end
 
@@ -510,7 +510,7 @@ describe Shoes::Dimensions do
     end
 
     shared_examples_for 'absolute_y_position' do
-      its(:absolute_x_position?) {should be_false}
+      its(:absolute_x_position?) {should be_falsey}
       its(:absolute_y_position?) {should be_true}
       its(:absolutely_positioned?) {should be_true}
     end

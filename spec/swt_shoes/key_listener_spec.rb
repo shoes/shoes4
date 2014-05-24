@@ -277,17 +277,17 @@ describe Shoes::Swt::Keypress do
     shared_examples_for 'accepts normal characters' do
       describe 'with a normal character' do
         let(:character) {'a'}
-        it{should be_false}
+        it{should be_falsey}
       end
     end
 
     context 'on a Shell' do
       let(:widget){shell}
-      it {should be_false}
+      it {should be_falsey}
 
       describe 'even with enter' do
         let(:keyCode) {::Swt::SWT::CR}
-        it {should be_false}
+        it {should be_falsey}
       end
     end
 

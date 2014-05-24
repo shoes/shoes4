@@ -82,7 +82,7 @@ describe Shoes::App do
         end
 
         it "sets resizable", :qt do
-          expect(internal_app.resizable).to be_false
+          expect(internal_app.resizable).to be_falsey
         end
       end
 
@@ -241,7 +241,7 @@ describe Shoes::App do
 
       context 'with defaults' do
         it 'does not start as fullscreen' do
-          expect(internal_app.start_as_fullscreen?).to be_false
+          expect(internal_app.start_as_fullscreen?).to be_falsey
         end
       end
 
