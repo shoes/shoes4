@@ -13,7 +13,7 @@ describe Shoes::Dimension do
                                   element_end:    parent_element_end,
                                   element_extent: parent_element_extent }
 
-  ONE_PIXEL = 1
+  ONE_PIXEL = 1 unless const_defined?(:ONE_PIXEL) && ONE_PIXEL == 1
 
   describe 'initialization' do
     describe 'without arguments (even no parent)' do

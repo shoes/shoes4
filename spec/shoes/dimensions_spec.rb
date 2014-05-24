@@ -36,7 +36,7 @@ describe Shoes::Dimensions do
     end
   end
 
-  ONE_PIXEL = 1
+  ONE_PIXEL = 1 unless const_defined?(:ONE_PIXEL) && ONE_PIXEL == 1
 
   describe 'initialization' do
     describe 'without arguments (defaults)' do
