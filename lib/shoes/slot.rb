@@ -4,6 +4,11 @@ class Shoes
     include CommonMethods
     include DimensionsDelegations
 
+    # We need that offset because otherwise element overlap e.g. occupy
+    # the same pixel - this way they start right next to each other
+    # See #update_current_position
+    NEXT_ELEMENT_OFFSET = 1
+
     attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
                 :leave_proc
 
@@ -124,9 +129,8 @@ class Shoes
     end
 
     def position_in_current_line(element, current_position)
-      x_modifier = same_line_x_modifier current_position
       position_element_at element,
-                          position_x(current_position.x + x_modifier, element),
+                          position_x(current_position.x, element),
                           position_y(current_position.y, element)
     end
 
@@ -147,12 +151,17 @@ class Shoes
 
     def update_current_position(current_position, element)
       return current_position if element.absolutely_positioned?
-      current_position.x = element.absolute_right
+      current_position.x = element.absolute_right + NEXT_ELEMENT_OFFSET
       current_position.y = element.absolute_top
-      if current_position.next_line_start < element.absolute_bottom + 1
-        current_position.next_line_start = element.absolute_bottom + 1
+      next_element_line_start = next_line_start_from element
+      if current_position.next_line_start < next_element_line_start
+        current_position.next_line_start = next_element_line_start
       end
       current_position
+    end
+
+    def next_line_start_from element
+      element.absolute_bottom + NEXT_ELEMENT_OFFSET
     end
 
     def position_x(relative_x, element)
@@ -195,13 +204,6 @@ class Shoes
     # However for the very first element in a line (well only the first, others)
     # are positioned with move_to_next_line) - we don't want to bump it to the
     # right because then it'd be one pixel too much to the right...
-    def same_line_x_modifier(current_position)
-      if first_element_on_line?(current_position)
-        0
-      else
-        1
-      end
-    end
 
     def first_element_on_line? current_position
       current_position.x == element_left
