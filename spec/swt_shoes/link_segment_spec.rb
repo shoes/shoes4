@@ -78,7 +78,7 @@ describe Shoes::Swt::LinkSegment do
 
   def expect_in_bounds(*points)
     points.each do |(x,y)|
-      expect(subject.in_bounds?(x, y)).to be_true, "with #{x}, #{y}"
+      expect(subject.in_bounds?(x, y)).to be_truthy, "with #{x}, #{y}"
     end
   end
 

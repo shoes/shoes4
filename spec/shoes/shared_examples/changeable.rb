@@ -13,7 +13,7 @@ shared_examples "an element that can respond to change" do
         called = true
       end
       subject.call_change_listeners
-      called.should be_true
+      called.should be_truthy
     end
 
     it "should pass the element itself to the callback" do

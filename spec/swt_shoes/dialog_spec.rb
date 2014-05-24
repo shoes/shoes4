@@ -49,7 +49,7 @@ describe Shoes::Swt::Dialog do
 
     it 'is true when YES was pressed' do
       double_message_box_returning ::Swt::SWT::YES
-      subject.confirm.should be_true
+      subject.confirm.should be_truthy
     end
 
     it 'is false when NO was pressed' do
@@ -93,7 +93,7 @@ describe Shoes::Swt::Dialog do
     describe '#confirm' do
       it 'returns true when YES was clicked' do
         double_message_box_returning ::Swt::SWT::YES
-        main_object.confirm('1 + 1 = 2').should be_true
+        main_object.confirm('1 + 1 = 2').should be_truthy
       end
 
       it 'returns false when NO was clicked' do

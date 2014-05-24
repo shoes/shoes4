@@ -29,7 +29,7 @@ describe Shoes::Swt::App do
       old_apps_length = Shoes::Swt.apps.length
       subject
       Shoes::Swt.apps.length.should eq(old_apps_length + 1)
-      Shoes::Swt.apps.include?(subject).should be_true
+      Shoes::Swt.apps.include?(subject).should be_truthy
     end
   end
 

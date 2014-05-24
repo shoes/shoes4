@@ -52,7 +52,7 @@ describe Shoes::Download do
 
   it 'creates the file specified by save' do
     download
-    eventually { expect(File.exist?(opts[:save])).to be_true }
+    eventually { expect(File.exist?(opts[:save])).to be_truthy }
   end
 
   context 'with a progress proc' do

@@ -58,7 +58,7 @@ describe Shoes::App do
         end
 
         it "is resizable", :qt do
-          expect(internal_app.resizable).to be_true
+          expect(internal_app.resizable).to be_truthy
         end
       end
     end
@@ -249,7 +249,7 @@ describe Shoes::App do
         let(:opts) { {fullscreen: true} }
 
         it 'starts as fullscreen ' do
-          expect(internal_app.start_as_fullscreen?).to be_true
+          expect(internal_app.start_as_fullscreen?).to be_truthy
         end
       end
     end

@@ -69,11 +69,11 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq nil}
       its(:height) {should eq nil}
-      its(:absolutely_positioned?) {should be_true}
-      its(:absolute_x_position?) {should be_true}
-      its(:absolute_y_position?) {should be_true}
-      its(:absolute_left_position?) {should be_true}
-      its(:absolute_top_position?) {should be_true}
+      its(:absolutely_positioned?) {should be_truthy}
+      its(:absolute_x_position?) {should be_truthy}
+      its(:absolute_y_position?) {should be_truthy}
+      its(:absolute_left_position?) {should be_truthy}
+      its(:absolute_top_position?) {should be_truthy}
       its(:absolute_right_position?) {should be_falsey}
       its(:absolute_bottom_position?) {should be_falsey}
     end
@@ -239,9 +239,9 @@ describe Shoes::Dimensions do
       its(:top) {should eq top}
       its(:width) {should eq width}
       its(:height) {should eq height}
-      its(:absolutely_positioned?) {should be_true}
-      its(:absolute_x_position?) {should be_true}
-      its(:absolute_y_position?) {should be_true}
+      its(:absolutely_positioned?) {should be_truthy}
+      its(:absolute_x_position?) {should be_truthy}
+      its(:absolute_y_position?) {should be_truthy}
 
       context 'missing width' do
         subject { Shoes::Dimensions.new parent, left:   left,
@@ -256,12 +256,12 @@ describe Shoes::Dimensions do
 
         its(:right) {should eq right}
         its(:bottom) {should eq bottom}
-        its(:absolute_x_position?) {should be_true}
-        its(:absolute_y_position?) {should be_true}
+        its(:absolute_x_position?) {should be_truthy}
+        its(:absolute_y_position?) {should be_truthy}
         its(:absolute_left_position?) {should be_falsey}
         its(:absolute_top_position?) {should be_falsey}
-        its(:absolute_right_position?) {should be_true}
-        its(:absolute_bottom_position?) {should be_true}
+        its(:absolute_right_position?) {should be_truthy}
+        its(:absolute_bottom_position?) {should be_truthy}
       end
     end
 
@@ -301,7 +301,7 @@ describe Shoes::Dimensions do
       end
 
       it 'considers itself positioned' do
-        expect(subject.positioned?).to be_true
+        expect(subject.positioned?).to be_truthy
       end
 
       describe 'with margins' do
@@ -494,9 +494,9 @@ describe Shoes::Dimensions do
     its(:absolutely_positioned?) {should be_falsey}
 
     shared_examples_for 'absolute_x_position' do
-      its(:absolute_x_position?) {should be_true}
+      its(:absolute_x_position?) {should be_truthy}
       its(:absolute_y_position?) {should be_falsey}
-      its(:absolutely_positioned?) {should be_true}
+      its(:absolutely_positioned?) {should be_truthy}
     end
 
     describe 'changing left' do
@@ -511,8 +511,8 @@ describe Shoes::Dimensions do
 
     shared_examples_for 'absolute_y_position' do
       its(:absolute_x_position?) {should be_falsey}
-      its(:absolute_y_position?) {should be_true}
-      its(:absolutely_positioned?) {should be_true}
+      its(:absolute_y_position?) {should be_truthy}
+      its(:absolutely_positioned?) {should be_truthy}
     end
 
     describe 'changing top' do
