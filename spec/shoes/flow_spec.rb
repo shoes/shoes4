@@ -34,7 +34,9 @@ describe Shoes::Flow do
   end
 
   it "clears with an optional block" do
-    expect(flow).to receive(:clear).with(&input_block)
+    expect(flow).to receive(:clear) do |&blk|
+      expect(blk).to eq(input_block)
+    end
     flow.clear &input_block
   end
 

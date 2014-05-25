@@ -13,7 +13,7 @@ shared_examples_for "stroke DSL method" do
 
   it "applies to subsequently created objects" do
     dsl.stroke color
-    Shoes::Oval.should_receive(:new).with do |*args|
+    expect(Shoes::Oval).to receive(:new) do |*args|
       style = args.pop
       expect(style[:stroke]).to eq(color)
     end
