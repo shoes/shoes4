@@ -97,7 +97,7 @@ class Shoes
         layout = generate_layout(1, @dsl.text)
         layout.text = ""
 
-        height += ::Shoes::Slot::NEXT_ELEMENT_ON_NEXT_LINE_OFFSET.y
+        height += ::Shoes::Slot::NEXT_ELEMENT_OFFSET
         generate_two_layouts(layout, "", @dsl.text, height)
       end
 
