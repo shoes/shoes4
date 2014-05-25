@@ -17,8 +17,15 @@ class Shoes
         @app = app
         @opts = opts
 
+        # fill is potentially a pattern that needs disposing, so hold onto it
+        @fill = opts[:fill]
+
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
+      end
+
+      def dispose
+        @fill.gui.dispose if @fill && @fill.respond_to?(:gui)
       end
 
       class Painter < RectPainter

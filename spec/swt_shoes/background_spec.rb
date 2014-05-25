@@ -8,6 +8,7 @@ describe Shoes::Swt::Background do
   let(:width) { 222 }
   let(:height) { 111 }
   let(:corners) { 0 }
+  let(:opts) { {} }
   let(:dsl) { double("dsl object", app: shoes_app,
                      element_left: left, element_top: top,
                      element_width: width, element_height: height,
@@ -15,12 +16,23 @@ describe Shoes::Swt::Background do
                      hidden: false).as_null_object }
 
   subject {
-    Shoes::Swt::Background.new dsl, swt_app
+    Shoes::Swt::Background.new dsl, swt_app, opts
   }
 
   context "#initialize" do
     it { is_expected.to be_an_instance_of(Shoes::Swt::Background) }
     its(:dsl) { is_expected.to be(dsl) }
+  end
+
+  describe "#dispose" do
+    let(:fill)     { double("fill", gui: fill_gui) }
+    let(:fill_gui) { double("fill gui") }
+    let(:opts)     { { fill: fill } }
+
+    it "lets subresources go" do
+      expect(fill_gui).to receive(:dispose)
+      subject.dispose
+    end
   end
 
   it_behaves_like "paintable"
