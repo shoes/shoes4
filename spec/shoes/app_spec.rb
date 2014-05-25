@@ -5,6 +5,10 @@ describe Shoes::App do
   let(:opts) { Hash.new }
   subject(:app) { Shoes::App.new(opts, &input_blk) }
 
+  after do
+    Shoes.unregister_all
+  end
+
   it_behaves_like "DSL container"
   it { is_expected.to respond_to :clipboard }
   it { is_expected.to respond_to :clipboard= }
@@ -174,7 +178,7 @@ describe Shoes::App do
 
   end
 
-  describe "connecting with gui" do 
+  describe "connecting with gui" do
     let(:gui) { app.instance_variable_get(:@__app__).gui }
 
     describe "clipboard" do
