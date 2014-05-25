@@ -16,12 +16,12 @@ class Shoes
         end
 
         def draw_textcursor
-          layout = @collection.layout_at_text_position(@text_block_dsl.cursor)
+          segment = @collection.segment_at_text_position(@text_block_dsl.cursor)
           relative_cursor = @collection.relative_text_position(@text_block_dsl.cursor)
-          position = layout.get_location(relative_cursor)
+          position = segment.get_location(relative_cursor)
 
-          move_if_necessary(layout.element_left + position.x,
-                            layout.element_top + position.y)
+          move_if_necessary(segment.element_left + position.x,
+                            segment.element_top + position.y)
 
         end
 

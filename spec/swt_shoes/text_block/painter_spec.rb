@@ -13,13 +13,12 @@ describe Shoes::Swt::TextBlock::Painter do
                      text_styles: text_styles, :hidden? => false).as_null_object
             }
 
-  let(:fitted_layout) do
+  let(:segment) do
     ::Swt::Font.stub(:new)       { font }
     ::Swt::TextLayout.stub(:new) { text_layout }
     ::Swt::TextStyle.stub(:new)  { style }
 
-    fitted = Shoes::Swt::FittedTextLayout.new(dsl, text, 200)
-    fitted.position_at(0, 10)
+    Shoes::Swt::TextBlock::TextSegment.new(dsl, text, 200).position_at(0, 10)
   end
 
   let(:text_layout) { double("text layout", text: text).as_null_object }
@@ -39,12 +38,12 @@ describe Shoes::Swt::TextBlock::Painter do
     ::Swt::TextStyle.stub(:new)  { style.as_null_object }
 
     # Can't stub this in during initial let because of circular reference
-    # fitted_layouts -> dsl -> gui -> fitted_layouts...
-    gui.stub(fitted_layouts: [fitted_layout])
+    # segments -> dsl -> gui -> segments...
+    gui.stub(segments: [segment])
   end
 
   it "draws" do
-    expect(fitted_layout).to receive(:draw)
+    expect(segment).to receive(:draw)
     subject.paintControl(event)
   end
 

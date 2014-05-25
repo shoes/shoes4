@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::FittedTextLayout do
+describe Shoes::Swt::TextBlock::TextSegment do
   let(:layout) { double("layout", text: "the text",
                         :alignment= => nil, :justify= => nil, :spacing= => nil,
                         :text= => nil, setWidth: nil,
@@ -40,8 +40,8 @@ describe Shoes::Swt::FittedTextLayout do
   end
 
   subject do
-    fitted = Shoes::Swt::FittedTextLayout.new(dsl, "text", layout_width)
-    fitted.position_at(element_left, element_top)
+    segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, "text", layout_width)
+    segment.position_at(element_left, element_top)
   end
 
   context "disposal" do

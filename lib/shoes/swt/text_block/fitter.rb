@@ -157,7 +157,7 @@ class Shoes
         end
 
         def generate_layout(width, text)
-          FittedTextLayout.new(@dsl, text, width)
+          TextSegment.new(@dsl, text, width)
         end
 
         def split_text(layout, height)
