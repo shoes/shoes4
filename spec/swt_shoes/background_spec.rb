@@ -19,8 +19,8 @@ describe Shoes::Swt::Background do
   }
 
   context "#initialize" do
-    it { is_expected.to be_an_instance_of(Shoes::Swt::Background) }
-    its(:dsl) { is_expected.to be(dsl) }
+    it { should be_an_instance_of(Shoes::Swt::Background) }
+    its(:dsl) { should be(dsl) }
   end
 
   it_behaves_like "paintable"

@@ -265,35 +265,35 @@ describe Shoes::Swt::Keypress do
     shared_examples_for 'ignores space and enter' do
       describe 'with a space' do
         let(:character) {' '}
-        it {is_expected.to be_truthy}
+        it {should be_true}
       end
 
       describe 'with enter' do
         let(:keyCode) {::Swt::SWT::CR}
-        it {is_expected.to be_truthy}
+        it {should be_true}
       end
     end
 
     shared_examples_for 'accepts normal characters' do
       describe 'with a normal character' do
         let(:character) {'a'}
-        it{is_expected.to be_falsey}
+        it{should be_false}
       end
     end
 
     context 'on a Shell' do
       let(:widget){shell}
-      it {is_expected.to be_falsey}
+      it {should be_false}
 
       describe 'even with enter' do
         let(:keyCode) {::Swt::SWT::CR}
-        it {is_expected.to be_falsey}
+        it {should be_false}
       end
     end
 
     context 'on a Text' do
       let(:widget){Java::OrgEclipseSwtWidgets::Text.new(shell, style)}
-      it {is_expected.to be_truthy}
+      it {should be_true}
     end
 
     context 'on a button' do
@@ -310,7 +310,7 @@ describe Shoes::Swt::Keypress do
 
       describe 'with up' do
         let(:keyCode) {::Swt::SWT::ARROW_UP}
-        it{is_expected.to be_truthy}
+        it{should be_true}
       end
 
       it_behaves_like 'accepts normal characters'

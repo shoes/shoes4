@@ -13,7 +13,7 @@ describe Shoes::Swt::Link do
     subject
   end
 
-  its(:dsl) {is_expected.to eq dsl}
+  its(:dsl) {should eq dsl}
 
   context "creating link segments" do
     let(:bounds)       { double("bounds", height: 0) }

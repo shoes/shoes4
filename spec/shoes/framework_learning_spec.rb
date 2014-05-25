@@ -25,6 +25,6 @@ end
 describe "A Shoes Framework" do
 
   it "should include Framework Plugins" do
-    expect(Learning::App.new.gui).to eq("Peter")
+    Learning::App.new.gui.should == "Peter"
   end
 end

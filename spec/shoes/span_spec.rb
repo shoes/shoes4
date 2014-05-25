@@ -8,13 +8,13 @@ describe Shoes::Span do
 
   describe 'span' do
     it 'sets style to Span block' do
-      expect(app.style[:strikethrough]).not_to be_truthy
+      expect(app.style[:strikethrough]).not_to be_true
 
       opts = { strikethrough: true }
       result = app.span('test', opts)
-      expect(result.opts[:strikethrough]).to be_truthy
+      expect(result.opts[:strikethrough]).to be_true
 
-      expect(app.style[:strikethrough]).not_to be_truthy
+      expect(app.style[:strikethrough]).not_to be_true
     end
   end
 
@@ -53,21 +53,21 @@ describe Shoes::Span do
   describe 'del' do
     it 'sets strikethrough to true' do
       result = app.del 'test'
-      expect(result.opts[:strikethrough]).to be_truthy
+      expect(result.opts[:strikethrough]).to be_true
     end
   end
 
   describe 'em' do
     it 'sets emphasis to true' do
       result = app.em 'test'
-      expect(result.opts[:emphasis]).to be_truthy
+      expect(result.opts[:emphasis]).to be_true
     end
   end
 
   describe 'ins' do
     it 'sets underline to true' do
       result = app.ins 'test'
-      expect(result.opts[:underline]).to be_truthy
+      expect(result.opts[:underline]).to be_true
     end
   end
 
@@ -88,7 +88,7 @@ describe Shoes::Span do
   describe 'strong' do
     it 'sets weight to true' do
       result = app.strong 'test'
-      expect(result.opts[:weight]).to be_truthy
+      expect(result.opts[:weight]).to be_true
     end
   end
 end

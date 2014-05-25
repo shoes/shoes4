@@ -18,7 +18,7 @@ describe Shoes::Swt::Progress do
   it_behaves_like "togglable"
 
   it "should have a method called fraction=" do
-    expect(subject).to respond_to :fraction=
+    subject.should respond_to :fraction=
   end
 
   it "should multiply the value by 100 when calling real.selection" do

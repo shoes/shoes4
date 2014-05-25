@@ -13,8 +13,8 @@ describe Shoes::Swt::Line do
   }
 
   context "#initialize" do
-    it { is_expected.to be_instance_of(Shoes::Swt::Line) }
-    its(:dsl) { is_expected.to be(dsl) }
+    it { should be_instance_of(Shoes::Swt::Line) }
+    its(:dsl) { should be(dsl) }
   end
 
   it "properly disposes" do
@@ -25,7 +25,7 @@ describe Shoes::Swt::Line do
   it_behaves_like "paintable"
   it_behaves_like "togglable"
 
-  it {is_expected.to respond_to :clear}
+  it {should respond_to :clear}
 
   describe "painter" do
     include_context "painter context"
