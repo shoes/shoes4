@@ -79,12 +79,12 @@ class Shoes
           layout.setWidth(width)
         end
 
-        def layout_height
-          layout.bounds.height - layout.spacing
-        end
-
         def layout_fits_in?(width)
           layout.bounds.width <= width
+        end
+
+        def height
+          layout.bounds.height - layout.spacing
         end
 
         def last_line_height

@@ -60,7 +60,7 @@ class Shoes
         @dsl.absolute_right  = starting_left + last_segment.last_line_width +
                                margin_right
 
-        @dsl.absolute_bottom = starting_top + last_segment.layout_height +
+        @dsl.absolute_bottom = starting_top + last_segment.height +
                                margin_top + margin_bottom
 
         @dsl.absolute_top    = @dsl.absolute_bottom -

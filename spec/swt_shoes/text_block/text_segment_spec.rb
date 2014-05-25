@@ -9,8 +9,8 @@ describe Shoes::Swt::TextBlock::TextSegment do
   let(:bounds) { Java::OrgEclipseSwtGraphics::Rectangle.new(0, 0, 0, 0) }
   let(:element_left) { 0 }
   let(:element_top)  { 0 }
-  let(:layout_width)  { 10 }
-  let(:layout_height) { 10 }
+  let(:segment_width)  { 10 }
+  let(:segment_height) { 10 }
   let(:left_offset)   { 5 }
   let(:top_offset)    { 5 }
 
@@ -40,7 +40,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
   end
 
   subject do
-    segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, "text", layout_width)
+    segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, "text", segment_width)
     segment.position_at(element_left, element_top)
   end
 
@@ -78,14 +78,14 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
 
     it "shrinks when too long for container" do
-      bounds.width = layout_width + 10
-      expect(subject.layout).to have_received(:setWidth).with(layout_width)
+      bounds.width = segment_width + 10
+      expect(subject.layout).to have_received(:setWidth).with(segment_width)
     end
   end
 
   context "bounds checking" do
     before(:each) do
-      set_bounds(0, 0, layout_width, layout_height)
+      set_bounds(0, 0, segment_width, segment_height)
     end
 
     it "checks boundaries" do
@@ -96,7 +96,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
       let(:element_left) { left_offset }
 
       it "checks boundaries" do
-        expect(subject.in_bounds?(layout_width + left_offset - 1, 0)).to be_true
+        expect(subject.in_bounds?(segment_width + left_offset - 1, 0)).to be_true
       end
     end
 
@@ -104,7 +104,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
       let(:element_top) { top_offset }
 
       it "checks boundaries" do
-        expect(subject.in_bounds?(0, layout_height + top_offset - 1)).to be_true
+        expect(subject.in_bounds?(0, segment_height + top_offset - 1)).to be_true
       end
     end
 

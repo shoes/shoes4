@@ -180,7 +180,7 @@ describe Shoes::Swt::TextBlock do
                     height=layout_height, line_height=line_height)
     bounds = double("bounds", width: width, height: height)
     double(name, disposed?: false,
-           width: width, layout_height: height,
+           width: width, height: height,
            last_line_width: width, last_line_height: line_height,
            bounds: bounds)
   end
