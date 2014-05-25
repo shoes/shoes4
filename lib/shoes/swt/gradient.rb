@@ -1,8 +1,20 @@
 class Shoes
   module Swt
     class Gradient
+      include Common::Clear
+
       def initialize(dsl)
         @dsl = dsl
+        @patterns = []
+      end
+
+      def dispose
+        @color1.dispose if @color1
+        @color2.dispose if @color2
+
+        @patterns.each do |pattern|
+          pattern.dispose unless pattern.disposed?
+        end
       end
 
       def color1
@@ -33,7 +45,10 @@ class Shoes
         height = height * 0.5
         angle  = normalize_angle(angle)
         left, top, width, height  = determine_args_based_on_angle(angle, left, top, width, height)
-        ::Swt::Pattern.new Shoes.display, left, top, width, height, color1.real, color2.real
+
+        pattern = ::Swt::Pattern.new Shoes.display, left, top, width, height, color1.real, color2.real
+        @patterns << pattern
+        pattern
       end
 
       def normalize_angle(angle)
