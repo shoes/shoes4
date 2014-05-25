@@ -6,21 +6,21 @@ describe Shoes::Swt::Font do
 
   describe 'Shoes::FONTS' do
     it 'has the FONTS array initially populared' do
-      Shoes::FONTS.should_not be_empty
+      expect(Shoes::FONTS).not_to be_empty
     end
 
     it 'loads the 2 shoes specific fonts' do
-      Shoes::FONTS.should include("Coolvetica", "Lacuna")
+      expect(Shoes::FONTS).to include("Coolvetica", "Lacuna")
     end
   end
 
   describe '.add_font' do
     it 'returns nil if no font was found' do
-      subject.add_font('/non/existent/font.ttf').should be_nil
+      expect(subject.add_font('/non/existent/font.ttf')).to be_nil
     end
 
     it 'returns the font name when the font file is present' do
-      subject.add_font(Shoes::FONT_DIR + 'Coolvetica.ttf').should eq 'Coolvetica'
+      expect(subject.add_font(Shoes::FONT_DIR + 'Coolvetica.ttf')).to eq 'Coolvetica'
     end
 
     it 'calls the Display#load_font method' do

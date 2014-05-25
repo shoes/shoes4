@@ -1,7 +1,7 @@
 shared_examples_for "movable object" do
   it "moves" do
     subject.instance_variable_set(:@app, app)
-    subject.move(300, 200).should eq(subject)
+    expect(subject.move(300, 200)).to eq(subject)
     expect(subject.left).to eq(300)
     expect(subject.top).to eq(200)
   end

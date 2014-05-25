@@ -52,7 +52,7 @@ describe Shoes::Download do
 
   it 'creates the file specified by save' do
     download
-    eventually { expect(File.exist?(opts[:save])).to be_true }
+    eventually { expect(File.exist?(opts[:save])).to be_truthy }
   end
 
   context 'with a progress proc' do
@@ -75,7 +75,7 @@ describe Shoes::Download do
       end
 
       it 'does not fail on progress, but called from content length and finish' do
-        pending 'Sometimes fails on Travis'
+        skip 'Sometimes fails on Travis'
         eventually {
           expect(download.gui).to receive(:eval_block).
           with(progress_proc, download).
@@ -92,7 +92,7 @@ describe Shoes::Download do
     context 'with a block' do
 
       it 'calls the block with a result' do
-        pending 'damn you download specs we really need to you to be reliable'
+        skip 'damn you download specs we really need to you to be reliable'
         # https://travis-ci.org/shoes/shoes4/jobs/25269033
         eventually { expect(download.gui).to receive(:eval_block).with(input_block, result) }
       end
@@ -126,7 +126,7 @@ describe Shoes::Download do
       subject(:download) { Shoes::Download.new app, parent, name, opts}
 
       it 'calls the finish proc' do
-        pending 'Another Travis failure...'
+        skip 'Another Travis failure...'
         eventually { expect(download.gui).to receive(:eval_block).with(finish_proc, result) }
       end
     end

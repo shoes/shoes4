@@ -13,7 +13,7 @@ describe Shoes::Swt::Star do
   subject { Shoes::Swt::Star.new dsl, swt_app }
 
   context "#initialize" do
-    its(:dsl) { should be(dsl) }
+    its(:dsl) { is_expected.to be(dsl) }
   end
 
   it_behaves_like "paintable"

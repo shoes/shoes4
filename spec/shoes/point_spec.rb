@@ -8,44 +8,44 @@ describe Shoes::Point do
   its(:y) { should eq(50) }
 
   specify "#left works on either point" do
-    subject.left(other_point).should eq(10)
-    other_point.left(subject).should eq(10)
+    expect(subject.left(other_point)).to eq(10)
+    expect(other_point.left(subject)).to eq(10)
   end
 
   specify "#top works on either point" do
-    subject.top(other_point).should eq(50)
-    other_point.top(subject).should eq(50)
+    expect(subject.top(other_point)).to eq(50)
+    expect(other_point.top(subject)).to eq(50)
   end
 
   describe "equality" do
     specify "requires x and y to be equal" do
-      subject.should eq(Shoes::Point.new 40, 50)
-      subject.should_not eq(Shoes::Point.new 41, 50)
-      subject.should_not eq(Shoes::Point.new 40, 51)
+      expect(subject).to eq(Shoes::Point.new 40, 50)
+      expect(subject).not_to eq(Shoes::Point.new 41, 50)
+      expect(subject).not_to eq(Shoes::Point.new 40, 51)
     end
 
     specify "works with other (x,y) objects" do
-      subject.should eq(Struct.new(:x, :y).new(40, 50))
+      expect(subject).to eq(Struct.new(:x, :y).new(40, 50))
     end
   end
 
   describe "#to" do
     specify "positive" do
-      subject.to(24, 166).should eq(Shoes::Point.new(64, 216))
+      expect(subject.to(24, 166)).to eq(Shoes::Point.new(64, 216))
     end
 
     specify "negative" do
-      subject.to(-24, -166).should eq(Shoes::Point.new(16, -116))
+      expect(subject.to(-24, -166)).to eq(Shoes::Point.new(16, -116))
     end
   end
 
   specify "calculates width of rectangle created with other point" do
-    subject.width(other_point).should eq(30)
-    other_point.width(subject).should eq(30)
+    expect(subject.width(other_point)).to eq(30)
+    expect(other_point.width(subject)).to eq(30)
   end
 
   specify "calculates height of rectangle created with other point" do
-    subject.height(other_point).should eq(10)
-    other_point.height(subject).should eq(10)
+    expect(subject.height(other_point)).to eq(10)
+    expect(other_point.height(subject)).to eq(10)
   end
 end

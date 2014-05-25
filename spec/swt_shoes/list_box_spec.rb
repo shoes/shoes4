@@ -22,7 +22,7 @@ describe Shoes::Swt::ListBox do
   it_behaves_like "togglable"
 
   it "should return nil when nothing is highlighted" do
-    subject.text.should be_nil
+    expect(subject.text).to be_nil
   end
 
   it "should call 'items' when updating values" do
@@ -31,7 +31,7 @@ describe Shoes::Swt::ListBox do
   end
 
   it "should respond to choose" do
-    subject.should respond_to :choose
+    expect(subject).to respond_to :choose
   end
 
   it "should call text= when choosing" do

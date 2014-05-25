@@ -16,15 +16,15 @@ shared_examples_for "style DSL method" do
         end
 
         it "creates element with appropriate class" do
-          element.class.should eq(klass)
+          expect(element.class).to eq(klass)
         end
 
         it "sets size" do
-          element.font_size.should eq(size)
+          expect(element.font_size).to eq(size)
         end
 
         it "sets font" do
-          element.font.should eq(font)
+          expect(element.font).to eq(font)
         end
       end
     end

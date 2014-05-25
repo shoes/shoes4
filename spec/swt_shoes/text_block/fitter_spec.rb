@@ -78,7 +78,7 @@ describe Shoes::Swt::TextBlock::Fitter do
       segment = double('segment', line_offsets: [0, 5, 9], text: "Text Split")
       segment.stub(:line_bounds) { double('line_bounds', height: 50)}
 
-      subject.split_text(segment, 55).should eq(["Text ", "Split"])
+      expect(subject.split_text(segment, 55)).to eq(["Text ", "Split"])
     end
 
     it "should be able to split text when too small" do
@@ -86,7 +86,7 @@ describe Shoes::Swt::TextBlock::Fitter do
       segment.stub(:line_bounds).with(0) { double('line_bounds', height: 21)}
       segment.stub(:line_bounds).with(1) { raise "Boom" }
 
-      subject.split_text(segment, 33).should eq(["Text Split", ""])
+      expect(subject.split_text(segment, 33)).to eq(["Text Split", ""])
     end
   end
 

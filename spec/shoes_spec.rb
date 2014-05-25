@@ -9,7 +9,7 @@ end
 describe Shoes, 'setup' do
 
   it 'knows this method' do
-    Shoes.should respond_to :setup
+    expect(Shoes).to respond_to :setup
   end
 
   describe 'outputting on standard error' do

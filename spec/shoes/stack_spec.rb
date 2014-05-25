@@ -26,7 +26,7 @@ describe Shoes::Stack do
       app = Shoes.app do ; end
       context_object = ContextObject.new app
       inside_stack = context_object.check_self_inside_stack
-      inside_stack.should be context_object
+      expect(inside_stack).to be context_object
     end
   end
 

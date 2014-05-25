@@ -11,114 +11,114 @@ describe Shoes::Dialog do
   end
 
   it 'is not nil' do
-    @dialog.should_not be_nil
+    expect(@dialog).not_to be_nil
   end
 
   describe '#alert' do
     it 'returns nil' do
-      @dialog.alert('something').should be_nil
+      expect(@dialog.alert('something')).to be_nil
     end
   end
 
   describe '#confirm' do
     it 'responds to it' do
-      @dialog.should respond_to :confirm
+      expect(@dialog).to respond_to :confirm
     end
   end
 
   describe '#ask_open_file' do
     it 'responds to it' do
-      @dialog.should respond_to :dialog_chooser
+      expect(@dialog).to respond_to :dialog_chooser
     end
   end
 
   describe '#ask_save_file' do
     it 'responds to it' do
-      @dialog.should respond_to :dialog_chooser
+      expect(@dialog).to respond_to :dialog_chooser
     end
   end
 
   describe '#ask_open_folder' do
     it 'responds to it' do
-      @dialog.should respond_to :dialog_chooser
+      expect(@dialog).to respond_to :dialog_chooser
     end
   end
 
   describe '#ask_save_folder' do
     it 'responds to it' do
-      @dialog.should respond_to :dialog_chooser
+      expect(@dialog).to respond_to :dialog_chooser
     end
   end
 
   describe '#ask' do
     it 'responds to it' do
-      @dialog.should respond_to :ask
+      expect(@dialog).to respond_to :ask
     end
   end
 
   describe '#ask_color' do
     it 'responds to it' do
-      @dialog.should respond_to :ask_color
+      expect(@dialog).to respond_to :ask_color
     end
   end
 
   describe 'nothing monkey patched on to Object' do
     it 'is not monkey patched on to object' do
-      Object.new.should_not respond_to :alert
+      expect(Object.new).not_to respond_to :alert
     end
 
     it 'is not monkey patched on to object' do
-      Object.new.should_not respond_to :confirm
+      expect(Object.new).not_to respond_to :confirm
     end
 
     it 'is not monkey patched on to object' do
-      Object.new.should_not respond_to :dialog_chooser
+      expect(Object.new).not_to respond_to :dialog_chooser
     end
 
     it 'is not monkey patched on to object' do
-      Object.new.should_not respond_to :ask
+      expect(Object.new).not_to respond_to :ask
     end
 
     it 'is not monkey patched on to object' do
-      Object.new.should_not respond_to :ask_color
+      expect(Object.new).not_to respond_to :ask_color
     end
   end
 
   describe 'the main object' do
     it 'knows of #alert' do
-      main_object.should respond_to :alert
+      expect(main_object).to respond_to :alert
     end
 
     it 'knows of #confirm' do
-      main_object.should respond_to :confirm
+      expect(main_object).to respond_to :confirm
     end
 
     it 'knows of #confirm?' do
-      main_object.should respond_to :confirm?
+      expect(main_object).to respond_to :confirm?
     end
 
     it 'knows of #ask_open_file' do
-      main_object.should respond_to :ask_open_file
+      expect(main_object).to respond_to :ask_open_file
     end
 
     it 'knows of #ask_save_file' do
-      main_object.should respond_to :ask_save_file
+      expect(main_object).to respond_to :ask_save_file
     end
 
     it 'knows of #ask_open_folder' do
-      main_object.should respond_to :ask_open_folder
+      expect(main_object).to respond_to :ask_open_folder
     end
 
     it 'knows of #ask_save_folder' do
-      main_object.should respond_to :ask_save_folder
+      expect(main_object).to respond_to :ask_save_folder
     end
 
     it 'knows of #ask' do
-      main_object.should respond_to :ask
+      expect(main_object).to respond_to :ask
     end
 
     it 'knows of #ask' do
-      main_object.should respond_to :ask_color
+      expect(main_object).to respond_to :ask_color
     end
   end
 
@@ -128,35 +128,35 @@ describe Shoes::Dialog do
     end
 
     it 'knows about #alert' do
-      @app.should respond_to :alert
+      expect(@app).to respond_to :alert
     end
 
     it 'knows about #confirm' do
-      @app.should respond_to :confirm
+      expect(@app).to respond_to :confirm
     end
 
     it 'knows about #ask_open_file' do
-      @app.should respond_to :ask_open_file
+      expect(@app).to respond_to :ask_open_file
     end
 
     it 'knows about #ask_save_file' do
-      @app.should respond_to :ask_save_file
+      expect(@app).to respond_to :ask_save_file
     end
 
     it 'knows about #ask_open_folder' do
-      @app.should respond_to :ask_open_folder
+      expect(@app).to respond_to :ask_open_folder
     end
 
     it 'knows about #ask_save_folder' do
-      @app.should respond_to :ask_save_folder
+      expect(@app).to respond_to :ask_save_folder
     end
 
     it 'knows about #ask_save_folder' do
-      @app.should respond_to :ask
+      expect(@app).to respond_to :ask
     end
 
     it 'knows about #ask_save_color' do
-      @app.should respond_to :ask_color
+      expect(@app).to respond_to :ask_color
     end
   end
 

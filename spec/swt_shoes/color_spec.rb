@@ -5,7 +5,7 @@ describe Shoes::Swt::Color do
 
   it_behaves_like "an swt pattern"
 
-  its(:class) { should eq(Shoes::Swt::Color) }
+  its(:class) { is_expected.to eq(Shoes::Swt::Color) }
 
   describe "underlying SWT object" do
     let(:real) { color.real }
@@ -47,10 +47,10 @@ end
 describe Shoes::Swt::NullColor do
   subject(:color) { Shoes::Swt::Color.create(nil) }
 
-  it { should be_instance_of(Shoes::Swt::NullColor) }
-  its(:real) { should be_nil }
-  its(:dsl) { should be_nil }
-  its(:alpha) { should be_nil }
+  it { is_expected.to be_instance_of(Shoes::Swt::NullColor) }
+  its(:real) { is_expected.to be_nil }
+  its(:dsl) { is_expected.to be_nil }
+  its(:alpha) { is_expected.to be_nil }
 
   describe "pattern interface" do
     let(:gc) { double("graphics context") }

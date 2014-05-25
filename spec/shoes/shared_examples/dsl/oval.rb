@@ -1,13 +1,13 @@
 shared_examples_for "an oval/circle element" do
   it "makes a Shoes::Oval" do
-    oval.should be_instance_of(Shoes::Oval)
+    expect(oval).to be_instance_of(Shoes::Oval)
   end
 
   it "sets the proper dimensions" do
-    oval.top.should eq(top)
-    oval.left.should eq(left)
-    oval.width.should eq(width)
-    oval.height.should eq(height)
+    expect(oval.top).to eq(top)
+    expect(oval.left).to eq(left)
+    expect(oval.width).to eq(width)
+    expect(oval.height).to eq(height)
   end
 end
 
@@ -24,7 +24,7 @@ shared_examples_for "oval DSL method" do
   end
 
   it "raises an ArgumentError" do
-    lambda { dsl.oval(10) }.should raise_error(ArgumentError)
+    expect { dsl.oval(10) }.to raise_error(ArgumentError)
   end
 
   context "a circle" do

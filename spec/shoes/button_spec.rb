@@ -17,8 +17,8 @@ describe Shoes::Button do
   it_behaves_like "object with state"
   it_behaves_like "object with dimensions"
 
-  it { should respond_to :click }
-  it { should respond_to :focus }
+  it { is_expected.to respond_to :click }
+  it { is_expected.to respond_to :focus }
 
   describe "initialize" do
     its(:parent) { should eq(parent) }

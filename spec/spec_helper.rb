@@ -3,6 +3,7 @@ $LOAD_PATH << File.join('../lib', SHOESSPEC_ROOT)
 
 require 'code_coverage'
 require 'rspec'
+require 'rspec/its'
 require 'pry'
 require 'shoes'
 require 'async_helper'

@@ -16,11 +16,11 @@ shared_examples_for "rgb DSL method" do
 
   describe "named color method" do
     it "produces correct color" do
-      dsl.cornflowerblue.should eq(Shoes::Color.new red, green, blue)
+      expect(dsl.cornflowerblue).to eq(Shoes::Color.new red, green, blue)
     end
 
     it "accepts alpha arg" do
-      dsl.cornflowerblue(alpha).should eq(Shoes::Color.new red, green, blue, alpha)
+      expect(dsl.cornflowerblue(alpha)).to eq(Shoes::Color.new red, green, blue, alpha)
     end
   end
 end

@@ -24,7 +24,7 @@ describe Shoes::Swt::Radio do
 
   describe "#initialize" do
     it "sets group to default" do
-      subject.group.should == Shoes::Swt::RadioGroup::DEFAULT_RADIO_GROUP
+      expect(subject.group).to eq(Shoes::Swt::RadioGroup::DEFAULT_RADIO_GROUP)
     end
   end
 
@@ -38,7 +38,7 @@ describe Shoes::Swt::Radio do
 
     it "changes the group" do
       subject.group = group_name
-      subject.group.should == group_name
+      expect(subject.group).to eq(group_name)
     end
 
     it "adds to the new radio group" do

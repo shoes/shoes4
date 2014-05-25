@@ -2,11 +2,11 @@ require 'shoes/spec_helper'
 
 shared_examples_for "basic border" do
   it "retains app" do
-    subject.app.should eq(app)
+    expect(subject.app).to eq(app)
   end
 
   it "creates gui object" do
-    subject.gui.should_not be_nil
+    expect(subject.gui).not_to be_nil
   end
 end
 
@@ -38,6 +38,6 @@ describe Shoes::Border do
     it_behaves_like "object with negative dimensions"
   end
 
-  it {should_not be_takes_up_space}
-  it {should_not be_needs_to_be_positioned}
+  it {is_expected.not_to be_takes_up_space}
+  it {is_expected.not_to be_needs_to_be_positioned}
 end

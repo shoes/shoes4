@@ -4,7 +4,7 @@ shared_examples_for "border DSL method" do
 
     it "sets color" do
       border = dsl.border(color)
-      border.stroke.should eq(Shoes::COLORS[:white])
+      expect(border.stroke).to eq(Shoes::COLORS[:white])
     end
   end
 end

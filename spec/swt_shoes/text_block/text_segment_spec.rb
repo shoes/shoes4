@@ -89,14 +89,14 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
 
     it "checks boundaries" do
-      expect(subject.in_bounds?(1,1)).to be_true
+      expect(subject.in_bounds?(1,1)).to be_truthy
     end
 
     describe "offsets left" do
       let(:element_left) { left_offset }
 
       it "checks boundaries" do
-        expect(subject.in_bounds?(segment_width + left_offset - 1, 0)).to be_true
+        expect(subject.in_bounds?(segment_width + left_offset - 1, 0)).to be_truthy
       end
     end
 
@@ -104,7 +104,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
       let(:element_top) { top_offset }
 
       it "checks boundaries" do
-        expect(subject.in_bounds?(0, segment_height + top_offset - 1)).to be_true
+        expect(subject.in_bounds?(0, segment_height + top_offset - 1)).to be_truthy
       end
     end
 
