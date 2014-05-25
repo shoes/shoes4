@@ -23,7 +23,7 @@ describe 'Shoes.url' do
       end
 
       def visit_me
-        location.should == '/visit_me'
+        $location = location # I really couldn't come up with a better way
       end
 
       def some_method
@@ -56,7 +56,8 @@ describe 'Shoes.url' do
   end
 
   it 'has a location method that returns the current URL' do
-    Shoes.app do visit '/visit_me' end
+    Shoes.app do visit('/visit_me') end
+    expect($location).to eq '/visit_me'
   end
 
   it 'instances report class as klazz (regression, do not ask...)' do
