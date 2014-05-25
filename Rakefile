@@ -2,8 +2,8 @@ require 'rake'
 require 'rake/clean'
 require 'rubygems/package_task'
 require 'rspec/core/rake_task'
-require 'bundler/gem_tasks'
 
+require_relative 'tasks/gem'
 require_relative 'tasks/changelog'
 
 PACKAGE_DIR = 'pkg'

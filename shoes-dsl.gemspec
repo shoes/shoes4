@@ -2,17 +2,17 @@
 require File.expand_path('../lib/shoes/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "shoes"
+  s.name        = "shoes-dsl"
   s.version     = Shoes::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Team Shoes"]
   s.email       = ["shoes@librelist.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
-  s.summary     = %q{Shoes is the best little GUI toolkit for Ruby. Shoes runs on JRuby only for now.}
-  s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.}
+  s.summary     = %q{The best little DSL for the best little GUI toolkit for Ruby.}
+  s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. This is the DSL for writing your app. You'll need a backend to run it.}
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split("\n").delete_if { |path| path =~ %r{^lib/shoes/swt|spec/swt_shoes} }
+  s.files         = `git ls-files`.split("\n").delete_if { |path| path =~ %r{^lib/shoes/swt|spec/swt_shoes|lib/shoes/cli.rb} }
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
@@ -20,8 +20,7 @@ Gem::Specification.new do |s|
   s.executables   = ['shoes-stub', 'ruby-shoes']
   s.extensions    = ['ext/install/Rakefile']
 
-  s.add_dependency "furoshiki", ">=0.1.2"
-  s.add_dependency "shoes-dsl", Shoes::VERSION
+  s.add_dependency "nokogiri" # For converting the manual to HTML
 
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"

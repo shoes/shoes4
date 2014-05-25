@@ -1,27 +1,24 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/shoes/version', __FILE__)
+require File.expand_path('../lib/shoes/swt/version', __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "shoes"
-  s.version     = Shoes::VERSION
+  s.name        = "shoes-swt"
+  s.version     = Shoes::Swt::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Team Shoes"]
   s.email       = ["shoes@librelist.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
-  s.summary     = %q{Shoes is the best little GUI toolkit for Ruby. Shoes runs on JRuby only for now.}
-  s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.}
+  s.summary     = %q{A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby.}
+  s.description = %q{A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.}
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split("\n").delete_if { |path| path =~ %r{^lib/shoes/swt|spec/swt_shoes} }
+  s.files         = `git ls-files -- lib/shoes/swt`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.require_paths = ["lib"]
 
-  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
-  s.executables   = ['shoes-stub', 'ruby-shoes']
-  s.extensions    = ['ext/install/Rakefile']
-
+  s.add_dependency "swt", "~>0.18"
   s.add_dependency "furoshiki", ">=0.1.2"
-  s.add_dependency "shoes-dsl", Shoes::VERSION
+  s.add_dependency "after_do", "~>0.3"
 
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"

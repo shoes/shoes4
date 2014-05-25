@@ -1,3 +1,5 @@
 source 'https://rubygems.org'
 
-gemspec
+gemspec :name => 'shoes'
+
+gemspec :name => 'shoes-swt'
