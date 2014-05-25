@@ -23,7 +23,7 @@ describe Shoes::App do
     let(:input_blk) { Proc.new {} }
 
     before do
-      Shoes::App.any_instance.stub(:flow)
+      allow_any_instance_of(Shoes::App).to receive(:flow)
     end
 
     it "initializes style hash", :qt do
@@ -228,7 +228,7 @@ describe Shoes::App do
     end
 
     it 'should receive a call to what is called in the append block' do
-      Shoes::App.any_instance.should_receive :para
+      expect_any_instance_of(Shoes::App).to receive :para
       subject
     end
   end
@@ -298,13 +298,13 @@ describe Shoes::App do
 
     it 'adds the child to the top_slot when there is one' do
       top_slot_double = double 'top slot'
-      internal_app.stub(top_slot: top_slot_double)
+      allow(internal_app).to receive_messages(top_slot: top_slot_double)
       expect(top_slot_double).to receive(:add_child).with(child)
       internal_app.add_child child
     end
 
     it 'adds the child to the own contents when there is no top_slot' do
-      internal_app.stub top_slot: nil
+      allow(internal_app).to receive_messages top_slot: nil
       internal_app.add_child child
       expect(internal_app.contents).to include child
     end

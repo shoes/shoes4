@@ -10,11 +10,11 @@ shared_context "painter context" do
   let(:sw) { 10 }
 
   before :each do
-    shape.stub(:fill) { fill }
-    shape.stub(:fill_alpha) { fill_alpha }
-    shape.stub(:stroke) { stroke }
-    shape.stub(:stroke_alpha) { stroke_alpha }
-    subject.stub(:reset_rotate) { double("reset_rotate").as_null_object }
+    allow(shape).to receive(:fill) { fill }
+    allow(shape).to receive(:fill_alpha) { fill_alpha }
+    allow(shape).to receive(:stroke) { stroke }
+    allow(shape).to receive(:stroke_alpha) { stroke_alpha }
+    allow(subject).to receive(:reset_rotate) { double("reset_rotate").as_null_object }
   end
 end
 
@@ -24,12 +24,12 @@ shared_examples_for "movable painter" do
     let(:transform) { double("transform").as_null_object }
 
     before :each do
-      ::Swt::Transform.stub(:new) { transform }
+      allow(::Swt::Transform).to receive(:new) { transform }
       shape.update_position
     end
 
     it "applies transform" do
-      gc.should_receive(:set_transform).with(transform)
+      expect(gc).to receive(:set_transform).with(transform)
       subject.paint_control(event)
     end
   end
@@ -38,30 +38,30 @@ end
 shared_examples_for "stroke painter" do
   describe "sets stroke" do
     specify "color" do
-      gc.should_receive(:set_foreground).with(stroke.real)
+      expect(gc).to receive(:set_foreground).with(stroke.real)
       subject.paint_control(event)
     end
 
     specify "alpha" do
-      gc.stub(:set_alpha)
-      gc.should_receive(:set_alpha).with(stroke_alpha)
+      allow(gc).to receive(:set_alpha)
+      expect(gc).to receive(:set_alpha).with(stroke_alpha)
       subject.paint_control(event)
     end
   end
 
   it "sets strokewidth" do
-    shape.stub(:strokewidth) { 4 }
-    gc.should_receive(:set_line_width).with(4)
+    allow(shape).to receive(:strokewidth) { 4 }
+    expect(gc).to receive(:set_line_width).with(4)
     subject.paint_control(event)
   end
 
   it "sets antialias" do
-    gc.should_receive(:set_antialias).with(Swt::SWT::ON)
+    expect(gc).to receive(:set_antialias).with(Swt::SWT::ON)
     subject.paint_control(event)
   end
   
   it "sets line cap" do
-    gc.should_receive(:set_line_cap).with(anything)
+    expect(gc).to receive(:set_line_cap).with(anything)
     subject.paint_control(event)
   end
 end
@@ -69,14 +69,14 @@ end
 shared_examples_for "fill painter" do
   describe "sets fill" do
     specify "color" do
-      gc.should_receive(:set_background).with(fill.real)
+      expect(gc).to receive(:set_background).with(fill.real)
       subject.paint_control(event)
     end
 
     specify "alpha" do
       # Once for stroke, once for fill
-      gc.stub(:set_alpha)
-      gc.should_receive(:set_alpha).with(fill_alpha)
+      allow(gc).to receive(:set_alpha)
+      expect(gc).to receive(:set_alpha).with(fill_alpha)
       subject.paint_control(event)
     end
   end

@@ -1,8 +1,8 @@
 shared_examples 'clickable backend' do
 
   before :each do
-    swt_app.stub :add_clickable_element
-    dsl.stub(:in_bounds?) { true }
+    allow(swt_app).to receive :add_clickable_element
+    allow(dsl).to receive(:in_bounds?) { true }
   end
 
   let(:clickable_block) {double 'clickable_block'}
@@ -20,18 +20,20 @@ shared_examples 'clickable backend' do
   end
 
   it 'calls the block when a click event comes in bounds' do
-    clickable_block.should_receive(:call).with(1, 2, 3)
+    expect(clickable_block).to receive(:call).with(1, 2, 3)
     clickable_subject.click_listener.handleEvent mouse_event
   end
 
   describe 'interaction with the swt app object' do
 
+    # This method should be updated to use the 'expect' syntax, but updating causes spec failures
     def expect_adds_listener_for(event)
       swt_app.should_receive(:add_listener).with(event, clickable_subject.click_listener)
+      # expect(swt_app).to receive(:add_listener).with(event, clickable_subject.click_listener)
     end
 
     it 'receives the add_clickable_element message' do
-      swt_app.should_receive(:add_clickable_element)
+      expect(swt_app).to receive(:add_clickable_element)
       clickable_subject
     end
 

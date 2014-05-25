@@ -6,13 +6,13 @@ shared_examples_for "object with state" do
   end
 
   it "should enable" do
-    subject.gui.should_receive(:enabled).with(true)
+    expect(subject.gui).to receive(:enabled).with(true)
     subject.state = nil
     expect(subject.state).to eq(nil) 
   end
 
   it "should disable" do
-    subject.gui.should_receive(:enabled).with(false)
+    expect(subject.gui).to receive(:enabled).with(false)
     subject.state = "disabled"
     expect(subject.state).to eq("disabled")
   end

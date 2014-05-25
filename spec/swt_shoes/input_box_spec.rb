@@ -14,8 +14,8 @@ describe Shoes::Swt::InputBox do
   subject { Shoes::Swt::InputBox.new dsl, parent, styles }
 
   before :each do
-    ::Swt::Widgets::Text.stub(:new) { real }
-    ::Swt::Widgets::Text.stub(:text=) { real }
+    allow(::Swt::Widgets::Text).to receive(:new) { real }
+    allow(::Swt::Widgets::Text).to receive(:text=) { real }
   end
 
   it_behaves_like "movable element"
@@ -91,7 +91,7 @@ describe Shoes::Swt::InputBox do
       context "when NOT set" do
         it "does NOT set PASSWORD style" do
           options = Shoes::Swt::EditLine::DEFAULT_STYLES
-          dsl.stub(:secret?) { false }
+          allow(dsl).to receive(:secret?) { false }
           expect(::Swt::Widgets::Text).to receive(:new).with(parent.real, options)
           subject
         end
@@ -100,7 +100,7 @@ describe Shoes::Swt::InputBox do
       context "when set" do
         it "sets PASSWORD style" do
           options = Shoes::Swt::EditLine::DEFAULT_STYLES | ::Swt::SWT::PASSWORD
-          dsl.stub(:secret?) { true }
+          allow(dsl).to receive(:secret?) { true }
           expect(::Swt::Widgets::Text).to receive(:new).with(parent.real, options)
           subject
         end

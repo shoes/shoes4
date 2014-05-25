@@ -31,13 +31,13 @@ describe Shoes::Swt::Color do
     let(:gc) { double("gc") }
 
     it "sets background" do
-      gc.stub(:set_alpha)
+      allow(gc).to receive(:set_alpha)
       expect(gc).to receive(:set_background).with(color.real)
       color.apply_as_fill(gc)
     end
 
     it "sets alpha" do
-      gc.stub(:set_background)
+      allow(gc).to receive(:set_background)
       expect(gc).to receive(:set_alpha)
       color.apply_as_fill(gc, 10, 20, 100, 200)
     end

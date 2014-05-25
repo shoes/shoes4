@@ -36,22 +36,22 @@ describe 'Shoes.url' do
   end
 
   it "should call index upon startup" do
-    klazz.any_instance.should_receive(:index)
+    expect_any_instance_of(klazz).to receive(:index)
     subject
   end
 
   it 'should receive path when visitting path' do
-    klazz.any_instance.should_receive(:path)
+    expect_any_instance_of(klazz).to receive(:path)
     Shoes.app do visit '/path' end
   end
 
   it 'handles the arguments given in the regexes' do
-    klazz.any_instance.should_receive(:number).with('7')
+    expect_any_instance_of(klazz).to receive(:number).with('7')
     Shoes.app do visit '/number/7' end
   end
 
   it 'can call methods defined in the URL class when visitting a URL' do
-    klazz.any_instance.should_receive(:some_method)
+    expect_any_instance_of(klazz).to receive(:some_method)
     Shoes.app do visit '/foo' end
   end
 

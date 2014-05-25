@@ -28,7 +28,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
                                                          default_text_styles) }
 
     before do
-      dsl.stub(:text) { first_segment.text }
+      allow(dsl).to receive(:text) { first_segment.text }
     end
 
     it "should have length" do
@@ -125,7 +125,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
                                                          default_text_styles) }
 
     before do
-      dsl.stub(:text) { first_segment.text + second_segment.text }
+      allow(dsl).to receive(:text) { first_segment.text + second_segment.text }
     end
 
     it "should have length" do
@@ -232,10 +232,10 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
     segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, text, 1)
     segment.position_at(0, 0)
-    segment.stub(:draw)
-    segment.stub(:set_style)
-    segment.stub(:get_location).and_return(double("position", x: 0, y: 0))
-    segment.stub(:layout).and_return(layout)
+    allow(segment).to receive(:draw)
+    allow(segment).to receive(:set_style)
+    allow(segment).to receive(:get_location).and_return(double("position", x: 0, y: 0))
+    allow(segment).to receive(:layout).and_return(layout)
     segment
   end
 
