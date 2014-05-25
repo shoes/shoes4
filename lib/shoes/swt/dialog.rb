@@ -82,6 +82,7 @@ class Shoes
         while !@shell.isDisposed do
           display.sleep unless display.readAndDispatch
         end
+        icon.dispose
         @ret
       end
     end
