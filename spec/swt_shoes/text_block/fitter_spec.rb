@@ -1,7 +1,6 @@
 require 'swt_shoes/spec_helper'
-require 'shoes/swt/text_block_fitter'
 
-describe Shoes::Swt::TextBlockFitter do
+describe Shoes::Swt::TextBlock::Fitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
                      absolute_left: 25, absolute_top: 75,
                      desired_width: 85,
@@ -22,14 +21,14 @@ describe Shoes::Swt::TextBlockFitter do
   let(:app_width)         { 2000 }
 
   let(:text_block) { double('text_block', dsl: dsl) }
-  let(:layout)     { double('layout') }
+  let(:segment)     { double('segment') }
 
   let(:current_position) { double('current_position') }
 
-  subject { Shoes::Swt::TextBlockFitter.new(text_block, current_position) }
+  subject { Shoes::Swt::TextBlock::Fitter.new(text_block, current_position) }
 
   before(:each) do
-    Shoes::Swt::FittedTextLayout.stub(:new) { layout }
+    Shoes::Swt::TextBlock::TextSegment.stub(:new) { segment }
   end
 
   describe "determining available space" do
@@ -76,90 +75,90 @@ describe Shoes::Swt::TextBlockFitter do
 
   describe "finding what didn't fit" do
     it "should tell split text by offsets and heights" do
-      layout = double('layout', line_offsets: [0, 5, 9], text: "Text Split")
-      layout.stub(:line_bounds) { double('line_bounds', height: 50)}
+      segment = double('segment', line_offsets: [0, 5, 9], text: "Text Split")
+      segment.stub(:line_bounds) { double('line_bounds', height: 50)}
 
-      expect(subject.split_text(layout, 55)).to eq(["Text ", "Split"])
+      expect(subject.split_text(segment, 55)).to eq(["Text ", "Split"])
     end
 
     it "should be able to split text when too small" do
-      layout = double('layout', line_offsets: [0, 10], text: "Text Split")
-      layout.stub(:line_bounds).with(0) { double('line_bounds', height: 21)}
-      layout.stub(:line_bounds).with(1) { raise "Boom" }
+      segment = double('segment', line_offsets: [0, 10], text: "Text Split")
+      segment.stub(:line_bounds).with(0) { double('line_bounds', height: 21)}
+      segment.stub(:line_bounds).with(1) { raise "Boom" }
 
-      expect(subject.split_text(layout, 33)).to eq(["Text Split", ""])
+      expect(subject.split_text(segment, 33)).to eq(["Text Split", ""])
     end
   end
 
   describe "fit it in" do
     let(:bounds) { double('bounds', width: 100, height: 50)}
-    let(:layout) { double('layout', text: "something something",
+    let(:segment) { double('segment', text: "something something",
                           line_count: 1, line_offsets:[], bounds: bounds) }
 
     before(:each) do
-      layout.stub(:position_at) { layout }
+      segment.stub(:position_at) { segment }
     end
 
-    context "to one layout" do
+    context "to one segment" do
       it "should work" do
-        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 130)
-        expect_fitted_layouts(fitted_layouts, [26, 76])
+        segments = when_fit_at(x: 25, y: 75, next_line_start: 130)
+        expect_segments(segments, [26, 76])
       end
 
       it "with one line, even if height is bigger" do
         bounds.stub(width: 50)
-        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
-        expect_fitted_layouts(fitted_layouts, [26, 76])
+        segments = when_fit_at(x: 25, y: 75, next_line_start: 95)
+        expect_segments(segments, [26, 76])
       end
     end
 
-    context "to two layouts" do
+    context "to two segments" do
       before(:each) do
-        layout.stub(line_count: 2, line_bounds: double(height: 15))
+        segment.stub(line_count: 2, line_bounds: double(height: 15))
         bounds.stub(width: 50)
         dsl.stub(containing_width: :unused)
       end
 
-      it "should split text and overflow to second layout" do
+      it "should split text and overflow to second segment" do
         with_text_split("something ", "something")
-        expect(layout).to receive(:dispose).once
+        expect(segment).to receive(:dispose).once
 
-        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
-        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 126])
+        segments = when_fit_at(x: 25, y: 75, next_line_start: 95)
+        expect_segments(segments, [26, 76], [1, 126])
       end
 
-      it "should overflow all text to second layout" do
+      it "should overflow all text to second segment" do
         with_text_split("", "something something")
-        expect(layout).to receive(:dispose).once
+        expect(segment).to receive(:dispose).once
 
-        fitted_layouts = when_fit_at(x: 25, y: 75, next_line_start: 95)
-        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 95])
+        segments = when_fit_at(x: 25, y: 75, next_line_start: 95)
+        expect_segments(segments, [26, 76], [1, 95])
       end
     end
 
-    context "to empty first layout" do
+    context "to empty first segment" do
       before(:each) do
         dsl.stub(containing_width: 100)
-        layout.stub(:text= => nil)
+        segment.stub(:text= => nil)
       end
 
-      it "rolls to second layout when 0 remaining width" do
+      it "rolls to second segment when 0 remaining width" do
         dsl.stub(desired_width: 0)
-        fitted_layouts = when_fit_at(x: 0, y: 75, next_line_start: 95)
-        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 96])
+        segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
+        expect_segments(segments, [26, 76], [1, 96])
       end
 
-      it "rolls to second layout when negative remaining width" do
+      it "rolls to second segment when negative remaining width" do
         dsl.stub(desired_width: -1)
-        fitted_layouts = when_fit_at(x: 0, y: 75, next_line_start: 95)
-        expect_fitted_layouts(fitted_layouts, [26, 76], [1, 96])
+        segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
+        expect_segments(segments, [26, 76], [1, 96])
       end
     end
   end
 
   def with_text_split(first, second)
     dsl.stub(text: first + second)
-    layout.stub(line_offsets: [0, first.length, first.length + second.length])
+    segment.stub(line_offsets: [0, first.length, first.length + second.length])
   end
 
   def when_positioned_at(args)
@@ -176,10 +175,10 @@ describe Shoes::Swt::TextBlockFitter do
     subject.fit_it_in
   end
 
-  def expect_fitted_layouts(fitted_layouts, *coordinates)
-    fitted_layouts.each_with_index do |fitted, index|
+  def expect_segments(segments, *coordinates)
+    segments.each_with_index do |segment, index|
       x, y = coordinates[index]
-      expect(fitted).to have_received(:position_at).with(x, y)
+      expect(segment).to have_received(:position_at).with(x, y)
     end
   end
 end

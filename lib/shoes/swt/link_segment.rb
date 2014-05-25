@@ -1,13 +1,13 @@
 class Shoes
   module Swt
     class LinkSegment
-      def initialize(fitted_layout, range)
+      def initialize(text_segment, range)
         @regions = []
         @range = range
-        @fitted_layout = fitted_layout
+        @text_segment = text_segment
 
         add_regions_for_lines(lines_for_link)
-        offset_regions(fitted_layout.element_left, fitted_layout.element_top)
+        offset_regions(text_segment.element_left, text_segment.element_top)
       end
 
       def add_regions_for_lines(lines)
@@ -72,15 +72,15 @@ class Shoes
       end
 
       def start_position
-        @fitted_layout.get_location(@range.first, false)
+        @text_segment.get_location(@range.first, false)
       end
 
       def end_position
-        @fitted_layout.get_location(@range.last, true)
+        @text_segment.get_location(@range.last, true)
       end
 
       def layout
-        @fitted_layout.layout
+        @text_segment.layout
       end
 
       class Region
