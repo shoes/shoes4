@@ -20,6 +20,7 @@ describe Shoes::Swt::Border do
   end
 
   it_behaves_like "paintable"
+  it_behaves_like "clearable"
 
   describe "painter" do
     include_context "painter context"
