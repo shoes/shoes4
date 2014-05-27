@@ -91,3 +91,5 @@ Shoes::InternalApp.add_global_keypress(:'control_alt_q') do
   clear
   quit
 end
+
+puts "Registered Ctrl+Alt+Q for leak hunting clean shutdown."
