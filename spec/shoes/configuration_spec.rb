@@ -20,8 +20,10 @@ describe Shoes::Configuration do
     let(:dsl_object) { Shoes::Shape.new app, args }
 
     describe "#backend_with_app_for" do
+      # This example should be upgraded to use 'expect' syntax, but that causes it to fail.
       it "passes app.gui to backend" do
-        expect(Shoes.configuration.backend::Shape).to receive(:new).with(dsl_object, app.gui, args)
+        Shoes.configuration.backend::Shape.should_receive(:new).with(dsl_object, app.gui, args)
+        # expect(Shoes.configuration.backend::Shape).to receive(:new).with(dsl_object, app.gui, args)
         dsl_object
       end
 
