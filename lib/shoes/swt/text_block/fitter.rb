@@ -109,8 +109,8 @@ class Shoes
           [
             first_layout.position_at(@dsl.element_left,
                                      @dsl.element_top),
-                                     second_layout.position_at(parent.absolute_left + @dsl.margin_left,
-                                                               @dsl.element_top + first_height)
+            second_layout.position_at(parent.absolute_left + @dsl.margin_left,
+                                      @dsl.element_top + first_height)
           ]
         end
 
