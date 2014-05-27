@@ -1,5 +1,7 @@
 require 'bundler/gem_helper'
 
+desc 'Build all gems'
+task 'build:all'
 ['shoes', 'shoes-dsl', 'shoes-swt'].each do |lib|
   desc "Build the #{lib} gem"
   task "build:#{lib}" do
@@ -7,6 +9,6 @@ require 'bundler/gem_helper'
     Rake::Task['build'].invoke
   end
 
-  task :build => "build:#{lib}"
+  task 'build:all' => "build:#{lib}"
 end
 
