@@ -7,22 +7,19 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :dimensions, :angle, :gui, :parent
+    attr_reader :app, :dimensions, :parent, :gui
+    style_with :angle, :art_styles, :center, :radius
 
-    def initialize(app, parent, left, top, width, height, opts = {}, &blk)
+    def initialize(app, parent, left, top, width, height, styles = {}, &blk)
       @app                 = app
-      @dimensions          = AbsoluteDimensions.new left, top, width, height, opts
-      @style               = Shoes::Common::Fill::DEFAULTS.merge(
-                            Shoes::Common::Stroke::DEFAULTS).merge(opts)
-      @style[:strokewidth] ||= 1
-      @angle               = opts[:angle]
+      @dimensions          = AbsoluteDimensions.new left, top, width, height, styles
       @parent              = parent
-
+      
+      style_init(styles)
       @parent.add_child self
-
       @gui = Shoes.backend_for(self, &blk)
 
-      clickable_options(opts)
+      clickable_options(styles)
     end
   end
 end
