@@ -5,8 +5,10 @@ describe Shoes::Swt::InputBox do
 
   let(:dsl) { double('dsl', app: shoes_app, visible?: true, element_width: 80,
                             element_height: 22, initial_text: 'Jay',
-                            secret?: secret).as_null_object }
-  let(:real) { double('real', disposed?: false, text: text).as_null_object }
+                            secret?: secret,
+                            call_change_listeners: true).as_null_object }
+  let(:real) { double('real', disposed?: false, text: text,
+                      add_modify_listener: true).as_null_object }
   let(:styles) {::Swt::SWT::SINGLE | ::Swt::SWT::BORDER}
   let(:secret) {false}
   let(:text) {'Some text...'}
@@ -56,14 +58,18 @@ describe Shoes::Swt::InputBox do
         end
 
         describe 'with the same text' do
-          let(:event) {double 'Bad Event', source: source,
-                              class: Java::OrgEclipseSwtEvents::ModifyEvent}
-          let(:source) {double 'Our source',
-                               class: Java::OrgEclipseSwtWidgets::Text,
-                               text: text}
+          let(:event) {double 'Bad Event', source: source}
+          let(:source) {double 'Our source', text: text}
           let(:text) {'Double call'}
+
           it 'does not call the change listeners' do
             subject.text = text
+            allow(event).to receive(:instance_of?) do |klazz|
+              klazz == Java::OrgEclipseSwtEvents::ModifyEvent
+            end
+            allow(source).to receive(:instance_of?) do |klazz|
+              klazz == Java::OrgEclipseSwtWidgets::Text
+            end
             @modify_block.call event
             expect(dsl).to_not have_received :call_change_listeners
           end
