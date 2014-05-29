@@ -152,12 +152,10 @@ class Shoes
       x_max = all_xs.max
       y_min = all_ys.min
       y_max = all_ys.max
-      puts "Updating bounds #{xs}, #{ys}"
       self.left = calculate_primary_dimension_value self.left, x_min
       self.top = calculate_primary_dimension_value self.top, y_min
       self.right = calculate_secondary_dimension_value self.right, x_max
       self.bottom = calculate_secondary_dimension_value self.top, y_max
-      puts "New bounds: #{dimensions}"
       nil
     end
 
