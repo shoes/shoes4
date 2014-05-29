@@ -17,7 +17,7 @@ describe Shoes::Configuration do
     include_context "dsl app"
 
     let(:args) { Hash.new }
-    let(:dsl_object) { Shoes::Shape.new app, args }
+    let(:dsl_object) { Shoes::Shape.new app, parent, args }
 
     describe "#backend_with_app_for" do
       it "passes app.gui to backend" do
