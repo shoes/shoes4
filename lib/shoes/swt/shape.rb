@@ -55,15 +55,11 @@ class Shoes
       end
 
       def left
-        elements = Java::float[6].new
-        transform.get_elements(elements)
-        elements[4]
+        native_left
       end
 
       def top
-        elements = Java::float[6].new
-        transform.get_elements(elements)
-        elements[5]
+        native_top
       end
 
       alias_method :absolute_left, :left
@@ -72,15 +68,11 @@ class Shoes
       alias_method :element_top, :top
 
       def width
-        bounds = Java::float[4].new
-        @element.get_bounds(bounds)
-        bounds[2]
+        native_width
       end
 
       def height
-        bounds = Java::float[4].new
-        @element.get_bounds(bounds)
-        bounds[3]
+        native_height
       end
 
       alias_method :element_width, :width
@@ -90,8 +82,46 @@ class Shoes
         @transform ||= ::Swt::Transform.new(::Swt.display)
       end
 
-      class Painter < Common::Painter
+      private
+      def new_java_float_array(length)
+        Java::float[length].new
+      end
 
+      def native_bounds_measurement(element, index)
+        bounds_array_size = 4
+        bounds = new_java_float_array(bounds_array_size)
+        element.get_bounds bounds
+        bounds[index]
+      end
+
+      def position_from_transform(index)
+        transform_elements_size = 6
+        elements = new_java_float_array(transform_elements_size)
+        transform.get_elements(elements)
+        elements[index]
+      end
+
+      def native_left
+        transform_elements_index_for_left = 4
+        position_from_transform transform_elements_index_for_left
+      end
+
+      def native_top
+        transform_elements_index_for_top = 5
+        position_from_transform transform_elements_index_for_top
+      end
+
+      def native_height
+        bounds_index_for_height = 3
+        native_bounds_measurement(@element, bounds_index_for_height)
+      end
+
+      def native_width
+        bounds_index_for_width = 2
+        native_bounds_measurement(@element, bounds_index_for_width)
+      end
+
+      class Painter < Common::Painter
         def fill(gc)
           gc.fill_path(@obj.element)
         end
