@@ -5,17 +5,22 @@ class Shoes
     include Shoes::Common::Stroke
     include Shoes::Common::Style
     include Shoes::Common::Clickable
+    include DimensionsDelegations
 
     # Creates a new Shoes::Shape
     #
-    def initialize(app, opts = {}, blk = nil)
+    def initialize(app, parent, opts = {}, blk = nil)
       @app = app
+      @dimensions = AbsoluteDimensions.new 0, 0, 0, 0, opts
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @blk = blk
+      @parent = parent
 
-      @displace_left = 0
-      @displace_top  = 0
+      # True until we've asked the pen to draw
+      @before_drawing = true
+
+      @parent.add_child self
 
       # GUI
       @gui = Shoes.backend_for(self, @style)
@@ -25,31 +30,8 @@ class Shoes
       clickable_options(opts)
     end
 
-    attr_reader :app, :blk, :gui, :hidden
+    attr_reader :app, :blk, :dimensions, :gui, :hidden
     attr_reader :x, :y
-    attr_accessor :displace_left, :displace_top
-
-    def left
-      @left || 0
-    end
-
-    def top
-      @top || 0
-    end
-
-    alias_method :absolute_left, :left
-    alias_method :absolute_top, :top
-    alias_method :element_left, :left
-    alias_method :element_top, :top
-
-
-    def right
-      @right || left
-    end
-
-    def bottom
-      @bottom || top
-    end
 
     def width
       @app.width
@@ -58,9 +40,6 @@ class Shoes
     def height
       @app.height
     end
-
-    alias_method :element_width, :width
-    alias_method :element_height, :height
 
     def needs_to_be_positioned?
       true
@@ -80,10 +59,10 @@ class Shoes
     # @param [Integer] top The new top value
     # @return [Shoes::Shape] This shape
     def move(left, top)
-      @right += offset(@left, left) if @right
-      @bottom += offset(@top, top) if @bottom
-      @left = left
-      @top = top
+      right += offset(self.left, left) if right
+      bottom += offset(self.top, top) if bottom
+      self.left = left
+      self.top = top
       @gui.update_position
       self
     end
@@ -97,6 +76,7 @@ class Shoes
       update_bounds_rect(@x, @y, x, y)
       @x, @y = x, y
       @gui.line_to(x, y)
+      @before_drawing = false
       self
     end
 
@@ -113,11 +93,14 @@ class Shoes
 
     def quad_to *args
       @gui.quad_to *args
+      @before_drawing = false
+      self
     end
 
     def curve_to(cx1, cy1, cx2, cy2, x, y)
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
       @gui.curve_to(cx1, cy1, cx2, cy2, x, y)
+      @before_drawing = false
       self
     end
 
@@ -125,6 +108,8 @@ class Shoes
       @x, @y = x, y
       update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
       @gui.arc(x, y, width, height, start_angle, arc_angle)
+      @before_drawing = false
+      self
     end
 
     private
@@ -161,15 +146,42 @@ class Shoes
     # @param [Array<Integer>] ys Array of Y coordinates
     # @return nil
     def update_bounds(xs, ys)
-      x_min = xs.min
-      x_max = xs.max
-      y_min = ys.min
-      y_max = ys.max
-      @left = x_min unless @left && x_min > @left
-      @top = y_min unless @top && y_min > @top
-      @right = x_max unless @right && x_max < @right
-      @bottom = y_max unless @bottom && y_max < @bottom
+      all_xs = all_x_values(xs)
+      all_ys = all_y_values(ys)
+      x_min = all_xs.min
+      x_max = all_xs.max
+      y_min = all_ys.min
+      y_max = all_ys.max
+      puts "Updating bounds #{xs}, #{ys}"
+      self.left = calculate_primary_dimension_value self.left, x_min
+      self.top = calculate_primary_dimension_value self.top, y_min
+      self.right = calculate_secondary_dimension_value self.right, x_max
+      self.bottom = calculate_secondary_dimension_value self.top, y_max
+      puts "New bounds: #{dimensions}"
       nil
+    end
+
+    def all_x_values(xs)
+      all_values xs, @x, self.left, self.right
+    end
+
+    def all_y_values(ys)
+      all_values ys, @y, self.top, self.bottom
+    end
+
+    def all_values(values, current, min, max)
+      additional = @before_drawing ? [current] : [current, min, max]
+      (values + additional).map &:to_i
+    end
+
+    def calculate_primary_dimension_value(current, new)
+      return new if @before_drawing
+      [current, new].min
+    end
+
+    def calculate_secondary_dimension_value(current, new)
+      return new if @before_drawing
+      [current, new].max
     end
   end
 end

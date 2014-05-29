@@ -3,7 +3,7 @@ require 'shoes/spec_helper'
 describe Shoes::Shape do
   include_context "dsl app"
 
-  subject { Shoes::Shape.new(app) {} }
+  subject { Shoes::Shape.new app, parent {} }
 
   it_behaves_like "object with stroke"
   #it_behaves_like "object with style"
@@ -21,7 +21,7 @@ describe Shoes::Shape do
         line_to xs.first, ys.first
       }
     }
-    subject { Shoes::Shape.new app, Hash.new, draw }
+    subject { Shoes::Shape.new app, parent, Hash.new, draw }
 
     its(:left) { should eq(130) }
     its(:top) { should eq(100) }
@@ -40,7 +40,7 @@ describe Shoes::Shape do
         curve_to 20, 30, 100, 200, 50, 50
       }
     }
-    subject { Shoes::Shape.new app, Hash.new, draw }
+    subject { Shoes::Shape.new app, parent, Hash.new, draw }
 
     its(:left)   { should eq(10) }
     its(:top)    { should eq(10) }
