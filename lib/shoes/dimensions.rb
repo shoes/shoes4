@@ -101,6 +101,10 @@ class Shoes
       true
     end
 
+    def to_s
+      "<#{self.class}:#{object_id} (#{left}, #{top})->(#{right}, #{bottom}), #{width}x#{height}>"
+    end
+
     def self.setup_delegations
       methods_to_rename = Dimension.public_instance_methods false
       renamed_delegate_to :x_dimension, methods_to_rename, 'start'  => 'left',
