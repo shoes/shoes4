@@ -98,13 +98,14 @@ class Shoes
 
     def curve_to(cx1, cy1, cx2, cy2, x, y)
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
+      @x, @y = x, y
       @gui.curve_to(cx1, cy1, cx2, cy2, x, y)
       self
     end
 
     def arc(x, y, width, height, start_angle, arc_angle)
-      @x, @y = x, y
       update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
+      @x, @y = x, y
       @gui.arc(x, y, width, height, start_angle, arc_angle)
       self
     end
