@@ -76,7 +76,6 @@ class Shoes
       update_bounds_rect(@x, @y, x, y)
       @x, @y = x, y
       @gui.line_to(x, y)
-      @before_drawing = false
       self
     end
 
@@ -93,14 +92,12 @@ class Shoes
 
     def quad_to *args
       @gui.quad_to *args
-      @before_drawing = false
       self
     end
 
     def curve_to(cx1, cy1, cx2, cy2, x, y)
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
       @gui.curve_to(cx1, cy1, cx2, cy2, x, y)
-      @before_drawing = false
       self
     end
 
@@ -108,7 +105,6 @@ class Shoes
       @x, @y = x, y
       update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
       @gui.arc(x, y, width, height, start_angle, arc_angle)
-      @before_drawing = false
       self
     end
 
@@ -156,6 +152,7 @@ class Shoes
       self.top = calculate_primary_dimension_value self.top, y_min
       self.right = calculate_secondary_dimension_value self.right, x_max
       self.bottom = calculate_secondary_dimension_value self.top, y_max
+      @before_drawing = false
       nil
     end
 
