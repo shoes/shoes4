@@ -36,10 +36,6 @@ class Shoes
         @element.move_to(x, y)
       end
 
-      def quad_to *args
-        @element.quad_to *args
-      end
-
       def curve_to(cx1, cy1, cx2, cy2, x, y)
         @element.cubic_to(cx1, cy1, cx2, cy2, x, y)
       end

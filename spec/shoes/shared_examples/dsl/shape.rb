@@ -5,7 +5,7 @@ shared_examples_for "shape DSL method" do
       line_to 400, 200
       line_to 100, 100
       line_to 400, 300
-      quad_to 100, 100, 20, 200
+      curve_to 100, 100, 20, 200, 120, 240
     }
   }
 

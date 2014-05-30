@@ -41,11 +41,6 @@ describe Shoes::Swt::Shape do
       element.should_receive(:line_to).with(20, 30)
       subject.line_to 20, 30
     end
-
-    it "delegates #quad_to" do
-      element.should_receive(:quad_to).with(100, 100, 20, 200)
-      subject.quad_to 100, 100, 20, 200
-    end
   end
 
   describe "moving" do

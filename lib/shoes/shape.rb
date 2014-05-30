@@ -91,11 +91,6 @@ class Shoes
       self
     end
 
-    def quad_to *args
-      @gui.quad_to *args
-      self
-    end
-
     def curve_to(cx1, cy1, cx2, cy2, x, y)
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
       @x, @y = x, y
