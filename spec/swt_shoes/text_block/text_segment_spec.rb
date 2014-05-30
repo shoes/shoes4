@@ -34,9 +34,9 @@ describe Shoes::Swt::TextBlock::TextSegment do
   let(:dsl) { double("dsl", font: "", font_size: 16, opts:{}) }
 
   before(:each) do
-    ::Swt::TextLayout.stub(:new)            { layout }
-    Shoes::Swt::TextFontFactory.stub(:new)  { font_factory }
-    Shoes::Swt::TextStyleFactory.stub(:new) { style_factory }
+    allow(::Swt::TextLayout).to receive(:new)            { layout }
+    allow(Shoes::Swt::TextFontFactory).to receive(:new)  { font_factory }
+    allow(Shoes::Swt::TextStyleFactory).to receive(:new) { style_factory }
   end
 
   subject do
@@ -46,13 +46,13 @@ describe Shoes::Swt::TextBlock::TextSegment do
 
   context "disposal" do
     it "disposes of underlying layout" do
-      layout.stub(:disposed?) { false }
+      allow(layout).to receive(:disposed?) { false }
       expect(layout).to receive(:dispose)
       subject.dispose
     end
 
     it "doesn't overdispose" do
-      layout.stub(:disposed?) { true }
+      allow(layout).to receive(:disposed?) { true }
       expect(layout).to_not receive(:dispose)
       subject.dispose
     end

@@ -10,11 +10,11 @@ describe Shoes::Swt::Animation do
   subject { Shoes::Swt::Animation.new dsl, swt_app }
 
   before :each do
-    display.stub(:timer_exec)
+    allow(display).to receive(:timer_exec)
   end
 
   it "triggers an Swt timer" do
-    display.should_receive(:timer_exec)
+    expect(display).to receive(:timer_exec)
     subject
   end
 
@@ -51,7 +51,7 @@ describe Shoes::Swt::Animation do
     describe 'disabled' do
       describe 'stopped?' do
         before :each do
-          dsl.stub :stopped? => true
+          allow(dsl).to receive_messages :stopped? => true
           task.call
         end
 
@@ -67,7 +67,7 @@ describe Shoes::Swt::Animation do
 
       describe 'removed?' do
         before :each do
-          dsl.stub :removed? => true
+          allow(dsl).to receive_messages :removed? => true
           task.call
         end
 

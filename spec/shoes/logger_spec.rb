@@ -37,7 +37,7 @@ describe Shoes::Logger::Ruby do
   end
 
   it "defaults to STDERR" do
-    STDERR.stub(:write)
+    allow(STDERR).to receive(:write)
     logger = Shoes::Logger::Ruby.new
     logger.error "Message"
     expect(STDERR).to have_received(:write)

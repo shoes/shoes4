@@ -14,7 +14,7 @@ describe Shoes::Swt::Radio do
   subject { Shoes::Swt::Radio.new dsl, parent }
 
   before :each do
-    ::Swt::Widgets::Button.stub(:new) { real }
+    allow(::Swt::Widgets::Button).to receive(:new) { real }
   end
 
   it_behaves_like "buttons"
@@ -33,7 +33,7 @@ describe Shoes::Swt::Radio do
     let(:radio_group) { double("radio_group").as_null_object }
     let(:group_lookup) { double('group_lookup', :[] => radio_group).as_null_object }
     before :each do
-      Shoes::Swt::RadioGroup.stub(:group_lookup) { group_lookup }  
+      allow(Shoes::Swt::RadioGroup).to receive(:group_lookup) { group_lookup }  
     end
 
     it "changes the group" do
@@ -42,14 +42,14 @@ describe Shoes::Swt::Radio do
     end
 
     it "adds to the new radio group" do
-      group_lookup.should_receive(:[]).with group_name
-      radio_group.should_receive(:add).with subject
+      expect(group_lookup).to receive(:[]).with group_name
+      expect(radio_group).to receive(:add).with subject
       subject.group = group_name
     end
 
     it "removes from the old radio group" do
-      group_lookup.should_receive(:[]).with Shoes::Swt::RadioGroup::DEFAULT_RADIO_GROUP
-      radio_group.should_receive(:remove).with subject
+      expect(group_lookup).to receive(:[]).with Shoes::Swt::RadioGroup::DEFAULT_RADIO_GROUP
+      expect(radio_group).to receive(:remove).with subject
       subject.group = group_name
     end
   end

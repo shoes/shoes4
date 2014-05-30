@@ -9,7 +9,7 @@ describe Shoes::Sound do
   its(:parent) { should be(parent) }
 
   it "delegates play to gui" do
-    subject.gui.should_receive(:play)
+    expect(subject.gui).to receive(:play)
     subject.play
   end
 end

@@ -14,9 +14,9 @@ describe Shoes::Swt::TextBlock::Painter do
             }
 
   let(:segment) do
-    ::Swt::Font.stub(:new)       { font }
-    ::Swt::TextLayout.stub(:new) { text_layout }
-    ::Swt::TextStyle.stub(:new)  { style }
+    allow(::Swt::Font).to receive(:new)       { font }
+    allow(::Swt::TextLayout).to receive(:new) { text_layout }
+    allow(::Swt::TextStyle).to receive(:new)  { style }
 
     Shoes::Swt::TextBlock::TextSegment.new(dsl, text, 200).position_at(0, 10)
   end
@@ -35,11 +35,11 @@ describe Shoes::Swt::TextBlock::Painter do
   subject { Shoes::Swt::TextBlock::Painter.new(dsl) }
 
   before :each do
-    ::Swt::TextStyle.stub(:new)  { style.as_null_object }
+    allow(::Swt::TextStyle).to receive(:new)  { style.as_null_object }
 
     # Can't stub this in during initial let because of circular reference
     # segments -> dsl -> gui -> segments...
-    gui.stub(segments: [segment])
+    allow(gui).to receive_messages(segments: [segment])
   end
 
   it "draws" do

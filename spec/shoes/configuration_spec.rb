@@ -21,7 +21,7 @@ describe Shoes::Configuration do
 
     describe "#backend_with_app_for" do
       it "passes app.gui to backend" do
-        Shoes.configuration.backend::Shape.should_receive(:new).with(dsl_object, app.gui, args)
+        expect(Shoes.configuration.backend::Shape).to receive(:new).with(anything, app.gui, anything)
         dsl_object
       end
 

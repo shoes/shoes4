@@ -5,8 +5,8 @@ describe Shoes::App do
     # The stubs that are unstubbed here occur in the spec_helper
     # error not triggered with a stubbed flush (removing the stub overall
     # seemed to difficult after initial try)
-    Shoes::Swt::App.any_instance.unstub(:flush)
-    Shoes::Swt::RedrawingAspect.unstub :new
+    allow_any_instance_of(Shoes::Swt::App).to receive(:flush).and_call_original
+    allow(Shoes::Swt::RedrawingAspect).to receive(:new).and_call_original
   end
 
   it 'does not fail with just a simple para #574' do

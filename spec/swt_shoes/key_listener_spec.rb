@@ -17,14 +17,14 @@ describe Shoes::Swt::Keypress do
 
     describe "Subclass Keypress" do
       it "adds key listener on creation" do
-        app.should_receive(:add_key_listener)
+        expect(app).to receive(:add_key_listener)
         Shoes::Swt::Keypress.new dsl, app, &block
       end
     end
 
     describe "Subclass Keyrelease" do
       it "adds key listener on creation" do
-        app.should_receive(:add_key_listener)
+        expect(app).to receive(:add_key_listener)
         Shoes::Swt::Keyrelease.new dsl, app, &block
       end
     end

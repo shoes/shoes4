@@ -37,7 +37,7 @@ describe Shoes::Swt::App do
     let(:the_display) { ::Swt::Widgets::Display }
 
     it "should set the menubar title" do
-      the_display.should_receive(:app_name=).with('double')
+      expect(the_display).to receive(:app_name=).with('double')
       subject
     end
   end

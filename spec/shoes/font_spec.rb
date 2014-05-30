@@ -11,7 +11,7 @@ describe Shoes::Font do
     end
 
     it 'calls the backend add_font method' do
-      Shoes.backend::Font.should_receive :add_font
+      expect(Shoes.backend::Font).to receive :add_font
       main_object.font 'some/path'
     end
   end

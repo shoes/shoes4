@@ -56,8 +56,8 @@ describe Shoes::ListBox do
   end
 
   it "should delegate #text to the backend" do
-    Shoes.configuration.backend::ListBox.any_instance.
-        should_receive(:text).and_return("Sneakers & Sandals")
+    expect_any_instance_of(Shoes.configuration.backend::ListBox).
+        to receive(:text).and_return("Sneakers & Sandals")
     expect(list_box.text).to eq("Sneakers & Sandals")
   end
 end

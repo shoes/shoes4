@@ -10,8 +10,8 @@ describe Shoes::Swt::Progress do
   subject { Shoes::Swt::Progress.new dsl, parent }
 
   before :each do
-    parent.stub(:real)
-    ::Swt::Widgets::ProgressBar.stub(:new) { real }
+    allow(parent).to receive(:real)
+    allow(::Swt::Widgets::ProgressBar).to receive(:new) { real }
   end
 
   it_behaves_like "movable element"
@@ -22,22 +22,22 @@ describe Shoes::Swt::Progress do
   end
 
   it "should multiply the value by 100 when calling real.selection" do
-    real.should_receive(:selection=).and_return(55)
+    expect(real).to receive(:selection=).and_return(55)
     subject.fraction = 0.55
   end
 
   it "should round up correctly" do
-    real.should_receive(:selection=).and_return(100)
+    expect(real).to receive(:selection=).and_return(100)
     subject.fraction = 0.999
   end
 
   context "with disposed real element" do
     before :each do
-      real.stub(:disposed?) { true }
+      allow(real).to receive(:disposed?) { true }
     end
 
     it "shouldn't set selection" do
-      real.should_not_receive(:selection=)
+      expect(real).not_to receive(:selection=)
       subject.fraction = 0.55
     end
   end

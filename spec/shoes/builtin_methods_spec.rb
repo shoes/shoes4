@@ -7,7 +7,7 @@ describe Shoes::BuiltinMethods do
 
   before :each do
     Shoes::LOG.clear
-    Shoes.stub(:logger) { logger }
+    allow(Shoes).to receive(:logger) { logger }
   end
 
   describe 'Shoes.p' do
@@ -24,7 +24,7 @@ describe Shoes::BuiltinMethods do
 
   describe "info" do
     before :each do
-      logger.stub(:info)
+      allow(logger).to receive(:info)
       app.info("test")
     end
 
@@ -39,7 +39,7 @@ describe Shoes::BuiltinMethods do
 
   describe "debug" do
     before :each do
-      logger.stub(:debug)
+      allow(logger).to receive(:debug)
       app.debug("test")
     end
 
@@ -54,7 +54,7 @@ describe Shoes::BuiltinMethods do
 
   describe "warn" do
     before :each do
-      logger.stub(:warn)
+      allow(logger).to receive(:warn)
       app.warn("test")
     end
 
@@ -69,7 +69,7 @@ describe Shoes::BuiltinMethods do
 
   describe "error" do
     before :each do
-      logger.stub(:error)
+      allow(logger).to receive(:error)
       app.error("test")
     end
 

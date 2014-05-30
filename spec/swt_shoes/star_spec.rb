@@ -35,12 +35,12 @@ describe Shoes::Swt::Star do
     it_behaves_like "stroke painter"
 
     it "fills star" do
-      gc.should_receive(:fillPolygon)
+      expect(gc).to receive(:fillPolygon)
       subject.paint_control(event)
     end
 
     it "draws star" do
-      gc.should_receive(:drawPolygon)
+      expect(gc).to receive(:drawPolygon)
       subject.paint_control(event)
     end
   end

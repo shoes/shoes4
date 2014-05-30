@@ -1,9 +1,11 @@
 shared_examples 'clickable backend' do
 
   before :each do
-    swt_app.stub :add_clickable_element
-    dsl.stub(:in_bounds?) { true }
+    allow(swt_app).to receive :add_clickable_element
+    allow(dsl).to receive(:in_bounds?) { true }
   end
+
+  let(:block) {clickable_block}
 
   let(:clickable_block) {double 'clickable_block'}
   let(:clickable_subject) do
@@ -20,34 +22,41 @@ shared_examples 'clickable backend' do
   end
 
   it 'calls the block when a click event comes in bounds' do
-    clickable_block.should_receive(:call).with(1, 2, 3)
+    expect(clickable_block).to receive(:call).with(1, 2, 3)
     clickable_subject.click_listener.handleEvent mouse_event
   end
 
   describe 'interaction with the swt app object' do
 
-    def expect_adds_listener_for(event)
-      swt_app.should_receive(:add_listener).with(event, clickable_subject.click_listener)
+    def expect_added_listener_for(event)
+      click_listener = subject.click_listener
+      expect(swt_app).to have_received(:add_listener).with(event,
+                                                           click_listener)
     end
 
     it 'receives the add_clickable_element message' do
-      swt_app.should_receive(:add_clickable_element)
+      expect(swt_app).to receive(:add_clickable_element)
       clickable_subject
     end
 
     it 'adds a listener for the MouseDown event' do
-      expect_adds_listener_for ::Swt::SWT::MouseDown
       clickable_subject
+      expect_added_listener_for ::Swt::SWT::MouseDown
+    end
+
+    it 'adds the correct listener' do
+      clickable_subject
+      expect_added_listener_for ::Swt::SWT::MouseDown
     end
 
     it 'adds a listener for the MouseDown event when click is called' do
-      expect_adds_listener_for ::Swt::SWT::MouseDown
       subject.click do ; end
+      expect_added_listener_for ::Swt::SWT::MouseDown
     end
 
     it 'adds a listener for the MouseUp event when release is called' do
-      expect_adds_listener_for ::Swt::SWT::MouseUp
       subject.release do ; end
+      expect_added_listener_for ::Swt::SWT::MouseUp
     end
   end
 

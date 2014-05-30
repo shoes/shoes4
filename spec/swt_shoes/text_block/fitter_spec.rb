@@ -28,7 +28,7 @@ describe Shoes::Swt::TextBlock::Fitter do
   subject { Shoes::Swt::TextBlock::Fitter.new(text_block, current_position) }
 
   before(:each) do
-    Shoes::Swt::TextBlock::TextSegment.stub(:new) { segment }
+    allow(Shoes::Swt::TextBlock::TextSegment).to receive(:new) { segment }
   end
 
   describe "determining available space" do
@@ -49,19 +49,19 @@ describe Shoes::Swt::TextBlock::Fitter do
 
     context "positioned outside parent" do
       before(:each) do
-        dsl.stub(:desired_width) { -1 }
+        allow(dsl).to receive(:desired_width) { -1 }
       end
 
       it "bumps to parent width when at end of vertical space" do
         when_positioned_at(x: 110, y: 5, next_line_start: 5)
-        dsl.stub(:desired_width).with(grandparent_width) { 890 }
+        allow(dsl).to receive(:desired_width).with(grandparent_width) { 890 }
 
         expect(subject.available_space).to eq([890, :unbounded])
       end
 
       it "bumps out until it fits" do
         when_positioned_at(x:1010, y: 5, next_line_start: 5)
-        dsl.stub(:desired_width).with(app_width) { 990 }
+        allow(dsl).to receive(:desired_width).with(app_width) { 990 }
 
         expect(subject.available_space).to eq([990, :unbounded])
       end
@@ -76,15 +76,15 @@ describe Shoes::Swt::TextBlock::Fitter do
   describe "finding what didn't fit" do
     it "should tell split text by offsets and heights" do
       segment = double('segment', line_offsets: [0, 5, 9], text: "Text Split")
-      segment.stub(:line_bounds) { double('line_bounds', height: 50)}
+      allow(segment).to receive(:line_bounds) { double('line_bounds', height: 50)}
 
       expect(subject.split_text(segment, 55)).to eq(["Text ", "Split"])
     end
 
     it "should be able to split text when too small" do
       segment = double('segment', line_offsets: [0, 10], text: "Text Split")
-      segment.stub(:line_bounds).with(0) { double('line_bounds', height: 21)}
-      segment.stub(:line_bounds).with(1) { raise "Boom" }
+      allow(segment).to receive(:line_bounds).with(0) { double('line_bounds', height: 21)}
+      allow(segment).to receive(:line_bounds).with(1) { raise "Boom" }
 
       expect(subject.split_text(segment, 33)).to eq(["Text Split", ""])
     end
@@ -96,7 +96,7 @@ describe Shoes::Swt::TextBlock::Fitter do
                           line_count: 1, line_offsets:[], bounds: bounds) }
 
     before(:each) do
-      segment.stub(:position_at) { segment }
+      allow(segment).to receive(:position_at) { segment }
     end
 
     context "to one segment" do
@@ -106,7 +106,7 @@ describe Shoes::Swt::TextBlock::Fitter do
       end
 
       it "with one line, even if height is bigger" do
-        bounds.stub(width: 50)
+        allow(bounds).to receive_messages(width: 50)
         segments = when_fit_at(x: 25, y: 75, next_line_start: 95)
         expect_segments(segments, [26, 76])
       end
@@ -114,9 +114,9 @@ describe Shoes::Swt::TextBlock::Fitter do
 
     context "to two segments" do
       before(:each) do
-        segment.stub(line_count: 2, line_bounds: double(height: 15))
-        bounds.stub(width: 50)
-        dsl.stub(containing_width: :unused)
+        allow(segment).to receive_messages(line_count: 2, line_bounds: double(height: 15))
+        allow(bounds).to receive_messages(width: 50)
+        allow(dsl).to receive_messages(containing_width: :unused)
       end
 
       it "should split text and overflow to second segment" do
@@ -138,18 +138,18 @@ describe Shoes::Swt::TextBlock::Fitter do
 
     context "to empty first segment" do
       before(:each) do
-        dsl.stub(containing_width: 100)
-        segment.stub(:text= => nil)
+        allow(dsl).to receive_messages(containing_width: 100)
+        allow(segment).to receive_messages(:text= => nil)
       end
 
       it "rolls to second segment when 0 remaining width" do
-        dsl.stub(desired_width: 0)
+        allow(dsl).to receive_messages(desired_width: 0)
         segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
         expect_segments(segments, [26, 76], [1, 96])
       end
 
       it "rolls to second segment when negative remaining width" do
-        dsl.stub(desired_width: -1)
+        allow(dsl).to receive_messages(desired_width: -1)
         segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
         expect_segments(segments, [26, 76], [1, 96])
       end
@@ -157,8 +157,8 @@ describe Shoes::Swt::TextBlock::Fitter do
   end
 
   def with_text_split(first, second)
-    dsl.stub(text: first + second)
-    segment.stub(line_offsets: [0, first.length, first.length + second.length])
+    allow(dsl).to receive_messages(text: first + second)
+    allow(segment).to receive_messages(line_offsets: [0, first.length, first.length + second.length])
   end
 
   def when_positioned_at(args)
@@ -166,8 +166,8 @@ describe Shoes::Swt::TextBlock::Fitter do
     y = args.fetch(:y)
     next_line_start = args.fetch(:next_line_start)
 
-    dsl.stub(absolute_left: x, absolute_top: y)
-    current_position.stub(:next_line_start) { next_line_start }
+    allow(dsl).to receive_messages(absolute_left: x, absolute_top: y)
+    allow(current_position).to receive(:next_line_start) { next_line_start }
   end
 
   def when_fit_at(args)

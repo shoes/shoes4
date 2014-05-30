@@ -5,7 +5,7 @@ describe Shoes::CLI do
   subject {Shoes::CLI.new}
 
   before :each do
-    subject.stub :package
+    allow(subject).to receive :package
   end
 
   it 'does not raise an error for a normal packaging command #624' do

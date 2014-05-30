@@ -13,8 +13,8 @@ describe Shoes::Swt::Flow do
 
   describe "#initialize" do
     before do
-      parent.stub(:real) { parent_real }
-      parent_real.stub(:get_layout){double(top_slot: true)}
+      allow(parent).to receive(:real) { parent_real }
+      allow(parent_real).to receive(:get_layout){double(top_slot: true)}
     end
 
     it "sets readers" do
