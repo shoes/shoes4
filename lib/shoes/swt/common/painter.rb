@@ -41,6 +41,7 @@ class Shoes
               fill graphics_context if fill_setup(graphics_context)
               draw graphics_context if draw_setup(graphics_context)
           end
+          graphics_context.set_transform(nil)
         end
 
         # Override in subclass and return something falsy if not using fill
