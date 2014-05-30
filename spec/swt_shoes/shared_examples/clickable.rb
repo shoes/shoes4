@@ -5,6 +5,8 @@ shared_examples 'clickable backend' do
     allow(dsl).to receive(:in_bounds?) { true }
   end
 
+  let(:block) {clickable_block}
+
   let(:clickable_block) {double 'clickable_block'}
   let(:clickable_subject) do
     subject.clickable clickable_block
@@ -26,10 +28,10 @@ shared_examples 'clickable backend' do
 
   describe 'interaction with the swt app object' do
 
-    # This method should be updated to use the 'expect' syntax, but updating causes spec failures
-    def expect_adds_listener_for(event)
-      swt_app.should_receive(:add_listener).with(event, clickable_subject.click_listener)
-      # expect(swt_app).to receive(:add_listener).with(event, clickable_subject.click_listener)
+    def expect_added_listener_for(event)
+      click_listener = subject.click_listener
+      expect(swt_app).to have_received(:add_listener).with(event,
+                                                           click_listener)
     end
 
     it 'receives the add_clickable_element message' do
@@ -38,18 +40,23 @@ shared_examples 'clickable backend' do
     end
 
     it 'adds a listener for the MouseDown event' do
-      expect_adds_listener_for ::Swt::SWT::MouseDown
       clickable_subject
+      expect_added_listener_for ::Swt::SWT::MouseDown
+    end
+
+    it 'adds the correct listener' do
+      clickable_subject
+      expect_added_listener_for ::Swt::SWT::MouseDown
     end
 
     it 'adds a listener for the MouseDown event when click is called' do
-      expect_adds_listener_for ::Swt::SWT::MouseDown
       subject.click do ; end
+      expect_added_listener_for ::Swt::SWT::MouseDown
     end
 
     it 'adds a listener for the MouseUp event when release is called' do
-      expect_adds_listener_for ::Swt::SWT::MouseUp
       subject.release do ; end
+      expect_added_listener_for ::Swt::SWT::MouseUp
     end
   end
 
