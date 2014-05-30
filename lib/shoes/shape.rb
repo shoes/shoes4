@@ -11,7 +11,7 @@ class Shoes
     #
     def initialize(app, parent, opts = {}, blk = nil)
       @app = app
-      @dimensions = AbsoluteDimensions.new 0, 0, 0, 0, opts
+      @dimensions = AbsoluteDimensions.new opts
       @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
       @style[:strokewidth] ||= @app.style[:strokewidth] || 1
       @blk = blk
