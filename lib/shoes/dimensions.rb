@@ -184,7 +184,8 @@ class Shoes
   module DimensionsDelegations
     extend Forwardable
 
-    DELEGATED_METHODS = Dimensions.public_instance_methods false
+    UNDELEGATED_METHODS = [:to_s]
+    DELEGATED_METHODS = Dimensions.public_instance_methods(false) - UNDELEGATED_METHODS
 
     def_delegators :dimensions, *DELEGATED_METHODS
   end
