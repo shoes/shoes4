@@ -34,14 +34,14 @@ describe Shoes::Swt::Line do
     subject { Shoes::Swt::Line::Painter.new(shape) }
 
     before(:each) do
-      dsl.stub(positioned?: true)
+      allow(dsl).to receive_messages(positioned?: true)
     end
 
     it_behaves_like "stroke painter"
 
     specify "draws line" do
       # coords as if drawn in box at (0,0)
-      gc.should_receive(:draw_line).with(0, 90, 290, 0)
+      expect(gc).to receive(:draw_line).with(0, 90, 290, 0)
       subject.paint_control(event)
     end
   end

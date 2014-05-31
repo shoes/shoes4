@@ -26,10 +26,10 @@ describe Shoes::Swt::Link do
                                 layout: inner_layout) }
 
     before(:each) do
-      shoes_app.stub(:add_listener)
-      shoes_app.stub(:add_clickable_element)
+      allow(shoes_app).to receive(:add_listener)
+      allow(shoes_app).to receive(:add_clickable_element)
 
-      swt_app.stub(:clickable_elements) { [] }
+      allow(swt_app).to receive(:clickable_elements) { [] }
     end
 
     it "clears existing" do

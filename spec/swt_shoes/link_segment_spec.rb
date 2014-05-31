@@ -88,11 +88,11 @@ describe Shoes::Swt::LinkSegment do
   end
 
   def stub_location(at, x, y)
-    text_segment.stub(:get_location).with(at, anything) { double(x: x, y: y) }
+    allow(text_segment).to receive(:get_location).with(at, anything) { double(x: x, y: y) }
   end
 
   def stub_line_bounds(index)
-    layout.stub(:line_bounds).with(index) {
+    allow(layout).to receive(:line_bounds).with(index) {
       double("line #{index}",
              x: 0,
              y: index * line_height,

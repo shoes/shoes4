@@ -38,7 +38,7 @@ describe Shoes::Animation do
   subject { Shoes::Animation.new( app, opts, block ) }
 
   before :each do
-    app.should_receive(:gui) { app_gui }
+    expect(app).to receive(:gui) { app_gui }
   end
 
   it_behaves_like Shoes::Animation

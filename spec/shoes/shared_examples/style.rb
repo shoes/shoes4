@@ -8,7 +8,7 @@ shared_examples_for "object with style" do
 
   describe 'changing style' do
     before do
-      subject.stub(:update_style)
+      allow(subject).to receive(:update_style)
     end
 
     it 'calls change_style when the style is changed' do

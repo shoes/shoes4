@@ -28,7 +28,7 @@ describe Shoes::Swt::ImagePattern do
     let(:gc) { double("gc") }
 
     it "sets background" do
-      gc.should_receive(:set_background_pattern)
+      expect(gc).to receive(:set_background_pattern)
       subject.apply_as_fill(gc, 10, 20, 100, 200)
     end
   end

@@ -1,7 +1,7 @@
 shared_examples "an element that can respond to change" do
   describe "when passing a block to the constructor" do
     it "should notify the block of change events" do
-      input_block.should_receive(:call).with(subject)
+      expect(input_block).to receive(:call).with(subject)
       subject.call_change_listeners
     end
   end

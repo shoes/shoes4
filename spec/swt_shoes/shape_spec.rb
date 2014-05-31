@@ -29,16 +29,16 @@ describe Shoes::Swt::Shape do
     let(:element) { double("element") }
 
     before :each do
-      ::Swt::Path.stub(:new) { element }
+      allow(::Swt::Path).to receive(:new) { element }
     end
 
     it "delegates #move_to" do
-      element.should_receive(:move_to).with(20, 30)
+      expect(element).to receive(:move_to).with(20, 30)
       subject.move_to 20, 30
     end
 
     it "delegates #line_to" do
-      element.should_receive(:line_to).with(20, 30)
+      expect(element).to receive(:line_to).with(20, 30)
       subject.line_to 20, 30
     end
   end
@@ -47,7 +47,7 @@ describe Shoes::Swt::Shape do
     let(:transform) { double("transform") }
 
     before :each do
-      ::Swt::Transform.stub(:new) { transform }
+      allow(::Swt::Transform).to receive(:new) { transform }
     end
 
     it "delegates #move" do
@@ -70,12 +70,12 @@ describe Shoes::Swt::Shape do
     it_behaves_like "movable painter"
 
     it "fills path" do
-      gc.should_receive(:fill_path)
+      expect(gc).to receive(:fill_path)
       subject.paint_control(event)
     end
 
     it "draws path" do
-      gc.should_receive(:draw_path)
+      expect(gc).to receive(:draw_path)
       subject.paint_control(event)
     end
   end

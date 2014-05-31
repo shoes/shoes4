@@ -18,7 +18,7 @@ describe Shoes::Swt::Check do
   subject { Shoes::Swt::Check.new dsl, parent }
 
   before :each do
-    ::Swt::Widgets::Button.stub(:new) { real }
+    allow(::Swt::Widgets::Button).to receive(:new) { real }
   end
 
   it_behaves_like "buttons"

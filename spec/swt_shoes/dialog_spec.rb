@@ -10,7 +10,7 @@ describe Shoes::Swt::Dialog do
 
   def double_message_box_expecting_message(message)
     double_dialog = double(:mb, open: true)
-    double_dialog.should_receive(:message=).with(message)
+    expect(double_dialog).to receive(:message=).with(message)
     create_double_message_box double_dialog
   end
 
@@ -19,8 +19,8 @@ describe Shoes::Swt::Dialog do
   end
 
   def create_double_message_box(double_dialog)
-    ::Swt::Widgets::Shell.stub(:new)
-    ::Swt::Widgets::MessageBox.stub(new: double_dialog)
+    allow(::Swt::Widgets::Shell).to receive(:new)
+    allow(::Swt::Widgets::MessageBox).to receive_messages(new: double_dialog)
   end
 
   before :each do

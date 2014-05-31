@@ -777,27 +777,27 @@ describe Shoes::DimensionsDelegations do
 
     subject do
       dummy = DummyClass.new
-      dummy.stub dimensions: dimensions
+      allow(dummy).to receive_messages dimensions: dimensions
       dummy
     end
 
     it 'forwards left calls to dimensions' do
-      dimensions.should_receive :left
+      expect(dimensions).to receive :left
       subject.left
     end
 
     it 'forwards bottom calls to dimensions' do
-      dimensions.should_receive :bottom
+      expect(dimensions).to receive :bottom
       subject.bottom
     end
 
     it 'forwards setter calls like left= do dimensions' do
-      dimensions.should_receive :left=
+      expect(dimensions).to receive :left=
       subject.left = 66
     end
 
     it 'forwards absolutely_positioned? calls to the dimensions' do
-      dimensions.should_receive :absolutely_positioned?
+      expect(dimensions).to receive :absolutely_positioned?
       subject.absolutely_positioned?
     end
   end
@@ -813,17 +813,17 @@ describe Shoes::DimensionsDelegations do
 
     subject do
       dummy = AnotherDummyClass.new
-      dummy.stub dsl: dsl
+      allow(dummy).to receive_messages dsl: dsl
       dummy
     end
 
     it 'forwards calls to dsl' do
-      dsl.should_receive :left
+      expect(dsl).to receive :left
       subject.left
     end
 
     it 'does not forward calls to parent' do
-      dsl.should_not_receive :parent
+      expect(dsl).not_to receive :parent
       expect {subject.parent}.to raise_error
     end
   end

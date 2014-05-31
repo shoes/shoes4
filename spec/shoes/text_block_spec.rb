@@ -152,8 +152,8 @@ describe Shoes::TextBlock do
 
   describe "width" do
     before(:each) do
-      parent.stub(:element_width) { 300 }
-      parent.stub(:absolute_left) { 0 }
+      allow(parent).to receive(:element_width) { 300 }
+      allow(parent).to receive(:absolute_left) { 0 }
     end
 
     context "when not explicitly set" do
@@ -199,7 +199,7 @@ describe Shoes::TextBlock do
     let(:textcursor) { double("textcursor") }
 
     before(:each) do
-      app.stub(:textcursor) { textcursor }
+      allow(app).to receive(:textcursor) { textcursor }
     end
 
     it "creates a textcursor" do
@@ -209,7 +209,7 @@ describe Shoes::TextBlock do
 
     it "only creates textcursor" do
       original = subject.textcursor
-      app.stub(:textcursor) { double("new cursor") }
+      allow(app).to receive(:textcursor) { double("new cursor") }
 
       expect(subject.textcursor).to eq(original)
       expect(app).to have_received(:textcursor).once

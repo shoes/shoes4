@@ -28,7 +28,7 @@ describe Shoes::Swt::Arc do
     end
 
     specify "delegates #wedge to dsl object" do
-      dsl.should_receive(:wedge?) { false }
+      expect(dsl).to receive(:wedge?) { false }
       expect(subject).to_not be_wedge
     end
   end
@@ -47,53 +47,53 @@ describe Shoes::Swt::Arc do
 
     context "normal fill style" do
       before :each do
-        shape.stub(wedge?: false)
+        allow(shape).to receive_messages(wedge?: false)
       end
 
       specify "fills arc using path" do
-        gc.should_receive(:fill_path)
+        expect(gc).to receive(:fill_path)
         subject.paint_control(event)
       end
 
       specify "draws arc" do
-        gc.should_receive(:draw_arc)
+        expect(gc).to receive(:draw_arc)
         subject.paint_control(event)
       end
 
       # Swt measures the arc counterclockwise, while Shoes measures it clockwise.
       specify "translates DSL values for Swt" do
         path = double('path')
-        ::Swt::Path.stub(:new) { path }
+        allow(::Swt::Path).to receive(:new) { path }
         args = [100, 200, width, height, 180.0, -90.0]
-        path.should_receive(:add_arc).with(*args)
+        expect(path).to receive(:add_arc).with(*args)
         sw = 10
         args = [100+sw/2, 200+sw/2, width-sw, height-sw, 180, -90.0]
-        gc.should_receive(:draw_arc).with(*args)
+        expect(gc).to receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end
     end
 
     context "wedge fill style" do
       before :each do
-        shape.stub(wedge?: true)
+        allow(shape).to receive_messages(wedge?: true)
       end
 
       specify "fills arc" do
-        gc.should_receive(:fill_arc)
+        expect(gc).to receive(:fill_arc)
         subject.paint_control(event)
       end
 
       specify "draws arc" do
-        gc.should_receive(:draw_arc)
+        expect(gc).to receive(:draw_arc)
         subject.paint_control(event)
       end
 
       specify "translates DSL values for Swt" do
         args = [100, 200, width, height, 180, -90.0]
-        gc.should_receive(:fill_arc).with(*args)
+        expect(gc).to receive(:fill_arc).with(*args)
         sw = 10
         args = [100+sw/2, 200+sw/2, width-sw, height-sw, 180, -90.0]
-        gc.should_receive(:draw_arc).with(*args)
+        expect(gc).to receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end
     end

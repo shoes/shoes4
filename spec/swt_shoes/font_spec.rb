@@ -25,7 +25,7 @@ describe Shoes::Swt::Font do
 
     it 'calls the Display#load_font method' do
       font_path = Shoes::FONT_DIR + 'Coolvetica.ttf'
-      ::Swt.display.should_receive(:load_font).with(font_path)
+      expect(::Swt.display).to receive(:load_font).with(font_path)
       subject.add_font font_path
     end
   end
