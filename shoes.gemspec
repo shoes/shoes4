@@ -20,7 +20,8 @@ Gem::Specification.new do |s|
   s.executables   = ['shoes-stub', 'ruby-shoes']
   s.extensions    = ['ext/install/Rakefile']
 
-  s.add_dependency "furoshiki", ">=0.1.2"
   s.add_dependency "shoes-dsl", Shoes::VERSION
   s.add_dependency "shoes-swt", Shoes::VERSION
+
+  s.add_dependency "furoshiki", ">=0.1.2" # For packaging
 end
