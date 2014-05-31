@@ -41,18 +41,6 @@ class Shoes
       @app.height
     end
 
-    def needs_to_be_positioned?
-      true
-    end
-
-    def takes_up_space?
-      true
-    end
-
-    def positioned?
-      absolute_left && absolute_top
-    end
-
     # Moves the shape
     #
     # @param [Integer] left The new left value
