@@ -76,6 +76,15 @@ class Shoes
       self
     end
 
+    # Draws a curve
+    #
+    # @param [Integer] cx1 The first control point's x-value
+    # @param [Integer] cy1 The first control point's y-value
+    # @param [Integer] cx2 The second control point's x-value
+    # @param [Integer] cy2 The second control point's y-value
+    # @param [Integer] x The end point's x-value
+    # @param [Integer] y The end point's y-value
+    # @return [Shoes::Shape] This shape
     def curve_to(cx1, cy1, cx2, cy2, x, y)
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
       @x, @y = x, y
@@ -83,6 +92,15 @@ class Shoes
       self
     end
 
+    # Draws an arc
+    #
+    # @param [Integer] x The left position
+    # @param [Integer] y The top position
+    # @param [Integer] width The width of the arc
+    # @param [Integer] height The height of the arc
+    # @param [Integer] start_angle The start angle
+    # @param [Integer] arc_angle The angular extent of the arc, relative to the start angle
+    # @return [Shoes::Shape] This shape
     def arc(x, y, width, height, start_angle, arc_angle)
       update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
       @x, @y = x, y
