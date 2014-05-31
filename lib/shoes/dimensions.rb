@@ -102,7 +102,7 @@ class Shoes
     end
 
     def to_s
-      "<#{self.class}:#{object_id} (#{left}, #{top})->(#{right}, #{bottom}), #{width}x#{height}>"
+      "<#{self.class}:#{object_id} relative values: (#{left}, #{top})->(#{right}, #{bottom}), absolute_values: (#{absolute_left}, #{absolute_top})->(#{absolute_right}, #{absolute_bottom}) #{width}x#{height}>"
     end
 
     def self.setup_delegations
