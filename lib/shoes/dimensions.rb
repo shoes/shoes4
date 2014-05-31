@@ -26,7 +26,7 @@
 #   Just the space taken up by the element itself without margins.
 #   Used by drawing.
 #
-# Note that this is NOT how margins work in the CSS box model. We derive for
+# Note that this is NOT how margins work in the CSS box model. We diverge for
 # reasons mentioned in this comment/thread: 
 # https://github.com/shoes/shoes4/pull/467#issuecomment-27655355
 
