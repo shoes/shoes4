@@ -27,7 +27,6 @@ class Shoes
 
       # GUI
       @gui = Shoes.backend_for(self, @style)
-      @gui.update_position
 
       instance_eval &@blk unless @blk.nil?
 
