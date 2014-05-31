@@ -47,8 +47,6 @@ class Shoes
     # @param [Integer] top The new top value
     # @return [Shoes::Shape] This shape
     def move(left, top)
-      right += offset(self.left, left) if right
-      bottom += offset(self.top, top) if bottom
       self.left = left
       self.top = top
       @gui.update_position
@@ -93,20 +91,6 @@ class Shoes
     end
 
     private
-    # Gives the relative offset of the new position from original position.
-    # This calculation is for a single coordinate value, e.g. an x or a y.
-    #
-    # @param [Integer] original The original position
-    # @param [Integer] new The new position
-    # @return [Integer] A value that should be added to the current position in order to
-    #   move to the new position.
-    def offset(original, new)
-      return 0 unless original && new
-      relative = (new - original).abs
-      relative = -relative if new < original
-      relative
-    end
-
     # Updates the bounds of this shape to include the rectangle described by
     # (x1, y1) and (x2, y2)
     #
