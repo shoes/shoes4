@@ -47,7 +47,7 @@ class Shoes
       end
 
       def update_position
-        transform.translate(dsl.element_left, dsl.element_top)
+        transform.translate(dsl.absolute_left, dsl.absolute_top)
       end
 
       def left

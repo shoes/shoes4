@@ -3,7 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Shape do
   include_context "swt app"
 
-  let(:dsl) { double('dsl', hidden: false).as_null_object }
+  let(:dsl) { instance_double("Shoes::Shape", hidden: false, style: {}).as_null_object }
   subject { Shoes::Swt::Shape.new dsl, swt_app }
 
   shared_examples_for "Swt::Shape" do
@@ -51,8 +51,9 @@ describe Shoes::Swt::Shape do
     end
 
     it "delegates #move" do
-      dsl.stub element_left: 20, element_top: 30
-      transform.should_receive(:translate).with(20, 30)
+      allow(dsl).to receive(:absolute_left) { 20 }
+      allow(dsl).to receive(:absolute_top) { 30 }
+      expect(transform).to receive(:translate).with(20, 30)
       subject.update_position
     end
 
