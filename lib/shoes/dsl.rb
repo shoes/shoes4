@@ -1,3 +1,58 @@
+require 'shoes/renamed_delegate'
+require 'shoes/dimension'
+require 'shoes/dimensions'
+require 'shoes/text_block_dimensions'
+
+require 'shoes/color'
+
+require 'shoes/common/background_element'
+require 'shoes/common/changeable'
+require 'shoes/common/clickable'
+require 'shoes/common/common_methods'
+require 'shoes/common/fill'
+require 'shoes/common/state'
+require 'shoes/common/stroke'
+require 'shoes/common/style'
+require 'shoes/common/style_normalizer'
+require 'shoes/builtin_methods'
+require 'shoes/check_button'
+require 'shoes/text'
+require 'shoes/span'
+require 'shoes/input_box'
+
+# please keep this list tidy and alphabetically sorted
+require 'shoes/animation'
+require 'shoes/arc'
+require 'shoes/background'
+require 'shoes/border'
+require 'shoes/button'
+require 'shoes/configuration'
+require 'shoes/color'
+require 'shoes/dialog'
+require 'shoes/download'
+require 'shoes/font'
+require 'shoes/gradient'
+require 'shoes/image'
+require 'shoes/image_pattern'
+require 'shoes/key_event'
+require 'shoes/line'
+require 'shoes/link'
+require 'shoes/link_hover'
+require 'shoes/list_box'
+require 'shoes/logger'
+require 'shoes/oval'
+require 'shoes/point'
+require 'shoes/progress'
+require 'shoes/radio'
+require 'shoes/rect'
+require 'shoes/shape'
+require 'shoes/slot_contents'
+require 'shoes/slot'
+require 'shoes/star'
+require 'shoes/sound'
+require 'shoes/text_block'
+require 'shoes/timer'
+
 class Shoes
   # Methods for creating and manipulating Shoes elements
   #
@@ -463,3 +518,7 @@ EOS
     end
   end
 end
+
+require 'shoes/app'
+require 'shoes/widget'
+require 'shoes/url'

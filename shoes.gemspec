@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.}
   s.license     = 'MIT'
 
-  s.files         = ['lib/shoes/version.rb']
+  s.files         = `git ls-files -- lib/shoes/ui`.split("\n").concat(['lib/shoes/version.rb'])
   s.test_files    = []
   s.require_paths = ["lib"]
 

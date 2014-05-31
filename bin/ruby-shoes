@@ -2,5 +2,5 @@
 lib_directory = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH << lib_directory
 
-require 'shoes/cli'
+require 'shoes/ui/cli'
 Shoes::CLI.new.run ARGV
