@@ -112,24 +112,20 @@ class Shoes
     def update_bounds(xs, ys)
       all_xs = all_x_values(xs)
       all_ys = all_y_values(ys)
-      x_min = all_xs.min
-      x_max = all_xs.max
-      y_min = all_ys.min
-      y_max = all_ys.max
-      @left_bound = calculate_primary_dimension_value @left_bound, x_min
-      @top_bound = calculate_primary_dimension_value @top_bound, y_min
-      @right_bound = calculate_secondary_dimension_value @right_bound, x_max
-      @bottom_bound = calculate_secondary_dimension_value @bottom_bound, y_max
+      @left_bound = calculate_primary_dimension_value @left_bound, all_xs
+      @top_bound = calculate_primary_dimension_value @top_bound, all_ys
+      @right_bound = calculate_secondary_dimension_value @right_bound, all_xs
+      @bottom_bound = calculate_secondary_dimension_value @bottom_bound, all_ys
       @before_drawing = false
       nil
     end
 
     def all_x_values(xs)
-      all_values xs, @x, self.left, self.right
+      all_values xs, @x, @left_bound, @right_bound
     end
 
     def all_y_values(ys)
-      all_values ys, @y, self.top, self.bottom
+      all_values ys, @y, @top_bound, @bottom_bound
     end
 
     def all_values(values, current, min, max)
@@ -138,13 +134,15 @@ class Shoes
     end
 
     def calculate_primary_dimension_value(current, new)
-      return new if @before_drawing
-      [current, new].min
+      new_min = Array(new).min
+      return new_min if @before_drawing || new_min < current
+      current
     end
 
     def calculate_secondary_dimension_value(current, new)
-      return new if @before_drawing
-      [current, new].max
+      new_max = Array(new).max
+      return new_max if @before_drawing || new_max > current
+      current
     end
   end
 end
