@@ -116,10 +116,10 @@ class Shoes
       x_max = all_xs.max
       y_min = all_ys.min
       y_max = all_ys.max
-      self.left = calculate_primary_dimension_value self.left, x_min
-      self.top = calculate_primary_dimension_value self.top, y_min
-      self.right = calculate_secondary_dimension_value self.right, x_max
-      self.bottom = calculate_secondary_dimension_value self.top, y_max
+      @left_bound = calculate_primary_dimension_value @left_bound, x_min
+      @top_bound = calculate_primary_dimension_value @top_bound, y_min
+      @right_bound = calculate_secondary_dimension_value @right_bound, x_max
+      @bottom_bound = calculate_secondary_dimension_value @bottom_bound, y_max
       @before_drawing = false
       nil
     end
