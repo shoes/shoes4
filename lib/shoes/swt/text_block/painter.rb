@@ -13,7 +13,7 @@ class Shoes
         end
 
         def paintControl(paint_event)
-          gcs_reset(paint_event.gc)
+          reset_graphics_context(paint_event.gc)
           return if @dsl.hidden?
 
           draw_layouts(paint_event.gc)
