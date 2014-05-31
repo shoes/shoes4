@@ -1,29 +1,38 @@
 require 'bundler/gem_helper'
 
-# Defer installing Bundler gem tasks until runtime, so we can install them
-# for a particular gem. Still create tasks that will show up in `rake --tasks`
-SUB_GEMS = ['shoes', 'shoes-dsl', 'shoes-swt']
-SUB_GEMS.each do |lib|
+# Define placeholder tasks so we can name them as dependencies. The bodies
+# of these tasks will be defined by Bundler at runtime.
+task :build
+task :install
+task :release
+
+desc 'Build all gems'
+task 'build:all'
+
+desc 'Install all gems'
+task 'install:all'
+
+['shoes', 'shoes-dsl', 'shoes-swt'].each do |lib|
+  # Defer installing Bundler gem tasks until runtime, so we can install them
+  # for a particular gem. Still create tasks that will show up in `rake --tasks`
+  # Note that executing #install_tasks multiple times will *add* to the defined
+  # tasks, so we can build up build:all and install:all tasks.
   task "install_gem_tasks:#{lib}" do
     Bundler::GemHelper.install_tasks :name => lib
   end
 
-  ['build', 'install', 'release'].each do |action|
-    # Define a placeholder task so we can name it as a dependency. The body
-    # of this task will be defined by Bundler at runtime.
-    task action
+  desc "Build the #{lib} gem"
+  task "build:#{lib}" => ["install_gem_tasks:#{lib}", :build]
 
-    desc "#{action.capitalize} the #{lib} gem"
-    task "#{action}:#{lib}" => ["install_gem_tasks:#{lib}", action]
-  end
+  desc "Install the #{lib} gem"
+  task "install:#{lib}" => ["install_gem_tasks:#{lib}", :install]
+
+  desc "Release the #{lib} gem"
+  task "release:#{lib}" => ["install_gem_tasks:#{lib}", :release]
+
+  task "build:all" => "install_gem_tasks:#{lib}"
+  task "install:all" => "install_gem_tasks:#{lib}"
 end
 
-
-['build', 'install'].each do |action|
-  desc "#{action.capitalize} all gems"
-  all_task_name = "#{action}:all"
-  task all_task_name
-
-  task all_task_name => SUB_GEMS.map { |lib| "#{action}:#{lib}" }
-end
-
+task 'build:all' => 'build'
+task 'install:all' => 'install'
