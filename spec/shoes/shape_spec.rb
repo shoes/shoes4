@@ -10,6 +10,7 @@ describe Shoes::Shape do
   it_behaves_like "movable object"
 
   describe "octagon" do
+    let(:style) { Hash.new }
     let(:draw) {
       Proc.new {
         xs = [200, 300, 370, 370, 300, 200, 130, 130]
@@ -21,16 +22,31 @@ describe Shoes::Shape do
         line_to xs.first, ys.first
       }
     }
-    subject { Shoes::Shape.new app, parent, Hash.new, draw }
+    subject { Shoes::Shape.new app, parent, style, draw }
 
-    its(:left) { should eq(130) }
-    its(:top) { should eq(100) }
-    its(:right) { should eq(370) }
-    its(:bottom) { should eq(340) }
+    its(:left) { should be_nil }
+    its(:top) { should be_nil }
+    its(:left_bound) { should eq(130) }
+    its(:top_bound) { should eq(100) }
+    its(:right_bound) { should eq(370) }
+    its(:bottom_bound) { should eq(340) }
     its(:width) { should eq(app.width) }
     its(:height) { should eq app.height }
 
     it_behaves_like "movable object"
+
+    describe "when created with left and top values" do
+      let(:style) { {left: 10, top: 100} }
+
+      its(:left) { should eq(10) }
+      its(:top) { should eq(100) }
+      its(:left_bound) { should eq(130) }
+      its(:top_bound) { should eq(100) }
+      its(:right_bound) { should eq(370) }
+      its(:bottom_bound) { should eq(340) }
+      its(:width) { should eq(app.width) }
+      its(:height) { should eq app.height }
+    end
   end
 
   describe "curve" do
@@ -42,10 +58,10 @@ describe Shoes::Shape do
     }
     subject { Shoes::Shape.new app, parent, Hash.new, draw }
 
-    its(:left)   { should eq(10) }
-    its(:top)    { should eq(10) }
-    its(:right)  { should eq(100) }
-    its(:bottom) { should eq(200) }
+    its(:left_bound)   { should eq(10) }
+    its(:top_bound)    { should eq(10) }
+    its(:right_bound)  { should eq(100) }
+    its(:bottom_bound) { should eq(200) }
     its(:width) { should eq(app.width) }
     its(:height) { should eq app.height }
 

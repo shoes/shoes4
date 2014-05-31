@@ -8,6 +8,7 @@ class Shoes
     include DimensionsDelegations
 
     attr_reader :app, :blk, :dimensions, :gui, :hidden, :x, :y
+    attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound
 
     # Creates a new Shoes::Shape
     #
