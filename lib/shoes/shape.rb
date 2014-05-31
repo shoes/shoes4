@@ -7,6 +7,8 @@ class Shoes
     include Shoes::Common::Clickable
     include DimensionsDelegations
 
+    attr_reader :app, :blk, :dimensions, :gui, :hidden, :x, :y
+
     # Creates a new Shoes::Shape
     #
     def initialize(app, parent, opts = {}, blk = nil)
@@ -30,9 +32,6 @@ class Shoes
 
       clickable_options(opts)
     end
-
-    attr_reader :app, :blk, :dimensions, :gui, :hidden
-    attr_reader :x, :y
 
     def width
       @app.width
