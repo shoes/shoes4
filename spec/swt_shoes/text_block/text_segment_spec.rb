@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::FittedTextLayout do
+describe Shoes::Swt::TextBlock::TextSegment do
   let(:layout) { double("layout", text: "the text",
                         :alignment= => nil, :justify= => nil, :spacing= => nil,
                         :text= => nil, setWidth: nil,
@@ -9,8 +9,8 @@ describe Shoes::Swt::FittedTextLayout do
   let(:bounds) { Java::OrgEclipseSwtGraphics::Rectangle.new(0, 0, 0, 0) }
   let(:element_left) { 0 }
   let(:element_top)  { 0 }
-  let(:layout_width)  { 10 }
-  let(:layout_height) { 10 }
+  let(:segment_width)  { 10 }
+  let(:segment_height) { 10 }
   let(:left_offset)   { 5 }
   let(:top_offset)    { 5 }
 
@@ -34,25 +34,25 @@ describe Shoes::Swt::FittedTextLayout do
   let(:dsl) { double("dsl", font: "", font_size: 16, opts:{}) }
 
   before(:each) do
-    ::Swt::TextLayout.stub(:new)            { layout }
-    Shoes::Swt::TextFontFactory.stub(:new)  { font_factory }
-    Shoes::Swt::TextStyleFactory.stub(:new) { style_factory }
+    allow(::Swt::TextLayout).to receive(:new)            { layout }
+    allow(Shoes::Swt::TextFontFactory).to receive(:new)  { font_factory }
+    allow(Shoes::Swt::TextStyleFactory).to receive(:new) { style_factory }
   end
 
   subject do
-    fitted = Shoes::Swt::FittedTextLayout.new(dsl, "text", layout_width)
-    fitted.position_at(element_left, element_top)
+    segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, "text", segment_width)
+    segment.position_at(element_left, element_top)
   end
 
   context "disposal" do
     it "disposes of underlying layout" do
-      layout.stub(:disposed?) { false }
+      allow(layout).to receive(:disposed?) { false }
       expect(layout).to receive(:dispose)
       subject.dispose
     end
 
     it "doesn't overdispose" do
-      layout.stub(:disposed?) { true }
+      allow(layout).to receive(:disposed?) { true }
       expect(layout).to_not receive(:dispose)
       subject.dispose
     end
@@ -78,14 +78,14 @@ describe Shoes::Swt::FittedTextLayout do
     end
 
     it "shrinks when too long for container" do
-      bounds.width = layout_width + 10
-      expect(subject.layout).to have_received(:setWidth).with(layout_width)
+      bounds.width = segment_width + 10
+      expect(subject.layout).to have_received(:setWidth).with(segment_width)
     end
   end
 
   context "bounds checking" do
     before(:each) do
-      set_bounds(0, 0, layout_width, layout_height)
+      set_bounds(0, 0, segment_width, segment_height)
     end
 
     it "checks boundaries" do
@@ -96,7 +96,7 @@ describe Shoes::Swt::FittedTextLayout do
       let(:element_left) { left_offset }
 
       it "checks boundaries" do
-        expect(subject.in_bounds?(layout_width + left_offset - 1, 0)).to be_truthy
+        expect(subject.in_bounds?(segment_width + left_offset - 1, 0)).to be_truthy
       end
     end
 
@@ -104,7 +104,7 @@ describe Shoes::Swt::FittedTextLayout do
       let(:element_top) { top_offset }
 
       it "checks boundaries" do
-        expect(subject.in_bounds?(0, layout_height + top_offset - 1)).to be_truthy
+        expect(subject.in_bounds?(0, segment_height + top_offset - 1)).to be_truthy
       end
     end
 

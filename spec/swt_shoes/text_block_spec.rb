@@ -16,15 +16,15 @@ describe Shoes::Swt::TextBlock do
   it_behaves_like "togglable"
 
   # reported nil, caused trouble in simple-downloader.rb
-  it 'initially responds with empty fitted layouts' do
-    expect(subject.fitted_layouts).to be_empty
+  it 'initially responds with empty segments' do
+    expect(subject.segments).to be_empty
   end
 
   describe "bounds checking" do
-    it "delegates to fitted layout" do
-      layout = double()
-      subject.fitted_layouts = [layout]
-      expect(layout).to receive(:in_bounds?)
+    it "delegates to segment" do
+      segment = double()
+      subject.segments = [segment]
+      expect(segment).to receive(:in_bounds?)
 
       subject.in_bounds?(1,1)
     end
@@ -39,21 +39,21 @@ describe Shoes::Swt::TextBlock do
     let(:unused_bounds) { double("unused bounds", height: 0, width: 0) }
 
     let(:fitter) { double("fitter") }
-    let(:fitted_layout) { create_layout }
-    let(:second_fitted_layout) { create_layout }
+    let(:segment) { create_segment }
+    let(:second_segment) { create_segment }
 
     let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
 
     before(:each) do
-      ::Shoes::Swt::TextBlockFitter.stub(:new) { fitter }
-      fitter.stub(:fit_it_in).and_return([fitted_layout], [second_fitted_layout])
+      allow(::Shoes::Swt::TextBlock::Fitter).to receive(:new) { fitter }
+      allow(fitter).to receive(:fit_it_in).and_return([segment], [second_segment])
     end
 
-    describe "with single layout" do
+    describe "with single segment" do
       before(:each) do
-        dsl.stub(:absolute_left)   { 50 }
-        dsl.stub(:absolute_top)    { 0 }
-        dsl.stub(:absolute_bottom) { layout_height }
+        allow(dsl).to receive(:absolute_left)   { 50 }
+        allow(dsl).to receive(:absolute_top)    { 0 }
+        allow(dsl).to receive(:absolute_bottom) { layout_height }
       end
 
       it "positions single line of text" do
@@ -65,7 +65,7 @@ describe Shoes::Swt::TextBlock do
       end
 
       it "positions single line with margin" do
-        dsl.stub(margin_left: margin, margin_right: margin,
+        allow(dsl).to receive_messages(margin_left: margin, margin_right: margin,
                  margin_top: margin, margin_bottom: margin)
 
         expect(dsl).to receive(:absolute_right=).with(layout_width + 50 + margin)
@@ -76,7 +76,7 @@ describe Shoes::Swt::TextBlock do
       end
 
       it "pushes to next line if ends in newline" do
-        dsl.stub(:text) { "text\n" }
+        allow(dsl).to receive(:text) { "text\n" }
 
         expect(dsl).to receive(:absolute_right=).with(50)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
@@ -85,16 +85,16 @@ describe Shoes::Swt::TextBlock do
         subject.contents_alignment(current_position)
       end
 
-      it "disposes of prior layouts" do
+      it "disposes of prior segments" do
         subject.contents_alignment(current_position)
-        expect(fitted_layout).to receive(:dispose)
+        expect(segment).to receive(:dispose)
 
         subject.contents_alignment(current_position)
       end
 
-      it "should not dispose any layouts" do
-        expect(fitted_layout).not_to receive(:dispose)
-        expect(second_fitted_layout).not_to receive(:dispose)
+      it "should not dispose any segments" do
+        expect(segment).not_to receive(:dispose)
+        expect(second_segment).not_to receive(:dispose)
 
         subject.contents_alignment(current_position)
       end
@@ -104,18 +104,18 @@ describe Shoes::Swt::TextBlock do
           subject.contents_alignment(current_position)
         end
 
-        it "should only dispose old fitted layout" do
-          expect(fitted_layout).to receive(:dispose)
-          expect(second_fitted_layout).not_to receive(:dispose)
+        it "should only dispose old segment" do
+          expect(segment).to receive(:dispose)
+          expect(second_segment).not_to receive(:dispose)
 
           subject.contents_alignment(current_position)
         end
 
-        it "should dispose all layouts on clear" do
-          swt_app.stub(:remove_listener)
+        it "should dispose all segments on clear" do
+          allow(swt_app).to receive(:remove_listener)
 
-          expect(fitted_layout).to receive(:dispose).at_least(1).times
-          expect(second_fitted_layout).to receive(:dispose).at_least(1).times
+          expect(segment).to receive(:dispose).at_least(1).times
+          expect(second_segment).to receive(:dispose).at_least(1).times
 
           subject.contents_alignment(current_position)
           subject.clear
@@ -123,20 +123,20 @@ describe Shoes::Swt::TextBlock do
       end
     end
 
-    describe "with two layouts" do
+    describe "with two segments" do
       before(:each) do
-        dsl.stub(:parent) { double("dsl parent", absolute_left: 0) }
-        dsl.stub(:absolute_bottom) { layout_height }
+        allow(dsl).to receive(:parent) { double("dsl parent", absolute_left: 0) }
+        allow(dsl).to receive(:absolute_bottom) { layout_height }
 
         current_position.next_line_start = 0
 
-        fitter.stub(:fit_it_in) {
-          [create_layout("unused fitted layout"),
-           create_layout("fitted_layout")]
+        allow(fitter).to receive(:fit_it_in) {
+          [create_segment("unused segment"),
+           create_segment("segment")]
         }
       end
 
-      it "positions in two layouts" do
+      it "positions in two segments" do
         expect(dsl).to receive(:absolute_right=).with(layout_width)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
         expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
@@ -144,8 +144,8 @@ describe Shoes::Swt::TextBlock do
         subject.contents_alignment(current_position)
       end
 
-      it "positions in two layouts with margins" do
-        dsl.stub(margin_left: margin, margin_right: margin,
+      it "positions in two segments with margins" do
+        allow(dsl).to receive_messages(margin_left: margin, margin_right: margin,
                  margin_top: margin, margin_bottom: margin)
 
         expect(dsl).to receive(:absolute_right=).with(layout_width + margin)
@@ -161,8 +161,8 @@ describe Shoes::Swt::TextBlock do
     let(:link)     { Shoes::Link.new(shoes_app, subject, ["link"])  }
 
     before(:each) do
-      dsl.stub(:links) { [link] }
-      swt_app.stub(:remove_listener)
+      allow(dsl).to receive(:links) { [link] }
+      allow(swt_app).to receive(:remove_listener)
     end
 
     it "clears links" do
@@ -176,11 +176,11 @@ describe Shoes::Swt::TextBlock do
     end
   end
 
-  def create_layout(name="fitted layout", width=layout_width,
+  def create_segment(name="segment", width=layout_width,
                     height=layout_height, line_height=line_height)
     bounds = double("bounds", width: width, height: height)
     double(name, disposed?: false,
-           width: width, layout_height: height,
+           width: width, height: height,
            last_line_width: width, last_line_height: line_height,
            bounds: bounds)
   end

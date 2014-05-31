@@ -15,7 +15,7 @@ describe Shoes, 'setup' do
   describe 'outputting on standard error' do
 
     def expect_stderr_puts(regex)
-      $stderr.should_receive(:puts).with(regex)
+      expect($stderr).to receive(:puts).with(regex)
     end
 
     before :each do

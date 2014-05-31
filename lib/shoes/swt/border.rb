@@ -9,7 +9,7 @@ class Shoes
 
       def_delegators :dsl, :angle, :corners
 
-      attr_reader :dsl, :painter, :opts, :transform
+      attr_reader :app, :dsl, :painter, :opts, :transform
 
       def initialize(dsl, app, opts = {}, &blk)
         @dsl = dsl

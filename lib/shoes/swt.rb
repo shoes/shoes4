@@ -71,7 +71,7 @@ require 'shoes/swt/rect_painter.rb'
 require 'shoes/swt/swt_button'
 require 'shoes/swt/check_button'
 require 'shoes/swt/radio_group'
-require 'shoes/swt/text_block_painter'
+require 'shoes/swt/text_block/painter'
 
 require 'shoes/swt/app'
 require 'shoes/swt/animation'
@@ -104,12 +104,14 @@ require 'shoes/swt/sound'
 require 'shoes/swt/text_block'
 require 'shoes/swt/timer'
 
-require 'shoes/swt/fitted_text_layout'
-require 'shoes/swt/fitted_text_layout_collection'
-require 'shoes/swt/text_block_cursor_painter'
-require 'shoes/swt/text_block_fitter'
-require 'shoes/swt/text_font_factory'
-require 'shoes/swt/text_style_factory'
+require 'shoes/swt/text_block/text_segment'
+require 'shoes/swt/text_block/text_segment_collection'
+require 'shoes/swt/text_block/cursor_painter'
+require 'shoes/swt/text_block/fitter'
+require 'shoes/swt/text_block/text_font_factory'
+require 'shoes/swt/text_block/text_style_factory'
+
+require 'shoes/swt/tooling/leak_hunter' if ENV["LEAK_HUNTER"]
 
 # redrawing aspect needs to know all the classes
 require 'shoes/swt/redrawing_aspect'

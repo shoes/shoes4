@@ -9,19 +9,19 @@ class Shoes
       DEFAULT_SPACING = 4
 
       attr_reader :dsl, :app
-      attr_accessor :fitted_layouts
+      attr_accessor :segments
 
       def initialize(dsl)
         @dsl            = dsl
         @app            = dsl.app.gui
         @opts           = @dsl.opts
-        @fitted_layouts = []
-        @painter        = TextBlockPainter.new @dsl
+        @segments       = []
+        @painter        = Painter.new @dsl
         @app.add_paint_listener @painter
       end
 
       def dispose
-        dispose_existing_layouts
+        dispose_existing_segments
       end
 
       # has a painter, nothing to do
@@ -29,21 +29,21 @@ class Shoes
       end
 
       def in_bounds?(x, y)
-        fitted_layouts.any? do |fitted|
-          fitted.in_bounds?(x, y)
+        segments.any? do |segment|
+          segment.in_bounds?(x, y)
         end
       end
 
       def contents_alignment(current_position)
-        dispose_existing_layouts
-        @fitted_layouts = TextBlockFitter.new(self, current_position).fit_it_in
+        dispose_existing_segments
+        @segments = Fitter.new(self, current_position).fit_it_in
 
         set_absolutes_on_dsl(current_position)
         set_calculated_sizes
       end
 
       def set_absolutes_on_dsl(current_position)
-        if fitted_layouts.one?
+        if segments.one?
           set_absolutes(@dsl.absolute_left, @dsl.absolute_top)
         else
           set_absolutes(@dsl.parent.absolute_left, current_position.next_line_start)
@@ -55,16 +55,16 @@ class Shoes
       end
 
       def set_absolutes(starting_left, starting_top)
-        last_layout = fitted_layouts.last
+        last_segment = segments.last
 
-        @dsl.absolute_right  = starting_left + last_layout.last_line_width +
+        @dsl.absolute_right  = starting_left + last_segment.last_line_width +
                                margin_right
 
-        @dsl.absolute_bottom = starting_top + last_layout.layout_height +
+        @dsl.absolute_bottom = starting_top + last_segment.height +
                                margin_top + margin_bottom
 
         @dsl.absolute_top    = @dsl.absolute_bottom -
-                               last_layout.last_line_height
+                               last_segment.last_line_height
       end
 
       def bump_absolutes_to_next_line
@@ -73,9 +73,9 @@ class Shoes
       end
 
       def set_calculated_sizes
-        @dsl.calculated_width  = fitted_layouts.last.width
-        @dsl.calculated_height = fitted_layouts.inject(0) do |total, layout|
-          total += layout.bounds.height
+        @dsl.calculated_width  = segments.last.width
+        @dsl.calculated_height = segments.inject(0) do |total, segment|
+          total += segment.bounds.height
         end
       end
 
@@ -91,7 +91,7 @@ class Shoes
       private
 
       def clear_contents
-        dispose_existing_layouts
+        dispose_existing_segments
         clear_links
       end
 
@@ -99,9 +99,9 @@ class Shoes
         @dsl.links.each(&:clear)
       end
 
-      def dispose_existing_layouts
-        @fitted_layouts.map(&:dispose)
-        @fitted_layouts.clear
+      def dispose_existing_segments
+        @segments.map(&:dispose)
+        @segments.clear
       end
 
       def trailing_newline?

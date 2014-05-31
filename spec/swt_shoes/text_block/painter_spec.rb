@@ -1,6 +1,6 @@
 require 'swt_shoes/spec_helper'
 
-describe Shoes::Swt::TextBlockPainter do
+describe Shoes::Swt::TextBlock::Painter do
   include_context "swt app"
 
   let(:opts) { {justify: true, leading: 10, underline: "single"} }
@@ -13,13 +13,12 @@ describe Shoes::Swt::TextBlockPainter do
                      text_styles: text_styles, :hidden? => false).as_null_object
             }
 
-  let(:fitted_layout) do
-    ::Swt::Font.stub(:new)       { font }
-    ::Swt::TextLayout.stub(:new) { text_layout }
-    ::Swt::TextStyle.stub(:new)  { style }
+  let(:segment) do
+    allow(::Swt::Font).to receive(:new)       { font }
+    allow(::Swt::TextLayout).to receive(:new) { text_layout }
+    allow(::Swt::TextStyle).to receive(:new)  { style }
 
-    fitted = Shoes::Swt::FittedTextLayout.new(dsl, text, 200)
-    fitted.position_at(0, 10)
+    Shoes::Swt::TextBlock::TextSegment.new(dsl, text, 200).position_at(0, 10)
   end
 
   let(:text_layout) { double("text layout", text: text).as_null_object }
@@ -33,18 +32,18 @@ describe Shoes::Swt::TextBlockPainter do
   let(:text_styles) {{}}
   let(:text) {'hello world'}
 
-  subject { Shoes::Swt::TextBlockPainter.new(dsl) }
+  subject { Shoes::Swt::TextBlock::Painter.new(dsl) }
 
   before :each do
-    ::Swt::TextStyle.stub(:new)  { style.as_null_object }
+    allow(::Swt::TextStyle).to receive(:new)  { style.as_null_object }
 
     # Can't stub this in during initial let because of circular reference
-    # fitted_layouts -> dsl -> gui -> fitted_layouts...
-    gui.stub(fitted_layouts: [fitted_layout])
+    # segments -> dsl -> gui -> segments...
+    allow(gui).to receive_messages(segments: [segment])
   end
 
   it "draws" do
-    expect(fitted_layout).to receive(:draw)
+    expect(segment).to receive(:draw)
     subject.paintControl(event)
   end
 

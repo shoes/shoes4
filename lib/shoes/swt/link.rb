@@ -22,10 +22,10 @@ class Shoes
         remove_listener_for(self)
       end
 
-      def create_links_in(layout_ranges)
+      def create_links_in(text_segment_ranges)
         @link_segments.clear
-        layout_ranges.each do |layout, range|
-          @link_segments << LinkSegment.new(layout, range)
+        text_segment_ranges.each do |text_segment, range|
+          @link_segments << LinkSegment.new(text_segment, range)
         end
       end
 

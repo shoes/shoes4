@@ -1,17 +1,29 @@
 class Shoes
   module Swt
     class ImagePattern
+      include Common::Clear
+
       def initialize(dsl)
         @dsl = dsl
       end
-      
+
+      def dispose
+        @image.dispose if @image
+        @pattern.dispose if @pattern
+      end
+
+      # Since colors are bound up (at least in specs) with image patterns,
+      # we can't safely touch images during initialize, so lazily load them.
+      def pattern
+        @image   ||= ::Swt::Image.new(Shoes.display, @dsl.path)
+        @pattern ||= ::Swt::Pattern.new(Shoes.display, @image)
+      end
+
       def apply_as_fill(gc, left, top, width, height, angle = 0)
-        pattern = ::Swt::Pattern.new(Shoes.display, ::Swt::Image.new(Shoes.display, @dsl.path))
         gc.set_background_pattern pattern
       end
-      
+
       def apply_as_stroke(gc, left, top, width, height, angle = 0)
-        pattern = ::Swt::Pattern.new(Shoes.display, ::Swt::Image.new(Shoes.display, @dsl.path))
         gc.set_foreground_pattern pattern
       end
     end

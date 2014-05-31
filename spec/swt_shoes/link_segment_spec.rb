@@ -5,10 +5,10 @@ describe Shoes::Swt::LinkSegment do
   let(:line_width)    { 20 }
   let(:line_height)   { 14 }
   let(:layout)        { double('swt layout', width: line_width, line_count: 10) }
-  let(:fitted_layout) { double('fitted layout', layout: layout,
+  let(:text_segment)  { double('text segment', layout: layout,
                                element_left: 0, element_top: 0) }
 
-  subject { Shoes::Swt::LinkSegment.new(fitted_layout, range) }
+  subject { Shoes::Swt::LinkSegment.new(text_segment, range) }
 
   before(:each) do
     10.times {|i| stub_line_bounds(i)}
@@ -88,11 +88,11 @@ describe Shoes::Swt::LinkSegment do
   end
 
   def stub_location(at, x, y)
-    fitted_layout.stub(:get_location).with(at, anything) { double(x: x, y: y) }
+    allow(text_segment).to receive(:get_location).with(at, anything) { double(x: x, y: y) }
   end
 
   def stub_line_bounds(index)
-    layout.stub(:line_bounds).with(index) {
+    allow(layout).to receive(:line_bounds).with(index) {
       double("line #{index}",
              x: 0,
              y: index * line_height,

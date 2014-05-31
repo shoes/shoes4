@@ -34,7 +34,9 @@ describe Shoes::Flow do
   end
 
   it "clears with an optional block" do
-    expect(flow).to receive(:clear).with(&input_block)
+    expect(flow).to receive(:clear) do |&blk|
+      expect(blk).to eq(input_block)
+    end
     flow.clear &input_block
   end
 
@@ -70,8 +72,21 @@ describe Shoes::Flow do
     end
 
     describe 'when the elements dont fit next to each other' do
-      let(:input_opts){ {width: element.width + 10} }
+      let(:input_opts){ {width: element.width + element2.width - 10} }
       it_behaves_like 'arranges elements underneath each other'
+
+      describe 'and a third element that goes into the second line' do
+        include_context 'three slot children'
+        include_context 'contents_alignment'
+
+        it 'positions the third element right next to the second' do
+          expect(element3.absolute_left).to eq element2.absolute_right + 1
+        end
+
+        it 'positions the third element on the same height as element 2' do
+          expect(element3.absolute_top).to eq element2.absolute_top
+        end
+      end
     end
 
     describe 'elements dont fit next to each other and set small height' do

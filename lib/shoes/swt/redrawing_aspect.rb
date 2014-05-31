@@ -17,7 +17,7 @@ class Shoes
                         Keypress                         => [:eval_block],
                         Keyrelease                       => [:eval_block],
                         MouseMoveListener                => [:eval_move_block],
-                        TextBlockCursorPainter           => [:move_textcursor],
+                        TextBlock::CursorPainter         => [:move_textcursor],
                         Timer                            => [:eval_block],
                         ::Shoes::Common::Changeable      => [:call_change_listeners]}
       # only the main thread may draw

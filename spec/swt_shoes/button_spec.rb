@@ -11,11 +11,11 @@ describe Shoes::Swt::Button do
   subject { Shoes::Swt::Button.new dsl, parent }
 
   before :each do
-    parent.stub(:real)
-    parent.stub(:dsl){double(contents: [])}
-    dsl.stub(:width=)
-    dsl.stub(:height=)
-    ::Swt::Widgets::Button.stub(:new) { real }
+    allow(parent).to receive(:real)
+    allow(parent).to receive(:dsl){double(contents: [])}
+    allow(dsl).to receive(:width=)
+    allow(dsl).to receive(:height=)
+    allow(::Swt::Widgets::Button).to receive(:new) { real }
   end
 
   it_behaves_like "buttons"
@@ -25,7 +25,7 @@ describe Shoes::Swt::Button do
 
   describe "#initialize" do
     it "sets text on real element" do
-      real.should_receive(:set_text).with(text)
+      expect(real).to receive(:set_text).with(text)
       subject
     end
 
@@ -36,9 +36,9 @@ describe Shoes::Swt::Button do
       let(:real) {double('button real', size: size, pack: true).as_null_object}
 
       before :each do
-        parent.stub(:real)
-        parent.stub(:dsl){double(contents: [])}
-        ::Swt::Widgets::Button.stub(:new) { real }
+        allow(parent).to receive(:real)
+        allow(parent).to receive(:dsl){double(contents: [])}
+        allow(::Swt::Widgets::Button).to receive(:new) { real }
       end
 
       def dsl_for_dimensions(width, height)
@@ -48,8 +48,8 @@ describe Shoes::Swt::Button do
       def with_dimensions_real_should_be(input_width,    input_height,
                                          expected_width, expected_height)
         dsl = dsl_for_dimensions input_width, input_height
-        dsl.should_receive(:element_width=).with(expected_width) unless input_width
-        dsl.should_receive(:element_height=).with(expected_height) unless input_height
+        expect(dsl).to receive(:element_width=).with(expected_width) unless input_width
+        expect(dsl).to receive(:element_height=).with(expected_height) unless input_height
         Shoes::Swt::Button.new dsl, parent
       end
 
@@ -70,8 +70,8 @@ describe Shoes::Swt::Button do
       end
 
       it 'sends set_text to the real before packing it #452' do
-        real.should_receive(:set_text).ordered
-        real.should_receive(:pack).ordered
+        expect(real).to receive(:set_text).ordered
+        expect(real).to receive(:pack).ordered
         subject
       end
     end
@@ -79,7 +79,7 @@ describe Shoes::Swt::Button do
 
   describe 'eval block' do
     it 'calls the block' do
-      block.should_receive(:call).with(dsl)
+      expect(block).to receive(:call).with(dsl)
       subject.eval_block block
     end
   end

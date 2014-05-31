@@ -39,7 +39,6 @@ simple-timer.rb
 
 good-arc.rb
 good-clock.rb
-good-clock-adjusted.rb
 good-follow.rb
 good-potato-chopping.rb
 good-reminder.rb
@@ -80,7 +79,7 @@ sample21.rb
 sample23.rb
 sample24.rb
 sample27.rb
-sample31.rb
+#sample31.rb
 sample34.rb
 sample35.rb
 sample37.rb

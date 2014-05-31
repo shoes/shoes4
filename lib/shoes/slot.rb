@@ -4,8 +4,10 @@ class Shoes
     include CommonMethods
     include DimensionsDelegations
 
-    NEXT_ELEMENT_ON_SAME_LINE_OFFSET = Point.new(1, 0)
-    NEXT_ELEMENT_ON_NEXT_LINE_OFFSET = Point.new(0, 1)
+    # We need that offset because otherwise element overlap e.g. occupy
+    # the same pixel - this way they start right next to each other
+    # See #update_current_position
+    NEXT_ELEMENT_OFFSET = 1
 
     attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
                 :leave_proc
@@ -113,10 +115,10 @@ class Shoes
 
     def positioning(element, current_position)
       return current_position unless element.needs_to_be_positioned?
-      position_modifier = position_element element, current_position
+      position_element element, current_position
       element.contents_alignment(current_position) if element.respond_to? :contents_alignment
       if element.takes_up_space?
-        update_current_position(current_position, element, position_modifier)
+        update_current_position(current_position, element)
       else
         current_position
       end
@@ -130,14 +132,12 @@ class Shoes
       position_element_at element,
                           position_x(current_position.x, element),
                           position_y(current_position.y, element)
-      NEXT_ELEMENT_ON_SAME_LINE_OFFSET
     end
 
     def move_to_next_line(element, current_position)
       position_element_at element,
                           position_x(self.element_left, element),
                           position_y(current_position.next_line_start, element)
-      NEXT_ELEMENT_ON_NEXT_LINE_OFFSET
     end
 
     def position_element_at(element, x, y)
@@ -149,14 +149,19 @@ class Shoes
       element.absolute_left == x && element.absolute_top == y
     end
 
-    def update_current_position(current_position, element, position_modifier)
+    def update_current_position(current_position, element)
       return current_position if element.absolutely_positioned?
-      current_position.x = element.absolute_right + position_modifier.x
-      current_position.y = element.absolute_top + position_modifier.y
-      if current_position.next_line_start < element.absolute_bottom + 1
-        current_position.next_line_start = element.absolute_bottom + 1
+      current_position.x = element.absolute_right + NEXT_ELEMENT_OFFSET
+      current_position.y = element.absolute_top
+      next_element_line_start = next_line_start_from element
+      if current_position.next_line_start < next_element_line_start
+        current_position.next_line_start = next_element_line_start
       end
       current_position
+    end
+
+    def next_line_start_from element
+      element.absolute_bottom + NEXT_ELEMENT_OFFSET
     end
 
     def position_x(relative_x, element)

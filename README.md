@@ -83,6 +83,10 @@ Another alternative yet is to put `require 'shoes'` at the top of your applicati
 
     $ jruby path/to/file.rb
 
+On OS X you still need to supply the additional parameters to JRuby
+
+    $ jruby -J-XstartOnFirstThread path/to/file.rb
+
 ## Want to see what shoes can do?
 
 You can run `rake samples` and random samples we believe are working will be run until you quit with Ctr + C. Some of them are really simple, while others are more complex or even games!
