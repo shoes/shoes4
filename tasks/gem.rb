@@ -2,7 +2,8 @@ require 'bundler/gem_helper'
 
 # Defer installing Bundler gem tasks until runtime, so we can install them
 # for a particular gem. Still create tasks that will show up in `rake --tasks`
-['shoes', 'shoes-dsl', 'shoes-swt'].each do |lib|
+SUB_GEMS = ['shoes', 'shoes-dsl', 'shoes-swt']
+SUB_GEMS.each do |lib|
   task "install_gem_tasks:#{lib}" do
     Bundler::GemHelper.install_tasks :name => lib
   end
@@ -14,13 +15,15 @@ require 'bundler/gem_helper'
 
     desc "#{action.capitalize} the #{lib} gem"
     task "#{action}:#{lib}" => ["install_gem_tasks:#{lib}", action]
-
-    unless action == 'release'
-      desc "#{action.capitalize} all gems"
-      task "#{action}:all"
-
-      task "#{action}:all" => "#{action}:#{lib}"
-    end
   end
+end
+
+
+['build', 'install'].each do |action|
+  desc "#{action.capitalize} all gems"
+  all_task_name = "#{action}:all"
+  task all_task_name
+
+  task all_task_name => SUB_GEMS.map { |lib| "#{action}:#{lib}" }
 end
 
