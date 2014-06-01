@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "swt", "~>0.18"
-  s.add_dependency "furoshiki", ">=0.1.2" # For packaging
   s.add_dependency "after_do", "~>0.3"
+  s.add_dependency "shoes-dsl", Shoes::Swt::VERSION
+  s.add_dependency "furoshiki", ">=0.1.2" # For packaging
 end
