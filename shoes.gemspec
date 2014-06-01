@@ -16,10 +16,6 @@ Gem::Specification.new do |s|
   s.test_files    = []
   s.require_paths = ["lib"]
 
-  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
-  s.executables   = ['shoes-stub', 'ruby-shoes']
-  s.extensions    = ['ext/install/Rakefile']
-
   s.add_dependency "shoes-dsl", Shoes::VERSION
   s.add_dependency "shoes-swt", Shoes::VERSION
 
