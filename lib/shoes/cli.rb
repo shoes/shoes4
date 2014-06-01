@@ -69,7 +69,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
     # @param [String] app the location of the app to run
     def execute_app(app)
       $LOAD_PATH.unshift(Dir.pwd)
-      Shoes.configuration.backend = :swt
+      require 'shoes/swt'
       load app
     end
 
