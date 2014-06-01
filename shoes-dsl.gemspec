@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/shoes/version', __FILE__)
+require_relative 'lib/shoes/version'
+require_relative 'manifests/shoes-dsl'
 
 Gem::Specification.new do |s|
   s.name        = "shoes-dsl"
@@ -12,8 +13,8 @@ Gem::Specification.new do |s|
   s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. This is the DSL for writing your app. You'll need a backend to run it.}
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split("\n").delete_if { |path| path =~ %r{^lib/shoes/swt|spec/swt_shoes} }
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = ShoesDslManifest.files
+  s.test_files    = ShoesDslManifest.test_files
   s.require_paths = ["lib"]
 
   # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
