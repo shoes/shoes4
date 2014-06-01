@@ -213,7 +213,7 @@ rescue LoadError
   end
 end
 
-spec = Gem::Specification.load('shoes.gemspec')
-Gem::PackageTask.new(spec) do |gem|
-  gem.package_dir = PACKAGE_DIR
-end
+# spec = Gem::Specification.load('shoes.gemspec')
+# Gem::PackageTask.new(spec) do |gem|
+#   gem.package_dir = PACKAGE_DIR
+# end
