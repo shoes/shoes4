@@ -8,7 +8,7 @@ class Shoes
     include DimensionsDelegations
 
     attr_reader :app, :dimensions, :parent, :gui
-    style_with :angle, :art_styles, :center, :radius
+    style_with :art_styles, :center, :radius
 
     def initialize(app, parent, left, top, width, height, styles = {}, &blk)
       @app                 = app
