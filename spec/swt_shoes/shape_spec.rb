@@ -50,9 +50,9 @@ describe Shoes::Swt::Shape do
       allow(::Swt::Transform).to receive(:new) { transform }
     end
 
-    it "delegates #move" do
-      allow(dsl).to receive(:absolute_left) { 20 }
-      allow(dsl).to receive(:absolute_top) { 30 }
+    it "translates position to dsl's element_left and element_top" do
+      allow(dsl).to receive(:element_left) { 20 }
+      allow(dsl).to receive(:element_top) { 30 }
       expect(transform).to receive(:translate).with(20, 30)
       subject.update_position
     end
