@@ -25,9 +25,8 @@ shared_examples_for "movable object" do
 end
 
 shared_examples_for "clearable object" do
-  it "clears" do
-    expect(subject).to receive(:clear)
-    subject.clear
+  it "understands clears" do
+    expect(subject).to respond_to(:clear)
   end
 end
 
