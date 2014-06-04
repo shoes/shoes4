@@ -37,6 +37,7 @@ class Shoes
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
         @__app__.element_styles[klass] = styles
+        p @__app__.element_styles
       else
         @__app__.style(klass_or_styles)
       end

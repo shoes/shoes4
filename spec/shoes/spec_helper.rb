@@ -5,13 +5,13 @@ def it_styles_with(*styles)
   spec_styles(supported_styles)
 end
 
-def unpack_styles(*styles)
+def unpack_styles(styles)
   supported_styles = []
   styles.each do |style|
     if Shoes::Common::Style::STYLE_GROUPS[style]
       Shoes::Common::Style::STYLE_GROUPS[style].each{|style| supported_styles << style}
     else
-      @supported_styles << style
+      supported_styles << style
     end
   end
   supported_styles
