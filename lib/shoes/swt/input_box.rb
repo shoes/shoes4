@@ -47,8 +47,8 @@ class Shoes
       private
       def nothing_changed?(event)
         source = event.source
-        event.class == Java::OrgEclipseSwtEvents::ModifyEvent &&
-        source.class == Java::OrgEclipseSwtWidgets::Text &&
+        event.instance_of?(Java::OrgEclipseSwtEvents::ModifyEvent) &&
+        source.instance_of?(Java::OrgEclipseSwtWidgets::Text) &&
         source.text == @last_text
       end
     end

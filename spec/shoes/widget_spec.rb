@@ -18,7 +18,7 @@ describe Shoes::Widget do
   end
 
   it "passes missing methods to app" do
-    app.should_receive(:banner).with("Pickles!")
+    expect(app).to receive(:banner).with("Pickles!")
     app.smile("Pickles!")
   end
 

@@ -80,7 +80,7 @@ shared_examples_for 'positioning through :_position' do
 
   it 'does not position an element if it does not need positioning' do
     my_element = element
-    my_element.stub needs_to_be_positioned?: false
+    allow(my_element).to receive_messages needs_to_be_positioned?: false
     expect(my_element).not_to receive :_position
     subject.add_child my_element
     subject.contents_alignment

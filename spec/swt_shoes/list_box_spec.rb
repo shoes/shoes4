@@ -15,8 +15,8 @@ describe Shoes::Swt::ListBox do
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 
   before :each do
-    parent.stub(:real)
-    ::Swt::Widgets::Combo.stub(:new) { real }
+    allow(parent).to receive(:real)
+    allow(::Swt::Widgets::Combo).to receive(:new) { real }
   end
 
   it_behaves_like "togglable"
@@ -26,7 +26,7 @@ describe Shoes::Swt::ListBox do
   end
 
   it "should call 'items' when updating values" do
-    real.should_receive(:items=).with(["hello"])
+    expect(real).to receive(:items=).with(["hello"])
     subject.update_items(["hello"])
   end
 
@@ -35,14 +35,14 @@ describe Shoes::Swt::ListBox do
   end
 
   it "should call text= when choosing" do
-    real.should_receive(:text=).with "Bacon"
+    expect(real).to receive(:text=).with "Bacon"
     subject.choose "Bacon"
   end
 
   describe "when the backend notifies us that the selection has changed" do
     it "should call the change listeners" do
-      dsl.should_receive(:call_change_listeners)
-      real.should_receive(:add_selection_listener) do |&blk|
+      expect(dsl).to receive(:call_change_listeners)
+      expect(real).to receive(:add_selection_listener) do |&blk|
         blk.call()
       end
       subject

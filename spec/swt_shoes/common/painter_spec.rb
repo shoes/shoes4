@@ -9,7 +9,7 @@ describe Shoes::Swt::Common::Painter do
   subject {Shoes::Swt::Common::Painter.new object}
 
   before do
-    ::Swt::Transform.stub(:new) { transform }
+    allow(::Swt::Transform).to receive(:new) { transform }
   end
 
   describe '#paint_control' do
@@ -19,13 +19,13 @@ describe Shoes::Swt::Common::Painter do
     end
 
     it 'does paint the object if it is hidden' do
-      dsl.stub visible?: false
+      allow(dsl).to receive_messages visible?: false
       expect(subject).not_to receive(:paint_object)
       subject.paint_control event
     end
 
     it 'does not paint the object if it is not positioned' do
-      dsl.stub positioned?: false
+      allow(dsl).to receive_messages positioned?: false
       expect(subject).not_to receive(:paint_object)
       subject.paint_control event
     end

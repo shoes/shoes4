@@ -4,13 +4,13 @@ require "spec_helper"
 
 RSpec.configure do |config|
   config.before(:each) do
-    Swt.stub(:event_loop)
-    Shoes::Swt::App.any_instance.stub(flush: true)
-    Swt::Widgets::Shell.any_instance.stub(:open)
-    Swt::Widgets::MessageBox.any_instance.stub(:open)
+    allow(Swt).to receive(:event_loop)
+    allow_any_instance_of(Shoes::Swt::App).to receive_messages(flush: true)
+    allow_any_instance_of(Swt::Widgets::Shell).to receive(:open)
+    allow_any_instance_of(Swt::Widgets::MessageBox).to receive(:open)
     # stubbed as otherwise all sorts of callbacks are added during certain specs,
     # which then fail because some doubles are not made for the methods called
-    Shoes::Swt::RedrawingAspect.stub new: true
+    allow(Shoes::Swt::RedrawingAspect).to receive_messages new: true
   end
 end
 
@@ -18,7 +18,7 @@ end
 # we don't really want that during test execution either way as it adds stuff to
 # methods that might break
 def with_redraws(&blk)
-  Shoes::Swt::RedrawingAspect.unstub :new
+  allow(Shoes::Swt::RedrawingAspect).to receive(:new).and_call_original
   aspect = Shoes::Swt::RedrawingAspect.new swt_app, double
   begin
     yield

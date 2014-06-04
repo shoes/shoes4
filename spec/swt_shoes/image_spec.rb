@@ -16,7 +16,7 @@ describe Shoes::Swt::Image do
   let(:image) { "spec/swt_shoes/minimal.png" }
 
   subject {
-    dsl.stub(:file_path) { image }
+    allow(dsl).to receive(:file_path) { image }
     Shoes::Swt::Image.new(dsl, parent, blk)
   }
 
@@ -30,12 +30,12 @@ describe Shoes::Swt::Image do
     let(:gc) { double("gc", drawImage: true) }
 
     before :each do
-      swt_app.should_receive(:add_paint_listener)
+      expect(swt_app).to receive(:add_paint_listener)
     end
 
     specify "draws image" do
-      dsl.stub element_left: left, element_top: top
-      gc.should_receive(:drawImage).with(subject.real, 0, 0, 3, 1, left, top, 3, 1)
+      allow(dsl).to receive_messages element_left: left, element_top: top
+      expect(gc).to receive(:drawImage).with(subject.real, 0, 0, 3, 1, left, top, 3, 1)
       subject.painter.call(event)
     end
   end

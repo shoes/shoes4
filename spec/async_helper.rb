@@ -11,7 +11,7 @@ module AsyncHelper
     loop do
       begin
         yield
-      rescue => error
+      rescue Exception => error
       end
       return if error.nil?
       raise error if Time.now >= time_limit

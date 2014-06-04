@@ -14,7 +14,7 @@ shared_examples_for "movable object" do
 
     it "does not change reported values of #left and #top" do
       # no error from calling set location with nil values due to unset values
-      subject.gui.stub :update_position
+      allow(subject.gui).to receive :update_position
       original_left = subject.left
       original_top = subject.top
       subject.displace(300, 200)
@@ -26,7 +26,7 @@ end
 
 shared_examples_for "clearable object" do
   it "clears" do
-    subject.should_receive(:clear)
+    expect(subject).to receive(:clear)
     subject.clear
   end
 end

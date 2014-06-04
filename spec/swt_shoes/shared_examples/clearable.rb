@@ -4,8 +4,8 @@ shared_examples_for "clearable" do
   end
 
   it "should remove paint listener" do
-    swt_app.should_receive(:remove_paint_listener)
-    swt_app.should_receive(:remove_listener).at_least(2).times
+    expect(swt_app).to receive(:remove_paint_listener)
+    expect(swt_app).to receive(:remove_listener).at_least(2).times
     subject.clear
   end
 
@@ -26,16 +26,16 @@ shared_examples_for "clearable native element" do
   end
 
   it "should dispose real when real is not disposed" do
-    swt_app.stub(:remove_listener)
-    real.stub(:disposed?) { false }
-    real.should_receive(:dispose)
+    allow(swt_app).to receive(:remove_listener)
+    allow(real).to receive(:disposed?) { false }
+    expect(real).to receive(:dispose)
     subject.clear
   end
 
   it "should not dispose real when real is already disposed" do
-    swt_app.stub(:remove_listener)
-    real.stub(:disposed?) { true }
-    real.should_not_receive(:dispose)
+    allow(swt_app).to receive(:remove_listener)
+    allow(real).to receive(:disposed?) { true }
+    expect(real).not_to receive(:dispose)
     subject.clear
   end
 end

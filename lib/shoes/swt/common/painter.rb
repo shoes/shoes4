@@ -4,7 +4,12 @@ class Shoes
       class Painter
         include ::Swt::Events::PaintListener
         include Resource
-        LINECAP = {curve: ::Swt::SWT::CAP_ROUND, rect: ::Swt::SWT::CAP_FLAT, project: ::Swt::SWT::CAP_SQUARE}
+
+        LINECAP = {
+          curve:   ::Swt::SWT::CAP_ROUND,
+          rect:    ::Swt::SWT::CAP_FLAT,
+          project: ::Swt::SWT::CAP_SQUARE
+        }
 
         def initialize(obj)
           @obj = obj
@@ -12,7 +17,7 @@ class Shoes
 
         def paint_control(event)
           graphics_context = event.gc
-          gcs_reset graphics_context
+          reset_graphics_context graphics_context
           if @obj.dsl.visible? && @obj.dsl.positioned?
             paint_object graphics_context
           end
@@ -25,9 +30,10 @@ class Shoes
         end
 
         def paint_object(graphics_context)
-          graphics_context.set_antialias ::Swt::SWT::ON
-          graphics_context.set_line_cap(LINECAP[@obj.dsl.style[:cap]] || LINECAP[:rect])
+          cap = LINECAP[@obj.dsl.style[:cap]]
+          graphics_context.set_line_cap(cap) if cap
           graphics_context.set_transform(@obj.transform)
+
           obj = @obj.dsl
           case obj
             when ::Shoes::Oval, ::Shoes::Rect

@@ -368,7 +368,7 @@ describe Shoes::Color::DSLHelpers do
 
   describe '#pattern' do
     it 'creates an image pattern when fed a string for which a file exists' do
-      File.stub(exist?: true)
+      allow(File).to receive_messages(exist?: true)
       my_path = '/some/path/to/image.png'
       image_pattern = subject.pattern(my_path)
       expect(image_pattern.path).to eq my_path

@@ -10,8 +10,8 @@ describe Shoes::Swt::ImagePattern do
   it_behaves_like "an swt pattern"
 
   before do
-    ::Swt::Image.stub(:new)   { swt_image }
-    ::Swt::Pattern.stub(:new) { swt_pattern }
+    allow(::Swt::Image).to receive(:new)   { swt_image }
+    allow(::Swt::Pattern).to receive(:new) { swt_pattern }
   end
 
   describe "#dispose" do
@@ -28,7 +28,7 @@ describe Shoes::Swt::ImagePattern do
     let(:gc) { double("gc") }
 
     it "sets background" do
-      gc.should_receive(:set_background_pattern)
+      expect(gc).to receive(:set_background_pattern)
       subject.apply_as_fill(gc, 10, 20, 100, 200)
     end
   end
