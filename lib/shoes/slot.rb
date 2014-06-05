@@ -53,6 +53,10 @@ class Shoes
       contents.add_element element
     end
 
+    def remove_child(element)
+      contents.delete element
+    end
+
     def append(&blk)
       eval_block blk
     end

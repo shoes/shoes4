@@ -54,7 +54,7 @@ class Shoes
     end
 
     def remove
-      @parent.contents.delete self if @parent
+      @parent.remove_child self if @parent
       @gui.clear if @gui
     end
 

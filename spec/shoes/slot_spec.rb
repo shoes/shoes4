@@ -57,4 +57,35 @@ describe Shoes::Slot do
     end
 
   end
+
+  describe '#remove_child' do
+    let(:element) {Shoes::FakeElement.new subject}
+
+    before :each do
+      subject.add_child element
+    end
+
+    it 'removes the element' do
+      subject.remove_child element
+      expect(subject.contents).to be_empty
+    end
+
+    describe '2 elements' do
+      let(:element2) {Shoes::FakeElement.new subject}
+
+      before :each do
+        subject.add_child element2
+        subject.remove_child element
+      end
+
+      it 'has one element remaining' do
+        expect(subject.contents.size).to eq 1
+      end
+
+      it 'has the second element remaining' do
+        expect(subject.contents).to include element2
+      end
+    end
+
+  end
 end
