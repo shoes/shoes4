@@ -7,7 +7,7 @@ Shoes.app do
   eles << shape(left: 200, top: 150, width: 300, height: 300, rotate: [45, 300, 300]){
     move_to 200, 200
     line_to 200, 100
-    quad_to 100, 100, 20, 200
+    curve_to 100, 100, 20, 200, 50, 150
     line_to 20, 100
   }
   eles << line(100, 100, 480, 480)
