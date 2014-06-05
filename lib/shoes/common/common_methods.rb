@@ -34,7 +34,7 @@ class Shoes
     # See also #hide and #show.
     def toggle
       @hidden = !@hidden
-      @gui.toggle
+      gui.toggle
       self
     end
 
@@ -51,7 +51,7 @@ class Shoes
     def _position left, top
       self.absolute_left = left
       self.absolute_top  = top
-      @gui.update_position if @gui && @gui.respond_to?(:update_position)
+      gui.update_position if gui && gui.respond_to?(:update_position)
     end
 
     def remove

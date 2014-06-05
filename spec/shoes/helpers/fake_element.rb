@@ -6,6 +6,6 @@ class Shoes
       true
     end
 
-    attr_accessor :parent
+    attr_accessor :parent, :gui
   end
 end
