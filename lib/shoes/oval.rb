@@ -1,8 +1,6 @@
 class Shoes
   class Oval
     include CommonMethods
-    include Common::Fill
-    include Common::Stroke
     include Common::Style
     include Common::Clickable
     include DimensionsDelegations

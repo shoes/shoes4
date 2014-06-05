@@ -244,7 +244,7 @@ Wrong number of arguments. Must be one of:
 EOS
           raise ArgumentError, message
       end
-      create Shoes::Oval, left, top, width, height, style.merge(oval_style), &blk
+      create Shoes::Oval, left, top, width, height, oval_style, &blk
     end
 
     # Creates a rectangle
