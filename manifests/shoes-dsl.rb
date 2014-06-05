@@ -14,6 +14,8 @@ class ShoesDslManifest
         lib/shoes/**/*
         manifests/shoes-dsl.rb
         shoes-dsl.gemspec
+        static/shoes-icon.png
+        static/Shoes.icns
       ])
       .include(test_files)
       .exclude { |file| file =~ %r{lib/shoes/ui|lib/shoes/swt} }

@@ -1,9 +1,20 @@
 class Shoes
   module Swt
+    shoes_icon = ::Shoes::ICON
+    if shoes_icon.include? '.jar!'
+      ICON = File.join(Dir.tmpdir, 'shoes-icon.png').freeze
+      open ICON, 'wb' do |fw|
+        open shoes_icon, 'rb' do |fr|
+          fw.write fr.read
+        end
+      end
+    else
+      ICON = shoes_icon
+    end
+
     # Shoes::App.new creates a new Shoes application window!
     # The default window is a [flow]
     #
-
     class App
       include Common::Container
       include Common::Clickable
@@ -174,7 +185,7 @@ class Shoes
       end
 
       def initialize_shell
-        @image = ::Swt::Graphics::Image.new(::Swt.display, SHOES_ICON)
+        @image = ::Swt::Graphics::Image.new(::Swt.display, ICON)
 
         @shell = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         @shell.image = @image

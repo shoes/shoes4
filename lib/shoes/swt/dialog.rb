@@ -56,7 +56,7 @@ class Shoes
 
       def open
         display = getParent.getDisplay
-        icon = ::Swt::Graphics::Image.new display, File.join(::Shoes::DIR, 'static/shoes-icon.png')
+        icon = ::Swt::Graphics::Image.new display, ::Shoes::Swt::ICON
         @shell.setImage icon
         @shell.setSize 300, 125
         @shell.setText 'Shoes 4 asks:'
