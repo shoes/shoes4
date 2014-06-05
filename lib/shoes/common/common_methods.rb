@@ -4,7 +4,8 @@ class Shoes
   #
   # Classes that include this module must expose:
   #
-  # gui_container - the "real" framework implementation object
+  # gui    - the "real" backend implementation of the object
+  # parent - the parent element e.g. the containing slot
   module CommonMethods
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
@@ -54,8 +55,8 @@ class Shoes
     end
 
     def remove
-      @parent.remove_child self if @parent
-      @gui.clear if @gui
+      parent.remove_child self if parent
+      gui.clear if gui && gui.respond_to?(:clear)
     end
 
     # displace(left: a number, top: a number) » self
