@@ -10,6 +10,8 @@ class ShoesManifest
   def self.files
     ShoesCommonManifest.files
       .include(%w[
+        Rakefile
+        app.yaml
         benchmark/**/*
         bin/**/*
         ext/**/*

@@ -24,8 +24,6 @@ class ShoesCommonManifest
       Guardfile
       LICENSE
       README.md
-      Rakefile
-      app.yaml
     )]
   end
 
