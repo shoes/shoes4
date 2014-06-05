@@ -425,7 +425,7 @@ EOS
 
     # Creates a new Shoes::Shape object
     def shape(shape_style = {}, &blk)
-      Shoes::Shape.new(@__app__, @__app__.style.merge(shape_style), blk)
+      create Shoes::Shape, style.merge(shape_style), blk
     end
 
     # Define app-level setter methods

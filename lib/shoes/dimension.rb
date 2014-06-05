@@ -44,7 +44,7 @@ class Shoes
     end
 
     def absolute_end
-      return absolute_start if extent.nil?
+      return absolute_start if extent.nil? || absolute_start.nil?
       absolute_start + extent + PIXEL_COUNTING_ADJUSTMENT
     end
 

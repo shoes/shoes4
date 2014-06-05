@@ -2,12 +2,11 @@
 
 Shoes 4 : the next version of Shoes
 
-## Still in development
+## Pre-alpha
 
-Hi there, thanks for checking by! Shoes4 is still in development. It doesn't support all of the shoes DSL just yet.
-But if you want to check it out, that's awesome! If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
+Hi there, thanks for checking by! Shoes 4 is still pre-alpha software. It currently supports almost all of the shoes DSL, but there are still some spots where you might get surprising results. If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
 
-There is a first preview release now :)
+There is a first [preview release](https://rubygems.org/gems/shoes/versions/4.0.0.pre1) now :)
 
 ## Installing Shoes4
 
@@ -143,8 +142,6 @@ Please feel free to tackle any issue - we will help you if needed. The tag is ju
 Also there is a list of samples that already work at samples/README, along with all the other samples. You can try to get a new sample to run. In order to do so you can run `rake non_samples` to run a random sample we think does not work. If you just want to list the non working samples you can also run `rake list_non_samples`.
 
 With all you do, please make sure to write specs as Shoes 4 is developed TDD-style (see the [Running Specs](https://github.com/shoes/shoes4#running-specs) section below). So make sure that you don't break any tests :-)
-
-We write our specs in rspec and are currently in the process of migrating from the old `should` syntax to the [new `expect` syntax](http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax). We basically say that whenever you touch a spec it'd be good if you converted it to the new syntax. Also new specs should be written in the new expect syntax.
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. Pull requests don't need to be done - they are great discussion starters! We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
 

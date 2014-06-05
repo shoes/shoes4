@@ -17,6 +17,7 @@ group :development do
   gem "kramdown"
   gem 'simplecov'
   gem 'coveralls'
+  gem "codeclimate-test-reporter"
   gem 'jruby-lint'
   gem 'webmock'
 end
