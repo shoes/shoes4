@@ -24,6 +24,7 @@ class ShoesCommonManifest
       Guardfile
       LICENSE
       README.md
+      manifests/common.rb
     )]
   end
 
