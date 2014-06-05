@@ -8,12 +8,11 @@ class ShoesDslManifest
   end
 
   def self.files
-    ShoesCommonManifest.files
+    @files ||= ShoesCommonManifest.files
       .include(%w[
         fonts/**/*
         lib/shoes/**/*
         manifests/shoes-dsl.rb
-        spec/shoes/**/*
         shoes-dsl.gemspec
       ])
       .include(test_files)
@@ -21,7 +20,7 @@ class ShoesDslManifest
   end
 
   def self.test_files
-    Rake::FileList['spec/*', 'spec/shoes/**/*']
+    @test_files ||= Rake::FileList['spec/*', 'spec/shoes/**/*']
   end
 end
 

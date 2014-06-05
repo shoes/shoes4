@@ -8,7 +8,7 @@ class ShoesSwtManifest
   end
 
   def self.files
-    ShoesCommonManifest.files
+    @files = ShoesCommonManifest.files
       .include(%w[
         lib/shoes/swt/**/*
         manifests/shoes-swt.rb
@@ -18,7 +18,7 @@ class ShoesSwtManifest
   end
 
   def self.test_files
-    Rake::FileList['spec/**/*']
+    @test_files = Rake::FileList['spec/**/*']
   end
 end
 

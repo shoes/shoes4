@@ -8,7 +8,7 @@ class ShoesManifest
   end
 
   def self.files
-    ShoesCommonManifest.files
+    @files = ShoesCommonManifest.files
       .include(%w[
         Rakefile
         app.yaml
@@ -28,7 +28,7 @@ class ShoesManifest
   end
 
   def self.test_files
-    Rake::FileList['spec/shoes/ui/**/*']
+    @test_files = Rake::FileList['spec/shoes/ui/**/*']
   end
 end
 
