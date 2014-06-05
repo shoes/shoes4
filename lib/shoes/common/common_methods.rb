@@ -6,6 +6,7 @@ class Shoes
   #
   # gui_container - the "real" framework implementation object
   module CommonMethods
+    include Common::Inspect
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide
