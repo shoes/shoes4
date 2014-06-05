@@ -10,10 +10,10 @@ shared_examples_for "strokewidth DSL method" do
 
   it "applies to subsequently created objects" do
     dsl.strokewidth 6
-    expect(Shoes::Oval).to receive(:new) do |*args|
+    expect(Shoes::Rect).to receive(:new) do |*args|
       style = args.pop
       expect(style[:strokewidth]).to eq(6)
     end
-    dsl.oval(10, 10, 100, 100)
+    dsl.rect(10, 10, 100, 100)
   end
 end

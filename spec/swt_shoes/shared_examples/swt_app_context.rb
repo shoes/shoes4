@@ -8,7 +8,7 @@ shared_context "swt app" do
                          add_paint_listener: true, remove_paint_listener: true,
                          add_clickable_element: true, add_listener: true,
                          flush: true, redraw: true) }
-  let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0) }
+  let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0, style: {}, element_styles: {}) }
   let(:parent) { double('parent', app: swt_app, add_child: true, real: true) }
   let(:parent_dsl) {double("parent dsl", add_child: true, contents: [],
                            gui: parent, x_dimension: double.as_null_object,

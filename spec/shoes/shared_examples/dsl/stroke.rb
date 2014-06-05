@@ -13,11 +13,11 @@ shared_examples_for "stroke DSL method" do
 
   it "applies to subsequently created objects" do
     dsl.stroke color
-    expect(Shoes::Oval).to receive(:new) do |*args|
+    expect(Shoes::Rect).to receive(:new) do |*args|
       style = args.pop
       expect(style[:stroke]).to eq(color)
     end
-    dsl.oval(10, 10, 100, 100)
+    dsl.rect(10, 10, 100, 100)
   end
 
   context "with hex string" do

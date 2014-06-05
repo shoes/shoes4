@@ -37,7 +37,6 @@ class Shoes
       if klass_or_styles.kind_of? Class
         klass = klass_or_styles
         @__app__.element_styles[klass] = styles
-        p @__app__.element_styles
       else
         @__app__.style(klass_or_styles)
       end
@@ -185,7 +184,7 @@ class Shoes
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      create Shoes::Arc, left, top, width, height, angle1, angle2, opts#style.merge(arc_style)
+      create Shoes::Arc, left, top, width, height, angle1, angle2, opts
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
