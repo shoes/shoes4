@@ -15,6 +15,7 @@ class ShoesManifest
         benchmark/**/*
         bin/**/*
         ext/**/*
+        lib/shoes.rb
         lib/shoes/ui/**/*
         lib/shoes/version.rb
         manifests/shoes.rb

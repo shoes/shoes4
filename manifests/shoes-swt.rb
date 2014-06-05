@@ -10,6 +10,7 @@ class ShoesSwtManifest
   def self.files
     @files = ShoesCommonManifest.files
       .include(%w[
+        lib/shoes/swt.rb
         lib/shoes/swt/**/*
         manifests/shoes-swt.rb
         shoes-swt.gemspec
