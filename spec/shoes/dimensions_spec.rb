@@ -370,7 +370,7 @@ describe Shoes::Dimensions do
         expect(subject.element_width).to eq nil
       end
 
-      it 'can set element_heightm to nil' do
+      it 'can set element_height to nil' do
         subject.element_height = nil
         expect(subject.element_height).to eq nil
       end

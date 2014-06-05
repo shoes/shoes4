@@ -9,9 +9,6 @@ class Shoes
       def move_to(x, y)
       end
 
-      def quad_to(*args)
-      end
-
       def curve_to(*args)
       end
     end

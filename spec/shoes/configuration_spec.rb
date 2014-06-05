@@ -17,11 +17,11 @@ describe Shoes::Configuration do
     include_context "dsl app"
 
     let(:args) { Hash.new }
-    let(:dsl_object) { Shoes::Shape.new app, args }
+    let(:dsl_object) { Shoes::Shape.new app, parent, args }
 
     describe "#backend_with_app_for" do
       it "passes app.gui to backend" do
-        expect(Shoes.configuration.backend::Shape).to receive(:new).with(anything, app.gui, anything)
+        expect(Shoes.configuration.backend::Shape).to receive(:new).with(an_instance_of(Shoes::Shape), app.gui, an_instance_of(Hash)).and_call_original
         dsl_object
       end
 

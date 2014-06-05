@@ -25,18 +25,22 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri" # For converting the manual to HTML
   s.add_dependency "after_do", "~>0.3"
 
-  s.add_development_dependency "guard"
-  s.add_development_dependency "guard-rspec", ">= 4.2"
   s.add_development_dependency "pry"
-
-  s.add_development_dependency "rspec", "~>3.0"
-  s.add_development_dependency "rspec-its", "~>1.0"
   s.add_development_dependency "rake"
-
   s.add_development_dependency "yard"
   s.add_development_dependency "kramdown"
+  s.add_development_dependency 'jruby-lint'
+
+  # Tests
+  s.add_development_dependency "rspec", "~>3.0"
+  s.add_development_dependency "rspec-its", "~>1.0"
+  s.add_development_dependency 'webmock'
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec", ">= 4.2"
+
+
+  # Test Coverage
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'coveralls'
-  s.add_development_dependency 'jruby-lint'
-  s.add_development_dependency 'webmock'
+  s.add_development_dependency "codeclimate-test-reporter"
 end

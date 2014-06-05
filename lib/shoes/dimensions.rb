@@ -26,7 +26,7 @@
 #   Just the space taken up by the element itself without margins.
 #   Used by drawing.
 #
-# Note that this is NOT how margins work in the CSS box model. We derive for
+# Note that this is NOT how margins work in the CSS box model. We diverge for
 # reasons mentioned in this comment/thread: 
 # https://github.com/shoes/shoes4/pull/467#issuecomment-27655355
 
@@ -99,6 +99,10 @@ class Shoes
 
     def takes_up_space?
       true
+    end
+
+    def to_s
+      "<#{self.class}:#{object_id} relative values: (#{left}, #{top})->(#{right}, #{bottom}), absolute_values: (#{absolute_left}, #{absolute_top})->(#{absolute_right}, #{absolute_bottom}) #{width}x#{height}>"
     end
 
     def self.setup_delegations
@@ -180,7 +184,8 @@ class Shoes
   module DimensionsDelegations
     extend Forwardable
 
-    DELEGATED_METHODS = Dimensions.public_instance_methods false
+    UNDELEGATED_METHODS = [:to_s]
+    DELEGATED_METHODS = Dimensions.public_instance_methods(false) - UNDELEGATED_METHODS
 
     def_delegators :dimensions, *DELEGATED_METHODS
   end

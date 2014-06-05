@@ -209,6 +209,12 @@ describe Shoes::Dimension do
       subject.extent = 22
       expect(subject.absolute_end).to eq 29 - ONE_PIXEL # pixel counting adjustment
     end
+
+    it 'returns nil if absolute_start is nil but extent is set' do
+      subject.absolute_start = nil
+      subject.extent = 100
+      expect(subject.absolute_end).to be_nil
+    end
   end
 
   describe '#margins' do
