@@ -1,13 +1,13 @@
 # JavaZOOM Sound-API Projects
 #  - Shared lib
-require 'support/tritonus_share.jar'
+require 'shoes/swt/support/tritonus_share.jar'
 #  - MP3 lib
-require 'support/mp3spi1.9.5.jar'
-require 'support/jl1.0.1.jar'
+require 'shoes/swt/support/mp3spi1.9.5.jar'
+require 'shoes/swt/support/jl1.0.1.jar'
 #  - Ogg/Vorbis lib
-require 'support/jogg-0.0.7.jar'
-require 'support/jorbis-0.0.15.jar'
-require 'support/vorbisspi1.0.3.jar'
+require 'shoes/swt/support/jogg-0.0.7.jar'
+require 'shoes/swt/support/jorbis-0.0.15.jar'
+require 'shoes/swt/support/vorbisspi1.0.3.jar'
 
 class Shoes
   module Swt
