@@ -2,15 +2,18 @@ require 'spec_helper'
 
 describe Shoes::CommonMethods do
 
-  let(:test_object) {double 'Tester', parent: parent, gui: gui}
   let(:parent) {double 'parent', add_child: true, remove_child: true}
   let(:gui) {double 'gui', clear: true}
 
-  before :each do
-    test_object.extend Shoes::CommonMethods
+  class CommonMethodsTest
+    include Shoes::CommonMethods
   end
 
-  subject {test_object}
+  subject {CommonMethodsTest.new}
+
+  before :each do
+    allow(subject).to receive_messages parent: parent, gui: gui
+  end
 
   describe '#remove' do
 
