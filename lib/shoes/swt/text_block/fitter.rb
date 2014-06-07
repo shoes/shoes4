@@ -48,7 +48,9 @@ class Shoes
         #
         def fit_it_in
           width, height = available_space
-          if no_space_in_first_layout?(width)
+          if @dsl.centered?
+            fit_as_centered(width)
+          elsif no_space_in_first_layout?(width)
             fit_as_empty_first_layout(height)
           else
             fit_into_full_layouts(width, height)
@@ -100,6 +102,11 @@ class Shoes
 
           height += ::Shoes::Slot::NEXT_ELEMENT_OFFSET
           generate_two_layouts(layout, "", @dsl.text, height)
+        end
+
+        def fit_as_centered(width)
+          segment = CenteredTextSegment.new(@dsl, width)
+          [segment.position_at(@dsl.element_left, @dsl.element_top)]
         end
 
         def generate_two_layouts(first_layout, first_text, second_text, height)

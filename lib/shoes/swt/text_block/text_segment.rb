@@ -27,8 +27,8 @@ class Shoes
           @style_factory = TextStyleFactory.new
 
           layout.text = text
+          layout.width = width unless layout_fits_in?(width)
           style_from(font_styling, @dsl.opts)
-          shrink_layout_to(width) unless layout_fits_in?(width)
         end
 
         def dispose
@@ -73,10 +73,6 @@ class Shoes
             styles:[::Swt::SWT::NORMAL]
           }
           }
-        end
-
-        def shrink_layout_to(width)
-          layout.setWidth(width)
         end
 
         def layout_fits_in?(width)

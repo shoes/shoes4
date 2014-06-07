@@ -2,10 +2,10 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock::Fitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
+                     desired_width: 85, centered?:    false,
                      absolute_left: 25, absolute_top: 75,
-                     desired_width: 85,
-                     element_left: 26, element_top: 76,
-                     margin_left: 1, margin_top: 1) }
+                     element_left:  26, element_top:  76,
+                     margin_left:   1,  margin_top:   1) }
 
   let(:parent_dsl) { double('parent_dsl', parent: grandparent_dsl,
                             absolute_left: 0, absolute_right: 100,
@@ -152,6 +152,16 @@ describe Shoes::Swt::TextBlock::Fitter do
         allow(dsl).to receive_messages(desired_width: -1)
         segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
         expect_segments(segments, [26, 76], [1, 96])
+      end
+    end
+
+    context "to center segment" do
+      it "uses full width" do
+        allow(dsl).to receive_messages(centered?: true)
+        segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
+
+        # TODO: This isn't quite right, but kind of works for the time being
+        expect_segments(segments, [26, 76])
       end
     end
   end
