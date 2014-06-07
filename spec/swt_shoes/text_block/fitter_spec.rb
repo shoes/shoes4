@@ -21,7 +21,7 @@ describe Shoes::Swt::TextBlock::Fitter do
   let(:app_width)         { 2000 }
 
   let(:text_block) { double('text_block', dsl: dsl) }
-  let(:segment)     { double('segment') }
+  let(:segment)    { double('segment') }
 
   let(:current_position) { double('current_position') }
 
@@ -92,8 +92,9 @@ describe Shoes::Swt::TextBlock::Fitter do
 
   describe "fit it in" do
     let(:bounds) { double('bounds', width: 100, height: 50)}
-    let(:segment) { double('segment', text: "something something",
-                          line_count: 1, line_offsets:[], bounds: bounds) }
+    let(:segment) { double('segment',
+                           text: "something something", :text= => nil,
+                           line_count: 1, line_offsets:[], bounds: bounds) }
 
     before(:each) do
       allow(segment).to receive(:position_at) { segment }
@@ -139,7 +140,6 @@ describe Shoes::Swt::TextBlock::Fitter do
     context "to empty first segment" do
       before(:each) do
         allow(dsl).to receive_messages(containing_width: 100)
-        allow(segment).to receive_messages(:text= => nil)
       end
 
       it "rolls to second segment when 0 remaining width" do
@@ -156,12 +156,21 @@ describe Shoes::Swt::TextBlock::Fitter do
     end
 
     context "to center segment" do
-      it "uses full width" do
+      before do
         allow(dsl).to receive_messages(centered?: true)
-        segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
+        allow(dsl).to receive_messages(containing_width: 100)
+      end
 
-        # TODO: This isn't quite right, but kind of works for the time being
-        expect_segments(segments, [26, 76])
+      it "uses full width" do
+        allow(dsl).to receive_messages(element_left: 0)
+        segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
+        expect_segments(segments, [0, 76])
+      end
+
+      it "bumps down a line if not at start" do
+        allow(dsl).to receive_messages(element_left: 20)
+        segments = when_fit_at(x: 20, y: 75, next_line_start: 95)
+        expect_segments(segments, [20, 76], [1, 95])
       end
     end
   end

@@ -49,7 +49,7 @@ class Shoes
         def fit_it_in
           width, height = available_space
           if @dsl.centered?
-            fit_as_centered(width)
+            fit_as_centered(width, height)
           elsif no_space_in_first_layout?(width)
             fit_as_empty_first_layout(height)
           else
@@ -96,33 +96,40 @@ class Shoes
         end
 
         def fit_as_empty_first_layout(height)
-          # Although we purposefully empty it out, still need the first layout
-          layout = generate_layout(1, @dsl.text)
-          layout.text = ""
-
           height += ::Shoes::Slot::NEXT_ELEMENT_OFFSET
-          generate_two_layouts(layout, "", @dsl.text, height)
+          generate_two_layouts(empty_segment, "", @dsl.text, height)
         end
 
-        def fit_as_centered(width)
-          segment = CenteredTextSegment.new(@dsl, width)
-          [segment.position_at(@dsl.element_left, @dsl.element_top)]
+        def fit_as_centered(width, height)
+          if @dsl.element_left > 0
+            position_two_segments(
+              empty_segment,
+              CenteredTextSegment.new(@dsl, @dsl.containing_width),
+              "",
+              height)
+          else
+            segment = CenteredTextSegment.new(@dsl, width)
+            [segment.position_at(@dsl.element_left, @dsl.element_top)]
+          end
         end
 
         def generate_two_layouts(first_layout, first_text, second_text, height)
-          first_height = first_height(first_layout, first_text, height)
           second_layout = generate_second_layout(second_text)
+          position_two_segments(first_layout, second_layout, first_text, height)
+        end
 
+        def generate_second_layout(second_text)
+          generate_layout(@dsl.containing_width, second_text)
+        end
+
+        def position_two_segments(first_layout, second_layout, first_text, height)
+          first_height = first_height(first_layout, first_text, height)
           [
             first_layout.position_at(@dsl.element_left,
                                      @dsl.element_top),
             second_layout.position_at(parent.absolute_left + @dsl.margin_left,
                                       @dsl.element_top + first_height)
           ]
-        end
-
-        def generate_second_layout(second_text)
-          generate_layout(@dsl.containing_width, second_text)
         end
 
         def available_space
@@ -165,6 +172,12 @@ class Shoes
 
         def generate_layout(width, text)
           TextSegment.new(@dsl, text, width)
+        end
+
+        def empty_segment
+          segment = generate_layout(1, @dsl.text)
+          segment.text = ""
+          segment
         end
 
         def split_text(layout, height)
