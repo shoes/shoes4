@@ -4,12 +4,9 @@ describe Shoes::CommonMethods do
 
   let(:parent) {double 'parent', add_child: true, remove_child: true}
   let(:gui) {double 'gui', clear: true}
+  let(:test_class) {Class.new {include Shoes::CommonMethods}}
 
-  class CommonMethodsTest
-    include Shoes::CommonMethods
-  end
-
-  subject {CommonMethodsTest.new}
+  subject {test_class.new}
 
   before :each do
     allow(subject).to receive_messages parent: parent, gui: gui
