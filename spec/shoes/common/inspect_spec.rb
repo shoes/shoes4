@@ -1,14 +1,17 @@
 require "spec_helper"
 
-class Shoes
-  class InspectableObject
-    include Shoes::Common::Inspect
-  end
-end
-
 describe "Shoes::Common::Inspect" do
+  let (:test_class) {
+    Class.new {
+      include Shoes::Common::Inspect
+      def self.name
+        "Shoes::InspectableObject"
+      end
+    }
+  }
+
   describe "when included" do
-    subject(:object) { Shoes::InspectableObject.new }
+    subject(:object) { test_class.new }
 
     it "gives a #to_s like (Shoes::Klass)" do
       expect(object.to_s).to eq("(Shoes::InspectableObject)")
