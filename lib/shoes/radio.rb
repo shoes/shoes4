@@ -1,5 +1,5 @@
 class Shoes
-  class Radio < CheckButton  
+  class Radio < CheckButton
     attr_accessor :group
 
     def initialize(app, parent, group, opts = {}, blk = nil)

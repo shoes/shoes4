@@ -1,5 +1,7 @@
 class Shoes
   class Sound
+    include Common::Inspect
+
     def initialize(parent, filepath, opts={}, &blk)
       @parent = parent
       @filepath = filepath
