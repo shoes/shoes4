@@ -25,7 +25,7 @@ describe Shoes::Swt::Line do
   it_behaves_like "paintable"
   it_behaves_like "togglable"
 
-  it {is_expected.to respond_to :clear}
+  it {is_expected.to respond_to :remove}
 
   describe "painter" do
     include_context "painter context"

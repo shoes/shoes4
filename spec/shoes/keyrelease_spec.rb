@@ -6,7 +6,7 @@ describe Shoes::Keyrelease do
   subject(:keyrelease) { Shoes::Keyrelease.new app, &input_block }
 
   it "should clear" do
-    expect(keyrelease).to respond_to(:clear)
+    expect(keyrelease).to respond_to(:remove)
   end
 
 end

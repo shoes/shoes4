@@ -13,7 +13,7 @@ class Shoes
       def replace(*opts)
       end
 
-      def clear;end
+      def remove;end
 
       def contents_alignment(*args);end
     end

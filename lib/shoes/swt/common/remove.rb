@@ -1,8 +1,8 @@
 class Shoes
   module Swt
     module Common
-      module Clear
-        def clear
+      module Remove
+        def remove
           app.remove_paint_listener @painter
           remove_click_listeners
           @real.dispose unless @real.nil? || @real.disposed?

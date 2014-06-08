@@ -56,7 +56,7 @@ class Shoes
 
     def remove
       parent.remove_child self if parent
-      gui.clear if gui && gui.respond_to?(:clear)
+      gui.remove if gui && gui.respond_to?(:remove)
     end
 
     # displace(left: a number, top: a number) » self

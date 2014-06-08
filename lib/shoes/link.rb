@@ -41,8 +41,8 @@ class Shoes
       @gui.in_bounds?(x, y)
     end
 
-    def clear
-      @gui.clear
+    def remove
+      @gui.remove
     end
 
   end

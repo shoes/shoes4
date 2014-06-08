@@ -40,7 +40,7 @@ class Shoes
         eval_block key_string unless character.empty?
       end
 
-      def clear
+      def remove
         @app.remove_key_listener(@key_listener)
       end
 

@@ -6,6 +6,6 @@ describe Shoes::Keypress do
   subject(:keypress) { Shoes::Keypress.new app, &input_block }
 
   it "should clear" do
-    expect(keypress).to respond_to(:clear)
+    expect(keypress).to respond_to(:remove)
   end
 end

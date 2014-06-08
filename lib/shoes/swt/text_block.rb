@@ -1,7 +1,7 @@
 class Shoes
   module Swt
     class TextBlock
-      include Common::Clear
+      include Common::Remove
       include Common::Toggle
       include Common::Clickable
       include ::Shoes::BackendDimensionsDelegations
@@ -79,7 +79,7 @@ class Shoes
         end
       end
 
-      def clear
+      def remove
         super
         clear_contents
       end
@@ -96,7 +96,7 @@ class Shoes
       end
 
       def clear_links
-        @dsl.links.each(&:clear)
+        @dsl.links.each(&:remove)
       end
 
       def dispose_existing_segments

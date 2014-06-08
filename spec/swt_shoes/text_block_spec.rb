@@ -111,14 +111,14 @@ describe Shoes::Swt::TextBlock do
           subject.contents_alignment(current_position)
         end
 
-        it "should dispose all segments on clear" do
+        it "should dispose all segments on remove" do
           allow(swt_app).to receive(:remove_listener)
 
           expect(segment).to receive(:dispose).at_least(1).times
           expect(second_segment).to receive(:dispose).at_least(1).times
 
           subject.contents_alignment(current_position)
-          subject.clear
+          subject.remove
         end
       end
     end
@@ -166,12 +166,12 @@ describe Shoes::Swt::TextBlock do
     end
 
     it "clears links" do
-      expect(link).to receive(:clear)
-      subject.clear
+      expect(link).to receive(:remove)
+      subject.remove
     end
 
     it "clears links on replace" do
-      expect(link).to receive(:clear)
+      expect(link).to receive(:remove)
       subject.replace("text")
     end
   end

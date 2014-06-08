@@ -7,7 +7,7 @@ class Shoes
       include Common::Clickable
       include Common::PainterUpdatesPosition
       include Common::Toggle
-      include Common::Clear
+      include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
       def_delegators :dsl, :angle, :corners

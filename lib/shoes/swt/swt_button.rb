@@ -1,7 +1,7 @@
 class Shoes
   module Swt
     class SwtButton
-      include Common::Clear
+      include Common::Remove
       include Common::Toggle
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations

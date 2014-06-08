@@ -20,7 +20,7 @@ describe Shoes::Swt::Button do
 
   it_behaves_like "buttons"
   it_behaves_like "movable element", 140, 300
-  it_behaves_like "clearable native element"
+  it_behaves_like "removable native element"
   it_behaves_like "togglable"
 
   describe "#initialize" do

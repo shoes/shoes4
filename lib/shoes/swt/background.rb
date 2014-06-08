@@ -4,7 +4,7 @@ class Shoes
       extend Forwardable
       include Common::Fill
       include Common::Stroke
-      include Common::Clear
+      include Common::Remove
       include Common::Toggle
       include BackendDimensionsDelegations
 

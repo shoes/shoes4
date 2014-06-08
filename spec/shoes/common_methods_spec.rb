@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Shoes::CommonMethods do
 
   let(:parent) {double 'parent', add_child: true, remove_child: true}
-  let(:gui) {double 'gui', clear: true}
+  let(:gui) {double 'gui', remove: true}
   let(:test_class) {Class.new {include Shoes::CommonMethods}}
 
   subject {test_class.new}
@@ -22,8 +22,8 @@ describe Shoes::CommonMethods do
       expect(parent).to have_received(:remove_child).with(subject)
     end
 
-    it 'calls clear on the gui' do
-      expect(gui).to have_received(:clear)
+    it 'calls remove on the gui' do
+      expect(gui).to have_received(:remove)
     end
 
     describe 'if the gui does not respond to clear' do

@@ -3,7 +3,7 @@ class Shoes
     # Class is used by edit_box and edit_line
     class InputBox
       include Common::Child
-      include Common::Clear
+      include Common::Remove
       include Common::PainterUpdatesPosition
       include Common::Toggle
       include Common::UpdatePosition

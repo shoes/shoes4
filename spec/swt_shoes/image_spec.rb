@@ -21,7 +21,7 @@ describe Shoes::Swt::Image do
   }
 
   it_behaves_like "paintable"
-  it_behaves_like "clearable"
+  it_behaves_like "removable"
   it_behaves_like "clickable backend"
   it_behaves_like "togglable"
 

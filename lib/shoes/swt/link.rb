@@ -17,7 +17,7 @@ class Shoes
         clickable self, Proc.new { dsl.execute_link }
       end
 
-      def clear
+      def remove
         @link_segments.clear
         remove_listener_for(self)
       end

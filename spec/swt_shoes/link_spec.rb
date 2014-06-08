@@ -51,7 +51,7 @@ describe Shoes::Swt::Link do
       expect(swt_app).to receive(:remove_listener).twice
 
       subject.create_links_in([[layout, 0..10]])
-      subject.clear
+      subject.remove
 
       expect(subject.link_segments).to be_empty
     end
