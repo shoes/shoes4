@@ -2,12 +2,12 @@ class Shoes
   module Common
     module Inspect
       def to_s
-        "(#{self.class.name.gsub('::', ':')})"
+        "(#{self.class.name})"
       end
 
       # Object hex representation from https://github.com/michaeldv/awesome_print
       def inspect
-        "(#{self.class.name.gsub('::', ':')} <#{"0x%08x" % (self.object_id * 2)}>)"
+        "(#{self.class.name} <#{"0x%08x" % (self.object_id * 2)}>)"
       end
     end
   end
