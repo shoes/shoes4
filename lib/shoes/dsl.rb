@@ -222,6 +222,7 @@ class Shoes
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts, &blk)
       oval_style = pop_style(opts)
+      oval_style = style_normalizer.normalize(oval_style)
       case opts.length
         when 3
           left, top, width = opts
