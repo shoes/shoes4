@@ -162,13 +162,13 @@ describe Shoes::Swt::TextBlock::Fitter do
       end
 
       it "uses full width" do
-        allow(dsl).to receive_messages(element_left: 0)
+        allow(dsl).to receive_messages(element_left: 0, left: 0)
         segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
         expect_segments(segments, [0, 76])
       end
 
       it "bumps down a line if not at start" do
-        allow(dsl).to receive_messages(element_left: 20)
+        allow(dsl).to receive_messages(element_left: 20, left: 20)
         segments = when_fit_at(x: 20, y: 75, next_line_start: 95)
         expect_segments(segments, [20, 76], [1, 95])
       end

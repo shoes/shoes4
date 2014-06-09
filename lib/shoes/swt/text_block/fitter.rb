@@ -101,16 +101,20 @@ class Shoes
         end
 
         def fit_as_centered(width, height)
-          if @dsl.element_left > 0
+          if first_element_on_line?
+            segment = CenteredTextSegment.new(@dsl, width)
+            [segment.position_at(@dsl.element_left, @dsl.element_top)]
+          else
             position_two_segments(
               empty_segment,
               CenteredTextSegment.new(@dsl, @dsl.containing_width),
               "",
               height)
-          else
-            segment = CenteredTextSegment.new(@dsl, width)
-            [segment.position_at(@dsl.element_left, @dsl.element_top)]
           end
+        end
+
+        def first_element_on_line?
+          @dsl.left - @dsl.margin_left <= 0
         end
 
         def generate_two_layouts(first_layout, first_text, second_text, height)
