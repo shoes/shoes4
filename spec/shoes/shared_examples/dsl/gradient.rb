@@ -4,7 +4,7 @@ shared_examples_for "creating gradient" do
   end
 
   it "returns correct gradient according to #inspect" do
-    expect(gradient.inspect).to match("[(]Shoes::Gradient:#{shoes_object_id_pattern} rgba[(]255, 0, 0, 255[)]->rgba[(]0, 0, 255, 255[)][)]")
+    expect(gradient.inspect).to match("[(]Shoes::Gradient:#{shoes_object_id_pattern} rgb[(]255, 0, 0[)]->rgb[(]0, 0, 255[)][)]")
   end
 end
 
