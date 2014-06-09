@@ -24,7 +24,7 @@ describe Shoes::Color do
     its(:blue) { should eq(0) }
     its(:hex) { should eq("#000000") }
     its(:to_s) { should match(rgba_pattern) }
-    its(:inspect) { should match(/^[(]Shoes::Color #{shoes_object_id_pattern} #{rgba_pattern}[)]$/) }
+    its(:inspect) { should match(/^[(]Shoes::Color:#{shoes_object_id_pattern} #{rgba_pattern}[)]$/) }
     it { is_expected.to be_black }
     it { is_expected.not_to be_white }
   end

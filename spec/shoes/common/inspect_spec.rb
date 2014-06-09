@@ -19,8 +19,8 @@ describe "Shoes::Common::Inspect" do
       expect(object.to_s).to eq("(Shoes::InspectableObject)")
     end
 
-    it "gives an #inspect like (Shoes::Klass <0x000049e8>)" do
-      expect(object.inspect).to match(/^[(]Shoes::InspectableObject #{shoes_object_id_pattern}[)]$/)
+    it "gives an #inspect like (Shoes::Klass:0x000049e8)" do
+      expect(object.inspect).to match(/^[(]Shoes::InspectableObject:#{shoes_object_id_pattern}[)]$/)
     end
   end
 end
