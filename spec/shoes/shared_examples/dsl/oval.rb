@@ -36,9 +36,16 @@ shared_examples_for "oval DSL method" do
     describe "with stroke and fill styles" do
       let(:stroke) { Shoes::COLORS.fetch :orchid }
       let(:fill) { Shoes::COLORS.fetch :lemonchiffon }
-      let(:oval) { dsl.oval(left, top, width, height, stroke: stroke, fill: fill) }
 
-      it_behaves_like "an oval/circle element"
+      describe "as colors" do
+        let(:oval) { dsl.oval(left, top, width, height, stroke: stroke, fill: fill) }
+        it_behaves_like "an oval/circle element"
+      end
+
+      describe "as hex strings" do
+        let(:oval) { dsl.oval(left, top, width, height, stroke: stroke.hex, fill: fill.hex) }
+        it_behaves_like "an oval/circle element"
+      end
     end
 
     describe "with too few arguments" do
