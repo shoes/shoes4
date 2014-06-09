@@ -1,5 +1,7 @@
 class Shoes
   class Point
+    include Common::Inspect
+
     def initialize(x, y)
       @x, @y = x, y
     end
@@ -38,6 +40,14 @@ class Shoes
 
     def ==(other)
       return other.respond_to?(:x) && @x == other.x && other.respond_to?(:y) && @y == other.y
+    end
+
+    def to_s
+      "(#{@x},#{@y})"
+    end
+
+    def inspect
+      super.insert(-2, " #{to_s}")
     end
   end
 end
