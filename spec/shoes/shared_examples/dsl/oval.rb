@@ -17,41 +17,43 @@ shared_examples_for "oval DSL method" do
   let(:width)  { 100 }
   let(:height) { 200 }
 
-  let(:oval) { dsl.oval(left, top, width, height) }
-
-  context "eccentric, from explicit arguments" do
-    it_behaves_like "an oval/circle element"
+  describe "an oval" do
+    describe "from explicit arguments" do
+      let(:oval) { dsl.oval(left, top, width, height) }
+      it_behaves_like "an oval/circle element"
+    end
   end
 
   it "raises an ArgumentError" do
     expect { dsl.oval(10) }.to raise_error(ArgumentError)
   end
 
-  context "a circle" do
+  describe "a circle" do
     let(:width) { height }
 
     describe "when constructed from explicit arguments" do
+      let(:oval) { dsl.oval(left, top, width, height) }
       it_behaves_like "an oval/circle element"
     end
 
     describe "when constructed with a top, left and diameter" do
-      let(:circle) { dsl.oval(left, top, width) }
+      let(:oval) { dsl.oval(left, top, width) }
       it_behaves_like "an oval/circle element"
     end
 
     describe "when constructing from a style hash" do
       describe "using left, top, height, width" do
-        let(:circle) { dsl.oval(left: left, top: top, width: width, height: height) }
+        let(:oval) { dsl.oval(left: left, top: top, width: width, height: height) }
         it_behaves_like "an oval/circle element"
       end
 
       describe "using left, top, height, width, center: false" do
-        let(:circle) { dsl.oval(left: left, top: top, width: width, height: height, center: false) }
+        let(:oval) { dsl.oval(left: left, top: top, width: width, height: height, center: false) }
         it_behaves_like "an oval/circle element"
       end
 
       describe "using left, top, diameter" do
-        let(:circle) { dsl.oval(left: left, top: top, diameter: width) }
+        let(:oval) { dsl.oval(left: left, top: top, diameter: width) }
         it_behaves_like "an oval/circle element"
       end
     end
