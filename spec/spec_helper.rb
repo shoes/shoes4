@@ -8,6 +8,7 @@ require 'pry'
 require 'shoes'
 require 'async_helper'
 require 'shoes/helpers/fake_element'
+require 'shoes/helpers/inspect_helpers'
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(:allow => "codeclimate.com")

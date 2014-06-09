@@ -67,8 +67,8 @@ require 'shoes/dimension'
 require 'shoes/dimensions'
 require 'shoes/text_block_dimensions'
 
-require 'shoes/color'
 require 'shoes/common/inspect'
+require 'shoes/color'
 
 require 'shoes/common/background_element'
 require 'shoes/common/changeable'
