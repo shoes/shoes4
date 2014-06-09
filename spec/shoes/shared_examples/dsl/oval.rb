@@ -27,8 +27,8 @@ shared_examples_for "oval DSL method" do
   let(:stroke) { Shoes::COLORS[:black] }
   let(:fill) { Shoes::COLORS[:black] }
 
-  describe "an oval" do
-    describe "from explicit arguments" do
+  describe "creating an oval" do
+    describe "with explicit arguments" do
       let(:oval) { dsl.oval(left, top, width, height) }
       it_behaves_like "an oval/circle element"
     end
@@ -40,42 +40,42 @@ shared_examples_for "oval DSL method" do
 
       it_behaves_like "an oval/circle element"
     end
+
+    describe "with too few arguments" do
+      it "raises an ArgumentError" do
+        expect { dsl.oval(10) }.to raise_error(ArgumentError)
+      end
+    end
   end
 
-  describe "a circle" do
+  describe "creating a circle" do
     let(:width) { height }
 
-    describe "when constructed from explicit arguments" do
+    describe "with explicit arguments" do
       let(:oval) { dsl.oval(left, top, width, height) }
       it_behaves_like "an oval/circle element"
     end
 
-    describe "when constructed with a top, left and diameter" do
+    describe "with top, left, diameter" do
       let(:oval) { dsl.oval(left, top, width) }
       it_behaves_like "an oval/circle element"
     end
 
-    describe "when constructing from a style hash" do
-      describe "using left, top, height, width" do
+    describe "with a style hash" do
+      describe "containing left, top, height, width" do
         let(:oval) { dsl.oval(left: left, top: top, width: width, height: height) }
         it_behaves_like "an oval/circle element"
       end
 
-      describe "using left, top, height, width, center: false" do
+      describe "containing left, top, height, width, center: false" do
         let(:oval) { dsl.oval(left: left, top: top, width: width, height: height, center: false) }
         it_behaves_like "an oval/circle element"
       end
 
-      describe "using left, top, diameter" do
+      describe "containing left, top, diameter" do
         let(:oval) { dsl.oval(left: left, top: top, diameter: width) }
         it_behaves_like "an oval/circle element"
       end
-    end
-  end
-
-  describe "creating an oval with too few arguments" do
-    it "raises an ArgumentError" do
-      expect { dsl.oval(10) }.to raise_error(ArgumentError)
     end
   end
 end
