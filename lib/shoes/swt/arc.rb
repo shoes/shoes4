@@ -5,7 +5,7 @@ class Shoes
       include Common::Stroke
       include Common::PainterUpdatesPosition
       include Common::Toggle
-      include Common::Clear
+      include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :dsl, :app, :transform

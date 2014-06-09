@@ -22,7 +22,6 @@ describe Shoes::Image do
     end
 
     it_behaves_like "movable object"
-    it_behaves_like "clearable object"
     it_behaves_like "object with dimensions"
 
     describe "relative dimensions from parent" do

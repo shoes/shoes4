@@ -2,7 +2,7 @@ class Shoes
   module Swt
     class ListBox
       include Common::Child
-      include Common::Clear
+      include Common::Remove
       include Common::Toggle
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations

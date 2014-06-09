@@ -21,7 +21,7 @@ describe Shoes::Swt::InputBox do
   end
 
   it_behaves_like "movable element"
-  it_behaves_like "clearable native element"
+  it_behaves_like "removable native element"
   it_behaves_like "togglable"
 
   describe "#initialize" do

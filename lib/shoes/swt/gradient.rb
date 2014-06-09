@@ -1,7 +1,7 @@
 class Shoes
   module Swt
     class Gradient
-      include Common::Clear
+      include Common::Remove
 
       def initialize(dsl)
         @dsl = dsl

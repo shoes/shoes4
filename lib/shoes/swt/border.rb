@@ -4,7 +4,7 @@ class Shoes
       extend Forwardable
       include Common::Fill
       include Common::Stroke
-      include Common::Clear
+      include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
       def_delegators :dsl, :angle, :corners

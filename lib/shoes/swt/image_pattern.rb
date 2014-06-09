@@ -1,7 +1,7 @@
 class Shoes
   module Swt
     class ImagePattern
-      include Common::Clear
+      include Common::Remove
 
       def initialize(dsl)
         @dsl = dsl

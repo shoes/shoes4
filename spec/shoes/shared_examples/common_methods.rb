@@ -24,13 +24,6 @@ shared_examples_for "movable object" do
   end
 end
 
-shared_examples_for "clearable object" do
-  it "clears" do
-    expect(subject).to receive(:clear)
-    subject.clear
-  end
-end
-
 shared_examples_for "left, top as center" do | *params |
   let(:centered_object) { described_class.new(app, parent, left, top, width, height, *params, :center => true) }
   it "should now be located somewhere" do

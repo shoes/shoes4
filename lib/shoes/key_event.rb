@@ -7,8 +7,8 @@ class Shoes
 
     attr_reader :app
 
-    def clear
-      @gui.clear
+    def remove
+      @gui.remove
     end
   end
 
