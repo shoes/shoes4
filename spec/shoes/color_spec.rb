@@ -1,8 +1,6 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Color do
-  let(:rgba_pattern) { 'rgba[(]0, 0, 0, [0-9]{1,3}[)]' }
-
   describe ".create" do
     let(:color) { Shoes::Color.new(40, 50, 60) }
 
@@ -16,15 +14,11 @@ describe Shoes::Color do
   end
 
   shared_examples_for "black" do
-    include InspectHelpers
-
     its(:class) { should eq(Shoes::Color) }
     its(:red) { should eq(0) }
     its(:green) { should eq(0) }
     its(:blue) { should eq(0) }
     its(:hex) { should eq("#000000") }
-    its(:to_s) { should match(rgba_pattern) }
-    its(:inspect) { should match(/^[(]Shoes::Color:#{shoes_object_id_pattern} #{rgba_pattern}[)]$/) }
     it { is_expected.to be_black }
     it { is_expected.not_to be_white }
   end
@@ -118,6 +112,18 @@ describe Shoes::Color do
           its(:alpha) { should eq(255) }
         end
       end
+    end
+
+    describe "inspect" do
+      include InspectHelpers
+
+      # Using patterns here so we can handle the variable hex string identifier
+      let(:rgb_pattern) { 'rgb[(]10, 20, 30[)]' }
+      let(:inspect_pattern) { "[(]Shoes::Color:#{shoes_object_id_pattern} #{rgb_pattern} alpha:40[)]$" }
+      subject(:color) { Shoes::Color.new(10, 20, 30, 40) }
+
+      its(:to_s) { should match(rgb_pattern) }
+      its(:inspect) { should match(inspect_pattern) }
     end
 
     context "white" do

@@ -76,11 +76,11 @@ EOS
     end
 
     def to_s
-      "rgba(#{red}, #{green}, #{blue}, #{alpha})"
+      "rgb(#{red}, #{green}, #{blue})"
     end
 
     def inspect
-      super.insert(-2, " #{to_s}")
+      super.insert(-2, " #{to_s} alpha:#{@alpha}")
     end
 
     private
