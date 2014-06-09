@@ -9,6 +9,14 @@ shared_examples_for "an oval/circle element" do
     expect(oval.width).to eq(width)
     expect(oval.height).to eq(height)
   end
+
+  it "sets stroke" do
+    expect(oval.style[:stroke]).to eq(stroke)
+  end
+
+  it "sets fill" do
+    expect(oval.style[:fill]).to eq(fill)
+  end
 end
 
 shared_examples_for "oval DSL method" do
@@ -16,16 +24,22 @@ shared_examples_for "oval DSL method" do
   let(:top)    { 30 }
   let(:width)  { 100 }
   let(:height) { 200 }
+  let(:stroke) { Shoes::COLORS[:black] }
+  let(:fill) { Shoes::COLORS[:black] }
 
   describe "an oval" do
     describe "from explicit arguments" do
       let(:oval) { dsl.oval(left, top, width, height) }
       it_behaves_like "an oval/circle element"
     end
-  end
 
-  it "raises an ArgumentError" do
-    expect { dsl.oval(10) }.to raise_error(ArgumentError)
+    describe "with stroke and fill styles" do
+      let(:stroke) { Shoes::COLORS.fetch :orchid }
+      let(:fill) { Shoes::COLORS.fetch :lemonchiffon }
+      let(:oval) { dsl.oval(left, top, width, height, stroke: stroke, fill: fill) }
+
+      it_behaves_like "an oval/circle element"
+    end
   end
 
   describe "a circle" do
@@ -59,4 +73,9 @@ shared_examples_for "oval DSL method" do
     end
   end
 
+  describe "creating an oval with too few arguments" do
+    it "raises an ArgumentError" do
+      expect { dsl.oval(10) }.to raise_error(ArgumentError)
+    end
+  end
 end
