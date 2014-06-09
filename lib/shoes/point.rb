@@ -43,7 +43,8 @@ class Shoes
     end
 
     def to_s
-      "(#{@x},#{@y})"
+      nothing = '_'
+      "(#{@x || nothing},#{@y || nothing})"
     end
 
     def inspect

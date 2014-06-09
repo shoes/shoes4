@@ -63,11 +63,11 @@ end
 
 require 'shoes/version'
 require 'shoes/renamed_delegate'
+require 'shoes/common/inspect'
 require 'shoes/dimension'
 require 'shoes/dimensions'
 require 'shoes/text_block_dimensions'
 
-require 'shoes/common/inspect'
 require 'shoes/color'
 
 require 'shoes/common/background_element'

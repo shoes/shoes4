@@ -59,5 +59,13 @@ describe Shoes::Point do
     it "inspects like (Shoes::Point:0x01234567 (x,y))" do
       expect(subject.inspect).to match(/[(]Shoes::Point:#{shoes_object_id_pattern} [(]40,50[)][)]/)
     end
+
+    describe "with nil values" do
+      subject { Shoes::Point.new(nil, nil) }
+
+      it "looks like (nil,nil)" do
+        expect(subject.to_s).to eq("(_,_)")
+      end
+    end
   end
 end
