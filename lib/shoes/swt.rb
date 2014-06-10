@@ -105,6 +105,7 @@ require 'shoes/swt/text_block'
 require 'shoes/swt/timer'
 
 require 'shoes/swt/text_block/text_segment'
+require 'shoes/swt/text_block/centered_text_segment'
 require 'shoes/swt/text_block/text_segment_collection'
 require 'shoes/swt/text_block/cursor_painter'
 require 'shoes/swt/text_block/fitter'

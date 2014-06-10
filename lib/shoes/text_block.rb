@@ -1,4 +1,5 @@
 class Shoes
+  CENTER = "center".freeze
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock
@@ -72,6 +73,10 @@ class Shoes
 
     def has_textcursor?
       @textcursor
+    end
+
+    def centered?
+      opts[:align] == CENTER
     end
 
     def links

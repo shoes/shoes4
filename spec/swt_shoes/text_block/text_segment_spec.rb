@@ -3,7 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::TextBlock::TextSegment do
   let(:layout) { double("layout", text: "the text",
                         :alignment= => nil, :justify= => nil, :spacing= => nil,
-                        :text= => nil, setWidth: nil,
+                        :text= => nil, width=: nil,
                         disposed?: false, dispose: nil,
                         set_style: nil, bounds: bounds) }
   let(:bounds) { Java::OrgEclipseSwtGraphics::Rectangle.new(0, 0, 0, 0) }
@@ -74,12 +74,12 @@ describe Shoes::Swt::TextBlock::TextSegment do
 
   describe "shrinking on initialization" do
     it "should not shrink when enough containing width" do
-      expect(subject.layout).to_not have_received(:setWidth)
+      expect(subject.layout).to_not have_received(:width=)
     end
 
     it "shrinks when too long for container" do
       bounds.width = segment_width + 10
-      expect(subject.layout).to have_received(:setWidth).with(segment_width)
+      expect(subject.layout).to have_received(:width=).with(segment_width)
     end
   end
 
