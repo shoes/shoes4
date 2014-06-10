@@ -22,10 +22,6 @@ describe Shoes::App do
   describe "initialize" do
     let(:input_blk) { Proc.new {} }
 
-    before do
-      allow_any_instance_of(Shoes::App).to receive(:flow)
-    end
-
     it "initializes style hash", :qt do
       style = Shoes::App.new.style
       expect(style.class).to eq(Hash)
