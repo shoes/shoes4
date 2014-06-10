@@ -1,15 +1,5 @@
 class Shoes
-  shoes_icon = File.expand_path("../../../static/shoes-icon.png", __FILE__)
-  if shoes_icon.include? '.jar!'
-    SHOES_ICON = File.join(Dir.tmpdir, 'shoes-icon.png').freeze
-    open SHOES_ICON, 'wb' do |fw|
-      open shoes_icon, 'rb' do |fr|
-        fw.write fr.read
-      end
-    end
-  else
-    SHOES_ICON = shoes_icon.freeze
-  end
+  ICON = File.join(DIR, 'static/shoes-icon.png').freeze
 
   # Instantiates a new Shoes app.
   #

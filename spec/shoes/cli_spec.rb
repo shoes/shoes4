@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'shoes/cli'
+require 'shoes/ui/cli'
 
 describe Shoes::CLI do
   subject {Shoes::CLI.new}

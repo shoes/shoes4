@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/shoes/version', __FILE__)
+require_relative 'lib/shoes/version'
+require_relative 'manifests/shoes'
 
 Gem::Specification.new do |s|
   s.name        = "shoes"
@@ -12,35 +13,13 @@ Gem::Specification.new do |s|
   s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.}
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = ShoesManifest.files
+  s.test_files    = ShoesManifest.test_files
   s.require_paths = ["lib"]
 
-  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
-  s.executables   = ['shoes-stub', 'ruby-shoes']
-  s.extensions    = ['ext/install/Rakefile']
+  s.add_dependency "shoes-dsl", Shoes::VERSION
+  s.add_dependency "shoes-swt", Shoes::VERSION
 
-  s.add_dependency "swt", "~>0.18"
-  s.add_dependency "furoshiki", ">=0.1.2"
+  s.add_dependency "furoshiki", ">=0.1.2" # For packaging
   s.add_dependency "nokogiri" # For converting the manual to HTML
-  s.add_dependency "after_do", "~>0.3"
-
-  s.add_development_dependency "pry"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "yard"
-  s.add_development_dependency "kramdown"
-  s.add_development_dependency 'jruby-lint'
-
-  # Tests
-  s.add_development_dependency "rspec", "~>3.0"
-  s.add_development_dependency "rspec-its", "~>1.0"
-  s.add_development_dependency 'webmock'
-  s.add_development_dependency "guard"
-  s.add_development_dependency "guard-rspec", ">= 4.2"
-
-
-  # Test Coverage
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'coveralls'
-  s.add_development_dependency "codeclimate-test-reporter"
 end
