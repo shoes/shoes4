@@ -16,10 +16,6 @@ def rspec(files, options = "")
 end
 
 # run rspec in separate Jruby JVM
-# options :
-#   :swt - true/false(default)  When True, will run Jruby with SWT-required -X-startOnFirstThread
-#   :rspec - string  Options to pass to Rspec commandline.
-#
 def jruby_rspec(files, args)
   swt = args.delete(:swt)
   rspec_opts = spec_opts_from_args(args)
