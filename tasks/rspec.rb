@@ -26,12 +26,6 @@ def jruby_rspec(files, args)
   rspec_opts << " #{ENV['RSPEC_OPTS']}"
 
   jruby_run(rspec(files, rspec_opts), swt)
-
-  #out = jruby_run(rspec(files, rspec_opts), swt)
-  #ok, result = out.split("\n").last
-  #examples_failures = result.match /\d* examples, \d* failures/
-
-  #return { :examples => examples_failures[1], :failures => examples_failures[2] }
 end
 
 def spec_opts_from_args(args)
