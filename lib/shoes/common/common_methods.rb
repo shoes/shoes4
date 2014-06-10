@@ -7,6 +7,7 @@ class Shoes
   # gui    - the "real" backend implementation of the object
   # parent - the parent element e.g. the containing slot
   module CommonMethods
+    include Common::Inspect
 
     # Hides the element, so that it can't be seen. See also #show and #toggle.
     def hide

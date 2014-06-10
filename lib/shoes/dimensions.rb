@@ -33,6 +33,7 @@
 class Shoes
   class Dimensions
     extend RenamedDelegate
+    include Common::Inspect
 
     attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
                   :margin_bottom, :top, :left, :right, :bottom
@@ -101,8 +102,12 @@ class Shoes
       true
     end
 
-    def to_s
-      "<#{self.class}:#{object_id} relative values: (#{left}, #{top})->(#{right}, #{bottom}), absolute_values: (#{absolute_left}, #{absolute_top})->(#{absolute_right}, #{absolute_bottom}) #{width}x#{height}>"
+    def inspect
+      nothing = '_'
+      super.insert(-2,
+        " relative:#{Point.new left, top}->#{Point.new right, bottom}" <<
+        " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" <<
+        " #{width || nothing}x#{height || nothing}")
     end
 
     def self.setup_delegations

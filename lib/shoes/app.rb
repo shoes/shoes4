@@ -29,6 +29,7 @@ class Shoes
   class App
     include DSL
     include BuiltinMethods
+    include Common::Inspect
 
     # Instantiates a new Shoes app.
     #

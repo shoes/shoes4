@@ -39,6 +39,8 @@ describe Shoes::Dimensions do
   ONE_PIXEL = 1 unless const_defined?(:ONE_PIXEL) && ONE_PIXEL == 1
 
   describe 'initialization' do
+    include InspectHelpers
+
     describe 'without arguments (defaults)' do
       subject {Shoes::Dimensions.new parent}
 
@@ -60,6 +62,8 @@ describe Shoes::Dimensions do
       its(:margin_bottom) {should == 0}
       its(:element_width) {should == nil}
       its(:element_height) {should == nil}
+      its(:to_s) {should == "(Shoes::Dimensions)"}
+      its(:inspect) {should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]_,_[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] _x_[)]/)}
     end
 
     describe 'with 2 arguments' do
@@ -76,6 +80,7 @@ describe Shoes::Dimensions do
       its(:absolute_top_position?) {should be_truthy}
       its(:absolute_right_position?) {should be_falsey}
       its(:absolute_bottom_position?) {should be_falsey}
+      its(:inspect) {should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]#{left},#{top}[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] _x_[)]/)}
     end
 
     describe 'with 4 arguments' do
@@ -87,6 +92,7 @@ describe Shoes::Dimensions do
       its(:height) {should eq height}
       its(:element_width) {should == width}
       its(:element_height) {should == height}
+      its(:inspect) {should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]#{left},#{top}[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] #{width}x#{height}[)]/)}
     end
 
     describe 'with relative width and height' do

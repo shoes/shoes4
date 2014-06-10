@@ -1,5 +1,7 @@
 class Shoes
   class Text
+    include Common::Inspect
+
     def initialize texts, color=nil
       @texts = texts
       @color = color
@@ -9,6 +11,10 @@ class Shoes
     attr_accessor :parent
     def app
       @parent.app
+    end
+
+    def inspect
+      super.insert(-2, %Q| "#{to_s}"|)
     end
   end
 end

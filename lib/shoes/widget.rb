@@ -22,6 +22,7 @@ class Shoes
   #
   class Widget
     extend Forwardable
+    include Common::Inspect
 
     # Delegate missing methods to app, so you can use the Shoes DSL
     # inside the widget.
