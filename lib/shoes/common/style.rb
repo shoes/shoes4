@@ -30,7 +30,6 @@ class Shoes
       end 
 
       def style_init(arg_styles, new_styles = {})
-
         default_element_styles = {}
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
@@ -63,7 +62,6 @@ class Shoes
         end
 
         def define_accessor_methods
-
           needs_accessors = @supported_styles.reject do |style|
             self.method_defined?(style)
           end

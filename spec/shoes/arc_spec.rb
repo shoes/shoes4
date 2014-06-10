@@ -17,21 +17,9 @@ describe Shoes::Arc do
     it_behaves_like "object with style"
     it_behaves_like "object with dimensions"
     it_behaves_like "left, top as center", :start_angle, :end_angle
-    it_behaves_like 'object with parent'
+    it_behaves_like "object with parent"
 
-    #unpack styles. In the future we'd like to do something clever to avoid this duplication.
-    supported_styles = []
-    %w[art_styles cap center dimensions radius].map(&:to_sym).each do |style|
-      if Shoes::Common::Style::STYLE_GROUPS[style]
-        Shoes::Common::Style::STYLE_GROUPS[style].each{|style| supported_styles << style}
-      else
-        supported_styles << style
-      end
-    end
-    
-    supported_styles.each do |style|
-      it_behaves_like "object that styles with #{style}"
-    end
+    it_styles_with :art_styles, :center, :dimensions, :radius
 
     it "is a Shoes::Arc" do
       expect(arc.class).to be(Shoes::Arc)

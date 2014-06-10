@@ -1,13 +1,11 @@
 class Shoes
   class Arc
     include CommonMethods
-    include Common::Fill
-    include Common::Stroke
     include Common::Style
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :parent, :dimensions
+    attr_reader :app, :dimensions, :parent, :gui
     style_with :angle1, :angle2, :art_styles, :center, :dimensions, :radius, :wedge
     STYLES = {wedge: false}
 

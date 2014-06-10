@@ -1692,10 +1692,10 @@ also set, shapes drawn will not be visible.
 Draws a line using the current line color (aka "stroke") starting at
 coordinates (left, top) and ending at coordinates (x2, y2).
 
-=== oval(left, top, radius) » Shoes::Shape ===
+=== oval(left, top, diameter) » Shoes::Shape ===
 
 Draws a circular form at pixel coordinates (left, top) with a width and height
-of `radius` pixels.  The line and fill colors are used to draw the shape.  By
+of `diameter` pixels.  The line and fill colors are used to draw the shape.  By
 default, the coordinates are for the oval's leftmost, top corner, but this can
 be changed by calling the [[Art.transform]] method or by using the `:center`
 style on the next method below.
@@ -1718,7 +1718,7 @@ Draw circular form using a style hash.  The following styles are supported:
 
  * `top`: the y-coordinate for the oval pen.
  * `left`: the x-coordinate for the oval pen.
- * `radius`: the width and height of the circle.
+ * `diameter`: the width and height of the circle.
  * `width`: a specific pixel width for the oval.
  * `height`: a specific pixel height for the oval.
  * `center`: do the coordinates specific the oval's center? (true or false)

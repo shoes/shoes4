@@ -184,7 +184,7 @@ class Shoes
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
     def arc(left, top, width, height, angle1, angle2, opts = {})
-      create Shoes::Arc, left, top, width, height, angle1, angle2, opts#style.merge(arc_style)
+      create Shoes::Arc, left, top, width, height, angle1, angle2, opts
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
@@ -221,7 +221,8 @@ class Shoes
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
     def oval(*opts, &blk)
-      oval_style = style_normalizer.normalize pop_style(opts)
+      oval_style = pop_style(opts)
+      oval_style = style_normalizer.normalize(oval_style)
       case opts.length
         when 3
           left, top, width = opts
@@ -243,7 +244,7 @@ Wrong number of arguments. Must be one of:
 EOS
           raise ArgumentError, message
       end
-      create Shoes::Oval, left, top, width, height, style.merge(oval_style), &blk
+      create Shoes::Oval, left, top, width, height, oval_style, &blk
     end
 
     # Creates a rectangle
