@@ -7,6 +7,7 @@ require_relative 'tasks/changelog'
 require_relative 'tasks/gem'
 require_relative 'tasks/rspec'
 require_relative 'tasks/sample'
+require_relative 'tasks/yard'
 
 PACKAGE_DIR = 'pkg'
 
@@ -15,18 +16,6 @@ CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage', "spec/test_app/#{PACKAGE_
 # Necessary for tasks to have description which is convenient in a few cases
 Rake::TaskManager.record_task_metadata = true
 
-begin
-  require 'yard'
-
-  YARD::Rake::YardocTask.new do |t|
-    t.options = ['-mmarkdown']
-  end
-rescue LoadError
-  desc "Generate YARD Documentation"
-  task :yard do
-    abort 'YARD is not available. Try: gem install yard'
-  end
-end
 
 # spec = Gem::Specification.load('shoes.gemspec')
 # Gem::PackageTask.new(spec) do |gem|
