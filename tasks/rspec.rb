@@ -57,14 +57,9 @@ end
 task :default => :spec
 
 desc "Run all specs"
-task :spec, [:module] => "spec:all" do
-
-end
+task :spec, [:module] => "spec:all"
 
 namespace :spec do
-  desc "Run all specs"
-  task :default => ["spec:all"]
-
   desc "Run all specs for Shoes DSL and SWT backend
   Limit the examples to specific :modules :
     Animation
