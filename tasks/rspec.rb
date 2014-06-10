@@ -56,16 +56,16 @@ end
 
 task :default => :spec
 
-desc "Run All Specs"
+desc "Run all specs"
 task :spec, [:module] => "spec:all" do
 
 end
 
 namespace :spec do
-  desc "Run All Specs / All Modules"
+  desc "Run all specs"
   task :default => ["spec:all"]
 
-  desc "Run Specs on Shoes + All Frameworks
+  desc "Run all specs for Shoes DSL and SWT backend
   Limit the examples to specific :modules :
     Animation
     App
@@ -92,14 +92,14 @@ namespace :spec do
       jruby_rspec(files, argh)
     end
 
-    desc "Run isolated Swt backend specs"
+    desc "Run SWT backend specs isolated from DSL"
     task :isolation, [:module] do |t, args|
       argh = swt_args(args)
       files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
       jruby_rspec(files, argh)
     end
 
-    desc "Run integration specs with Swt backend"
+    desc "Run DSL specs integrated with SWT backend"
     task :integration, [:module] do |t, args|
       argh = swt_args(args)
       files = Dir['spec/shoes/*_spec.rb'].join ' '
@@ -107,7 +107,7 @@ namespace :spec do
     end
   end
 
-  desc "Specs for Shoes DSL
+  desc "Run specs for Shoes DSL
   Limit the examples to specific :modules : "
   task :dsl, [:module] do |t, args|
     argh = args.to_hash
