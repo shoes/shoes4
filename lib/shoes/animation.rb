@@ -1,5 +1,6 @@
 class Shoes
   class Animation
+    include Common::Inspect
 
     # Creates a new Animation.
     #

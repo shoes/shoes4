@@ -7,6 +7,8 @@ describe Shoes::Span do
   subject(:span) { Shoes::Span.new(text, opts) }
 
   describe 'span' do
+    include InspectHelpers
+
     it 'sets style to Span block' do
       expect(app.style[:strikethrough]).not_to be_truthy
 
@@ -15,6 +17,14 @@ describe Shoes::Span do
       expect(result.opts[:strikethrough]).to be_truthy
 
       expect(app.style[:strikethrough]).not_to be_truthy
+    end
+
+    it 'displays text for #to_s' do
+      expect(span.to_s).to eq(text.join)
+    end
+
+    it 'displays (Shoes::Span:0x01234567 "text") for #inspect' do
+      expect(span.inspect).to match(/[(]Shoes::Span:#{shoes_object_id_pattern} "#{text.join}"[)]/)
     end
   end
 

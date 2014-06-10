@@ -1,5 +1,7 @@
 class Shoes
   class Gradient
+    include Common::Inspect
+
     def initialize(color1, color2, alpha = Shoes::Color::OPAQUE)
       @color1, @color2 = color1, color2
       @alpha = alpha
@@ -7,8 +9,8 @@ class Shoes
 
     attr_reader :alpha, :color1, :color2
 
-    def to_s
-      "<#{self.class} #{color1.hex}->#{color2.hex}>"
+    def inspect
+      super.insert(-2, " #{color1}->#{color2}")
     end
 
     def ==(other)

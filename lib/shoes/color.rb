@@ -1,6 +1,8 @@
 class Shoes
   class Color
+    include Common::Inspect
     include Comparable
+
     OPAQUE = 255
     TRANSPARENT = 0
 
@@ -71,6 +73,14 @@ EOS
     #   Shoes::Color.new(255, 0, 255).hex # => "#ff00ff"
     def hex
       format "#%02x%02x%02x", @red, @green, @blue
+    end
+
+    def to_s
+      "rgb(#{red}, #{green}, #{blue})"
+    end
+
+    def inspect
+      super.insert(-2, " #{to_s} alpha:#{@alpha}")
     end
 
     private
