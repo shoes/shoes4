@@ -43,7 +43,6 @@ class Shoes
     # @option opts [Fixnum]  :height     (500)       The height of the app window
     #
     # @see Dimension#initialize
- 
     def initialize(opts={}, &blk)
       @__app__ = Shoes::InternalApp.new(self, opts, &blk)
       @__app__.setup_gui
@@ -71,10 +70,6 @@ class Shoes
       @__app__.quit
     end
 
-    def to_s
-      'Shoes App: ' + @__app__.app_title
-    end
-    
     def parent
       @__app__.current_slot.parent
     end
@@ -91,11 +86,12 @@ class Shoes
 
     alias_method :fullscreen?, :fullscreen
 
-    # inspect normally recursively inspects the values of all instance
-    # variables... as the app has a reference to EVERYTHING this turns
-    # out to be quite a lot/so much that the app runs out of memory #504
+    def to_s
+      super.insert(-2, " \"#{@__app__.app_title}\"")
+    end
+
     def inspect
-      "#<#{self.class}:0x#{hash.to_s(16)} @__app__=So much stuff literally breaks the memory limit. Look at it selectively.>"
+      super.insert(-2, " \"#{@__app__.app_title}\")")
     end
 
     DELEGATE_BLACKLIST = [:parent]
@@ -105,7 +101,6 @@ class Shoes
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
                          Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
   end
-
 
   # This is the representation of the app that is used internally by Shoes
   # objects. It is *NOT* the app object that a user interacts with in a
@@ -318,8 +313,7 @@ class Shoes
     end
 
     def inspect
-      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
+      super.insert(-2, " \"#{@__app__.app_title}\" #{@dimensions.inspect})")
     end
-
   end
 end

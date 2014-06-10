@@ -50,6 +50,18 @@ describe Shoes::App do
         expect(subject.absolute_top).to eq 0
       end
 
+      describe "inspect" do
+        include InspectHelpers
+
+        it "shows title in #to_s" do
+          expect(subject.to_s).to eq("(Shoes::App \"#{defaults.fetch :title}\")")
+        end
+
+        it "shows title in #inspect" do
+          expect(subject.inspect).to match("(Shoes::App:#{shoes_object_id_pattern} \"#{defaults.fetch :title}\")")
+        end
+      end
+
       describe "internal app state" do
         let(:internal_app) { app.instance_variable_get(:@__app__) }
 
