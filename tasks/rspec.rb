@@ -107,14 +107,15 @@ namespace :spec do
     end
   end
 
-  desc "Specs for base Shoes libraries
+  desc "Specs for Shoes DSL
   Limit the examples to specific :modules : "
-  task "shoes", [:module] do |t, args|
+  task :dsl, [:module] do |t, args|
     argh = args.to_hash
     files = Dir['spec/shoes/**/*_spec.rb'].join ' '
     jruby_rspec(files, argh)
   end
 
+  task :shoes, [:module] do |t, args|
+    Rake::Task['spec:dsl'].invoke(args[:module])
+  end
 end
-
-
