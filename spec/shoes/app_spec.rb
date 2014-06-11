@@ -159,28 +159,28 @@ describe Shoes::App do
 
         # .. but does not affect app2
         expect(app2.line(0, 100, 100, 0).style[:strokewidth]).not_to eq(10)
-     
+
       end
     end
   end
 
   describe "app-level style setter" do
     let(:goldenrod) { Shoes::COLORS[:goldenrod] }
-    
+
     pattern_styles = Shoes::DSL::PATTERN_APP_STYLES
     other_styles = Shoes::DSL::OTHER_APP_STYLES
 
     pattern_styles.each do |style|
       it "sets #{style} for objects" do
         subject.public_send(style, goldenrod)
-        expect(subject.line(0, 100, 100, 0).style[style]).to eq(goldenrod) 
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq(goldenrod)
       end
     end
 
     other_styles.each do |style|
       it "sets #{style} for objects" do
         subject.public_send(style, 'val')
-        expect(subject.line(0, 100, 100, 0).style[style]).to eq('val') 
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq('val')
       end
     end
 
