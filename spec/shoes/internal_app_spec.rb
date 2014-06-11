@@ -54,4 +54,21 @@ describe Shoes::InternalApp do
       end
     end
   end
+
+  describe '#add_child' do
+    let(:child) { double 'child' }
+    let(:opts) { Hash.new }
+
+    it 'adds the child to the top_slot when there is one' do
+      top_slot = instance_double("Shoes::Flow")
+      allow(subject).to receive(:top_slot) { top_slot }
+      expect(subject.top_slot).to receive(:add_child).with(child)
+      subject.add_child child
+    end
+
+    it 'adds the child to its own contents when there is no top_slot' do
+      subject.add_child child
+      expect(subject.contents).to include child
+    end
+  end
 end

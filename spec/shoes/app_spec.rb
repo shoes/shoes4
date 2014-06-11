@@ -265,24 +265,6 @@ describe Shoes::App do
     end
   end
 
-  describe '#add_child' do
-    let(:internal_app) { app.instance_variable_get(:@__app__) }
-    let(:child) {double 'child'}
-
-    it 'adds the child to the top_slot when there is one' do
-      top_slot_double = double 'top slot'
-      allow(internal_app).to receive_messages(top_slot: top_slot_double)
-      expect(top_slot_double).to receive(:add_child).with(child)
-      internal_app.add_child child
-    end
-
-    it 'adds the child to the own contents when there is no top_slot' do
-      allow(internal_app).to receive_messages top_slot: nil
-      internal_app.add_child child
-      expect(internal_app.contents).to include child
-    end
-  end
-
   describe '#clear' do
     let(:input_blk) {Proc.new {para 'Hello'}}
     let(:internal_app) {subject.instance_variable_get(:@__app__)}
