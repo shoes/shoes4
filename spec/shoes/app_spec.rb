@@ -61,18 +61,6 @@ describe Shoes::App do
           expect(subject.inspect).to match("(Shoes::App:#{shoes_object_id_pattern} \"#{defaults.fetch :title}\")")
         end
       end
-
-      describe "internal app state" do
-        let(:internal_app) { app.instance_variable_get(:@__app__) }
-
-        it "sets title", :qt do
-          expect(internal_app.app_title).to eq defaults[:title]
-        end
-
-        it "is resizable", :qt do
-          expect(internal_app.resizable).to be_truthy
-        end
-      end
     end
 
     context "from opts" do
@@ -86,16 +74,9 @@ describe Shoes::App do
         expect(subject.height).to eq opts[:height]
       end
 
-      describe "internal app state" do
-        let(:internal_app) { app.instance_variable_get(:@__app__) }
-
-        it "sets title", :qt do
-          expect(internal_app.app_title).to eq opts[:title]
-        end
-
-        it "sets resizable", :qt do
-          expect(internal_app.resizable).to be_falsey
-        end
+      it "passes opts to InternalApp" do
+        expect(Shoes::InternalApp).to receive(:new).with(kind_of(Shoes::App), opts).and_call_original
+        subject
       end
 
       it 'initializes a flow with the right parameters' do
