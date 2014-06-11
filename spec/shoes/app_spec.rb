@@ -120,7 +120,7 @@ describe Shoes::App do
       end
     end
   end
-  
+
   describe "style with defaults" do
     let(:default_styles) { Shoes::Common::Style::DEFAULT_STYLES }
 
@@ -132,7 +132,7 @@ describe Shoes::App do
       subject.style strokewidth: 4
       expect(subject.style).to eq(default_styles.merge(strokewidth: 4))
     end
-    
+
     default_styles = Shoes::Common::Style::DEFAULT_STYLES
 
     default_styles.each do |key, value|
