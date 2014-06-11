@@ -249,17 +249,17 @@ describe Shoes::App do
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'is not in fullscreen', :fails_on_osx => true do
+      it 'is not in fullscreen', :fails_on_osx do
         expect(app).not_to be_fullscreen
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'has its original width', :fails_on_osx => true do
+      it 'has its origina', :fails_on_osx do
         expect(app.width).to eq(defaults[:width])
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'has its original height', :fails_on_osx => true do
+      it 'has its original height', :fails_on_osx do
         expect(app.height).to eq(defaults[:height])
       end
     end
