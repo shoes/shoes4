@@ -229,31 +229,15 @@ describe Shoes::App do
   end
 
   describe 'fullscreen' do
-    describe 'starting' do
-      let(:internal_app) { app.instance_variable_get(:@__app__) }
-
-      context 'with defaults' do
-        it 'does not start as fullscreen' do
-          expect(internal_app.start_as_fullscreen?).to be_falsey
-        end
+    context 'defaults' do
+      it 'is not fullscreen' do
+        expect(app).not_to be_fullscreen
       end
 
-      describe 'with the fullscreen option' do
-        let(:opts) { {fullscreen: true} }
-
-        it 'starts as fullscreen ' do
-          expect(internal_app.start_as_fullscreen?).to be_truthy
-        end
+      it 'can enter fullscreen' do
+        app.fullscreen = true
+        expect(app).to be_fullscreen
       end
-    end
-
-    it 'is not in fullscreen by default' do
-      expect(app).not_to be_fullscreen
-    end
-
-    it 'can be turned into fullscreen' do
-      app.fullscreen = true
-      expect(app).to be_fullscreen
     end
 
     describe 'going into fullscreen and back out again' do

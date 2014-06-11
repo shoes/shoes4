@@ -5,6 +5,7 @@ class Shoes
       attr_accessor :fullscreen
       def initialize(dsl)
         @dsl = dsl
+        @started = false
       end
 
       # suboptimal but good enough fo now... calling the DSL lets the methods
@@ -18,13 +19,15 @@ class Shoes
       end
 
       def open
+        @started = true
+        self.fullscreen = true if @dsl.start_as_fullscreen?
       end
 
       def quit
       end
-      
+
       def started?
-        true
+        @started
       end
 
       def flush

@@ -24,10 +24,14 @@ describe Shoes::InternalApp do
       it "sets height" do
         expect(subject.height).to eq(defaults[:height])
       end
+
+      it "does not start as fullscreen" do
+        expect(subject.start_as_fullscreen?).to be_falsey
+      end
     end
 
     context "with custom opts" do
-      let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
+      let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false, :fullscreen => true} }
 
       it "sets title", :qt do
         expect(subject.app_title).to eq opts[:title]
@@ -43,6 +47,10 @@ describe Shoes::InternalApp do
 
       it "sets height" do
         expect(subject.height).to eq(opts[:height])
+      end
+
+      it "sets fullscreen" do
+        expect(subject.start_as_fullscreen?).to be_truthy
       end
     end
   end
