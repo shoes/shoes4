@@ -1,4 +1,4 @@
-require 'spec/shoes/spec_helper'
+require 'shoes/spec_helper'
 require 'fileutils'
 
 main_object = self

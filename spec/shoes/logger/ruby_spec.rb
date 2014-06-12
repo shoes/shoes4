@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'logger'
 
 describe Shoes::Logger::Ruby do
   it "delegates to a Logger instance" do
