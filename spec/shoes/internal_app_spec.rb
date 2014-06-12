@@ -1,12 +1,12 @@
 require 'shoes/spec_helper'
 
 describe Shoes::InternalApp do
-  let(:user_facing_app) { instance_double("Shoes::App") }
-  subject { Shoes::InternalApp.new user_facing_app, opts }
+  include_context "dsl app"
+
+  subject { app }
 
   describe "#initialize" do
     context "with defaults" do
-      let(:opts) { Hash.new }
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets title", :qt do
@@ -31,10 +31,10 @@ describe Shoes::InternalApp do
     end
 
     context "with custom opts" do
-      let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false, :fullscreen => true} }
+      let(:input_opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
 
       it "sets title", :qt do
-        expect(subject.app_title).to eq opts[:title]
+        expect(subject.app_title).to eq input_opts[:title]
       end
 
       it "sets resizable", :qt do
@@ -42,33 +42,59 @@ describe Shoes::InternalApp do
       end
 
       it "sets width" do
-        expect(subject.width).to eq(opts[:width])
+        expect(subject.width).to eq(input_opts[:width])
       end
 
       it "sets height" do
-        expect(subject.height).to eq(opts[:height])
+        expect(subject.height).to eq(input_opts[:height])
       end
+    end
+  end
 
-      it "sets fullscreen" do
-        expect(subject.start_as_fullscreen?).to be_truthy
-      end
+  describe 'fullscreen' do
+    let(:input_opts) { {:fullscreen => true} }
+
+    it "sets fullscreen" do
+      expect(subject.start_as_fullscreen?).to be_truthy
     end
   end
 
   describe '#add_child' do
     let(:child) { double 'child' }
-    let(:opts) { Hash.new }
 
-    it 'adds the child to the top_slot when there is one' do
+    it 'adds the child to the top_slot' do
       top_slot = instance_double("Shoes::Flow")
       allow(subject).to receive(:top_slot) { top_slot }
       expect(subject.top_slot).to receive(:add_child).with(child)
       subject.add_child child
     end
+  end
 
-    it 'adds the child to its own contents when there is no top_slot' do
-      subject.add_child child
-      expect(subject.contents).to include child
+  describe '#clear' do
+    let(:input_block) {
+      Proc.new {
+        para "CONTENT"
+        para "JUST FOR TESTING"
+      }
+    }
+
+    before :each do
+      expect(subject.top_slot.contents.size).to eq(2)
+      # TODO: Consider using this once #756 has been resolved.
+      # expect(subject.contents.size).to eq(2)
+    end
+
+    it 'clears top_slot' do
+      pending "Should pass when InternalApp doesn't have its own contents. See #756."
+      subject.clear
+      # Right now, this is not empty, because it contains one flow (the top_slot)
+      expect(subject.contents).to be_empty
+    end
+
+    # Should be replaced by 'clears top_slot' when that spec passes
+    it 'clears app contents' do
+      subject.clear
+      expect(subject.top_slot.contents).to be_empty
     end
   end
 end

@@ -140,6 +140,10 @@ class Shoes
       @resize_callbacks << blk
     end
 
+    def inspect
+      super.insert(-2, " \"#{@app_title}\" #{@dimensions.inspect})")
+    end
+
     def self.global_keypresses
       @global_keypresses ||= {}
     end
@@ -207,10 +211,6 @@ class Shoes
       self.class.add_global_keypress(:"alt_/") do
         Logger.setup
       end
-    end
-
-    def inspect
-      super.insert(-2, " \"#{@__app__.app_title}\" #{@dimensions.inspect})")
     end
   end
 end

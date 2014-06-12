@@ -267,11 +267,15 @@ describe Shoes::App do
 
   describe '#clear' do
     let(:input_blk) {Proc.new {para 'Hello'}}
-    let(:internal_app) {subject.instance_variable_get(:@__app__)}
 
-    it 'deletes everything (regression)' do
+    it 'has initial contents' do
+      expect(subject.contents).to_not be_empty
+    end
+
+    it 'removes everything (regression)' do
+      pending "Should pass when InternalApp doesn't have its own contents. See #756"
       subject.clear
-      expect(internal_app.top_slot.contents).to be_empty
+      expect(subject.contents).to be_empty
     end
 
     context 'clear in the initial input_block' do

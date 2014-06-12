@@ -1,6 +1,7 @@
 class Shoes
   class SlotContents
     extend Forwardable
+    include Common::Inspect
 
     def_delegators :@contents, :[], :size, :empty?, :first, :each, :clear,
                                :include?, :delete
@@ -40,7 +41,7 @@ class Shoes
     end
 
     def inspect
-      "#<#{self.class}:0x#{hash.to_s(16)} @prepending=#{@prepending} @prepending_index=#{@prepending_index} @contents=#{@contents.size} items that are too much to show or there might be an out of memory error.>"
+      super.insert(-2, " @size=#{size} @prepending=#{@prepending} @prepending_index=#{@prepending_index}")
     end
 
     private
