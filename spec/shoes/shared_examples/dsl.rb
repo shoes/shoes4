@@ -12,6 +12,7 @@ shared_examples "DSL container" do
     animate
     arc
     background
+    button
     border
     cap
     check
