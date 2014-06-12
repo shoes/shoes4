@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Shoes::Common::Inspect" do
-  let (:test_class) {
+  let(:test_class) {
     Class.new {
       include Shoes::Common::Inspect
       def self.name
