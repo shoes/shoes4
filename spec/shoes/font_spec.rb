@@ -1,5 +1,4 @@
 require 'shoes/spec_helper'
-require 'fileutils'
 
 main_object = self
 
