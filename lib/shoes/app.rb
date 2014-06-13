@@ -149,7 +149,7 @@ class Shoes
                   :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
-      top_slot.clear &blk
+      current_slot.clear &blk
     end
 
     def width
@@ -256,11 +256,16 @@ class Shoes
       self.global_keypresses[key] = blk
     end
 
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
+    end
+
     private
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way
       # top_slot already exists and methods may be called on it
       @top_slot = Flow.new self, self, width: width, height: height
+      self.current_slot = @top_slot
       @top_slot.append &execution_blk
     end
 
@@ -315,10 +320,6 @@ class Shoes
       self.class.add_global_keypress(:"alt_/") do
         Logger.setup
       end
-    end
-
-    def inspect
-      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
     end
 
   end
