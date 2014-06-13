@@ -71,8 +71,9 @@ class Shoes
 
 
     def add_child(child)
-      # No-op. The top_slot needs this, but we already hold it explicitly.
-      # Other elements should be added to the top_slot.
+      # No-op. The top_slot needs this method, but we already hold an explicit
+      # reference to the top_slot, so we don't need to add it as a child. Other
+      # elements should be added as children of the top_slot.
     end
 
     def default_styles
