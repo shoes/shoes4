@@ -42,11 +42,11 @@ describe Shoes::Download do
   end
 
   it "understands content_length" do
-    expect(content_length).to eql(1)
+    expect(content_length).to be >= 1
   end
 
   it "understands length" do
-    expect(length).to eql(1)
+    expect(length).to be >= 1
   end
 
   it 'creates the file specified by save' do
