@@ -1,5 +1,5 @@
 require 'shoes/spec_helper'
-require_relative 'helpers/fake_element'
+require 'shoes/helpers/fake_element'
 
 describe Shoes::Flow do
   include_context "dsl app"
