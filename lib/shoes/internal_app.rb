@@ -71,11 +71,8 @@ class Shoes
 
 
     def add_child(child)
-      # A slot calls #add_child on its parent during initialization. The top
-      # slot is a special case, since it doesn't need to add itself (and can't
-      # in fact). This check filters out the #add_child called in the top slot's
-      # initialize method.
-      top_slot.add_child child unless top_slot.nil?
+      # No-op. The top_slot needs this, but we already hold it explicitly.
+      # Other elements should be added to the top_slot.
     end
 
     def default_styles

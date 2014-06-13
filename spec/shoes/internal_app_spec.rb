@@ -65,15 +65,6 @@ describe Shoes::InternalApp do
     end
   end
 
-  describe '#add_child' do
-    let(:child) { double 'child' }
-
-    it 'adds the child to the top_slot' do
-      subject.add_child child
-      expect(subject.top_slot.contents).to include(child)
-    end
-  end
-
   describe '#clear' do
     context 'when called after the initial input block' do
       let(:input_block) {
