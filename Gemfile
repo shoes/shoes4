@@ -9,7 +9,7 @@ group :development do
   gem "guard-rspec"
   gem "pry"
 
-  gem "rspec", "~>3.0.0.rc1"
+  gem "rspec", "~>3.0.0"
   gem "rspec-its", "~>1.0.1"
   gem "rake"
 
