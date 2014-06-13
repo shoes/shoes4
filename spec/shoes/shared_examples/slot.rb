@@ -1,5 +1,3 @@
-require 'shoes/spec_helper'
-
 shared_examples_for "Slot" do
   it "should be able to append" do
     expect(subject.contents).to be_empty

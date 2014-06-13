@@ -71,30 +71,80 @@ describe Shoes::InternalApp do
   end
 
   describe '#clear' do
-    let(:input_block) {
-      Proc.new {
-        para "CONTENT"
-        para "JUST FOR TESTING"
+    context 'when called after the initial input block' do
+      let(:input_block) {
+        Proc.new {
+          para "CONTENT"
+          para "JUST FOR TESTING"
+        }
       }
-    }
 
-    before :each do
-      expect(subject.top_slot.contents.size).to eq(2)
-      # TODO: Consider using this once #756 has been resolved.
-      # expect(subject.contents.size).to eq(2)
+      before :each do
+        expect(subject.top_slot.contents.size).to eq(2)
+        # TODO: Consider using this once #756 has been resolved.
+        # expect(subject.contents.size).to eq(2)
+      end
+
+      it 'clears top_slot' do
+        pending "Should pass when InternalApp doesn't have its own contents. See #756."
+        subject.clear
+        # Right now, this is not empty, because it contains one flow (the top_slot)
+        expect(subject.contents).to be_empty
+      end
+
+      # Should be replaced by 'clears top_slot' when that spec passes
+      it 'clears app contents' do
+        subject.clear
+        expect(subject.top_slot.contents).to be_empty
+      end
     end
 
-    it 'clears top_slot' do
-      pending "Should pass when InternalApp doesn't have its own contents. See #756."
-      subject.clear
-      # Right now, this is not empty, because it contains one flow (the top_slot)
-      expect(subject.contents).to be_empty
+    context 'clear in the initial input_block' do
+      let(:input_block) {
+        Proc.new do
+          para 'Hello there'
+          clear do
+            para 'see you'
+          end
+        end
+      }
+
+      it 'does not raise an error calling clear on a top_slot that is nil' do
+        expect {subject}.not_to raise_error
+      end
+
+      describe 'inside a slot' do
+        let(:input_block) do
+          Proc.new do
+            button 'I am here'
+            stack do
+              button 'Hi there'
+              button 'Another one'
+              clear
+            end
+          end
+        end
+
+        it 'does not delete the button outside of the stack and the stack' do
+          expect(subject.top_slot.contents.size).to eq 2
+        end
+      end
     end
 
-    # Should be replaced by 'clears top_slot' when that spec passes
-    it 'clears app contents' do
-      subject.clear
-      expect(subject.top_slot.contents).to be_empty
+    describe 'clearing and parent' do
+      let(:input_blk) do
+        Proc.new do
+          clear
+          button 'My Button'
+        end
+      end
+
+      it 'has the top_slot as the parent of the button' do
+        subject
+        button = subject.top_slot.contents.first
+        expect(button.parent).to eq subject.top_slot
+      end
     end
+
   end
 end

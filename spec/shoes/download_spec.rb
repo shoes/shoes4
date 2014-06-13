@@ -1,5 +1,4 @@
 require 'shoes/spec_helper'
-require 'webmock/rspec'
 
 describe Shoes::Download do
   include AsyncHelper

@@ -41,7 +41,7 @@ class Shoes
                   :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
-      top_slot.clear &blk
+      current_slot.clear &blk
     end
 
     def width
@@ -157,6 +157,7 @@ class Shoes
       # creating it first, then appending is important because that way
       # top_slot already exists and methods may be called on it
       @top_slot = Flow.new self, self, width: width, height: height
+      self.current_slot = @top_slot
       @top_slot.append &execution_blk
     end
 

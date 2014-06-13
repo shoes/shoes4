@@ -266,7 +266,12 @@ describe Shoes::App do
   end
 
   describe '#clear' do
-    let(:input_blk) {Proc.new {para 'Hello'}}
+    let(:input_blk) do
+      Proc.new do
+        para 'Hello'
+      end
+    end
+    let(:internal_app) {subject.instance_variable_get(:@__app__)}
 
     it 'has initial contents' do
       expect(subject.contents).to_not be_empty
@@ -277,22 +282,6 @@ describe Shoes::App do
       subject.clear
       expect(subject.contents).to be_empty
     end
-
-    context 'clear in the initial input_block' do
-      let(:input_blk) {
-        Proc.new do
-          para 'Hello there'
-          clear do
-            para 'see you'
-          end
-        end
-      }
-
-      it 'does not raise an error calling clear on a top_slot that is nil' do
-        expect {subject}.not_to raise_error
-      end
-    end
-
   end
 
   describe "#gutter" do
