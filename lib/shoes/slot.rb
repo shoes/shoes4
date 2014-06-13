@@ -44,9 +44,10 @@ class Shoes
     end
 
     def eval_block blk
+      old_current_slot = @app.current_slot
       @app.current_slot = self
       blk.call if blk
-      @app.current_slot = parent
+      @app.current_slot = old_current_slot
     end
 
     def add_child(element)

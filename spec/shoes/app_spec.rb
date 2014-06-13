@@ -351,6 +351,21 @@ describe Shoes::App do
       end
     end
 
+    describe 'clearing and parent' do
+      let(:input_blk) do
+        Proc.new do
+          clear
+          button 'My Button'
+        end
+      end
+
+      it 'has the top_slot as the parent of the button' do
+        subject
+        button = internal_app.top_slot.contents.first
+        expect(button.parent).to eq internal_app.top_slot
+      end
+    end
+
   end
 
   describe "#gutter" do
