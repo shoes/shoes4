@@ -8,7 +8,7 @@ class Shoes
     attr_reader :app, :parent, :blk, :gui, :opts, :dimensions
     attr_accessor :text
 
-    def initialize(app, parent, text = 'Button', opts = {}, blk = nil)
+    def initialize(app, parent, text, opts = {}, blk = nil)
       @app    = app
       @parent = parent
       @text   = text
