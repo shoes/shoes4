@@ -149,7 +149,7 @@ class Shoes
                   :width, :height, :start_as_fullscreen, :location
 
     def clear(&blk)
-      top_slot.clear &blk
+      current_slot.clear &blk
     end
 
     def width

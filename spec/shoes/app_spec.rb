@@ -307,7 +307,11 @@ describe Shoes::App do
   end
 
   describe '#clear' do
-    let(:input_blk) {Proc.new {para 'Hello'}}
+    let(:input_blk) do
+      Proc.new do
+        para 'Hello'
+      end
+    end
     let(:internal_app) {subject.instance_variable_get(:@__app__)}
 
     it 'deletes everything (regression)' do
@@ -327,6 +331,23 @@ describe Shoes::App do
 
       it 'does not raise an error calling clear on a top_slot that is nil' do
         expect {subject}.not_to raise_error
+      end
+
+      describe 'inside a slot' do
+        let(:input_blk) do
+          Proc.new do
+            button 'I am here'
+            stack do
+              button 'Hi there'
+              button 'Another one'
+              clear
+            end
+          end
+        end
+
+        it 'does not delete the button outside of the stack and the stack' do
+          expect(internal_app.top_slot.contents.size).to eq 2
+        end
       end
     end
 
