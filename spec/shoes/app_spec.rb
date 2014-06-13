@@ -278,7 +278,6 @@ describe Shoes::App do
     end
 
     it 'removes everything (regression)' do
-      pending "Should pass when InternalApp doesn't have its own contents. See #756"
       subject.clear
       expect(subject.contents).to be_empty
     end
@@ -304,8 +303,8 @@ describe Shoes::App do
   end
 
   describe "#parent" do
-    context "when parent is top slot" do
-      it "returns the top_slot if no slot is wrapped around" do
+    context "for a top-level element (not explicitly in a slot)" do
+      it "returns the top_slot" do
         my_parent = nil
         app = Shoes.app do
           flow do
@@ -316,8 +315,8 @@ describe Shoes::App do
       end
     end
 
-    context "when parent is not the top slot" do
-      it 'returns the current parent' do
+    context "for an element within a slot" do
+      it "returns the enclosing slot" do
         my_parent = nil
         my_stack  = nil
         app = Shoes.app do

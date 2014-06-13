@@ -27,6 +27,7 @@ class Shoes
     def setup_gui
       @gui = Shoes.configuration.backend::App.new self
 
+      self.current_slot = create_top_slot
       execution_blk = create_execution_block(blk)
       eval_block execution_blk
 
@@ -34,7 +35,7 @@ class Shoes
       register_console_keypress
     end
 
-    attr_reader :gui, :top_slot, :contents, :app, :dimensions,
+    attr_reader :gui, :top_slot, :app, :dimensions,
                 :mouse_motion, :owner, :element_styles, :resize_callbacks
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
@@ -42,6 +43,10 @@ class Shoes
 
     def clear(&blk)
       current_slot.clear &blk
+    end
+
+    def contents
+      top_slot.contents
     end
 
     def width
@@ -64,12 +69,13 @@ class Shoes
       @rotate = angle || @rotate || 0
     end
 
+
     def add_child(child)
-      if top_slot
-        top_slot.add_child child
-      else
-        contents << child
-      end
+      # A slot calls #add_child on its parent during initialization. The top
+      # slot is a special case, since it doesn't need to add itself (and can't
+      # in fact). This check filters out the #add_child called in the top slot's
+      # initialize method.
+      top_slot.add_child child unless top_slot.nil?
     end
 
     def default_styles
@@ -153,11 +159,11 @@ class Shoes
     end
 
     private
-    def eval_block(execution_blk)
-      # creating it first, then appending is important because that way
-      # top_slot already exists and methods may be called on it
+    def create_top_slot
       @top_slot = Flow.new self, self, width: width, height: height
-      self.current_slot = @top_slot
+    end
+
+    def eval_block(execution_blk)
       @top_slot.append &execution_blk
     end
 
@@ -179,7 +185,6 @@ class Shoes
     def set_initial_attributes
       @style                = default_styles
       @element_styles       = {}
-      @contents             = []
       @mouse_motion         = []
       @mouse_button         = 0
       @mouse_pos            = [0, 0]
