@@ -256,6 +256,10 @@ class Shoes
       self.global_keypresses[key] = blk
     end
 
+    def inspect
+      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
+    end
+
     private
     def eval_block(execution_blk)
       # creating it first, then appending is important because that way
@@ -315,10 +319,6 @@ class Shoes
       self.class.add_global_keypress(:"alt_/") do
         Logger.setup
       end
-    end
-
-    def inspect
-      "#<#{self.class}:0x#{hash.to_s(16)} @app_title=#{@app_title} @dimensions=#{@dimensions.inspect} and a lot of stuff that's too much too handle... and leads to OutOfMemoryErrors>"
     end
 
   end
