@@ -585,6 +585,7 @@ EOS
   end
 end
 
+require 'shoes/internal_app'
 require 'shoes/app'
 require 'shoes/widget'
 require 'shoes/url'

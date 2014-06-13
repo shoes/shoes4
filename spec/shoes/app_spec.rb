@@ -50,15 +50,15 @@ describe Shoes::App do
         expect(subject.absolute_top).to eq 0
       end
 
-      describe "internal app state" do
-        let(:internal_app) { app.instance_variable_get(:@__app__) }
+      describe "inspect" do
+        include InspectHelpers
 
-        it "sets title", :qt do
-          expect(internal_app.app_title).to eq defaults[:title]
+        it "shows title in #to_s" do
+          expect(subject.to_s).to eq("(Shoes::App \"#{defaults.fetch :title}\")")
         end
 
-        it "is resizable", :qt do
-          expect(internal_app.resizable).to be_truthy
+        it "shows title in #inspect" do
+          expect(subject.inspect).to match("(Shoes::App:#{shoes_object_id_pattern} \"#{defaults.fetch :title}\")")
         end
       end
     end
@@ -74,16 +74,9 @@ describe Shoes::App do
         expect(subject.height).to eq opts[:height]
       end
 
-      describe "internal app state" do
-        let(:internal_app) { app.instance_variable_get(:@__app__) }
-
-        it "sets title", :qt do
-          expect(internal_app.app_title).to eq opts[:title]
-        end
-
-        it "sets resizable", :qt do
-          expect(internal_app.resizable).to be_falsey
-        end
+      it "passes opts to InternalApp" do
+        expect(Shoes::InternalApp).to receive(:new).with(kind_of(Shoes::App), opts).and_call_original
+        subject
       end
 
       it 'initializes a flow with the right parameters' do
@@ -108,7 +101,7 @@ describe Shoes::App do
       end
     end
   end
-  
+
   describe "style with defaults" do
     let(:default_styles) { Shoes::Common::Style::DEFAULT_STYLES }
 
@@ -120,7 +113,7 @@ describe Shoes::App do
       subject.style strokewidth: 4
       expect(subject.style).to eq(default_styles.merge(strokewidth: 4))
     end
-    
+
     default_styles = Shoes::Common::Style::DEFAULT_STYLES
 
     default_styles.each do |key, value|
@@ -147,28 +140,28 @@ describe Shoes::App do
 
         # .. but does not affect app2
         expect(app2.line(0, 100, 100, 0).style[:strokewidth]).not_to eq(10)
-     
+
       end
     end
   end
 
   describe "app-level style setter" do
     let(:goldenrod) { Shoes::COLORS[:goldenrod] }
-    
+
     pattern_styles = Shoes::DSL::PATTERN_APP_STYLES
     other_styles = Shoes::DSL::OTHER_APP_STYLES
 
     pattern_styles.each do |style|
       it "sets #{style} for objects" do
         subject.public_send(style, goldenrod)
-        expect(subject.line(0, 100, 100, 0).style[style]).to eq(goldenrod) 
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq(goldenrod)
       end
     end
 
     other_styles.each do |style|
       it "sets #{style} for objects" do
         subject.public_send(style, 'val')
-        expect(subject.line(0, 100, 100, 0).style[style]).to eq('val') 
+        expect(subject.line(0, 100, 100, 0).style[style]).to eq('val')
       end
     end
 
@@ -236,31 +229,15 @@ describe Shoes::App do
   end
 
   describe 'fullscreen' do
-    describe 'starting' do
-      let(:internal_app) { app.instance_variable_get(:@__app__) }
-
-      context 'with defaults' do
-        it 'does not start as fullscreen' do
-          expect(internal_app.start_as_fullscreen?).to be_falsey
-        end
+    context 'defaults' do
+      it 'is not fullscreen' do
+        expect(app).not_to be_fullscreen
       end
 
-      describe 'with the fullscreen option' do
-        let(:opts) { {fullscreen: true} }
-
-        it 'starts as fullscreen ' do
-          expect(internal_app.start_as_fullscreen?).to be_truthy
-        end
+      it 'can enter fullscreen' do
+        app.fullscreen = true
+        expect(app).to be_fullscreen
       end
-    end
-
-    it 'is not in fullscreen by default' do
-      expect(app).not_to be_fullscreen
-    end
-
-    it 'can be turned into fullscreen' do
-      app.fullscreen = true
-      expect(app).to be_fullscreen
     end
 
     describe 'going into fullscreen and back out again' do
@@ -272,37 +249,19 @@ describe Shoes::App do
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'is not in fullscreen', :fails_on_osx => true do
+      it 'is not in fullscreen', :fails_on_osx do
         expect(app).not_to be_fullscreen
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'has its original width', :fails_on_osx => true do
+      it 'has its origina', :fails_on_osx do
         expect(app.width).to eq(defaults[:width])
       end
 
       # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'has its original height', :fails_on_osx => true do
+      it 'has its original height', :fails_on_osx do
         expect(app.height).to eq(defaults[:height])
       end
-    end
-  end
-
-  describe '#add_child' do
-    let(:internal_app) { app.instance_variable_get(:@__app__) }
-    let(:child) {double 'child'}
-
-    it 'adds the child to the top_slot when there is one' do
-      top_slot_double = double 'top slot'
-      allow(internal_app).to receive_messages(top_slot: top_slot_double)
-      expect(top_slot_double).to receive(:add_child).with(child)
-      internal_app.add_child child
-    end
-
-    it 'adds the child to the own contents when there is no top_slot' do
-      allow(internal_app).to receive_messages top_slot: nil
-      internal_app.add_child child
-      expect(internal_app.contents).to include child
     end
   end
 
@@ -314,58 +273,15 @@ describe Shoes::App do
     end
     let(:internal_app) {subject.instance_variable_get(:@__app__)}
 
-    it 'deletes everything (regression)' do
+    it 'has initial contents' do
+      expect(subject.contents).to_not be_empty
+    end
+
+    it 'removes everything (regression)' do
+      pending "Should pass when InternalApp doesn't have its own contents. See #756"
       subject.clear
-      expect(internal_app.top_slot.contents).to be_empty
+      expect(subject.contents).to be_empty
     end
-
-    context 'clear in the initial input_block' do
-      let(:input_blk) {
-        Proc.new do
-          para 'Hello there'
-          clear do
-            para 'see you'
-          end
-        end
-      }
-
-      it 'does not raise an error calling clear on a top_slot that is nil' do
-        expect {subject}.not_to raise_error
-      end
-
-      describe 'inside a slot' do
-        let(:input_blk) do
-          Proc.new do
-            button 'I am here'
-            stack do
-              button 'Hi there'
-              button 'Another one'
-              clear
-            end
-          end
-        end
-
-        it 'does not delete the button outside of the stack and the stack' do
-          expect(internal_app.top_slot.contents.size).to eq 2
-        end
-      end
-    end
-
-    describe 'clearing and parent' do
-      let(:input_blk) do
-        Proc.new do
-          clear
-          button 'My Button'
-        end
-      end
-
-      it 'has the top_slot as the parent of the button' do
-        subject
-        button = internal_app.top_slot.contents.first
-        expect(button.parent).to eq internal_app.top_slot
-      end
-    end
-
   end
 
   describe "#gutter" do
