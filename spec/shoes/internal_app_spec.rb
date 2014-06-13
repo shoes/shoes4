@@ -73,10 +73,10 @@ describe Shoes::InternalApp do
   describe '#clear' do
     context 'when called after the initial input block' do
       let(:input_block) {
-        Proc.new {
+        Proc.new do
           para "CONTENT"
           para "JUST FOR TESTING"
-        }
+        end
       }
 
       before :each do
@@ -99,7 +99,7 @@ describe Shoes::InternalApp do
       end
     end
 
-    context 'clear in the initial input_block' do
+    context 'when called in the initial input_block' do
       let(:input_block) {
         Proc.new do
           para 'Hello there'
@@ -109,12 +109,12 @@ describe Shoes::InternalApp do
         end
       }
 
-      it 'does not raise an error calling clear on a top_slot that is nil' do
+      it 'does not raise an error' do
         expect {subject}.not_to raise_error
       end
 
-      describe 'inside a slot' do
-        let(:input_block) do
+      context 'when called inside a slot' do
+        let(:input_block) {
           Proc.new do
             button 'I am here'
             stack do
@@ -123,26 +123,32 @@ describe Shoes::InternalApp do
               clear
             end
           end
-        end
+        }
 
-        it 'does not delete the button outside of the stack and the stack' do
+        it 'does not delete the slot, or an element outside the slot' do
           expect(subject.top_slot.contents.size).to eq 2
         end
       end
     end
 
-    describe 'clearing and parent' do
-      let(:input_blk) do
+    context 'when called before a button in an initial input block' do
+      let(:input_block) {
         Proc.new do
           clear
           button 'My Button'
         end
+      }
+
+      it 'allows a button to be created' do
+        expect(subject.top_slot.contents.size).to eq(1)
       end
 
-      it 'has the top_slot as the parent of the button' do
-        subject
-        button = subject.top_slot.contents.first
-        expect(button.parent).to eq subject.top_slot
+      describe 'the button' do
+        let(:button) { subject.top_slot.contents.first }
+
+        it 'has the top_slot as its parent' do
+          expect(button.parent).to eq subject.top_slot
+        end
       end
     end
 
