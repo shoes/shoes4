@@ -15,6 +15,7 @@ class Shoes
     UPDATE_STEPS = 100
 
     def initialize(app, parent, url, opts = {}, &blk)
+      @url = url
       @opts = opts
       @blk = blk
       @gui = Shoes.configuration.backend_for(self)
@@ -23,7 +24,10 @@ class Shoes
       @finished = false
       @transferred = 0
       @content_length = 1 # non zero initialized to avoid Zero Div Errors
-      start_download url
+    end
+
+    def start
+      start_download
     end
 
     def started?
@@ -36,7 +40,7 @@ class Shoes
 
     # needed for the specs (jay multi threading and specs)
     def join_thread
-      @thread.join
+      @thread.join unless @thread.nil?
     end
 
     def percent
@@ -53,14 +57,14 @@ class Shoes
     end
 
     private
-    def start_download(url)
+    def start_download
       require 'open-uri'
       @thread = Thread.new do
         uri_opts = {}
         uri_opts[:content_length_proc] = content_length_proc
         uri_opts[:progress_proc] = progress_proc if @opts[:progress]
 
-        open url, uri_opts do |download_data|
+        open @url, uri_opts do |download_data|
           @response.body = download_data.read
           @response.status = download_data.status
           @response.headers = download_data.meta
