@@ -59,14 +59,9 @@ describe Shoes::InternalApp do
     end
   end
 
-  describe '#add_child' do
-    let(:child) { double 'child' }
-
-    it 'adds the child to the top_slot' do
-      top_slot = instance_double("Shoes::Flow")
-      allow(subject).to receive(:top_slot) { top_slot }
-      expect(subject.top_slot).to receive(:add_child).with(child)
-      subject.add_child child
+  describe '#contents' do
+    it 'delegates to top_slot' do
+      expect(subject.contents).to be(subject.top_slot.contents)
     end
   end
 
@@ -80,22 +75,12 @@ describe Shoes::InternalApp do
       }
 
       before :each do
-        expect(subject.top_slot.contents.size).to eq(2)
-        # TODO: Consider using this once #756 has been resolved.
-        # expect(subject.contents.size).to eq(2)
+        expect(subject.contents.size).to eq(2)
       end
 
       it 'clears top_slot' do
-        pending "Should pass when InternalApp doesn't have its own contents. See #756."
         subject.clear
-        # Right now, this is not empty, because it contains one flow (the top_slot)
         expect(subject.contents).to be_empty
-      end
-
-      # Should be replaced by 'clears top_slot' when that spec passes
-      it 'clears app contents' do
-        subject.clear
-        expect(subject.top_slot.contents).to be_empty
       end
     end
 
@@ -126,7 +111,7 @@ describe Shoes::InternalApp do
         }
 
         it 'does not delete the slot, or an element outside the slot' do
-          expect(subject.top_slot.contents.size).to eq 2
+          expect(subject.contents.size).to eq 2
         end
       end
     end
@@ -140,11 +125,11 @@ describe Shoes::InternalApp do
       }
 
       it 'allows a button to be created' do
-        expect(subject.top_slot.contents.size).to eq(1)
+        expect(subject.contents.size).to eq(1)
       end
 
       describe 'the button' do
-        let(:button) { subject.top_slot.contents.first }
+        let(:button) { subject.contents.first }
 
         it 'has the top_slot as its parent' do
           expect(button.parent).to eq subject.top_slot
