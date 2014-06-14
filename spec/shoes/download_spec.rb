@@ -1,7 +1,6 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Download do
-  include AsyncHelper
   include_context "dsl app"
 
   let(:name) { "http://www.google.com/logos/nasa50th.gif" }
@@ -25,38 +24,39 @@ describe Shoes::Download do
   end
 
   context 'before it has been started' do
-    it 'understands percent' do
-      eventually{ expect(percent).to eql(0)}
+    it 'is 0 percent' do
+      expect(percent).to eq(0)
     end
 
     it 'understands abort' do
       expect(download).to respond_to(:abort)
     end
 
-    it 'understands content_length' do
-      expect(content_length).to be >= 1
+    it 'has initial content_length of 1' do
+      expect(content_length).to eq(1)
     end
 
-    it 'understands length' do
-      expect(length).to be >= 1
+    it 'has initial length of 1' do
+      expect(length).to eq(1)
     end
   end
 
   context 'without a progress proc' do
     before :each do
       download.start
+      download.join_thread
     end
 
     it 'finishes' do
-      eventually { expect(download).to be_finished }
+      expect(download).to be_finished
     end
 
     it 'starts' do
-      eventually { expect(download).to be_started }
+      expect(download).to be_started
     end
 
     it 'creates the file specified by save' do
-      eventually { expect(File.exist?(opts[:save])).to be_truthy }
+      expect(File.exist?(opts[:save])).to be_truthy
     end
   end
 
@@ -101,10 +101,7 @@ describe Shoes::Download do
     end
 
     context 'with a block' do
-
       it 'calls the block with a result' do
-        #skip 'damn you download specs we really need to you to be reliable'
-        # https://travis-ci.org/shoes/shoes4/jobs/25269033
         expect(download.gui).to have_received(:eval_block).with(input_block, result)
       end
 
@@ -137,7 +134,6 @@ describe Shoes::Download do
       subject(:download) { Shoes::Download.new app, parent, name, opts}
 
       it 'calls the finish proc' do
-        #skip 'Another Travis failure...'
         expect(download.gui).to have_received(:eval_block).with(finish_proc, result)
       end
     end
