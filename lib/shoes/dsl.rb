@@ -576,7 +576,9 @@ EOS
     end
 
     def download(name, args={}, &blk)
-      create Shoes::Download, name, args, &blk
+      create(Shoes::Download, name, args, &blk).tap do |download|
+        download.start
+      end
     end
 
     def gutter

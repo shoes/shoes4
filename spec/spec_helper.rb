@@ -8,7 +8,6 @@ require 'pry'
 require 'shoes'
 require 'shoes/ui/cli'
 require 'fileutils'
-require 'async_helper'
 require 'shoes/helpers/fake_element'
 require 'shoes/helpers/inspect_helpers'
 
