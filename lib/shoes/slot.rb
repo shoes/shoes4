@@ -10,7 +10,7 @@ class Shoes
     NEXT_ELEMENT_OFFSET = 1
 
     attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
-                :leave_proc
+                :leave_proc, :scroll
     style_with :art_styles, :attach, :dimensions, :stroke
 
     def initialize(app, parent, styles = {}, blk = nil)
@@ -31,6 +31,8 @@ class Shoes
 
       @dimensions     = Dimensions.new parent, @style
       @fixed_height   = height || false
+      @scroll         = styles.fetch(:scroll, false)
+      @scroll_top     = 0
       set_default_dimension_values
 
       @pass_coordinates = true
@@ -98,6 +100,22 @@ class Shoes
 
     def mouse_left
       @hovered = false
+    end
+
+    def scroll_height
+      position_contents.y
+    end
+
+    def scroll_max
+      scroll_height - height
+    end
+
+    def scroll_top
+      @scroll_top
+    end
+
+    def scroll_top=(position)
+      @scroll_top = position
     end
 
     def app
