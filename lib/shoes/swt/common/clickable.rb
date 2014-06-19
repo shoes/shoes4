@@ -8,7 +8,7 @@ class Shoes
         # object = self is there for compatibility reasons for now
         # it's for link (defined in text.rb) and the listener is added in the
         # swt/text_block.rb ... moving it around would be too hard now
-        def clickable(object = self, block)
+        def clickable(object = self, &block)
           add_listener_for object, ::Swt::SWT::MouseDown, block
         end
 

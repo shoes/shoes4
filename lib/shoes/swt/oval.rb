@@ -15,14 +15,13 @@ class Shoes
       # @param [Shoes::Oval] dsl the dsl object to provide gui for
       # @param [Shoes::Swt::App] app the app
       # @param [Hash] opts options
-      def initialize(dsl, app, &blk)
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
         @container = @app.real
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-        clickable blk if blk
       end
 
       def update_position

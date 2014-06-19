@@ -15,9 +15,9 @@ class Shoes
       
       style_init(styles)
       @parent.add_child self
-      @gui = Shoes.backend_for(self, &blk)
+      @gui = Shoes.backend_for(self)
 
-      clickable_options(styles)
+      register_click(styles, &blk)
     end
   end
 end
