@@ -1,5 +1,7 @@
 require 'swt'
 require 'shoes/swt'
+# Interested what hometown is and what it does?
+# check here: https://github.com/jasonrclark/hometown
 require 'hometown'
 
 # All known subclasses of Swt::Graphics::Resource
