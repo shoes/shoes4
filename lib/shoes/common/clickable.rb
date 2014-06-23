@@ -9,9 +9,9 @@ class Shoes
         @gui.release &blk
       end
 
-      def register_click(styles, &blk)
+      def register_click(styles, blk)
         click(&styles[:click]) if styles[:click]
-        @gui.clickable &blk
+        @gui.clickable blk
       end
 
       # Can throw away this method once all elements are changed

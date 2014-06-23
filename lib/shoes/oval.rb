@@ -8,7 +8,7 @@ class Shoes
     attr_reader :app, :dimensions, :parent, :gui
     style_with :art_styles, :center, :radius
 
-    def initialize(app, parent, left, top, width, height, styles = {}, &blk)
+    def initialize(app, parent, left, top, width, height, styles = {}, blk)
       @app                 = app
       @dimensions          = AbsoluteDimensions.new left, top, width, height, styles
       @parent              = parent
@@ -17,7 +17,7 @@ class Shoes
       @parent.add_child self
       @gui = Shoes.backend_for(self)
 
-      register_click(styles, &blk)
+      register_click(styles, blk)
     end
   end
 end
