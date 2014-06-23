@@ -303,8 +303,8 @@ class Shoes
     # @param [Hash] opts Arc style options
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
-    def arc(left, top, width, height, angle1, angle2, opts = {})
-      create Shoes::Arc, left, top, width, height, angle1, angle2, opts
+    def arc(left, top, width, height, angle1, angle2, styles = {}, &blk)
+      create Shoes::Arc, left, top, width, height, angle1, angle2, styles, blk
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)
@@ -314,8 +314,8 @@ class Shoes
     # @param [Integer] x2 The x-value of point B
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
-    def line(x1, y1, x2, y2, opts = {})
-      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts)
+    def line(x1, y1, x2, y2, opts = {}, &blk)
+      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts), blk
     end
 
     # Creates an oval at (left, top)
@@ -422,7 +422,7 @@ EOS
 
     def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
       opts = style_normalizer.normalize opts
-      create Shoes::Star, left, top, points, outer, inner, opts, &blk
+      create Shoes::Star, left, top, points, outer, inner, opts, blk
     end
 
     # Creates a new Shoes::Shape object

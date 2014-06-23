@@ -14,14 +14,13 @@ class Shoes
 
       attr_reader :dsl, :app, :transform, :container
 
-      def initialize(dsl, app, &blk)
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
         @container = @app.real
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
-        clickable blk if blk
       end
 
       class Painter < Common::Painter

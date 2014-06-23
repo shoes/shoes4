@@ -10,7 +10,7 @@ class Shoes
     attr_reader :app, :gui, :angle, :dimensions, :outer, :inner, :points,
                 :parent
 
-    def initialize(app, parent, left, top, points, outer, inner, opts = {}, &blk)
+    def initialize(app, parent, left, top, points, outer, inner, opts = {}, blk = nil)
       @app = app
 
       # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
@@ -34,9 +34,9 @@ class Shoes
       @parent = parent
       @parent.add_child self
 
-      @gui = Shoes.backend_for(self, &blk)
+      @gui = Shoes.backend_for(self)
 
-      clickable_options(opts)
+      register_click(opts, blk)
     end
 
     def in_bounds?(x, y)

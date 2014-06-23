@@ -9,7 +9,7 @@ class Shoes
     attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui, :parent
 
 
-    def initialize(app, parent, point_a, point_b, opts = {})
+    def initialize(app, parent, point_a, point_b, opts = {}, blk = nil)
       @app                 = app
       @style               = Shoes::Common::Stroke::DEFAULTS.merge(opts)
       @style[:strokewidth] ||= 1
@@ -25,7 +25,7 @@ class Shoes
 
       @gui = Shoes.backend_for(self, gui_opts)
 
-      clickable_options(opts)
+      register_click(opts, blk)
     end
 
     def enclosing_box_of_line

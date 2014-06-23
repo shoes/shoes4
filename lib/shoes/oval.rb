@@ -8,7 +8,7 @@ class Shoes
     attr_reader :app, :dimensions, :parent, :gui
     style_with :art_styles, :center, :radius
 
-    def initialize(app, parent, left, top, width, height, styles = {}, blk)
+    def initialize(app, parent, left, top, width, height, styles = {}, blk = nil)
       @app                 = app
       @dimensions          = AbsoluteDimensions.new left, top, width, height, styles
       @parent              = parent

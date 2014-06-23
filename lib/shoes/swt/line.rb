@@ -1,6 +1,7 @@
 class Shoes
   module Swt
     class Line
+      include Common::Clickable
       include Common::Stroke
       include Common::Toggle
       include Common::Remove

@@ -38,7 +38,7 @@ class Shoes
       # Important to use accessor and do this after the backend exists!
       self.text = Array(text)
 
-      clickable_options(@opts)
+      register_click(@opts)
     end
 
     def in_bounds?(*args)

@@ -21,8 +21,8 @@ class Shoes
 
       @parent.add_child self
 
-      @gui = Shoes.backend_for(self, opts, &blk)
-      clickable_options(opts)
+      @gui = Shoes.backend_for(self, opts)
+      register_click(opts, blk)
     end
   end
 end

@@ -15,7 +15,7 @@ class Shoes
 
       attr_reader :dsl, :app, :transform, :painter, :container
 
-      def initialize(dsl, app, opts ={}, &blk)
+      def initialize(dsl, app, opts ={})
         @dsl = dsl
         @app = app
         @opts = opts
@@ -24,7 +24,6 @@ class Shoes
 
         @painter = RectPainter.new(self)
         @app.add_paint_listener @painter
-        clickable blk if blk
       end
     end
   end

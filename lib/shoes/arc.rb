@@ -9,7 +9,7 @@ class Shoes
     style_with :angle1, :angle2, :art_styles, :center, :dimensions, :radius, :wedge
     STYLES = {wedge: false}
 
-    def initialize(app, parent, left, top, width, height, angle1, angle2, styles = {}, &blk)
+    def initialize(app, parent, left, top, width, height, angle1, angle2, styles = {}, blk = nil)
       @app                 = app
       @parent              = parent
       @dimensions          = Dimensions.new parent, left, top, width, height, styles

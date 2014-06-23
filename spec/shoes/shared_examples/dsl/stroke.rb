@@ -14,7 +14,7 @@ shared_examples_for "stroke DSL method" do
   it "applies to subsequently created objects" do
     dsl.stroke color
     expect(Shoes::Rect).to receive(:new) do |*args|
-      style = args.pop
+      style = args.last.class == Hash ? args.pop : {}
       expect(style[:stroke]).to eq(color)
     end
     dsl.rect(10, 10, 100, 100)

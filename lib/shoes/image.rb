@@ -16,9 +16,9 @@ class Shoes
 
       @dimensions = Dimensions.new parent, opts
 
-      @gui = Shoes.configuration.backend_for(self, @parent.gui, blk)
+      @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
-      clickable_options(opts)
+      register_click(opts, blk)
     end
 
     def path

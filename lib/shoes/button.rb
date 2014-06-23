@@ -21,7 +21,7 @@ class Shoes
 
       parent.add_child self
 
-      clickable_options(opts)
+      register_click(opts)
       state_options(opts)
     end
 
