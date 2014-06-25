@@ -9,7 +9,7 @@ class Shoes
 
     attr_reader :app, :gui, :corners, :dimensions, :angle, :parent
 
-    def initialize(app, parent, left, top, width, height, opts = {}, &blk)
+    def initialize(app, parent, left, top, width, height, opts = {}, blk = nil)
       @app                 = app
       @dimensions          = AbsoluteDimensions.new left, top, width, height, opts
       @corners             = opts[:curve] || 0

@@ -417,7 +417,7 @@ Wrong number of arguments. Must be one of:
 EOS
         raise ArgumentError, message
       end
-      create Shoes::Rect, left, top, width, height, style.merge(opts), &blk
+      create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
     def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
