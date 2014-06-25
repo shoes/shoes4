@@ -3,8 +3,10 @@ class Shoes
     extend Forwardable
     include Common::Inspect
 
-    def_delegators :@contents, :[], :size, :empty?, :first, :each, :clear,
-                               :include?, :delete
+    ARRAY_DELEGATE_METHODS = (Enumerable.public_instance_methods(false) +
+                             Array.public_instance_methods(false)).uniq
+
+    def_delegators :@contents, *ARRAY_DELEGATE_METHODS
 
     def initialize
       @contents         = []
