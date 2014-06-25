@@ -6,6 +6,12 @@ shared_examples_for "Slot" do
     expect(subject.contents.size).to eq(1)
   end
 
+  it 'has a height of 0 as it is empty although it has a top' do
+    subject.absolute_top = 100
+    subject.contents_alignment
+    expect(subject.height).to eq 0
+  end
+
   it_behaves_like 'prepending'
   it_behaves_like 'clearing'
   it_behaves_like 'element one positioned with bottom and right'

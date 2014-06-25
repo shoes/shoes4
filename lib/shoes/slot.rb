@@ -220,7 +220,7 @@ class Shoes
       if max_bottom
         max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
       else
-        self.absolute_top
+        0
       end
     end
 
