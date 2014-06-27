@@ -3,7 +3,7 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::TextBlock::TextSegment do
   let(:layout) { double("layout", text: "the text",
                         :alignment= => nil, :justify= => nil, :spacing= => nil,
-                        :text= => nil, width=: nil,
+                        :text= => nil, :width= => nil,
                         disposed?: false, dispose: nil,
                         set_style: nil, bounds: bounds) }
   let(:bounds) { Java::OrgEclipseSwtGraphics::Rectangle.new(0, 0, 0, 0) }

@@ -73,21 +73,21 @@ namespace :spec do
     Limit the examples to specific :modules : "
     task :all, [:module] do |t, args|
       argh = swt_args(args)
-      files = (Dir['spec/swt_shoes/*_spec.rb'] + Dir['spec/shoes/*_spec.rb']).join ' '
+      files = (Dir['spec/swt_shoes/**/*_spec.rb'] + Dir['spec/shoes/**/*_spec.rb']).join ' '
       jruby_rspec(files, argh)
     end
 
     desc "Run SWT backend specs isolated from DSL"
     task :isolation, [:module] do |t, args|
       argh = swt_args(args)
-      files = Dir['spec/swt_shoes/*_spec.rb'].join ' '
+      files = Dir['spec/swt_shoes/**/*_spec.rb'].join ' '
       jruby_rspec(files, argh)
     end
 
     desc "Run DSL specs integrated with SWT backend"
     task :integration, [:module] do |t, args|
       argh = swt_args(args)
-      files = Dir['spec/shoes/*_spec.rb'].join ' '
+      files = Dir['spec/shoes/**/*_spec.rb'].join ' '
       jruby_rspec(files, argh)
     end
   end
