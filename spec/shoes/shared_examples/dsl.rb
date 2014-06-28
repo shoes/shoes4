@@ -35,6 +35,7 @@ shared_examples "DSL container" do
     stroke
     strokewidth
     style
+    video
   ].each do |method|
     include_examples "#{method} DSL method"
   end

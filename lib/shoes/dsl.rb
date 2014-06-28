@@ -66,6 +66,7 @@ require 'shoes/renamed_delegate'
 require 'shoes/common/inspect'
 require 'shoes/dimension'
 require 'shoes/dimensions'
+require 'shoes/not_implemented_error'
 require 'shoes/text_block_dimensions'
 
 require 'shoes/color'
@@ -583,6 +584,14 @@ EOS
     def gutter
       @__app__.gutter
     end
+
+    def video(*args)
+      raise Shoes::NotImplementedError,
+            'Sorry video support has been cut from shoes 4!' +
+            ' Check out github issue #113 for any changes/updates or if you' +
+            ' want to help :)'
+    end
+
   end
 end
 
