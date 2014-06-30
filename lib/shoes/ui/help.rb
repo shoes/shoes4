@@ -89,7 +89,7 @@ class Manual < Shoes
 
   def show_toc
     s = self
-    stack(height: 120){}
+    stack height: 30
     flow width: 0.2, margin_left: 10 do
       flow(margin_right: 20) do
         background black(0.7), curve: 5
