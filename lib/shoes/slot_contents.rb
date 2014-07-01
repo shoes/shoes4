@@ -1,15 +1,12 @@
 class Shoes
-  class SlotContents
-    extend Forwardable
+  class SlotContents < SimpleDelegator
     include Common::Inspect
-
-    def_delegators :@contents, :[], :size, :empty?, :first, :each, :clear,
-                               :include?, :delete
 
     def initialize
       @contents         = []
       @prepending       = false
       @prepending_index = 0
+      super(@contents)
     end
 
     def add_element(element)
@@ -25,10 +22,6 @@ class Shoes
       @prepending = true
       blk.call
       @prepending = false
-    end
-
-    def to_ary
-      @contents
     end
 
     def clear

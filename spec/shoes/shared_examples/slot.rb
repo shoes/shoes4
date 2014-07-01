@@ -6,9 +6,16 @@ shared_examples_for "Slot" do
     expect(subject.contents.size).to eq(1)
   end
 
+  it 'has a height of 0 as it is empty although it has a top' do
+    subject.absolute_top = 100
+    subject.contents_alignment
+    expect(subject.height).to eq 0
+  end
+
   it_behaves_like 'prepending'
   it_behaves_like 'clearing'
   it_behaves_like 'element one positioned with bottom and right'
+  it_behaves_like 'growing although relatively positioned elements'
 end
 
 shared_context 'one slot child' do
@@ -48,6 +55,10 @@ shared_context 'element one with top and left' do
   let(:ele_top) {22}
   let(:ele_left) {47}
   let(:ele_opts) {{left: ele_left, top: ele_top}}
+end
+
+shared_context 'slot with set height and width' do
+  let(:input_opts) {{width: 250, height: 300}}
 end
 
 shared_context 'element one with bottom and right' do
@@ -99,6 +110,7 @@ shared_examples_for 'element one positioned with bottom and right' do
   include_context 'one slot child'
   include_context 'contents_alignment'
   include_context 'element one with bottom and right'
+  include_context 'slot with set height and width'
 
   it 'positions the element from its right' do
     expect(element.absolute_right).to eq (subject.absolute_right - ele_right - 1)
@@ -194,6 +206,27 @@ shared_examples_for 'taking care of margin' do
 
   it 'respects the top margin for the first element' do
     expect(element.absolute_top).to eq input_opts[:margin]
+  end
+end
+
+shared_examples_for 'growing although relatively positioned elements' do
+  include_context 'one slot child'
+  include_context 'contents_alignment'
+
+  describe 'positioned at the very beginning' do
+    let(:ele_opts) {{top: 0}}
+
+    it 'grows the slot height' do
+      expect(subject.height).to eq element.height
+    end
+  end
+
+  describe 'positioned with a good offset' do
+    let(:ele_opts) {{top: 70}}
+
+    it 'grows the height even further' do
+      expect(subject.height).to eq element.height + 70
+    end
   end
 end
 

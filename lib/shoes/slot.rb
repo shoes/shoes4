@@ -69,8 +69,8 @@ class Shoes
     end
 
     def contents_alignment(_=nil)
-      last_position = position_contents
-      determine_slot_height(last_position)
+      position_contents
+      determine_slot_height
     end
 
     def hovered?
@@ -209,14 +209,19 @@ class Shoes
       current_x + fitting_width - 1 <= element_right
     end
 
-    def determine_slot_height(last_position)
-      content_height = compute_content_height(last_position)
+    def determine_slot_height
+      content_height = compute_content_height
       self.height = content_height if has_variable_height?
       content_height
     end
 
-    def compute_content_height(last_position)
-      last_position.next_line_start - self.absolute_top
+    def compute_content_height
+      max_bottom = contents.map(&:absolute_bottom).max
+      if max_bottom
+        max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
+      else
+        0
+      end
     end
 
     def has_variable_height?
