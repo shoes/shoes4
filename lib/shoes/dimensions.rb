@@ -193,6 +193,10 @@ class Shoes
     DELEGATED_METHODS = Dimensions.public_instance_methods(false) - UNDELEGATED_METHODS
 
     def_delegators :dimensions, *DELEGATED_METHODS
+
+    def adjust_current_position(*_)
+      # no-op by default for almost all elements
+    end
   end
 
   # depends on a #dsl method to forward to (e.g. for backend objects)

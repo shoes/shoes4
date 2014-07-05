@@ -162,6 +162,7 @@ class Shoes
       if current_position.next_line_start < next_element_line_start
         current_position.next_line_start = next_element_line_start
       end
+      element.adjust_current_position current_position
       current_position
     end
 
