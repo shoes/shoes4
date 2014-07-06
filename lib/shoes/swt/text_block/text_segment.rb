@@ -17,7 +17,7 @@ class Shoes
         attr_reader :layout, :element_left, :element_top
 
         extend Forwardable
-        def_delegators :@layout, :text, :text=, :bounds, :width,
+        def_delegators :@layout, :text, :text=, :bounds, :width, :spacing,
                                  :line_bounds, :line_count, :line_offsets
 
         def initialize(dsl, text, width)

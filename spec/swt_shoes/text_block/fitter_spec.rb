@@ -8,7 +8,7 @@ describe Shoes::Swt::TextBlock::Fitter do
                      margin_left:   1,  margin_top:   1) }
 
   let(:parent_dsl) { double('parent_dsl', parent: grandparent_dsl,
-                            absolute_left: 0, absolute_right: 100,
+                            absolute_top: 0, absolute_left: 0, absolute_right: 100,
                             width: parent_width, height: 200) }
 
   let(:grandparent_dsl) { double('grandparent_dsl', parent: app,
@@ -97,7 +97,11 @@ describe Shoes::Swt::TextBlock::Fitter do
                            line_count: 1, line_offsets:[], bounds: bounds) }
 
     before(:each) do
+      layout = double('swt_layout', :spacing => 4, :spacing= => nil)
       allow(segment).to receive(:position_at) { segment }
+      allow(segment).to receive(:spacing) { 4 }
+      allow(segment).to receive(:layout)  { layout }
+
     end
 
     context "to one segment" do
@@ -125,7 +129,7 @@ describe Shoes::Swt::TextBlock::Fitter do
         expect(segment).to receive(:dispose).once
 
         segments = when_fit_at(x: 25, y: 75, next_line_start: 95)
-        expect_segments(segments, [26, 76], [1, 126])
+        expect_segments(segments, [26, 76], [1, 123])
       end
 
       it "should overflow all text to second segment" do
@@ -133,7 +137,7 @@ describe Shoes::Swt::TextBlock::Fitter do
         expect(segment).to receive(:dispose).once
 
         segments = when_fit_at(x: 25, y: 75, next_line_start: 95)
-        expect_segments(segments, [26, 76], [1, 95])
+        expect_segments(segments, [26, 76], [1, 96])
       end
     end
 
@@ -145,13 +149,13 @@ describe Shoes::Swt::TextBlock::Fitter do
       it "rolls to second segment when 0 remaining width" do
         allow(dsl).to receive_messages(desired_width: 0)
         segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
-        expect_segments(segments, [26, 76], [1, 96])
+        expect_segments(segments, [26, 76], [1, 97])
       end
 
       it "rolls to second segment when negative remaining width" do
         allow(dsl).to receive_messages(desired_width: -1)
         segments = when_fit_at(x: 0, y: 75, next_line_start: 95)
-        expect_segments(segments, [26, 76], [1, 96])
+        expect_segments(segments, [26, 76], [1, 97])
       end
     end
 
@@ -170,7 +174,7 @@ describe Shoes::Swt::TextBlock::Fitter do
       it "bumps down a line if not at start" do
         allow(dsl).to receive_messages(element_left: 20, left: 20)
         segments = when_fit_at(x: 20, y: 75, next_line_start: 95)
-        expect_segments(segments, [20, 76], [1, 95])
+        expect_segments(segments, [20, 76], [1, 96])
       end
     end
   end

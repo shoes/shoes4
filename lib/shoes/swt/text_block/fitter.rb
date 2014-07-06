@@ -128,11 +128,12 @@ class Shoes
 
         def position_two_segments(first_layout, second_layout, first_text, height)
           first_height = first_height(first_layout, first_text, height)
+
           [
             first_layout.position_at(@dsl.element_left,
                                      @dsl.element_top),
             second_layout.position_at(parent.absolute_left + @dsl.margin_left,
-                                      @dsl.element_top + first_height)
+                                      @dsl.element_top + first_height + 1)
           ]
         end
 
@@ -201,7 +202,7 @@ class Shoes
         # If first text is empty, height may be smaller than an actual line in
         # the current font. Take our pre-existing allowed height instead.
         def first_height(first_layout, first_text, height)
-          first_height = first_layout.bounds.height
+          first_height = first_layout.bounds.height - first_layout.spacing
           first_height = height if first_text.empty?
           first_height
         end
