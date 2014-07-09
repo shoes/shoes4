@@ -11,7 +11,7 @@ class Shoes
 
       def register_click(styles, blk = nil)
         click(&styles[:click]) if styles[:click]
-        @gui.clickable blk if blk
+        click &blk if blk
       end
     end
   end
