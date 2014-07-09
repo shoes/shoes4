@@ -18,6 +18,8 @@ There are two ways to get your hands on shoes 4 - the preview gem release and in
 So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
 
     $ rvm install jruby
+    
+**JDK version note:** While shoes4 should generally work with a JDK version 6 and up we recommend to use newer version. There have been malfunctioning features on version 6 that worked once updated to JDK version 7.
 
 ### Installing Shoes4 as a gem
 
