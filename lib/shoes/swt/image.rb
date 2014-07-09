@@ -15,15 +15,13 @@ class Shoes
 
       attr_reader :parent, :real, :dsl, :painter
 
-      def initialize(dsl, parent, blk)
+      def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
 
         load_image(@dsl.file_path)
 
         add_paint_listener
-
-        clickable blk if blk
       end
 
       def update_image

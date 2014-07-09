@@ -9,7 +9,7 @@ class Shoes
 
     attr_reader :app, :gui, :corners, :dimensions, :angle, :parent
 
-    def initialize(app, parent, left, top, width, height, opts = {}, &blk)
+    def initialize(app, parent, left, top, width, height, opts = {}, blk = nil)
       @app                 = app
       @dimensions          = AbsoluteDimensions.new left, top, width, height, opts
       @corners             = opts[:curve] || 0
@@ -21,8 +21,8 @@ class Shoes
 
       @parent.add_child self
 
-      @gui = Shoes.backend_for(self, opts, &blk)
-      clickable_options(opts)
+      @gui = Shoes.backend_for(self, opts)
+      register_click(opts, blk)
     end
   end
 end

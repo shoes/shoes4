@@ -1,6 +1,7 @@
 class Shoes
   module Swt
     class Arc
+      include Common::Clickable
       include Common::Fill
       include Common::Stroke
       include Common::PainterUpdatesPosition

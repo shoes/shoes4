@@ -9,8 +9,9 @@ class Shoes
         @gui.release &blk
       end
 
-      def clickable_options(opts)
-        click(&opts[:click]) if opts[:click]
+      def register_click(styles, blk = nil)
+        click(&styles[:click]) if styles[:click]
+        click &blk if blk
       end
     end
   end

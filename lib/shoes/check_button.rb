@@ -16,7 +16,7 @@ class Shoes
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
 
-      clickable_options(opts)
+      register_click(opts)
       state_options(opts)
     end
 
@@ -33,7 +33,7 @@ class Shoes
     end
 
     def click
-      @blk.call
+      @blk.call if blk
     end
   end
 
