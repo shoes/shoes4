@@ -42,6 +42,12 @@ class Shoes
         set_calculated_sizes
       end
 
+      def adjust_current_position(current_position)
+        last_segment = segments.last
+        current_position.y = @dsl.absolute_bottom
+        current_position.y -= last_segment.last_line_height unless @bumped_to_next_line
+      end
+
       def set_absolutes_on_dsl(current_position)
         if segments.one?
           set_absolutes(@dsl.absolute_left, @dsl.absolute_top)
@@ -51,6 +57,8 @@ class Shoes
 
         if trailing_newline?
           bump_absolutes_to_next_line
+        else
+          @bumped_to_next_line = false
         end
       end
 
@@ -62,14 +70,11 @@ class Shoes
 
         @dsl.absolute_bottom = starting_top + last_segment.height +
                                margin_top + margin_bottom
-
-        @dsl.absolute_top    = @dsl.absolute_bottom -
-                               last_segment.last_line_height
       end
 
       def bump_absolutes_to_next_line
         @dsl.absolute_right = @dsl.parent.absolute_left
-        @dsl.absolute_top   = @dsl.absolute_bottom
+        @bumped_to_next_line = true
       end
 
       def set_calculated_sizes

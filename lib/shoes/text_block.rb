@@ -67,6 +67,10 @@ class Shoes
       @gui.contents_alignment(current_position)
     end
 
+    def adjust_current_position(current_position)
+      @gui.adjust_current_position(current_position)
+    end
+
     def textcursor(line_height = 0)
       @textcursor ||= app.textcursor(line_height)
     end

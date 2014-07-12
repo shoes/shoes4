@@ -59,9 +59,10 @@ describe Shoes::Swt::TextBlock do
       it "positions single line of text" do
         expect(dsl).to receive(:absolute_right=).with(layout_width + 50)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
-        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-        subject.contents_alignment(current_position)
+        when_aligns_and_positions
+
+        expect(current_position.y).to eq(layout_height - line_height)
       end
 
       it "positions single line with margin" do
@@ -70,9 +71,10 @@ describe Shoes::Swt::TextBlock do
 
         expect(dsl).to receive(:absolute_right=).with(layout_width + 50 + margin)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin)
-        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-        subject.contents_alignment(current_position)
+        when_aligns_and_positions
+
+        expect(current_position.y).to eq(layout_height - line_height)
       end
 
       it "pushes to next line if ends in newline" do
@@ -80,9 +82,10 @@ describe Shoes::Swt::TextBlock do
 
         expect(dsl).to receive(:absolute_right=).with(50)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
-        expect(dsl).to receive(:absolute_top=).with(layout_height)
 
-        subject.contents_alignment(current_position)
+        when_aligns_and_positions
+
+        expect(current_position.y).to eq(layout_height)
       end
 
       it "disposes of prior segments" do
@@ -139,9 +142,10 @@ describe Shoes::Swt::TextBlock do
       it "positions in two segments" do
         expect(dsl).to receive(:absolute_right=).with(layout_width)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height)
-        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-        subject.contents_alignment(current_position)
+        when_aligns_and_positions
+
+        expect(current_position.y).to eq(layout_height - line_height)
       end
 
       it "positions in two segments with margins" do
@@ -150,9 +154,10 @@ describe Shoes::Swt::TextBlock do
 
         expect(dsl).to receive(:absolute_right=).with(layout_width + margin)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin)
-        expect(dsl).to receive(:absolute_top=).with(layout_height - line_height)
 
-        subject.contents_alignment(current_position)
+        when_aligns_and_positions
+
+        expect(current_position.y).to eq(layout_height - line_height)
       end
     end
   end
@@ -183,5 +188,10 @@ describe Shoes::Swt::TextBlock do
            width: width, height: height,
            last_line_width: width, last_line_height: line_height,
            bounds: bounds)
+  end
+
+  def when_aligns_and_positions
+    subject.contents_alignment(current_position)
+    subject.adjust_current_position(current_position)
   end
 end
