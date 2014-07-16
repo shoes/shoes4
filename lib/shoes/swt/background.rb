@@ -8,17 +8,17 @@ class Shoes
       include Common::Toggle
       include BackendDimensionsDelegations
 
-      def_delegators :dsl, :corners, :angle
+      def_delegators :dsl, :angle
 
-      attr_reader :dsl, :app, :transform, :painter, :opts
+      attr_reader :dsl, :app, :corners, :transform, :painter
 
-      def initialize(dsl, app, opts = {}, &blk)
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
-        @opts = opts
 
         # fill is potentially a pattern that needs disposing, so hold onto it
-        @fill = opts[:fill]
+        @fill = dsl.fill
+        @corners = dsl.curve
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter

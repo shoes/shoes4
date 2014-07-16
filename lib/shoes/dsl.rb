@@ -197,8 +197,8 @@ class Shoes
       create Shoes::Border, pattern(color), opts, blk
     end
 
-    def background(color, opts = {}, &blk)
-      create Shoes::Background, pattern(color), style_normalizer.normalize(opts), blk
+    def background(color, opts = {})
+      create Shoes::Background, pattern(color), style_normalizer.normalize(opts)
     end
 
     def edit_line(*args, &blk)

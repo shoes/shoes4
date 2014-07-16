@@ -12,11 +12,11 @@ describe Shoes::Swt::Background do
   let(:dsl) { double("dsl object", app: shoes_app,
                      element_left: left, element_top: top,
                      element_width: width, element_height: height,
-                     strokewidth: 1, corners: corners,
+                     strokewidth: 1, curve: corners,
                      hidden: false).as_null_object }
 
   subject {
-    Shoes::Swt::Background.new dsl, swt_app, opts
+    Shoes::Swt::Background.new dsl, swt_app
   }
 
   context "#initialize" do
