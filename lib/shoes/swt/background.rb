@@ -10,7 +10,7 @@ class Shoes
 
       def_delegators :dsl, :angle
 
-      attr_reader :dsl, :app, :corners, :transform, :painter
+      attr_reader :dsl, :app, :transform, :painter
 
       def initialize(dsl, app)
         @dsl = dsl
@@ -18,10 +18,13 @@ class Shoes
 
         # fill is potentially a pattern that needs disposing, so hold onto it
         @fill = dsl.fill
-        @corners = dsl.curve
 
         @painter = Painter.new(self)
         @app.add_paint_listener @painter
+      end
+
+      def corners
+        dsl.curve
       end
 
       def dispose
