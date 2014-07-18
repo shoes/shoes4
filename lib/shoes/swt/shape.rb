@@ -1,6 +1,7 @@
 class Shoes
   module Swt
     class Shape
+      include Common::Remove
       include Common::Fill
       include Common::Stroke
       include Common::PainterUpdatesPosition
@@ -22,6 +23,7 @@ class Shoes
 
       def dispose
         @transform.dispose unless @transform.nil? || @transform.disposed?
+        @element.dispose   unless @element.nil? || @element.disposed?
       end
 
       attr_reader :dsl, :app
