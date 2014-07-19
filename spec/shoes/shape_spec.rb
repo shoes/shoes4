@@ -67,4 +67,15 @@ describe Shoes::Shape do
 
     it_behaves_like "movable object"
   end
+
+  describe "arc" do
+    let(:draw) {
+      Proc.new {
+        arc 10, 10, 100, 100, Shoes::PI, Shoes::TWO_PI
+      }
+    }
+    subject { Shoes::Shape.new app, parent, Hash.new, draw }
+
+    it_behaves_like "movable object"
+  end
 end

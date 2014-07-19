@@ -7,7 +7,7 @@ class Shoes
     include Shoes::Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :blk, :dimensions, :gui, :hidden, :x, :y
+    attr_reader :app, :parent, :blk, :dimensions, :gui, :hidden, :x, :y
     attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound
 
     # Creates a new Shoes::Shape
@@ -101,7 +101,7 @@ class Shoes
     # @param [Integer] start_angle The start angle
     # @param [Integer] arc_angle The angular extent of the arc, relative to the start angle
     # @return [Shoes::Shape] This shape
-    def arc_to(x, y, width, height, start_angle, arc_angle)
+    def arc(x, y, width, height, start_angle, arc_angle)
       update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
       @x, @y = x, y
       @gui.arc(x, y, width, height, start_angle, arc_angle)
