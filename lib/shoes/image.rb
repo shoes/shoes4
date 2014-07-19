@@ -1,6 +1,6 @@
 class Shoes
   class Image
-    include Common::Element
+    include Common::UIElement
     include Common::Clickable
 
     attr_reader :parent, :blk, :gui, :app, :file_path, :opts, :dimensions

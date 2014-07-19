@@ -1,6 +1,6 @@
 class Shoes
   class Slot
-    include Common::Element
+    include Common::UIElement
     include Common::Clickable
 
     # We need that offset because otherwise element overlap e.g. occupy

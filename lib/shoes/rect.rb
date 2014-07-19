@@ -1,6 +1,6 @@
 class Shoes
   class Rect
-    include Common::Element
+    include Common::UIElement
     include Common::Style
     include Common::Fill
     include Common::Stroke

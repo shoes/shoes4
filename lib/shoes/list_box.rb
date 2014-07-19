@@ -1,6 +1,6 @@
 class Shoes
   class ListBox
-    include Common::Element
+    include Common::UIElement
     include Common::Changeable
     include Common::State
 

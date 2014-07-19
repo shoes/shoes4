@@ -1,6 +1,6 @@
 class Shoes
   module Common
-    module Element
+    module UIElement
       include Common::Inspect
       include Common::Visibility
       include Common::Positioning

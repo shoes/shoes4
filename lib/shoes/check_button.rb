@@ -1,6 +1,6 @@
 class Shoes
   class CheckButton
-    include Common::Element
+    include Common::UIElement
     include Common::Clickable
     include Common::State
 

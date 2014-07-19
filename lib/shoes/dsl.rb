@@ -83,7 +83,7 @@ require 'shoes/common/style'
 require 'shoes/common/style_normalizer'
 require 'shoes/common/visibility'
 
-require 'shoes/common/element'
+require 'shoes/common/ui_element'
 
 require 'shoes/builtin_methods'
 require 'shoes/check_button'

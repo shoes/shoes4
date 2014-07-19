@@ -1,6 +1,6 @@
 class Shoes
   class Progress
-    include Common::Element
+    include Common::UIElement
 
     attr_reader :app, :parent, :blk, :gui, :opts, :dimensions, :fraction
 

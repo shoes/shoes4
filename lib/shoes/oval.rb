@@ -1,6 +1,6 @@
 class Shoes
   class Oval
-    include Common::Element
+    include Common::UIElement
     include Common::Style
     include Common::Clickable
 

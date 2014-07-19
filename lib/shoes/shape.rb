@@ -1,6 +1,6 @@
 class Shoes
   class Shape
-    include Common::Element
+    include Common::UIElement
     include Common::Fill
     include Common::Stroke
     include Common::Style

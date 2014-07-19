@@ -3,7 +3,7 @@ class Shoes
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock
-    include Common::Element
+    include Common::UIElement
     include Common::Clickable
     include TextBlockDimensionsDelegations
 

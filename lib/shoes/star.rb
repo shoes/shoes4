@@ -1,6 +1,6 @@
 class Shoes
   class Star
-    include Common::Element
+    include Common::UIElement
     include Common::Fill
     include Common::Stroke
     include Common::Style
