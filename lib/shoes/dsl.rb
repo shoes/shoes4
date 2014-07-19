@@ -193,12 +193,12 @@ class Shoes
       create Shoes::Image, path, opts, blk
     end
 
-    def border(color, opts = {}, &blk)
-      create Shoes::Border, pattern(color), opts, blk
+    def border(color, styles = {})
+      create Shoes::Border, pattern(color), styles
     end
 
-    def background(color, opts = {})
-      create Shoes::Background, pattern(color), style_normalizer.normalize(opts)
+    def background(color, styles = {})
+      create Shoes::Background, pattern(color), style_normalizer.normalize(styles)
     end
 
     def edit_line(*args, &blk)
