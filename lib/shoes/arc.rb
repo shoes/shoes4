@@ -5,7 +5,7 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
-    attr_reader :app, :dimensions, :parent, :gui
+    attr_reader :app, :parent, :dimensions, :gui
     style_with :angle1, :angle2, :art_styles, :center, :dimensions, :radius, :wedge
     STYLES = {wedge: false}
 

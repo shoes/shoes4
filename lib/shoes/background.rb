@@ -1,26 +1,22 @@
 class Shoes
   class Background
-    include DimensionsDelegations
     include CommonMethods
-    include Common::BackgroundElement
     include Common::Style
-    include Common::Fill
-    include Common::Stroke
+    include DimensionsDelegations
+    include Common::BackgroundElement
 
-    attr_reader :app, :gui, :parent, :corners, :angle, :dimensions
+    attr_reader :app, :dimensions, :parent, :gui
+    style_with :angle, :curve, :fill
+    STYLES = {angle: 0, curve: 0}
 
-    def initialize(app, parent, color, opts = {}, blk = nil)
+    def initialize(app, parent, color, styles = {})
       @app    = app
       @parent = parent
-      @dimensions = ParentDimensions.new parent, opts
-      @corners    = opts[:curve] || 0
-      @angle      = opts[:angle] || 0
-      opts[:fill] = color
-
-      @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
-      parent.add_child self
-
-      @gui = Shoes.backend_for(self, opts, &blk)
+      @dimensions = ParentDimensions.new parent, styles
+      
+      style_init(styles, fill: color)
+      @parent.add_child self
+      @gui = Shoes.backend_for(self)
     end
 
     def needs_to_be_positioned?

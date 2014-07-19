@@ -8,15 +8,15 @@ describe Shoes::Swt::Background do
   let(:width) { 222 }
   let(:height) { 111 }
   let(:corners) { 0 }
-  let(:opts) { {} }
+  let(:fill) { Shoes::COLORS[:salmon] }
   let(:dsl) { double("dsl object", app: shoes_app,
                      element_left: left, element_top: top,
                      element_width: width, element_height: height,
-                     strokewidth: 1, corners: corners,
-                     hidden: false).as_null_object }
+                     strokewidth: 1, curve: corners, fill: fill,
+                     hidden: false).as_null_object}
 
   subject {
-    Shoes::Swt::Background.new dsl, swt_app, opts
+    Shoes::Swt::Background.new dsl, swt_app
   }
 
   context "#initialize" do
@@ -27,7 +27,6 @@ describe Shoes::Swt::Background do
   describe "#dispose" do
     let(:fill)     { double("fill", gui: fill_gui) }
     let(:fill_gui) { double("fill gui") }
-    let(:opts)     { { fill: fill } }
 
     it "lets subresources go" do
       expect(fill_gui).to receive(:dispose)
