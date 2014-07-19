@@ -1,7 +1,6 @@
 class Shoes
   class Progress
-    include CommonMethods
-    include DimensionsDelegations
+    include Common::Element
 
     attr_reader :app, :parent, :blk, :gui, :opts, :dimensions, :fraction
 

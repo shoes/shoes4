@@ -1,9 +1,8 @@
 class Shoes
   class InputBox
-    include CommonMethods
+    include Common::Element
     include Common::Changeable
     include Common::State
-    include DimensionsDelegations
 
     attr_reader :app, :gui, :blk, :parent, :dimensions, :initial_text
 

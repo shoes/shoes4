@@ -1,9 +1,8 @@
 class Shoes
   class ListBox
-    include CommonMethods
+    include Common::Element
     include Common::Changeable
     include Common::State
-    include DimensionsDelegations
 
     DEFAULT_WIDTH = 200
     DEFAULT_HEIGHT = 20

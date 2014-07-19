@@ -1,11 +1,10 @@
 class Shoes
   class Rect
-    include CommonMethods
+    include Common::Element
     include Common::Style
     include Common::Fill
     include Common::Stroke
     include Common::Clickable
-    include DimensionsDelegations
 
     attr_reader :app, :gui, :corners, :dimensions, :angle, :parent
 

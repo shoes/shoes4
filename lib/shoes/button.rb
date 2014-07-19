@@ -1,9 +1,8 @@
 class Shoes
   class Button
-    include Shoes::CommonMethods
-    include Shoes::Common::Clickable
-    include Shoes::Common::State
-    include DimensionsDelegations
+    include Common::Element
+    include Common::Clickable
+    include Common::State
 
     attr_reader :app, :parent, :blk, :gui, :opts, :dimensions
     attr_accessor :text

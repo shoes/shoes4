@@ -1,9 +1,8 @@
 class Shoes
   class CheckButton
-    include CommonMethods
+    include Common::Element
     include Common::Clickable
     include Common::State
-    include DimensionsDelegations
 
     attr_reader :app, :parent, :blk, :gui, :dimensions
 

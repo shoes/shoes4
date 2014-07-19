@@ -1,7 +1,6 @@
 class Shoes
   class Background
-    include DimensionsDelegations
-    include CommonMethods
+    include Common::Element
     include Common::BackgroundElement
     include Common::Style
     include Common::Fill

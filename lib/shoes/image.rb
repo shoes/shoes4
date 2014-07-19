@@ -1,8 +1,7 @@
 class Shoes
   class Image
-    include CommonMethods
+    include Common::Element
     include Common::Clickable
-    include DimensionsDelegations
 
     attr_reader :parent, :blk, :gui, :app, :file_path, :opts, :dimensions
 

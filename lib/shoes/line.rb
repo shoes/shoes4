@@ -1,10 +1,9 @@
 class Shoes
   class Line
-    include CommonMethods
+    include Common::Element
     include Common::Stroke
     include Common::Style
     include Common::Clickable
-    include DimensionsDelegations
 
     attr_reader :app, :point_a, :point_b, :angle, :dimensions, :gui, :parent
 
