@@ -19,9 +19,11 @@ describe Shoes::Swt::Shape do
 
   it_behaves_like "Swt::Shape"
   it_behaves_like "paintable"
+  it_behaves_like "removable"
 
   it "properly disposes" do
     expect(subject.transform).to receive(:dispose)
+    expect(subject.element).to receive(:dispose)
     subject.dispose
   end
 
