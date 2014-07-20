@@ -1,9 +1,8 @@
 class Shoes
   class Arc
-    include CommonMethods
+    include Common::UIElement
     include Common::Style
     include Common::Clickable
-    include DimensionsDelegations
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :angle1, :angle2, :art_styles, :center, :dimensions, :radius, :wedge
@@ -13,7 +12,7 @@ class Shoes
       @app                 = app
       @parent              = parent
       @dimensions          = Dimensions.new parent, left, top, width, height, styles
-      
+
       style_init(styles, angle1: angle1, angle2: angle2)
       @parent.add_child self
       @gui = Shoes.backend_for(self)

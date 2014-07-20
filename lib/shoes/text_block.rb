@@ -3,9 +3,8 @@ class Shoes
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock
-    include CommonMethods
+    include Common::UIElement
     include Common::Clickable
-    include DimensionsDelegations
     include TextBlockDimensionsDelegations
 
     attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts

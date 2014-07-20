@@ -1,7 +1,6 @@
 class Shoes
   class Border
-    include DimensionsDelegations
-    include CommonMethods
+    include Common::UIElement
     include Common::BackgroundElement
     include Common::Style
     include Common::Fill

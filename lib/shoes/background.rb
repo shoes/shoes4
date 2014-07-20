@@ -1,9 +1,8 @@
 class Shoes
   class Background
-    include CommonMethods
-    include Common::Style
-    include DimensionsDelegations
+    include Common::UIElement
     include Common::BackgroundElement
+    include Common::Style
 
     attr_reader :app, :dimensions, :parent, :gui
     style_with :angle, :curve, :fill
@@ -13,7 +12,7 @@ class Shoes
       @app    = app
       @parent = parent
       @dimensions = ParentDimensions.new parent, styles
-      
+
       style_init(styles, fill: color)
       @parent.add_child self
       @gui = Shoes.backend_for(self)

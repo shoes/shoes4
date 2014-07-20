@@ -1,11 +1,10 @@
 class Shoes
   class Shape
-    include Shoes::CommonMethods
-    include Shoes::Common::Fill
-    include Shoes::Common::Stroke
-    include Shoes::Common::Style
-    include Shoes::Common::Clickable
-    include DimensionsDelegations
+    include Common::UIElement
+    include Common::Fill
+    include Common::Stroke
+    include Common::Style
+    include Common::Clickable
 
     attr_reader :app, :parent, :blk, :dimensions, :gui, :hidden, :x, :y
     attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound

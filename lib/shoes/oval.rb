@@ -1,9 +1,8 @@
 class Shoes
   class Oval
-    include CommonMethods
+    include Common::UIElement
     include Common::Style
     include Common::Clickable
-    include DimensionsDelegations
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :art_styles, :center, :radius
@@ -12,7 +11,7 @@ class Shoes
       @app                 = app
       @parent              = parent
       @dimensions          = AbsoluteDimensions.new left, top, width, height, styles
-      
+
       style_init(styles)
       @parent.add_child self
       @gui = Shoes.backend_for(self)

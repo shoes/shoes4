@@ -1,11 +1,10 @@
 class Shoes
   class Star
-    include CommonMethods
+    include Common::UIElement
     include Common::Fill
     include Common::Stroke
     include Common::Style
     include Common::Clickable
-    include DimensionsDelegations
 
     attr_reader :app, :gui, :angle, :dimensions, :outer, :inner, :points,
                 :parent
