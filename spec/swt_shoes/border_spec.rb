@@ -10,7 +10,7 @@ describe Shoes::Swt::Border do
   let(:corners) { 0 }
   let(:dsl) { double("dsl object", element_width: width, element_height: height,
                      element_left: left, element_top: top, parent: parent,
-                     strokewidth: 1, corners: corners,hidden: false).as_null_object }
+                     strokewidth: 1, curve: corners,hidden: false).as_null_object }
 
   subject { Shoes::Swt::Border.new dsl, swt_app }
 

@@ -3,26 +3,20 @@ class Shoes
     include Common::UIElement
     include Common::BackgroundElement
     include Common::Style
-    include Common::Fill
-    include Common::Stroke
 
-    attr_reader :app, :gui, :parent, :corners, :angle, :opts, :dimensions
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :angle, :curve, :stroke, :strokewidth
+    STYLES = {angle: 0, curve: 0}
 
-    def initialize(app, parent, color, opts = {}, blk = nil)
+
+    def initialize(app, parent, color, styles = {})
       @app = app
       @parent = parent
+      @dimensions = ParentDimensions.new parent, styles
 
-      @dimensions = ParentDimensions.new parent, opts
-      @corners = opts[:curve] || 0
-      @angle = opts[:angle] || 0
-
-      opts[:stroke] = color
-      parent.add_child self
-
-      @style = Common::Fill::DEFAULTS.merge(Common::Stroke::DEFAULTS).merge(opts)
-      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
-
-      @gui = Shoes.backend_for(self, opts, &blk)
+      style_init(styles, stroke: color)
+      @parent.add_child self
+      @gui = Shoes.backend_for(self)
     end
 
     def needs_to_be_positioned?
