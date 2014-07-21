@@ -1,9 +1,8 @@
 class Shoes
   class Border
-    include CommonMethods
-    include Common::Style
-    include DimensionsDelegations
+    include Common::UIElement
     include Common::BackgroundElement
+    include Common::Style
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :angle, :curve, :stroke, :strokewidth

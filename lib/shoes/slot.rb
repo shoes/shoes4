@@ -1,8 +1,7 @@
 class Shoes
   class Slot
+    include Common::UIElement
     include Common::Clickable
-    include CommonMethods
-    include DimensionsDelegations
 
     # We need that offset because otherwise element overlap e.g. occupy
     # the same pixel - this way they start right next to each other

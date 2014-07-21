@@ -28,10 +28,10 @@ class Shoes
                           ::Shoes::Common::Style => [:update_style],
                           ::Shoes::TextBlock     => [:replace]}
 
-      CHANGED_POSITION = {::Shoes::CommonMethods => [:_position],
-                          ::Shoes::Dimensions    => [:left=, :top=, :width=,
-                                                     :height=,
-                                                     :displace_left=, :displace_top=],
+      CHANGED_POSITION = {::Shoes::Common::Positioning => [:_position],
+                          ::Shoes::Dimensions          => [:left=, :top=, :width=,
+                                                           :height=,
+                                                           :displace_left=, :displace_top=],
                           }
 
       # These methods trigger SWT painting listeners, so we need to be sure
