@@ -10,16 +10,23 @@ class Shoes
         size = font_style[:size]
         styles = font_style[:styles].reduce { |result, s| result | s }
 
+        # Check if this font already exists, use that instead if it does
+        for existing_font in @fonts
+          if [Shoes.display, name, size, styles] == existing_font[1..@fonts.length]
+            return existing_font[0]
+          end
+        end
+
         font = ::Swt::Graphics::Font.new Shoes.display, name, size, styles
 
         # Hold a reference to the font so we can dispose it when the time comes
-        @fonts << font
+        @fonts.push([font, Shoes.display, name, size, styles])
 
         font
       end
 
       def dispose
-        @fonts.each { |font| font.dispose unless font.disposed? }
+        @fonts.each { |font, _, _, _, _| font.dispose unless font.disposed? }
         @fonts.clear
       end
     end
