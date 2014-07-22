@@ -7,14 +7,14 @@ class Shoes
 
       def create_font(font_style)
 
-		new_font = TextFont.new(Shoes.display, font_style, font = nil)
-		
-		# Check if font with same style and display exists
-		existing_font = @fonts.find{ |font| font == new_font }
-		return existing_font.font if existing_font
+        new_font = TextFont.new(Shoes.display, font_style, font = nil)
+        
+        # Check if font with same style and display exists
+        existing_font = @fonts.find{ |font| font == new_font }
+        return existing_font.font if existing_font
 
         # Hold a reference to the font so we can dispose it when the time comes
-		@fonts << new_font.make_font
+        @fonts << new_font.make_font
 
         new_font.font
       end
