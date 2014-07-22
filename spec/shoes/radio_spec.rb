@@ -15,7 +15,6 @@ describe Shoes::Radio do
     it "sets accessors" do
       expect(radio.parent).to eq(parent)
       expect(radio.group).to eq(group)
-      expect(radio.blk).to eq(input_block)
     end
   end
 

@@ -12,11 +12,13 @@ class Shoes
           add_listener_for object, ::Swt::SWT::MouseDown, block
         end
 
-        def click(&block)
+        def click(block)
+          remove_listener_for ::Swt::SWT::MouseDown
           add_listener_for ::Swt::SWT::MouseDown, block
         end
 
-        def release(&block)
+        def release(block)
+          remove_listener_for ::Swt::SWT::MouseUp
           add_listener_for ::Swt::SWT::MouseUp, block
         end
 
@@ -29,12 +31,18 @@ class Shoes
           app.add_clickable_element dsl_object
           app.add_listener event, listener
         end
-
+        
+        def remove_listener_for_link(swt_link)
+          dsl_object = swt_link.dsl
+          app.clickable_elements.delete(dsl_object)
+          app.remove_listener ::Swt::SWT::MouseDown, swt_link.click_listener
+          app.remove_listener ::Swt::SWT::MouseUp, swt_link.click_listener
+        end
+        
         def remove_listener_for(swt_object = self, event)
           dsl_object = swt_object.dsl
           app.clickable_elements.delete(dsl_object)
-          app.remove_listener ::Swt::SWT::MouseDown, swt_object.click_listener
-          app.remove_listener ::Swt::SWT::MouseUp, swt_object.click_listener
+          app.remove_listener event, swt_object.click_listener
         end
 
         class ClickListener

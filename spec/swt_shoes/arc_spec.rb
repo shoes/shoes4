@@ -35,6 +35,7 @@ describe Shoes::Swt::Arc do
 
   it_behaves_like "paintable"
   it_behaves_like "togglable"
+  it_behaves_like "clickable backend"
 
   describe "painter" do
     include_context "painter context"

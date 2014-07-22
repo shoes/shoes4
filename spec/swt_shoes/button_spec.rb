@@ -87,15 +87,15 @@ describe Shoes::Swt::Button do
   describe 'click' do
     it 'adds listener to real object' do
       expect(real).to receive(:addSelectionListener)
-      subject.click &block
+      subject.click block
     end
 
     it 'passes dsl object to block' do
-      expect(real).to receive(:addSelectionListener).twice do |&blk|
+      expect(real).to receive(:addSelectionListener).once do |&blk|
         expect(block).to receive(:call).with(dsl)
         blk.call
       end
-      subject.click &block
+      subject.click block
     end
   end
 end

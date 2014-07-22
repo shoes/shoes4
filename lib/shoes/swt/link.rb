@@ -19,7 +19,7 @@ class Shoes
 
       def remove
         @link_segments.clear
-        remove_listener_for(self)
+        remove_listener_for_link(self)
       end
 
       def create_links_in(text_segment_ranges)

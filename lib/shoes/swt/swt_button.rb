@@ -6,7 +6,7 @@ class Shoes
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real, :dsl
+      attr_reader :parent, :real, :dsl, :listener
 
       def initialize(dsl, parent, type)
         @dsl = dsl
@@ -14,7 +14,6 @@ class Shoes
 
         @type = type
         @real = ::Swt::Widgets::Button.new(@parent.real, @type)
-        @real.addSelectionListener { eval_block @dsl.blk } if @dsl.blk
 
         yield(@real) if block_given?
 
@@ -29,7 +28,12 @@ class Shoes
         @real.set_focus
       end
 
-      def click &blk
+      def click blk
+        @listener_array = @real.getListeners ::Swt::SWT::Selection
+        if @listener_array.length > 0
+          @old_listener = @listener_array[0]
+          @real.removeListener ::Swt::SWT::Selection, @old_listener
+        end
         @real.addSelectionListener { eval_block blk }
       end
 

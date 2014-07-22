@@ -44,7 +44,8 @@ class Shoes
           @supported_styles = []
 
           unpack_style_groups(styles)
-          define_accessor_methods
+          define_reader_methods
+          define_writer_methods
         end
 
         def supported_styles
@@ -61,24 +62,32 @@ class Shoes
           end
         end
 
-        def define_accessor_methods
-          needs_accessors = @supported_styles.reject do |style|
+        def define_reader_methods
+          needs_readers = @supported_styles.reject do |style|
             self.method_defined?(style)
           end
 
-          #define accessors for styles that need them
-          needs_accessors.map(&:to_sym).each do |style|
-
+          #define readers for styles that need them
+          needs_readers.map(&:to_sym).each do |style|
             define_method style do
               @style[style]
             end
-
-            define_method "#{style}=" do |new_style|
-              @style[style] = new_style
-            end
-
           end
         end
+
+        def define_writer_methods
+          needs_writers = @supported_styles.reject do |style|
+            self.method_defined?("#{style}=")
+          end
+
+          #define writers by invoking the style method
+          needs_writers.map(&:to_sym).each do |style_key|
+            define_method "#{style_key}=" do |new_style|
+              self.send("style", style_key.to_sym => new_style)
+            end
+          end
+        end
+
       end
 
       def self.included(klass)
@@ -90,14 +99,19 @@ class Shoes
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
         set_dimensions(new_styles)
+        set_click(new_styles) if new_styles.has_key?(:click)
         @style.merge! normalized_style
       end
-      
+
       #if dimension is set via style, pass info on to the dimensions setter
       def set_dimensions(new_styles)
         new_styles.each do |key, value|
           self.send(key.to_s+"=", value) if STYLE_GROUPS[:dimensions].include?(key)
         end
+      end
+
+      def set_click(new_styles)
+        self.click &new_styles[:click]
       end
 
       def update_dimensions #so that @style hash matches actual values

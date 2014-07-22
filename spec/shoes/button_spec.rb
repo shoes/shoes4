@@ -22,7 +22,6 @@ describe Shoes::Button do
 
   describe "initialize" do
     its(:parent) { should eq(parent) }
-    its(:blk) { should eq(input_block) }
     its(:text) { should eq("text") }
     its(:width) { should eq(131) }
     its(:height) { should eq(137) }

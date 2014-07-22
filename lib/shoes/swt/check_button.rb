@@ -1,7 +1,6 @@
 class Shoes
   module Swt
     class CheckButton < SwtButton
-      include Common::Clickable
       include Common::Child
 
       def initialize(dsl, parent, type)
