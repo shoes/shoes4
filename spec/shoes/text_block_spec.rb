@@ -237,12 +237,12 @@ describe Shoes::TextBlock do
 
     it "has fragment styles" do
       text_styles = {
-        21..33 => [helper.strong_breadsticks],
-        34..46 => [helper.em],
-        47..59 => [helper.code],
-        60..71 => [helper.bg, helper.fg, helper.strong, helper.ins],
-        72..76 => [helper.sub]
-      }
+                     21..33 => [helper.strong_breadsticks],
+                     34..46 => [helper.em],
+                     47..59 => [helper.code],
+                     60..71 => [helper.bg, helper.fg, helper.strong, helper.ins],
+                     72..76 => [helper.sub]
+                    }
       expect(para.text_styles).to eq(text_styles)
     end
 
