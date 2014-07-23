@@ -3,8 +3,7 @@ class Shoes
     module CommonMethods
       def initialize(dsl, *args)
       end
-      def click(blk)
-      end
+      
       def update_position
       end
     end

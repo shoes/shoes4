@@ -30,10 +30,7 @@ class Shoes
 
       def click blk
         @listener_array = @real.getListeners ::Swt::SWT::Selection
-        if @listener_array.length > 0
-          @old_listener = @listener_array[0]
-          @real.removeListener ::Swt::SWT::Selection, @old_listener
-        end
+        @real.removeListener ::Swt::SWT::Selection, @listener_array.first if @listener_array.first
         @real.addSelectionListener { eval_block blk }
       end
 

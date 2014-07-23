@@ -1,4 +1,5 @@
 require 'shoes/mock/common_methods'
+require 'shoes/mock/clickable'
 
 require 'shoes/mock/animation'
 require 'shoes/mock/app'

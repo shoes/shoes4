@@ -110,10 +110,6 @@ class Shoes
         end
       end
 
-      def set_click(new_styles)
-        self.click &new_styles[:click]
-      end
-
       def update_dimensions #so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
           @style[style] = self.send(style.to_s)
