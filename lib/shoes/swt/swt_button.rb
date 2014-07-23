@@ -6,7 +6,7 @@ class Shoes
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real, :dsl, :listener
+      attr_reader :parent, :real, :dsl
 
       def initialize(dsl, parent, type)
         @dsl = dsl
