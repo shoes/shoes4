@@ -1,30 +1,26 @@
 class Shoes
   class ListBox
     include Common::UIElement
+    include Common::Style
     include Common::Changeable
-    include Common::State
 
-    DEFAULT_WIDTH = 200
-    DEFAULT_HEIGHT = 20
+    STYLES = {width: 200, height: 20, items: [""]}
 
-    attr_reader :items, :app, :gui, :blk, :parent, :opts, :dimensions
+    attr_reader :items, :app, :gui, :blk, :parent, :styles, :dimensions
+    style_with :change, :choose, :dimensions, :items, :state, :text
 
-    def initialize(app, parent, opts = {}, blk = nil)
+    def initialize(app, parent, styles = {}, blk = nil)
       @app        = app
       @parent     = parent
-      @blk        = blk
-      @opts       = opts
-      @dimensions = Dimensions.new parent, opts
-      @dimensions.width  ||= DEFAULT_WIDTH
-      @dimensions.height ||= DEFAULT_HEIGHT
+      style_init(styles)
+      @dimensions = Dimensions.new parent, @style
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
-      self.items = opts.has_key?(:items) ? opts[:items] : [""]
-      choose(opts[:choose]) if opts.has_key?(:choose)
       @parent.add_child self
 
       self.change &blk if blk
-      state_options(opts)
+      self.items = @style[:items]
+      choose(@style[:choose]) if @style.has_key?(:choose)
     end
 
     def items=(values)
@@ -36,8 +32,22 @@ class Shoes
       @gui.text
     end
 
-    def choose(item)
-      @gui.choose item
+    def choose(item_or_hash)
+      case item_or_hash
+      when String
+        @gui.choose item_or_hash
+      when Hash
+        @gui.choose item_or_hash[:item]
+      end
+    end
+
+    def choose=(item)
+      choose(item)
+    end
+    
+    def state=(value)
+      @style[:state] = value
+      @gui.enabled value.nil?
     end
   end
 end
