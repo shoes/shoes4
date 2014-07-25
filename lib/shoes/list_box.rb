@@ -40,10 +40,8 @@ class Shoes
         @gui.choose item_or_hash[:item]
       end
     end
-
-    def choose=(item)
-      choose(item)
-    end
+    
+    alias_method :choose=, :choose
     
     def state=(value)
       @style[:state] = value
