@@ -237,11 +237,11 @@ class Shoes
     end
 
     def flow(opts = {}, &blk)
-      create Shoes::Flow, opts, &blk
+      create Shoes::Flow, opts, blk
     end
 
     def stack(opts = {}, &blk)
-      create Shoes::Stack, opts, &blk
+      create Shoes::Stack, opts, blk
     end
 
     def button(text = 'Button', opts={}, &blk)

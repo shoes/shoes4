@@ -2,6 +2,7 @@ class Shoes
   class Slot
     include Common::UIElement
     include Common::Clickable
+    include Common::Style
 
     # We need that offset because otherwise element overlap e.g. occupy
     # the same pixel - this way they start right next to each other
@@ -10,9 +11,10 @@ class Shoes
 
     attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
                 :leave_proc
+    style_with :art_styles, :attach, :dimensions, :stroke
 
-    def initialize(app, parent, opts={}, &blk)
-      init_attributes(app, parent, opts, blk)
+    def initialize(app, parent, styles = {}, blk = nil)
+      init_attributes(app, parent, styles, blk)
       @parent.add_child self
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
@@ -20,12 +22,13 @@ class Shoes
       contents_alignment
     end
 
-    def init_attributes(app, parent, opts, blk)
+    def init_attributes(app, parent, styles, blk)
       @app            = app
       @parent         = parent
       @contents       = SlotContents.new
       @blk            = blk
-      @dimensions     = Dimensions.new parent, opts
+      style_init(styles)
+      @dimensions     = Dimensions.new parent, @style
       @fixed_height   = height || false
       set_default_dimension_values
     end
