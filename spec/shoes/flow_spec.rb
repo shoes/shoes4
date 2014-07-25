@@ -4,7 +4,7 @@ require 'shoes/helpers/fake_element'
 describe Shoes::Flow do
   include_context "dsl app"
 
-  subject(:flow) { Shoes::Flow.new(app, parent, input_opts, &input_block) }
+  subject(:flow) { Shoes::Flow.new(app, parent, input_opts, input_block) }
 
   it_behaves_like "clickable object"
   it_behaves_like "hover and leave events"
