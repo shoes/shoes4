@@ -3,10 +3,9 @@ class Shoes
     class TextFont
       attr_reader :display, :font_style, :font
 
-      def initialize(display, font_style, font)
+      def initialize(display, font_style)
         @display = display
         @font_style = font_style
-        @font = font
       end
 
       def ==(other_font)
