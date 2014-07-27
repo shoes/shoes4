@@ -11,11 +11,11 @@ class Shoes
         styles = styles_bitmask(font_style[:styles])
 
         existing_font = find_existing_font(name, size, styles)
-        return existing_font if existing_font
-
-        font = ::Swt::Graphics::Font.new @display, name, size, styles
-        @fonts << font
-        font
+        if existing_font
+          existing_font
+        else
+          build_font(name, size, styles)
+        end
       end
 
       def dispose
@@ -33,6 +33,12 @@ class Shoes
               font_data.style == styles
           end
         end
+      end
+
+      def build_font(name, size, styles)
+        font = ::Swt::Graphics::Font.new @display, name, size, styles
+        @fonts << font
+        font
       end
 
       def styles_bitmask(styles)
