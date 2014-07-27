@@ -109,6 +109,7 @@ require 'shoes/swt/text_block/centered_text_segment'
 require 'shoes/swt/text_block/text_segment_collection'
 require 'shoes/swt/text_block/cursor_painter'
 require 'shoes/swt/text_block/fitter'
+require 'shoes/swt/text_block/text_font'
 require 'shoes/swt/text_block/text_font_factory'
 require 'shoes/swt/text_block/text_style_factory'
 

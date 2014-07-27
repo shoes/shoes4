@@ -6,22 +6,24 @@ class Shoes
       end
 
       def create_font(font_style)
-        name = font_style[:name]
-        size = font_style[:size]
-        styles = font_style[:styles].reduce { |result, s| result | s }
 
-        font = ::Swt::Graphics::Font.new Shoes.display, name, size, styles
+        new_font = TextFont.new(Shoes.display, font_style, font = nil)
+        
+        # Check if font with same style and display exists
+        existing_font = @fonts.find{ |font| font == new_font }
+        return existing_font.font if existing_font
 
         # Hold a reference to the font so we can dispose it when the time comes
-        @fonts << font
+        @fonts << new_font.make_font
 
-        font
+        new_font.font
       end
 
       def dispose
-        @fonts.each { |font| font.dispose unless font.disposed? }
+        @fonts.each { |text_font| text_font.font.dispose unless text_font.font.disposed? }
         @fonts.clear
       end
     end
   end
 end
+
