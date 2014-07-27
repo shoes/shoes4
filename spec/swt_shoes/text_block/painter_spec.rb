@@ -25,7 +25,8 @@ describe Shoes::Swt::TextBlock::Painter do
 
   let(:event) { double("event").as_null_object }
   let(:style) { double(:style).as_null_object }
-  let(:font)  { double(:font).as_null_object }
+  let(:font)  { double(:font, font_data: [font_data]).as_null_object }
+  let(:font_data) { double(name: "font", height: 16.0, style: ::Swt::SWT::NORMAL) }
 
   let(:blue) { Shoes::Color.new(0, 0, 255) }
   let(:swt_blue) { Shoes::Swt::Color.new(blue).real}
@@ -164,13 +165,6 @@ describe Shoes::Swt::TextBlock::Painter do
 
       subject.paintControl(event)
     end
-
-    it "sets font style to normal by default" do
-      expect(::Swt::Font).to receive(:new).with(anything, anything, anything, ::Swt::SWT::NORMAL)
-
-      subject.paintControl(event)
-    end
-
   end
 
   context "colors" do
@@ -209,8 +203,6 @@ describe Shoes::Swt::TextBlock::Painter do
     # right now, which I'm not too fond of... :)
     let(:text_styles) {[[0...text.length, [Shoes::Span.new([text], size: 50)]]]}
     it 'sets the font size to 50' do
-      expect(::Swt::Font).to receive(:new).
-                             with(anything, anything, dsl.font_size, anything)
       expect(::Swt::Font).to receive(:new).
                              with(anything, anything, 50, anything)
 

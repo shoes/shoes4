@@ -8,20 +8,43 @@ class Shoes
       def create_font(font_style)
         name = font_style[:name]
         size = font_style[:size]
-        styles = font_style[:styles].reduce { |result, s| result | s }
+        styles = styles_bitmask(font_style[:styles])
 
-        font = ::Swt::Graphics::Font.new Shoes.display, name, size, styles
-
-        # Hold a reference to the font so we can dispose it when the time comes
-        @fonts << font
-
-        font
+        existing_font = find_existing_font(name, size, styles)
+        if existing_font
+          existing_font
+        else
+          build_font(name, size, styles)
+        end
       end
 
       def dispose
         @fonts.each { |font| font.dispose unless font.disposed? }
         @fonts.clear
       end
+
+      def find_existing_font(name, size, styles)
+        # Bit odd, but fonts on some OS's have multiple font_data elements,
+        # so check if any of them match.
+        @fonts.find do |font|
+          font.font_data.any? do |font_data|
+            font_data.name == name &&
+            font_data.height.to_f == size.to_f &&
+            font_data.style == styles
+          end
+        end
+      end
+
+      def build_font(name, size, styles)
+        font = ::Swt::Graphics::Font.new @display, name, size, styles
+        @fonts << font
+        font
+      end
+
+      def styles_bitmask(styles)
+        styles.reduce { |result, s| result | s }
+      end
     end
   end
 end
+
