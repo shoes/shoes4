@@ -16,6 +16,8 @@ class Shoes
       def remove;end
 
       def contents_alignment(*args);end
+
+      def adjust_current_position(*args);end
     end
 
     class Banner < TextBlock; end
