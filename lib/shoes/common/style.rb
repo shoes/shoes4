@@ -1,23 +1,23 @@
 class Shoes
   module Common
     # Style methods.
-    module Style 
+    module Style
 
       DEFAULT_STYLES = {
         fill:        Shoes::COLORS[:black],
         stroke:      Shoes::COLORS[:black],
-        strokewidth: 1 
+        strokewidth: 1
       }
 
       STYLE_GROUPS = {
         art_styles:    [:cap, :click, :fill, :stroke, :strokewidth],
         common_styles: [:displace_left, :displace_top, :hidden],
-        dimensions:    [:bottom, :height, :left, :margin, 
-                        :margin_bottom, :margin_left, :margin_right, 
+        dimensions:    [:bottom, :height, :left, :margin,
+                        :margin_bottom, :margin_left, :margin_right,
                         :margin_top, :right, :top, :width],
-        text_styles:   [:align, :click, :emphasis, :family, :fill, :font, 
-                        :justify, :kerning, :leading, :rise, :size, :stretch, 
-                        :strikecolor, :strikethrough, :stroke, :undercolor, 
+        text_styles:   [:align, :click, :emphasis, :family, :fill, :font,
+                        :justify, :kerning, :leading, :rise, :size, :stretch,
+                        :strikecolor, :strikethrough, :stroke, :undercolor,
                         :underline, :weight, :wrap],
         others:        [:angle1, :angle2, :center, :radius, :wedge]
       }
@@ -27,7 +27,7 @@ class Shoes
         update_style(new_styles) if need_to_update_style?(new_styles)
         update_dimensions if styles_with_dimensions?
         @style
-      end 
+      end
 
       def style_init(arg_styles, new_styles = {})
         default_element_styles = {}
@@ -51,7 +51,7 @@ class Shoes
         def supported_styles
           @supported_styles
         end
-        
+
         def unpack_style_groups(styles)
           styles.each do |style|
             if STYLE_GROUPS[style]
@@ -67,7 +67,6 @@ class Shoes
             self.method_defined?(style)
           end
 
-          #define readers for styles that need them
           needs_readers.map(&:to_sym).each do |style|
             define_method style do
               @style[style]
@@ -80,7 +79,6 @@ class Shoes
             self.method_defined?("#{style}=")
           end
 
-          #define writers by invoking the style method
           needs_writers.map(&:to_sym).each do |style_key|
             define_method "#{style_key}=" do |new_style|
               self.send("style", style_key.to_sym => new_style)

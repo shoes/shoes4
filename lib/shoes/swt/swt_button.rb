@@ -29,9 +29,15 @@ class Shoes
       end
 
       def click blk
-        @listener_array = @real.getListeners ::Swt::SWT::Selection
-        @real.removeListener ::Swt::SWT::Selection, @listener_array.first if @listener_array.first
+        remove_listeners
         @real.addSelectionListener { eval_block blk }
+      end
+
+      def remove_listeners
+        listener_array = @real.getListeners ::Swt::SWT::Selection
+        listener_array.each do |listener|
+          @real.removeListener ::Swt::SWT::Selection, listener
+        end
       end
 
       def enabled(value)
