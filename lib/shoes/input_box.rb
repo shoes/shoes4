@@ -1,28 +1,29 @@
 class Shoes
   class InputBox
     include Common::UIElement
+    include Common::Style
     include Common::Changeable
-    include Common::State
 
-    attr_reader :app, :gui, :blk, :parent, :dimensions, :initial_text
+    attr_reader :app, :parent, :dimensions,  :gui
+    style_with :change, :dimensions, :text, :state
 
-    def initialize(app, parent, text, opts, blk = nil)
+    def initialize(app, parent, text, styles, blk = nil)
       @app          = app
       @parent       = parent
-      @blk          = blk
-      @dimensions   = Dimensions.new parent, opts
-      @initial_text = text
-      @secret       = opts[:secret]
+      # style_init goes before dimensions, because dimensions expects
+      # default height and width
+      style_init(styles, text: text)
+      @dimensions   = Dimensions.new parent, @style
 
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
 
       self.change &blk if blk
-      state_options(opts)
     end
-
-    def secret?
-      @secret
+  
+    def state=(value)
+      @style[:state] = value
+      @gui.enabled value.nil?
     end
 
     def focus
@@ -34,6 +35,7 @@ class Shoes
     end
 
     def text=(value)
+      @style[:text] = value.to_s
       @gui.text = value.to_s
     end
 
@@ -47,21 +49,26 @@ class Shoes
   end
 
   class EditBox < InputBox
-    DEFAULT_STYLE = { width: 200,
-                      height: 108 }
+    STYLES = { width: 200, height: 108, text: '' }
 
-    def initialize(app, parent, text, opts={}, blk = nil)
-      super(app, parent, text, DEFAULT_STYLE.merge(opts), blk)
+    def initialize(app, parent, text, styles = {}, blk = nil)
+      super(app, parent, text, styles, blk)
     end
   end
 
   class EditLine < InputBox
-    DEFAULT_STYLE = { width:  200,
-                      height: 28 }
 
-    def initialize(app, parent, text, opts={}, blk = nil)
-      super(app, parent, text, DEFAULT_STYLE.merge(opts), blk)
+    STYLES = { width:  200, height: 28, text: '' }
+    style_with :secret
+
+    def initialize(app, parent, text, styles = {}, blk = nil)
+      super(app, parent, text, styles, blk)
     end
+
+    def secret?
+      @secret
+    end
+
   end
 
 end
