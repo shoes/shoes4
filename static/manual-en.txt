@@ -1829,6 +1829,16 @@ the other methods in this [[Art]] section) inside a shape, but they will not be
 part of the line.  They will be more like a group of shapes are all drawn as
 one.
 
+=== shape(styles) » Shoes::Shape ===
+
+Draw a arbitrary shape using a style hash.  The following styles are supported:
+
+ * `left`: the x-coordinate for the shape.
+ * `top`: the y-coordinate for the shape.
+ * `center`: do the coordinates specific the rectangle's center? (true or false - default is false)
+
+These styles may also be altered using the `style` method on the shape object.
+
 === star(left, top, points = 10, outer = 100.0, inner = 50.0) » Shoes::Shape ===
 
 Draws a star using the stroke and fill colors.  The star is positioned with its
