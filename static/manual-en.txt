@@ -1831,7 +1831,7 @@ one.
 
 === shape(styles) » Shoes::Shape ===
 
-Draw a arbitrary shape using a style hash.  The following styles are supported:
+Draw an arbitrary shape using a style hash. The following styles are supported:
 
  * `left`: the x-coordinate for the shape.
  * `top`: the y-coordinate for the shape.
