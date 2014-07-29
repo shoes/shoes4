@@ -8,7 +8,7 @@ class Shoes
         @started = false
       end
 
-      # suboptimal but good enough fo now... calling the DSL lets the methods
+      # suboptimal but good enough for now... calling the DSL lets the methods
       # play ping pong calling each other... will think of something.
       def width
         @dsl.opts[:width]

@@ -3,7 +3,7 @@ require 'shoes/helpers/sample17_helper'
 
 describe Shoes::TextBlock do
   include_context "dsl app"
-
+  
   let(:text_link) { Shoes::Link.new(app, parent, ['Hello']) }
   let(:text) { [text_link, ", world!"] }
   subject(:text_block) { Shoes::TextBlock.new(app, parent, text, 99, {app: app}) }

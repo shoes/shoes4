@@ -509,7 +509,7 @@ EOS
 
     def link(*texts, &blk)
       opts = normalize_style_for_element(Shoes::Link, texts)
-      create Shoes::Link, texts, opts, &blk
+      create Shoes::Link, texts, opts, blk
     end
 
     def span(*texts)

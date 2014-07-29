@@ -2,21 +2,21 @@ class Shoes
   class CheckButton
     include Common::UIElement
     include Common::Clickable
-    include Common::State
+    include Common::Style
 
-    attr_reader :app, :parent, :blk, :gui, :dimensions
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :checked, :click, :dimensions, :state
 
-    def initialize(app, parent, opts = {}, blk = nil)
+    def initialize(app, parent, styles = {}, blk = nil)
       @app        = app
       @parent     = parent
-      @blk        = blk
-      @dimensions = Dimensions.new parent, opts
+      @dimensions = Dimensions.new parent, styles
 
+      style_init(styles)
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
 
-      register_click(opts)
-      state_options(opts)
+      register_click(styles, blk)
     end
 
     def checked?
@@ -31,9 +31,11 @@ class Shoes
       @gui.focus
     end
 
-    def click
-      @blk.call if blk
+    def state=(value)
+      @style[:state] = value
+      @gui.enabled value.nil?
     end
+
   end
 
   class Check < CheckButton ; end

@@ -47,8 +47,7 @@ describe Shoes::Swt::Link do
     end
 
     it "clears links" do
-      # One remove call each for mouse down, mouse up
-      expect(swt_app).to receive(:remove_listener).twice
+      expect(swt_app).to receive(:remove_listener)
 
       subject.create_links_in([[layout, 0..10]])
       subject.remove

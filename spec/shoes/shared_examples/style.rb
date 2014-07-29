@@ -36,7 +36,7 @@ all_the_styles.map(&:to_sym).each do |style|
   shared_examples_for "object that styles with #{style}" do
     
     it "has #{style} setter" do
-      expect(subject).to respond_to("#{style}=".to_sym) unless style == :click
+      expect(subject).to respond_to("#{style}=".to_sym)
     end
 
     it "has #{style} getter" do

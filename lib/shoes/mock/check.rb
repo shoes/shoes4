@@ -2,6 +2,7 @@ class Shoes
   module Mock
     class Check
       include Shoes::Mock::CommonMethods
+      include Shoes::Mock::Clickable
 
       def initialize(*opts)
       end
