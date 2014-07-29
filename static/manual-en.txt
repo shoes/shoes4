@@ -1835,7 +1835,6 @@ Draw a arbitrary shape using a style hash.  The following styles are supported:
 
  * `left`: the x-coordinate for the shape.
  * `top`: the y-coordinate for the shape.
- * `center`: do the coordinates specific the rectangle's center? (true or false - default is false)
 
 These styles may also be altered using the `style` method on the shape object.
 
