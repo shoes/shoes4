@@ -54,11 +54,19 @@ class Shoes
       end
 
       def create_image(data)
-        @real              = ::Swt::Graphics::Image.new(::Swt.display, data)
-        @full_width        = @real.getImageData.width
-        @full_height       = @real.getImageData.height
-        dsl.element_width  ||= default_width
-        dsl.element_height ||= default_height
+        begin
+          @real = ::Swt::Graphics::Image.new(::Swt.display, data)
+        rescue #::Swt::SWTException
+          puts "*** WARNING - Failed to load image ***"
+          data = File.join(DIR, 'static/icon-error.png')
+          dsl.style[:file_path] = data
+          retry
+        else
+          @full_width        = @real.getImageData.width
+          @full_height       = @real.getImageData.height
+          dsl.element_width  ||= default_width
+          dsl.element_height ||= default_height
+        end
       end
 
       def default_width
@@ -96,6 +104,7 @@ class Shoes
         if raw_image_data?(name_or_data)
           data = load_raw_image_data(name_or_data)
         else
+          # TODO: Check file validity here. Try relative path.
           data = name_or_data
         end
         create_image(data)

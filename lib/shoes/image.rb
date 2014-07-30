@@ -1,31 +1,30 @@
 class Shoes
   class Image
     include Common::UIElement
+    include Common::Style
     include Common::Clickable
 
-    attr_reader :parent, :blk, :gui, :app, :file_path, :opts, :dimensions
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :art_styles, :dimensions, :file_path
 
-    def initialize(app, parent, file_path, opts = {}, blk = nil)
+    def initialize(app, parent, file_path, styles = {}, blk = nil)
       @app = app
       @parent = parent
-      @file_path = file_path
-      @opts = opts
-      @blk = blk
+      style_init(styles, file_path: file_path)
+
+      @dimensions = Dimensions.new parent, styles
       parent.add_child self
-
-      @dimensions = Dimensions.new parent, opts
-
       @gui = Shoes.configuration.backend_for(self, @parent.gui)
 
-      register_click(opts, blk)
+      register_click(styles, blk)
     end
 
     def path
-      @file_path
+      @style[:file_path]
     end
 
     def path=(path)
-      @file_path = path
+      @style[:file_path] = path
       @gui.update_image
     end
   end
