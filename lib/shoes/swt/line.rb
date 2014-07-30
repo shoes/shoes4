@@ -16,8 +16,7 @@ class Shoes
       # @param [Shoes::Swt::App] app The {Swt::App} this object belongs to
       # @param [Shoes::Point] point_a One endpoint of the line
       # @param [Shoes::Point] point_b The other endpoint of the line
-      # @param [Hash] opts Options
-      def initialize(dsl, app, opts = {})
+      def initialize(dsl, app)
         @dsl, @app = dsl, app
 
         translate_according_to_enclosing_box
