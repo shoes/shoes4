@@ -14,7 +14,6 @@ describe Shoes::Swt::Image do
   let(:height) { nil }
   let(:width) {nil}
   let(:image) { "spec/swt_shoes/minimal.png" }
-  let(:bad_filename) { "../static/shoes-icon.png"}
 
   subject {
     allow(dsl).to receive(:file_path) { image }
@@ -47,20 +46,6 @@ describe Shoes::Swt::Image do
     specify "loads image from raw data" do
       subject.real.image_data.width = 3
       subject.real.image_data.height = 1
-    end
-  end
-
-  describe "when given a bad file path" do
-    let(:dsl) { Shoes::Image.new shoes_app, parent_dsl, bad_filename, opts}
-
-    subject do
-      allow(dsl).to receive(:file_path) { bad_filename }
-      Shoes::Swt::Image.new(dsl, parent)
-    end
-
-    it "should raise an error" do
-      #expect(subject).to raise_error
-      expect(subject.path).to eq("lib/static/icon-error.png")
     end
   end
 
