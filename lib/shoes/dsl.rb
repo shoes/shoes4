@@ -473,11 +473,11 @@ EOS
       inscription:  10
     }.freeze
 
-    %w[banner title subtitle tagline caption para inscription].each do |method|
+    FONT_SIZES.keys.each do |method|
       define_method method do |*texts|
-        opts = texts.last.class == Hash ? texts.pop : {}
+        styles = pop_style(texts)
         klass = Shoes.const_get(method.capitalize)
-        create klass, texts, FONT_SIZES[method.to_sym], style_for_element(klass, opts)
+        create klass, texts, FONT_SIZES[method.to_sym], styles
       end
     end
 
@@ -493,9 +493,9 @@ EOS
 
     TEXT_STYLES.keys.each do |method|
       define_method method do |*texts|
-        style = style_normalizer.normalize(pop_style(texts))
-        opts = TEXT_STYLES[method].merge(style)
-        Shoes::Span.new texts, opts
+        styles = style_normalizer.normalize(pop_style(texts))
+        styles = TEXT_STYLES[method].merge(styles)
+        Shoes::Span.new texts, styles
       end
     end
 
