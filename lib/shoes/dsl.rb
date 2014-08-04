@@ -194,8 +194,8 @@ class Shoes
 
     public
 
-    def image(path, opts={}, &blk)
-      create Shoes::Image, path, opts, blk
+    def image(path, styles = {}, &blk)
+      create Shoes::Image, path, styles, blk
     end
 
     def border(color, styles = {})
