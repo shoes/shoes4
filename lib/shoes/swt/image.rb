@@ -54,7 +54,7 @@ class Shoes
       end
 
       def create_image(data)
-        @real              = ::Swt::Graphics::Image.new(::Swt.display, data)
+        @real = ::Swt::Graphics::Image.new(::Swt.display, data)
         @full_width        = @real.getImageData.width
         @full_height       = @real.getImageData.height
         dsl.element_width  ||= default_width
