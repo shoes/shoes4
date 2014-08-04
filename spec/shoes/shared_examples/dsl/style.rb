@@ -1,5 +1,4 @@
 shared_examples_for "style DSL method" do
-=begin -- this won't work until we implement style
   describe "setting new defaults for text block" do
     let(:stroke) { Shoes::COLORS[:chartreuse] }
     let(:size)   { 42 }
@@ -21,7 +20,7 @@ shared_examples_for "style DSL method" do
         end
 
         it "sets size" do
-          expect(element.font_size).to eq(size)
+          expect(element.size).to eq(size)
         end
 
         it "sets font" do
@@ -30,5 +29,4 @@ shared_examples_for "style DSL method" do
       end
     end
   end
-=end
 end

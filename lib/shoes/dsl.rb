@@ -460,24 +460,11 @@ EOS
       @__app__.style[:fill] = nil
     end
 
-    # Text blocks
-    # normally constants belong to the top, I put them here because they are
-    # only used here.
-    FONT_SIZES = {
-      banner:       48,
-      title:        34,
-      subtitle:     26,
-      tagline:      18,
-      caption:      14,
-      para:         12,
-      inscription:  10
-    }.freeze
-
-    FONT_SIZES.keys.each do |method|
+    %w[banner title subtitle tagline caption para inscription].each do |method|
       define_method method do |*texts|
         styles = pop_style(texts)
         klass = Shoes.const_get(method.capitalize)
-        create klass, texts, FONT_SIZES[method.to_sym], styles
+        create klass, texts, styles
       end
     end
 

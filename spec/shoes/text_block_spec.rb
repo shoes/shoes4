@@ -3,10 +3,10 @@ require 'shoes/helpers/sample17_helper'
 
 describe Shoes::TextBlock do
   include_context "dsl app"
-  
+
   let(:text_link) { Shoes::Link.new(app, parent, ['Hello']) }
   let(:text) { [text_link, ", world!"] }
-  subject(:text_block) { Shoes::TextBlock.new(app, parent, text, 99, {app: app}) }
+  subject(:text_block) { Shoes::TextBlock.new(app, parent, text, {app: app}) }
 
   describe "initialize" do
     it "creates gui object" do
@@ -76,74 +76,73 @@ describe Shoes::TextBlock do
   end
 
   describe "font" do
-    let(:size) { 99 }
-    let(:text_block) { Shoes::TextBlock.new(app, parent, ["Hello, world!"], size, opts) }
+    let(:text_block) { Shoes::Para.new(app, parent, ["Hello, world!"], style) }
 
     context "with defaults" do
-      let(:opts) { Hash.new }
+      let(:style) { Hash.new }
 
       it "sets the default font to Arial" do
         expect(text_block.font).to eq "Arial"
       end
 
       it "sets the size from explicit argument" do
-        expect(text_block.font_size).to eq size
+        expect(text_block.size).to eq 12
       end
     end
 
     context "with a font family string" do
-      let(:opts) { { font: "Helvetica" } }
+      let(:style) { { font: "Helvetica" } }
 
       it "sets the font family" do
         expect(text_block.font).to eq "Helvetica"
       end
 
       it "sets the size from explicit argument" do
-        expect(text_block.font_size).to eq size
+        expect(text_block.size).to eq 12
       end
     end
 
     context "with a font family string and size with 'px'" do
-      let(:opts) { { font: "Helvetica 33px" } }
+      let(:style) { { font: "Helvetica 33px" } }
 
       it "sets the font family" do
         expect(text_block.font).to eq "Helvetica"
       end
 
       it "sets the font size" do
-        expect(text_block.font_size).to eq 33
+        expect(text_block.size).to eq 33
       end
     end
 
     context "with a font family string and size with ' px'" do
-      let(:opts) { { font: "Helvetica 33 px" } }
+      let(:style) { { font: "Helvetica 33 px" } }
 
       it "sets the font family" do
         expect(text_block.font).to eq "Helvetica"
       end
 
       it "sets the font size" do
-        expect(text_block.font_size).to eq 33
+        expect(text_block.size).to eq 33
       end
     end
 
     context "with a quoted font family string and size with 'px'" do
-      let(:opts) { { font: '"Comic Sans" 13px' } }
+      let(:style) { { font: '"Comic Sans" 13px' } }
 
       it "sets the font family" do
         expect(text_block.font).to eq "Comic Sans"
       end
 
       it "sets the size" do
-        expect(text_block.font_size).to eq 13
+        expect(text_block.size).to eq 13
       end
     end
   end
 
   describe "stroke" do
     it "should accept a hex code" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], 99, { stroke: "#fda", app: app })
-      color = s.opts[:stroke]
+      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], { stroke: "#fda", app: app })
+      color = s.style[:stroke]
       expect(color.red).to eql 255
       expect(color.green).to eql 221
       expect(color.blue).to eql 170
@@ -157,7 +156,7 @@ describe Shoes::TextBlock do
     end
 
     context "when not explicitly set" do
-      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], 42) }
+      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"]) }
 
       it "delegates to calculated width" do
         subject.calculated_width = 240
@@ -181,7 +180,7 @@ describe Shoes::TextBlock do
     end
 
     context "when explicitly set" do
-      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], 42, { width: 120 }) }
+      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], { width: 120 }) }
 
       it "gets returned" do
         expect(subject.width).to eql 120

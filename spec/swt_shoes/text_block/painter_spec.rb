@@ -3,13 +3,13 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::TextBlock::Painter do
   include_context "swt app"
 
-  let(:opts) { {justify: true, leading: 10, underline: "single"} }
+  let(:dsl_style) { {justify: true, leading: 10, underline: "single"} }
   let(:gui) { double("gui", dispose: nil) }
   let(:dsl) { double("dsl", app: shoes_app, gui: gui,
-                     text: text, cursor: nil,
-                     opts: opts, element_width: 200, element_height: 180,
+                     text: text, cursor: nil, style: dsl_style,
+                     dsl_style: dsl_style, element_width: 200, element_height: 180,
                      element_left: 0, element_top: 10, font: "font",
-                     font_size: 16, margin_left: 0, margin_top: 0,
+                     size: 16, margin_left: 0, margin_top: 0,
                      text_styles: text_styles, :hidden? => false).as_null_object
             }
 
@@ -49,12 +49,12 @@ describe Shoes::Swt::TextBlock::Painter do
   end
 
   it "sets justify" do
-    expect(text_layout).to receive(:justify=).with(opts[:justify])
+    expect(text_layout).to receive(:justify=).with(dsl_style[:justify])
     subject.paintControl(event)
   end
 
   it "sets spacing" do
-    expect(text_layout).to receive(:spacing=).with(opts[:leading])
+    expect(text_layout).to receive(:spacing=).with(dsl_style[:leading])
     subject.paintControl(event)
   end
 
@@ -75,7 +75,7 @@ describe Shoes::Swt::TextBlock::Painter do
     end
 
     it "sets correct rise value" do
-      opts[:rise] = 10
+      dsl_style[:rise] = 10
       expect(style).to receive(:rise=).with(10)
 
       subject.paintControl(event)
@@ -84,7 +84,7 @@ describe Shoes::Swt::TextBlock::Painter do
 
   context "underline option" do
     it "sets default underline style to none" do
-      opts.delete(:underline)
+      dsl_style.delete(:underline)
 
       expect(style).to receive(:underline=).with(false)
       expect(style).to receive(:underlineStyle=).with(nil)
@@ -101,7 +101,7 @@ describe Shoes::Swt::TextBlock::Painter do
     end
 
     it "sets underline color" do
-      opts[:undercolor] = blue
+      dsl_style[:undercolor] = blue
 
       expect(style).to receive(:underlineColor=).with(swt_blue)
 
@@ -123,7 +123,7 @@ describe Shoes::Swt::TextBlock::Painter do
     end
 
     it "sets strikethrough" do
-      opts[:strikethrough] = "single"
+      dsl_style[:strikethrough] = "single"
 
       expect(style).to receive(:strikeout=).with(true)
 
@@ -131,7 +131,7 @@ describe Shoes::Swt::TextBlock::Painter do
     end
 
     it "sets strikethrough color" do
-      opts[:strikecolor] = blue
+      dsl_style[:strikecolor] = blue
 
       expect(style).to receive(:strikeoutColor=).with(swt_blue)
 
@@ -147,20 +147,20 @@ describe Shoes::Swt::TextBlock::Painter do
 
   context "font styles" do
     it "sets font style to bold" do
-      opts[:weight] = true
+      dsl_style[:weight] = true
       expect(::Swt::Font).to receive(:new).with(anything, anything, anything, ::Swt::SWT::BOLD)
       subject.paintControl(event)
     end
 
     it "sets font style to italic" do
-      opts[:emphasis] = true
+      dsl_style[:emphasis] = true
       expect(::Swt::Font).to receive(:new).with(anything, anything, anything, ::Swt::SWT::ITALIC)
       subject.paintControl(event)
     end
 
     it "sets font style to both bold and italic" do
-      opts[:weight] = true
-      opts[:emphasis] = true
+      dsl_style[:weight] = true
+      dsl_style[:emphasis] = true
       expect(::Swt::Font).to receive(:new).with(anything, anything, anything, ::Swt::SWT::BOLD | ::Swt::SWT::ITALIC)
 
       subject.paintControl(event)
@@ -177,8 +177,8 @@ describe Shoes::Swt::TextBlock::Painter do
         subject.paintControl(event)
       end
 
-      it "is set with opts[:stroke]" do
-        opts[:stroke] = Shoes::COLORS[:salmon]
+      it "is set with dsl_style[:stroke]" do
+        dsl_style[:stroke] = Shoes::COLORS[:salmon]
         expect(::Swt::TextStyle).to receive(:new).with(anything, salmon, anything)
         subject.paintControl(event)
       end
@@ -190,8 +190,8 @@ describe Shoes::Swt::TextBlock::Painter do
         subject.paintControl(event)
       end
 
-      it "is set with opts[:fill]" do
-        opts[:fill] = Shoes::COLORS[:salmon]
+      it "is set with dsl_style[:fill]" do
+        dsl_style[:fill] = Shoes::COLORS[:salmon]
         expect(::Swt::TextStyle).to receive(:new).with(anything, anything, salmon)
         subject.paintControl(event)
       end

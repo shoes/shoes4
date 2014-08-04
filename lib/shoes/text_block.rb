@@ -4,32 +4,23 @@ class Shoes
 
   class TextBlock
     include Common::UIElement
+    include Common::Style
     include Common::Clickable
     include TextBlockDimensionsDelegations
 
-    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts
-    attr_accessor :font, :font_size, :cursor, :textcursor
+    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
+    attr_accessor :cursor, :textcursor
+    style_with :text_block_styles, :dimensions
 
-    def initialize(app, parent, text, font_size, opts = {})
+
+    def initialize(app, parent, text, styles = {})
       @parent             = parent
       @app                = app
-      @opts               = opts
-      @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
-      @font_size          = @opts[:size] || font_size
+      style_init(styles)
 
-      @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
-      @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
+      @dimensions   = TextBlockDimensions.new parent, @style
 
-      #TODO
-      # Workaround until common styling is applied to TextBlock since we get
-      # the app-default fill => black styling here otherwise.
-      @opts[:fill] = nil unless @opts.include?(:fill)
-
-      @dimensions   = TextBlockDimensions.new parent, opts
-
-      handle_opts @opts
-
-      @opts = @app.style.merge(@opts)
+      handle_styles @style
 
       @gui = Shoes.configuration.backend_for(self)
       @parent.add_child(self)
@@ -37,7 +28,7 @@ class Shoes
       # Important to use accessor and do this after the backend exists!
       self.text = Array(text)
 
-      register_click(@opts)
+      register_click(@style)
     end
 
     def in_bounds?(*args)
@@ -79,7 +70,7 @@ class Shoes
     end
 
     def centered?
-      opts[:align] == CENTER
+      style[:align] == CENTER
     end
 
     def links
@@ -107,32 +98,46 @@ class Shoes
       styles
     end
 
-    def handle_opts(opts)
-      parse_font_opt opts[:font] if opts.has_key? :font
+    def handle_styles(style)
+      parse_font_style style[:font] if style[:font] #if is needed for the specs
     end
 
-    def parse_font_opt(type)
+    def parse_font_style(type)
       size_regex = /(\d+)(\s*px)?/
       style_regex = /none|bold|normal|oblique|italic/i # TODO: add more
 
       font_family = type.gsub(style_regex,'').gsub(size_regex,'').
                   split(',').map { |x| x.strip.gsub(/["]/,'') }
 
-      @font = font_family.first unless (font_family.size == 1 and
+      @style[:font] = font_family.first unless (font_family.size == 1 and
         font_family[0] == "") or font_family.size == 0
 
       fsize = size_regex.match(type)
-      @font_size = fsize[1].to_i unless fsize.nil?
+      @style[:size] = fsize[1].to_i unless fsize.nil?
 
       # TODO: Style options
     end
   end
 
-  class Banner < TextBlock; end
-  class Title < TextBlock; end
-  class Subtitle < TextBlock; end
-  class Tagline < TextBlock; end
-  class Caption < TextBlock; end
-  class Para < TextBlock; end
-  class Inscription < TextBlock; end
+  class Banner < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 48}
+  end
+  class Title < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 34}
+  end
+  class Subtitle < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 26}
+  end
+  class Tagline < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 18}
+  end
+  class Caption < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 14}
+  end
+  class Para < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 12}
+  end
+  class Inscription < TextBlock
+    STYLES = {font: "Arial", fill: nil, size: 10}
+  end
 end

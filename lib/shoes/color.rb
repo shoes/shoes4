@@ -149,6 +149,8 @@ EOS
               color arg
             when Range, Shoes::Gradient
               gradient(arg)
+            when Shoes::ImagePattern
+              arg
             else
               raise ArgumentError, "Bad pattern: #{arg.inspect}"
           end
