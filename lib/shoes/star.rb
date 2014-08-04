@@ -10,7 +10,6 @@ class Shoes
     def initialize(app, parent, left, top, points, outer, inner, styles = {}, blk = nil)
       @app = app
       @parent = parent
-      style_init(styles, inner: inner, outer: outer, points: points)
 
       # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
       width = outer*2
@@ -23,8 +22,11 @@ class Shoes
       inner_dimensions = AbsoluteDimensions.new 0, 0, inner*2, 0
 
       # Get actual outer/inner from the dimension to handle relative values
-      @style[:outer] = @dimensions.width / 2
-      @style[:inner] = inner_dimensions.width / 2
+      outer = @dimensions.width / 2
+      inner = inner_dimensions.width / 2
+
+      # Now set style using adjust outer and inner
+      style_init(styles, inner: inner, outer: outer, points: points)
 
       @parent.add_child self
       @gui = Shoes.backend_for(self)
