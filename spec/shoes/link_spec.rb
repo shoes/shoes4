@@ -50,7 +50,7 @@ describe Shoes::Link do
 
       it "sets up for the click" do
         expect(callable).to receive(:call)
-        subject.execute_link
+        subject.blk.call
       end
     end
 
@@ -59,17 +59,17 @@ describe Shoes::Link do
 
       it "should visit the url" do
         expect(app).to receive(:visit).with("/url")
-        subject.execute_link
+        subject.blk.call
       end
     end
 
     context "with click option as Proc" do
-      let(:block) { double("block", call: nil) }
-      subject { Shoes::Link.new(internal_app, nil, texts, click: block) }
+      let(:callable) { double("callable", call: nil) }
+      subject { Shoes::Link.new(internal_app, nil, texts, click: Proc.new { callable.call }) }
 
       it "calls the block" do
-        expect(block).to receive(:call)
-        subject.execute_link
+        expect(callable).to receive(:call)
+        subject.blk.call
       end
     end
 
@@ -83,7 +83,7 @@ describe Shoes::Link do
         expect(replacement_block).to receive(:call)
 
         subject.click { replacement_block.call }
-        subject.execute_link
+        subject.blk.call
       end
     end
   end

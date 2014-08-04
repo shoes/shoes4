@@ -6,13 +6,6 @@ describe Shoes::Swt::Link do
 
   subject { Shoes::Swt::Link.new(dsl, swt_app) }
 
-  it "marks itself clickable" do
-    expect(swt_app).to receive(:add_listener)
-    expect(swt_app).to receive(:add_clickable_element)
-
-    subject
-  end
-
   its(:dsl) {is_expected.to eq dsl}
 
   context "creating link segments" do
