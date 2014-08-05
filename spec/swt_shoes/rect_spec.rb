@@ -8,10 +8,9 @@ describe Shoes::Swt::Rect do
   let(:width) { 222 }
   let(:height) { 111 }
   let(:dsl) {::Shoes::Rect.new shoes_app, parent, left, top, width, height}
-  let(:block) {double "WHY OH GOD WHY"}
 
   subject {
-    Shoes::Swt::Rect.new dsl, swt_app, block
+    Shoes::Swt::Rect.new dsl, swt_app
   }
 
   it_behaves_like "paintable"

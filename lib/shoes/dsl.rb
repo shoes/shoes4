@@ -194,8 +194,8 @@ class Shoes
 
     public
 
-    def image(path, opts={}, &blk)
-      create Shoes::Image, path, opts, blk
+    def image(path, styles = {}, &blk)
+      create Shoes::Image, path, styles, blk
     end
 
     def border(color, styles = {})
@@ -426,9 +426,9 @@ EOS
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
-    def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
-      opts = style_normalizer.normalize opts
-      create Shoes::Star, left, top, points, outer, inner, opts, blk
+    def star(left, top, points = 10, outer = 100.0, inner = 50.0, styles = {}, &blk)
+      styles = style_normalizer.normalize styles
+      create Shoes::Star, left, top, points, outer, inner, styles, blk
     end
 
     # Creates a new Shoes::Shape object
