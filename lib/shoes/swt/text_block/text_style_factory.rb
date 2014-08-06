@@ -28,14 +28,14 @@ class Shoes
         @gui_style
       end
 
-      def self.apply_styles(styles, style)
-        styles[:font_detail][:styles] = parse_font_style(style)
-        styles[:font_detail][:name] = style[:font] if style[:font]
-        styles[:font_detail][:size] = style[:size] if style[:size]
-        styles[:fg] = style[:stroke]
-        styles[:bg] = style[:fill]
-        styles[:font_detail][:size] *= style[:size_modifier] if style[:size_modifier]
-        styles.merge(style)
+      def self.apply_styles(gui_style, dsl_style)
+        gui_style[:font_detail][:styles] = parse_font_style(dsl_style)
+        gui_style[:font_detail][:name] = dsl_style[:font] if dsl_style[:font]
+        gui_style[:font_detail][:size] = dsl_style[:size] if dsl_style[:size]
+        gui_style[:fg] = dsl_style[:stroke]
+        gui_style[:bg] = dsl_style[:fill]
+        gui_style[:font_detail][:size] *= dsl_style[:size_modifier] if dsl_style[:size_modifier]
+        gui_style.merge(dsl_style)
       end
 
       def self.parse_font_style(style)

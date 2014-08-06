@@ -7,7 +7,7 @@ describe Shoes::Swt::TextBlock::Painter do
   let(:gui) { double("gui", dispose: nil) }
   let(:dsl) { double("dsl", app: shoes_app, gui: gui,
                      text: text, cursor: nil, style: dsl_style,
-                     dsl_style: dsl_style, element_width: 200, element_height: 180,
+                     element_width: 200, element_height: 180,
                      element_left: 0, element_top: 10, font: "font",
                      size: 16, margin_left: 0, margin_top: 0,
                      text_styles: text_styles, :hidden? => false).as_null_object

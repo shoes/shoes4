@@ -59,7 +59,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
         styles = [[0..1, [create_link("linky")]]]
         subject.style_segment_ranges(styles)
 
-        expected_style = style_with(underline: true, stroke: ::Shoes::COLORS[:blue])
+        expected_style = style_with(underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil)
         expect(first_segment).to have_received(:set_style).with(expected_style, 0..1)
       end
 

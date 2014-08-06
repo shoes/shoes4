@@ -11,7 +11,7 @@ class Shoes
     attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
     attr_accessor :cursor, :textcursor
     style_with :text_block_styles, :dimensions
-
+    STYLES = {font: "Arial"} # used in TextBlock specs only
 
     def initialize(app, parent, text, styles = {})
       @parent             = parent
@@ -119,25 +119,19 @@ class Shoes
     end
   end
 
-  class Banner < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 48}
+  {
+    "Banner"      => { size: 48 },
+    "Title"       => { size: 34 },
+    "Subtitle"    => { size: 26 },
+    "Tagline"     => { size: 18 },
+    "Caption"     => { size: 14 },
+    "Para"        => { size: 12 },
+    "Inscription" => { size: 10 }
+  }.each do |name, styles|
+    clazz = Class.new(TextBlock) do
+      self.const_set("STYLES", { font: "Arial", fill: nil }.merge(styles))
+    end
+    Shoes.const_set(name, clazz)
   end
-  class Title < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 34}
-  end
-  class Subtitle < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 26}
-  end
-  class Tagline < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 18}
-  end
-  class Caption < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 14}
-  end
-  class Para < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 12}
-  end
-  class Inscription < TextBlock
-    STYLES = {font: "Arial", fill: nil, size: 10}
-  end
+
 end

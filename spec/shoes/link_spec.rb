@@ -22,7 +22,8 @@ describe Shoes::Link do
     it "should default styles" do
       expect(subject.style).to eql({
         :underline=>true,
-        :stroke=>Shoes::COLORS[:blue]
+        :stroke=>Shoes::COLORS[:blue],
+        :fill=>nil
       })
     end
 

@@ -76,17 +76,13 @@ describe Shoes::TextBlock do
   end
 
   describe "font" do
-    let(:text_block) { Shoes::Para.new(app, parent, ["Hello, world!"], style) }
+    let(:text_block) { Shoes::TextBlock.new(app, parent, ["Hello, world!"], style) }
 
     context "with defaults" do
       let(:style) { Hash.new }
 
       it "sets the default font to Arial" do
         expect(text_block.font).to eq "Arial"
-      end
-
-      it "sets the size from explicit argument" do
-        expect(text_block.size).to eq 12
       end
     end
 
@@ -95,10 +91,6 @@ describe Shoes::TextBlock do
 
       it "sets the font family" do
         expect(text_block.font).to eq "Helvetica"
-      end
-
-      it "sets the size from explicit argument" do
-        expect(text_block.size).to eq 12
       end
     end
 
