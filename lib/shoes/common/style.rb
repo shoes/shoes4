@@ -126,7 +126,7 @@ class Shoes
       # aspect and we want to avoid unnecessary redraws
       def style_changed?(new_styles)
         new_styles.each_pair.any? do |key, value|
-          @style[key].inspect != value.inspect
+          @style[key] != value
         end
       end
 

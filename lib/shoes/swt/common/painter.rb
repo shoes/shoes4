@@ -25,7 +25,7 @@ class Shoes
           # Really important to rescue here. Failures that escape this method
           # cause odd-ball hangs with no backtraces. See #559 for an example.
           #
-          puts "SWALLOWED PAINT EXCEPTION ON #{@obj.to_s} - go take care of it: " + e.to_s
+          puts "SWALLOWED PAINT EXCEPTION ON #{@obj} - go take care of it: " + e.to_s
           puts 'Unfortunately we have to swallow it because it causes odd failures :('
         end
 

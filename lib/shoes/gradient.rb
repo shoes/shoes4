@@ -16,5 +16,17 @@ class Shoes
     def ==(other)
       other.is_a?(self.class) && self.to_s == other.to_s
     end
+
+    def !=(other)
+      other.is_a?(self.class) && self.inspect != other.inspect
+    end
+
+    def <=>(other)
+      if other.is_a?(self.class)
+        self.inspect <=> other.inspect
+      else
+        self <=> other
+      end
+    end
   end
 end
