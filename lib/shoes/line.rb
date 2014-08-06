@@ -21,6 +21,11 @@ class Shoes
       register_click(styles, blk)
     end
 
+    def update_style(new_styles)
+      super
+      enclosing_box_of_line
+    end
+
     def enclosing_box_of_line
       @dimensions = AbsoluteDimensions.new left:   point_a.left(point_b),
                                            top:    point_a.top(point_b),
