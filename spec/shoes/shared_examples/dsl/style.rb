@@ -20,7 +20,7 @@ shared_examples_for "style DSL method" do
         end
 
         it "sets size" do
-          expect(element.font_size).to eq(size)
+          expect(element.size).to eq(size)
         end
 
         it "sets font" do
