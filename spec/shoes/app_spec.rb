@@ -289,7 +289,7 @@ describe Shoes::App do
       let(:input_block) { Proc.new { para "Round peg, square hole" * 200 } }
 
       it "has gutter of 16" do
-        expect(app.gutter).to eq(16)
+        expect(app.gutter).to be_between(16, 17)
       end
     end
 
@@ -297,7 +297,7 @@ describe Shoes::App do
       let(:input_block) { Proc.new { para "Round peg, square hole" } }
 
       it "has gutter of 16" do
-        expect(app.gutter).to eq(16)
+        expect(app.gutter).to be_between(16, 17)
       end
     end
   end
