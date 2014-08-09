@@ -10,6 +10,7 @@ class ShoesDslManifest
   def self.files
     @files ||= ShoesCommonManifest.files
       .include(%w[
+        ext/**/*
         fonts/**/*
         lib/shoes/**/*
         manifests/shoes-dsl.rb

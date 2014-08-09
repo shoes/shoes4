@@ -460,24 +460,11 @@ EOS
       @__app__.style[:fill] = nil
     end
 
-    # Text blocks
-    # normally constants belong to the top, I put them here because they are
-    # only used here.
-    FONT_SIZES = {
-      banner:       48,
-      title:        34,
-      subtitle:     26,
-      tagline:      18,
-      caption:      14,
-      para:         12,
-      inscription:  10
-    }.freeze
-
     %w[banner title subtitle tagline caption para inscription].each do |method|
       define_method method do |*texts|
-        opts = texts.last.class == Hash ? texts.pop : {}
+        styles = pop_style(texts)
         klass = Shoes.const_get(method.capitalize)
-        create klass, texts, FONT_SIZES[method.to_sym], style_for_element(klass, opts)
+        create klass, texts, styles
       end
     end
 
@@ -493,9 +480,9 @@ EOS
 
     TEXT_STYLES.keys.each do |method|
       define_method method do |*texts|
-        style = style_normalizer.normalize(pop_style(texts))
-        opts = TEXT_STYLES[method].merge(style)
-        Shoes::Span.new texts, opts
+        styles = style_normalizer.normalize(pop_style(texts))
+        styles = TEXT_STYLES[method].merge(styles)
+        Shoes::Span.new texts, styles
       end
     end
 

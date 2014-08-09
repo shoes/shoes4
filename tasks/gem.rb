@@ -12,7 +12,7 @@ task 'build:all'
 desc 'Install all gems'
 task 'install:all'
 
-['shoes', 'shoes-dsl', 'shoes-swt'].each do |lib|
+['shoes-dsl', 'shoes-swt', 'shoes'].each do |lib|
   # Defer installing Bundler gem tasks until runtime, so we can install them
   # for a particular gem. Still create tasks that will show up in `rake --tasks`
   # Note that executing #install_tasks multiple times will *add* to the defined

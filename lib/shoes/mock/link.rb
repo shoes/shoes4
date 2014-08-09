@@ -5,6 +5,9 @@ class Shoes
 
       def initialize(dsl, app, opts = {})
       end
+
+      def click(blk)
+      end
     end
   end
 end

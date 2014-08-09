@@ -28,7 +28,7 @@ class Shoes
 
           layout.text = text
           layout.width = width unless layout_fits_in?(width)
-          style_from(font_styling, @dsl.opts)
+          style_from(font_styling, @dsl.style)
         end
 
         def dispose
@@ -47,16 +47,16 @@ class Shoes
           @layout.get_location(cursor, trailing)
         end
 
-        def style_from(default_text_styles, opts)
-          layout.justify = opts[:justify]
-          layout.spacing = (opts[:leading] || DEFAULT_SPACING)
-          layout.alignment = case opts[:align]
+        def style_from(default_text_styles, style)
+          layout.justify = style[:justify]
+          layout.spacing = (style[:leading] || DEFAULT_SPACING)
+          layout.alignment = case style[:align]
                              when 'center'; ::Swt::SWT::CENTER
                              when 'right';  ::Swt::SWT::RIGHT
                              else           ::Swt::SWT::LEFT
                              end
 
-          set_style(TextStyleFactory.apply_styles(default_text_styles, opts))
+          set_style(TextStyleFactory.apply_styles(default_text_styles, style))
         end
 
         def set_style(styles, range=(0...text.length))
@@ -69,7 +69,7 @@ class Shoes
           {
             font_detail: {
             name: @dsl.font,
-            size: @dsl.font_size,
+            size: @dsl.size,
             styles:[::Swt::SWT::NORMAL]
           }
           }
