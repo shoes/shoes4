@@ -219,7 +219,9 @@ class Shoes
     end
 
     def compute_content_height
-      max_bottom = contents.map(&:absolute_bottom).max
+      max_bottom = contents.reject(&:hidden?).
+                            map(&:absolute_bottom).
+                            max
       if max_bottom
         max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
       else
