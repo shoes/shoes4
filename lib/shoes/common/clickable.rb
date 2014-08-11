@@ -11,11 +11,7 @@ class Shoes
 
       def register_click(styles, blk = nil)
         click(&styles[:click]) if styles[:click]
-        click &blk if blk
-      end
-      
-      def set_click(new_styles)
-        self.click &new_styles[:click]
+        click(&blk) if blk
       end
 
     end

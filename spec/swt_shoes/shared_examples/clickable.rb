@@ -19,7 +19,7 @@ shared_examples 'clickable backend' do
   let(:mouse_event) {double 'mouse_event', button: 1, x: 2, y:3}
 
   it {is_expected.to respond_to :clickable}
- 
+
   it 'its click_handler should not be nil' do
     expect(clickable_subject.click_listener).not_to be_nil
   end

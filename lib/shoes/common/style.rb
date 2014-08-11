@@ -98,7 +98,7 @@ class Shoes
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
         set_dimensions(new_styles)
-        set_click(new_styles) if new_styles.has_key?(:click)
+        click(&new_styles[:click]) if new_styles.has_key?(:click)
         @style.merge! normalized_style
       end
 
