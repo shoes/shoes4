@@ -189,6 +189,7 @@ class Shoes
       @mouse_hover_controls = []
       @resize_callbacks     = []
       @rotate               = 0
+      @pass_coordinates     = true
     end
 
     def set_attributes_from_options(opts)

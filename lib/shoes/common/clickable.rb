@@ -1,6 +1,8 @@
 class Shoes
   module Common
     module Clickable
+      attr_accessor :pass_coordinates
+
       def click(&blk)
         @gui.click blk
       end
@@ -14,6 +16,9 @@ class Shoes
         click(&blk) if blk
       end
 
+      def pass_coordinates?
+        @pass_coordinates
+      end
     end
   end
 end

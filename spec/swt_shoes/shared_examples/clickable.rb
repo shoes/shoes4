@@ -25,7 +25,7 @@ shared_examples 'clickable backend' do
   end
 
   it 'calls the block when a click event comes in bounds' do
-    expect(clickable_block).to receive(:call).with(1, 2, 3)
+    expect(clickable_block).to receive(:call).with(dsl)
     clickable_subject.click_listener.handleEvent mouse_event
   end
 
