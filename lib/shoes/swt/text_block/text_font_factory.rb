@@ -47,4 +47,3 @@ class Shoes
     end
   end
 end
-

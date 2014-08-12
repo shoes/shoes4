@@ -2,8 +2,8 @@ require 'shoes/spec_helper'
 
 describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }
-  let(:app) { double("app", gui: gui) }
-  let(:internal_app) { double("internal app", app: app, gui: gui) }
+  let(:app) { double("app", gui: gui, style: {}, element_styles: {}) }
+  let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
 
   context "initialize" do
     let(:texts) { ["text", "goes", "first"] }
@@ -19,27 +19,28 @@ describe Shoes::Link do
       expect(subject.color).to eql(:blue)
     end
 
-    it "should default opts" do
-      expect(subject.opts).to eql({
+    it "should default styles" do
+      expect(subject.style).to eql({
         :underline=>true,
-        :stroke=>Shoes::COLORS[:blue]
+        :stroke=>Shoes::COLORS[:blue],
+        :fill=>nil
       })
     end
 
-    context "overriding options" do
+    context "overriding styles" do
       subject { Shoes::Link.new(app, app, texts,
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
-        expect(subject.opts).to include(:stroke => Shoes::COLORS[:blue])
+        expect(subject.style).to include(:stroke => Shoes::COLORS[:blue])
       end
 
       it "should override defaults" do
-        expect(subject.opts).to include(:underline => false)
+        expect(subject.style).to include(:underline => false)
       end
 
       it "should include other options" do
-        expect(subject.opts).to include(:bg => Shoes::COLORS[:green])
+        expect(subject.style).to include(:bg => Shoes::COLORS[:green])
       end
     end
 
@@ -49,7 +50,7 @@ describe Shoes::Link do
 
       it "sets up for the click" do
         expect(callable).to receive(:call)
-        subject.execute_link
+        subject.blk.call
       end
     end
 
@@ -58,17 +59,17 @@ describe Shoes::Link do
 
       it "should visit the url" do
         expect(app).to receive(:visit).with("/url")
-        subject.execute_link
+        subject.blk.call
       end
     end
 
     context "with click option as Proc" do
-      let(:block) { double("block", call: nil) }
-      subject { Shoes::Link.new(internal_app, nil, texts, click: block) }
+      let(:callable) { double("callable", call: nil) }
+      subject { Shoes::Link.new(internal_app, nil, texts, click: Proc.new { callable.call }) }
 
       it "calls the block" do
-        expect(block).to receive(:call)
-        subject.execute_link
+        expect(callable).to receive(:call)
+        subject.blk.call
       end
     end
 
@@ -82,7 +83,7 @@ describe Shoes::Link do
         expect(replacement_block).to receive(:call)
 
         subject.click { replacement_block.call }
-        subject.execute_link
+        subject.blk.call
       end
     end
   end

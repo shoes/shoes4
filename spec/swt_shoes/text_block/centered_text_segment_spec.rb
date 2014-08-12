@@ -2,7 +2,7 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::TextBlock::CenteredTextSegment do
   let(:width) { 200 }
-  let(:dsl)   { double("dsl", text: "boo", font: "", font_size: 16, opts:{}) }
+  let(:dsl)   { double("dsl", text: "boo", font: "", size: 16, style:{}) }
 
   subject { Shoes::Swt::TextBlock::CenteredTextSegment.new(dsl, width)}
 

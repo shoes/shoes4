@@ -66,7 +66,7 @@ class Shoes
     end
 
     def secret?
-      @secret
+      self.secret
     end
 
   end

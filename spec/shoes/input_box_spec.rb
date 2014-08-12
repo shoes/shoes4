@@ -9,7 +9,7 @@ describe Shoes::InputBox do
   let(:height) { 200 }
   let(:text) { "the text" }
 
-  # EditBox is an InputBox but InputBox is enver instantiated itself
+  # EditBox is an InputBox but InputBox is never instantiated itself
   # And there are problems in the backend due to option settings
   subject { Shoes::EditBox.new(app, parent, text, input_opts, input_block) }
 
@@ -40,5 +40,22 @@ describe Shoes::InputBox do
   describe "negative dimensions" do
     subject { Shoes::EditBox.new(app, parent, text, negative_opts) }
     it_behaves_like "object with negative dimensions"
+  end
+
+  describe Shoes::EditLine do
+    describe "secret" do
+      subject { Shoes::EditLine.new(app, parent, text, secret: true) }
+
+      it "gets initialized" do
+        expect(subject.secret).to eq(true)
+        expect(subject.secret?).to eq(true)
+      end
+
+      it "respects setting" do
+        subject.secret = false
+        expect(subject.secret).to eq(false)
+        expect(subject.secret?).to eq(false)
+      end
+    end
   end
 end

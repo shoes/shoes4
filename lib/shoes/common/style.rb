@@ -15,7 +15,7 @@ class Shoes
         dimensions:    [:bottom, :height, :left, :margin,
                         :margin_bottom, :margin_left, :margin_right,
                         :margin_top, :right, :top, :width],
-        text_styles:   [:align, :click, :emphasis, :family, :fill, :font,
+        text_block_styles:   [:align, :click, :emphasis, :family, :fill, :font,
                         :justify, :kerning, :leading, :rise, :size, :stretch,
                         :strikecolor, :strikethrough, :stroke, :undercolor,
                         :underline, :weight, :wrap],
@@ -40,6 +40,7 @@ class Shoes
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
+        @style = StyleNormalizer.new.normalize(@style)
       end
 
       def create_style_hash

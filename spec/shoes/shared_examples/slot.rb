@@ -36,6 +36,16 @@ shared_context 'two slot children' do
   end
 end
 
+shared_context 'hidden child' do
+  let(:hidden_element) {Shoes::FakeElement.new nil, height: 200, width: 70}
+
+  before :each do
+    subject.add_child hidden_element
+    hidden_element.gui = double("hidden gui", toggle: nil)
+    hidden_element.hide
+  end
+end
+
 shared_context 'three slot children' do
   include_context 'two slot children'
   let(:element3) {Shoes::FakeElement.new(nil, height: 50, width: 20)}
@@ -226,6 +236,15 @@ shared_examples_for 'growing although relatively positioned elements' do
 
     it 'grows the height even further' do
       expect(subject.height).to eq element.height + 70
+    end
+  end
+
+  describe 'positioning with hidden elements' do
+    include_context 'hidden child'
+
+    it 'grows only to height of first child' do
+      subject.contents_alignment
+      expect(subject.height).to eq element.height
     end
   end
 end

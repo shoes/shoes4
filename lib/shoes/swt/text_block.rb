@@ -14,7 +14,7 @@ class Shoes
       def initialize(dsl)
         @dsl            = dsl
         @app            = dsl.app.gui
-        @opts           = @dsl.opts
+        @style           = @dsl.style
         @segments       = []
         @painter        = Painter.new @dsl
         @app.add_paint_listener @painter
