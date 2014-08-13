@@ -61,6 +61,10 @@ class Shoes
           widget_instance
         end
       end
+
+      # Now that we've made the widget method on the app, make sure that
+      # widgets know to delegate to the newly defined method.
+      def_delegator :app, dsl_method
     end
 
 
