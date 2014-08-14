@@ -6,6 +6,7 @@ describe Shoes::Swt::App do
                             :width => width,
                             :height => 0,
                             :app_title => 'double') }
+  let(:dsl) { app }
 
   let(:opts_unresizable) { {:background => Shoes::COLORS[:salmon],
                             :resizable => false} }
@@ -19,6 +20,16 @@ describe Shoes::Swt::App do
 
   it { is_expected.to respond_to :clipboard }
   it { is_expected.to respond_to :clipboard= }
+
+  it_behaves_like "clickable backend" do
+    let(:swt_app) { subject }
+    let(:click_block_parameters) { click_block_coordinates }
+
+    before do
+      allow(dsl).to receive(:pass_coordinates?) { true }
+      allow(subject).to receive(:add_listener)
+    end
+  end
 
   before :each do
     Shoes::Swt.unregister_all

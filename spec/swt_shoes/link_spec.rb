@@ -2,11 +2,14 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Link do
   include_context "swt app"
+
   let(:dsl) { Shoes::Link.new shoes_app, parent, ["linky"] }
 
   subject { Shoes::Swt::Link.new(dsl, swt_app) }
 
   its(:dsl) {is_expected.to eq dsl}
+
+  it_behaves_like "clickable backend"
 
   context "creating link segments" do
     let(:bounds)       { double("bounds", height: 0) }
