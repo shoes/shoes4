@@ -53,7 +53,11 @@ class Shoes
           end
 
           def eval_block(mouse_event)
-            @block.call mouse_event.button, mouse_event.x, mouse_event.y
+            if @clickable_object.pass_coordinates?
+              @block.call mouse_event.button, mouse_event.x, mouse_event.y
+            else
+              @block.call @clickable_object
+            end
           end
         end
 

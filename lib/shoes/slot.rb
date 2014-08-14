@@ -28,9 +28,12 @@ class Shoes
       @contents       = SlotContents.new
       @blk            = blk
       style_init(styles)
+
       @dimensions     = Dimensions.new parent, @style
       @fixed_height   = height || false
       set_default_dimension_values
+
+      @pass_coordinates = true
     end
 
     def set_default_dimension_values

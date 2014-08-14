@@ -36,6 +36,10 @@ class Shoes
       @blk = blk
     end
 
+    def pass_coordinates?
+      false
+    end
+
     def in_bounds?(x, y)
       @gui.in_bounds?(x, y)
     end

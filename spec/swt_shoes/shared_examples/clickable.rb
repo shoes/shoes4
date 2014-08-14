@@ -19,13 +19,20 @@ shared_examples 'clickable backend' do
   let(:mouse_event) {double 'mouse_event', button: 1, x: 2, y:3}
 
   it {is_expected.to respond_to :clickable}
- 
+
   it 'its click_handler should not be nil' do
     expect(clickable_subject.click_listener).not_to be_nil
   end
 
+  # This let will be used for expectations on click parameters
+  let(:click_block_parameters)  { [dsl] }
+
+  # This is the alternate form of click parameters we can expect
+  # set click_block_parameters to this for examples with coordinate clicks
+  let(:click_block_coordinates) { [1, 2, 3] }
+
   it 'calls the block when a click event comes in bounds' do
-    expect(clickable_block).to receive(:call).with(1, 2, 3)
+    expect(clickable_block).to receive(:call).with(*click_block_parameters)
     clickable_subject.click_listener.handleEvent mouse_event
   end
 

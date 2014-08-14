@@ -1,6 +1,8 @@
 class Shoes
   module Common
     module Clickable
+      attr_accessor :pass_coordinates
+
       def click(&blk)
         @gui.click blk
       end
@@ -11,13 +13,12 @@ class Shoes
 
       def register_click(styles, blk = nil)
         click(&styles[:click]) if styles[:click]
-        click &blk if blk
-      end
-      
-      def set_click(new_styles)
-        self.click &new_styles[:click]
+        click(&blk) if blk
       end
 
+      def pass_coordinates?
+        @pass_coordinates
+      end
     end
   end
 end
