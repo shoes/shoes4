@@ -60,6 +60,7 @@ nks_dancing_circle.rb
 nks_dictionary.rb
 nks_edit_box.rb
 nks_edit_line.rb
+nks_notes.rb
 nks_poem.rb
 nks_self.rb
 nks_text_sizes.rb
