@@ -1,220 +1,248 @@
 
-#  
-#  Shoes TicTactoe
-#  
-
-# Global Constants and Variables
-
-PADDING = 10
-TIC_SIZE = 60
-$player = 0
-$click = false
-$player_para = nil
-$animation
-
-# Player Module - yet to be exported
-
-def toggle_player
-	if $player == 0
-		$player = 1
-		$player_para.replace "Player Yellow"
-	else
-		$player = 0
-		$player_para.replace "Player Blue"
-	end
+# Size module
+# Change these constants to change the size of the board.
+module SIZE
+	PADDING = 10
+	TIC_SIZE = 60
+  B_RADIUS = 5
+	WIDTH = HEIGHT = (PADDING * 4) + (TIC_SIZE * 5)
 end
-
-def player_symbol
-	if $player == 0
-		'X'
-	else
-		'O'
-	end
-end
-
-def check_if_over
-	diagonal_tics = []
-	diagonal_tacs = []
-	(1..3).each do |i|
-		tics = Tic.find_x(i).select { |tic| tic.checked == 'X' }
-		return true if tics.length > 2
-		tics = Tic.find_x(i).select { |tic| tic.checked == 'O' }
-		return true if tics.length > 2
-		tics = Tic.find_y(i).select { |tic| tic.checked == 'X' }
-		return true if tics.length > 2
-		tics = Tic.find_y(i).select { |tic| tic.checked == 'O' }
-		return true if tics.length > 2
-		diagonal_tics << Tic.find(i,i)
-		diagonal_tacs << Tic.find(4-i, i)
-	end
-	tics = diagonal_tacs.select { |tic| tic.checked == 'X' }
-	return true if tics.length > 2
-	tics = diagonal_tacs.select { |tic| tic.checked == 'O' }
-	return true if tics.length > 2
-	tics = diagonal_tics.select { |tic| tic.checked == 'X' }
-	return true if tics.length > 2
-	tics = diagonal_tics.select { |tic| tic.checked == 'O' }
-	return true if tics.length > 2
-	
-	false
-end
-
-def check_if_full
-	tics = Tic.tics.select { |tic| tic.checked }
-	tics.length == 9
-end
-
-
-# Tic Class - yet to be exported
 
 class Tic
-	attr_accessor :x, :y, :width, :height, :checked, :rect
+	attr_reader :x, :y, :checked, :rect, :player
 	
-	@@tics = []
-	
-	def initialize(x, y, width = 60, height = nil, checked = false)
-		if height
-			@height = height
-		else
-			@height = width
-		end
-		@x = x
-		@y = y
-		@top = (PADDING + TIC_SIZE) * x
-		@left = (PADDING + TIC_SIZE) * y
-		@width = width
+	def initialize(tic, board)
+		@rect = tic[0]
+		@x = tic[1]
+		@y = tic[2]
+		@board = board
+		@player = false
 		@checked = false
-		@@tics << self
 	end
 	
-	def draw(app)
-		@rect = app.rect @top, @left, @width, @height, 5 # Last one's border radius
+	def check
+		@checked = true
+	end
+	
+	def reset
+		@player = false
+		@checked = false
+	@rect.style fill: '#000000'
+	end
+	
+	def player=(symbol)
+		@player = symbol
+		if symbol == 'X'
+			@rect.style fill: '#00FFFF'
+		else
+			@rect.style fill: '#FFFF44'
+		end
+	end
+	
+end
+
+
+# Mostly keeps track of the Player.
+# 'class Player' would imply two.
+class Game
+	
+	def initialize(player_label)
+		@player = false
+		@label = player_label
+	end
+	
+	def restart
+		@player = true and toggle_player # English syntax!
+	end
+	
+	def toggle_player
+		@player = !@player
+		@label.text = player_turn
+	end
+	
+	def player_symbol
+		@player ? 'X' : 'O'
+	end
+	
+	def player_color
+		@player ? "Yellow" : "Blue"
+	end
+	
+	def player_turn
+		"#{player_color}'s Turn"
+	end
+	
+	def player_win
+		@player =! @player
+		"#{player_color} won!"
+	end
+	
+end
+
+
+# Organizes the Tics and 
+# checks for winning configurations
+class Board
+	attr_reader :game
+	
+	def initialize(tics, player_label)
+		@tics = []
+		@over = false
+	  @game = Game.new player_label
 		
-		@rect.click do
-			unless $click or @checked
-				@checked = player_symbol
-				toggle_player
-				$click = true
-				if check_if_over
-					
-					@app_rect = app.rect 0,0,$width,$width, fill: app.rgb(0,0,0,0.7)
-					if $player == 1
-						player = 'Blue'
-					else
-						player = 'Yellow'
-					end
-					@title = app.title "#{player} won!", stroke: app.white, top: 90, left: 88, size: 34
-					@quit = app.button 'Quit', top:165, left:138 do
-						exit
-					end
-					@restart = app.button 'Restart', top:140, left:130 do
-						Tic.restart app
-						@app_rect.hide
-						@title.hide
-						@quit.hide
-						@restart.hide
-						if $player == 1
-							toggle_player
-						end
-					end
-				elsif check_if_full
-					@app_rect = app.rect 0,0,$width,$width, fill: app.rgb(0,0,0,0.6)
-					@quit = app.button 'Quit', top:165, left:138 do
-						exit
-					end
-					@title = app.title "Cat's Game!", stroke: app.white, top: 90, left: 80, size: 34
-					@restart = app.button 'Restart', top:140, left:130 do
-						Tic.restart app
-						@app_rect.hide
-						@title.hide
-						@quit.hide
-						@restart.hide
-						if $player == 1
-							toggle_player
-						end
+		tics.each do |tic| # Each tic in this array is of the format: [rect, x, y]
+			@tics << Tic.new(tic, self)
+		end
+		
+	end
+	
+	# Actions for each of the tic's rectangle
+	def set_tic_actions
+		@tics.each do |tic|
+			tic.rect.click do
+				unless tic.checked or @over
+					@game.toggle_player
+					tic.player = @game.player_symbol
+					tic.check
+					@over = self.check_if_over
+					if @over
+						show_screen(game.player_win)
+					elsif @tics.select { |tic| tic.checked }.length == 9
+						@over = true
+						show_screen("Cat's Game!")
 					end
 				end
 			end
 		end
-		
-		@rect.release do
-			$click = false
-		end
-		
 	end
 	
-	def self.make_board(app)
-		
-		fill = app.black
+	def check_if_over
+		(1..3).each do |i|
+			return true if all_checked?(row(i)) 
+			return true if all_checked?(column(i))
+		end	
+		return true if all_checked?(diagonal1)
+		return true if all_checked?(diagonal2)
+		false
+	end
 	
-		3.times do |i|
-		
-			3.times do |j|
-			
-				Tic.new(j+1, i+1, TIC_SIZE).draw app
-			
+	# Takes an array and tells if each Tic has been checked by the same player
+	def all_checked?(array)
+		if array[0].checked
+			return array[0].player == array[1].player && array[1].player == array[2].player
+		else
+			return false
+		end
+	end
+	
+	
+	# In this case, the screen is the
+	# end screen, including the transparent
+	# black panel and its buttons. 
+	def set_screen(screen)
+		@screen = screen
+	end
+	
+	def clear_screen
+		@screen.each do |item|
+			item.hide
+		end
+	end
+	
+	def show_screen(title)
+		@screen.each do |item|
+			item.show
+		end
+		@screen[0].text = title
+	end
+	
+	def restart
+		clear_screen
+		@over = false
+		@tics.each do |tic|
+			tic.reset
+		end
+		game.restart
+	end
+	
+	def row(x)
+		@tics.select { |tic| tic.x == x }
+	end
+	
+	def column(y)
+		@tics.select { |tic| tic.y == y }
+	end
+	
+	def diagonal1
+		tics = []
+		(1..3).each do |i|
+			@tics.select { |tic| tic.x == i && tic.y == i }.each do |tic|
+				tics << tic
 			end
-		
 		end
-		
+		tics
 	end
 	
-	def self.redraw(app)
-		@@tics.each do |tic|
-			if tic.checked == 'X'
-				tic.rect.style fill: app.cyan
-			elsif tic.checked == 'O'
-				tic.rect.style fill: app.yellow
+	def diagonal2
+		tics = []
+		(1..3).each do |i|
+			@tics.select { |tic| tic.x == i && tic.y == (4 - i) }.each do |tic|
+				tics << tic
 			end
 		end
-	end
-	
-	def self.restart(app)
-		@@tics.each do |tic|
-			tic.checked = false
-			tic.rect.style fill: app.black
-		end
-	end
-	
-	def self.find_x(x)
-		@@tics.select { |tic| tic.x == x }
-	end
-	
-	def self.find_y(y)
-		@@tics.select { |tic| tic.y == y }
-	end
-	
-	def self.find(x,y)
-		@@tics.select { |tic| tic.x == x and tic.y  == y }[0]
-	end
-	
-	def self.tics
-		@@tics
+		tics
 	end
 	
 end
 
+
 # Main GUI App
-
-width = height = $width = (PADDING * 4) + (TIC_SIZE * 5)
-
-Shoes.app width: width, height: height, title: 'Tic Tac Toe' do
+Shoes.app width: SIZE::WIDTH, height: SIZE::HEIGHT, title: 'Tic Tac Toe' do
 	background gradient(slategray, slateblue)
 	
 	stroke white
 	
-	title 'Tic Tac Toe', left: 85, family: 'Lacuna', top: 10
+	title 'Tic Tac Toe', align: 'center', family: 'Lacuna', top: 10
 	
-	flow bottom: 10, left: 120 do
-	$player_para = para 'Player Blue', size: 20
+	flow bottom: 10 do
+		@player_label = para "Blue's Turn", size: 20, align: 'center'
 	end
 	
-	stroke app.black
+	stroke black
 	
-	Tic.make_board self
-	
-	$animation = animate do 
-		Tic.redraw self
+	# The making of the Tic rectangles, along with a record of their coordinates.
+	tics = []
+	(1..3).each do |i|
+		(1..3).each do |j|
+			rectangle = rect((SIZE::PADDING + SIZE::TIC_SIZE) * i, (SIZE::PADDING + SIZE::TIC_SIZE) * j, SIZE::TIC_SIZE, SIZE::TIC_SIZE, SIZE::B_RADIUS)
+			tics << [rectangle, i, j]
+		end
 	end
+	
+	
+	stroke black
+	
+	board = Board.new(tics, @player_label) # player_label is passed on to the game.
+	
+	board.set_tic_actions
+	
+	# End Screen
+	black_screen = rect 0,0,SIZE::WIDTH,SIZE::WIDTH, fill: app.rgb(0,0,0,0.5)
+	flow align: 'center' do
+		# Positioned oddly because 'align: "center"' appears not to work on buttons
+		@quit_button = button 'Quit', top: 174, left: (SIZE::WIDTH/2 - 34) do
+			exit
+		end
+		# Positioned oddly because 'align: "center"' appears not to work on buttons
+		@restart_button = button 'Restart', top: 140, align: 'center', left: (SIZE::WIDTH/2 - 43) do
+			board.restart
+		end
+  end
+	alert_title = title "Cat's Game!", stroke: white, top: 90, align: 'center', size: 34
+	exit_screen = [alert_title, black_screen, @quit_button, @restart_button]
+	
+	board.set_screen(exit_screen) # Passes pre-made gui on for later use
+	board.clear_screen # Clears it to begin with
+	
 	
 end
