@@ -6,7 +6,7 @@ class Shoes
       @x, @y = x, y
     end
 
-    attr_reader :x, :y
+    attr_accessor :x, :y
 
     # @param [Shoes::Point] other the other point
     # @return [Integer] if this is further left, this.x; otherwise other.x

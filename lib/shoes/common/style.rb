@@ -111,7 +111,6 @@ class Shoes
         set_dimensions(new_styles)
         set_click(new_styles) if new_styles.has_key?(:click)
         @style.merge! normalized_style
-        enclosing_box_of_line if self.class == Shoes::Line
       end
 
       #if dimension is set via style, pass info on to the dimensions setter
