@@ -25,6 +25,7 @@ class Shoes
 
       # These need to trigger a redraw
       SAME_POSITION    = {Common::Toggle          => [:toggle],
+                          Image                   => [:update_image],
                           ::Shoes::Common::Style  => [:update_style],
                           ::Shoes::Common::Remove => [:remove],
                           ::Shoes::Slot           => [:mouse_hovered, :mouse_left],
