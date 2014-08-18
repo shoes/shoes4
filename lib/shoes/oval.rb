@@ -5,14 +5,14 @@ class Shoes
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui
-    style_with :art_styles, :center, :radius
+    style_with :art_styles, :center, :dimensions, :radius
 
     def initialize(app, parent, left, top, width, height, styles = {}, blk = nil)
       @app                 = app
       @parent              = parent
-      @dimensions          = AbsoluteDimensions.new left, top, width, height, styles
-
       style_init(styles)
+      @dimensions          = AbsoluteDimensions.new left, top, width, height, @style
+
       @parent.add_child self
       @gui = Shoes.backend_for(self)
 
