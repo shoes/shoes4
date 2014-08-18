@@ -27,6 +27,7 @@ class Shoes
       SAME_POSITION    = {Common::Toggle          => [:toggle],
                           ::Shoes::Common::Style  => [:update_style],
                           ::Shoes::Common::Remove => [:remove],
+                          ::Shoes::Slot           => [:mouse_hovered, :mouse_left],
                           ::Shoes::TextBlock      => [:replace]}
 
       CHANGED_POSITION = {::Shoes::Common::Positioning => [:_position],

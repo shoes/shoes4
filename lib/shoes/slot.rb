@@ -96,10 +96,12 @@ class Shoes
 
     def mouse_hovered
       @hovered = true
+      @hover_proc.call(self) if @hover_proc
     end
 
     def mouse_left
       @hovered = false
+      @leave_proc.call(self) if @leave_proc
     end
 
     def scroll_height
