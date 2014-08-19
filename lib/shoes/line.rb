@@ -48,7 +48,6 @@ class Shoes
     end
 
     def x2=(val)
-      p "gets called"
       @point_b.x = val
       @style[:x2] = val
       enclosing_box_of_line

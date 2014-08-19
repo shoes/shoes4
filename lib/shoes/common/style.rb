@@ -34,9 +34,8 @@ class Shoes
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
         create_style_hash
-
-        @style.merge!(default_element_styles)
         @style.merge!(@app.style)
+        @style.merge!(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
