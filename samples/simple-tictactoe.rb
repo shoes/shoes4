@@ -27,7 +27,7 @@ class Tic
 	def reset
 		@player = false
 		@checked = false
-	@rect.style fill: '#000000'
+	  @rect.style fill: '#000000'
 	end
 	
 	def player=(symbol)
@@ -104,12 +104,10 @@ class Board
 					@game.toggle_player
 					tic.player = @game.player_symbol
 					tic.check
-					@over = self.check_if_over
-					if @over
-						show_screen(game.player_win)
-					elsif @tics.select { |tic| tic.checked }.length == 9
-						@over = true
-						show_screen("Cat's Game!")
+					if self.check_if_over
+            show_screen(game.player_win)
+          elsif self.full?
+             show_screen("Cat's Game!")
 					end
 				end
 			end
@@ -117,13 +115,8 @@ class Board
 	end
 	
 	def check_if_over
-		(1..3).each do |i|
-			return true if all_checked?(row(i)) 
-			return true if all_checked?(column(i))
-		end	
-		return true if all_checked?(diagonal1)
-		return true if all_checked?(diagonal2)
-		false
+    (1..3).any? { |i| all_checked?(row(i)) || all_checked?(column(i)) } \
+    || all_checked?(diagonal1) || all_checked?(diagonal2)
 	end
 	
 	# Takes an array and tells if each Tic has been checked by the same player
@@ -150,12 +143,13 @@ class Board
 	end
 	
 	def show_screen(title)
+    @over = true
 		@screen.each do |item|
 			item.show
 		end
 		@screen[0].text = title
 	end
-	
+  
 	def restart
 		clear_screen
 		@over = false
@@ -174,24 +168,25 @@ class Board
 	end
 	
 	def diagonal1
-		tics = []
-		(1..3).each do |i|
-			@tics.select { |tic| tic.x == i && tic.y == i }.each do |tic|
-				tics << tic
-			end
-		end
-		tics
+    tics = []
+    (1..3).each do |i|
+      tics.concat(@tics.select { |tic| tic.x == i && tic.y == i })
+    end
+    tics
 	end
 	
 	def diagonal2
 		tics = []
 		(1..3).each do |i|
-			@tics.select { |tic| tic.x == i && tic.y == (4 - i) }.each do |tic|
-				tics << tic
-			end
+			tics.concat(@tics.select { |tic| tic.x == i && tic.y == (4 - i) })
 		end
 		tics
 	end
+  
+  def full?
+    @tics.select { |tic| tic.checked }.length == 9
+  end
+	
 	
 end
 
