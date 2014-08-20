@@ -13,6 +13,7 @@ class Shoes
       style_init(styles)
       @dimensions = Dimensions.new parent, @style
       @gui        = Shoes.configuration.backend_for(self, @parent.gui)
+      @gui.fraction = @style[:fraction] || 0
       @parent.add_child self
     end
 
