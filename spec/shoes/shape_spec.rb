@@ -3,14 +3,16 @@ require 'shoes/spec_helper'
 describe Shoes::Shape do
   include_context "dsl app"
 
-  subject { Shoes::Shape.new app, parent {} }
+  let(:style) { Hash.new }
+  let(:draw)  { Proc.new { } }
+
+  subject { Shoes::Shape.new app, parent, style, draw }
 
   it_behaves_like "object with stroke"
   #it_behaves_like "object with style"
   it_behaves_like "movable object"
 
   describe "octagon" do
-    let(:style) { Hash.new }
     let(:draw) {
       Proc.new {
         xs = [200, 300, 370, 370, 300, 200, 130, 130]
@@ -22,7 +24,6 @@ describe Shoes::Shape do
         line_to xs.first, ys.first
       }
     }
-    subject { Shoes::Shape.new app, parent, style, draw }
 
     its(:left) { should be_nil }
     its(:top) { should be_nil }
@@ -56,7 +57,6 @@ describe Shoes::Shape do
         curve_to 20, 30, 100, 200, 50, 50
       }
     }
-    subject { Shoes::Shape.new app, parent, Hash.new, draw }
 
     its(:left_bound)   { should eq(10) }
     its(:top_bound)    { should eq(10) }
@@ -74,7 +74,18 @@ describe Shoes::Shape do
         arc 10, 10, 100, 100, Shoes::PI, Shoes::TWO_PI
       }
     }
-    subject { Shoes::Shape.new app, parent, Hash.new, draw }
+
+    it_behaves_like "movable object"
+  end
+
+  describe "accesses app" do
+    let(:draw) {
+      Proc.new {
+        background Shoes::COLORS[:red]
+        stroke Shoes::COLORS[:blue]
+        rect 10, 10, 100, 100
+      }
+    }
 
     it_behaves_like "movable object"
   end
