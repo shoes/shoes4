@@ -46,7 +46,15 @@ class Shoes
       end
 
       def mouse_on?(element, mouse_event)
-        element.in_bounds? mouse_event.x, mouse_event.y
+        !element_hidden?(element) && element.in_bounds?(mouse_event.x, mouse_event.y)
+      end
+
+      def element_hidden?(element)
+        if element.respond_to?(:hidden?)
+          element.hidden?
+        else
+          false
+        end
       end
 
       def cursor_over_clickable_element?(mouse_event)

@@ -32,8 +32,14 @@ shared_examples 'clickable backend' do
   let(:click_block_coordinates) { [1, 2, 3] }
 
   it 'calls the block when a click event comes in bounds' do
+    allow(dsl).to receive(:hidden?) { false }
     expect(clickable_block).to receive(:call).with(*click_block_parameters)
     clickable_subject.click_listener.handleEvent mouse_event
+  end
+
+  it "doesn't call the block if the object is hidden" do
+    allow(dsl).to receive(:hidden?) { true }
+    expect(clickable_block).to_not receive(:call)
   end
 
   describe 'interaction with the swt app object' do
