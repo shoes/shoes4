@@ -22,7 +22,7 @@ class Shoes
       @blk = blk
       # True until we've asked the pen to draw
       @before_drawing = true
-      @app.app.eval_with_additional_context(self, &blk)
+      @app.eval_with_additional_context(self, &blk)
     end
 
     def width
