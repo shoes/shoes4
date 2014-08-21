@@ -28,35 +28,42 @@ class Shoes
     end
 
     def left=(val)
-      @point_a.x < @point_b.x ? @point_a.x = val : @point_b.x = val
-      self.x2, self.y2 = @point_b.x, @point_b.y
+      @point_a.x < @point_b.x ? @point_a.x = val : set_point_b(val, y2)
+      enclosing_box_of_line
     end
 
     def right=(val)
-      @point_a.x > @point_b.x ? @point_a.x = val : @point_b.x = val
-      self.x2, self.y2 = @point_b.x, @point_b.y
+      @point_a.x > @point_b.x ? @point_a.x = val : set_point_b(val, y2)
+      enclosing_box_of_line
     end
 
     def top=(val)
-      @point_a.y < @point_b.y ? @point_a.y = val : @point_b.y = val
-      self.x2, self.y2 = @point_b.x, @point_b.y
+      @point_a.y < @point_b.y ? @point_a.y = val : set_point_b(x2, val)
+      enclosing_box_of_line
     end
 
     def bottom=(val)
-      @point_a.y > @point_b.y ? @point_a.y = val : @point_b.y = val
-      self.x2, self.y2 = @point_b.x, @point_b.y
+      @point_a.y > @point_b.y ? @point_a.y = val : set_point_b(x2, val)
+      enclosing_box_of_line
     end
 
     def x2=(val)
-      @point_b.x = val
-      @style[:x2] = val
+      set_point_b(val, y2)
       enclosing_box_of_line
     end
 
     def y2=(val)
-      @point_b.y = val
-      @style[:y2] = val
+      set_point_b(x2, val)
       enclosing_box_of_line
+    end
+
+    private
+
+    def set_point_b(x_val, y_val)
+      @point_b.x = x_val unless x2 == x_val
+      @point_b.y = y_val unless y2 == y_val
+      @style[:x2] = x_val unless @style[:x2] == x_val
+      @style[:y2] = y_val unless @style[:y2] == y_val
     end
 
     def enclosing_box_of_line
