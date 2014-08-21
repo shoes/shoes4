@@ -47,6 +47,7 @@ class Shoes
           end
 
           def handleEvent(mouse_event)
+            return if @clickable_object.respond_to?(:hidden?) && @clickable_object.hidden?
             if @clickable_object.in_bounds?(mouse_event.x, mouse_event.y)
               eval_block mouse_event
             end
