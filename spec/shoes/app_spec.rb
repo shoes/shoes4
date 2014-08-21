@@ -352,6 +352,43 @@ describe Shoes::App do
       it {is_expected.not_to include :parent}
     end
   end
+
+  describe "additional context" do
+    it "fails on unknown method" do
+      expect { subject.asdf }.to raise_error(NoMethodError)
+    end
+
+    it "calls through to context if available" do
+      context = double("context", asdf: nil)
+      expect(context).to receive(:asdf)
+
+      subject.eval_with_additional_context(context) do
+        asdf
+      end
+    end
+
+    it "clears context when finished" do
+      context = double("context")
+
+      captured_context = nil
+      subject.eval_with_additional_context(context) do
+        captured_context = @__additional_context__
+      end
+
+      expect(captured_context).to eq(context)
+      expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
+    end
+
+    it "still clears context when failure in eval" do
+      context = double("context")
+
+      expect do
+        subject.eval_with_additional_context(context) { raise "O_o" }
+      end.to raise_error(RuntimeError)
+
+      expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
+    end
+  end
 end
 
 describe "App registry" do

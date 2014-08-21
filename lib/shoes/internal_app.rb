@@ -11,6 +11,8 @@ class Shoes
     include Common::Clickable
     include DimensionsDelegations
 
+    extend Forwardable
+
     DEFAULT_OPTIONS = { :width      => 600,
                         :height     => 500,
                         :title      => "Shoes 4",
@@ -40,6 +42,8 @@ class Shoes
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
                   :width, :height, :start_as_fullscreen, :location
+
+    def_delegators :@app, :eval_with_additional_context
 
     def clear(&blk)
       current_slot.clear &blk

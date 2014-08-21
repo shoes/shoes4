@@ -94,6 +94,21 @@ class Shoes
       super.insert(-2, " \"#{@__app__.app_title}\")")
     end
 
+    def eval_with_additional_context(context, &blk)
+      @__additional_context__ = context
+      instance_eval(&blk) if blk
+    ensure
+      @__additional_context__ = nil
+    end
+
+    def method_missing(name, *args, &blk)
+      if @__additional_context__
+        @__additional_context__.public_send(name, *args, &blk)
+      else
+        super
+      end
+    end
+
     DELEGATE_BLACKLIST = [:parent]
 
     # class definitions are evaluated top to bottom, want to have all of them
