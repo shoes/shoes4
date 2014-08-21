@@ -372,11 +372,11 @@ describe Shoes::App do
 
       captured_context = nil
       subject.eval_with_additional_context(context) do
-        captured_context = additional_context
+        captured_context = @__additional_context__
       end
 
       expect(captured_context).to eq(context)
-      expect(subject.additional_context).to be_nil
+      expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
     end
 
     it "still clears context when failure in eval" do
@@ -386,7 +386,7 @@ describe Shoes::App do
         subject.eval_with_additional_context(context) { raise "O_o" }
       end.to raise_error(RuntimeError)
 
-      expect(subject.additional_context).to be_nil
+      expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
     end
   end
 end
