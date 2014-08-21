@@ -38,14 +38,14 @@ describe Shoes::Swt::MouseMoveListener do
     let(:arrow_cursor) {Shoes::Swt::Shoes.display.getSystemCursor(::Swt::SWT::CURSOR_ARROW)}
 
     context 'over a clickable element' do
-      let(:clickable_elements) {[double('element', hidden?: false, in_bounds?: true)]}
+      let(:clickable_elements) {[double('element', visible?: true, in_bounds?: true)]}
       it 'should set the curser hand' do
         expect(shell).to have_received(:setCursor).with(hand_cursor)
       end
     end
 
     context 'not over a clickable element' do
-      let(:clickable_elements) {[double('element', hidden?: false, in_bounds?: false)]}
+      let(:clickable_elements) {[double('element', visible?: true, in_bounds?: false)]}
       it 'should set the curser hand' do
         expect(shell).to have_received(:setCursor).with(arrow_cursor)
       end
@@ -54,7 +54,7 @@ describe Shoes::Swt::MouseMoveListener do
 
   describe 'hover control' do
     let(:element) {double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
-                          hidden?: false, mouse_left: nil, mouse_hovered: nil}
+                          visible?: true, mouse_left: nil, mouse_hovered: nil}
     let(:mouse_hover_controls) {[element]}
 
     shared_examples_for 'does not do anything' do
@@ -100,7 +100,7 @@ describe Shoes::Swt::MouseMoveListener do
       let(:in_bounds?) {true}
       let(:hovered?)   {false}
       let(:element) {double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
-                            hidden?: true, mouse_left: nil, mouse_hovered: nil}
+                            visible?: false, mouse_left: nil, mouse_hovered: nil}
 
       it_behaves_like 'does not do anything'
     end
@@ -110,7 +110,7 @@ describe Shoes::Swt::MouseMoveListener do
       let(:hovered?) {true}
 
       let(:element2) {double 'element 2', in_bounds?: true, hovered?: false,
-                             hidden?: false, mouse_left: nil, mouse_hovered: nil}
+                             visible?: true, mouse_left: nil, mouse_hovered: nil}
       let(:mouse_hover_controls) {[element, element2]}
 
       it 'calls leave for element 1 before calling hover for element 2' do
