@@ -20,11 +20,9 @@ describe Shoes::Link do
     end
 
     it "should default styles" do
-      expect(subject.style).to eql({
-        :underline=>true,
-        :stroke=>Shoes::COLORS[:blue],
-        :fill=>nil
-      })
+      expect(subject.style[:underline]).to eql(true)
+      expect(subject.style[:fill]).to eql(nil)
+      expect(subject.style[:stroke]).to eql(Shoes::COLORS[:blue])
     end
 
     context "overriding styles" do

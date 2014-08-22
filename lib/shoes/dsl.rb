@@ -320,8 +320,8 @@ class Shoes
     # @param [Integer] x2 The x-value of point B
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
-    def line(x1, y1, x2, y2, opts = {}, &blk)
-      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts), blk
+    def line(x1, y1, x2, y2, styles = {}, &blk)
+      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), styles, blk
     end
 
     # Creates an oval at (left, top)

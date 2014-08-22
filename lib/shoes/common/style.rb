@@ -33,11 +33,20 @@ class Shoes
         default_element_styles = {}
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
-        @style = @app.style.merge(default_element_styles)
+        create_style_hash
+        @style.merge!(@app.style)
+        @style.merge!(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
         @style = StyleNormalizer.new.normalize(@style)
+      end
+
+      def create_style_hash
+        @style = {}
+        supported_styles.each do |key|
+          @style[key] = nil
+        end
       end
 
       module StyleWith
@@ -49,10 +58,6 @@ class Shoes
           define_writer_methods
         end
 
-        def supported_styles
-          @supported_styles
-        end
-
         def unpack_style_groups(styles)
           styles.each do |style|
             if STYLE_GROUPS[style]
@@ -60,6 +65,12 @@ class Shoes
             else
               @supported_styles << style
             end
+          end
+
+          supported_styles = @supported_styles
+
+          define_method("supported_styles") do
+            supported_styles
           end
         end
 
@@ -86,8 +97,7 @@ class Shoes
             end
           end
         end
-
-      end
+      end #end of StyleWith module
 
       def self.included(klass)
         klass.extend StyleWith
