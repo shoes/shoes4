@@ -5,6 +5,7 @@ class Shoes
 
       DEFAULT_STYLES = {
         fill:        Shoes::COLORS[:black],
+        rotate:      0,
         stroke:      Shoes::COLORS[:black],
         strokewidth: 1
       }

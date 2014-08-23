@@ -11,7 +11,7 @@ class Shoes
 
     attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
                 :leave_proc, :scroll
-    style_with :art_styles, :attach, :dimensions, :stroke
+    style_with :art_styles, :attach, :dimensions, :release, :stroke
 
     def initialize(app, parent, styles = {}, blk = nil)
       init_attributes(app, parent, styles, blk)
