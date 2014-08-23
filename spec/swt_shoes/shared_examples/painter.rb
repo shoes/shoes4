@@ -7,6 +7,8 @@ shared_context "painter context" do
   let(:stroke) { Shoes::Swt::Color.new(Shoes::Color.new(111, 112, 113, stroke_alpha)) }
   let(:fill_alpha) { 70 }
   let(:stroke_alpha) { 110 }
+  let(:color1) { Shoes::Color.new(10, 10, 10) }
+  let(:color2) { Shoes::Color.new(0, 100, 0) }
   let(:sw) { 10 }
 
   before :each do
@@ -49,6 +51,14 @@ shared_examples_for "stroke painter" do
     end
   end
 
+  describe "sets stroke as" do
+    let(:stroke) { Shoes::Swt::Gradient.new(Shoes::Gradient.new(color1, color2)) }
+    specify "gradient" do
+      expect(gc).to receive(:set_foreground).with(stroke)
+      subject.paint_control(event)
+    end
+  end
+
   it "sets strokewidth" do
     allow(shape).to receive(:strokewidth) { 4 }
     expect(gc).to receive(:set_line_width).with(4)
@@ -59,7 +69,7 @@ shared_examples_for "stroke painter" do
     expect(gc).to receive(:set_antialias).with(Swt::SWT::ON)
     subject.paint_control(event)
   end
-  
+
   it "sets line cap" do
     expect(gc).to receive(:set_line_cap).with(anything)
     subject.paint_control(event)
