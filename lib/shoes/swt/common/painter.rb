@@ -33,7 +33,6 @@ class Shoes
           cap = LINECAP[@obj.dsl.style[:cap]]
           graphics_context.set_line_cap(cap) if cap
           graphics_context.set_transform(@obj.transform)
-
           obj = @obj.dsl
           case obj
             when ::Shoes::Oval, ::Shoes::Rect

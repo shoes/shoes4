@@ -7,8 +7,6 @@ shared_context "painter context" do
   let(:stroke) { Shoes::Swt::Color.new(Shoes::Color.new(111, 112, 113, stroke_alpha)) }
   let(:fill_alpha) { 70 }
   let(:stroke_alpha) { 110 }
-  let(:color1) { Shoes::Color.new(10, 10, 10) }
-  let(:color2) { Shoes::Color.new(0, 100, 0) }
   let(:sw) { 10 }
 
   before :each do
@@ -47,14 +45,6 @@ shared_examples_for "stroke painter" do
     specify "alpha" do
       allow(gc).to receive(:set_alpha)
       expect(gc).to receive(:set_alpha).with(stroke_alpha)
-      subject.paint_control(event)
-    end
-  end
-
-  describe "sets stroke as" do
-    let(:stroke) { Shoes::Swt::Gradient.new(Shoes::Gradient.new(color1, color2)) }
-    specify "gradient" do
-      expect(gc).to receive(:set_foreground).with(stroke)
       subject.paint_control(event)
     end
   end
