@@ -11,10 +11,10 @@ class Shoes
     def initialize(app, parent, color, styles = {})
       @app = app
       @parent = parent
-      style_init(styles, fill: color)
+      style_init styles, fill: color
       @dimensions = ParentDimensions.new parent, @style
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
+      @gui = Shoes.backend_for self
     end
 
     def needs_to_be_positioned?

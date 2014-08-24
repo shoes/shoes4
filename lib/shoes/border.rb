@@ -8,15 +8,13 @@ class Shoes
     style_with :angle, :common_styles, :curve, :dimensions, :stroke, :strokewidth
     STYLES = {angle: 0, curve: 0}
 
-
     def initialize(app, parent, color, styles = {})
       @app = app
       @parent = parent
-      @dimensions = ParentDimensions.new parent, styles
-
-      style_init(styles, stroke: color)
+      style_init styles, stroke: color
+      @dimensions = ParentDimensions.new parent, @style
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
+      @gui = Shoes.backend_for self
     end
 
     def needs_to_be_positioned?

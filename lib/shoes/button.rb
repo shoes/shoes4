@@ -8,13 +8,13 @@ class Shoes
     style_with :click, :common_styles, :dimensions, :state, :text
 
     def initialize(app, parent, text, styles = {}, blk = nil)
-      @app    = app
+      @app = app
       @parent = parent
-      style_init(styles, text: text)
+      style_init styles, text: text
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
-      register_click(@style, blk)
+      @gui = Shoes.configuration.backend_for self, @parent.gui
+      register_click @style, blk
     end
 
     def focus
@@ -22,7 +22,7 @@ class Shoes
     end
 
     def state=(value)
-      @style[:state] = value
+      self.style state: value
       @gui.enabled value.nil?
     end
 

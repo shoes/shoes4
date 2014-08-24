@@ -26,6 +26,8 @@ describe Shoes::ListBox do
   end
 
   it "contains the correct items" do
+    p subject.style.to_s
+    p subject.items
     expect(subject.items).to eq(["Wine", "Vodka", "Water"])
   end
 
@@ -48,11 +50,7 @@ describe Shoes::ListBox do
       expect_gui_choose_with "Wine"
       list_box.choose "Wine"
     end
-
-    it 'should call @gui.choose when the choose option is passed' do
-      expect_gui_choose_with 'Wine'
-      Shoes::ListBox.new app, parent, input_opts.merge(choose: 'Wine')
-    end
+    
   end
 
   it "should delegate #text to the backend" do

@@ -11,11 +11,11 @@ class Shoes
     def initialize(app, parent, left, top, width, height, angle1, angle2, styles = {}, blk = nil)
       @app = app
       @parent = parent
-      style_init(styles, angle1: angle1, angle2: angle2)
+      style_init styles, angle1: angle1, angle2: angle2
       @dimensions = Dimensions.new parent, left, top, width, height, @style
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
-      register_click(@style, blk)
+      @gui = Shoes.backend_for self
+      register_click @style, blk
     end
 
     def wedge?
