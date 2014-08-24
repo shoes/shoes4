@@ -5,7 +5,7 @@ class Shoes
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui, :point_a, :point_b
-    style_with :angle, :art_styles, :dimensions, :x2, :y2
+    style_with :angle, :art_styles, :common_styles, :dimensions, :x2, :y2
 
     def initialize(app, parent, point_a, point_b, styles = {}, blk = nil)
       @app     = app
@@ -13,13 +13,12 @@ class Shoes
       @point_a = point_a
       @point_b = point_b
 
-      style_init(styles, x2: point_b.x, y2: point_b.y)
+      style_init styles, x2: point_b.x, y2: point_b.y
       enclosing_box_of_line
 
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
-
-      register_click(styles, blk)
+      @gui = Shoes.backend_for self
+      register_click @style, blk
     end
 
     def update_style(new_styles)
@@ -62,8 +61,8 @@ class Shoes
     def set_point_b(which, val)
       @point_b.x = val if which == :x
       @point_b.y = val if which == :y
-      @style[:x2] = val if which == :x
-      @style[:y2] = val if which == :y
+      style(x2: val) if which == :x
+      style(y2: val) if which == :y
       enclosing_box_of_line
     end
 

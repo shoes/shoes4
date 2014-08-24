@@ -24,6 +24,8 @@ class Shoes
         @real.add_selection_listener do |event|
           @dsl.call_change_listeners
         end
+        update_items dsl.style[:items]
+        choose dsl.style[:choose] if dsl.style[:choose]
       end
 
       def update_items(values)
@@ -38,12 +40,10 @@ class Shoes
       def choose(item)
         @real.text = item
       end
-      
+
       def enabled(value)
         @real.enable_widget value
       end
     end
   end
 end
-
-

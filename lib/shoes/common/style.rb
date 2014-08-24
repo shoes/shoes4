@@ -10,16 +10,15 @@ class Shoes
       }
 
       STYLE_GROUPS = {
-        art_styles:    [:cap, :click, :fill, :stroke, :strokewidth],
-        common_styles: [:displace_left, :displace_top, :hidden],
-        dimensions:    [:bottom, :height, :left, :margin,
-                        :margin_bottom, :margin_left, :margin_right,
-                        :margin_top, :right, :top, :width],
-        text_block_styles:   [:align, :click, :emphasis, :family, :fill, :font,
-                        :justify, :kerning, :leading, :rise, :size, :stretch,
-                        :strikecolor, :strikethrough, :stroke, :undercolor,
-                        :underline, :weight, :wrap],
-        others:        [:angle1, :angle2, :center, :radius, :wedge]
+        art_styles:           [:cap, :click, :fill, :stroke, :strokewidth],
+        common_styles:        [:displace_left, :displace_top, :hidden],
+        dimensions:           [:bottom, :height, :left, :margin,
+                               :margin_bottom, :margin_left, :margin_right,
+                               :margin_top, :right, :top, :width],
+        text_block_styles:    [:align, :click, :emphasis, :family, :fill, :font,
+                               :justify, :kerning, :leading, :rise, :size, :stretch,
+                               :strikecolor, :strikethrough, :stroke, :undercolor,
+                               :underline, :weight, :wrap],
       }
 
       # Adds styles, or just returns current style if no argument

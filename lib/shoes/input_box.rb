@@ -4,25 +4,21 @@ class Shoes
     include Common::Style
     include Common::Changeable
 
-    attr_reader :app, :parent, :dimensions,  :gui
-    style_with :change, :dimensions, :text, :state
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :change, :common_styles, :dimensions, :text, :state
 
     def initialize(app, parent, text, styles, blk = nil)
-      @app          = app
-      @parent       = parent
-      # style_init goes before dimensions, because dimensions expects
-      # default height and width
-      style_init(styles, text: text)
-      @dimensions   = Dimensions.new parent, @style
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui)
+      @app = app
+      @parent = parent
+      style_init styles, text: text
+      @dimensions = Dimensions.new parent, @style
       @parent.add_child self
-
-      self.change &blk if blk
+      @gui = Shoes.configuration.backend_for self, @parent.gui
+      change &blk if blk
     end
-  
+
     def state=(value)
-      @style[:state] = value
+      style state: value
       @gui.enabled value.nil?
     end
 
@@ -35,7 +31,7 @@ class Shoes
     end
 
     def text=(value)
-      @style[:text] = value.to_s
+      style text: value.to_s
       @gui.text = value.to_s
     end
 
