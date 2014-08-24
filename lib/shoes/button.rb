@@ -22,7 +22,7 @@ class Shoes
     end
 
     def state=(value)
-      self.style state: value
+      style state: value
       @gui.enabled value.nil?
     end
 
