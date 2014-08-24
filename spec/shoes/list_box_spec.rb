@@ -26,8 +26,6 @@ describe Shoes::ListBox do
   end
 
   it "contains the correct items" do
-    p subject.style.to_s
-    p subject.items
     expect(subject.items).to eq(["Wine", "Vodka", "Water"])
   end
 
@@ -50,7 +48,7 @@ describe Shoes::ListBox do
       expect_gui_choose_with "Wine"
       list_box.choose "Wine"
     end
-    
+
   end
 
   it "should delegate #text to the backend" do
