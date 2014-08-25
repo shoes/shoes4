@@ -6,23 +6,23 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui, :blk, :x, :y
     attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound
-    style_with :art_styles, :center, :dimensions
+    style_with :art_styles, :center, :common_styles, :dimensions
 
     # Creates a new Shoes::Shape
     #
     def initialize(app, parent, styles = {}, blk = nil)
       @app = app
       @parent = parent
-      style_init(styles)
+      style_init styles
       @dimensions = AbsoluteDimensions.new @style
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
-      register_click(@style)
+      @gui = Shoes.backend_for self
+      register_click
 
       @blk = blk
       # True until we've asked the pen to draw
       @before_drawing = true
-      @app.eval_with_additional_context(self, &blk)
+      @app.eval_with_additional_context self, &blk
     end
 
     def width

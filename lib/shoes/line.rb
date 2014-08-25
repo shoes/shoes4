@@ -18,7 +18,7 @@ class Shoes
 
       @parent.add_child self
       @gui = Shoes.backend_for self
-      register_click @style, blk
+      register_click blk
     end
 
     def update_style(new_styles)

@@ -5,16 +5,12 @@ class Shoes
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui
-    style_with :checked, :click, :common_styles, :dimensions, :state
 
-    def initialize(app, parent, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles
+    def initialize(app, parent, styles, blk)
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
-      register_click @style, blk
+      register_click blk
     end
 
     def checked?
@@ -37,7 +33,18 @@ class Shoes
 
   end
 
-  class Check < CheckButton ; end
+  class Check < CheckButton
+
+    style_with :checked, :click, :common_styles, :dimensions, :state
+
+    def initialize(app, parent, styles ={}, blk = nil)
+      @app = app
+      @parent = parent
+      style_init styles
+      super(app, parent, styles, blk)
+    end
+
+  end
 
 
 end

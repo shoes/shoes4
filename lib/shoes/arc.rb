@@ -15,7 +15,7 @@ class Shoes
       @dimensions = Dimensions.new parent, left, top, width, height, @style
       @parent.add_child self
       @gui = Shoes.backend_for self
-      register_click @style, blk
+      register_click blk
     end
 
     def wedge?

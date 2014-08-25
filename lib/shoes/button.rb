@@ -14,7 +14,7 @@ class Shoes
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
-      register_click @style, blk
+      register_click blk
     end
 
     def focus
