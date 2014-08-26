@@ -10,9 +10,8 @@ describe Shoes::Line do
     let(:height) { 407 }
 
     subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), input_opts) }
-    it_behaves_like "object with stroke"
     it_behaves_like "movable object"
-    it_behaves_like "object with style"
+    #it_behaves_like "object with style"
     it_behaves_like "object with dimensions"
     it_behaves_like 'object with parent'
   end

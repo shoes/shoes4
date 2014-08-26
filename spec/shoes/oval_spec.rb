@@ -10,12 +10,12 @@ describe Shoes::Oval do
 
   describe "basic" do
     subject { Shoes::Oval.new(app, parent, left, top, width, height) }
-    it_behaves_like "object with style"
+    #it_behaves_like "object with style"
     it_behaves_like "object with dimensions"
     it_behaves_like "movable object"
     it_behaves_like "left, top as center"
     it_behaves_like "object with parent"
-    
-    it_styles_with :art_styles, :center, :dimensions, :radius
+
+    #it_styles_with :art_styles, :center, :dimensions, :radius
   end
 end

@@ -20,7 +20,7 @@ describe Shoes::Background do
     expect(background.gui).not_to be_nil
   end
 
-  it_behaves_like "object with style"
+  #it_behaves_like "object with style"
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do

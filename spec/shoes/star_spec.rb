@@ -21,9 +21,7 @@ describe Shoes::Star do
   subject { Shoes::Star.new(app, parent, left, top, 5, 50, 30) }
 
   it_behaves_like "basic star"
-  it_behaves_like "object with fill"
-  it_behaves_like "object with stroke"
-  it_behaves_like "object with style"
+  #it_behaves_like "object with style"
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
   it_behaves_like 'object with parent'
