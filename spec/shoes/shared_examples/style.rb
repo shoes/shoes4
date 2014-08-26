@@ -1,8 +1,16 @@
 shared_examples_for "object with style" do |*args|
 
   describe 'using app-level styles' do
-    it 'initially uses app defaults'
-    it 'overwrites app defaults'
+    it 'initially uses app defaults' do
+      app.style.each do |key, value|
+        expect(subject.style[key]).to eq(value) if subject.style[key] && !subject.class::STYLES[key]
+      end
+    end
+
+    it 'overwrites app defaults' do
+      subject.style(fill: '#fff')
+      expect(subject.style[:fill]).not_to eq(app.style[:fill])
+    end
   end
 
   describe 'using element-level styles' do
@@ -56,8 +64,6 @@ shared_examples_for "object with style" do |*args|
         expect(subject).to respond_to("#{style}=".to_sym)
       end
     end
-
-    #it 'retrieves newly set styles'
 
     it 'has a style getter for all styles' do
       subject.supported_styles.each do |style|
