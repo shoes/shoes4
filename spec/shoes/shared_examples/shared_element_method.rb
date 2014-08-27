@@ -2,6 +2,8 @@ require 'shoes/color'
 
 shared_examples_for "object with stroke" do
   let(:color) { Shoes::COLORS.fetch :tomato }
+  let(:color2) { Shoes::COLORS.fetch :forestgreen }
+  let(:gradient) { Shoes::Gradient.new(color, color2) }
 
   specify "returns a color" do
     c = subject.stroke = color
@@ -12,6 +14,12 @@ shared_examples_for "object with stroke" do
     subject.stroke = color
     expect(subject.stroke).to eq(color)
     expect(subject.style[:stroke]).to eq(color)
+  end
+
+  specify "sets with a gradient" do
+    subject.stroke = gradient
+    expect(subject.stroke).to eq(gradient)
+    expect(subject.style[:stroke]).to eq(gradient)
   end
 
   # Be sure the subject does *not* have the stroke set previously

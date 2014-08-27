@@ -76,7 +76,7 @@ class Shoes
 
     %w(
       width height owner started? location left top absolute_left
-      absolute_top rotate click release clear fullscreen fullscreen=
+      absolute_top click release clear fullscreen fullscreen=
       contents
     ).each do |method|
       define_method method do |*args, &block|
