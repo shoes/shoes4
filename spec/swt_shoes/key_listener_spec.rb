@@ -29,6 +29,10 @@ describe Shoes::Swt::Keypress do
       end
     end
   end
+  it "removes on remove" do
+    expect(app).to receive(:remove_key_listener).with(key_listener)
+    key_listener.remove
+  end
 
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
