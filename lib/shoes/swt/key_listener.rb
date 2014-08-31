@@ -41,7 +41,7 @@ class Shoes
       end
 
       def remove
-        @app.remove_key_listener(@key_listener)
+        @app.remove_key_listener(self)
       end
 
       BUTTON_EXCLUDES = ["\n", " "]
