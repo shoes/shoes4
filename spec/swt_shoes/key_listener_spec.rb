@@ -2,7 +2,7 @@
 require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Keypress do
-  let(:app) { double('app', add_key_listener: nil) }
+  let(:app) { double('app', add_key_listener: nil, remove_key_listener: nil) }
   let(:dsl) { double('dsl') }
   let(:block) { proc{ |key| key} }
   let(:key_listener) {Shoes::Swt::Keypress.new(dsl, app, &block)}
@@ -29,9 +29,10 @@ describe Shoes::Swt::Keypress do
       end
     end
   end
-  it "removes on remove" do
-    expect(app).to receive(:remove_key_listener).with(key_listener)
+
+  it "removes the key listener from the app on remove" do
     key_listener.remove
+    expect(app).to have_received(:remove_key_listener).with(key_listener)
   end
 
   CTRL = ::Swt::SWT::CTRL
