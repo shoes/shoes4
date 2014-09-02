@@ -29,6 +29,8 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "sleep 3"
+after_script:
+  - find -name '*.log' -exec cat {} \;
 addons:
   code_climate:
     repo_token: 45d4f3c5c1de9031011acf4c3c85867f152cea4200c61f3b69d881bcf2794e9f
