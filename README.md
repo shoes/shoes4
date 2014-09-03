@@ -19,6 +19,8 @@ So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/
 
     $ rvm install jruby
     
+**Important JRuby version note:** JRuby 1.7.14 seems to have a bug where it won't work with bundler and multiple gemspecs. We have multiple gemspecs. Hence, **JRuby 1.7.14** will not work so please use JRuby 1.7.13 until a fix version is released.
+    
 **JDK version note:** While shoes4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
 
 ### Installing Shoes4 as a gem
