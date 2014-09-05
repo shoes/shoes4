@@ -5,12 +5,13 @@ class Shoes
 
       DEFAULT_STYLES = {
         fill:        Shoes::COLORS[:black],
+        rotate:      0,
         stroke:      Shoes::COLORS[:black],
         strokewidth: 1
       }
 
       STYLE_GROUPS = {
-        art_styles:    [:cap, :click, :fill, :stroke, :strokewidth],
+        art_styles:    [:cap, :click, :fill, :rotate, :stroke, :strokewidth],
         common_styles: [:displace_left, :displace_top, :hidden],
         dimensions:    [:bottom, :height, :left, :margin,
                         :margin_bottom, :margin_left, :margin_right,

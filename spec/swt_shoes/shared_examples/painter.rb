@@ -59,7 +59,7 @@ shared_examples_for "stroke painter" do
     expect(gc).to receive(:set_antialias).with(Swt::SWT::ON)
     subject.paint_control(event)
   end
-  
+
   it "sets line cap" do
     expect(gc).to receive(:set_line_cap).with(anything)
     subject.paint_control(event)
