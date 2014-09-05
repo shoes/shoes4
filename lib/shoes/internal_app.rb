@@ -69,11 +69,6 @@ class Shoes
       gui && gui.started?
     end
 
-    def rotate angle=nil
-      @rotate = angle || @rotate || 0
-    end
-
-
     def add_child(child)
       # No-op. The top_slot needs this method, but we already hold an explicit
       # reference to the top_slot, so we don't need to add it as a child. Other
@@ -133,7 +128,7 @@ class Shoes
     end
 
     def textcursor(line_height)
-      app.line(0, 0, 0, line_height, hidden: true, strokewidth: 1, stroke: ::Shoes::COLORS[:black])
+      app.line(0, 0, 0, line_height, hidden: true)
     end
 
     def execute_block(blk)
@@ -192,7 +187,6 @@ class Shoes
       @mouse_pos            = [0, 0]
       @mouse_hover_controls = []
       @resize_callbacks     = []
-      @rotate               = 0
       @pass_coordinates     = true
     end
 

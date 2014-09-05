@@ -5,7 +5,9 @@ class Shoes
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui, :point_a, :point_b
-    style_with :angle, :art_styles, :common_styles, :dimensions, :x2, :y2
+
+    style_with :angle, :art_styles, :dimensions, :x2, :y2
+    STYLES = {angle: 0}
 
     def initialize(app, parent, point_a, point_b, styles = {}, blk = nil)
       @app     = app

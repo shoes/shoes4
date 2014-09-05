@@ -436,7 +436,7 @@ EOS
 
     # Define app-level setter methods
     PATTERN_APP_STYLES = [:fill, :stroke]
-    OTHER_APP_STYLES = [:cap, :strokewidth]
+    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform, :translate]
 
     PATTERN_APP_STYLES.each do |style|
       define_method style.to_s do |val|
