@@ -179,8 +179,8 @@ class Shoes
       end
 
       def main_window_style
-        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::MAX | ::Swt::SWT::V_SCROLL
-        style |= ::Swt::SWT::RESIZE if @dsl.opts[:resizable]
+        style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::V_SCROLL
+        style |= ::Swt::SWT::RESIZE | ::Swt::SWT::MAX if @dsl.opts[:resizable]
         style
       end
 
@@ -312,4 +312,3 @@ class Shoes
 
   end
 end
-
