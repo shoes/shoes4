@@ -8,9 +8,9 @@ class Shoes
       @to_s = @texts.map(&:to_s).join
     end
     attr_reader :to_s, :texts, :color
-    attr_accessor :parent
+    attr_accessor :parent_text
     def app
-      @parent.app
+      @parent_text.app
     end
 
     def inspect
