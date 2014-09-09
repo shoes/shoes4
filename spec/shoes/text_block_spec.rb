@@ -244,5 +244,9 @@ describe Shoes::TextBlock do
     it 'sets the parent_text of nested fragments correctly' do
       expect(helper.ins.parent_text).to eq helper.strong
     end
+
+    it 'lets the nested text fragements know what their text block is' do
+      expect(helper.ins.text_block).to eq para
+    end
   end
 end

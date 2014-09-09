@@ -53,6 +53,14 @@ describe Shoes::Span do
     end
   end
 
+  describe 'setting the text block a span belongs to' do
+    it 'can set it' do
+      text_block = double 'text block'
+      subject.text_block = text_block
+      expect(subject.text_block).to eq text_block
+    end
+  end
+
   describe 'code' do
     it 'sets font to Lucida Console' do
       result = app.code 'test'
