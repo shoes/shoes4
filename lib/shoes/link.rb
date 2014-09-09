@@ -47,5 +47,13 @@ class Shoes
     def remove
       @gui.remove
     end
+
+    def hidden?
+      @text_block.hidden?
+    end
+
+    def visible?
+      @text_block.visible?
+    end
   end
 end
