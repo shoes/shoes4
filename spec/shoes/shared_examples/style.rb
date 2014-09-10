@@ -1,9 +1,13 @@
-shared_examples_for "object with style" do |*args|
+shared_examples_for "object with style" do
 
   describe 'using app-level styles' do
     it 'initially uses app defaults' do
+
       app.style.each do |key, value|
-        expect(subject.style[key]).to eq(value) if subject.style[key] && !subject.class::STYLES[key]
+        def subject_has_key_and_doesnt_have_default?(key)
+          subject.style[key] && !subject.class::STYLES[key]
+        end
+        expect(subject.style[key]).to eq(value) if subject_has_key_and_doesnt_have_default? key
       end
     end
 
@@ -14,18 +18,16 @@ shared_examples_for "object with style" do |*args|
   end
 
   describe 'using element-level styles' do
+    let(:arg_styles) { {jellybean: 'blueberry'} }
 
     it 'uses element defaults' do
-      user_facing_app.style(subject.class, jellybean: 'test')
-      input_args = [app, parent] + args
-      new_subject = subject.class.new(*input_args)
-      expect(new_subject.style[:jellybean]).to eq('test')
+      user_facing_app.style(subject.class, jellybean: 'pumpkin')
+      expect(subject_without_style.style[:jellybean]).to eq('pumpkin')
     end
 
     it 'overwrites element defaults' do
-      input_args = [app, parent] + args
-      new_subject = subject.class.new(*input_args, jellybean: 'not_test')
-      expect(new_subject.style[:jellybean]).to eq('not_test')
+      user_facing_app.style(subject.class, jellybean: 'pumpkin')
+      expect(subject_with_style.style[:jellybean]).to eq('blueberry')
     end
   end
 
