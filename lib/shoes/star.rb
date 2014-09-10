@@ -5,7 +5,7 @@ class Shoes
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui
-    style_with :angle, :art_styles, :dimensions, :inner, :outer, :points
+    style_with :angle, :art_styles,:common_styles, :dimensions, :inner, :outer, :points
     STYLES = {angle: 0}
 
     def initialize(app, parent, left, top, points, outer, inner, styles = {}, blk = nil)
@@ -30,9 +30,9 @@ class Shoes
       style_init(styles, inner: inner, outer: outer, points: points)
 
       @parent.add_child self
-      @gui = Shoes.backend_for(self)
+      @gui = Shoes.backend_for self
 
-      register_click(@style, blk)
+      register_click blk
     end
 
     def in_bounds?(x, y)

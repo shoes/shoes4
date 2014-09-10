@@ -9,15 +9,14 @@ class Shoes
     # See #update_current_position
     NEXT_ELEMENT_OFFSET = 1
 
-    attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
-                :leave_proc, :scroll
-    style_with :art_styles, :attach, :dimensions, :release, :stroke
+    attr_reader :parent, :dimensions, :gui, :contents, :blk, :hover_proc, :leave_proc
+    style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
+    STYLES = {scroll: false}
 
     def initialize(app, parent, styles = {}, blk = nil)
       init_attributes(app, parent, styles, blk)
       @parent.add_child self
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui)
+      @gui = Shoes.configuration.backend_for self, @parent.gui
       eval_block blk
       contents_alignment
     end
@@ -27,14 +26,11 @@ class Shoes
       @parent         = parent
       @contents       = SlotContents.new
       @blk            = blk
-      style_init(styles)
-
+      style_init styles
       @dimensions     = Dimensions.new parent, @style
       @fixed_height   = height || false
-      @scroll         = styles.fetch(:scroll, false)
       @scroll_top     = 0
       set_default_dimension_values
-
       @pass_coordinates = true
     end
 

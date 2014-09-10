@@ -4,27 +4,25 @@ class Shoes
     include Common::Style
     include Common::Changeable
 
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
     STYLES = {width: 200, height: 20, items: [""]}
 
-    attr_reader :items, :app, :gui, :blk, :parent, :styles, :dimensions
-    style_with :change, :choose, :dimensions, :items, :state, :text
-
     def initialize(app, parent, styles = {}, blk = nil)
-      @app        = app
-      @parent     = parent
-      style_init(styles)
+      @app = app
+      @parent = parent
+      style_init styles
       @dimensions = Dimensions.new parent, @style
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui)
       @parent.add_child self
-
-      self.change &blk if blk
-      self.items = @style[:items]
-      choose(@style[:choose]) if @style.has_key?(:choose)
+      @gui = Shoes.configuration.backend_for self, @parent.gui
+      change &blk if blk
+      
+      items = @style[:items]
+      choose @style[:choose]
     end
 
     def items=(values)
-      @items = values
+      style(items: values)
       @gui.update_items values
     end
 
@@ -35,16 +33,18 @@ class Shoes
     def choose(item_or_hash)
       case item_or_hash
       when String
+        style(choose: item_or_hash)
         @gui.choose item_or_hash
       when Hash
+        style(choose: item_or_hash[:item])
         @gui.choose item_or_hash[:item]
       end
     end
-    
+
     alias_method :choose=, :choose
-    
+
     def state=(value)
-      @style[:state] = value
+      style(state: value)
       @gui.enabled value.nil?
     end
   end
