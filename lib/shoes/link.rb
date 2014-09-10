@@ -13,26 +13,26 @@ class Shoes
       style_init styles
       @gui = Shoes.backend_for self
 
-      setup_click @style, blk
+      setup_click blk
       super texts, @style
     end
 
     # Doesn't use Common::Clickable because of URL flavor option clicks
-    def setup_click(style, blk)
+    def setup_click(blk)
       if blk.nil?
-        if @style[:click].respond_to?(:call)
+        if @style[:click].respond_to? :call
           blk = @style[:click]
         else
           # Slightly awkward, but we need App, not InternalApp, to call visit
-          blk = Proc.new { app.app.visit(@style[:click]) }
+          blk = Proc.new { app.app.visit @style[:click] }
         end
       end
 
-      click(&blk)
+      click &blk
     end
 
     def click(&blk)
-      @gui.click(blk) if blk
+      @gui.click blk if blk
       @blk = blk
     end
 

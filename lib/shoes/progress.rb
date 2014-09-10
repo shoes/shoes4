@@ -17,7 +17,7 @@ class Shoes
     end
 
     def fraction=(value)
-      style fraction: value
+      style(fraction: value)
       @gui.fraction = value
     end
   end

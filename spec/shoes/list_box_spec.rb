@@ -49,6 +49,10 @@ describe Shoes::ListBox do
       list_box.choose "Wine"
     end
 
+    it 'should call @gui.choose when the choose option is passed' do
+      expect_gui_choose_with 'Wine'
+      Shoes::ListBox.new app, parent, input_opts.merge(choose: 'Wine')
+    end
   end
 
   it "should delegate #text to the backend" do

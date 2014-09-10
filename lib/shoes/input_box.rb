@@ -5,7 +5,6 @@ class Shoes
     include Common::Changeable
 
     attr_reader :app, :parent, :dimensions, :gui
-    style_with :change, :common_styles, :dimensions, :text, :state
 
     def initialize(app, parent, text, styles, blk = nil)
       @app = app
@@ -18,7 +17,7 @@ class Shoes
     end
 
     def state=(value)
-      style state: value
+      style(state: value)
       @gui.enabled value.nil?
     end
 
@@ -31,7 +30,7 @@ class Shoes
     end
 
     def text=(value)
-      style text: value.to_s
+      style(text: value.to_s)
       @gui.text = value.to_s
     end
 
@@ -45,26 +44,17 @@ class Shoes
   end
 
   class EditBox < InputBox
+    style_with :change, :common_styles, :dimensions, :text, :state
     STYLES = { width: 200, height: 108, text: '' }
-
-    def initialize(app, parent, text, styles = {}, blk = nil)
-      super(app, parent, text, styles, blk)
-    end
   end
 
   class EditLine < InputBox
-
+    style_with :change, :common_styles, :dimensions, :text, :secret, :state
     STYLES = { width:  200, height: 28, text: '' }
-    style_with :secret
-
-    def initialize(app, parent, text, styles = {}, blk = nil)
-      super(app, parent, text, styles, blk)
-    end
 
     def secret?
       self.secret
     end
-
   end
 
 end
