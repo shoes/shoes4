@@ -80,13 +80,14 @@ class Shoes
 
     private
 
-    def gather_text_styles(parent, texts, styles={}, start_point=0)
+    def gather_text_styles(parent_text, texts, styles={}, start_point=0)
       texts.each do |text|
         if text.is_a? Shoes::Text
-          text.parent = parent
-          end_point = start_point + text.to_s.length - 1
-          range = start_point..end_point
-          styles[range] ||= []
+          text.text_block  = self
+          text.parent_text = parent_text
+          end_point        = start_point + text.to_s.length - 1
+          range            = start_point..end_point
+          styles[range]    ||= []
           styles[range] << text
           gather_text_styles(text, text.texts, styles, start_point)
         end

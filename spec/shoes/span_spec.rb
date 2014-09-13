@@ -28,28 +28,36 @@ describe Shoes::Span do
     end
   end
 
-  describe 'Looking up parent styles' do
+  describe 'Looking up styles of the parent text' do
     let(:white) {Shoes::COLORS[:white]}
     let(:red) {Shoes::COLORS[:red]}
     it 'does not try to merge with parent style when there are none' do
       parent = double 'parent'
-      span.parent = parent
+      span.parent_text = parent
       expect {span.style}.to_not raise_error()
     end
 
-    it 'merges with the styles of the parent' do
+    it 'merges with the styles of the parent text' do
       parent = double 'parent', style: {stroke: white}
-      span.parent = parent
+      span.parent_text = parent
       expect(span.style[:stroke]).to eq(white)
     end
 
     describe 'with own style' do
       let(:style) {{stroke: red}}
-      it 'prefers own values over parent values' do
+      it 'prefers own values over parent text values' do
         parent = double 'parent', style: {stroke: white}
-        span.parent = parent
+        span.parent_text = parent
         expect(span.style[:stroke]).to eq(red)
       end
+    end
+  end
+
+  describe 'setting the text block a span belongs to' do
+    it 'can set it' do
+      text_block = double 'text block'
+      subject.text_block = text_block
+      expect(subject.text_block).to eq text_block
     end
   end
 
