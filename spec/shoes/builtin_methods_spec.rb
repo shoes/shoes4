@@ -86,8 +86,9 @@ describe Shoes::BuiltinMethods do
   # elsewhere
   describe 'The so called builtin methods are also available from Shoes' do
     color_methods = [:alert, :ask, :ask_color, :ask_open_file, :ask_save_file,
-                     :ask_open_folder, :ask_save_folder, :confirm, :debug,
-                     :error, :font, :info, :warn]
+                     :ask_open_folder, :ask_save_folder, :confirm, :color,
+                     :debug, :error, :font, :gradient, :rgb, :info, :pattern,
+                     :warn]
 
     color_methods.each do |method|
       it "responds to #{method}" do
@@ -95,5 +96,15 @@ describe Shoes::BuiltinMethods do
       end
     end
 
+
+    describe 'does not get to the nitty gritty helper_methods' do
+      helper_methods = [:image_file?, :image_pattern]
+
+      helper_methods.each do |method|
+        it "does not respond to #{method}" do
+          expect(Shoes).not_to respond_to method
+        end
+      end
+    end
   end
 end

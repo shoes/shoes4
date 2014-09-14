@@ -202,6 +202,7 @@ EOS
         Shoes::Gradient.new(color(min), color(max))
       end
 
+      private
       def image_file?(arg)
         arg =~ /\.gif|jpg|jpeg|png$/
       end

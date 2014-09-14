@@ -7,6 +7,8 @@ class Shoes
   end
 
   module BuiltinMethods
+    include Color::DSLHelpers
+
     def alert(message = '')
       Shoes::Dialog.new.alert message
     end
