@@ -84,13 +84,13 @@ describe Shoes::BuiltinMethods do
 
   # just testing responds to things since the implementation is tested
   # elsewhere
-  describe 'The so called builtin methods are also available from Shoes' do
-    color_methods = [:alert, :ask, :ask_color, :ask_open_file, :ask_save_file,
+  describe 'are builtin methods are also available from Shoes' do
+    builtin_methods = [:alert, :ask, :ask_color, :ask_open_file, :ask_save_file,
                      :ask_open_folder, :ask_save_folder, :confirm, :color,
                      :debug, :error, :font, :gradient, :gray, :rgb, :info,
                      :pattern, :warn]
 
-    color_methods.each do |method|
+    builtin_methods.each do |method|
       it "responds to #{method}" do
         expect(Shoes).to respond_to method
       end
