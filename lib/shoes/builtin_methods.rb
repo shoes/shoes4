@@ -65,6 +65,8 @@ class Shoes
       Shoes::Font.add_font(path)
     end
   end
+
+  extend BuiltinMethods
 end
 
 # including the module into the main object (monkey patch)

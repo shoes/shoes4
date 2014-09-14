@@ -81,4 +81,19 @@ describe Shoes::BuiltinMethods do
       expect(logger).to have_received(:error)
     end
   end
+
+  # just testing responds to things since the implementation is tested
+  # elsewhere
+  describe 'The so called builtin methods are also available from Shoes' do
+    color_methods = [:alert, :ask, :ask_color, :ask_open_file, :ask_save_file,
+                     :ask_open_folder, :ask_save_folder, :confirm, :debug,
+                     :error, :font, :info, :warn]
+
+    color_methods.each do |method|
+      it "responds to #{method}" do
+        expect(Shoes).to respond_to method
+      end
+    end
+
+  end
 end
