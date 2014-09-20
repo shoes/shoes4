@@ -14,6 +14,7 @@ class Shoes
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
+      @gui.fraction = @style[:fraction]
     end
 
     def fraction=(value)
