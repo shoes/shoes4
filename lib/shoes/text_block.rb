@@ -10,25 +10,22 @@ class Shoes
 
     attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
     attr_accessor :cursor, :textcursor
-    style_with :text_block_styles, :dimensions
+    style_with  :common_styles, :dimensions, :text_block_styles
     STYLES = {font: "Arial"} # used in TextBlock specs only
 
     def initialize(app, parent, text, styles = {})
-      @parent             = parent
-      @app                = app
-      style_init(styles)
-
-      @dimensions   = TextBlockDimensions.new parent, @style
-
+      @parent = parent
+      @app = app
+      style_init styles
+      @dimensions = TextBlockDimensions.new parent, @style
       handle_styles @style
-
-      @gui = Shoes.configuration.backend_for(self)
-      @parent.add_child(self)
+      @gui = Shoes.backend_for self
+      @parent.add_child self
 
       # Important to use accessor and do this after the backend exists!
       self.text = Array(text)
 
-      register_click(@style)
+      register_click
     end
 
     def in_bounds?(*args)
@@ -83,13 +80,14 @@ class Shoes
 
     private
 
-    def gather_text_styles(parent, texts, styles={}, start_point=0)
+    def gather_text_styles(parent_text, texts, styles={}, start_point=0)
       texts.each do |text|
         if text.is_a? Shoes::Text
-          text.parent = parent
-          end_point = start_point + text.to_s.length - 1
-          range = start_point..end_point
-          styles[range] ||= []
+          text.text_block  = self
+          text.parent_text = parent_text
+          end_point        = start_point + text.to_s.length - 1
+          range            = start_point..end_point
+          styles[range]    ||= []
           styles[range] << text
           gather_text_styles(text, text.texts, styles, start_point)
         end

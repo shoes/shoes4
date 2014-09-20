@@ -202,6 +202,13 @@ EOS
         Shoes::Gradient.new(color(min), color(max))
       end
 
+      def gray(level = 128, alpha = Shoes::Color::OPAQUE)
+        Shoes::Color.new(level, level, level, alpha)
+      end
+
+      alias_method :grey, :gray
+
+      private
       def image_file?(arg)
         arg =~ /\.gif|jpg|jpeg|png$/
       end
@@ -271,8 +278,6 @@ EOS
       [:ghostwhite, 248, 248, 255],
       [:gold, 255, 215, 0],
       [:goldenrod, 218, 165, 32],
-      [:gray, 128, 128, 128],
-      [:grey, 128, 128, 128],
       [:green, 0, 128, 0],
       [:greenyellow, 173, 255, 47],
       [:honeydew, 240, 255, 240],
@@ -376,12 +381,5 @@ EOS
         Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
     end
-
-    def gray(level = 128, alpha = Shoes::Color::OPAQUE)
-      Shoes::Color.new(level, level, level, alpha)
-    end
-
-    alias_method :grey, :gray
-
   end
 end

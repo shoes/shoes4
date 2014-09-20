@@ -11,8 +11,8 @@ class Shoes
         @gui.release blk
       end
 
-      def register_click(styles, blk = nil)
-        click(&styles[:click]) if styles[:click]
+      def register_click(blk = nil)
+        click(&@style[:click]) if @style[:click]
         click(&blk) if blk
       end
 

@@ -4,12 +4,11 @@ describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }
   let(:app) { double("app", gui: gui, style: {}, element_styles: {}) }
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
+  let(:texts) { ["text", "goes", "first"] }
+
+  subject { Shoes::Link.new(app, app, texts, {color: :blue}) }
 
   context "initialize" do
-    let(:texts) { ["text", "goes", "first"] }
-
-    subject { Shoes::Link.new(app, app, texts, {color: :blue}) }
-
     it "should set up text" do
       expect(subject.texts).to eql(texts)
       expect(subject.to_s).to  eql("textgoesfirst")
@@ -83,6 +82,24 @@ describe Shoes::Link do
         subject.click { replacement_block.call }
         subject.blk.call
       end
+    end
+  end
+
+  describe 'visibility' do
+    let(:text_block) {double 'text block', visible?: true, hidden?: false}
+
+    before :each do
+      subject.text_block = text_block
+    end
+
+    it 'forwards visible? calls' do
+      subject.visible?
+      expect(text_block).to have_received :visible?
+    end
+
+    it 'forwards hidden? calls' do
+      subject.hidden?
+      expect(text_block).to have_received :hidden?
     end
   end
 end

@@ -237,12 +237,16 @@ describe Shoes::TextBlock do
       expect(para.text_styles).to eq(text_styles)
     end
 
-    it 'sets the parent of the non nested texts to the para' do
-      expect(helper.strong_breadsticks.parent).to eq para
+    it 'sets the parent_text of the non nested texts to the para' do
+      expect(helper.strong_breadsticks.parent_text).to eq para
     end
 
-    it 'sets the parent of nested fragments correctly' do
-      expect(helper.ins.parent).to eq helper.strong
+    it 'sets the parent_text of nested fragments correctly' do
+      expect(helper.ins.parent_text).to eq helper.strong
+    end
+
+    it 'lets the nested text fragements know what their text block is' do
+      expect(helper.ins.text_block).to eq para
     end
   end
 end

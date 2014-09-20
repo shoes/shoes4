@@ -5,7 +5,7 @@ class Shoes
 
       attr_reader :app, :link_segments, :dsl
 
-      def initialize(dsl, app, styles={})
+      def initialize(dsl, app)
         @app = app
         @link_segments = []
         @dsl = dsl

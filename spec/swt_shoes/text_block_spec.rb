@@ -11,7 +11,7 @@ describe Shoes::Swt::TextBlock do
                      margin_top: 0, margin_bottom: 0,
                      pass_coordinates?: nil).as_null_object }
 
-  subject { Shoes::Swt::TextBlock.new(dsl) }
+  subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 
   it_behaves_like "paintable"
   it_behaves_like "togglable"
