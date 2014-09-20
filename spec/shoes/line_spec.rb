@@ -11,7 +11,10 @@ describe Shoes::Line do
 
     subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), input_opts) }
     it_behaves_like "movable object"
-    #it_behaves_like "object with style"
+    it_behaves_like "object with style" do
+      let(:subject_without_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430)) }
+      let(:subject_with_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), arg_styles) }
+    end
     it_behaves_like "object with dimensions"
     it_behaves_like 'object with parent'
   end

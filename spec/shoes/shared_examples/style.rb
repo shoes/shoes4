@@ -1,13 +1,14 @@
 shared_examples_for "object with style" do
 
+  def uses_app_default?(key)
+    subject.style[key] && !subject.class::STYLES[key]
+  end
+
   describe 'using app-level styles' do
     it 'initially uses app defaults' do
 
       app.style.each do |key, value|
-        def subject_has_key_and_doesnt_have_default?(key)
-          subject.style[key] && !subject.class::STYLES[key]
-        end
-        expect(subject.style[key]).to eq(value) if subject_has_key_and_doesnt_have_default? key
+        expect(subject.style[key]).to eq(value) if uses_app_default? key
       end
     end
 

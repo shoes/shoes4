@@ -1,7 +1,8 @@
 class Shoes
   module Mock
     class Star
-      include CommonMethods
+      include Shoes::Mock::CommonMethods
+      include Shoes::Mock::Clickable
 
       def initialize(dsl, app)
         @dsl, @app = dsl, app

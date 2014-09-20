@@ -25,7 +25,11 @@ describe Shoes::Border do
   subject { Shoes::Border.new(app, parent, blue, opts) }
 
   it_behaves_like "basic border"
-  #it_behaves_like "object with style"
+  it_behaves_like "object with style" do
+    subject { Shoes::Border.new(app, parent, Shoes::COLORS[:black]) }
+    let(:subject_without_style) { Shoes::Border.new(app, parent, blue) }
+    let(:subject_with_style) { Shoes::Border.new(app, parent, blue, arg_styles) }
+  end
   it_behaves_like "object with dimensions"
 
   describe "relative dimensions from parent" do

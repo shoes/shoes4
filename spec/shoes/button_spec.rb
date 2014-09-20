@@ -15,6 +15,10 @@ describe Shoes::Button do
 
   it_behaves_like "movable object"
   it_behaves_like "object with state"
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Button.new(app, parent, "text") }
+    let(:subject_with_style) { Shoes::Button.new(app, parent, "text", arg_styles) }
+  end
   it_behaves_like "object with dimensions"
 
   it { is_expected.to respond_to :click }

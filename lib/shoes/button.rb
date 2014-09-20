@@ -6,6 +6,7 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :click, :dimensions, :state, :text
+    STYLES = {}
 
     def initialize(app, parent, text, styles = {}, blk = nil)
       @app    = app
@@ -23,7 +24,7 @@ class Shoes
     def focus
       @gui.focus
     end
-    
+
     def state=(value)
       @style[:state] = value
       @gui.enabled value.nil?
