@@ -6,6 +6,7 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :art_styles, :common_styles, :dimensions, :file_path
+    STYLES = {}
 
     def initialize(app, parent, file_path, styles = {}, blk = nil)
       @app = app

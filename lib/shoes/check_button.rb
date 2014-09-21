@@ -5,6 +5,7 @@ class Shoes
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui
+    STYLES = {}
 
     def initialize(app, parent, styles = {}, blk = nil)
       @app = app

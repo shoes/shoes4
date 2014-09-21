@@ -23,6 +23,11 @@ describe Shoes::Image do
 
     it_behaves_like "movable object"
     it_behaves_like "object with dimensions"
+    
+    it_behaves_like "object with style" do
+      let(:subject_without_style) { Shoes::Image.new(app, parent, filename) }
+      let(:subject_with_style) { Shoes::Image.new(app, parent, filename, arg_styles) }
+    end
 
     describe "relative dimensions from parent" do
       subject { Shoes::Image.new(app, parent, filename, relative_opts) }

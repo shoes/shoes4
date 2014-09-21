@@ -8,6 +8,11 @@ describe Shoes::TextBlock do
   let(:text) { [text_link, ", world!"] }
   subject(:text_block) { Shoes::TextBlock.new(app, parent, text, {app: app}) }
 
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::TextBlock.new(app, parent, text) }
+    let(:subject_with_style) { Shoes::TextBlock.new(app, parent, text, arg_styles) }
+  end
+
   describe "initialize" do
     it "creates gui object" do
       expect(text_block.gui).not_to be_nil

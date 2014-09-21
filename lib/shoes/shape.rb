@@ -7,6 +7,7 @@ class Shoes
     attr_reader :app, :parent, :dimensions, :gui, :blk, :x, :y
     attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound
     style_with :art_styles, :center, :common_styles, :dimensions
+    STYLES = {}
 
     # Creates a new Shoes::Shape
     #

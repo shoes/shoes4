@@ -14,6 +14,12 @@ describe Shoes::InputBox do
   subject { Shoes::EditBox.new(app, parent, text, input_opts, input_block) }
 
   it_behaves_like "object with dimensions"
+
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::EditBox.new(app, parent, text) }
+    let(:subject_with_style) { Shoes::EditBox.new(app, parent, text, arg_styles) }
+  end
+
   it_behaves_like "movable object"
   it_behaves_like "an element that can respond to change"
   it_behaves_like "object with state"
@@ -55,6 +61,11 @@ describe Shoes::InputBox do
         subject.secret = false
         expect(subject.secret).to eq(false)
         expect(subject.secret?).to eq(false)
+      end
+
+      it_behaves_like "object with style" do
+        let(:subject_without_style) { Shoes::EditLine.new(app, parent, text) }
+        let(:subject_with_style) { Shoes::EditLine.new(app, parent, text, arg_styles) }
       end
     end
   end
