@@ -1,7 +1,11 @@
 shared_examples_for "object with style" do
 
   def uses_app_default?(key)
-    subject.style[key] && !subject.class::STYLES[key]
+    if defined? self.class::STYLES
+      subject.style[key] && !subject.class::STYLES[key]
+    else
+      subject.style[key]
+    end
   end
 
   describe 'using app-level styles' do
