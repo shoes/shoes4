@@ -115,13 +115,13 @@ class Shoes
       #if dimension is set via style, pass info on to the dimensions setter
       def set_dimensions(new_styles)
         new_styles.each do |key, value|
-          self.send(key.to_s+"=", value) if STYLE_GROUPS[:dimensions].include?(key)
+          self.send("#{key}=", value) if STYLE_GROUPS[:dimensions].include?(key)
         end
       end
 
       def update_dimensions #so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          @style[style] = self.send(style.to_s)
+          @style[style] = self.send(style) if self.respond_to? style
         end
       end
 
