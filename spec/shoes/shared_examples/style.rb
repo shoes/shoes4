@@ -9,8 +9,8 @@ shared_examples_for "object with style" do
   end
 
   describe 'using app-level styles' do
+    
     it 'initially uses app defaults' do
-
       app.style.each do |key, value|
         expect(subject.style[key]).to eq(value) if uses_app_default? key
       end
@@ -75,24 +75,6 @@ shared_examples_for "object with style" do
     it 'has a style getter for all styles' do
       subject.supported_styles.each do |style|
         expect(subject).to respond_to("#{style}".to_sym)
-      end
-    end
-
-    it 'calls update_style when setting' do
-      allow(subject).to receive(:update_style)
-
-      subject.supported_styles.each do |style|
-        subject.send("#{style}=".to_sym, 1)
-        expect(subject).to have_received(:update_style).at_least(1).times
-      end
-    end
-
-    it "doesn't call_update style when getting" do
-      allow(subject).to receive(:update_style)
-
-      subject.supported_styles.each do |style|
-        subject.send("#{style}".to_sym)
-        expect(subject).not_to have_received(:update_style)
       end
     end
   end
