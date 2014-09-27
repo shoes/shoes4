@@ -86,4 +86,15 @@ describe Shoes::Common::Style do
     end
   end
 
+  describe 'StyleWith' do
+    it 'ensures that readers exist for each supported style' do
+      expect(subject).to respond_to :key
+    end
+
+    it 'ensures that writers exist for each supported style' do
+      expect(subject).to respond_to :key=
+    end
+
+  end
+
 end

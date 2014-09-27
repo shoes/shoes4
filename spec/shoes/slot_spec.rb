@@ -13,6 +13,11 @@ describe Shoes::Slot do
 
   it_behaves_like "object with dimensions"
 
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Slot.new(app, parent) }
+    let(:subject_with_style) { Shoes::Slot.new(app, parent, arg_styles) }
+  end
+
   describe "relative dimensions from parent" do
     subject { Shoes::Slot.new(app, parent, relative_opts) }
     it_behaves_like "object with relative dimensions"

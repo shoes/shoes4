@@ -8,8 +8,11 @@ describe Shoes::Shape do
 
   subject { Shoes::Shape.new app, parent, style, draw }
 
-  it_behaves_like "object with stroke"
-  #it_behaves_like "object with style"
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Shape.new(app, parent) }
+    let(:subject_with_style) { Shoes::Shape.new(app, parent, arg_styles) }
+  end
+
   it_behaves_like "movable object"
 
   describe "octagon" do

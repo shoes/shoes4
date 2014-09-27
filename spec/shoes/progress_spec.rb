@@ -16,6 +16,11 @@ describe Shoes::Progress do
 
   it_behaves_like "object with dimensions"
 
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Progress.new(app, parent) }
+    let(:subject_with_style) { Shoes::Progress.new(app, parent, arg_styles) }
+  end
+
   context "initialize" do
     let(:input_opts) { { fraction: 50 } }
 

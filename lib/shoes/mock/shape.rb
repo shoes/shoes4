@@ -2,6 +2,7 @@ class Shoes
   module Mock
     class Shape
       include Shoes::Mock::CommonMethods
+      include Shoes::Mock::Clickable
 
       def line_to(x, y)
       end
