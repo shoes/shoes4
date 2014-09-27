@@ -7,6 +7,10 @@ describe Shoes::Check do
 
   it_behaves_like "checkable"
   it_behaves_like "object with state"
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Check.new(app, parent) }
+    let(:subject_with_style) { Shoes::Check.new(app, parent, arg_styles) }
+  end
 
   describe "dimensions" do
     let(:left) { 10 }

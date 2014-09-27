@@ -16,6 +16,9 @@ class Shoes
       def text
         @dsl.style[:text]
       end
+
+      def text=(value)
+      end
     end
 
     class EditBox < InputBox

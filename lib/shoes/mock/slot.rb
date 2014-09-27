@@ -1,6 +1,8 @@
 class Shoes
   module Mock
     class Slot
+      include Shoes::Mock::Clickable
+      
       def initialize dsl, parent
         @dsl, @parent = dsl, parent
       end

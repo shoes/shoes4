@@ -159,12 +159,12 @@ class Shoes
     end
 
     def init_margins(opts)
-      opts.delete_if { |k, v| v.nil? }
-      self.margin        = opts[:margin]
-      self.margin_left   = opts.fetch(:margin_left, margin_left)
-      self.margin_top    = opts.fetch(:margin_top, margin_top)
-      self.margin_right  = opts.fetch(:margin_right, margin_right)
-      self.margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
+      new_opts = opts.reject { |k, v| v.nil? }
+      self.margin        = new_opts[:margin]
+      self.margin_left   = new_opts.fetch(:margin_left, margin_left)
+      self.margin_top    = new_opts.fetch(:margin_top, margin_top)
+      self.margin_right  = new_opts.fetch(:margin_right, margin_right)
+      self.margin_bottom = new_opts.fetch(:margin_bottom, margin_bottom)
     end
   end
 

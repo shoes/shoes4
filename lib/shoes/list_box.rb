@@ -16,7 +16,7 @@ class Shoes
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
       change &blk if blk
-      
+
       items = @style[:items]
       choose @style[:choose]
     end
@@ -30,7 +30,7 @@ class Shoes
       @gui.text
     end
 
-    def choose(item_or_hash)
+    def choose(item_or_hash = nil)
       case item_or_hash
       when String
         style(choose: item_or_hash)
