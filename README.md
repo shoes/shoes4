@@ -101,8 +101,7 @@ Packaging is just a baby, so be gentle.
 
 In order to package an app, you need to have the Shoes gem installed in your environment. If you didn't do the gem installation you can always generate a gem and install it from the current source:
 
-    $ rake gem
-    $ gem install pkg/shoes-4.0.0.pre1.gem
+    $ rake install:all
 
 Now, you can package an app. But first, look here:
 
