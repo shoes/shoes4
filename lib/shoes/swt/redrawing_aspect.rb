@@ -10,16 +10,17 @@ class Shoes
   module Swt
     class RedrawingAspect
 
-      NEED_TO_UPDATE = {Animation                        => [:eval_block],
-                        Button                           => [:eval_block],
-                        Common::Clickable::ClickListener => [:eval_block],
-                        ::Shoes::InternalApp             => [:execute_block],
-                        Keypress                         => [:eval_block],
-                        Keyrelease                       => [:eval_block],
-                        MouseMoveListener                => [:eval_move_block],
-                        TextBlock::CursorPainter         => [:move_textcursor],
-                        Timer                            => [:eval_block],
-                        ::Shoes::Common::Changeable      => [:call_change_listeners]}
+      NEED_TO_UPDATE =
+          {Animation                        => [:eval_block],
+           Button                           => [:eval_block],
+           Common::Clickable::ClickListener => [:eval_block],
+           ::Shoes::InternalApp             => [:execute_block],
+           Keypress                         => [:eval_block],
+           Keyrelease                       => [:eval_block],
+           MouseMoveListener                => [:eval_move_block],
+           TextBlock::CursorPainter         => [:move_textcursor],
+           Timer                            => [:eval_block],
+           ::Shoes::Common::Changeable      => [:call_change_listeners]}
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
@@ -28,7 +29,8 @@ class Shoes
                           Image                   => [:update_image],
                           ::Shoes::Common::Style  => [:update_style],
                           ::Shoes::Common::Remove => [:remove],
-                          ::Shoes::Slot           => [:mouse_hovered, :mouse_left],
+                          ::Shoes::Slot           => [:mouse_hovered,
+                                                      :mouse_left],
                           ::Shoes::TextBlock      => [:replace]}
 
       CHANGED_POSITION = {::Shoes::Common::Positioning => [:_position]}
