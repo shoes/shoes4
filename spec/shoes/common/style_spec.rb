@@ -56,9 +56,13 @@ describe Shoes::Common::Style do
       expect(subject.left).to eq 200
     end
 
-    it 'sets click' do
-      subject.style(click: input_proc)
-      expect(subject.click_blk).to eq input_proc
+    it 'sets non dimension non click style via setter' do
+      subject.key = 'silver'
+      expect(subject.style[:key]).to eq 'silver'
+    end
+
+    it 'gets non dimension non click style via getter' do
+      expect(subject.key).to eq 'changed value'
     end
 
     # these specs are rather extensive as they are performance critical for
@@ -88,11 +92,15 @@ describe Shoes::Common::Style do
 
   describe 'StyleWith' do
     it 'ensures that readers exist for each supported style' do
-      expect(subject).to respond_to :key
+      subject.supported_styles.each do |style|
+        expect(subject).to respond_to style
+      end
     end
 
     it 'ensures that writers exist for each supported style' do
-      expect(subject).to respond_to :key=
+      subject.supported_styles.each do |style|
+        expect(subject).to respond_to "#{style}="
+      end
     end
 
   end
