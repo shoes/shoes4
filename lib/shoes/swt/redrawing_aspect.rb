@@ -31,11 +31,7 @@ class Shoes
                           ::Shoes::Slot           => [:mouse_hovered, :mouse_left],
                           ::Shoes::TextBlock      => [:replace]}
 
-      CHANGED_POSITION = {::Shoes::Common::Positioning => [:_position],
-                          ::Shoes::Dimensions          => [:left=, :top=, :width=,
-                                                           :height=,
-                                                           :displace_left=, :displace_top=],
-                          }
+      CHANGED_POSITION = {::Shoes::Common::Positioning => [:_position]}
 
       # These methods trigger SWT painting listeners, so we need to be sure
       # that positioning has run properly before allowing them to continue.
