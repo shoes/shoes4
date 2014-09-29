@@ -56,6 +56,11 @@ describe Shoes::Common::Style do
       expect(subject.left).to eq 200
     end
 
+    it 'sets click' do
+      subject.style(click: input_proc)
+      expect(subject.click_blk).to eq input_proc
+    end
+
     it 'sets non dimension non click style via setter' do
       subject.key = 'silver'
       expect(subject.style[:key]).to eq 'silver'
