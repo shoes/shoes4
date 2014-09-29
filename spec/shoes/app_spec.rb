@@ -389,6 +389,20 @@ describe Shoes::App do
       expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
     end
   end
+
+  describe '.new_dsl_method (for widget method notifications etc.)' do
+    before :each do
+      Shoes::App.new_dsl_method :widget_method do
+        # noop
+      end
+    end
+
+    [Shoes::App, Shoes::URL, Shoes::Widget].each do |klazz|
+      it "#{klazz} now responds to this method" do
+        expect(klazz).to be_public_method_defined(:widget_method)
+      end
+    end
+  end
 end
 
 describe "App registry" do

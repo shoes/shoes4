@@ -43,28 +43,22 @@ class Shoes
 
     def self.inherited(klass, &blk)
       dsl_method = dsl_method_name(klass)
-      Shoes::App.class_eval do
-        define_method(dsl_method) do |*args, &blk|
-          # we set app 2 times because widgets execute most of their code
-          # straight in initialize. I dunno if there is a good way of setting
-          # an @app instance variable before initialize is executed. We could
-          # hand it over in #initialize but that would break the interface
-          # and people would have to set it themselves or make sure to call
-          # super so for not it's like this.
-          # Setting the ref on the instance is important as we might have
-          # instances of the same widget in different Shoes::Apps so each one
-          # needs to save the reference to the one it was started with
-          klass.app              = self
-          widget_instance        = klass.new(*args, &blk)
-          widget_instance.app    = self
-          widget_instance.parent = @__app__.current_slot
-          widget_instance
-        end
+      Shoes::App.new_dsl_method(dsl_method) do |*args, &blk|
+        # we set app 2 times because widgets execute most of their code
+        # straight in initialize. I dunno if there is a good way of setting
+        # an @app instance variable before initialize is executed. We could
+        # hand it over in #initialize but that would break the interface
+        # and people would have to set it themselves or make sure to call
+        # super so for not it's like this.
+        # Setting the ref on the instance is important as we might have
+        # instances of the same widget in different Shoes::Apps so each one
+        # needs to save the reference to the one it was started with
+        klass.app              = self
+        widget_instance        = klass.new(*args, &blk)
+        widget_instance.app    = self
+        widget_instance.parent = @__app__.current_slot
+        widget_instance
       end
-
-      # Now that we've made the widget method on the app, make sure that
-      # widgets know to delegate to the newly defined method.
-      def_delegator :app, dsl_method
     end
 
 
