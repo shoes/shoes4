@@ -6,7 +6,7 @@ describe Shoes::Common::Style do
   class StyleTester
     include Shoes::Common::Style
     attr_accessor :left
-    style_with :key, :left, :click
+    style_with :key, :left, :click, :strokewidth
 
     def initialize(app, style = {})
       @app = app #needed for style init
@@ -24,8 +24,8 @@ describe Shoes::Common::Style do
   end
 
   subject {StyleTester.new(app)}
-  let(:default_styles) {Shoes::Common::Style::DEFAULT_STYLES}
-  let(:initial_style) { default_styles.merge({key: 'value', left: 15, click: nil}) }
+  #let(:default_styles) {Shoes::Common::Style::DEFAULT_STYLES}
+  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1} }
 
   its(:style) { should eq (initial_style) }
 
@@ -68,6 +68,23 @@ describe Shoes::Common::Style do
 
     it 'gets non dimension non click style via getter' do
       expect(subject.key).to eq 'changed value'
+    end
+
+    it "reads 'default' styles with reader" do
+      expect(subject.strokewidth).to eq 1
+    end
+
+    it "writes 'default' styles with writer" do
+      subject.strokewidth = 5
+      expect(subject.strokewidth).to eq 5
+    end
+
+    it "does not read 'default' styles that it doesn't support" do
+      expect(subject).not_to respond_to :stroke
+    end
+
+    it "does not write 'default' styles that it doesn't support" do
+      expect(subject).not_to respond_to :stroke=
     end
 
     # these specs are rather extensive as they are performance critical for

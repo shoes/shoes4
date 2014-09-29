@@ -11,7 +11,7 @@ class Shoes
       }
 
       STYLE_GROUPS = {
-        art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth],
+        art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth, :transform, :translate],
         common_styles:        [:displace_left, :displace_top, :hidden],
         dimensions:           [:bottom, :height, :left, :margin,
                                :margin_bottom, :margin_left, :margin_right,
@@ -34,7 +34,7 @@ class Shoes
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
         create_style_hash
-        @style.merge!(@app.style)
+        merge_app_styles
         @style.merge!(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
@@ -46,6 +46,12 @@ class Shoes
         @style = {}
         supported_styles.each do |key|
           @style[key] = nil
+        end
+      end
+
+      def merge_app_styles
+        @app.style.each do |key, val|
+          @style[key] = val if self.supported_styles.include? key
         end
       end
 
