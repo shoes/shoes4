@@ -101,8 +101,7 @@ Packaging is just a baby, so be gentle.
 
 In order to package an app, you need to have the Shoes gem installed in your environment. If you didn't do the gem installation you can always generate a gem and install it from the current source:
 
-    $ rake gem
-    $ gem install pkg/shoes-4.0.0.pre1.gem
+    $ rake install:all
 
 Now, you can package an app. But first, look here:
 
@@ -115,11 +114,17 @@ Now, you can package an app. But first, look here:
 
 That's Warbler talking. Actually, we sneak the Shoes gem in anyway, but don't tell.
 
-Okay, now for real. The simplest thing is to put your script in a directory by itself and then
+Okay, now for real. The simplest thing is to put your script in a directory by itself and then:
 
     $ bin/shoes -p swt:app path/to/directory-of/your-shoes-app.rb
 
-You'll find your app at `path/to/directory-of/pkg/Shoes App.app`.
+This will produce a Mac app, which you can then find at `path/to/directory-of/pkg/Shoes App.app`.
+
+You can also package a shoes app up as a jar through:
+
+    $ bin/shoes -p swt:jar path/to/directory-of/your-shoes-app.rb
+
+You can find the jar in the same directory as above, i.e. path/to/directory-of/pkg/your-shoes-app.jar
 
 If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/shoes/shoes4/blob/master/app.yaml) for more details.
 

@@ -51,3 +51,5 @@ tmp/*
 
 # ignore built gem so you don't commit it accidentally
 *.gem
+
+samples/packaging/pkg/*
