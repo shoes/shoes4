@@ -333,26 +333,6 @@ describe Shoes::App do
 
   end
 
-  describe 'DELEGATE_METHODS' do
-    subject {Shoes::App::DELEGATE_METHODS}
-
-    describe 'does not include general ruby object methods' do
-      it {is_expected.not_to include :new, :initialize}
-    end
-
-    describe 'it has access to Shoes app and DSL methods' do
-      it {is_expected.to include :para, :rect, :stack, :flow, :image, :location}
-    end
-
-    describe 'it does not have access to private methods' do
-      it {is_expected.not_to include :pop_style, :style_normalizer, :create}
-    end
-
-    describe 'there are blacklisted methods which it should not include' do
-      it {is_expected.not_to include :parent, :app}
-    end
-  end
-
   describe "additional context" do
     it "fails on unknown method" do
       expect { subject.asdf }.to raise_error(NoMethodError)
@@ -434,6 +414,26 @@ describe Shoes::App do
         it "#{klazz} now responds to this method" do
           expect(klazz).to be_public_method_defined(:widget_method)
         end
+      end
+    end
+
+    describe 'DELEGATE_METHODS' do
+      subject {Shoes::App::DELEGATE_METHODS}
+
+      describe 'does not include general ruby object methods' do
+        it {is_expected.not_to include :new, :initialize}
+      end
+
+      describe 'it has access to Shoes app and DSL methods' do
+        it {is_expected.to include :para, :rect, :stack, :flow, :image, :location}
+      end
+
+      describe 'it does not have access to private methods' do
+        it {is_expected.not_to include :pop_style, :style_normalizer, :create}
+      end
+
+      describe 'there are blacklisted methods that wreck havoc' do
+        it {is_expected.not_to include :parent, :app}
       end
     end
 
