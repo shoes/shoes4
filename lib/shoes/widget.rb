@@ -21,12 +21,9 @@ class Shoes
   #   end
   #
   class Widget
-    extend Forwardable
     include Common::Inspect
 
-    # Delegate missing methods to app, so you can use the Shoes DSL
-    # inside the widget.
-    def_delegators :app, *Shoes::App::DELEGATE_METHODS
+    Shoes::App.subscribe_to_dsl_methods self
 
     attr_accessor :parent
     attr_writer   :app
