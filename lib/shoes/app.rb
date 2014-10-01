@@ -19,13 +19,6 @@ class Shoes
     Shoes::App.new(opts, &blk)
   end
 
-  # Load bootstrapping so that Shoes::App::METHOD_SUBSCRIBERS can refer to them
-  # before they are loaded
-  class Widget
-  end
-  module URL
-  end
-
   # This is the user-facing App object. It is `self` inside of a Shoes.app
   # block, and is the context in which a Shoes app is evaled. It delegates most
   # of its functionality to an InternalApp object, which interacts with other
