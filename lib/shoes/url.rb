@@ -6,11 +6,9 @@ class Shoes
   end
 
   module URL
-    extend Forwardable
-
-    def_delegators :app, *(Shoes::App::DELEGATE_METHODS)
-
     attr_accessor :app
+
+    Shoes::App.subscribe_to_dsl_methods self
 
     def self.included(base_class)
       base_class.extend URLDefiner
@@ -19,7 +17,6 @@ class Shoes
     def self.urls
       @urls ||= {}
     end
-
   end
 
   module URLDefiner

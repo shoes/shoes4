@@ -19,7 +19,6 @@ class Shoes
     Shoes::App.new(opts, &blk)
   end
 
-
   # This is the user-facing App object. It is `self` inside of a Shoes.app
   # block, and is the context in which a Shoes app is evaled. It delegates most
   # of its functionality to an InternalApp object, which interacts with other
@@ -109,12 +108,24 @@ class Shoes
       end
     end
 
-    DELEGATE_BLACKLIST = [:parent]
+    DELEGATE_BLACKLIST = [:parent, :app]
 
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
                          Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
+
+    def self.subscribe_to_dsl_methods(klazz)
+      klazz.extend Forwardable unless klazz.is_a? Forwardable
+      klazz.def_delegators :app, *DELEGATE_METHODS
+      @method_subscribers ||= []
+      @method_subscribers << klazz
+    end
+
+    def self.new_dsl_method(name, &blk)
+      define_method name, blk
+      @method_subscribers.each {|klazz| klazz.def_delegator :app, name}
+    end
   end
 
 end
