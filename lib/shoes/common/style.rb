@@ -11,7 +11,7 @@ class Shoes
       }
 
       STYLE_GROUPS = {
-        art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth],
+        art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth, :transform, :translate],
         common_styles:        [:displace_left, :displace_top, :hidden],
         dimensions:           [:bottom, :height, :left, :margin,
                                :margin_bottom, :margin_left, :margin_right,
@@ -34,7 +34,7 @@ class Shoes
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
         create_style_hash
-        @style.merge!(@app.style)
+        merge_app_styles
         @style.merge!(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
@@ -46,6 +46,12 @@ class Shoes
         @style = {}
         supported_styles.each do |key|
           @style[key] = nil
+        end
+      end
+
+      def merge_app_styles
+        @app.style.each do |key, val|
+          @style[key] = val if self.supported_styles.include? key
         end
       end
 
@@ -115,13 +121,13 @@ class Shoes
       #if dimension is set via style, pass info on to the dimensions setter
       def set_dimensions(new_styles)
         new_styles.each do |key, value|
-          self.send(key.to_s+"=", value) if STYLE_GROUPS[:dimensions].include?(key)
+          self.send("#{key}=", value) if STYLE_GROUPS[:dimensions].include?(key)
         end
       end
 
       def update_dimensions #so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          @style[style] = self.send(style.to_s)
+          @style[style] = self.send(style) if self.respond_to? style
         end
       end
 
