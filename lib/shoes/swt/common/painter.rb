@@ -25,7 +25,7 @@ class Shoes
           # Really important to rescue here. Failures that escape this method
           # cause odd-ball hangs with no backtraces. See #559 for an example.
           #
-          puts 'SWALLOWED PAINT EXCEPTION - go take care of it' + e.to_s
+          puts "SWALLOWED PAINT EXCEPTION ON #{@obj} - go take care of it: " + e.to_s
           puts 'Unfortunately we have to swallow it because it causes odd failures :('
         end
 
@@ -33,11 +33,10 @@ class Shoes
           cap = LINECAP[@obj.dsl.style[:cap]]
           graphics_context.set_line_cap(cap) if cap
           graphics_context.set_transform(@obj.transform)
-
           obj = @obj.dsl
           case obj
             when ::Shoes::Oval, ::Shoes::Rect
-              set_rotate graphics_context, @obj.angle,
+              set_rotate graphics_context, obj.rotate,
                          obj.element_left + obj.element_width/2.0,
                          obj.element_top + obj.element_height/2.0 do
                 fill graphics_context if fill_setup(graphics_context)

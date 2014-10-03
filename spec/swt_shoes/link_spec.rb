@@ -2,18 +2,14 @@ require 'swt_shoes/spec_helper'
 
 describe Shoes::Swt::Link do
   include_context "swt app"
+
   let(:dsl) { Shoes::Link.new shoes_app, parent, ["linky"] }
 
   subject { Shoes::Swt::Link.new(dsl, swt_app) }
 
-  it "marks itself clickable" do
-    expect(swt_app).to receive(:add_listener)
-    expect(swt_app).to receive(:add_clickable_element)
-
-    subject
-  end
-
   its(:dsl) {is_expected.to eq dsl}
+
+  it_behaves_like "clickable backend"
 
   context "creating link segments" do
     let(:bounds)       { double("bounds", height: 0) }
@@ -47,8 +43,7 @@ describe Shoes::Swt::Link do
     end
 
     it "clears links" do
-      # One remove call each for mouse down, mouse up
-      expect(swt_app).to receive(:remove_listener).twice
+      expect(swt_app).to receive(:remove_listener)
 
       subject.create_links_in([[layout, 0..10]])
       subject.remove

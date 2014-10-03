@@ -1,25 +1,25 @@
 class Shoes
   module Common
     # Style methods.
-    module Style 
+    module Style
 
       DEFAULT_STYLES = {
         fill:        Shoes::COLORS[:black],
+        rotate:      0,
         stroke:      Shoes::COLORS[:black],
-        strokewidth: 1 
+        strokewidth: 1
       }
 
       STYLE_GROUPS = {
-        art_styles:    [:cap, :click, :fill, :stroke, :strokewidth],
-        common_styles: [:displace_left, :displace_top, :hidden],
-        dimensions:    [:bottom, :height, :left, :margin, 
-                        :margin_bottom, :margin_left, :margin_right, 
-                        :margin_top, :right, :top, :width],
-        text_styles:   [:align, :click, :emphasis, :family, :fill, :font, 
-                        :justify, :kerning, :leading, :rise, :size, :stretch, 
-                        :strikecolor, :strikethrough, :stroke, :undercolor, 
-                        :underline, :weight, :wrap],
-        others:        [:angle1, :angle2, :center, :radius, :wedge]
+        art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth],
+        common_styles:        [:displace_left, :displace_top, :hidden],
+        dimensions:           [:bottom, :height, :left, :margin,
+                               :margin_bottom, :margin_left, :margin_right,
+                               :margin_top, :right, :top, :width],
+        text_block_styles:    [:align, :click, :emphasis, :family, :fill, :font,
+                               :justify, :kerning, :leading, :rise, :size, :stretch,
+                               :strikecolor, :strikethrough, :stroke, :undercolor,
+                               :underline, :weight, :wrap],
       }
 
       # Adds styles, or just returns current style if no argument
@@ -27,16 +27,26 @@ class Shoes
         update_style(new_styles) if need_to_update_style?(new_styles)
         update_dimensions if styles_with_dimensions?
         @style
-      end 
+      end
 
       def style_init(arg_styles, new_styles = {})
         default_element_styles = {}
         default_element_styles = self.class::STYLES if defined? self.class::STYLES
 
-        @style = @app.style.merge(default_element_styles)
+        create_style_hash
+        @style.merge!(@app.style)
+        @style.merge!(default_element_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
+        @style = StyleNormalizer.new.normalize(@style)
+      end
+
+      def create_style_hash
+        @style = {}
+        supported_styles.each do |key|
+          @style[key] = nil
+        end
       end
 
       module StyleWith
@@ -44,13 +54,10 @@ class Shoes
           @supported_styles = []
 
           unpack_style_groups(styles)
-          define_accessor_methods
+          define_reader_methods
+          define_writer_methods
         end
 
-        def supported_styles
-          @supported_styles
-        end
-        
         def unpack_style_groups(styles)
           styles.each do |style|
             if STYLE_GROUPS[style]
@@ -59,27 +66,38 @@ class Shoes
               @supported_styles << style
             end
           end
+
+          supported_styles = @supported_styles
+
+          define_method("supported_styles") do
+            supported_styles
+          end
         end
 
-        def define_accessor_methods
-          needs_accessors = @supported_styles.reject do |style|
+        def define_reader_methods
+          needs_readers = @supported_styles.reject do |style|
             self.method_defined?(style)
           end
 
-          #define accessors for styles that need them
-          needs_accessors.map(&:to_sym).each do |style|
-
+          needs_readers.map(&:to_sym).each do |style|
             define_method style do
               @style[style]
             end
-
-            define_method "#{style}=" do |new_style|
-              @style[style] = new_style
-            end
-
           end
         end
-      end
+
+        def define_writer_methods
+          needs_writers = @supported_styles.reject do |style|
+            self.method_defined?("#{style}=")
+          end
+
+          needs_writers.map(&:to_sym).each do |style_key|
+            define_method "#{style_key}=" do |new_style|
+              self.send("style", style_key.to_sym => new_style)
+            end
+          end
+        end
+      end #end of StyleWith module
 
       def self.included(klass)
         klass.extend StyleWith
@@ -90,9 +108,10 @@ class Shoes
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
         set_dimensions(new_styles)
+        click(&new_styles[:click]) if new_styles.has_key?(:click)
         @style.merge! normalized_style
       end
-      
+
       #if dimension is set via style, pass info on to the dimensions setter
       def set_dimensions(new_styles)
         new_styles.each do |key, value|

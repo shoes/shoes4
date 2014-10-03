@@ -13,7 +13,7 @@ class Shoes
       # @param [Hash] opts Initialization options
       #   If this shape is part of another shape (i.e. it is not responsible
       #   for drawing itself), `opts` should be omitted
-      def initialize(dsl, app, opts = {})
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
         @element = ::Swt::Path.new(::Swt.display)

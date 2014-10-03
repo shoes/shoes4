@@ -2,6 +2,7 @@ class Shoes
   module Mock
     class Radio
       include Shoes::Mock::CommonMethods
+      include Shoes::Mock::Clickable
 
       def initialize(*opts)
       end

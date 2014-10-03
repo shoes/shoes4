@@ -16,6 +16,20 @@ describe Shoes::Progress do
 
   it_behaves_like "object with dimensions"
 
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Progress.new(app, parent) }
+    let(:subject_with_style) { Shoes::Progress.new(app, parent, arg_styles) }
+  end
+
+  context "initialize" do
+    let(:input_opts) { { fraction: 50 } }
+
+    it "sets fraction" do
+      expect_any_instance_of(Shoes.configuration.backend::Progress).to receive(:fraction=).with(50)
+      expect(progress).not_to be_nil
+    end
+  end
+
   context "setting fraction" do
     it "sets on gui" do
       expect(progress.gui).to receive(:fraction=).with(0.5)

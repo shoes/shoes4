@@ -19,7 +19,6 @@ class Shoes
     Shoes::App.new(opts, &blk)
   end
 
-
   # This is the user-facing App object. It is `self` inside of a Shoes.app
   # block, and is the context in which a Shoes app is evaled. It delegates most
   # of its functionality to an InternalApp object, which interacts with other
@@ -76,7 +75,7 @@ class Shoes
 
     %w(
       width height owner started? location left top absolute_left
-      absolute_top rotate click release clear fullscreen fullscreen=
+      absolute_top click release clear fullscreen fullscreen=
       contents
     ).each do |method|
       define_method method do |*args, &block|
@@ -94,12 +93,39 @@ class Shoes
       super.insert(-2, " \"#{@__app__.app_title}\")")
     end
 
-    DELEGATE_BLACKLIST = [:parent]
+    def eval_with_additional_context(context, &blk)
+      @__additional_context__ = context
+      instance_eval(&blk) if blk
+    ensure
+      @__additional_context__ = nil
+    end
+
+    def method_missing(name, *args, &blk)
+      if @__additional_context__
+        @__additional_context__.public_send(name, *args, &blk)
+      else
+        super
+      end
+    end
+
+    DELEGATE_BLACKLIST = [:parent, :app]
 
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
                          Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
+
+    def self.subscribe_to_dsl_methods(klazz)
+      klazz.extend Forwardable unless klazz.is_a? Forwardable
+      klazz.def_delegators :app, *DELEGATE_METHODS
+      @method_subscribers ||= []
+      @method_subscribers << klazz
+    end
+
+    def self.new_dsl_method(name, &blk)
+      define_method name, blk
+      @method_subscribers.each {|klazz| klazz.def_delegator :app, name}
+    end
   end
 
 end

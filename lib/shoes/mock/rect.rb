@@ -1,7 +1,8 @@
 class Shoes
   module Mock
     class Rect
-      include CommonMethods
+      include Shoes::Mock::CommonMethods
+      include Shoes::Mock::Clickable
 
       def initialize(dsl, app, opts = {})
         @dsl, @app = dsl, app

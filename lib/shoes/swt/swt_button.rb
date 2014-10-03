@@ -14,7 +14,6 @@ class Shoes
 
         @type = type
         @real = ::Swt::Widgets::Button.new(@parent.real, @type)
-        @real.addSelectionListener { eval_block @dsl.blk } if @dsl.blk
 
         yield(@real) if block_given?
 
@@ -29,8 +28,16 @@ class Shoes
         @real.set_focus
       end
 
-      def click &blk
+      def click blk
+        remove_listeners
         @real.addSelectionListener { eval_block blk }
+      end
+
+      def remove_listeners
+        listener_array = @real.getListeners ::Swt::SWT::Selection
+        listener_array.each do |listener|
+          @real.removeListener ::Swt::SWT::Selection, listener
+        end
       end
 
       def enabled(value)

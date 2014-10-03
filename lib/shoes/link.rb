@@ -1,40 +1,43 @@
 class Shoes
   class Link < Span
-    attr_reader :app, :parent, :gui
 
-    DEFAULT_OPTS = { underline: true, stroke: ::Shoes::COLORS[:blue] }
+    include Common::Style
 
-    def initialize(app, parent, texts, opts={}, &blk)
+    attr_reader :app, :parent, :gui, :blk
+    style_with :common_styles, :text_block_styles
+    STYLES = { underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil }
+
+    def initialize(app, parent, texts, styles = {}, blk = nil)
       @app = app
       @parent = parent
-      setup_block(blk, opts)
+      style_init styles
+      @gui = Shoes.backend_for self
 
-      opts = DEFAULT_OPTS.merge(opts)
-      @gui = Shoes.backend_for(self, opts)
-
-      super texts, opts
+      setup_click blk
+      super texts, @style
     end
 
-    def setup_block(blk, opts)
-      if blk
-        @blk = blk
-      elsif opts.include?(:click)
-        if opts[:click].respond_to?(:call)
-          @blk = opts[:click]
+    # Doesn't use Common::Clickable because of URL flavor option clicks
+    def setup_click(blk)
+      if blk.nil?
+        if @style[:click].respond_to? :call
+          blk = @style[:click]
         else
           # Slightly awkward, but we need App, not InternalApp, to call visit
-          @blk = Proc.new { app.app.visit(opts[:click]) }
+          blk = Proc.new { app.app.visit @style[:click] }
         end
       end
+
+      click &blk
     end
 
     def click(&blk)
+      @gui.click blk if blk
       @blk = blk
-      self
     end
 
-    def execute_link
-      @blk.call
+    def pass_coordinates?
+      false
     end
 
     def in_bounds?(x, y)
@@ -45,5 +48,12 @@ class Shoes
       @gui.remove
     end
 
+    def hidden?
+      @text_block.hidden?
+    end
+
+    def visible?
+      @text_block.visible?
+    end
   end
 end

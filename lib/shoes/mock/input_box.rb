@@ -2,7 +2,7 @@ class Shoes
   module Mock
     class InputBox
       include Shoes::Mock::CommonMethods
-      attr_accessor :text, :left, :top
+      attr_accessor :left, :top
 
       def enabled(value)
       end
@@ -11,6 +11,13 @@ class Shoes
       end
 
       def caret_to(index)
+      end
+
+      def text
+        @dsl.style[:text]
+      end
+
+      def text=(value)
       end
     end
 

@@ -104,4 +104,30 @@ describe Shoes::Flow do
       it_behaves_like 'taking care of margin'
     end
   end
+
+  describe 'scrolling' do
+    include_context "scroll"
+    subject(:flow) { Shoes::Flow.new(app, parent, opts) }
+
+    context 'when scrollable' do
+      let(:scroll) { true }
+
+      it_behaves_like "scrollable slot"
+
+      context 'when content overflows' do
+        include_context "overflowing content"
+        it_behaves_like "scrollable slot with overflowing content"
+      end
+    end
+
+    context 'when slot is not scrollable' do
+      let(:scroll) { false }
+
+      its(:scroll) { should be_falsey }
+
+      it "initializes scroll_top to 0" do
+        expect(flow.scroll_top).to eq(0)
+      end
+    end
+  end
 end

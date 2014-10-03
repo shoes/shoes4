@@ -2,15 +2,19 @@ class Shoes
   class Text
     include Common::Inspect
 
-    def initialize texts, color=nil
-      @texts = texts
-      @color = color
-      @to_s = @texts.map(&:to_s).join
-    end
     attr_reader :to_s, :texts, :color
-    attr_accessor :parent
+    attr_accessor :parent_text, :text_block
+
+    def initialize(texts, color=nil)
+      @texts       = texts
+      @color       = color
+      @to_s        = @texts.map(&:to_s).join
+      @parent_text = nil
+      @text_block  = nil
+    end
+
     def app
-      @parent.app
+      @parent_text.app
     end
 
     def inspect

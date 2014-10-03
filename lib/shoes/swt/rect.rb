@@ -10,20 +10,20 @@ class Shoes
       include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
-      def_delegators :dsl, :angle, :corners
+      def_delegators :dsl, :angle
 
+      attr_reader :dsl, :app, :transform, :painter
 
-      attr_reader :dsl, :app, :transform, :painter, :container
-
-      def initialize(dsl, app, opts ={})
+      def initialize(dsl, app)
         @dsl = dsl
         @app = app
-        @opts = opts
-
-        @container = @app.real
 
         @painter = RectPainter.new(self)
         @app.add_paint_listener @painter
+      end
+
+      def corners
+        dsl.curve
       end
     end
   end

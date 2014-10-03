@@ -1,28 +1,24 @@
 class Shoes
   class InputBox
     include Common::UIElement
+    include Common::Style
     include Common::Changeable
-    include Common::State
 
-    attr_reader :app, :gui, :blk, :parent, :dimensions, :initial_text
+    attr_reader :app, :parent, :dimensions, :gui
 
-    def initialize(app, parent, text, opts, blk = nil)
-      @app          = app
-      @parent       = parent
-      @blk          = blk
-      @dimensions   = Dimensions.new parent, opts
-      @initial_text = text
-      @secret       = opts[:secret]
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui)
+    def initialize(app, parent, text, styles = {}, blk = nil)
+      @app = app
+      @parent = parent
+      style_init styles, text: text
+      @dimensions = Dimensions.new parent, @style
       @parent.add_child self
-
-      self.change &blk if blk
-      state_options(opts)
+      @gui = Shoes.configuration.backend_for self, @parent.gui
+      change &blk if blk
     end
 
-    def secret?
-      @secret
+    def state=(value)
+      style(state: value)
+      @gui.enabled value.nil?
     end
 
     def focus
@@ -34,6 +30,7 @@ class Shoes
     end
 
     def text=(value)
+      style(text: value.to_s)
       @gui.text = value.to_s
     end
 
@@ -47,20 +44,16 @@ class Shoes
   end
 
   class EditBox < InputBox
-    DEFAULT_STYLE = { width: 200,
-                      height: 108 }
-
-    def initialize(app, parent, text, opts={}, blk = nil)
-      super(app, parent, text, DEFAULT_STYLE.merge(opts), blk)
-    end
+    style_with :change, :common_styles, :dimensions, :text, :state
+    STYLES = { width: 200, height: 108, text: '' }
   end
 
   class EditLine < InputBox
-    DEFAULT_STYLE = { width:  200,
-                      height: 28 }
+    style_with :change, :common_styles, :dimensions, :text, :secret, :state
+    STYLES = { width:  200, height: 28, text: '' }
 
-    def initialize(app, parent, text, opts={}, blk = nil)
-      super(app, parent, text, DEFAULT_STYLE.merge(opts), blk)
+    def secret?
+      self.secret
     end
   end
 

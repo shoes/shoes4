@@ -333,24 +333,110 @@ describe Shoes::App do
 
   end
 
-  describe 'DELEGATE_METHODS' do
-    subject {Shoes::App::DELEGATE_METHODS}
-
-    describe 'does not include general ruby object methods' do
-      it {is_expected.not_to include :new, :initialize}
+  describe "additional context" do
+    it "fails on unknown method" do
+      expect { subject.asdf }.to raise_error(NoMethodError)
     end
 
-    describe 'it has access to Shoes app and DSL methods' do
-      it {is_expected.to include :para, :rect, :stack, :flow, :image, :location}
+    it "calls through to context if available" do
+      context = double("context", asdf: nil)
+      expect(context).to receive(:asdf)
+
+      subject.eval_with_additional_context(context) do
+        asdf
+      end
     end
 
-    describe 'it does not have access to private methods' do
-      it {is_expected.not_to include :pop_style, :style_normalizer, :create}
+    it "clears context when finished" do
+      context = double("context")
+
+      captured_context = nil
+      subject.eval_with_additional_context(context) do
+        captured_context = @__additional_context__
+      end
+
+      expect(captured_context).to eq(context)
+      expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
     end
 
-    describe 'there are blacklisted methods which it should not include' do
-      it {is_expected.not_to include :parent}
+    it "still clears context when failure in eval" do
+      context = double("context")
+
+      expect do
+        subject.eval_with_additional_context(context) { raise "O_o" }
+      end.to raise_error(RuntimeError)
+
+      expect(subject.instance_variable_get(:@__additional_context__)).to be_nil
     end
+  end
+
+  describe 'subscribing to DSL methods' do
+
+    class TestSubscribeClass
+      attr_reader :app
+      def initialize(app)
+        @app = app
+      end
+      Shoes::App.subscribe_to_dsl_methods(self)
+    end
+
+    let(:subscribed_instance) {TestSubscribeClass.new subject}
+
+    AUTO_SUBSCRIBED_CLASSES = [Shoes::App, Shoes::URL, Shoes::Widget]
+    SUBSCRIBED_CLASSES      = AUTO_SUBSCRIBED_CLASSES + [TestSubscribeClass]
+
+    describe '.subscribe_to_dsl_methods' do
+      it 'has its instances respond to the dsl methods of the app' do
+        expect(subscribed_instance).to respond_to :para, :image
+      end
+
+      it 'delegates does methods to the passed in app' do
+        expect(subject).to receive(:para)
+        subscribed_instance.para
+      end
+
+      SUBSCRIBED_CLASSES.each do |klazz|
+        it "#{klazz} responds to a regular DSL method" do
+          expect(klazz).to be_public_method_defined(:para)
+        end
+      end
+    end
+
+    describe '.new_dsl_method (for widget method notifications etc.)' do
+
+      before :each do
+        Shoes::App.new_dsl_method :widget_method do
+          # noop
+        end
+      end
+
+      SUBSCRIBED_CLASSES.each do |klazz|
+        it "#{klazz} now responds to this method" do
+          expect(klazz).to be_public_method_defined(:widget_method)
+        end
+      end
+    end
+
+    describe 'DELEGATE_METHODS' do
+      subject {Shoes::App::DELEGATE_METHODS}
+
+      describe 'does not include general ruby object methods' do
+        it {is_expected.not_to include :new, :initialize}
+      end
+
+      describe 'it has access to Shoes app and DSL methods' do
+        it {is_expected.to include :para, :rect, :stack, :flow, :image, :location}
+      end
+
+      describe 'it does not have access to private methods' do
+        it {is_expected.not_to include :pop_style, :style_normalizer, :create}
+      end
+
+      describe 'there are blacklisted methods that wreck havoc' do
+        it {is_expected.not_to include :parent, :app}
+      end
+    end
+
   end
 end
 

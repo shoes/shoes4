@@ -3,7 +3,8 @@ require 'swt_shoes/spec_helper'
 describe Shoes::Swt::Flow do
   include_context "swt app"
 
-  let(:dsl) { double('dsl', app: shoes_app).as_null_object }
+  let(:dsl) { double('dsl', app: shoes_app,
+                     pass_coordinates?: true).as_null_object }
   let(:real) { double('real', disposed?: false) }
   let(:parent_real) { double('parent_real', :get_layout => "ok") }
 
@@ -15,6 +16,10 @@ describe Shoes::Swt::Flow do
   # Add back in when slots get an appropriate backend.
   # #905
   # it_behaves_like "togglable"
+
+  it_behaves_like "clickable backend" do
+    let(:click_block_parameters) { click_block_coordinates }
+  end
 
   describe "#initialize" do
     before do

@@ -22,6 +22,12 @@ Usage: #{opts.program_name} [-h] [-p package] file
           end
           @packages << Package.new(package)
         end
+
+        opts.on('-v', '--version', 'Shoes version') do
+          puts "Shoes #{VERSION}"
+          exit
+        end
+
         opts.separator "\nPackage types:"
         opts.separator package_types(opts)
         opts.separator "\nExamples:"

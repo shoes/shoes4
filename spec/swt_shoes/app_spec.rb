@@ -6,6 +6,7 @@ describe Shoes::Swt::App do
                             :width => width,
                             :height => 0,
                             :app_title => 'double') }
+  let(:dsl) { app }
 
   let(:opts_unresizable) { {:background => Shoes::COLORS[:salmon],
                             :resizable => false} }
@@ -19,6 +20,16 @@ describe Shoes::Swt::App do
 
   it { is_expected.to respond_to :clipboard }
   it { is_expected.to respond_to :clipboard= }
+
+  it_behaves_like "clickable backend" do
+    let(:swt_app) { subject }
+    let(:click_block_parameters) { click_block_coordinates }
+
+    before do
+      allow(dsl).to receive(:pass_coordinates?) { true }
+      allow(subject).to receive(:add_listener)
+    end
+  end
 
   before :each do
     Shoes::Swt.unregister_all
@@ -45,17 +56,15 @@ describe Shoes::Swt::App do
   context "main window style" do
     BASE_BITMASK =  Swt::SWT::CLOSE   |
                     Swt::SWT::MIN     |
-                    Swt::SWT::MAX     |
-                    Swt::SWT::RESIZE  |
                     Swt::SWT::V_SCROLL
 
     it "should return a bitmask that represents being resizable" do
-      expect(subject.send(:main_window_style)).to eq(BASE_BITMASK)
+      expect(subject.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::RESIZE | Swt::SWT::MAX)
     end
 
     it "should return a bitmask that represents not being resizable" do
-      resizable = Shoes::Swt::App.new app_unresizable
-      expect(resizable.send(:main_window_style)).to eq(BASE_BITMASK & ~Swt::SWT::RESIZE )
+      not_resizable = Shoes::Swt::App.new app_unresizable
+      expect(not_resizable.send(:main_window_style)).to eq(BASE_BITMASK)
     end
   end
 

@@ -9,15 +9,14 @@ class Shoes
     # See #update_current_position
     NEXT_ELEMENT_OFFSET = 1
 
-    attr_reader :parent, :gui, :contents, :blk, :dimensions, :hover_proc,
-                :leave_proc
-    style_with :art_styles, :attach, :dimensions, :stroke
+    attr_reader :parent, :dimensions, :gui, :contents, :blk, :hover_proc, :leave_proc
+    style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
+    STYLES = {scroll: false}
 
     def initialize(app, parent, styles = {}, blk = nil)
       init_attributes(app, parent, styles, blk)
       @parent.add_child self
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui)
+      @gui = Shoes.configuration.backend_for self, @parent.gui
       eval_block blk
       contents_alignment
     end
@@ -27,10 +26,12 @@ class Shoes
       @parent         = parent
       @contents       = SlotContents.new
       @blk            = blk
-      style_init(styles)
+      style_init styles
       @dimensions     = Dimensions.new parent, @style
       @fixed_height   = height || false
+      @scroll_top     = 0
       set_default_dimension_values
+      @pass_coordinates = true
     end
 
     def set_default_dimension_values
@@ -91,10 +92,28 @@ class Shoes
 
     def mouse_hovered
       @hovered = true
+      @hover_proc.call(self) if @hover_proc
     end
 
     def mouse_left
       @hovered = false
+      @leave_proc.call(self) if @leave_proc
+    end
+
+    def scroll_height
+      position_contents.y
+    end
+
+    def scroll_max
+      scroll_height - height
+    end
+
+    def scroll_top
+      @scroll_top
+    end
+
+    def scroll_top=(position)
+      @scroll_top = position
     end
 
     def app
@@ -219,7 +238,9 @@ class Shoes
     end
 
     def compute_content_height
-      max_bottom = contents.map(&:absolute_bottom).max
+      max_bottom = contents.reject(&:hidden?).
+                            map(&:absolute_bottom).
+                            max
       if max_bottom
         max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
       else

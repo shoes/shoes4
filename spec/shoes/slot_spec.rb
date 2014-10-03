@@ -8,9 +8,15 @@ describe Shoes::Slot do
   let(:top) { 66 }
   let(:width) { 111 }
   let(:height) { 333 }
-  subject(:slot) { Shoes::Slot.new(app, parent, left: left, top: top, width: width, height: height) }
+  let(:input_opts) { {left: left, top: top, width: width, height: height} }
+  subject(:slot) { Shoes::Slot.new(app, parent, input_opts) }
 
   it_behaves_like "object with dimensions"
+
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::Slot.new(app, parent) }
+    let(:subject_with_style) { Shoes::Slot.new(app, parent, arg_styles) }
+  end
 
   describe "relative dimensions from parent" do
     subject { Shoes::Slot.new(app, parent, relative_opts) }
@@ -25,7 +31,7 @@ describe Shoes::Slot do
   describe '#clear' do
 
     def add_text_block
-      Shoes::TextBlock.new app, slot, ['text'], 20
+      Shoes::TextBlock.new app, slot, ['text']
     end
 
     before :each do
@@ -86,6 +92,39 @@ describe Shoes::Slot do
         expect(subject.contents).to include element2
       end
     end
+  end
 
+  describe "hover" do
+    let(:callable) { double("block", call: nil) }
+    let(:block)    { Proc.new { callable.call } }
+
+    it "doesn't need hover proc to be called" do
+      expect(callable).to_not receive(:call)
+      subject.mouse_hovered
+    end
+
+    it "calls block on mouse_hovered" do
+      expect(callable).to receive(:call)
+
+      subject.hover(block)
+      subject.mouse_hovered
+    end
+  end
+
+  describe "leave" do
+    let(:callable) { double("block", call: nil) }
+    let(:block)    { Proc.new { callable.call } }
+
+    it "doesn't need leave proc to be called" do
+      expect(callable).to_not receive(:call)
+      subject.mouse_left
+    end
+
+    it "calls block on mouse_left" do
+      expect(callable).to receive(:call)
+
+      subject.leave(block)
+      subject.mouse_left
+    end
   end
 end

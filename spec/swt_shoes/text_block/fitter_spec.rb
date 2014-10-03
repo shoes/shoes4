@@ -176,6 +176,12 @@ describe Shoes::Swt::TextBlock::Fitter do
         segments = when_fit_at(x: 20, y: 75, next_line_start: 95)
         expect_segments(segments, [20, 76], [1, 96])
       end
+
+      it "if unbounded height, still bumps down properly" do
+        allow(dsl).to receive_messages(absolute_top: 95, element_left: 20, left: 20, margin_left: 1)
+        segments = when_fit_at(x: 20, y: 75, next_line_start: 95)
+        expect_segments(segments, [20, 76], [1, 96])
+      end
     end
   end
 

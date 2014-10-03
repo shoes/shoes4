@@ -4,11 +4,11 @@
 #
 # Position (left, top, right, bottom)
 # plain (left, top, right, bottom)
-#   An offset relative to the parent (parents mostly are slots e.g. 
+#   An offset relative to the parent (parents mostly are slots e.g.
 #   flows/stacks), e.g it isn't fully positioned/doesn't flow anymore when set
 #
 # absolute (absolute_left, absolute_top, absolute_right, absolute_bottom)
-#   The absolute position of an element in the app, set by positioning code (in 
+#   The absolute position of an element in the app, set by positioning code (in
 #   slot.rb). Might not be the beginning of the element as it also takes margins
 #   into account, so it could be the beginning of the margin. Is also used in
 #   the positioning code.
@@ -27,7 +27,7 @@
 #   Used by drawing.
 #
 # Note that this is NOT how margins work in the CSS box model. We diverge for
-# reasons mentioned in this comment/thread: 
+# reasons mentioned in this comment/thread:
 # https://github.com/shoes/shoes4/pull/467#issuecomment-27655355
 
 class Shoes
@@ -159,11 +159,12 @@ class Shoes
     end
 
     def init_margins(opts)
-      self.margin        = opts[:margin]
-      self.margin_left   = opts.fetch(:margin_left, margin_left)
-      self.margin_top    = opts.fetch(:margin_top, margin_top)
-      self.margin_right  = opts.fetch(:margin_right, margin_right)
-      self.margin_bottom = opts.fetch(:margin_bottom, margin_bottom)
+      new_opts = opts.reject { |k, v| v.nil? }
+      self.margin        = new_opts[:margin]
+      self.margin_left   = new_opts.fetch(:margin_left, margin_left)
+      self.margin_top    = new_opts.fetch(:margin_top, margin_top)
+      self.margin_right  = new_opts.fetch(:margin_right, margin_right)
+      self.margin_bottom = new_opts.fetch(:margin_bottom, margin_bottom)
     end
   end
 

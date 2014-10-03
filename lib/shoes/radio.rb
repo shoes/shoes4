@@ -1,15 +1,16 @@
 class Shoes
   class Radio < CheckButton
-    attr_accessor :group
 
-    def initialize(app, parent, group, opts = {}, blk = nil)
-      @group = group
-      super(app, parent, opts, blk)
+    style_with :checked, :click, :common_styles, :dimensions, :group, :state
+
+    def initialize(app, parent, group, styles = {}, blk = nil)
+      styles[:group] = group
+      super(app, parent, styles, blk)
     end
 
     def group=(value)
-      self.gui.group = value
-      @group = value
+      style(group: value)
+      gui.group = value
     end
   end
 end

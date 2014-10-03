@@ -74,11 +74,9 @@ require 'shoes/color'
 require 'shoes/common/background_element'
 require 'shoes/common/changeable'
 require 'shoes/common/clickable'
-require 'shoes/common/fill'
 require 'shoes/common/positioning'
 require 'shoes/common/remove'
 require 'shoes/common/state'
-require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/common/style_normalizer'
 require 'shoes/common/visibility'
@@ -194,8 +192,8 @@ class Shoes
 
     public
 
-    def image(path, opts={}, &blk)
-      create Shoes::Image, path, opts, blk
+    def image(path, styles = {}, &blk)
+      create Shoes::Image, path, styles, blk
     end
 
     def border(color, styles = {})
@@ -320,8 +318,8 @@ class Shoes
     # @param [Integer] x2 The x-value of point B
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
-    def line(x1, y1, x2, y2, opts = {}, &blk)
-      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), style.merge(opts), blk
+    def line(x1, y1, x2, y2, styles = {}, &blk)
+      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), styles, blk
     end
 
     # Creates an oval at (left, top)
@@ -426,19 +424,19 @@ EOS
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
-    def star(left, top, points = 10, outer = 100.0, inner = 50.0, opts = {}, &blk)
-      opts = style_normalizer.normalize opts
-      create Shoes::Star, left, top, points, outer, inner, opts, blk
+    def star(left, top, points = 10, outer = 100.0, inner = 50.0, styles = {}, &blk)
+      styles = style_normalizer.normalize styles
+      create Shoes::Star, left, top, points, outer, inner, styles, blk
     end
 
     # Creates a new Shoes::Shape object
-    def shape(shape_style = {}, &blk)
-      create Shoes::Shape, style.merge(shape_style), blk
+    def shape(styles = {}, &blk)
+      create Shoes::Shape, styles, blk
     end
 
     # Define app-level setter methods
     PATTERN_APP_STYLES = [:fill, :stroke]
-    OTHER_APP_STYLES = [:cap, :strokewidth]
+    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform, :translate]
 
     PATTERN_APP_STYLES.each do |style|
       define_method style.to_s do |val|
@@ -460,24 +458,11 @@ EOS
       @__app__.style[:fill] = nil
     end
 
-    # Text blocks
-    # normally constants belong to the top, I put them here because they are
-    # only used here.
-    FONT_SIZES = {
-      banner:       48,
-      title:        34,
-      subtitle:     26,
-      tagline:      18,
-      caption:      14,
-      para:         12,
-      inscription:  10
-    }.freeze
-
     %w[banner title subtitle tagline caption para inscription].each do |method|
       define_method method do |*texts|
-        opts = texts.last.class == Hash ? texts.pop : {}
+        styles = pop_style(texts)
         klass = Shoes.const_get(method.capitalize)
-        create klass, texts, FONT_SIZES[method.to_sym], style_for_element(klass, opts)
+        create klass, texts, styles
       end
     end
 
@@ -493,9 +478,9 @@ EOS
 
     TEXT_STYLES.keys.each do |method|
       define_method method do |*texts|
-        style = style_normalizer.normalize(pop_style(texts))
-        opts = TEXT_STYLES[method].merge(style)
-        Shoes::Span.new texts, opts
+        styles = style_normalizer.normalize(pop_style(texts))
+        styles = TEXT_STYLES[method].merge(styles)
+        Shoes::Span.new texts, styles
       end
     end
 
@@ -509,7 +494,7 @@ EOS
 
     def link(*texts, &blk)
       opts = normalize_style_for_element(Shoes::Link, texts)
-      create Shoes::Link, texts, opts, &blk
+      create Shoes::Link, texts, opts, blk
     end
 
     def span(*texts)

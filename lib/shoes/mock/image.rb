@@ -2,6 +2,7 @@ class Shoes
   module Mock
     class Image
       include Shoes::Mock::CommonMethods
+      include Shoes::Mock::Clickable
 
       attr_accessor :left, :top
 

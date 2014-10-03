@@ -1,15 +1,15 @@
 class Shoes
   class Span < Text
-    def initialize(texts, options={})
-      @opts = options
-      super texts, options.delete(:color)
+    def initialize(texts, styles={})
+      @style = styles
+      super texts, styles.delete(:color)
     end
 
-    def opts
-      if @parent && @parent.respond_to?(:opts)
-        @parent.opts.merge(@opts)
+    def style
+      if @parent_text && @parent_text.respond_to?(:style)
+        @parent_text.style.merge(@style)
       else
-        @opts
+        @style
       end
     end
   end

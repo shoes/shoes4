@@ -14,16 +14,16 @@ class Shoes
         end
 
         def paint_control(graphic_context)
-          style_from(dsl.opts)
+          style_from(dsl.style)
           style_segment_ranges(dsl.text_styles)
           create_links(dsl.text_styles)
           draw(graphic_context)
           draw_cursor
         end
 
-        def style_from(opts)
+        def style_from(style)
           @segments.each do |segment|
-            segment.style_from(default_text_styles, opts)
+            segment.style_from(default_text_styles, style)
           end
         end
 
@@ -48,8 +48,8 @@ class Shoes
 
         def calculate_style(elements)
           elements.inject(default_text_styles) do |current_style, element|
-            if element.respond_to?(:opts)
-              TextStyleFactory.apply_styles(current_style, element.opts)
+            if element.respond_to?(:style)
+              TextStyleFactory.apply_styles(current_style, element.style)
             else
               # Didn't know how to style from the element, so punt
               current_style

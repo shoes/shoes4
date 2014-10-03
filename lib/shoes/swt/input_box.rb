@@ -17,7 +17,7 @@ class Shoes
 
         @real = ::Swt::Widgets::Text.new(@parent.real, text_options)
         @real.set_size dsl.element_width, dsl.element_height
-        @real.set_text dsl.initial_text.to_s
+        @real.set_text dsl.style[:text]
         @real.add_modify_listener do |event|
           @dsl.call_change_listeners unless nothing_changed?(event)
         end

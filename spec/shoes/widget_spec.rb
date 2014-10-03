@@ -6,6 +6,13 @@ class Smile < Shoes::Widget
   end
 end
 
+class Face < Shoes::Widget
+  def initialize
+    para  "Hair"
+    smile "Toothsome"
+  end
+end
+
 describe Shoes::Widget do
   let(:app) { Shoes::App.new }
 
@@ -30,5 +37,34 @@ describe Shoes::Widget do
       widget = smile 'lalala'
     end
     expect(widget.parent).to eq slot
+  end
+
+  it "allows can use other widgets from widget initialize" do
+    expect(app).to receive(:smile)
+    app.face
+  end
+
+  describe 'together with the URL sub system' do
+    let!(:klazz) do
+      Class.new(Shoes) do
+        include RSpec::Matchers
+
+        url '/', :check_smile
+        url '/smile', :smile
+
+        def check_smile
+          expect(self).to respond_to :smile
+        end
+      end
+    end
+
+    it 'responds to widget defined methods like smile' do
+      Shoes.app
+    end
+
+    it 'really smiles' do
+      expect_any_instance_of(Smile).to receive(:initialize)
+      Shoes.app do visit '/smile' end
+    end
   end
 end

@@ -12,11 +12,13 @@ class Shoes
           add_listener_for object, ::Swt::SWT::MouseDown, block
         end
 
-        def click(&block)
+        def click(block)
+          remove_listener_for ::Swt::SWT::MouseDown
           add_listener_for ::Swt::SWT::MouseDown, block
         end
 
-        def release(&block)
+        def release(block)
+          remove_listener_for ::Swt::SWT::MouseUp
           add_listener_for ::Swt::SWT::MouseUp, block
         end
 
@@ -33,8 +35,7 @@ class Shoes
         def remove_listener_for(swt_object = self, event)
           dsl_object = swt_object.dsl
           app.clickable_elements.delete(dsl_object)
-          app.remove_listener ::Swt::SWT::MouseDown, swt_object.click_listener
-          app.remove_listener ::Swt::SWT::MouseUp, swt_object.click_listener
+          app.remove_listener event, swt_object.click_listener
         end
 
         class ClickListener
@@ -46,13 +47,18 @@ class Shoes
           end
 
           def handleEvent(mouse_event)
+            return if @clickable_object.respond_to?(:hidden?) && @clickable_object.hidden?
             if @clickable_object.in_bounds?(mouse_event.x, mouse_event.y)
               eval_block mouse_event
             end
           end
 
           def eval_block(mouse_event)
-            @block.call mouse_event.button, mouse_event.x, mouse_event.y
+            if @clickable_object.pass_coordinates?
+              @block.call mouse_event.button, mouse_event.x, mouse_event.y
+            else
+              @block.call @clickable_object
+            end
           end
         end
 

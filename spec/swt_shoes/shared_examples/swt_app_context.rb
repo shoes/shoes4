@@ -5,11 +5,12 @@
 shared_context "swt app" do
   let(:swt_app_real) { double('swt app real', disposed?: false,
                               set_visible: true) }
+  let(:clickable_element) { double("clickable_element", delete: nil) }
   let(:swt_app) do
     swt_double = double('swt app', real: swt_app_real, disposed?: false,
                          add_paint_listener: true, remove_paint_listener: true,
-                         add_clickable_element: true, add_listener: true,
-                         flush: true, redraw: true)
+                         add_clickable_element: true, add_listener: true, remove_listener: true,
+                         flush: true, redraw: true, clickable_elements: clickable_element)
     allow(swt_double).to receive(:app).and_return(swt_double)
     swt_double
   end

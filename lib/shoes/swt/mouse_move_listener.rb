@@ -33,7 +33,6 @@ class Shoes
         @app.dsl.mouse_hover_controls.each do |element|
           if !mouse_on?(element, mouse_event) and element.hovered?
             element.mouse_left
-            element.leave_proc.call element if element.leave_proc
           end
         end
       end
@@ -42,13 +41,20 @@ class Shoes
         @app.dsl.mouse_hover_controls.each do |element|
           if mouse_on?(element, mouse_event) and !element.hovered?
             element.mouse_hovered
-            element.hover_proc.call element if element.hover_proc
           end
         end
       end
 
       def mouse_on?(element, mouse_event)
-        element.in_bounds? mouse_event.x, mouse_event.y
+        element_visible?(element) && element.in_bounds?(mouse_event.x, mouse_event.y)
+      end
+
+      def element_visible?(element)
+        if element.respond_to?(:visible?)
+          element.visible?
+        else
+          false
+        end
       end
 
       def cursor_over_clickable_element?(mouse_event)

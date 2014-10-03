@@ -1,25 +1,25 @@
 class Shoes
   class Progress
     include Common::UIElement
+    include Common::Style
 
-    attr_reader :app, :parent, :blk, :gui, :opts, :dimensions, :fraction
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :common_styles, :dimensions, :fraction
+    STYLES = {fraction: 0.0}
 
-    def initialize(app, parent, opts = {}, blk = nil)
-      @app        = app
-      @parent     = parent
-      @opts       = opts
-      @blk        = blk
-      @dimensions = Dimensions.new parent, opts
-      @gui        = Shoes.configuration.backend_for(self, @parent.gui)
-
+    def initialize(app, parent, styles = {}, blk = nil)
+      @app = app
+      @parent = parent
+      style_init styles
+      @dimensions = Dimensions.new parent, @style
       @parent.add_child self
-
-      @fraction = 0.0
+      @gui = Shoes.configuration.backend_for self, @parent.gui
+      @gui.fraction = @style[:fraction]
     end
 
     def fraction=(value)
-      @fraction = value
-      @gui.fraction = @fraction
+      style(fraction: value)
+      @gui.fraction = value
     end
   end
 end

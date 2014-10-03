@@ -38,12 +38,10 @@ class Shoes
       def choose(item)
         @real.text = item
       end
-      
+
       def enabled(value)
         @real.enable_widget value
       end
     end
   end
 end
-
-

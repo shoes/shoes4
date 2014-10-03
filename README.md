@@ -1,4 +1,4 @@
-# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4/badge/master.svg)](https://coveralls.io/r/shoes/shoes4)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
+# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4.svg)](https://coveralls.io/r/shoes/shoes4?branch=master)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
 
 Shoes 4 : the next version of Shoes
 
@@ -18,6 +18,8 @@ There are two ways to get your hands on shoes 4 - the preview gem release and in
 So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
 
     $ rvm install jruby
+    
+**Important JRuby version note:** JRuby 1.7.14 and 1.7.15 have a bug where `bundle install` won't work with shoes4. Make sure to use JRuby 1.7.16 or JRuby-1.7.13 with shoes4.
     
 **JDK version note:** While shoes4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
 
@@ -99,8 +101,7 @@ Packaging is just a baby, so be gentle.
 
 In order to package an app, you need to have the Shoes gem installed in your environment. If you didn't do the gem installation you can always generate a gem and install it from the current source:
 
-    $ rake gem
-    $ gem install pkg/shoes-4.0.0.pre1.gem
+    $ rake install:all
 
 Now, you can package an app. But first, look here:
 
@@ -113,11 +114,17 @@ Now, you can package an app. But first, look here:
 
 That's Warbler talking. Actually, we sneak the Shoes gem in anyway, but don't tell.
 
-Okay, now for real. The simplest thing is to put your script in a directory by itself and then
+Okay, now for real. The simplest thing is to put your script in a directory by itself and then:
 
     $ bin/shoes -p swt:app path/to/directory-of/your-shoes-app.rb
 
-You'll find your app at `path/to/directory-of/pkg/Shoes App.app`.
+This will produce a Mac app, which you can then find at `path/to/directory-of/pkg/Shoes App.app`.
+
+You can also package a shoes app up as a jar through:
+
+    $ bin/shoes -p swt:jar path/to/directory-of/your-shoes-app.rb
+
+You can find the jar in the same directory as above, i.e. path/to/directory-of/pkg/your-shoes-app.jar
 
 If you want more control (like you want to name your app something besides "Shoes App", or you don't want to include all of those files we talked about before), make an `app.yaml` file. See [the example](https://github.com/shoes/shoes4/blob/master/app.yaml) for more details.
 

@@ -4,40 +4,28 @@ class Shoes
 
   class TextBlock
     include Common::UIElement
+    include Common::Style
     include Common::Clickable
     include TextBlockDimensionsDelegations
 
-    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions, :opts
-    attr_accessor :font, :font_size, :cursor, :textcursor
+    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
+    attr_accessor :cursor, :textcursor
+    style_with  :common_styles, :dimensions, :text_block_styles
+    STYLES = {font: "Arial"} # used in TextBlock specs only
 
-    def initialize(app, parent, text, font_size, opts = {})
-      @parent             = parent
-      @app                = app
-      @opts               = opts
-      @font               = @app.font || DEFAULT_TEXTBLOCK_FONT
-      @font_size          = @opts[:size] || font_size
-
-      @opts[:stroke] = Shoes::Color.new(@opts[:stroke]) if @opts[:stroke].is_a?(String)
-      @opts[:fill] = Shoes::Color.new(@opts[:fill]) if @opts[:fill].is_a?(String)
-
-      #TODO
-      # Workaround until common styling is applied to TextBlock since we get
-      # the app-default fill => black styling here otherwise.
-      @opts[:fill] = nil unless @opts.include?(:fill)
-
-      @dimensions   = TextBlockDimensions.new parent, opts
-
-      handle_opts @opts
-
-      @opts = @app.style.merge(@opts)
-
-      @gui = Shoes.configuration.backend_for(self)
-      @parent.add_child(self)
+    def initialize(app, parent, text, styles = {})
+      @parent = parent
+      @app = app
+      style_init styles
+      @dimensions = TextBlockDimensions.new parent, @style
+      handle_styles @style
+      @gui = Shoes.backend_for self
+      @parent.add_child self
 
       # Important to use accessor and do this after the backend exists!
       self.text = Array(text)
 
-      register_click(@opts)
+      register_click
     end
 
     def in_bounds?(*args)
@@ -79,7 +67,7 @@ class Shoes
     end
 
     def centered?
-      opts[:align] == CENTER
+      style[:align] == CENTER
     end
 
     def links
@@ -92,13 +80,14 @@ class Shoes
 
     private
 
-    def gather_text_styles(parent, texts, styles={}, start_point=0)
+    def gather_text_styles(parent_text, texts, styles={}, start_point=0)
       texts.each do |text|
         if text.is_a? Shoes::Text
-          text.parent = parent
-          end_point = start_point + text.to_s.length - 1
-          range = start_point..end_point
-          styles[range] ||= []
+          text.text_block  = self
+          text.parent_text = parent_text
+          end_point        = start_point + text.to_s.length - 1
+          range            = start_point..end_point
+          styles[range]    ||= []
           styles[range] << text
           gather_text_styles(text, text.texts, styles, start_point)
         end
@@ -107,32 +96,40 @@ class Shoes
       styles
     end
 
-    def handle_opts(opts)
-      parse_font_opt opts[:font] if opts.has_key? :font
+    def handle_styles(style)
+      parse_font_style style[:font] if style[:font] #if is needed for the specs
     end
 
-    def parse_font_opt(type)
+    def parse_font_style(type)
       size_regex = /(\d+)(\s*px)?/
       style_regex = /none|bold|normal|oblique|italic/i # TODO: add more
 
       font_family = type.gsub(style_regex,'').gsub(size_regex,'').
                   split(',').map { |x| x.strip.gsub(/["]/,'') }
 
-      @font = font_family.first unless (font_family.size == 1 and
+      @style[:font] = font_family.first unless (font_family.size == 1 and
         font_family[0] == "") or font_family.size == 0
 
       fsize = size_regex.match(type)
-      @font_size = fsize[1].to_i unless fsize.nil?
+      @style[:size] = fsize[1].to_i unless fsize.nil?
 
       # TODO: Style options
     end
   end
 
-  class Banner < TextBlock; end
-  class Title < TextBlock; end
-  class Subtitle < TextBlock; end
-  class Tagline < TextBlock; end
-  class Caption < TextBlock; end
-  class Para < TextBlock; end
-  class Inscription < TextBlock; end
+  {
+    "Banner"      => { size: 48 },
+    "Title"       => { size: 34 },
+    "Subtitle"    => { size: 26 },
+    "Tagline"     => { size: 18 },
+    "Caption"     => { size: 14 },
+    "Para"        => { size: 12 },
+    "Inscription" => { size: 10 }
+  }.each do |name, styles|
+    clazz = Class.new(TextBlock) do
+      self.const_set("STYLES", { font: "Arial", fill: nil }.merge(styles))
+    end
+    Shoes.const_set(name, clazz)
+  end
+
 end

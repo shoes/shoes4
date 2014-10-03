@@ -5,7 +5,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   let(:first_segment) { create_segment("first", "first") }
   let(:second_segment) { create_segment("second", "rest") }
-  let(:dsl) { double("dsl", font: "", font_size: 16, opts:{}) }
+  let(:dsl) { double("dsl", font: "", size: 16, style:{}) }
 
   let(:gc) { double("gc") }
   let(:default_text_styles) {
@@ -41,7 +41,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling" do
-      styles = [[0..1, [double("segment", opts:{stroke: :blue})]]]
+      styles = [[0..1, [double("segment", style:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -56,10 +56,13 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
     describe "links" do
       it "styles links" do
-        styles = [[0..1, [create_link("linky")]]]
+        dsl_link = create_link("linky")
+        styles = [[0..1, [dsl_link]]]
         subject.style_segment_ranges(styles)
 
-        expected_style = style_with(underline: true, stroke: ::Shoes::COLORS[:blue])
+        dsl_style = dsl_link.style
+        default_style = default_text_styles.merge(dsl_style)
+        expected_style = default_style.merge({underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil})
         expect(first_segment).to have_received(:set_style).with(expected_style, 0..1)
       end
 
@@ -149,7 +152,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling in first segment" do
-      styles = [[0..2, [double("segment", opts:{stroke: :blue})]]]
+      styles = [[0..2, [double("segment", style:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -158,7 +161,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling in second segment" do
-      styles = [[5..7, [double("segment", opts:{stroke: :blue})]]]
+      styles = [[5..7, [double("segment", style:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -167,7 +170,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling in both segments" do
-      styles = [[2..7, [double("segment", opts:{stroke: :blue})]]]
+      styles = [[2..7, [double("segment", style:{stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -243,8 +246,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     Shoes::Link.new(shoes_app, parent, [text])
   end
 
-  def style_with(opts={})
-    default_text_styles.merge(opts)
+  def style_with(style={})
+    default_text_styles.merge(style)
   end
 
   def expect_relative_position_at_end_of(cursor, segment)

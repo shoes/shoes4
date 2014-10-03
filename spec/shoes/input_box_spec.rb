@@ -9,11 +9,17 @@ describe Shoes::InputBox do
   let(:height) { 200 }
   let(:text) { "the text" }
 
-  # EditBox is an InputBox but InputBox is enver instantiated itself
+  # EditBox is an InputBox but InputBox is never instantiated itself
   # And there are problems in the backend due to option settings
   subject { Shoes::EditBox.new(app, parent, text, input_opts, input_block) }
 
   it_behaves_like "object with dimensions"
+
+  it_behaves_like "object with style" do
+    let(:subject_without_style) { Shoes::EditBox.new(app, parent, text) }
+    let(:subject_with_style) { Shoes::EditBox.new(app, parent, text, arg_styles) }
+  end
+
   it_behaves_like "movable object"
   it_behaves_like "an element that can respond to change"
   it_behaves_like "object with state"
@@ -40,5 +46,27 @@ describe Shoes::InputBox do
   describe "negative dimensions" do
     subject { Shoes::EditBox.new(app, parent, text, negative_opts) }
     it_behaves_like "object with negative dimensions"
+  end
+
+  describe Shoes::EditLine do
+    describe "secret" do
+      subject { Shoes::EditLine.new(app, parent, text, secret: true) }
+
+      it "gets initialized" do
+        expect(subject.secret).to eq(true)
+        expect(subject.secret?).to eq(true)
+      end
+
+      it "respects setting" do
+        subject.secret = false
+        expect(subject.secret).to eq(false)
+        expect(subject.secret?).to eq(false)
+      end
+
+      it_behaves_like "object with style" do
+        let(:subject_without_style) { Shoes::EditLine.new(app, parent, text) }
+        let(:subject_with_style) { Shoes::EditLine.new(app, parent, text, arg_styles) }
+      end
+    end
   end
 end

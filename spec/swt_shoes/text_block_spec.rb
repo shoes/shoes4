@@ -8,12 +8,14 @@ describe Shoes::Swt::TextBlock do
   let(:margin) { 10 }
   let(:dsl) { double("dsl", app: shoes_app, text: "text",
                      margin_left: 0, margin_right: 0,
-                     margin_top: 0, margin_bottom: 0).as_null_object }
+                     margin_top: 0, margin_bottom: 0,
+                     pass_coordinates?: nil).as_null_object }
 
-  subject { Shoes::Swt::TextBlock.new(dsl) }
+  subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 
   it_behaves_like "paintable"
   it_behaves_like "togglable"
+  it_behaves_like "clickable backend"
 
   # reported nil, caused trouble in simple-downloader.rb
   it 'initially responds with empty segments' do

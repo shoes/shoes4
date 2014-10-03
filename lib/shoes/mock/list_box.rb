@@ -11,6 +11,9 @@ class Shoes
 
       def choose(string)
       end
+
+      def text
+      end
     end
   end
 end

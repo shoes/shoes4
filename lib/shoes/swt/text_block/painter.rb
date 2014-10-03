@@ -8,7 +8,7 @@ class Shoes
         attr_reader :app
         def initialize(dsl)
           @dsl = dsl
-          @opts = @dsl.opts
+          @style = @dsl.style
           @app = @dsl.app.gui
         end
 
@@ -30,13 +30,13 @@ class Shoes
 
         def default_text_styles
           {
-            :fg          => @opts[:fg],
-            :bg          => @opts[:bg],
-            :strikecolor => @opts[:strikecolor],
-            :undercolor  => @opts[:undercolor],
+            :fg          => @style[:fg],
+            :bg          => @style[:bg],
+            :strikecolor => @style[:strikecolor],
+            :undercolor  => @style[:undercolor],
             :font_detail => {
             :name   => @dsl.font,
-            :size   => @dsl.font_size,
+            :size   => @dsl.size,
             :styles => [::Swt::SWT::NORMAL]
           }
           }

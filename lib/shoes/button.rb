@@ -1,31 +1,30 @@
 class Shoes
   class Button
     include Common::UIElement
+    include Common::Style
     include Common::Clickable
-    include Common::State
 
-    attr_reader :app, :parent, :blk, :gui, :opts, :dimensions
-    attr_accessor :text
+    attr_reader :app, :parent, :dimensions, :gui
+    style_with :click, :common_styles, :dimensions, :state, :text
 
-    def initialize(app, parent, text, opts = {}, blk = nil)
-      @app    = app
+    def initialize(app, parent, text, styles = {}, blk = nil)
+      @app = app
       @parent = parent
-      @text   = text
-      @opts   = opts
-      @blk    = blk
-
-      @dimensions = Dimensions.new parent, opts
-
-      @gui = Shoes.configuration.backend_for(self, @parent.gui)
-
-      parent.add_child self
-
-      register_click(opts)
-      state_options(opts)
+      style_init styles, text: text
+      @dimensions = Dimensions.new parent, @style
+      @parent.add_child self
+      @gui = Shoes.configuration.backend_for self, @parent.gui
+      register_click blk
     end
 
     def focus
       @gui.focus
     end
+
+    def state=(value)
+      style(state: value)
+      @gui.enabled value.nil?
+    end
+
   end
 end

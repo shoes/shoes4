@@ -6,7 +6,7 @@
 
 simple-anim-shapes.rb
 simple-animate.rb
-simple-arc.rb
+# simple-arc.rb  Pending on #423
 simple-bounce.rb
 simple-brightness-transitions.rb
 simple-button-animate.rb
@@ -54,10 +54,17 @@ expert-snake.rb
 expert-tankspank.rb
 
 # examples from the nobody knows shoes book
-nks_poem.rb
+nks_booklist.rb
 nks_breadsticks.rb
+nks_dancing_circle.rb
+nks_dictionary.rb
+nks_edit_box.rb
+nks_edit_line.rb
+nks_notes.rb
+nks_poem.rb
+nks_self.rb
 nks_text_sizes.rb
-
+nks_trurl.rb
 
 class-book-adjusted.rb
 

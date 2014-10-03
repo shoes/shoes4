@@ -1,35 +1,28 @@
 class Shoes
   class Shape
     include Common::UIElement
-    include Common::Fill
-    include Common::Stroke
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :blk, :dimensions, :gui, :hidden, :x, :y
+    attr_reader :app, :parent, :dimensions, :gui, :blk, :x, :y
     attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound
+    style_with :art_styles, :center, :common_styles, :dimensions
 
     # Creates a new Shoes::Shape
     #
-    def initialize(app, parent, opts = {}, blk = nil)
+    def initialize(app, parent, styles = {}, blk = nil)
       @app = app
-      @dimensions = AbsoluteDimensions.new opts
-      @style = Shoes::Common::Fill::DEFAULTS.merge(Shoes::Common::Stroke::DEFAULTS).merge(opts)
-      @style[:strokewidth] ||= @app.style[:strokewidth] || 1
-      @blk = blk
       @parent = parent
+      style_init styles
+      @dimensions = AbsoluteDimensions.new @style
+      @parent.add_child self
+      @gui = Shoes.backend_for self
+      register_click
 
+      @blk = blk
       # True until we've asked the pen to draw
       @before_drawing = true
-
-      @parent.add_child self
-
-      # GUI
-      @gui = Shoes.backend_for(self, @style)
-
-      instance_eval &@blk unless @blk.nil?
-
-      register_click(opts)
+      @app.eval_with_additional_context self, &blk
     end
 
     def width

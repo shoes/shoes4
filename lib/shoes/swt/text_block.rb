@@ -11,10 +11,9 @@ class Shoes
       attr_reader :dsl, :app
       attr_accessor :segments
 
-      def initialize(dsl)
+      def initialize(dsl, app)
         @dsl            = dsl
-        @app            = dsl.app.gui
-        @opts           = @dsl.opts
+        @app            = app
         @segments       = []
         @painter        = Painter.new @dsl
         @app.add_paint_listener @painter

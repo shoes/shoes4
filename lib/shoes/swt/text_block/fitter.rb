@@ -203,7 +203,7 @@ class Shoes
         # the current font. Take our pre-existing allowed height instead.
         def first_height(first_layout, first_text, height)
           first_height = first_layout.bounds.height - first_layout.spacing
-          first_height = height if first_text.empty?
+          first_height = height if first_text.empty? && height != :unbounded
           first_height
         end
       end

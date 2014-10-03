@@ -16,56 +16,56 @@ class Shoes
         @colors.clear
       end
 
-      def create_style(font, foreground, background, opts)
+      def create_style(font, foreground, background, style)
         fg = swt_color(foreground, ::Shoes::COLORS[:black])
         bg = swt_color(background)
-        @style = ::Swt::TextStyle.new font, fg, bg
-        set_underline(opts)
-        set_undercolor(opts)
-        set_rise(opts)
-        set_strikethrough(opts)
-        set_strikecolor(opts)
-        @style
+        @gui_style = ::Swt::TextStyle.new font, fg, bg
+        set_underline(style)
+        set_undercolor(style)
+        set_rise(style)
+        set_strikethrough(style)
+        set_strikecolor(style)
+        @gui_style
       end
 
-      def self.apply_styles(styles, opts)
-        styles[:font_detail][:styles] = parse_font_style(opts)
-        styles[:font_detail][:name] = opts[:font] if opts[:font]
-        styles[:font_detail][:size] = opts[:size] if opts[:size]
-        styles[:fg] = opts[:stroke]
-        styles[:bg] = opts[:fill]
-        styles[:font_detail][:size] *= opts[:size_modifier] if opts[:size_modifier]
-        styles.merge(opts)
+      def self.apply_styles(gui_style, dsl_style)
+        gui_style[:font_detail][:styles] = parse_font_style(dsl_style)
+        gui_style[:font_detail][:name] = dsl_style[:font] if dsl_style[:font]
+        gui_style[:font_detail][:size] = dsl_style[:size] if dsl_style[:size]
+        gui_style[:fg] = dsl_style[:stroke]
+        gui_style[:bg] = dsl_style[:fill]
+        gui_style[:font_detail][:size] *= dsl_style[:size_modifier] if dsl_style[:size_modifier]
+        gui_style.merge(dsl_style)
       end
 
-      def self.parse_font_style(opts)
+      def self.parse_font_style(style)
         font_styles = []
-        font_styles << ::Swt::SWT::BOLD if opts[:weight]
-        font_styles << ::Swt::SWT::ITALIC if opts[:emphasis]
-        font_styles << ::Swt::SWT::NORMAL if !opts[:weight] && !opts[:emphasis]
+        font_styles << ::Swt::SWT::BOLD if style[:weight]
+        font_styles << ::Swt::SWT::ITALIC if style[:emphasis]
+        font_styles << ::Swt::SWT::NORMAL if !style[:weight] && !style[:emphasis]
         font_styles
       end
 
       private
-      def set_rise(opts)
-        @style.rise = opts[:rise]
+      def set_rise(style)
+        @gui_style.rise = style[:rise]
       end
 
-      def set_underline(opts)
-        @style.underline = opts[:underline].nil? || opts[:underline] == "none" ? false : true
-        @style.underlineStyle = UNDERLINE_STYLES[opts[:underline]]
+      def set_underline(style)
+        @gui_style.underline = style[:underline].nil? || style[:underline] == "none" ? false : true
+        @gui_style.underlineStyle = UNDERLINE_STYLES[style[:underline]]
       end
 
-      def set_undercolor(opts)
-        @style.underlineColor = color_from_dsl opts[:undercolor]
+      def set_undercolor(style)
+        @gui_style.underlineColor = color_from_dsl style[:undercolor]
       end
 
-      def set_strikethrough(opts)
-        @style.strikeout = opts[:strikethrough].nil? || opts[:strikethrough] == "none" ? false : true
+      def set_strikethrough(style)
+        @gui_style.strikeout = style[:strikethrough].nil? || style[:strikethrough] == "none" ? false : true
       end
 
-      def set_strikecolor(opts)
-        @style.strikeoutColor = color_from_dsl opts[:strikecolor]
+      def set_strikecolor(style)
+        @gui_style.strikeoutColor = color_from_dsl style[:strikecolor]
       end
 
       def swt_color(color, default = nil)

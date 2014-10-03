@@ -38,14 +38,14 @@ describe Shoes::Swt::MouseMoveListener do
     let(:arrow_cursor) {Shoes::Swt::Shoes.display.getSystemCursor(::Swt::SWT::CURSOR_ARROW)}
 
     context 'over a clickable element' do
-      let(:clickable_elements) {[double('element', in_bounds?: true)]}
+      let(:clickable_elements) {[double('element', visible?: true, in_bounds?: true)]}
       it 'should set the curser hand' do
         expect(shell).to have_received(:setCursor).with(hand_cursor)
       end
     end
 
     context 'not over a clickable element' do
-      let(:clickable_elements) {[double('element', in_bounds?: false)]}
+      let(:clickable_elements) {[double('element', visible?: true, in_bounds?: false)]}
       it 'should set the curser hand' do
         expect(shell).to have_received(:setCursor).with(arrow_cursor)
       end
@@ -54,18 +54,13 @@ describe Shoes::Swt::MouseMoveListener do
 
   describe 'hover control' do
     let(:element) {double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
-                          hover_proc: element_hover, leave_proc: element_leave,
-                          mouse_left: nil, mouse_hovered: nil}
-    let(:element_hover) {double 'element hover', call: nil}
-    let(:element_leave) {double 'element leave', call: nil}
+                          visible?: true, mouse_left: nil, mouse_hovered: nil}
     let(:mouse_hover_controls) {[element]}
 
     shared_examples_for 'does not do anything' do
       it 'calls no hover related methods whatsoever' do
         expect(element).not_to have_received :mouse_left
         expect(element).not_to have_received :mouse_hovered
-        expect(element_hover).not_to have_received :call
-        expect(element_leave).not_to have_received :call
       end
     end
 
@@ -87,10 +82,6 @@ describe Shoes::Swt::MouseMoveListener do
       let(:in_bounds?) {true}
       let(:hovered?) {false}
 
-      it 'calls the hover block' do
-        expect(element_hover).to have_received :call
-      end
-
       it 'calls the hovered method' do
         expect(element).to have_received :mouse_hovered
       end
@@ -100,13 +91,18 @@ describe Shoes::Swt::MouseMoveListener do
       let(:in_bounds?) {false}
       let(:hovered?) {true}
 
-      it 'calls the leave block' do
-        expect(element_leave).to have_received :call
-      end
-
       it 'calls the mouse_left method' do
         expect(element).to have_received :mouse_left
       end
+    end
+
+    describe 'in bounds, not hovered but hidden' do
+      let(:in_bounds?) {true}
+      let(:hovered?)   {false}
+      let(:element) {double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
+                            visible?: false, mouse_left: nil, mouse_hovered: nil}
+
+      it_behaves_like 'does not do anything'
     end
 
     describe 'with 2 elements' do
@@ -114,14 +110,12 @@ describe Shoes::Swt::MouseMoveListener do
       let(:hovered?) {true}
 
       let(:element2) {double 'element 2', in_bounds?: true, hovered?: false,
-                             hover_proc: element2_hover, leave_proc: nil,
-                             mouse_left: nil, mouse_hovered: nil}
-      let(:element2_hover) {double 'element 2 hover', call: nil}
+                             visible?: true, mouse_left: nil, mouse_hovered: nil}
       let(:mouse_hover_controls) {[element, element2]}
 
       it 'calls leave for element 1 before calling hover for element 2' do
-        expect(element_leave).to receive(:call).ordered
-        expect(element2_hover).to receive(:call).ordered
+        expect(element).to receive(:mouse_left).ordered
+        expect(element2).to receive(:mouse_hovered).ordered
         subject.mouse_move(mouse_event)
       end
     end

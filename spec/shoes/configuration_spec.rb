@@ -16,17 +16,16 @@ describe Shoes::Configuration do
   describe "backend" do
     include_context "dsl app"
 
-    let(:args) { Hash.new }
-    let(:dsl_object) { Shoes::Shape.new app, parent, args }
+    let(:dsl_object) { Shoes::Shape.new app, parent}
 
     describe "#backend_with_app_for" do
       it "passes app.gui to backend" do
-        expect(Shoes.configuration.backend::Shape).to receive(:new).with(an_instance_of(Shoes::Shape), app.gui, an_instance_of(Hash)).and_call_original
+        expect(Shoes.configuration.backend::Shape).to receive(:new).with(an_instance_of(Shoes::Shape), app.gui).and_call_original
         dsl_object
       end
 
       it "returns shape backend object" do
-        expect(Shoes.configuration.backend_with_app_for(dsl_object, args)).to be_instance_of(Shoes.configuration.backend::Shape)
+        expect(Shoes.configuration.backend_with_app_for(dsl_object)).to be_instance_of(Shoes.configuration.backend::Shape)
       end
 
       it "raises ArgumentError for a non-Shoes object" do

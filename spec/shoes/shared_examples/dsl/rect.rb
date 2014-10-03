@@ -30,7 +30,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        expect(rect.corners).to eq(0)
+        expect(rect.curve).to eq(0)
       end
     end
 
@@ -40,7 +40,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "sets corner radius" do
-        expect(rect.corners).to eq(curve)
+        expect(rect.curve).to eq(curve)
       end
     end
 
@@ -50,7 +50,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        expect(rect.corners).to eq(0)
+        expect(rect.curve).to eq(0)
       end
     end
 
@@ -60,7 +60,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "sets corner radius" do
-        expect(rect.corners).to eq(curve)
+        expect(rect.curve).to eq(curve)
       end
     end
   end
@@ -75,7 +75,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        expect(rect.corners).to eq(0)
+        expect(rect.curve).to eq(0)
       end
     end
 
@@ -85,7 +85,7 @@ shared_examples_for "rect DSL method" do
       include_examples "rectangle dimensions"
 
       it "defaults to corner radius of 0" do
-        expect(rect.corners).to eq(0)
+        expect(rect.curve).to eq(0)
       end
     end
   end
