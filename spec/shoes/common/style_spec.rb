@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe Shoes::Common::Style do
   include_context "dsl app"
-  let(:white) { Shoes::COLORS[:white] }
+  let(:blue) { Shoes::COLORS[:blue] }
 
   class StyleTester
     include Shoes::Common::Style
     attr_accessor :left
     style_with :key, :left, :click, :strokewidth, :fill
-    STYLES = {fill: "#fff"}
+    STYLES = {fill: Shoes::COLORS[:blue]}
 
     def initialize(app, styles = {})
       @app = app #needed for style init
@@ -27,7 +27,7 @@ describe Shoes::Common::Style do
   subject {StyleTester.new(app)}
 
   its(:style) { should eq (initial_style) }
-  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: white} }
+  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue} }
 
   describe 'reading and writing through #style(hash)' do
     let(:input_proc) { Proc.new {} }
@@ -117,13 +117,13 @@ describe Shoes::Common::Style do
 
   describe "style priorities" do
     subject {StyleTester.new(app, key: 'pumpkin')}
-    
+
     it 'uses arguments-styles over element-styles' do
       expect(subject.key).to eq 'pumpkin'
     end
 
     it "uses element-defaults over app-defaults" do
-      expect(subject.fill).to eq white
+      expect(subject.fill).to eq blue
     end
 
     #related priority specs are tested individually in spec/shared_examples/style
