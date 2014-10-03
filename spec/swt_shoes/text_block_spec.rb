@@ -14,7 +14,7 @@ describe Shoes::Swt::TextBlock do
   subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 
   it_behaves_like "paintable"
-  it_behaves_like "togglable"
+  it_behaves_like "updating visibility"
   it_behaves_like "clickable backend"
 
   # reported nil, caused trouble in simple-downloader.rb

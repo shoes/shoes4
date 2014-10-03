@@ -35,7 +35,7 @@ describe Shoes::Swt::Background do
   end
 
   it_behaves_like "paintable"
-  it_behaves_like "togglable"
+  it_behaves_like "updating visibility"
 
   describe "painter" do
     include_context "painter context"

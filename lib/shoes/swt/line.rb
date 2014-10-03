@@ -3,7 +3,7 @@ class Shoes
     class Line
       include Common::Clickable
       include Common::Stroke
-      include Common::Toggle
+      include Common::Visibility
       include Common::Remove
       include Common::PainterUpdatesPosition
       include ::Shoes::BackendDimensionsDelegations

@@ -15,7 +15,7 @@ describe Shoes::Swt::Flow do
   # which we test elsewhere.
   # Add back in when slots get an appropriate backend.
   # #905
-  # it_behaves_like "togglable"
+  # it_behaves_like "updating visibility"
 
   it_behaves_like "clickable backend" do
     let(:click_block_parameters) { click_block_coordinates }

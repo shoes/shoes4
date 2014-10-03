@@ -35,7 +35,7 @@ describe Shoes::Swt::Arc do
   end
 
   it_behaves_like "paintable"
-  it_behaves_like "togglable"
+  it_behaves_like "updating visibility"
   it_behaves_like "clickable backend"
 
   describe "painter" do

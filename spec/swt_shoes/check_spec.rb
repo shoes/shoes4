@@ -24,5 +24,5 @@ describe Shoes::Swt::Check do
   it_behaves_like "buttons"
   it_behaves_like "movable element"
   it_behaves_like "selectable"
-  it_behaves_like "togglable"
+  it_behaves_like "updating visibility"
 end

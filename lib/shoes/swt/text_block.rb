@@ -2,7 +2,7 @@ class Shoes
   module Swt
     class TextBlock
       include Common::Remove
-      include Common::Toggle
+      include Common::Visibility
       include Common::Clickable
       include ::Shoes::BackendDimensionsDelegations
 

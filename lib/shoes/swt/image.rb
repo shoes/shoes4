@@ -7,7 +7,7 @@ class Shoes
       include Common::Resource
       include Common::Clickable
       include Common::PainterUpdatesPosition
-      include Common::Toggle
+      include Common::Visibility
       include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
