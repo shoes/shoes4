@@ -9,7 +9,12 @@ describe Shoes::Swt::Flow do
 
   subject { Shoes::Swt::Flow.new(dsl, parent) }
 
-  it_behaves_like "togglable"
+  # it does not use toggle anymore and hides each element individually
+  # which means that each element takes care of what this spec specs,
+  # which we test elsewhere.
+  # Add back in when slots get an appropriate backend.
+  # #905
+  # it_behaves_like "togglable"
 
   describe "#initialize" do
     before do

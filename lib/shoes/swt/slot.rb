@@ -23,7 +23,7 @@ class Shoes
       # backend representations that can just hide their contents all together
       # I decided to put this logic in the backend since the hiding is a backend
       # responsibility, although this is more DSL code
-      # #904
+      # #904 #905
       def toggle
         if dsl.hidden?
           dsl.contents.each &:hide
