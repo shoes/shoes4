@@ -2,16 +2,18 @@ require 'spec_helper'
 
 describe Shoes::Common::Style do
   include_context "dsl app"
+  let(:white) { Shoes::COLORS[:white] }
 
   class StyleTester
     include Shoes::Common::Style
     attr_accessor :left
-    style_with :key, :left, :click, :strokewidth
+    style_with :key, :left, :click, :strokewidth, :fill
+    STYLES = {fill: "#fff"}
 
-    def initialize(app, style = {})
+    def initialize(app, styles = {})
       @app = app #needed for style init
+      style_init(styles, key: 'value')
       @left = 15
-      style_init(key: 'value', left: @left)
     end
 
     def click(&arg)
@@ -22,16 +24,15 @@ describe Shoes::Common::Style do
       @click
     end
   end
-
   subject {StyleTester.new(app)}
-  #let(:default_styles) {Shoes::Common::Style::DEFAULT_STYLES}
-  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1} }
 
   its(:style) { should eq (initial_style) }
+  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: white} }
 
-  describe 'changing the style through #style(hash)' do
-    let(:changed_style) { {key: 'changed value'} }
+  describe 'reading and writing through #style(hash)' do
     let(:input_proc) { Proc.new {} }
+    let(:changed_style) { {key: 'changed value'} }
+
 
     before :each do
       subject.style changed_style
@@ -70,23 +71,6 @@ describe Shoes::Common::Style do
       expect(subject.key).to eq 'changed value'
     end
 
-    it "reads 'default' styles with reader" do
-      expect(subject.strokewidth).to eq 1
-    end
-
-    it "writes 'default' styles with writer" do
-      subject.strokewidth = 5
-      expect(subject.strokewidth).to eq 5
-    end
-
-    it "does not read 'default' styles that it doesn't support" do
-      expect(subject).not_to respond_to :stroke
-    end
-
-    it "does not write 'default' styles that it doesn't support" do
-      expect(subject).not_to respond_to :stroke=
-    end
-
     # these specs are rather extensive as they are performance critical for
     # redrawing
     describe 'calling or not calling #update_style' do
@@ -110,6 +94,39 @@ describe Shoes::Common::Style do
         subject.style new_key: 'value'
       end
     end
+  end
+
+  describe "app-default" do
+    it "reads app-default styles with reader" do
+      expect(subject.strokewidth).to eq 1
+    end
+
+    it "writes app-default styles with writer" do
+      subject.strokewidth = 5
+      expect(subject.strokewidth).to eq 5
+    end
+
+    it "does not read 'default' styles that it doesn't support" do
+      expect(subject).not_to respond_to :stroke
+    end
+
+    it "does not write 'default' styles that it doesn't support" do
+      expect(subject).not_to respond_to :stroke=
+    end
+  end
+
+  describe "style priorities" do
+    subject {StyleTester.new(app, key: 'pumpkin')}
+    
+    it 'uses arguments-styles over element-styles' do
+      expect(subject.key).to eq 'pumpkin'
+    end
+
+    it "uses element-defaults over app-defaults" do
+      expect(subject.fill).to eq white
+    end
+
+    #related priority specs are tested individually in spec/shared_examples/style
   end
 
   describe 'StyleWith' do
