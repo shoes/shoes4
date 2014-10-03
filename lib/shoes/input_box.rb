@@ -9,7 +9,7 @@ class Shoes
     def initialize(app, parent, text, styles = {}, blk = nil)
       @app = app
       @parent = parent
-      style_init styles, text: text
+      style_init styles, text: text.to_s
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui

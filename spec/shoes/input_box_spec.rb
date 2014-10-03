@@ -38,6 +38,14 @@ describe Shoes::InputBox do
     subject.caret_to 42
   end
 
+  describe 'non string text' do
+    let(:text) {42}
+
+    it 'is converted to a string (convenience + error in backend)' do
+      expect(subject.text).to eq '42'
+    end
+  end
+
   describe "relative dimensions from parent" do
     subject { Shoes::EditBox.new(app, parent, text, relative_opts) }
     it_behaves_like "object with relative dimensions"
