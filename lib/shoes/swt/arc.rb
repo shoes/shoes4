@@ -5,7 +5,7 @@ class Shoes
       include Common::Fill
       include Common::Stroke
       include Common::PainterUpdatesPosition
-      include Common::Toggle
+      include Common::Visibility
       include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 

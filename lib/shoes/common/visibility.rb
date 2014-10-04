@@ -3,8 +3,8 @@ class Shoes
     module Visibility
       # Hides the element, so that it can't be seen. See also #show and #toggle.
       def hide
-        @hidden = false
-        toggle
+        @hidden = true
+        update_visibility
       end
 
       def hidden?
@@ -19,15 +19,20 @@ class Shoes
 
       # Reveals the element, if it is hidden. See also #hide and #toggle.
       def show
-        @hidden = true
-        toggle
+        @hidden = false
+        update_visibility
       end
 
       # Hides an element if it is shown. Or shows the element, if it is hidden.
       # See also #hide and #show.
       def toggle
         @hidden = !@hidden
-        gui.toggle
+        update_visibility
+      end
+
+      private
+      def update_visibility
+        gui.update_visibility
         self
       end
     end

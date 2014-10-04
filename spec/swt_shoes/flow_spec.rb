@@ -10,7 +10,12 @@ describe Shoes::Swt::Flow do
 
   subject { Shoes::Swt::Flow.new(dsl, parent) }
 
-  it_behaves_like "togglable"
+  # it does not use toggle anymore and hides each element individually
+  # which means that each element takes care of what this spec specs,
+  # which we test elsewhere.
+  # Add back in when slots get an appropriate backend.
+  # #905
+  # it_behaves_like "updating visibility"
 
   it_behaves_like "clickable backend" do
     let(:click_block_parameters) { click_block_coordinates }

@@ -3,7 +3,7 @@ class Shoes
     class Progress
       include Common::Child
       include Common::Remove
-      include Common::Toggle
+      include Common::Visibility
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 

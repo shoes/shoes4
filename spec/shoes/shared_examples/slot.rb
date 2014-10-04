@@ -41,7 +41,7 @@ shared_context 'hidden child' do
 
   before :each do
     subject.add_child hidden_element
-    hidden_element.gui = double("hidden gui", toggle: nil)
+    hidden_element.gui = double("hidden gui", update_visibility: nil)
     hidden_element.hide
   end
 end

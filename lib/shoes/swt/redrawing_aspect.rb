@@ -25,7 +25,7 @@ class Shoes
       NEED_TO_ASYNC_UPDATE_GUI = {::Shoes::Download => [:eval_block]}
 
       # These need to trigger a redraw
-      SAME_POSITION    = {Common::Toggle          => [:toggle],
+      SAME_POSITION    = {Common::Visibility      => [:update_visibility],
                           Image                   => [:update_image],
                           ::Shoes::Common::Style  => [:update_style],
                           ::Shoes::Common::Remove => [:remove],

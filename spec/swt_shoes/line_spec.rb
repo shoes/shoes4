@@ -23,7 +23,7 @@ describe Shoes::Swt::Line do
   end
 
   it_behaves_like "paintable"
-  it_behaves_like "togglable"
+  it_behaves_like "updating visibility"
   it_behaves_like "clickable backend"
 
   it {is_expected.to respond_to :remove}

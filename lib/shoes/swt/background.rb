@@ -5,7 +5,7 @@ class Shoes
       include Common::Fill
       include Common::Stroke
       include Common::Remove
-      include Common::Toggle
+      include Common::Visibility
       include BackendDimensionsDelegations
 
       def_delegators :dsl, :angle

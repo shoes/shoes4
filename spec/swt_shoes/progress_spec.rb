@@ -15,7 +15,7 @@ describe Shoes::Swt::Progress do
   end
 
   it_behaves_like "movable element"
-  it_behaves_like "togglable"
+  it_behaves_like "updating visibility"
 
   it "should have a method called fraction=" do
     expect(subject).to respond_to :fraction=
