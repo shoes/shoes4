@@ -3,7 +3,7 @@ class Shoes
     class ListBox
       include Shoes::Mock::CommonMethods
 
-      def update_items(v)
+      def update_items
       end
 
       def enabled(value)
