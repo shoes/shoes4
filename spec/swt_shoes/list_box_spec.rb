@@ -8,7 +8,7 @@ describe Shoes::Swt::ListBox do
                         items: items, opts: {},
                         element_width: 200, element_height: 20).as_null_object }
   let(:block)  { ->(){} }
-  let(:real)   { double('real', text: "",
+  let(:real)   { double('real', text: "", :items= => true,
                         set_size: true, add_selection_listener: true,
                         disposed?: false ) }
 
@@ -37,6 +37,11 @@ describe Shoes::Swt::ListBox do
   it "should call text= when choosing" do
     expect(real).to receive(:text=).with "Bacon"
     subject.choose "Bacon"
+  end
+
+  it 'sets the items on real upon initialization' do
+    subject
+    expect(real).to have_received(:items=).with(items)
   end
 
   describe "when the backend notifies us that the selection has changed" do

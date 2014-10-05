@@ -2,7 +2,10 @@ require 'shoes/spec_helper'
 
 describe Shoes::ListBox do
   include_context "dsl app"
-  let(:input_opts)  { { items: ["Wine", "Vodka", "Water"], left: left, top: top, width: width, height: height } }
+  let(:input_opts)  { { items: items, left: left, top: top, width: width,
+                        height: height } }
+
+  let(:items) {["Wine", "Vodka", "Water"]}
 
   let(:left) { 10 }
   let(:top) { 20 }
@@ -63,5 +66,9 @@ describe Shoes::ListBox do
     expect_any_instance_of(Shoes.configuration.backend::ListBox).
         to receive(:text).and_return("Sneakers & Sandals")
     expect(list_box.text).to eq("Sneakers & Sandals")
+  end
+
+  it 'has the initialized text elements' do
+    expect(subject.items).to eq items
   end
 end

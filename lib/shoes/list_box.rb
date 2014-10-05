@@ -17,7 +17,6 @@ class Shoes
       @gui = Shoes.configuration.backend_for self, @parent.gui
       change &blk if blk
 
-      items = @style[:items]
       choose @style[:choose]
     end
 
