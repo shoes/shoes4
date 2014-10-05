@@ -22,7 +22,7 @@ class Shoes
 
     def items=(values)
       style(items: values)
-      @gui.update_items values
+      @gui.update_items
     end
 
     def text

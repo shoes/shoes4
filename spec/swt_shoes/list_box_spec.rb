@@ -26,8 +26,10 @@ describe Shoes::Swt::ListBox do
   end
 
   it "should call 'items' when updating values" do
-    expect(real).to receive(:items=).with(["hello"])
-    subject.update_items(["hello"])
+    subject # creation already calls update_items once
+    allow(dsl).to receive(:items).and_return ["hello"]
+    subject.update_items
+    expect(real).to have_received(:items=).with(["hello"])
   end
 
   it "should respond to choose" do
