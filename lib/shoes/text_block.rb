@@ -85,8 +85,11 @@ class Shoes
         if text.is_a? Shoes::Text
           text.text_block  = self
           text.parent_text = parent_text
+
           end_point        = start_point + text.to_s.length - 1
+          end_point        = start_point if end_point < start_point
           range            = start_point..end_point
+
           styles[range]    ||= []
           styles[range] << text
           gather_text_styles(text, text.texts, styles, start_point)

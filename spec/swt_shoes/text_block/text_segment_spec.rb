@@ -70,6 +70,11 @@ describe Shoes::Swt::TextBlock::TextSegment do
       subject.set_style(style_hash, 1..2)
       expect(layout).to have_received(:set_style).with(style, 1, 2)
     end
+
+    it "ignores empty ranges" do
+      subject.set_style(style_hash, 1..1)
+      expect(layout).to_not have_received(:set_style).with(style, 1, 1)
+    end
   end
 
   describe "shrinking on initialization" do
