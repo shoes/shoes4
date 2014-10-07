@@ -5,6 +5,10 @@ class Changelog
     {pattern: 'Changelog: bugfix', heading: 'Bug Fixes'}
   ]
 
+  COMMIT_SEPARATOR     = '<--COMMIT-->'
+  BODY_START_SEPARATOR = '<--BODY-START-->'
+  BODY_END_SEPARATOR   = '<--BODY-END-->'
+
   def generate(categories = CATEGORY_MAPPING)
     commit_range = commits_on_master_since_last_release
     changes = categorize_commits(categories, commit_range)
@@ -34,11 +38,25 @@ class Changelog
 
   def commits_matching(pattern, commit_range)
     grep_placeholder = '{TOKEN}'
-    log_command_template = "git log --regexp-ignore-case --grep '#{grep_placeholder}' --format='* %s [%h]' #{commit_range}"
+    log_command_template = "git log --regexp-ignore-case --grep '#{grep_placeholder}' --format='%s#{BODY_START_SEPARATOR}%b#{BODY_END_SEPARATOR} [%h]#{COMMIT_SEPARATOR}' #{commit_range}"
     log_command = log_command_template.gsub(grep_placeholder, pattern)
 
-    commits =`#{log_command}`.split("\n").tap do
-      raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
+    commits =`#{log_command}`
+    raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
+
+    commits.split(COMMIT_SEPARATOR + "\n").map{|commit| uniform_change_log(commit)}
+  end
+
+  def uniform_change_log(commit)
+    '* ' + extract_changelog_message(commit)
+  end
+
+  def extract_changelog_message commit
+    if commit =~ /Merge pull request/i
+      message = commit.sub(/Merge pull request.*#{BODY_START_SEPARATOR}/i, '')
+      message.sub /((\n.*#{BODY_END_SEPARATOR})|#{BODY_END_SEPARATOR})/m, ''
+    else
+      commit.sub /#{BODY_START_SEPARATOR}.*#{BODY_END_SEPARATOR}/m, ''
     end
   end
 
