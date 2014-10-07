@@ -72,8 +72,8 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
 
     it "ignores empty ranges" do
-      subject.set_style(style_hash, 1..1)
-      expect(layout).to_not have_received(:set_style).with(style, 1, 1)
+      subject.set_style(style_hash, 0...0)
+      expect(layout).to_not have_received(:set_style).with(style, 0, 0)
     end
   end
 

@@ -60,8 +60,8 @@ class Shoes
         end
 
         def set_style(styles, range=(0...text.length))
-          # If we've been given an empty/nonesense range, just ignore it
-          return unless range.count > 1
+          # If we've been given an empty/nonsense range, just ignore it
+          return unless range.count > 0
 
           font = @font_factory.create_font(styles[:font_detail])
           style = @style_factory.create_style(font, styles[:fg], styles[:bg], styles)

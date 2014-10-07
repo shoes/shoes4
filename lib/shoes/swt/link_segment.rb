@@ -6,8 +6,8 @@ class Shoes
         @range = range
         @text_segment = text_segment
 
-        # Empty link will have no range, so don't create regions for it!
-        return unless @range.count > 1
+        # Don't create regions for empty links!
+        return unless @range.count > 0
 
         add_regions_for_lines(lines_for_link)
         offset_regions(text_segment.element_left, text_segment.element_top)

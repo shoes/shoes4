@@ -219,7 +219,7 @@ describe Shoes::TextBlock do
     let(:actual_app) { app.app }
 
     it "properly ignores empty element lengths in text_styles" do
-      text_styles = { 0..0 => [link, span] }
+      text_styles = { 0...0 => [link, span] }
 
       expect(para.text_styles).to eq(text_styles)
     end

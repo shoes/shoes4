@@ -85,10 +85,15 @@ class Shoes
         if text.is_a? Shoes::Text
           text.text_block  = self
           text.parent_text = parent_text
-
           end_point        = start_point + text.to_s.length - 1
-          end_point        = start_point if end_point < start_point
-          range            = start_point..end_point
+
+          # If our endpoint is before our start, it's an empty string. We treat
+          # those specially with the (0...0) range that has an empty count.
+          if end_point < start_point
+            range = (0...0)
+          else
+            range = start_point..end_point
+          end
 
           styles[range]    ||= []
           styles[range] << text

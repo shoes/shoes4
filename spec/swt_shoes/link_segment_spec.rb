@@ -17,7 +17,7 @@ describe Shoes::Swt::LinkSegment do
 
   # ....................
   context "empty link" do
-    let(:range) { (0..0) }
+    let(:range) { (0...0) }
 
     it "fails all bounds checks" do
       stub_start_and_end_locations([0, 0], [10, 0])
