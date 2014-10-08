@@ -14,6 +14,17 @@ describe Shoes::Swt::LinkSegment do
     10.times {|i| stub_line_bounds(i)}
   end
 
+
+  # ....................
+  context "empty link" do
+    let(:range) { (0...0) }
+
+    it "fails all bounds checks" do
+      stub_start_and_end_locations([0, 0], [10, 0])
+      expect_not_in_bounds(0, 0, 10, line_height)
+    end
+  end
+
   # xxxxxxxxxx..........
   it "sets bounds on single line" do
     stub_start_and_end_locations([0, 0], [10, 0])
@@ -79,6 +90,12 @@ describe Shoes::Swt::LinkSegment do
   def expect_in_bounds(*points)
     points.each do |(x,y)|
       expect(subject.in_bounds?(x, y)).to be_truthy, "with #{x}, #{y}"
+    end
+  end
+
+  def expect_not_in_bounds(*points)
+    points.each do |(x,y)|
+      expect(subject.in_bounds?(x, y)).to be_falsey, "with #{x}, #{y}"
     end
   end
 

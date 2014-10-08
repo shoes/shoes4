@@ -212,6 +212,19 @@ describe Shoes::TextBlock do
     end
   end
 
+  context "with empty subelements" do
+    let!(:link) { actual_app.link('') }
+    let!(:span) { actual_app.span('') }
+    let!(:para) { actual_app.para(link, span) }
+    let(:actual_app) { app.app }
+
+    it "properly ignores empty element lengths in text_styles" do
+      text_styles = { 0...0 => [link, span] }
+
+      expect(para.text_styles).to eq(text_styles)
+    end
+  end
+
   # Emulates samples/sample17.rb
   #
   #   Shoes.app width: 240, height: 95 do
