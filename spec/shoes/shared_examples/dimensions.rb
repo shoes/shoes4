@@ -15,8 +15,8 @@ shared_examples_for "object with relative dimensions" do
   it "should initialize based on parent dimensions" do
     expect(subject.left).to eq left
     expect(subject.top).to eq top
-    expect(subject.width).to be_within(1).of(parent.width / 2)
-    expect(subject.height).to be_within(1).of(parent.height / 2)
+    expect(subject.width).to be_within(1).of(parent.element_width / 2)
+    expect(subject.height).to be_within(1).of(parent.element_height / 2)
   end
 end
 
@@ -26,7 +26,7 @@ shared_examples_for "object with negative dimensions" do
   it "should initialize based on parent dimensions" do
     expect(subject.left).to eq(left)
     expect(subject.top).to eq(top)
-    expect(subject.width).to eq(parent.width - width)
-    expect(subject.height).to eq(parent.height - height)
+    expect(subject.width).to eq(parent.element_width - width)
+    expect(subject.height).to eq(parent.element_height - height)
   end
 end
