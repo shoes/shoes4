@@ -8,6 +8,8 @@ class ShoesManifest
   end
 
   def self.files
+    # Note we explicitly list files in bin rather than globbing.  Rubygems is
+    # unhappy otherwise with symlinks there when building the executable list.
     @files = ShoesCommonManifest.files
       .include(%w[
         Rakefile
