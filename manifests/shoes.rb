@@ -13,7 +13,9 @@ class ShoesManifest
         Rakefile
         app.yaml
         benchmark/**/*
-        bin/**/*
+        bin/ruby-shoes
+        bin/shoes-guard
+        bin/shoes-stub
         ext/**/*
         lib/shoes.rb
         lib/shoes/ui/**/*
