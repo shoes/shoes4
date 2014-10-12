@@ -1,32 +1,103 @@
-= BROWN SHOES NEEDS A NEW RELEASE SCHEDULE!!
-* Name Suggestions anyone?
+4.0.0.pre2
+----------------
 
-= Policeman
-== 17th August, 2010
-* Move to Ruby 1.9.1
-* General stability improvements
-* Updated all dependancies
-* Ported OSX to Cocoa
-* Now works with Windows Vista and Windows 7
+New features (1)
+----------------
 
-= Raisins (0.r1134)
-== 5th December, 2008
-<http://shoooes.net/about/raisins>
-* Built-in Shoes manual. (Alt-?)
-* Error console. (Alt-/)
-* In-memory and on-disk image cache.
-* Asynchronous download method.
-* External font support.
-* Packager for building EXE, DMG, RUN and SHY.
-* Effects (blurs, shadows, glows).
-* Arbitrary shape method.
-* Image blocks.
-* Switched from Carbon to Cocoa.
-* RubyGems integration.
+* Full functionality of style (element#style, setters, hash, app level) [56d91f8]
 
-= Curious (0.r396)
-== 8th January, 2008
-* First official release of Shoes.
-* Support for OS X, Win32 and GTK+.
-* Scrolling stacks newly added.
-* VLC embedded for Video.
+Improvements (36)
+-----------------
+
+* Update SWT to 4.4 [536ffae]
+* Add specs to style module [fe53771]
+* Removed redrawing triggers after Dimension methods  [61a55ba]
+* Update packaging dependency to 0.2.0 now supporting rubyzip > 1.0 [c3dd289]
+* Added shared specs for element#style and Common::Style [5b62ba8]
+* #gray, #rgb and #gradient are also builtin methods [8f7ee92]
+* Apply fraction from progress initialize [b241240]
+* Builtin methods are also available from the Shoes class [de37d59]
+* Update list of app level styles and partially fix rotate angle issues [2affdbb]
+* Updates line to use new style methods [1b76aa3]
+* Updated shape to use style method [29498d1]
+* Trigger redraw on hover/leave for slot and image update [ae5dfb5]
+* Add nks_notes.rb to working samples now that #847 is fixed. [9487281]
+* Add scroll* methods to slots [6fb0e79]
+* Click passes element, not coordinates to most blocks [78ecb23]
+* Cleanup for link click registration weirdness [bdaa792]
+* Update span, link, and textblock elements to use style methods. [d569a77]
+* Update star to use style methods [e6eec90]
+* Updated rect to use new style methods [54e5edf]
+* Update image to use style methods [1238977]
+* Implementation of style on progress bar [2dc222f]
+* Update Listbox EditLine and EditBox to use new style methods [dbeffff]
+* Added styling and clicking to buttons (check, radio, and button) [25b2ec6]
+* Updated Border to use new styling methods (#711) [cb865a6]
+* Convert CommonMethods to Common::Element [e400f7a]
+* Updated Background to use new styling methods (#711) [49fa0a1]
+* Standardized how clicking is applied to elements by creating a register_click method. [c79bdd3]
+* Allow button calls without a button name [a315ef4]
+* Add common #to_s and #inspect methods for DSL objects [350c4dc]
+* Break project into shoes, shoes-dsl, and shoes-swt gems [e16a0c4]
+* Disposal for Images and Patterns. [ddcd9fb]
+* Move Swt::TextBlock related classes to subdirectory. [226e03f]
+* Revise TextBlock cursor to be more like other text functionality. [f016ee7]
+* Updated manual to show correct syntax for rect. [2fee530]
+* Extract TextBlockDimensions class. [b3a7a4f]
+
+Bug Fixes (32)
+--------------
+
+* Fix running bin/shoes.bat from source [fe47075]
+* Move shoes executable to from shoes-dsl to shoes [92583e6]
+* Fix for crash on empty link text [3da3159]
+* Hide only the elements of a slot, not its parent contents  [f2ea17c]
+* Fix crash for Border when hiding [1c2ab74]
+* Methods defined in widgets are available in URL instances [3a94afb]
+* Make texts know their TextBlock and hence their visibility [7b4ea24]
+* Non resizable apps can not be maximized (fixes resizable on mac) #872 [b08b215]
+* Keypress#remove removes the kez listener and does not blow up [498588c]
+* Run shape blocks with app as self [dbb0a46]
+* Remove from clickable_elements on remove [918288f]
+* Don't allow clicks on hidden elements [7fcd93a]
+* Removing children from slot should trigger redraw [be35743]
+* Fix for allowing widgets to use widget DSL methods [99d22e1]
+* Fix for secret on edit lines [79c4c98]
+* Fix crash computing height with hidden elements [41ebafe]
+* Fix for unbounded height crash on centering [11fc3ae]
+* Windows build requires shoes.bat from ext/install [232ec68]
+* Reuse created fonts in the factory [7959bd8]
+* Disposal of Shape SWT resources. Closes #748. [650365b]
+* Fix for offsetting of second text segments [97fe79b]
+* Consider relatively positioned elements for slot height [3e71126]
+* Fix fatal exceptions in samples/simple-calc.rb [d53d588]
+* Extract InternalApp and specs to their own classes [732108a]
+* Fix slot clearing [3697802]
+* Don't clear  top_slot when clear is called, clear current_slot [a57778c]
+* Handling for text centering [87405f5]
+* Fix common remove to allow removal of slots [c25df7e]
+* Clear transform after painting each object, to avoid side effects on other painters [5a57ce3]
+* Fix off by one error in slot positioning. [baee69a]
+* Dispose of transform resources. [265600c]
+* Only report stat/end relative to the parent if there is one [c82e763]
+
+Miscellaneous (11)
+------------------
+
+* Fix changelog task to handle github's "Merged PR..." [0cdc659]
+* Add sample56 snapshot [e7eb0d3]
+* Add task to generate change log entries [12a056a]
+* Shorten Changelog#generate a bit through extraction [f622722]
+* Add changelog count by category [9a8d020]
+* Only include changelog categories with commits [4218aee]
+* Add basic 'rake changelog' command [4c746d6]
+* Links must be cleared on TextBlock#replace [4b90786]
+* App#parent method to show the parent of the slot currently evaled [48e811f]
+* Add keypress to close app cleanly when running leak hunter and dispose of app-level resources. [af4d6bb]
+
+Contributors (16)
+-----------------
+
+Jason R. Clark, Eric Watson, Tobias Pfeiffer, KC Erb, Charles Chamberlain,
+George, Marcell Monteiro Cruz, Glenn Murray, Jason Clark, Tim Krajcar,
+glenn-murray-bse, KCErb, PeterWAWood, Suirtimed, ashbb, Carlos R Tirado
