@@ -24,11 +24,11 @@ class Shoes
         @real.add_selection_listener do |event|
           @dsl.call_change_listeners
         end
-        update_items @dsl.items
+        update_items
       end
 
-      def update_items(values)
-        @real.items = values.map(&:to_s)
+      def update_items
+        @real.items = @dsl.items.map(&:to_s)
       end
 
       def text
