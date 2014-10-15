@@ -13,7 +13,7 @@ desc 'Install all gems'
 task 'install:all'
 
 desc 'Release all gems'
-task 'release:all'
+task 'release:all' => [ 'build:all' ]
 
 ['shoes-dsl', 'shoes-swt', 'shoes'].each do |lib|
   # Defer installing Bundler gem tasks until runtime, so we can install them
@@ -35,7 +35,7 @@ task 'release:all'
 
   task "build:all" => "install_gem_tasks:#{lib}"
   task "install:all" => "install_gem_tasks:#{lib}"
-  task "release:all" => ["build:#{lib}", "release:#{lib}"]
+  task "release:all" => ["release:#{lib}"]
 end
 
 task 'build:all' => 'build'
