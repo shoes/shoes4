@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+# TODO: Make this conditional on if we're actually just in dev
+# Check pwd for Gemfile? Something smarter?
+require 'bundler/setup'
+Bundler.require
+
+puts "Selecting Shoes backend to use. This is a one-time operation."
+candidates = Gem.find_files("shoes/**/generate-backend.rb")
+if candidates.one?
+  selected_generator = candidates.first
+else
+  # TODO: select a backend, interactively?
+end
+
+require selected_generator
+File.open(File.expand_path(File.join(ARGV[0], "shoes-backend")), "w") do |file|
+  file.write(generate_backend(ARGV[0]))
+end

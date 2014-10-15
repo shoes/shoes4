@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri" # For converting the manual to HTML
 
   # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
-  s.executables   = ['shoes-stub', 'ruby-shoes']
+  s.executables   = ['shoes-picker', 'shoes-stub', 'ruby-shoes']
   s.extensions    = ['ext/install/Rakefile']
 end
