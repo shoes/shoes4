@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-
 # TODO: Make this conditional on if we're actually just in dev
 # Check pwd for Gemfile? Something smarter?
 require 'bundler/setup'
