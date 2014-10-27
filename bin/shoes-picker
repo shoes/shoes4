@@ -1,21 +1,6 @@
 #!/usr/bin/env ruby
+lib_directory = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH << lib_directory
 
-# Only bundle if we find a local Gemfile.  This allows us to work properly
-# running from source without finding gem-installed backends.
-if File.exists?("Gemfile")
-  require 'bundler/setup'
-  Bundler.require
-end
-
-puts "Selecting Shoes backend to use. This is a one-time operation."
-candidates = Gem.find_files("shoes/**/generate-backend.rb")
-if candidates.one?
-  selected_generator = candidates.first
-else
-  # TODO: select a backend, interactively?
-end
-
-require selected_generator
-File.open(File.expand_path(File.join(ARGV[0], "shoes-backend")), "w") do |file|
-  file.write(generate_backend(ARGV[0]))
-end
+require 'shoes/ui/picker'
+Shoes::UI::Picker.new.run
