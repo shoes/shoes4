@@ -32,10 +32,14 @@ class Shoes
 
       def write_backend(generator_file)
         require generator_file
-        File.open(File.expand_path(File.join(ARGV[0], "shoes-backend")), "w") do |file|
+
+        # On Windows getting odd paths with trailing double-quote
+        bin_dir = ARGV[0].gsub('"', '')
+
+        File.open(File.expand_path(File.join(bin_dir, "shoes-backend")), "w") do |file|
           # Contract with backends is to define generate_backend method that we
           # can call. Bit ugly, open to better options for that interchange.
-          file.write(generate_backend(ARGV[0]))
+          file.write(generate_backend(bin_dir))
         end
       end
     end
