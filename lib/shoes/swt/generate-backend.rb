@@ -1,3 +1,9 @@
+require 'rbconfig'
+
 def generate_backend(path)
-  "jruby --1.9 -J-XstartOnFirstThread #{path}/shoes-swt"
+  if RbConfig::CONFIG["host_os"] =~ /darwin/
+    options = "-J-XstartOnFirstThread"
+  end
+
+  "jruby --1.9 #{options} #{path}/shoes-swt"
 end
