@@ -74,13 +74,13 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
 **Note:** For Windows, `C:\tmp\shoes4>bin\shoes samples\simple-sound.rb` If you installed Shoes4 as a gem, just do `C:\tmp> shoes path\to\file.rb`
 
-There is also a simple ruby starter script which you may use as follows:
+There is also a simple ruby starter script when using the SWT backend which you may use as follows:
 
-    $ bin/ruby-shoes samples/simple-sound.rb
+    $ bin/shoes-swt samples/simple-sound.rb
 
 This does not work yet on Mac as JRuby (the JVM) needs some additional parameters. Here you can just do the following (which basically is what bin/shoes does):
 
-    $ jruby -J-XstartOnFirstThread bin/ruby-shoes samples/simple-sound.rb
+    $ jruby -J-XstartOnFirstThread bin/shoes-swt samples/simple-sound.rb
 
 Another alternative yet is to put `require 'shoes'` at the top of your applications, then you can simply do
 
