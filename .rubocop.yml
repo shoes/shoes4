@@ -1,0 +1,17 @@
+# We sometimes need Java method names for interoperability
+#Style/MethodName:
+#  Enabled: false
+
+
+# I Honestly don't care if we do kind_of? or is_a?
+Style/ClassCheck:
+  Enabled: false
+
+# Don't ever try to take my `inject` from me, reduce is ok too
+Style/CollectionMethods:
+  PreferredMethods:
+      inject: 'inject'
+
+# Java::float is a thing and it is a class, somehow the converted . version also works but that doesn't denote that it's a class
+Style/ColonMethodCall:
+  Enabled: false
