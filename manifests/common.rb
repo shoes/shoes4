@@ -1,14 +1,14 @@
 require 'rake/file_list'
 
 module ShoesManifestReport
-  @@manifests = []
+  @manifests = []
 
   def self.extended(clazz)
-    @@manifests << clazz
+    @manifests << clazz
   end
 
   def self.manifest_classes
-    @@manifests
+    @manifests
   end
 
   def report
