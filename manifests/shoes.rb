@@ -19,6 +19,7 @@ class ShoesManifest
         bin/shoes-stub
         bin/shoes-picker
         ext/**/*
+        lib/rubygems_plugin.rb
         lib/shoes.rb
         lib/shoes/ui/**/*
         lib/shoes/version.rb
