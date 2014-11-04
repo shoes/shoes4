@@ -13,15 +13,15 @@ describe "Gem manifests" do
       manifest.files + manifest.test_files
     end.flatten
 
-    # If this fails, the class tracking we hooked into ShoesManifestReport got
-    # broken. Fix me please!
-    fail if all_manifest_files.empty?
+    if all_manifest_files.empty?
+      fail "Didn't get any manifest files listed. Did ShoesManifestReport change?"
+    end
 
     all_manifest_files.concat(ALLOWED_EXCLUSIONS)
 
-    incorrectly_excluded_files = Dir["**/*.rb"].map do |file|
-      all_manifest_files.include?(file) ? nil : file
-    end.compact
+    incorrectly_excluded_files = Dir["**/*.rb"].reject do |file|
+      all_manifest_files.include?(file)
+    end
 
     expect(incorrectly_excluded_files).to be_empty
   end
