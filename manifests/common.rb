@@ -1,6 +1,16 @@
 require 'rake/file_list'
 
 module ShoesManifestReport
+  @@manifests = []
+
+  def self.extended(clazz)
+    @@manifests << clazz
+  end
+
+  def self.manifest_classes
+    @@manifests
+  end
+
   def report
     puts "Manifest of #{gem_name} gem"
     puts
