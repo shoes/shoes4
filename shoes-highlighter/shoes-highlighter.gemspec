@@ -2,22 +2,23 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'shoes/highlighter/version'
+require_relative '../manifests/shoes-highlighter'
 
-Gem::Specification.new do |spec|
-  spec.name          = "shoes-highlighter"
-  spec.version       = Shoes::Highlighter::VERSION
-  spec.authors       = ["Jason R. Clark"]
-  spec.email         = ["jclark@newrelic.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+Gem::Specification.new do |s|
+  s.name          = "shoes-highlighter"
+  s.version     = Shoes::Highlighter::VERSION
+  s.platform    = Gem::Platform::RUBY
+  s.authors     = ["Team Shoes"]
+  s.email       = ["shoes@librelist.com"]
+  s.homepage    = "https://github.com/shoes/shoes4"
+  s.summary     = %q{A syntax highlighting library used by Shoes}
+  s.description = %q{A syntax highlighting library used by Shoes. Originally extracted from Hackety-Hack.}
+  s.license     = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  s.files         = ShoesHighlighterManifest.files
+  s.test_files    = ShoesHighlighterManifest.test_files
+  s.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.7"
-  spec.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "bundler", "~> 1.7"
+  s.add_development_dependency "rake", "~> 10.0"
 end
