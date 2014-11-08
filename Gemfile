@@ -3,8 +3,7 @@ source 'https://rubygems.org'
 gemspec :name => 'shoes'
 gemspec :name => 'shoes-dsl'
 gemspec :name => 'shoes-swt'
-
-gem 'shoes-highlighter', path: 'shoes-highlighter'
+gemspec :name => 'shoes-highlighter/shoes-highlighter'
 
 group :development do
   gem "guard"

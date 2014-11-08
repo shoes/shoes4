@@ -1,8 +1,9 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
 require 'shoes/highlighter/version'
-require_relative '../manifests/shoes-highlighter'
+require File.expand_path(File.join(__FILE__, "..", "..", "manifests", "shoes-highlighter"))
 
 Gem::Specification.new do |s|
   s.name          = "shoes-highlighter"
