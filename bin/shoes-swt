@@ -2,5 +2,10 @@
 lib_directory = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH << lib_directory
 
+if File.exists?("Gemfile")
+  require "bundler/setup"
+  Bundler.require
+end
+
 require 'shoes/ui/cli'
 Shoes::CLI.new.run ARGV
