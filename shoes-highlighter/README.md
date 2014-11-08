@@ -1,6 +1,6 @@
 # Shoes::Highlighter
 
-TODO: Write a gem description
+A syntax highlighting gem, extracted from Shoes and Hackety Hack.
 
 ## Installation
 
@@ -20,11 +20,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+See https://github.com/shoes/shoes4/blob/master/lib/shoes/ui/help.rb
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/shoes-highlighter/fork )
+1. Fork it ( https://github.com/shoes/shoes-highlighter/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
