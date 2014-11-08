@@ -76,7 +76,7 @@ class Shoes
     %w(
       width height owner started? location left top absolute_left
       absolute_top click release clear fullscreen fullscreen=
-      contents
+      contents wait_until_closed
     ).each do |method|
       define_method method do |*args, &block|
         @__app__.public_send method, *args, &block

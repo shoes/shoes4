@@ -145,6 +145,14 @@ class Shoes
         @key_listeners[listener.class].delete(listener)
       end
 
+      # For use from modal Shoes windows, keeps pumping UI messages but hangs
+      # on from executing other Shoes code until we're done.
+      def wait_until_closed
+        while !@shell.isDisposed do
+          ::Swt.display.sleep unless ::Swt.display.readAndDispatch
+        end
+      end
+
       private
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
@@ -181,6 +189,7 @@ class Shoes
       def main_window_style
         style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::V_SCROLL
         style |= ::Swt::SWT::RESIZE | ::Swt::SWT::MAX if @dsl.opts[:resizable]
+        style |= ::Swt::SWT::APPLICATION_MODAL        if @dsl.opts[:modal]
         style
       end
 
