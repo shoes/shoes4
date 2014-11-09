@@ -279,7 +279,7 @@ class Shoes
     #
     def animate(opts = {}, &blk)
       opts = {:framerate => opts} unless opts.is_a? Hash
-      Shoes::Animation.new @__app__, opts, blk
+      create Shoes::Animation, opts, blk
     end
 
     def every(n=1, &blk)

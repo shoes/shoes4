@@ -33,9 +33,10 @@ end
 describe Shoes::Animation do
   let(:app) { double('app') }
   let(:app_gui) { double('app gui') }
+  let(:slot) { double('slot', on_clear: nil) }
   let(:opts) { {} }
   let(:block) { double('block') }
-  subject { Shoes::Animation.new( app, opts, block ) }
+  subject { Shoes::Animation.new( app, slot, opts, block ) }
 
   before :each do
     expect(app).to receive(:gui) { app_gui }
@@ -52,6 +53,11 @@ describe Shoes::Animation do
   end
 
   it { is_expected.not_to be_stopped }
+
+  it "sets up callback with parent" do
+    expect(slot).to receive(:on_clear)
+    subject
+  end
 
   describe "with framerate" do
     let(:opts) { {:framerate => 36, :app => app} }

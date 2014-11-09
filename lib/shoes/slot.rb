@@ -26,6 +26,7 @@ class Shoes
       @parent         = parent
       @contents       = SlotContents.new
       @blk            = blk
+      @on_clear       = []
       style_init styles
       @dimensions     = Dimensions.new parent, @style
       @fixed_height   = height || false
@@ -43,7 +44,14 @@ class Shoes
 
     def clear(&blk)
       contents.clear
+      @on_clear.each do |on_clear|
+        on_clear.call
+      end
       eval_block blk
+    end
+
+    def on_clear(&blk)
+      @on_clear << blk
     end
 
     def eval_block blk

@@ -10,7 +10,7 @@ class Shoes
     #     animation frame
     #   @option opts [Integer] :framerate (24) The framerate (frames per second)
     #   @option opts [Shoes::App] :app The current Shoes app
-    def initialize(app, opts, blk)
+    def initialize(app, parent, opts, blk)
       @style = opts
       @framerate = @style[:framerate] || 10
       @app = app
@@ -18,6 +18,9 @@ class Shoes
       @current_frame = 0
       @stopped = false
       @gui = Shoes.configuration.backend_for(self, @app.gui)
+
+      @parent = parent
+      @parent.on_clear { stop }
     end
 
     attr_reader :current_frame, :framerate, :blk
