@@ -23,7 +23,9 @@ NY     = 20             # height of tetris court (in blocks)
 DX     = WIDTH / NX     # pixel width  of a single tetris block
 DY     = HEIGHT / NY    # pixel height of a single tetris block
 FPS    = 60             # game animation frame rate (fps)
+
 PACE   = { :start => 0.5, :step => 0.005, :min => 0.1 } # how long before a piece drops by 1 row (seconds)
+SCORE  = { :line => 100, :multiplier => 2 }             # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
 
 #==================================================================================================
 # The 7 Tetromino Types
@@ -100,8 +102,8 @@ class Tetris
 
   #----------------------------------------------------------------------------
 
-  def move(dir)
-    nextup = current.move(dir)
+  def move(direction)
+    nextup = current.move(direction)
     if unoccupied(nextup)
       choose_new_piece(nextup)
       true
@@ -157,7 +159,7 @@ class Tetris
   end
   
   def reward_lines(lines)
-    @score = score + (100 * 2**(lines-1))   # e.g. 1: 100, 2: 200, 3: 400, 4: 800
+    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1))   # e.g. 1: 100, 2: 200, 3: 400, 4: 800
     @pace  = [pace - lines*PACE[:step], PACE[:min]].max
   end
 
@@ -224,22 +226,22 @@ end # class Tetris
 class Piece
 
   attr :tetromino,  # the tetromino type
-       :dir,        # the rotation direction (:up, :down, :left, :right)
+       :direction,  # the rotation direction (:up, :down, :left, :right)
        :x, :y       # the (x,y) position on the board
 
   #----------------------------------------------------------------------------
 
-  def initialize(tetromino, x = nil, y = nil, dir = nil)
+  def initialize(tetromino, x = nil, y = nil, direction = nil)
     @tetromino = tetromino
-    @dir       = dir || :up
-    @x         = x   || rand(NX - tetromino[:size])   # default to a random horizontal position (that fits)
-    @y         = y   || 0
+    @direction = direction || :up
+    @x         = x         || rand(NX - tetromino[:size])   # default to a random horizontal position (that fits)
+    @y         = y         || 0
   end
 
   #----------------------------------------------------------------------------
 
   def rotate
-    newdir = case dir
+    newdir = case direction
              when :left  then :up
              when :up    then :right
              when :right then :down
@@ -248,11 +250,11 @@ class Piece
     Piece.new(tetromino, x, y, newdir)
   end
 
-  def move(dir)
-    case dir
-    when :right then Piece.new(tetromino, x + 1, y,     @dir)
-    when :left  then Piece.new(tetromino, x - 1, y,     @dir)
-    when :down  then Piece.new(tetromino, x,     y + 1, @dir)
+  def move(direction)
+    case direction
+    when :right then Piece.new(tetromino, x + 1, y,     @direction)
+    when :left  then Piece.new(tetromino, x - 1, y,     @direction)
+    when :down  then Piece.new(tetromino, x,     y + 1, @direction)
     end
   end
 
@@ -262,7 +264,7 @@ class Piece
     bit = 0b1000000000000000
     row = 0
     col = 0
-    blocks = tetromino[:blocks][dir]
+    blocks = tetromino[:blocks][direction]
     until bit.zero?
       if (blocks & bit) == bit
         yield x+col, y+row
@@ -301,7 +303,7 @@ Shoes.app :title => 'Tetris', :width => WIDTH, :height => HEIGHT do
     rect(x*DX, y*DY, DX, DY)
   end
 
-  last = now = Time.now
+  last = Time.now
   animate = animate FPS do
     now = Time.now
 
