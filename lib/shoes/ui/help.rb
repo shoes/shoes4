@@ -1,6 +1,6 @@
 require 'nokogiri'
 require 'nkf'
-require 'ext/highlighter'
+require 'shoes/highlighter'
 
 class Array
   def / len
@@ -27,7 +27,7 @@ class Manual < Shoes
   url '/', :index
   url '/manual/(\d+)', :index
 
-  include HH::Markup
+  include Shoes::Highlighter::Markup
 
   def index pnum = 0
     #font LANG == 'ja' ? 'MS UI Gothic' : 'Arial'
