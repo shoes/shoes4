@@ -155,6 +155,11 @@ class Shoes
       self.global_keypresses[key] = blk
     end
 
+    def wait_until_closed
+      return unless gui
+      gui.wait_until_closed
+    end
+
     private
     def create_top_slot
       @top_slot = Flow.new self, self, width: width, height: height
@@ -215,5 +220,6 @@ class Shoes
         Logger.setup
       end
     end
+
   end
 end

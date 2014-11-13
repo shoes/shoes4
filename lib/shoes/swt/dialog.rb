@@ -23,10 +23,6 @@ class Shoes
         fd.open
       end
 
-      def ask msg, args
-        Swt::AskDialog.new(::Swt::Widgets::Shell.new, msg, args).open
-      end
-
       def ask_color title
         shell = ::Swt::Widgets::Shell.new Shoes.display
         cd = ::Swt::Widgets::ColorDialog.new shell
@@ -45,45 +41,6 @@ class Shoes
 
       def confirmed?(answer_id)
         answer_id == SWT::YES
-      end
-    end
-
-    class AskDialog < ::Swt::Widgets::Dialog
-      def initialize shell, msg, args
-        @shell, @msg, @args= shell, msg, args
-        super shell
-      end
-
-      def open
-        display = getParent.getDisplay
-        icon = ::Swt::Graphics::Image.new display, ::Shoes::Swt::ICON
-        @shell.setImage icon
-        @shell.setSize 300, 125
-        @shell.setText 'Shoes 4 asks:'
-        label = ::Swt::Widgets::Label.new @shell, ::Swt::SWT::NONE
-        label.setText @msg
-        label.setLocation 10, 10
-        label.pack
-        styles = @args[:secret] ? ::Swt::SWT::BORDER | ::Swt::SWT::SINGLE | ::Swt::SWT::PASSWORD : ::Swt::SWT::BORDER | ::Swt::SWT::SINGLE
-        text = ::Swt::Widgets::Text.new @shell, styles
-        text.setLocation 10, 30
-        text.setSize 270, 20
-        b = ::Swt::Widgets::Button.new @shell, ::Swt::SWT::NULL
-        b.setText 'OK'
-        b.setLocation 180, 55
-        b.pack
-        b.addSelectionListener{|e| @ret = text.getText; @shell.close}
-        b = ::Swt::Widgets::Button.new @shell, ::Swt::SWT::NULL
-        b.setText 'CANCEL'
-        b.setLocation 222, 55
-        b.pack
-        b.addSelectionListener{|e| @ret = nil; @shell.close}
-        @shell.open
-        while !@shell.isDisposed do
-          display.sleep unless display.readAndDispatch
-        end
-        icon.dispose
-        @ret
       end
     end
   end

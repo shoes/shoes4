@@ -40,8 +40,7 @@ class Shoes
       NEED_CONTENTS_ALIGNMENT = {
                           ::Shoes::Swt::Dialog    => [:ask_color,
                                                       :dialog_chooser,
-                                                      :open_message_box],
-                          ::Shoes::Swt::AskDialog => [:open]
+                                                      :open_message_box]
                           }
 
 

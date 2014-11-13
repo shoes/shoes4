@@ -69,12 +69,6 @@ describe Shoes::Swt::Dialog do
     end
   end
 
-  describe 'ask' do
-    it 'responds to it' do
-      expect(@dialog).to respond_to :ask
-    end
-  end
-
   describe 'ask_color' do
     it 'responds to it' do
       expect(@dialog).to respond_to :ask_color
