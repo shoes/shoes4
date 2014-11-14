@@ -4,8 +4,6 @@ gemspec :name => 'shoes'
 gemspec :name => 'shoes-dsl'
 gemspec :name => 'shoes-swt'
 
-gem 'shoes-highlighter', path: 'shoes-highlighter'
-
 group :development do
   gem "guard"
   gem "guard-rspec"
