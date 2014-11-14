@@ -2,7 +2,6 @@ class Shoes
   module Common
     # Style methods.
     module Style
-
       DEFAULT_STYLES = {
         fill:        Shoes::COLORS[:black],
         rotate:      0,
@@ -51,7 +50,7 @@ class Shoes
 
       def merge_app_styles
         @app.style.each do |key, val|
-          @style[key] = val if self.supported_styles.include? key
+          @style[key] = val if supported_styles.include? key
         end
       end
 
@@ -67,7 +66,7 @@ class Shoes
         def unpack_style_groups(styles)
           styles.each do |style|
             if STYLE_GROUPS[style]
-              STYLE_GROUPS[style].each{|style| @supported_styles << style}
+              STYLE_GROUPS[style].each { |style| @supported_styles << style }
             else
               @supported_styles << style
             end
@@ -99,11 +98,11 @@ class Shoes
 
           needs_writers.map(&:to_sym).each do |style_key|
             define_method "#{style_key}=" do |new_style|
-              self.send("style", style_key.to_sym => new_style)
+              send("style", style_key.to_sym => new_style)
             end
           end
         end
-      end #end of StyleWith module
+      end # end of StyleWith module
 
       def self.included(klass)
         klass.extend StyleWith
@@ -114,25 +113,25 @@ class Shoes
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
         set_dimensions(new_styles)
-        click(&new_styles[:click]) if new_styles.has_key?(:click)
+        click(&new_styles[:click]) if new_styles.key?(:click)
         @style.merge! normalized_style
       end
 
-      #if dimension is set via style, pass info on to the dimensions setter
+      # if dimension is set via style, pass info on to the dimensions setter
       def set_dimensions(new_styles)
         new_styles.each do |key, value|
-          self.send("#{key}=", value) if STYLE_GROUPS[:dimensions].include?(key)
+          send("#{key}=", value) if STYLE_GROUPS[:dimensions].include?(key)
         end
       end
 
-      def update_dimensions #so that @style hash matches actual values
+      def update_dimensions # so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          @style[style] = self.send(style) if self.respond_to? style
+          @style[style] = send(style) if self.respond_to? style
         end
       end
 
       def styles_with_dimensions?
-        STYLE_GROUPS[:dimensions].any? {|dimension| @style.has_key? dimension}
+        STYLE_GROUPS[:dimensions].any? { |dimension| @style.key? dimension }
       end
 
       def need_to_update_style?(new_styles)
@@ -146,7 +145,6 @@ class Shoes
           @style[key] != value
         end
       end
-
     end
   end
 end

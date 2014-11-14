@@ -15,7 +15,7 @@ class Shoes
         confirmed? answer_id
       end
 
-      def dialog_chooser title, folder=false
+      def dialog_chooser(title, folder = false)
         style = ::Swt::SWT::OPEN
         shell = ::Swt::Widgets::Shell.new Shoes.display
         fd = folder ? ::Swt::Widgets::DirectoryDialog.new(shell, style) : ::Swt::Widgets::FileDialog.new(shell, style)
@@ -23,7 +23,7 @@ class Shoes
         fd.open
       end
 
-      def ask_color title
+      def ask_color(title)
         shell = ::Swt::Widgets::Shell.new Shoes.display
         cd = ::Swt::Widgets::ColorDialog.new shell
         cd.setText title
@@ -32,6 +32,7 @@ class Shoes
       end
 
       private
+
       def open_message_box(style, msg)
         shell = ::Swt::Widgets::Shell.new ::Swt.display
         @message_box = ::Swt::Widgets::MessageBox.new shell, style

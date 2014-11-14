@@ -38,6 +38,7 @@ class Shoes
     end
 
     private
+
     def append_element(element)
       @contents << element
     end

@@ -15,7 +15,6 @@ class Shoes
   extend Common::Registration
 
   class << self
-
     def logger
       Shoes.configuration.logger_instance
     end
@@ -32,7 +31,7 @@ class Shoes
     # @param block [Proc] The block that describes the gems that are needed
     # @deprecated
     def setup(&block)
-      $stderr.puts "WARN: The Shoes.setup method is deprecated, you need to install gems yourself." +
+      $stderr.puts "WARN: The Shoes.setup method is deprecated, you need to install gems yourself." \
                    "You can do this using the 'gem install' command or bundler and a Gemfile."
       DeprecatedShoesGemSetup.new.instance_eval(&block)
     end
@@ -42,18 +41,16 @@ class Shoes
     # @param name [String|Symbol] The name, such as :swt or :mock
     # @return The backend
     def load_backend(name)
-      begin
-        require "shoes/#{name.to_s.downcase}"
-        Shoes.const_get(name.to_s.capitalize)
-      rescue LoadError => e
-        raise LoadError, "Couldn't load backend Shoes::#{name.capitalize}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
-      end
+      require "shoes/#{name.to_s.downcase}"
+      Shoes.const_get(name.to_s.capitalize)
+    rescue LoadError => e
+      raise LoadError, "Couldn't load backend Shoes::#{name.capitalize}'. Error: #{e.message}\n#{e.backtrace.join("\n")}"
     end
   end
 
   class DeprecatedShoesGemSetup
     def gem(name)
-      name, version = name.split()
+      name, version = name.split
       install_cmd = 'gem install ' + name
       install_cmd += " --version \"#{version}\"" if version
       $stderr.puts "WARN: To use the '#{name}' gem, install it with '#{install_cmd}', and put 'require \"#{name}\"' at the top of your Shoes program."
@@ -242,7 +239,7 @@ class Shoes
       create Shoes::Stack, opts, blk
     end
 
-    def button(text = 'Button', opts={}, &blk)
+    def button(text = 'Button', opts = {}, &blk)
       create Shoes::Button, text, opts, blk
     end
 
@@ -278,15 +275,15 @@ class Shoes
     #     end
     #
     def animate(opts = {}, &blk)
-      opts = {:framerate => opts} unless opts.is_a? Hash
+      opts = { framerate: opts } unless opts.is_a? Hash
       Shoes::Animation.new @__app__, opts, blk
     end
 
-    def every(n=1, &blk)
-      animate 1.0/n, &blk
+    def every(n = 1, &blk)
+      animate 1.0 / n, &blk
     end
 
-    def timer(n=1, &blk)
+    def timer(n = 1, &blk)
       n *= 1000
       Timer.new @__app__, n, &blk
     end
@@ -366,7 +363,7 @@ Wrong number of arguments. Must be one of:
   - oval(left, top, width, height, [opts])
   - oval(styles)
 EOS
-          raise ArgumentError, message
+          fail ArgumentError, message
       end
       create Shoes::Oval, left, top, width, height, oval_style, blk
     end
@@ -419,7 +416,7 @@ Wrong number of arguments. Must be one of:
   - rect(left, top, width, height, curve, [opts])
   - rect(styles)
 EOS
-        raise ArgumentError, message
+        fail ArgumentError, message
       end
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
@@ -458,7 +455,7 @@ EOS
       @__app__.style[:fill] = nil
     end
 
-    %w[banner title subtitle tagline caption para inscription].each do |method|
+    %w(banner title subtitle tagline caption para inscription).each do |method|
       define_method method do |*texts|
         styles = pop_style(texts)
         klass = Shoes.const_get(method.capitalize)
@@ -485,11 +482,11 @@ EOS
     end
 
     def fg(*texts, color)
-      Shoes::Span.new texts, { stroke: pattern(color) }
+      Shoes::Span.new texts,  stroke: pattern(color)
     end
 
     def bg(*texts, color)
-      Shoes::Span.new texts, { fill: pattern(color) }
+      Shoes::Span.new texts,  fill: pattern(color)
     end
 
     def link(*texts, &blk)
@@ -538,7 +535,7 @@ EOS
 
     def visit(url)
       match_data = nil
-      url_data = Shoes::URL.urls.find {|page, _| match_data = page.match url}
+      url_data = Shoes::URL.urls.find { |page, _| match_data = page.match url }
       if url_data
         action_proc = url_data[1]
         url_argument = match_data[1]
@@ -565,23 +562,20 @@ EOS
       @__app__.clipboard = str
     end
 
-    def download(name, args={}, &blk)
-      create(Shoes::Download, name, args, &blk).tap do |download|
-        download.start
-      end
+    def download(name, args = {}, &blk)
+      create(Shoes::Download, name, args, &blk).tap(&:start)
     end
 
     def gutter
       @__app__.gutter
     end
 
-    def video(*args)
-      raise Shoes::NotImplementedError,
-            'Sorry video support has been cut from shoes 4!' +
-            ' Check out github issue #113 for any changes/updates or if you' +
-            ' want to help :)'
+    def video(*_args)
+      fail Shoes::NotImplementedError,
+           'Sorry video support has been cut from shoes 4!' \
+           ' Check out github issue #113 for any changes/updates or if you' \
+           ' want to help :)'
     end
-
   end
 end
 

@@ -25,6 +25,5 @@ class Shoes
       style(state: value)
       @gui.enabled value.nil?
     end
-
   end
 end

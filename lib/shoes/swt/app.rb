@@ -21,7 +21,7 @@ class Shoes
 
       attr_reader :dsl, :real, :shell, :clickable_elements
 
-      def initialize dsl
+      def initialize(dsl)
         @clickable_elements = []
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
@@ -73,9 +73,9 @@ class Shoes
         @shell.disposed? || @real.disposed?
       end
 
-      def redraw(left=nil, top=nil, width=nil, height=nil, all=true)
+      def redraw(left = nil, top = nil, width = nil, height = nil, all = true)
         unless @real.disposed?
-          if (left == nil or top == nil or width == nil or height == nil)
+          if left.nil? || top.nil? || width.nil? || height.nil?
             @real.redraw
           else
             @real.redraw(left, top, width, height, all)
@@ -148,17 +148,18 @@ class Shoes
       # For use from modal Shoes windows, keeps pumping UI messages but hangs
       # on from executing other Shoes code until we're done.
       def wait_until_closed
-        while !@shell.isDisposed do
+        until @shell.isDisposed
           ::Swt.display.sleep unless ::Swt.display.readAndDispatch
         end
       end
 
       private
+
       def initialize_scroll_bar
         scroll_bar = @shell.getVerticalBar
         scroll_bar.setIncrement 10
         selection_listener = SelectionListener.new(scroll_bar) do |vertical_bar, event|
-          if self.shell.getVerticalBar.getVisible and event.detail != ::Swt::SWT::DRAG
+          if shell.getVerticalBar.getVisible && event.detail != ::Swt::SWT::DRAG
             vertically_scroll_window(vertical_bar)
           end
         end
@@ -166,9 +167,9 @@ class Shoes
       end
 
       def vertically_scroll_window(vertical_bar)
-        location = self.real.getLocation
+        location = real.getLocation
         location.y = -vertical_bar.getSelection
-        self.real.setLocation location
+        real.setLocation location
       end
 
       def force_shell_size
@@ -180,10 +181,10 @@ class Shoes
       end
 
       def main_window_on_close
-        lambda { |event|
+        lambda do |_event|
           ::Swt.display.dispose
-          Dir[File.join(Dir.tmpdir, "__shoes4_*.png")].each{|f| File.delete f}
-        }
+          Dir[File.join(Dir.tmpdir, "__shoes4_*.png")].each { |f| File.delete f }
+        end
       end
 
       def main_window_style
@@ -205,7 +206,7 @@ class Shoes
 
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell,
-          ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
+                                              ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
         @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
         @real.setLayout init_shoes_layout
       end
@@ -231,7 +232,7 @@ class Shoes
       end
 
       def unregister_app
-        proc do |event|
+        proc do |_event|
           ::Shoes::Swt.unregister(self)
         end
       end
@@ -276,7 +277,6 @@ class Shoes
           @shell.client_area.width
         end
       end
-
     end
 
     class ShellControlListener
@@ -292,15 +292,15 @@ class Shoes
         @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
         @app.real.layout
-        @app.dsl.resize_callbacks.each{|blk| blk.call}
+        @app.dsl.resize_callbacks.each(&:call)
       end
 
-      def controlMoved(e)
+      def controlMoved(_e)
       end
     end
 
     class MouseListener
-      def initialize app
+      def initialize(app)
         @app = app
       end
 
@@ -314,10 +314,9 @@ class Shoes
         @app.dsl.mouse_pos = [e.x, e.y]
       end
 
-      def mouseDoubleClick(e)
+      def mouseDoubleClick(_e)
         # do nothing
       end
     end
-
   end
 end

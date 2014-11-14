@@ -11,7 +11,7 @@ class Shoes
 
     attr_reader :parent, :dimensions, :gui, :contents, :blk, :hover_proc, :leave_proc
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
-    STYLES = {scroll: false}
+    STYLES = { scroll: false }
 
     def initialize(app, parent, styles = {}, blk = nil)
       init_attributes(app, parent, styles, blk)
@@ -46,7 +46,7 @@ class Shoes
       eval_block blk
     end
 
-    def eval_block blk
+    def eval_block(blk)
       old_current_slot = @app.current_slot
       @app.current_slot = self
       blk.call if blk
@@ -71,7 +71,7 @@ class Shoes
       end
     end
 
-    def contents_alignment(_=nil)
+    def contents_alignment(_ = nil)
       position_contents
       determine_slot_height
     end
@@ -108,16 +108,12 @@ class Shoes
       scroll_height - height
     end
 
-    def scroll_top
-      @scroll_top
-    end
+    attr_reader :scroll_top
 
-    def scroll_top=(position)
-      @scroll_top = position
-    end
+    attr_writer :scroll_top
 
     def app
-      @app.app #return the Shoes::App not the internal app
+      @app.app # return the Shoes::App not the internal app
     end
 
     def inspect
@@ -125,6 +121,7 @@ class Shoes
     end
 
     protected
+
     CurrentPosition = Struct.new(:x, :y, :next_line_start)
 
     def position_contents
@@ -150,8 +147,8 @@ class Shoes
       end
     end
 
-    def position_element(element, current_position)
-      raise 'position_element is a subclass responsibility'
+    def position_element(_element, _current_position)
+      fail 'position_element is a subclass responsibility'
     end
 
     def position_in_current_line(element, current_position)
@@ -162,7 +159,7 @@ class Shoes
 
     def move_to_next_line(element, current_position)
       position_element_at element,
-                          position_x(self.element_left, element),
+                          position_x(element_left, element),
                           position_y(current_position.next_line_start, element)
     end
 
@@ -187,7 +184,7 @@ class Shoes
       current_position
     end
 
-    def next_line_start_from element
+    def next_line_start_from(element)
       element.absolute_bottom + NEXT_ELEMENT_OFFSET
     end
 
@@ -203,7 +200,7 @@ class Shoes
       if element.absolute_left_position?
         self.absolute_left + element.left
       elsif element.absolute_right_position?
-        self.absolute_right - (element.right + element.width)
+        absolute_right - (element.right + element.width)
       end
     end
 
@@ -221,7 +218,7 @@ class Shoes
       elsif element.absolute_bottom_position?
         # TODO: slots grow... to really position it relative to the bottom
         # we probably need to position it after everything has been positioned
-        self.absolute_bottom - (element.bottom + element.height)
+        absolute_bottom - (element.bottom + element.height)
       end
     end
 
@@ -238,9 +235,9 @@ class Shoes
     end
 
     def compute_content_height
-      max_bottom = contents.reject(&:hidden?).
-                            map(&:absolute_bottom).
-                            max
+      max_bottom = contents.reject(&:hidden?)
+                   .map(&:absolute_bottom)
+                   .max
       if max_bottom
         max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
       else
@@ -249,7 +246,7 @@ class Shoes
     end
 
     def has_variable_height?
-      not @fixed_height
+      !@fixed_height
     end
   end
 

@@ -1,11 +1,11 @@
 class Shoes
   module Mock
     class Dialog
-      def alert(*args)
+      def alert(*_args)
         nil
       end
 
-      def confirm(msg = '')
+      def confirm(_msg = '')
         true
       end
     end

@@ -6,10 +6,10 @@ class Shoes
       def update_items
       end
 
-      def enabled(value)
+      def enabled(_value)
       end
 
-      def choose(string)
+      def choose(_string)
       end
 
       def text

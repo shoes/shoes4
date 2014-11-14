@@ -27,10 +27,9 @@ class Shoes
           dsl.strokewidth
         end
 
-
         def apply_stroke(context)
           if stroke
-            l, t = self.is_a?(Star) ? [element_left - element_width/2.0, element_top - element_height/2.0] : [element_left, element_top]
+            l, t = self.is_a?(Star) ? [element_left - element_width / 2.0, element_top - element_height / 2.0] : [element_left, element_top]
             stroke.apply_as_stroke(context, l, t, element_width, element_height, angle)
             context.set_line_width strokewidth
             true

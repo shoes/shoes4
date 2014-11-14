@@ -10,7 +10,7 @@ class Shoes
       color.is_a?(Color) ? color : new(color)
     end
 
-    def initialize(*args)#red, green, blue, alpha = OPAQUE)
+    def initialize(*args) # red, green, blue, alpha = OPAQUE)
       case args.length
       when 1
         red, green, blue, alpha = HexConverter.new(args.first).to_rgb
@@ -24,7 +24,7 @@ Must be one of:
   - #{self.class}.new(red, green, blue)
   - #{self.class}.new(red, green, blue, alpha)
 EOS
-        raise ArgumentError, message
+        fail ArgumentError, message
       end
       alpha ||= OPAQUE
       @red = normalize_rgb(red)
@@ -80,10 +80,11 @@ EOS
     end
 
     def inspect
-      super.insert(-2, " #{to_s} alpha:#{@alpha}")
+      super.insert(-2, " #{self} alpha:#{@alpha}")
     end
 
     private
+
     def normalize_rgb(value)
       rgb = value.is_a?(Fixnum) ? value : (255 * value).round
       return 255 if rgb > 255
@@ -91,12 +92,12 @@ EOS
       rgb
     end
 
-    def raise_class_mismatch_error other
-      raise ArgumentError,
-            "can't compare #{self.class.name} with #{other.class.name}"
+    def raise_class_mismatch_error(other)
+      fail ArgumentError,
+           "can't compare #{self.class.name} with #{other.class.name}"
     end
 
-    def same_base_color? other
+    def same_base_color?(other)
       @red == other.red && @green == other.green && @blue == other.blue
     end
 
@@ -112,7 +113,7 @@ EOS
 
     class HexConverter
       def initialize(hex)
-        @hex = validate(hex) || raise(ArgumentError, "Bad hex color: #{hex}")
+        @hex = validate(hex) || fail(ArgumentError, "Bad hex color: #{hex}")
         @red, @green, @blue = hex_to_rgb(pad_if_necessary @hex)
       end
 
@@ -121,6 +122,7 @@ EOS
       end
 
       private
+
       def hex_to_rgb(hex)
         hex.chars.each_slice(2).map { |a| a.join.to_i(16) }
       end
@@ -152,7 +154,7 @@ EOS
             when Shoes::ImagePattern
               arg
             else
-              raise ArgumentError, "Bad pattern: #{arg.inspect}"
+              fail ArgumentError, "Bad pattern: #{arg.inspect}"
           end
         else
           gradient(*args)
@@ -192,12 +194,12 @@ EOS
               when Range
                 min, max = arg.first, arg.last
               else
-                raise ArgumentError, "Can't make gradient out of #{arg.inspect}"
+                fail ArgumentError, "Can't make gradient out of #{arg.inspect}"
             end
           when 2
             min, max = args[0], args[1]
           else
-            raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
+            fail ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
         end
         Shoes::Gradient.new(color(min), color(max))
       end
@@ -209,6 +211,7 @@ EOS
       alias_method :grey, :gray
 
       private
+
       def image_file?(arg)
         arg =~ /\.gif|jpg|jpeg|png$/
       end
@@ -217,7 +220,6 @@ EOS
         Shoes::ImagePattern.new path if File.exist?(path)
       end
     end
-
   end
 
   # Create all of the built-in Shoes colors

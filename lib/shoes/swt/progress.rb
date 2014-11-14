@@ -18,7 +18,7 @@ class Shoes
         @real.minimum = 0
         @real.maximum = 100
 
-        if @dsl.element_width and @dsl.element_height
+        if @dsl.element_width && @dsl.element_height
           @real.setSize dsl.element_width, dsl.element_height
         else
           @real.pack
@@ -28,7 +28,7 @@ class Shoes
       end
 
       def fraction=(value)
-        @real.selection = (value*100).to_i unless @real.disposed?
+        @real.selection = (value * 100).to_i unless @real.disposed?
       end
     end
   end

@@ -32,7 +32,7 @@ class Shoes
       def play
         Thread.new do
           begin
-            sound_file = JFile.new(self.filepath)
+            sound_file = JFile.new(filepath)
 
             audio_input_stream = AudioSystem.getAudioInputStream(sound_file)
             audio_format = audio_input_stream.getFormat
@@ -47,8 +47,8 @@ class Shoes
             puts uafex.inspect, uafex.backtrace
           rescue IOException => ioex
             puts ioex.inspect, ioex.backtrace
-              #rescue JIOException => jioex
-              #  jioex.stacktrace
+          # rescue JIOException => jioex
+          #  jioex.stacktrace
           rescue LineUnavailableException => luex
             puts luex.inspect, luex.backtrace
           rescue Exception => e
@@ -61,11 +61,11 @@ class Shoes
         case audio_format.encoding
           when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding, Java::JavazoomSpiMpegSampledFile::MpegEncoding
             decoded_format = AudioFormat.new(AudioFormat::Encoding::PCM_SIGNED,
-                                             audio_format.getSampleRate(),
+                                             audio_format.getSampleRate,
                                              16,
-                                             audio_format.getChannels(),
-                                             audio_format.getChannels() * 2,
-                                             audio_format.getSampleRate(),
+                                             audio_format.getChannels,
+                                             audio_format.getChannels * 2,
+                                             audio_format.getSampleRate,
                                              false)
             decoded_audio_input_stream = AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
 
@@ -77,16 +77,15 @@ class Shoes
       end
 
       def rawplay(decoded_audio_format, decoded_audio_input_stream)
-
-        #throws IOException, LineUnavailableException
+        # throws IOException, LineUnavailableException
 
         sampled_data = Java::byte[BufferSize].new
 
         line = getLine(decoded_audio_format)
-        if line != nil
+        unless line.nil?
 
           # Start
-          line.start()
+          line.start
           bytes_read = 0, bytes_written = 0
           while bytes_read != -1
 
@@ -97,16 +96,15 @@ class Shoes
             end
           end
           # Stop
-          line.drain()
-          line.stop()
-          line.close()
-          decoded_audio_input_stream.close()
+          line.drain
+          line.stop
+          line.close
+          decoded_audio_input_stream.close
         end
       end
 
       def getLine(audioFormat)
-
-        #throws LineUnavailableException
+        # throws LineUnavailableException
 
         res = nil
         info = DataLine::Info.new(SourceDataLine.java_class, audioFormat)

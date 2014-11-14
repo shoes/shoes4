@@ -19,11 +19,11 @@ class Shoes
         @pattern ||= ::Swt::Pattern.new(Shoes.display, @image)
       end
 
-      def apply_as_fill(gc, left, top, width, height, angle = 0)
+      def apply_as_fill(gc, _left, _top, _width, _height, _angle = 0)
         gc.set_background_pattern pattern
       end
 
-      def apply_as_stroke(gc, left, top, width, height, angle = 0)
+      def apply_as_stroke(gc, _left, _top, _width, _height, _angle = 0)
         gc.set_foreground_pattern pattern
       end
     end

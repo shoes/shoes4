@@ -30,8 +30,8 @@ class Shoes
     end
 
     # This is the width the text block initially wants to try and fit into.
-    def desired_width(containing=containing_width)
-      parent.absolute_left + containing - self.absolute_left
+    def desired_width(containing = containing_width)
+      parent.absolute_left + containing - absolute_left
     end
 
     # If an explicit width's set, use that when asking how much space we need.
@@ -48,5 +48,4 @@ class Shoes
 
     def_delegators :dimensions, *DELEGATED_METHODS
   end
-
 end

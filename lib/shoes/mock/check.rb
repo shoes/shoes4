@@ -4,22 +4,21 @@ class Shoes
       include Shoes::Mock::CommonMethods
       include Shoes::Mock::Clickable
 
-      def initialize(*opts)
+      def initialize(*_opts)
       end
 
       def checked?
         false
       end
 
-      def checked=(*opts)
+      def checked=(*_opts)
       end
 
       def focus
       end
 
-      def enabled(value)
+      def enabled(_value)
       end
-      
     end
   end
 end

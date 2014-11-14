@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Team Shoes"]
   s.email       = ["shoes@librelist.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
-  s.summary     = %q{A syntax highlighting library used by Shoes}
-  s.description = %q{A syntax highlighting library used by Shoes. Originally extracted from Hackety-Hack.}
+  s.summary     = 'A syntax highlighting library used by Shoes'
+  s.description = 'A syntax highlighting library used by Shoes. Originally extracted from Hackety-Hack.'
   s.license     = 'MIT'
 
   s.files         = ShoesHighlighterManifest.files

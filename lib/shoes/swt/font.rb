@@ -1,5 +1,4 @@
 class Shoes
-
   module Swt
     module Font
       class << self
@@ -10,11 +9,12 @@ class Shoes
         end
 
         def initial_fonts
-          load_shoes_fonts #system fonts are loaded automatically by SWT
+          load_shoes_fonts # system fonts are loaded automatically by SWT
           ::Swt.display.get_font_list(nil, true).map(&:name)
         end
 
         private
+
         def load_font(path)
           ::Swt.display.load_font path
         end
@@ -28,5 +28,5 @@ class Shoes
     end
   end
 
-  ::Shoes::Font.initial_fonts.each {|font| Shoes::FONTS << font}
+  ::Shoes::Font.initial_fonts.each { |font| Shoes::FONTS << font }
 end

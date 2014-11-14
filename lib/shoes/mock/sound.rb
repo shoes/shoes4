@@ -1,7 +1,7 @@
 class Shoes
   module Mock
     class Sound
-      def initialize(dsl)
+      def initialize(_dsl)
       end
     end
   end

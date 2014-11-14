@@ -24,7 +24,7 @@ class Shoes
       end
 
       def in_bounds?(x, y)
-        @link_segments.any? {|segment| segment.in_bounds?(x, y)}
+        @link_segments.any? { |segment| segment.in_bounds?(x, y) }
       end
     end
   end

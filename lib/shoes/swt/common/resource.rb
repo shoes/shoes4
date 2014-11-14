@@ -10,7 +10,7 @@ class Shoes
 
         def dispose_previous_contexts
           @graphic_contexts ||= []
-          @graphic_contexts.each{|g| g.dispose if g}
+          @graphic_contexts.each { |g| g.dispose if g }
           @graphic_contexts.clear
         end
 

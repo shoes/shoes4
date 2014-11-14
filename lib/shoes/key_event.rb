@@ -12,6 +12,6 @@ class Shoes
     end
   end
 
-  class Keypress < KeyEvent ; end
-  class Keyrelease < KeyEvent ; end
+  class Keypress < KeyEvent; end
+  class Keyrelease < KeyEvent; end
 end

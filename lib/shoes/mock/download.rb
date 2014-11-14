@@ -1,7 +1,6 @@
 class Shoes
   module Mock
     class Download
-
       def initialize(*_)
       end
 
@@ -12,7 +11,6 @@ class Shoes
 
       def busy?
       end
-
     end
   end
 end

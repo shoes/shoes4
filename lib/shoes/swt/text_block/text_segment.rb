@@ -18,7 +18,7 @@ class Shoes
 
         extend Forwardable
         def_delegators :@layout, :text, :text=, :bounds, :width, :spacing,
-                                 :line_bounds, :line_count, :line_offsets
+                       :line_bounds, :line_count, :line_offsets
 
         def initialize(dsl, text, width)
           @dsl = dsl
@@ -43,7 +43,7 @@ class Shoes
           self
         end
 
-        def get_location(cursor, trailing=false)
+        def get_location(cursor, trailing = false)
           @layout.get_location(cursor, trailing)
         end
 
@@ -51,15 +51,15 @@ class Shoes
           layout.justify = style[:justify]
           layout.spacing = (style[:leading] || DEFAULT_SPACING)
           layout.alignment = case style[:align]
-                             when 'center'; ::Swt::SWT::CENTER
-                             when 'right';  ::Swt::SWT::RIGHT
+                             when 'center' then ::Swt::SWT::CENTER
+                             when 'right' then  ::Swt::SWT::RIGHT
                              else           ::Swt::SWT::LEFT
                              end
 
           set_style(TextStyleFactory.apply_styles(default_text_styles, style))
         end
 
-        def set_style(styles, range=(0...text.length))
+        def set_style(styles, range = (0...text.length))
           # If we've been given an empty/nonsense range, just ignore it
           return unless range.count > 0
 
@@ -71,10 +71,10 @@ class Shoes
         def font_styling
           {
             font_detail: {
-            name: @dsl.font,
-            size: @dsl.size,
-            styles:[::Swt::SWT::NORMAL]
-          }
+              name: @dsl.font,
+              size: @dsl.size,
+              styles: [::Swt::SWT::NORMAL]
+            }
           }
         end
 

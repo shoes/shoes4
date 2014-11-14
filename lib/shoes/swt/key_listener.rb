@@ -9,11 +9,11 @@ class Shoes
 
       SPECIAL_KEY_NAMES = {}
 
-      %w[TAB PAGE_UP PAGE_DOWN HOME END F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
-         F13 F14 F15].each do|key|
+      %w(TAB PAGE_UP PAGE_DOWN HOME END F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
+         F13 F14 F15).each do|key|
         SPECIAL_KEY_NAMES[get_swt_constant key] = key.downcase
       end
-      %w[UP DOWN LEFT RIGHT].each do |key|
+      %w(UP DOWN LEFT RIGHT).each do |key|
         SPECIAL_KEY_NAMES[get_swt_constant "ARROW_#{key}"] = key.downcase
       end
 
@@ -22,11 +22,11 @@ class Shoes
       SPECIAL_KEY_NAMES[::Swt::SWT::ESC] = "escape"
       SPECIAL_KEY_NAMES[::Swt::SWT::CR]  = "\n"
 
-      MODIFIER_KEYS = %w[CTRL SHIFT ALT CAPS_LOCK COMMAND].map do |key|
+      MODIFIER_KEYS = %w(CTRL SHIFT ALT CAPS_LOCK COMMAND).map do |key|
         get_swt_constant key
       end
 
-      def initialize(dsl, app, &blk)
+      def initialize(_dsl, app, &blk)
         @block = blk
         @app = app
         @app.add_key_listener(self)
@@ -45,7 +45,7 @@ class Shoes
       end
 
       BUTTON_EXCLUDES = ["\n", " "]
-      COMBO_EXCLUDES  = %w[up down] + BUTTON_EXCLUDES
+      COMBO_EXCLUDES  = %w(up down) + BUTTON_EXCLUDES
 
       # For a variety of SWT controls, certain characters should not be passed
       # to Shoes key listeners, since they're already handled by the controls.

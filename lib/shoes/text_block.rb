@@ -8,10 +8,10 @@ class Shoes
     include Common::Clickable
     include TextBlockDimensionsDelegations
 
-    attr_reader   :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
+    attr_reader :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
     attr_accessor :cursor, :textcursor
-    style_with  :common_styles, :dimensions, :text_block_styles
-    STYLES = {font: "Arial"} # used in TextBlock specs only
+    style_with :common_styles, :dimensions, :text_block_styles
+    STYLES = { font: "Arial" } # used in TextBlock specs only
 
     def initialize(app, parent, text, styles = {})
       @parent = parent
@@ -47,10 +47,10 @@ class Shoes
     end
 
     def to_s
-      self.text
+      text
     end
 
-    def contents_alignment(current_position=nil)
+    def contents_alignment(current_position = nil)
       @gui.contents_alignment(current_position)
     end
 
@@ -80,7 +80,7 @@ class Shoes
 
     private
 
-    def gather_text_styles(parent_text, texts, styles={}, start_point=0)
+    def gather_text_styles(parent_text, texts, styles = {}, start_point = 0)
       texts.each do |text|
         if text.is_a? Shoes::Text
           text.text_block  = self
@@ -105,18 +105,18 @@ class Shoes
     end
 
     def handle_styles(style)
-      parse_font_style style[:font] if style[:font] #if is needed for the specs
+      parse_font_style style[:font] if style[:font] # if is needed for the specs
     end
 
     def parse_font_style(type)
       size_regex = /(\d+)(\s*px)?/
       style_regex = /none|bold|normal|oblique|italic/i # TODO: add more
 
-      font_family = type.gsub(style_regex,'').gsub(size_regex,'').
-                  split(',').map { |x| x.strip.gsub(/["]/,'') }
+      font_family = type.gsub(style_regex, '').gsub(size_regex, '')
+                    .split(',').map { |x| x.strip.gsub(/["]/, '') }
 
-      @style[:font] = font_family.first unless (font_family.size == 1 and
-        font_family[0] == "") or font_family.size == 0
+      @style[:font] = font_family.first unless (font_family.size == 1 &&
+        font_family[0] == "") || font_family.size == 0
 
       fsize = size_regex.match(type)
       @style[:size] = fsize[1].to_i unless fsize.nil?
@@ -135,9 +135,8 @@ class Shoes
     "Inscription" => { size: 10 }
   }.each do |name, styles|
     clazz = Class.new(TextBlock) do
-      self.const_set("STYLES", { font: "Arial", fill: nil }.merge(styles))
+      const_set("STYLES", { font: "Arial", fill: nil }.merge(styles))
     end
     Shoes.const_set(name, clazz)
   end
-
 end

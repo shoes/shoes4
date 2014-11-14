@@ -1,6 +1,6 @@
 class Shoes
   class Span < Text
-    def initialize(texts, styles={})
+    def initialize(texts, styles = {})
       @style = styles
       super texts, styles.delete(:color)
     end

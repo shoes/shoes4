@@ -27,13 +27,13 @@ class Shoes
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply fill
       # @note left, top, width, height, and angle are not used in this method, and only
       #   exist to satisfy the Pattern interface
-      def apply_as_fill(gc, left = nil, top = nil, width = nil, height = nil, angle = nil)
+      def apply_as_fill(gc, _left = nil, _top = nil, _width = nil, _height = nil, _angle = nil)
         gc.set_background real
         gc.set_alpha alpha
       end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply stroke
-      def apply_as_stroke(gc, left = nil, top = nil, width = nil, height = nil, angle = nil)
+      def apply_as_stroke(gc, _left = nil, _top = nil, _width = nil, _height = nil, _angle = nil)
         gc.set_foreground real
         gc.set_alpha alpha
       end
@@ -41,9 +41,9 @@ class Shoes
 
     class NullColor
       attr_reader :alpha, :dsl, :real
-      def apply_as_fill(gc); end
-      def apply_as_stroke(gc); end
+      def apply_as_fill(_gc); end
+
+      def apply_as_stroke(_gc); end
     end
   end
 end
-

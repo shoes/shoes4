@@ -29,7 +29,7 @@ class Shoes
     extend ::Shoes::Common::Registration
 
     module Shoes
-      def self.app(opts={}, &blk)
+      def self.app(opts = {}, &blk)
         Shoes::App.new(opts, &blk)
         Shoes.logger.debug "Exiting Shoes.app"
       end
@@ -42,7 +42,7 @@ class Shoes
         ::Swt::Widgets::Display.getCurrent
       end
 
-      ::Swt::Widgets::Display.new.getFontList(nil, true).each{|f| ::Shoes::FONTS << f.getName}
+      ::Swt::Widgets::Display.new.getFontList(nil, true).each { |f| ::Shoes::FONTS << f.getName }
       ::Shoes::FONTS.uniq!
     end
   end

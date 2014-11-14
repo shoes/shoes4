@@ -3,19 +3,20 @@ class Shoes
     class MouseMoveListener
       include ::Swt::Events::MouseMoveListener
 
-      def initialize app
+      def initialize(app)
         @app = app
       end
 
       def mouse_move(mouse_event)
         @app.dsl.mouse_pos = [mouse_event.x, mouse_event.y]
-        @app.dsl.mouse_motion.each{|blk| eval_move_block blk, mouse_event}
+        @app.dsl.mouse_motion.each { |blk| eval_move_block blk, mouse_event }
         mouse_shape_control mouse_event
         mouse_leave_control mouse_event
         mouse_hover_control mouse_event
       end
 
       private
+
       def eval_move_block(blk, event)
         blk.call event.x, event.y
       end
@@ -26,12 +27,12 @@ class Shoes
                  else
                    ::Swt::SWT::CURSOR_ARROW
                  end
-        @app.shell.setCursor  Shoes.display.getSystemCursor(cursor)
+        @app.shell.setCursor Shoes.display.getSystemCursor(cursor)
       end
 
       def mouse_leave_control(mouse_event)
         @app.dsl.mouse_hover_controls.each do |element|
-          if !mouse_on?(element, mouse_event) and element.hovered?
+          if !mouse_on?(element, mouse_event) && element.hovered?
             element.mouse_left
           end
         end
@@ -39,7 +40,7 @@ class Shoes
 
       def mouse_hover_control(mouse_event)
         @app.dsl.mouse_hover_controls.each do |element|
-          if mouse_on?(element, mouse_event) and !element.hovered?
+          if mouse_on?(element, mouse_event) && !element.hovered?
             element.mouse_hovered
           end
         end

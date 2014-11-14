@@ -26,8 +26,7 @@ class Shoes
       end
 
       class Painter < RectPainter
-
-        def fill_setup(gc)
+        def fill_setup(_gc)
           # don't draw
         end
 

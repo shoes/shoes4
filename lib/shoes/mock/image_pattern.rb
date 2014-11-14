@@ -1,8 +1,7 @@
 class Shoes
   module Mock
     class ImagePattern
-      def initialize(path)
-
+      def initialize(_path)
       end
     end
   end

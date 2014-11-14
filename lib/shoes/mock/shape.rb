@@ -4,16 +4,16 @@ class Shoes
       include Shoes::Mock::CommonMethods
       include Shoes::Mock::Clickable
 
-      def line_to(x, y)
+      def line_to(_x, _y)
       end
 
-      def move_to(x, y)
+      def move_to(_x, _y)
       end
 
-      def curve_to(*args)
+      def curve_to(*_args)
       end
 
-      def arc(*args)
+      def arc(*_args)
       end
     end
   end

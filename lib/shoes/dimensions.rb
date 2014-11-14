@@ -35,13 +35,12 @@ class Shoes
     extend RenamedDelegate
     include Common::Inspect
 
-    attr_writer   :width, :height, :margin_left, :margin_right, :margin_top,
-                  :margin_bottom, :top, :left, :right, :bottom
-    attr_reader   :parent, :x_dimension, :y_dimension
+    attr_writer :width, :height, :margin_left, :margin_right, :margin_top,
+                :margin_bottom, :top, :left, :right, :bottom
+    attr_reader :parent, :x_dimension, :y_dimension
     attr_accessor :absolute_left, :absolute_top,
                   :displace_left, :displace_top
     protected :parent # we shall not mess with parent,see #495
-
 
     # in case you wonder about the -1... it is used to adjust the right and
     # bottom values. Because right is not left + width but rather left + width -1
@@ -105,9 +104,9 @@ class Shoes
     def inspect
       nothing = '_'
       super.insert(-2,
-        " relative:#{Point.new left, top}->#{Point.new right, bottom}" <<
-        " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" <<
-        " #{width || nothing}x#{height || nothing}")
+                   " relative:#{Point.new left, top}->#{Point.new right, bottom}" \
+                   " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" \
+                   " #{width || nothing}x#{height || nothing}")
     end
 
     def self.setup_delegations
@@ -123,6 +122,7 @@ class Shoes
     setup_delegations
 
     private
+
     def hash_as_argument?(left)
       left.respond_to? :fetch
     end
@@ -146,8 +146,8 @@ class Shoes
     end
 
     def init_x_and_y_dimensions
-      parent_x_dimension = @parent? @parent.x_dimension : nil
-      parent_y_dimension = @parent? @parent.y_dimension : nil
+      parent_x_dimension = @parent ? @parent.x_dimension : nil
+      parent_y_dimension = @parent ? @parent.y_dimension : nil
       @x_dimension = Dimension.new parent_x_dimension, @left_top_as_center
       @y_dimension = Dimension.new parent_y_dimension, @left_top_as_center
     end
@@ -159,7 +159,7 @@ class Shoes
     end
 
     def init_margins(opts)
-      new_opts = opts.reject { |k, v| v.nil? }
+      new_opts = opts.reject { |_k, v| v.nil? }
       self.margin        = new_opts[:margin]
       self.margin_left   = new_opts.fetch(:margin_left, margin_left)
       self.margin_top    = new_opts.fetch(:margin_top, margin_top)

@@ -26,7 +26,7 @@ class Shoes
     Shoes::App.subscribe_to_dsl_methods self
 
     attr_accessor :parent
-    attr_writer   :app
+    attr_writer :app
 
     class << self
       attr_accessor :app
@@ -38,7 +38,7 @@ class Shoes
       @app || self.class.app
     end
 
-    def self.inherited(klass, &blk)
+    def self.inherited(klass, &_blk)
       dsl_method = dsl_method_name(klass)
       Shoes::App.new_dsl_method(dsl_method) do |*args, &blk|
         # we set app 2 times because widgets execute most of their code
@@ -58,12 +58,12 @@ class Shoes
       end
     end
 
-
     private
+
     def self.dsl_method_name(klass)
-      klass.to_s[/(^|::)(\w+)$/, 2].
-        gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-        gsub(/([a-z\d])([A-Z])/,'\1_\2').downcase
+      klass.to_s[/(^|::)(\w+)$/, 2]
+        .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
     end
   end
 end

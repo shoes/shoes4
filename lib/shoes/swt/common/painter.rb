@@ -37,8 +37,8 @@ class Shoes
           case obj
             when ::Shoes::Oval, ::Shoes::Rect
               set_rotate graphics_context, obj.rotate,
-                         obj.element_left + obj.element_width/2.0,
-                         obj.element_top + obj.element_height/2.0 do
+                         obj.element_left + obj.element_width / 2.0,
+                         obj.element_top + obj.element_height / 2.0 do
                 fill graphics_context if fill_setup(graphics_context)
                 draw graphics_context if draw_setup(graphics_context)
               end
@@ -54,7 +54,7 @@ class Shoes
         end
 
         # Implement in subclass
-        def fill(graphics_context)
+        def fill(_graphics_context)
         end
 
         # Override in subclass and return something falsy if not using draw
@@ -63,10 +63,10 @@ class Shoes
         end
 
         # Implement in subclass
-        def draw(graphics_context)
+        def draw(_graphics_context)
         end
 
-        def set_rotate graphics_context, angle, left, top
+        def set_rotate(graphics_context, angle, left, top)
           angle, left, top = angle.to_i, left.to_i, top.to_i
           if block_given?
             begin
@@ -80,7 +80,7 @@ class Shoes
           end
         end
 
-        def reset_rotate transform, graphics_context, angle, left, top
+        def reset_rotate(transform, graphics_context, angle, left, top)
           transform.translate left, top
           transform.rotate angle
           transform.translate -left, -top

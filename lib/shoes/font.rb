@@ -31,6 +31,7 @@ class Shoes
       end
 
       private
+
       def font_name(path)
         remove_file_ext(parse_filename_from_path(path))
       end

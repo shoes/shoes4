@@ -36,6 +36,7 @@ class Shoes
       end
 
       private
+
       def translate_according_to_enclosing_box
         @translated_point_a = @dsl.point_a.to(-left, -top)
         @translated_point_b = @dsl.point_b.to(-left, -top)
@@ -52,7 +53,7 @@ class Shoes
         end
 
         # Don't do fill setup
-        def fill_setup(gc)
+        def fill_setup(_gc)
         end
       end
     end

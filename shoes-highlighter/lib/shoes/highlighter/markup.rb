@@ -3,38 +3,36 @@
 class Shoes
   module Highlighter
     module Markup
-
       TOKENIZER = Shoes::Highlighter::Syntax.load "ruby"
       COLORS = {
-        :comment => {:stroke => "#887"},
-        :keyword => {:stroke => "#111"},
-        :method => {:stroke => "#C09", :weight => "bold"},
+        comment: { stroke: "#887" },
+        keyword: { stroke: "#111" },
+        method: { stroke: "#C09", weight: "bold" },
         # :class => {:stroke => "#0c4", :weight => "bold"},
         # :module => {:stroke => "#050"},
         # :punct => {:stroke => "#668", :weight => "bold"},
-        :symbol => {:stroke => "#C30"},
-        :string => {:stroke => "#C90"},
-        :number => {:stroke => "#396" },
-        :regex => {:stroke => "#000", :fill => "#FFC" },
+        symbol: { stroke: "#C30" },
+        string: { stroke: "#C90" },
+        number: { stroke: "#396" },
+        regex: { stroke: "#000", fill: "#FFC" },
         # :char => {:stroke => "#f07"},
-        :attribute => {:stroke => "#369" },
+        attribute: { stroke: "#369" },
         # :global => {:stroke => "#7FB" },
-        :expr => {:stroke => "#722" },
+        expr: { stroke: "#722" },
         # :escape => {:stroke => "#277" }
-        :ident => {:stroke => "#994c99"},
-        :constant => {:stroke => "#630", :weight => "bold"},
-        :class => {:stroke => "#630", :weight => "bold"},
-        :matching => {:stroke => "#ff0", :weight => "bold"},
+        ident: { stroke: "#994c99" },
+        constant: { stroke: "#630", weight: "bold" },
+        class: { stroke: "#630", weight: "bold" },
+        matching: { stroke: "#ff0", weight: "bold" },
       }
 
-
-      def highlight str, pos=nil, colors=COLORS
+      def highlight(str, pos = nil, colors = COLORS)
         tokens = []
         TOKENIZER.tokenize(str) do |t|
           if t.group == :punct
             # split punctuation into single characters tokens
             # TODO: to it in the parser
-            tokens += t.split('').map{|s| Shoes::Highlighter::Syntax::Token.new(s, :punct)}
+            tokens += t.split('').map { |s| Shoes::Highlighter::Syntax::Token.new(s, :punct) }
           else
             # add token as is
             tokens << t
@@ -44,31 +42,31 @@ class Shoes
         res = []
         tokens.each do |token|
           res <<
-          if colors[token.group]
-            #span(token, colors[token.group])
-            tmp = fg(token, colors[token.group][:stroke])
-            colors[token.group][:fill] ? bg(tmp, colors[token.group][:fill]) : tmp
-          elsif colors[:any]
-            #span(token, colors[:any])
-            tmp = fg(token, colors[:any][:stroke])
-            colors[:any][:fill] ? bg(tmp, colors[:any][:fill]) : tmp
-          else
-            token
-          end
+            if colors[token.group]
+              # span(token, colors[token.group])
+              tmp = fg(token, colors[token.group][:stroke])
+              colors[token.group][:fill] ? bg(tmp, colors[token.group][:fill]) : tmp
+            elsif colors[:any]
+              # span(token, colors[:any])
+              tmp = fg(token, colors[:any][:stroke])
+              colors[:any][:fill] ? bg(tmp, colors[:any][:fill]) : tmp
+            else
+              token
+            end
         end
 
-        if pos.nil? or pos < 0
+        if pos.nil? || pos < 0
           return res
         end
 
         token_index, matching_index = matching_token(tokens, pos)
 
         if token_index
-          #res[token_index] = span(tokens[token_index], colors[:matching])
+          # res[token_index] = span(tokens[token_index], colors[:matching])
           tmp = fg(tokens[token_index], colors[:matching][:stroke])
           res[token_index] = colors[:matching][:fill] ? bg(tmp, colors[:matching][:fill]) : tmp
           if matching_index
-            #res[matching_index] = span(tokens[matching_index], colors[:matching])
+            # res[matching_index] = span(tokens[matching_index], colors[:matching])
             tmp = fg(tokens[matching_index], colors[:matching][:stroke])
             res[matching_index] = colors[:matching][:fill] ? bg(tmp, colors[:matching][:fill]) : tmp
           end
@@ -78,20 +76,21 @@ class Shoes
       end
 
       private
+
       def matching_token(tokens, pos)
         curr_pos = 0
         token_index = nil
         tokens.each_with_index do |t, i|
           curr_pos += t.size
-          if token_index.nil? and curr_pos >= pos
+          if token_index.nil? && curr_pos >= pos
             token_index = i
             break
           end
         end
         if token_index.nil? then return nil end
 
-        match = matching_token_at_index(tokens, token_index);
-        if match.nil? and curr_pos == pos and token_index < tokens.size-1
+        match = matching_token_at_index(tokens, token_index)
+        if match.nil? && curr_pos == pos && token_index < tokens.size - 1
           # try the token before the cursor, instead of the one after
           token_index += 1
           match = matching_token_at_index(tokens, token_index)
@@ -104,7 +103,6 @@ class Shoes
         end
       end
 
-
       def matching_token_at_index(tokens, index)
         starts, ends, direction = matching_tokens(tokens, index)
         if starts.nil?
@@ -113,19 +111,19 @@ class Shoes
 
         stack_level = 1
         index += direction
-        while index >= 0 and index < tokens.size
+        while index >= 0 && index < tokens.size
           # TODO separate space in the tokenizer
           t = tokens[index].gsub(/\s/, '')
-          if ends.include?(t) and not as_modifier?(tokens, index)
+          if ends.include?(t) && !as_modifier?(tokens, index)
             stack_level -= 1
             return index if stack_level == 0
-          elsif starts.include?(t) and not as_modifier?(tokens, index)
+          elsif starts.include?(t) && !as_modifier?(tokens, index)
             stack_level += 1
           end
           index += direction
         end
         # no matching token found
-        return nil
+        nil
       end
 
       # returns an array of tokens matching and the direction
@@ -157,33 +155,31 @@ class Shoes
       end
 
       def as_modifier?(tokens, index)
-
-        if not MODIFIERS.include? tokens[index].gsub(/\s/, '')
+        unless MODIFIERS.include? tokens[index].gsub(/\s/, '')
           return false
         end
 
         index -= 1
         # find last index before the token that is no space
-        index -= 1 while index >= 0 and tokens[index] =~ /\A[ \t]*\z/
+        index -= 1 while index >= 0 && tokens[index] =~ /\A[ \t]*\z/
 
-          if index < 0
-            # first character of the string
-            false
-          elsif tokens[index] =~ /\n[ \t]*\Z/
-            # first token of the line
-            false
-          elsif tokens[index].group == :punct
-            # preceded by a punctuation token on the same line
-            i = tokens[index].rindex(/\S/)
-            punc = tokens[index][i, 1]
-            # true if the preceeding statement was terminating
-            not NON_TERMINATING.include?(punc)
-          else
-            # preceded by a non punctuation token on the same line
-            true
-          end
+        if index < 0
+          # first character of the string
+          false
+        elsif tokens[index] =~ /\n[ \t]*\Z/
+          # first token of the line
+          false
+        elsif tokens[index].group == :punct
+          # preceded by a punctuation token on the same line
+          i = tokens[index].rindex(/\S/)
+          punc = tokens[index][i, 1]
+          # true if the preceeding statement was terminating
+          !NON_TERMINATING.include?(punc)
+        else
+          # preceded by a non punctuation token on the same line
+          true
+        end
       end
-
 
       OPEN_BRACKETS = {
         '{' => '}',
@@ -191,9 +187,9 @@ class Shoes
         '[' => ']',
       }
 
-      #close_bracket = {}
-      #OPEN_BRACKETS.each{|open, close| opens_bracket[close] = open}
-      #CLOSE_BRACKETS = opens_bracket
+      # close_bracket = {}
+      # OPEN_BRACKETS.each{|open, close| opens_bracket[close] = open}
+      # CLOSE_BRACKETS = opens_bracket
       # the following is more readable :)
       CLOSE_BRACKETS = {
         '}' => '{',
@@ -203,20 +199,9 @@ class Shoes
 
       BRACKETS = CLOSE_BRACKETS.keys + OPEN_BRACKETS.keys
 
-      OPEN_BLOCK = [
-        'def',
-        'class',
-        'module',
-        'do',
-        'if',
-        'unless',
-        'while',
-        'until',
-        'begin',
-        'for'
-      ]
+      OPEN_BLOCK = %w(def class module do if unless while until begin for)
 
-      MODIFIERS = %w[if unless while until]
+      MODIFIERS = %w(if unless while until)
 
       NON_TERMINATING = %w{+ - * / , . = ~ < > ( [}
     end

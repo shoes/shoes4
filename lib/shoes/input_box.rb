@@ -53,8 +53,7 @@ class Shoes
     STYLES = { width:  200, height: 28, text: '' }
 
     def secret?
-      self.secret
+      secret
     end
   end
-
 end

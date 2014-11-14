@@ -1,8 +1,9 @@
 class Shoes
   module Mock
     class Keyrelease
-      def initialize(*opts)
+      def initialize(*_opts)
       end
+
       def remove
       end
     end

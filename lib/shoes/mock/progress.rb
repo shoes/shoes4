@@ -3,7 +3,7 @@ class Shoes
     class Progress
       include Shoes::Mock::CommonMethods
 
-      def fraction=(fraction)
+      def fraction=(_fraction)
       end
     end
   end

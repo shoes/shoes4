@@ -2,7 +2,7 @@ class Shoes
   class ImagePattern
     include Common::Inspect
 
-    def initialize path
+    def initialize(path)
       @path = path
       @gui = Shoes.configuration.backend_for(self)
     end

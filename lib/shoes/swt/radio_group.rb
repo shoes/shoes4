@@ -1,6 +1,6 @@
 class Shoes
   module Swt
-    # In Swt radio groups are managed by composites which occupy space 
+    # In Swt radio groups are managed by composites which occupy space
     # and can interfere with users interacting with other controls. Here
     # we simulate radio groups so that they can all be in one composite.
     class RadioGroup
@@ -21,10 +21,10 @@ class Shoes
       end
 
       def add(radio_button)
-        return if @radio_buttons.include?(radio_button) 
+        return if @radio_buttons.include?(radio_button)
         @radio_buttons << radio_button
 
-        selection_listener = SelectionListener.new radio_button do |selected_radio, event|
+        selection_listener = SelectionListener.new radio_button do |selected_radio, _event|
           select_only_one_radio_in_group(selected_radio)
         end
         @selection_listeners << selection_listener
@@ -40,13 +40,13 @@ class Shoes
         @selection_listeners.delete_at(index)
       end
 
-      def self.group_lookup
-        @group_lookup
+      class << self
+        attr_reader :group_lookup
       end
 
       def select_only_one_radio_in_group(selected_radio)
-        @radio_buttons.each do |radio| 
-          radio.real.set_selection(radio == selected_radio) 
+        @radio_buttons.each do |radio|
+          radio.real.set_selection(radio == selected_radio)
         end
       end
     end

@@ -1,6 +1,5 @@
 class Shoes
   class Radio < CheckButton
-
     style_with :checked, :click, :common_styles, :dimensions, :group, :state
 
     def initialize(app, parent, group, styles = {}, blk = nil)

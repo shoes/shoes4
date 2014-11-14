@@ -6,7 +6,7 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
-    STYLES = {width: 200, height: 20, items: [""]}
+    STYLES = { width: 200, height: 20, items: [""] }
 
     def initialize(app, parent, styles = {}, blk = nil)
       @app = app

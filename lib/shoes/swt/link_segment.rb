@@ -32,7 +32,7 @@ class Shoes
       end
 
       def line_bounds
-        (0..layout.line_count-1).map do |index|
+        (0..layout.line_count - 1).map do |index|
           layout.line_bounds(index)
         end
       end
@@ -71,7 +71,7 @@ class Shoes
       end
 
       def in_bounds?(x, y)
-        @regions.any? {|region| region.in_bounds?(x, y)}
+        @regions.any? { |region| region.in_bounds?(x, y) }
       end
 
       def start_position
@@ -103,7 +103,7 @@ class Shoes
         end
 
         def in_bounds?(x, y)
-          (@start_x..@end_x).include?(x) and (@start_y..@end_y).include?(y)
+          (@start_x..@end_x).include?(x) && (@start_y..@end_y).include?(y)
         end
       end
     end
