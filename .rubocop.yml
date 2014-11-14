@@ -1,6 +1,7 @@
 # We sometimes need Java method names for interoperability
-#Style/MethodName:
-#  Enabled: false
+# Like java colling our methods like `controlResized`
+Style/MethodName:
+  Enabled: false
 
 # We don't care if we do kind_of? or is_a?
 Style/ClassCheck:
