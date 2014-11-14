@@ -1,7 +1,7 @@
 language: ruby
 script: "rake spec:all"
 rvm:
-  - jruby-1.7.16
+  - jruby-19mode
   - jruby-head
 jdk:
   - openjdk6
