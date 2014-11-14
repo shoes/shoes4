@@ -2,8 +2,7 @@
 #Style/MethodName:
 #  Enabled: false
 
-
-# I Honestly don't care if we do kind_of? or is_a?
+# We don't care if we do kind_of? or is_a?
 Style/ClassCheck:
   Enabled: false
 
@@ -14,4 +13,14 @@ Style/CollectionMethods:
 
 # Java::float is a thing and it is a class, somehow the converted . version also works but that doesn't denote that it's a class
 Style/ColonMethodCall:
+  Enabled: false
+
+# We like to be flexible if we want to add in interpolation
+# see discussion #859
+Style/StringLiterals:
+  Enabled: false
+
+# We like the flexibility of adding additional items to the hash
+# see discussion in #859
+Style/TrailingComma:
   Enabled: false
