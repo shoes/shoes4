@@ -54,6 +54,7 @@ expert-minesweeper-adjusted.rb
 expert-pong.rb
 expert-snake.rb
 expert-tankspank.rb
+expert-tetris.rb
 
 # examples from the nobody knows shoes book
 nks_booklist.rb
