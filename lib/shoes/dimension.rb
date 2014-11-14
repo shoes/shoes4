@@ -76,11 +76,11 @@ class Shoes
     end
 
     def absolute_start_position?
-      not @start.nil?
+      !@start.nil?
     end
 
     def absolute_end_position?
-      not @end.nil?
+      !@end.nil?
     end
 
     def absolute_position?
@@ -120,6 +120,7 @@ class Shoes
     end
 
     private
+
     def basic_start_value
       value = @start
       value = calculate_relative value if is_relative?(value)
@@ -231,6 +232,7 @@ class Shoes
     end
 
     private
+
     def value_modified?(method)
       instance_variable = ('@' + method.to_s).to_sym
       instance_variable_get(instance_variable)

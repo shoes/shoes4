@@ -11,13 +11,13 @@ class Shoes
     # @param [Shoes::Point] other the other point
     # @return [Integer] if this is further left, this.x; otherwise other.x
     def left(other = self)
-      [self.x, other.x].min
+      [x, other.x].min
     end
 
     # @param [Shoes::Point] other the other point
     # @return [Integer] if this is higher, this.y; otherwise other.y
     def top(other = self)
-      [self.y, other.y].min
+      [y, other.y].min
     end
 
     # Creates a new point at an offset of (x,y) from this point. Positive
@@ -39,7 +39,7 @@ class Shoes
     end
 
     def ==(other)
-      return other.respond_to?(:x) && @x == other.x && other.respond_to?(:y) && @y == other.y
+      other.respond_to?(:x) && @x == other.x && other.respond_to?(:y) && @y == other.y
     end
 
     def to_s
@@ -48,7 +48,7 @@ class Shoes
     end
 
     def inspect
-      super.insert(-2, " #{to_s}")
+      super.insert(-2, " #{self}")
     end
   end
 end

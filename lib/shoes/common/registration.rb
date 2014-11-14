@@ -20,9 +20,7 @@ class Shoes
         @apps = []
       end
 
-      def main_app
-        @main_app
-      end
+      attr_reader :main_app
 
       # Registers the first app as the main app
       def register_main_app(app)

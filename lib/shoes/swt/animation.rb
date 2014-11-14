@@ -1,7 +1,6 @@
 class Shoes
   module Swt
     class Animation
-
       attr_reader :task
 
       # An Swt animation implementation
@@ -15,7 +14,7 @@ class Shoes
 
         # Wrap the animation block so we can count frames.
         # Note that the task re-calls itself on each run.
-        @task = Proc.new do
+        @task = proc do
           unless animation_removed?
             run_animation unless @dsl.stopped?
             schedule_next_animation
@@ -29,6 +28,7 @@ class Shoes
       end
 
       private
+
       def animation_removed?
         @app.real.disposed? || @dsl.removed?
       end

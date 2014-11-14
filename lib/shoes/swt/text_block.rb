@@ -65,10 +65,10 @@ class Shoes
         last_segment = segments.last
 
         @dsl.absolute_right  = starting_left + last_segment.last_line_width +
-                               margin_right
+          margin_right
 
         @dsl.absolute_bottom = starting_top + last_segment.height +
-                               margin_top + margin_bottom
+          margin_top + margin_bottom
       end
 
       def bump_absolutes_to_next_line

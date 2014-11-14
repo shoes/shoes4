@@ -1,0 +1,23 @@
+# We sometimes need Java method names for interoperability
+# Like java colling our methods like `controlResized`
+Style/MethodName:
+  Enabled: false
+
+# We don't care if we do kind_of? or is_a?
+Style/ClassCheck:
+  Enabled: false
+
+# Don't ever try to take my `inject` from me, reduce is ok too
+Style/CollectionMethods:
+  PreferredMethods:
+      inject: 'inject'
+
+# We like to be flexible if we want to add in interpolation
+# see discussion #859
+Style/StringLiterals:
+  Enabled: false
+
+# We like the flexibility of adding additional items to the hash
+# see discussion in #859
+Style/TrailingComma:
+  Enabled: false

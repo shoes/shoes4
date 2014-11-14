@@ -194,7 +194,7 @@ class Shoes
             height_so_far += layout.line_bounds(i).height
             break if height_so_far > height
 
-            ending_offset = offsets[i+1]
+            ending_offset = offsets[i + 1]
           end
           [layout.text[0...ending_offset], layout.text[ending_offset..-1]]
         end

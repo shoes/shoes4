@@ -1,9 +1,7 @@
 class Shoes
   module Common
     module State
-      def state
-        @state
-      end
+      attr_reader :state
 
       def state=(value)
         @state = value
@@ -11,7 +9,7 @@ class Shoes
       end
 
       def state_options(opts)
-        self.state = opts[:state] 
+        self.state = opts[:state]
       end
     end
   end

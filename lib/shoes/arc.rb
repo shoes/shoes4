@@ -6,7 +6,7 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
-    STYLES = {wedge: false}
+    STYLES = { wedge: false }
 
     def initialize(app, parent, left, top, width, height, angle1, angle2, styles = {}, blk = nil)
       @app = app

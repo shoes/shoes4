@@ -1,10 +1,9 @@
 class Shoes
   module Swt
     class ShoesLayout < ::Swt::Widgets::Layout
-
       attr_accessor :gui_app
 
-      def layout(*dontcare)
+      def layout(*_dontcare)
         dsl_app = @gui_app.dsl
         height = dsl_app.height
         scrollable_height = dsl_app.top_slot.contents_alignment
@@ -20,6 +19,7 @@ class Shoes
       end
 
       private
+
       def set_gui_size(height, scrollable_height)
         width          = @gui_app.dsl.width
         maximum_height = [scrollable_height, height].max

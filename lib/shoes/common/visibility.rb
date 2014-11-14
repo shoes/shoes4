@@ -31,6 +31,7 @@ class Shoes
       end
 
       private
+
       def update_visibility
         gui.update_visibility
         self

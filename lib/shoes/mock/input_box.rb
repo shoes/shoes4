@@ -4,20 +4,20 @@ class Shoes
       include Shoes::Mock::CommonMethods
       attr_accessor :left, :top
 
-      def enabled(value)
+      def enabled(_value)
       end
 
-      def highlight_text(start_index, finish_index)
+      def highlight_text(_start_index, _finish_index)
       end
 
-      def caret_to(index)
+      def caret_to(_index)
       end
 
       def text
         @dsl.style[:text]
       end
 
-      def text=(value)
+      def text=(_value)
       end
     end
 

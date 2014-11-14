@@ -6,7 +6,6 @@ class Shoes
       include Common::Stroke
       include Common::PainterUpdatesPosition
 
-
       # Creates a new Shoes::Swt::Shape
       #
       # @param [Shoes::Shape] dsl The dsl object to provide gui for
@@ -81,6 +80,7 @@ class Shoes
       end
 
       private
+
       def new_java_float_array(length)
         Java::float[length].new
       end

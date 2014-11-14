@@ -38,7 +38,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
       opts
     end
 
-    def package_types(opts)
+    def package_types(_opts)
       <<-EOS
       swt:app     A standalone OS X executable with the Swt backend
       swt:jar     An executable JAR with the Swt backend

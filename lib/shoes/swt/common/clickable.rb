@@ -2,7 +2,6 @@ class Shoes
   module Swt
     module Common
       module Clickable
-
         attr_accessor :click_listener
 
         # object = self is there for compatibility reasons for now
@@ -23,6 +22,7 @@ class Shoes
         end
 
         private
+
         def add_listener_for(swt_object = self, event, block)
           # dsl objects take care of in bounds checking etc.
           dsl_object = swt_object.dsl
@@ -61,7 +61,6 @@ class Shoes
             end
           end
         end
-
       end
     end
   end

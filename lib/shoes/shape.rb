@@ -94,13 +94,14 @@ class Shoes
     # @param [Integer] arc_angle The angular extent of the arc, relative to the start angle
     # @return [Shoes::Shape] This shape
     def arc(x, y, width, height, start_angle, arc_angle)
-      update_bounds_rect(x-width/2, y-height/2, x+width/2, y+height/2)
+      update_bounds_rect(x - width / 2, y - height / 2, x + width / 2, y + height / 2)
       @x, @y = x, y
       @gui.arc(x, y, width, height, start_angle, arc_angle)
       self
     end
 
     private
+
     # Updates the bounds of this shape to include the rectangle described by
     # (x1, y1) and (x2, y2)
     #
@@ -110,7 +111,7 @@ class Shoes
     # @param [Integer] y2 The y-value of the second coordinate
     # @return nil
     def update_bounds_rect(x1, y1, x2, y2)
-      update_bounds( [x1, x2], [y1, y2] )
+      update_bounds([x1, x2], [y1, y2])
     end
 
     # Updates the bounds of this shape to the rectangle covering all

@@ -31,13 +31,13 @@ class Shoes
         def draw(gc)
           gc.drawPolygon make_polygon(@obj)
         end
-        
+
         def make_polygon(obj)
           outer, inner, points, left, top = obj.outer, obj.inner, obj.points,
                                             obj.element_left, obj.element_top
           polygon = []
           polygon << left << (top + outer)
-          (1..points*2).each do |i|
+          (1..points * 2).each do |i|
             angle =  i * ::Math::PI / points
             r = (i % 2 == 0) ? outer : inner
             polygon << (left + r * ::Math.sin(angle)) << (top + r * ::Math.cos(angle))

@@ -30,15 +30,15 @@ class Shoes
 
         def default_text_styles
           {
-            :fg          => @style[:fg],
-            :bg          => @style[:bg],
-            :strikecolor => @style[:strikecolor],
-            :undercolor  => @style[:undercolor],
-            :font_detail => {
-            :name   => @dsl.font,
-            :size   => @dsl.size,
-            :styles => [::Swt::SWT::NORMAL]
-          }
+            fg: @style[:fg],
+            bg: @style[:bg],
+            strikecolor: @style[:strikecolor],
+            undercolor: @style[:undercolor],
+            font_detail: {
+              name: @dsl.font,
+              size: @dsl.size,
+              styles: [::Swt::SWT::NORMAL]
+            }
           }
         end
       end

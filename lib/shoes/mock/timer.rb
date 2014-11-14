@@ -1,7 +1,7 @@
 class Shoes
   module Mock
     class Timer
-      def initialize(*args)
+      def initialize(*_args)
       end
     end
   end

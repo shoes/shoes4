@@ -9,12 +9,12 @@ class Shoes
         @opts = opts
       end
 
-      def redraw(*opts); end
+      def redraw(*_opts); end
 
-      def replace(*opts)
+      def replace(*_opts)
       end
 
-      def remove;end
+      def remove; end
 
       # A very imperfect implementation, but at least it takes up about a line.
       # Needed to spec scrolling behavior
@@ -22,7 +22,7 @@ class Shoes
         @dsl.absolute_top = current_position.y + (@dsl.size || 12)
       end
 
-      def adjust_current_position(*args);end
+      def adjust_current_position(*_args); end
     end
 
     class Banner < TextBlock; end

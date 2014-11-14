@@ -21,7 +21,7 @@ class Shoes
           ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY
         )
         @real.set_size dsl.element_width, dsl.element_height
-        @real.add_selection_listener do |event|
+        @real.add_selection_listener do |_event|
           @dsl.call_change_listeners
         end
         update_items

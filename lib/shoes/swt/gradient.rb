@@ -40,7 +40,8 @@ class Shoes
       end
 
       private
-      def create_pattern left, top, width, height, angle
+
+      def create_pattern(left, top, width, height, angle)
         width  = width * 0.5
         height = height * 0.5
         angle  = normalize_angle(angle)
@@ -52,20 +53,20 @@ class Shoes
       end
 
       def normalize_angle(angle)
-        angle = Math::PI * (angle/180.0)
-        angle % (Math::PI*2.0)
+        angle = Math::PI * (angle / 180.0)
+        angle % (Math::PI * 2.0)
       end
 
       def determine_args_based_on_angle(angle, left, top, width, height)
         x, y = calculate_x_and_y(angle, height, width)
-        if 0 <= angle and angle < Math::PI*0.5
-          args = [left+width+x, top+height-y, left+width-x, top+height+y]
-        elsif Math::PI*0.5 <= angle and angle < Math::PI
-          args = [left+width+y, top+height+x, left+width-y, top+height-x]
-        elsif Math::PI <= angle and angle < Math::PI*1.5
-          args = [left+width-x, top+height+y, left+width+x, top+height-y]
-        elsif Math::PI*1.5 <= angle and angle < Math::PI*2.0
-          args = [left+width-y, top+height-x, left+width+y, top+height+x]
+        if 0 <= angle && angle < Math::PI * 0.5
+          args = [left + width + x, top + height - y, left + width - x, top + height + y]
+        elsif Math::PI * 0.5 <= angle && angle < Math::PI
+          args = [left + width + y, top + height + x, left + width - y, top + height - x]
+        elsif Math::PI <= angle && angle < Math::PI * 1.5
+          args = [left + width - x, top + height + y, left + width + x, top + height - y]
+        elsif Math::PI * 1.5 <= angle && angle < Math::PI * 2.0
+          args = [left + width - y, top + height - x, left + width + y, top + height + x]
         end
         args
       end
@@ -80,12 +81,12 @@ class Shoes
         end
         my_angle = angle % (Math::PI * 0.5)
         length = Math.sqrt(my_width**2 + my_height**2)
-        b      = (my_height==0 and my_width==0) ? 0 : Math.atan(my_height/my_width)
-        c      = Math::PI*0.5 - my_angle - b
+        b      = (my_height == 0 && my_width == 0) ? 0 : Math.atan(my_height / my_width)
+        c      = Math::PI * 0.5 - my_angle - b
         r      = length * Math.cos(c.abs)
-        x      = r * Math.cos(b+c)
-        y      = r * Math.sin(b+c)
-        return x, y
+        x      = r * Math.cos(b + c)
+        y      = r * Math.sin(b + c)
+        [x, y]
       end
     end
   end

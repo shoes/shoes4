@@ -47,6 +47,7 @@ class Shoes
       end
 
       private
+
       def set_rise(style)
         @gui_style.rise = style[:rise]
       end
@@ -74,7 +75,7 @@ class Shoes
       end
 
       def color_from_dsl(dsl_color, default = nil)
-        return nil if dsl_color.nil? and default.nil?
+        return nil if dsl_color.nil? && default.nil?
         return color_from_dsl default if dsl_color.nil?
         color = ::Swt::Color.new(Shoes.display, dsl_color.red, dsl_color.green, dsl_color.blue)
 

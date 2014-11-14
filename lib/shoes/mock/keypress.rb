@@ -1,8 +1,9 @@
 class Shoes
   module Mock
     class Keypress
-      def initialize(*opts)
+      def initialize(*_opts)
       end
+
       def remove
       end
     end

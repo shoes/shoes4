@@ -1,7 +1,6 @@
 class Shoes
   module Mock
     class App
-
       attr_accessor :fullscreen
       def initialize(dsl)
         @dsl = dsl
@@ -36,7 +35,7 @@ class Shoes
       def clipboard
       end
 
-      def clipboard=(text)
+      def clipboard=(_text)
       end
 
       def gutter

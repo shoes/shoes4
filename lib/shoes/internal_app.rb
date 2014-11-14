@@ -13,11 +13,11 @@ class Shoes
 
     extend Forwardable
 
-    DEFAULT_OPTIONS = { :width      => 600,
-                        :height     => 500,
-                        :title      => "Shoes 4",
-                        :resizable  => true,
-                        :background => Shoes::COLORS.fetch(:shoes_background) }.freeze
+    DEFAULT_OPTIONS = { width: 600,
+                        height: 500,
+                        title: "Shoes 4",
+                        resizable: true,
+                        background: Shoes::COLORS.fetch(:shoes_background) }.freeze
 
     def initialize(app, opts, &blk)
       @app = app
@@ -69,7 +69,7 @@ class Shoes
       gui && gui.started?
     end
 
-    def add_child(child)
+    def add_child(_child)
       # No-op. The top_slot needs this method, but we already hold an explicit
       # reference to the top_slot, so we don't need to add it as a child. Other
       # elements should be added as children of the top_slot.
@@ -79,7 +79,7 @@ class Shoes
       Common::Style::DEFAULT_STYLES.clone
     end
 
-    def in_bounds?(x, y)
+    def in_bounds?(_x, _y)
       true
     end
 
@@ -152,7 +152,7 @@ class Shoes
     end
 
     def self.add_global_keypress(key, &blk)
-      self.global_keypresses[key] = blk
+      global_keypresses[key] = blk
     end
 
     def wait_until_closed
@@ -161,6 +161,7 @@ class Shoes
     end
 
     private
+
     def create_top_slot
       @top_slot = Flow.new self, self, width: width, height: height
     end
@@ -171,11 +172,11 @@ class Shoes
 
     def create_execution_block(blk)
       if blk
-        execution_blk = Proc.new do
+        execution_blk = proc do
           execute_block blk
         end
       elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
-        execution_blk = Proc.new do
+        execution_blk = proc do
           app.visit '/'
         end
       else
@@ -220,6 +221,5 @@ class Shoes
         Logger.setup
       end
     end
-
   end
 end

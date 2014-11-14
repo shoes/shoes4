@@ -4,9 +4,8 @@ class Shoes
       include Shoes::Mock::CommonMethods
       include Shoes::Mock::Clickable
 
-      def initialize(dsl, app, opts = {})
+      def initialize(_dsl, _app, _opts = {})
       end
-      
     end
   end
 end

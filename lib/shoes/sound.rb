@@ -2,7 +2,7 @@ class Shoes
   class Sound
     include Common::Inspect
 
-    def initialize(parent, filepath, opts={}, &blk)
+    def initialize(parent, filepath, _opts = {}, &_blk)
       @parent = parent
       @filepath = filepath
 

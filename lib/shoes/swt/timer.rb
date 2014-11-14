@@ -3,7 +3,7 @@ class Shoes
     class Timer
       def initialize(dsl, app, blk)
         @blk = blk
-        task = Proc.new do
+        task = proc do
           unless app.real.disposed?
             eval_block
           end

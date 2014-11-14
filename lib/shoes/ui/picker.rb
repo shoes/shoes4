@@ -12,7 +12,7 @@ class Shoes
       # Only bundle if we find a local Gemfile.  This allows us to work properly
       # running from source without finding gem-nstalled backends.
       def bundle
-        if File.exists?("Gemfile")
+        if File.exist?("Gemfile")
           require 'bundler/setup'
           Bundler.require
         end
@@ -24,7 +24,7 @@ class Shoes
         if candidates.one?
           generator_file = candidates.first
         else
-          raise NotImplementedError("Currently can't interactively select a backend. See #929")
+          fail NotImplementedError("Currently can't interactively select a backend. See #929")
         end
 
         generator_file

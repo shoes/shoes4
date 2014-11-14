@@ -1,7 +1,7 @@
 class Shoes
   module Mock
     module Clickable
-      def click(blk)
+      def click(_blk)
       end
     end
   end

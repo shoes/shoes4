@@ -22,7 +22,6 @@ class Shoes
 
           move_if_necessary(segment.element_left + position.x,
                             segment.element_top + position.y)
-
         end
 
         # It's important to only move when necessary to avoid constant redraws

@@ -31,7 +31,6 @@ class Shoes
           dsl.contents.each &:show
         end
       end
-
     end
     class Flow < Slot; end
     class Stack < Slot; end

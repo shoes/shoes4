@@ -1,7 +1,7 @@
 class Shoes
   module Mock
     class Animation
-      def initialize(*opts)
+      def initialize(*_opts)
       end
     end
   end

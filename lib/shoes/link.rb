@@ -1,6 +1,5 @@
 class Shoes
   class Link < Span
-
     include Common::Style
 
     attr_reader :app, :parent, :gui, :blk
@@ -24,7 +23,7 @@ class Shoes
           blk = @style[:click]
         else
           # Slightly awkward, but we need App, not InternalApp, to call visit
-          blk = Proc.new { app.app.visit @style[:click] }
+          blk = proc { app.app.visit @style[:click] }
         end
       end
 

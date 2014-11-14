@@ -11,7 +11,6 @@ class Shoes
 
       attr_reader :dsl, :app, :transform, :painter, :container
 
-
       # @param [Shoes::Oval] dsl the dsl object to provide gui for
       # @param [Shoes::Swt::App] app the app
       # @param [Hash] opts options
@@ -43,8 +42,8 @@ class Shoes
 
         def draw(graphics_context)
           sw = graphics_context.get_line_width
-          graphics_context.draw_oval(@obj.element_left+sw/2, @obj.element_top+sw/2,
-                                     @obj.element_width-sw, @obj.element_height-sw)
+          graphics_context.draw_oval(@obj.element_left + sw / 2, @obj.element_top + sw / 2,
+                                     @obj.element_width - sw, @obj.element_height - sw)
         end
       end
     end

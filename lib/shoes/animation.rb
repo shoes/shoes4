@@ -35,7 +35,7 @@ class Shoes
     end
 
     def toggle
-     @stopped = !@stopped
+      @stopped = !@stopped
     end
 
     def remove

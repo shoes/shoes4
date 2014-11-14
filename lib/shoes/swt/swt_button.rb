@@ -20,7 +20,7 @@ class Shoes
         set_size
       end
 
-      def eval_block blk
+      def eval_block(blk)
         blk.call @dsl
       end
 
@@ -28,7 +28,7 @@ class Shoes
         @real.set_focus
       end
 
-      def click blk
+      def click(blk)
         remove_listeners
         @real.addSelectionListener { eval_block blk }
       end
@@ -45,6 +45,7 @@ class Shoes
       end
 
       private
+
       def set_size
         @real.pack
         @dsl.element_width ||= @real.size.x

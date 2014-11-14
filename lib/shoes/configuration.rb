@@ -15,7 +15,7 @@ class Shoes
       end
 
       def default_backend
-        if caller.any? {|path| path =~ /rspec/}
+        if caller.any? { |path| path =~ /rspec/ }
           :mock
         else
           :swt
@@ -30,7 +30,7 @@ class Shoes
       #   Shoes::Configuration.backend = :swt # => Shoes::Swt
       def backend=(name)
         unless @backend.nil?
-          raise "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
+          fail "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
         end
         @backend_name ||= name
       end
@@ -43,8 +43,8 @@ class Shoes
       #   Shoes.configuration.backend_class(shoes_button) # => Shoes::Swt::Button
       def backend_class(shoes_object)
         class_name = shoes_object.class.name.split("::").last
-        raise ArgumentError, "#{shoes_object} does not have a backend class defined for #{backend}" unless self.backend.const_defined?(class_name)
-        self.backend.const_get(class_name)
+        fail ArgumentError, "#{shoes_object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name)
+        backend.const_get(class_name)
       end
 
       # Creates an appropriate backend object, passing along additional arguments
@@ -77,7 +77,7 @@ class Shoes
       end
 
       def logger_instance
-        @logger_instance ||= Shoes::Logger.get(self.logger).new
+        @logger_instance ||= Shoes::Logger.get(logger).new
       end
     end
   end

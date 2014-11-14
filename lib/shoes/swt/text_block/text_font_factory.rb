@@ -29,9 +29,9 @@ class Shoes
         @fonts.find do |font|
           font.font_data.any? do |font_data|
             font_data.name == name &&
-            # Windows seems to create fonts of height 15.75 when requesting 16
-            font_data.height.round == size.round &&
-            font_data.style == styles
+              # Windows seems to create fonts of height 15.75 when requesting 16
+              font_data.height.round == size.round &&
+              font_data.style == styles
           end
         end
       end

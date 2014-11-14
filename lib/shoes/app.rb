@@ -15,7 +15,7 @@ class Shoes
   #
   # @see Shoes::App#initialize
 
-  def self.app(opts={}, &blk)
+  def self.app(opts = {}, &blk)
     Shoes::App.new(opts, &blk)
   end
 
@@ -42,7 +42,7 @@ class Shoes
     # @option opts [Fixnum]  :height     (500)       The height of the app window
     #
     # @see Dimension#initialize
-    def initialize(opts={}, &blk)
+    def initialize(opts = {}, &blk)
       @__app__ = Shoes::InternalApp.new(self, opts, &blk)
       @__app__.setup_gui
       Shoes.register self
@@ -55,7 +55,7 @@ class Shoes
       self
     end
 
-    def window(options={}, &block)
+    def window(options = {}, &block)
       options.merge! owner: self
       self.class.new(options, &block)
     end
@@ -124,8 +124,7 @@ class Shoes
 
     def self.new_dsl_method(name, &blk)
       define_method name, blk
-      @method_subscribers.each {|klazz| klazz.def_delegator :app, name}
+      @method_subscribers.each { |klazz| klazz.def_delegator :app, name }
     end
   end
-
 end

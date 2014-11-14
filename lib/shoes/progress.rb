@@ -5,9 +5,9 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :common_styles, :dimensions, :fraction
-    STYLES = {fraction: 0.0}
+    STYLES = { fraction: 0.0 }
 
-    def initialize(app, parent, styles = {}, blk = nil)
+    def initialize(app, parent, styles = {}, _blk = nil)
       @app = app
       @parent = parent
       style_init styles

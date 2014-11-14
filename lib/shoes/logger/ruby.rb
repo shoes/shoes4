@@ -3,10 +3,10 @@ require 'delegate'
 class Shoes
   module Logger
     class Ruby < SimpleDelegator
-      def initialize(device=STDERR)
+      def initialize(device = STDERR)
         require 'logger'
         logger = ::Logger.new(device)
-        logger.formatter = proc do |severity, datetime, progname, message|
+        logger.formatter = proc do |severity, _datetime, _progname, message|
           "%s: %s\n" % [severity, message]
         end
         super(logger)

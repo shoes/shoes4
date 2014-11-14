@@ -33,12 +33,9 @@ class Shoes
       style(state: value)
       @gui.enabled value.nil?
     end
-
   end
 
   class Check < CheckButton
     style_with :checked, :click, :common_styles, :dimensions, :state
   end
-
-
 end

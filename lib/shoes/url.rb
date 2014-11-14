@@ -1,8 +1,7 @@
 class Shoes
-
   # Backwards compatibility, kind of likely to be removed
   def self.inherited(base_class)
-    base_class.send :include, URL #include is private, therefore send
+    base_class.send :include, URL # include is private, therefore send
   end
 
   module URL
@@ -37,6 +36,7 @@ class Shoes
     end
 
     private
+
     def convert_page_to_regex(page)
       /^#{page}$/
     end

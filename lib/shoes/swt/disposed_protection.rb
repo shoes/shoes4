@@ -15,7 +15,7 @@ class Shoes
           @real.respond_to? method
         end
 
-        def method_missing(method, *args)
+        def method_missing(_method, *_args)
         end
       end
     end

@@ -32,7 +32,7 @@ class Shoes
       end
 
       class Painter < RectPainter
-        def draw_setup(gc)
+        def draw_setup(_gc)
           # don't draw
         end
       end

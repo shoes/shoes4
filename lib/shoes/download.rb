@@ -10,11 +10,10 @@ class Shoes
   end
 
   class Download
-
     attr_reader :progress, :response, :content_length, :gui, :transferred
     UPDATE_STEPS = 100
 
-    def initialize(app, parent, url, opts = {}, &blk)
+    def initialize(_app, _parent, url, opts = {}, &blk)
       @url = url
       @opts = opts
       @blk = blk
@@ -57,6 +56,7 @@ class Shoes
     end
 
     private
+
     def start_download
       require 'open-uri'
       @thread = Thread.new do
@@ -84,19 +84,19 @@ class Shoes
     def progress_proc
       lambda do |size|
         if !content_length.nil? &&
-          (size - self.transferred) > (content_length / UPDATE_STEPS) &&
-          !@gui.busy?
-            @gui.busy = true
-            eval_block(@opts[:progress], self)
-            @transferred = size
+           (size - transferred) > (content_length / UPDATE_STEPS) &&
+           !@gui.busy?
+          @gui.busy = true
+          eval_block(@opts[:progress], self)
+          @transferred = size
         end
       end
     end
 
-    def finish_download(download_data)
+    def finish_download(_download_data)
       @finished = true
 
-      #In case backend didn't catch the 100%
+      # In case backend didn't catch the 100%
       @transferred = @content_length
       eval_block(@opts[:progress], self) if @opts[:progress]
 

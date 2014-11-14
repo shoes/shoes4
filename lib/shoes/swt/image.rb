@@ -29,6 +29,7 @@ class Shoes
       end
 
       private
+
       def load_image(name_or_data)
         if url?(name_or_data)
           save_width_and_height
@@ -122,7 +123,6 @@ class Shoes
         end
         app.add_paint_listener(@painter)
       end
-
     end
   end
 end

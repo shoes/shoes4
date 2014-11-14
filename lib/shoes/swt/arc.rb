@@ -35,14 +35,16 @@ class Shoes
       end
 
       private
+
       def radians_to_degrees(radians)
         radians * 180 / ::Shoes::PI
       end
 
       public
+
       class Painter < Common::Painter
         def fill(graphics_context)
-          if (@obj.wedge?)
+          if @obj.wedge?
             graphics_context.fill_arc(@obj.element_left, @obj.element_top,
                                       @obj.element_width, @obj.element_height,
                                       @obj.angle1, @obj.angle2 * -1)
@@ -57,11 +59,11 @@ class Shoes
 
         def draw(graphics_context)
           sw = graphics_context.get_line_width
-          if (@obj.element_left and @obj.element_top and @obj.element_width and @obj.element_height)
-            graphics_context.draw_arc(@obj.element_left+sw/2,
-                                      @obj.element_top+sw/2,
-                                      @obj.element_width-sw,
-                                      @obj.element_height-sw,
+          if @obj.element_left && @obj.element_top && @obj.element_width && @obj.element_height
+            graphics_context.draw_arc(@obj.element_left + sw / 2,
+                                      @obj.element_top + sw / 2,
+                                      @obj.element_width - sw,
+                                      @obj.element_height - sw,
                                       @obj.angle1, @obj.angle2 * -1)
           end
         end

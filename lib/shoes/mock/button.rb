@@ -3,7 +3,7 @@ class Shoes
     class Button
       include Shoes::Mock::CommonMethods
       include Shoes::Mock::Clickable
-      def enabled(value)
+      def enabled(_value)
       end
     end
   end
