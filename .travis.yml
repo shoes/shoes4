@@ -4,9 +4,10 @@ rvm:
   - jruby-1.7.16
   - jruby-head
 jdk:
+  - openjdk6
   - openjdk7
   - oraclejdk7
-  - openjdk6
+  - oraclejdk8
 matrix:
   allow_failures:
     - rvm: jruby-head
