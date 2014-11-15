@@ -53,7 +53,7 @@ class Shoes
       end
 
       def set_underline(style)
-        @gui_style.underline = (style[:underline].nil? || (style[:underline] == "none")) ? false : true
+        @gui_style.underline = style_present? style[:underline]
         @gui_style.underlineStyle = UNDERLINE_STYLES[style[:underline]]
       end
 
@@ -62,7 +62,7 @@ class Shoes
       end
 
       def set_strikethrough(style)
-        @gui_style.strikeout = (style[:strikethrough].nil? || (style[:strikethrough] == "none")) ? false : true
+        @gui_style.strikeout = style_present? style[:strikethrough]
       end
 
       def set_strikecolor(style)
@@ -83,6 +83,11 @@ class Shoes
         @colors << color
 
         color
+      end
+
+      private
+      def style_present?(style)
+        !style.nil? && !(style == 'none')
       end
     end
   end
