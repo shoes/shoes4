@@ -26,9 +26,9 @@ class Shoes
       # #904 #905
       def update_visibility
         if dsl.hidden?
-          dsl.contents.each &:hide
+          dsl.contents.each(&:hide)
         else
-          dsl.contents.each &:show
+          dsl.contents.each(&:show)
         end
       end
     end

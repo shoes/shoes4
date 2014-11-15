@@ -27,7 +27,7 @@ class Shoes
         end
       end
 
-      click &blk
+      click(&blk)
     end
 
     def click(&blk)

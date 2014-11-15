@@ -83,7 +83,7 @@ class Shoes
         def reset_rotate(transform, graphics_context, angle, left, top)
           transform.translate left, top
           transform.rotate angle
-          transform.translate -left, -top
+          transform.translate(-left, -top)
           graphics_context.setTransform transform
         end
       end

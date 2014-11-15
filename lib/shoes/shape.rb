@@ -141,7 +141,7 @@ class Shoes
 
     def all_values(values, current, min, max)
       additional = @before_drawing ? [current] : [current, min, max]
-      (values + additional).map &:to_i
+      (values + additional).map(&:to_i)
     end
 
     def calculate_primary_dimension_value(current, new)

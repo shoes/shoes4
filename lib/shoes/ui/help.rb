@@ -96,7 +96,7 @@ class Manual < Shoes
         inscription "Not findng it?\n", 'Try ', link(fg 'Search', white) { visit '/manual/999' }, '!', align: 'center', stroke: lightgray
       end
       stack(height: 10) {}
-      para *TOC
+      para(*TOC)
       para link(fg 'to_html', green) { s.html_manual }
     end
   end
@@ -131,7 +131,7 @@ class Manual < Shoes
             if _code.include? 'te-su-to'
               para fg(code('  ' + _code), maroon), NL, margin: [-10, 10, 0, 20]
             else
-              para *highlight('  ' + _code, nil).map { |e| code e }, NL * 2, margin: [-10, 10, 0, 20]
+              para(*highlight('  ' + _code, nil).map { |e| code e }, NL * 2, margin: [-10, 10, 0, 20])
             end
           end
           fill_rest_of_line
@@ -156,14 +156,14 @@ class Manual < Shoes
     txt = txt.gsub("\n", ' ').gsub(/\^(.+?)\^/m, '\1').gsub(/\[\[BR\]\]/i, "\n")
     txts = txt.split(/(\[\[\S+?\]\])/m).map { |s| s.split(/(\[\[\S+? .+?\]\])/m) }.flatten
     case txts[0]
-    when /\A==== (.+) ====/ then caption *marker(Regexp.last_match[1], term), size: 24
-    when /\A=== (.+) ===/ then tagline *marker(Regexp.last_match[1], term), size: 12, weight: 'bold'
-    when /\A== (.+) ==/ then subtitle *marker(Regexp.last_match[1], term)
-    when /\A= (.+) =/ then title *marker(Regexp.last_match[1], term)
+    when /\A==== (.+) ====/ then caption(*marker(Regexp.last_match[1], term), size: 24)
+    when /\A=== (.+) ===/ then tagline(*marker(Regexp.last_match[1], term), size: 12, weight: 'bold')
+    when /\A== (.+) ==/ then subtitle(*marker(Regexp.last_match[1], term))
+    when /\A= (.+) =/ then title(*marker(Regexp.last_match[1], term))
     when /\A\{COLORS\}/ then flow { color_page }
     when /\A\{SAMPLES\}/ then flow { sample_page }
     else
-      para *mk_deco(mk_links(txts, term).flatten), NL, (intro && i.zero?) ? { size: 16 } : ''
+      para(*mk_deco(mk_links(txts, term).flatten), NL, (intro && i.zero?) ? { size: 16 } : '')
       txt.gsub IMAGE_RE do
         image File.join(DIR, "static/#{Regexp.last_match[3]}"), eval("{#{Regexp.last_match[2] || 'margin_left: 50'}}")
         fill_rest_of_line
@@ -173,9 +173,9 @@ class Manual < Shoes
 
   def mk_links(txts, term = nil)
     txts.map { |txt| txt.gsub(IMAGE_RE, '') }
-      .map { |txt| txt =~ /\[\[(\S+?)\]\]/m ? (t = Regexp.last_match[1].split('.'); link(ins *marker(t.last, term)) { visit "/manual/#{find_pnum t.first}" }) : txt }
+      .map { |txt| txt =~ /\[\[(\S+?)\]\]/m ? (t = Regexp.last_match[1].split('.'); link(ins(*marker(t.last, term))) { visit "/manual/#{find_pnum t.first}" }) : txt }
       .map do|txt|
-        txt =~ /\[\[(\S+?) (.+?)\]\]/m ? (url = Regexp.last_match[1]; link(ins *marker(Regexp.last_match[2], term)) { visit url =~ /^http/ ? url : "/manual/#{find_pnum url}" }) :
+        txt =~ /\[\[(\S+?) (.+?)\]\]/m ? (url = Regexp.last_match[1]; link(ins(*marker(Regexp.last_match[2], term))) { visit url =~ /^http/ ? url : "/manual/#{find_pnum url}" }) :
         (txt.is_a?(String) ? marker(txt, term) : txt)
       end
   end
@@ -227,7 +227,7 @@ class Manual < Shoes
         "%02d%s%s" % [first.to_i, ('-' if second), second]
       end
       [dummy_name, orig_name]
-    end.sort.map &:last
+    end.sort.map(&:last)
   end
 
   def find_pnum(page)
@@ -389,7 +389,7 @@ class Manual < Shoes
     toc = []
     [0..3, 4..9, 10..16, 17..32, 33..37].each do |r|
       toc.push TOC_LIST[r.first][0]
-      toc.push(TOC_LIST[r.first + 1..r.last].to_a.map &:first) if r.include?(num)
+      toc.push(TOC_LIST[r.first + 1..r.last].to_a.map(&:first)) if r.include?(num)
     end
     toc
   end

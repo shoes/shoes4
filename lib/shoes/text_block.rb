@@ -33,13 +33,13 @@ class Shoes
     end
 
     def text=(*texts)
-      replace *texts[0]
+      replace(*texts[0])
     end
 
     def replace(*texts)
       # Order here matters as well--backend#replace shouldn't rely on DSL state
       # but the texts that it's passed if it needs information at this point.
-      @gui.replace *texts
+      @gui.replace(*texts)
 
       @text        = texts.map(&:to_s).join
       @contents    = texts

@@ -46,7 +46,7 @@ class Shoes
     def_delegators :@app, :eval_with_additional_context
 
     def clear(&blk)
-      current_slot.clear &blk
+      current_slot.clear(&blk)
     end
 
     def contents
@@ -132,7 +132,7 @@ class Shoes
     end
 
     def execute_block(blk)
-      app.instance_eval &blk
+      app.instance_eval(&blk)
     end
 
     def gutter
@@ -167,7 +167,7 @@ class Shoes
     end
 
     def eval_block(execution_blk)
-      @top_slot.append &execution_blk
+      @top_slot.append(&execution_blk)
     end
 
     def create_execution_block(blk)
