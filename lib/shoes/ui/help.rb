@@ -233,7 +233,7 @@ class Manual < Shoes
   def find_pnum(page)
     return 999 if page == 'Search'
     TOC_LIST.each_with_index do |e, i|
-      title, section = e
+      title = e
       return i if title == page
     end
   end
@@ -245,7 +245,6 @@ class Manual < Shoes
       sections = (sparts[1..-1] / 2).map do |k2, v2|
         meth = v2.split(/^=== (.+?) ===/)
         k2t = k2[/^(?:The )?([\-\w]+)/, 1]
-        meth_plain = meth[0].gsub(IMAGE_RE, '')
         h = { title: k2, section: k, description: meth[0], methods: (meth[1..-1] / 2) }
         [k2t, h]
       end
@@ -421,8 +420,6 @@ class Manual < Shoes
     flow do
       show_header 'Search'
       show_toc
-      pnum, docs_title, docs_description, docs_methods = get_title_and_desc(25)
-      paras = mk_paras docs_description
 
       flow width: 0.8, margin: [10, 0, 20, 0] do
         el = edit_line width: 300
@@ -442,7 +439,7 @@ class Manual < Shoes
   def search(term)
     descs, methods = [], []
     PNUMS.each_with_index do |(chapter, section), pnum|
-      pnum, docs_title, docs_description, docs_methods = get_title_and_desc(pnum)
+      _pnum, docs_title, docs_description, docs_methods = get_title_and_desc(pnum)
       paras = mk_paras(docs_description)
       descs << [chapter, section, docs_title, paras] if paras.map { |txt| txt.gsub(CODE_RE, '').gsub(IMAGE_RE, '') }.join(' ').index(term)
       docs_methods.each do |docs_method|

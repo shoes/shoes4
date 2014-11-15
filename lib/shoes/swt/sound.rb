@@ -86,13 +86,12 @@ class Shoes
 
           # Start
           line.start
-          bytes_read = 0, bytes_written = 0
+          bytes_read = 0
           while bytes_read != -1
 
             bytes_read = decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
             if bytes_read != -1
-
-              bytes_written = line.write(sampled_data, 0, bytes_read)
+              line.write(sampled_data, 0, bytes_read)
             end
           end
           # Stop
@@ -105,8 +104,6 @@ class Shoes
 
       def getLine(audioFormat)
         # throws LineUnavailableException
-
-        res = nil
         info = DataLine::Info.new(SourceDataLine.java_class, audioFormat)
         res = AudioSystem.getLine(info)
         res.open(audioFormat)

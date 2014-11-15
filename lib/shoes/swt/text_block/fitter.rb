@@ -84,7 +84,6 @@ class Shoes
 
           # Since we regenerate layouts, we must dispose of first try here.
           layout.dispose
-          layout = nil
 
           first_layout = generate_layout(width, first_text)
 

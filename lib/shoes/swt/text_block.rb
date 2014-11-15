@@ -79,7 +79,7 @@ class Shoes
       def set_calculated_sizes
         @dsl.calculated_width  = segments.last.width
         @dsl.calculated_height = segments.inject(0) do |total, segment|
-          total += segment.bounds.height
+          total + segment.bounds.height
         end
       end
 
