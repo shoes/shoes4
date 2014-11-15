@@ -124,14 +124,14 @@ class Manual < Shoes
         text.gsub CODE_RE do |lines|
           lines = lines.split NL
           n = lines[1] =~ /\#\!ruby/ ? 2 : 1
-          _code = lines[n...-1].join(NL + '  ')
+          code = lines[n...-1].join(NL + '  ')
           flow do
             background rgb(190, 190, 190), curve: 5
-            inscription link(fg('Run this', magenta)) { eval s.mk_executable(_code), TOPLEVEL_BINDING }, '  ', align: 'right'
-            if _code.include? 'te-su-to'
-              para fg(code('  ' + _code), maroon), NL, margin: [-10, 10, 0, 20]
+            inscription link(fg('Run this', magenta)) { eval s.mk_executable(code), TOPLEVEL_BINDING }, '  ', align: 'right'
+            if code.include? 'te-su-to'
+              para fg(code('  ' + code), maroon), NL, margin: [-10, 10, 0, 20]
             else
-              para(*highlight('  ' + _code, nil).map { |e| code e }, NL * 2, margin: [-10, 10, 0, 20])
+              para(*highlight('  ' + code, nil).map { |e| code e }, NL * 2, margin: [-10, 10, 0, 20])
             end
           end
           fill_rest_of_line

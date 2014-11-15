@@ -58,8 +58,6 @@ class Shoes
       end
     end
 
-    private
-
     def self.dsl_method_name(klass)
       klass.to_s[/(^|::)(\w+)$/, 2]
         .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')

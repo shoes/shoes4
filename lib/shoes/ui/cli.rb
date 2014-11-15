@@ -8,7 +8,7 @@ class Shoes
     end
 
     def parse!(args)
-      opts = OptionParser.new do |opts|
+      options = OptionParser.new do |opts|
         opts.program_name = 'shoes'
         opts.banner = <<-EOS
 Usage: #{opts.program_name} [-h] [-p package] file
@@ -34,8 +34,8 @@ Usage: #{opts.program_name} [-h] [-p package] file
         opts.separator examples(opts)
       end
 
-      opts.parse!(args)
-      opts
+      options.parse!(args)
+      options
     end
 
     def package_types(_opts)

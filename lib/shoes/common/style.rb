@@ -66,9 +66,9 @@ class Shoes
         def unpack_style_groups(styles)
           styles.each do |style|
             if STYLE_GROUPS[style]
-              STYLE_GROUPS[style].each { |style| @supported_styles << style }
+              STYLE_GROUPS[style].each { |group_style| support_style group_style }
             else
-              @supported_styles << style
+              support_style style
             end
           end
 
@@ -101,6 +101,11 @@ class Shoes
               send("style", style_key.to_sym => new_style)
             end
           end
+        end
+
+        private
+        def support_style group_style
+          @supported_styles << group_style
         end
       end # end of StyleWith module
 

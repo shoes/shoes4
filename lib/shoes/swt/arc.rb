@@ -40,8 +40,6 @@ class Shoes
         radians * 180 / ::Shoes::PI
       end
 
-      public
-
       class Painter < Common::Painter
         def fill(graphics_context)
           if @obj.wedge?
