@@ -90,22 +90,22 @@ class Shoes
       end
 
       def scroll_top
-        @real.getLocation.y
+        @real.location.y
       end
 
       def scroll_top=(n)
         @real.setLocation 0, -n
-        @shell.getVerticalBar.setSelection n
+        @shell.vertical_bar.selection = n
       end
 
       def clipboard
-        ::Swt::Clipboard.new(Shoes.display).getContents ::Swt::TextTransfer.getInstance
+        ::Swt::Clipboard.new(Shoes.display).contents ::Swt::TextTransfer.instance
       end
 
       def clipboard=(str)
         ::Swt::Clipboard.new(Shoes.display).setContents(
           [str].to_java,
-          [::Swt::TextTransfer.getInstance].to_java(::Swt::TextTransfer)
+          [::Swt::TextTransfer.instance].to_java(::Swt::TextTransfer)
         )
       end
 
@@ -130,7 +130,7 @@ class Shoes
       # method is called, we don't rely on its reported value.
       def gutter
         # 16
-        @shell.getVerticalBar.getSize.x
+        @shell.vertical_bar.size.x
       end
 
       def add_key_listener(listener)
@@ -152,10 +152,10 @@ class Shoes
       private
 
       def initialize_scroll_bar
-        scroll_bar = @shell.getVerticalBar
-        scroll_bar.setIncrement 10
+        scroll_bar = @shell.vertical_bar
+        scroll_bar.increment = 10
         selection_listener = SelectionListener.new(scroll_bar) do |vertical_bar, event|
-          if shell.getVerticalBar.getVisible && event.detail != ::Swt::SWT::DRAG
+          if shell.vertical_bar.visible && event.detail != ::Swt::SWT::DRAG
             vertically_scroll_window(vertical_bar)
           end
         end
@@ -163,9 +163,9 @@ class Shoes
       end
 
       def vertically_scroll_window(vertical_bar)
-        location = real.getLocation
-        location.y = -vertical_bar.getSelection
-        real.setLocation location
+        location = real.location
+        location.y = -vertical_bar.selection
+        real.location = location
       end
 
       def force_shell_size
@@ -203,8 +203,8 @@ class Shoes
       def initialize_real
         @real = ::Swt::Widgets::Composite.new(@shell,
                                               ::Swt::SWT::TRANSPARENT | ::Swt::SWT::NO_RADIO_GROUP)
-        @real.setSize(@dsl.width - @shell.getVerticalBar.getSize.x, @dsl.height)
-        @real.setLayout init_shoes_layout
+        @real.setSize(@dsl.width - @shell.vertical_bar.size.x, @dsl.height)
+        @real.layout = init_shoes_layout
       end
 
       # it seems like the class can not not have a constructor with an argument
