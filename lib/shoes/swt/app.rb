@@ -58,11 +58,7 @@ class Shoes
       end
 
       def width
-        if overlay_scrollbars?
-          @shell.client_area.width
-        else
-          width_adjusted_for_scrollbars
-        end
+        @shell.client_area.width
       end
 
       def height
@@ -264,18 +260,6 @@ class Shoes
 
       def for_this_shell?(evt)
         evt.widget.shell == @shell unless evt.widget.disposed?
-      end
-
-      def overlay_scrollbars?
-        @shell.scrollbars_mode == ::Swt::SWT::SCROLLBAR_OVERLAY
-      end
-
-      def width_adjusted_for_scrollbars
-        if @shell.getVerticalBar.getVisible
-          @shell.client_area.width + @shell.getVerticalBar.getSize.x
-        else
-          @shell.client_area.width
-        end
       end
     end
 
