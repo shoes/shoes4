@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.test_files    = ShoesManifest.test_files
   s.require_paths = ["lib"]
 
-  s.add_dependency "shoes-dsl", Shoes::VERSION
-  s.add_dependency "shoes-swt", Shoes::VERSION
+  s.add_dependency "shoes-core", Shoes::VERSION
+  s.add_dependency "shoes-swt",  Shoes::VERSION
   s.add_dependency "shoes-highlighter", "~> 1.0.0"
 
   s.add_dependency "furoshiki", ">=0.1.2" # For packaging

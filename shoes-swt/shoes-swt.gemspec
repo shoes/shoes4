@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "swt", "~>4.4"
   s.add_dependency "after_do", "~>0.3"
-  s.add_dependency "shoes-dsl", Shoes::Swt::VERSION
+  s.add_dependency "shoes-core", Shoes::Swt::VERSION
   s.add_dependency "furoshiki", "~>0.2.0" # For packaging
 
   s.executables   = ['shoes-swt']

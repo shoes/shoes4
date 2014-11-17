@@ -1,6 +1,6 @@
 require_relative 'common'
 
-class ShoesDslManifest
+class ShoesCoreManifest
   extend ShoesManifestReport
 
   def self.gem_name
@@ -29,6 +29,6 @@ end
 
 
 if $0 == __FILE__
-  puts ShoesDslManifest.report
+  puts ShoesCoreManifest.report
 end
 
