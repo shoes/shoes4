@@ -4,7 +4,7 @@ class ShoesCoreManifest
   extend ShoesManifestReport
 
   def self.gem_name
-    'shoes-dsl'
+    'shoes-core'
   end
 
   def self.files
@@ -13,8 +13,8 @@ class ShoesCoreManifest
         ext/**/*
         fonts/**/*
         lib/shoes/**/*
-        manifests/shoes-dsl.rb
-        shoes-dsl.gemspec
+        manifests/shoes-core.rb
+        shoes-core.gemspec
         static/shoes-icon.png
         static/Shoes.icns
       ])
