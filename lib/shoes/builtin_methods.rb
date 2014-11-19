@@ -68,10 +68,9 @@ class Shoes
     end
   end
 
+  # make the builtin methods available on the Shoes class
   extend BuiltinMethods
 end
 
-# including the module into the main object (monkey patch)
-class << self
-  include Shoes::BuiltinMethods
-end
+# including the module into the main object for availability on the top level
+extend Shoes::BuiltinMethods
