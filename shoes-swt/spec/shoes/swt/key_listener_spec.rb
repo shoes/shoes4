@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Keypress do
   let(:app) { double('app', add_key_listener: nil, remove_key_listener: nil) }

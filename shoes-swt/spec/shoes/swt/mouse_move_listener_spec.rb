@@ -1,4 +1,4 @@
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::MouseMoveListener do
   let(:app) {double 'SWT App', dsl: dsl_app, shell: shell,

@@ -1,4 +1,4 @@
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::ColorFactory do
   let(:blue)     { Shoes::COLORS[:blue] }

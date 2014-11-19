@@ -1,4 +1,4 @@
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::TextBlock::Fitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",

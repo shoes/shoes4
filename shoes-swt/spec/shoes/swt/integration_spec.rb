@@ -1,4 +1,4 @@
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::App do
   before :each do

@@ -1,4 +1,4 @@
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Image do
   include_context "swt app"
@@ -13,7 +13,7 @@ describe Shoes::Swt::Image do
   let(:top) { 200 }
   let(:height) { nil }
   let(:width) {nil}
-  let(:image) { "spec/swt_shoes/minimal.png" }
+  let(:image) { "shoes-swt/spec/shoes/swt/minimal.png" }
 
   subject {
     allow(dsl).to receive(:file_path) { image }
@@ -41,7 +41,7 @@ describe Shoes::Swt::Image do
   end
 
   describe "painting raw images" do
-    let(:image) { File.read("spec/swt_shoes/minimal.png", :mode => "rb") }
+    let(:image) { File.read("shoes-swt/spec/shoes/swt/minimal.png", :mode => "rb") }
 
     specify "loads image from raw data" do
       subject.real.image_data.width = 3

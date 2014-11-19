@@ -1,6 +1,8 @@
 SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
-$LOAD_PATH << File.join('../lib', SHOESSPEC_ROOT)
+$LOAD_PATH << File.join(SHOESSPEC_ROOT)
+$LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/spec')
 
+require 'shoes/swt/spec_helper'
 require 'code_coverage'
 require 'rspec'
 require 'rspec/its'
@@ -14,5 +16,5 @@ require 'shoes/helpers/inspect_helpers'
 require 'webmock/rspec'
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 
-shared_examples = File.expand_path('../shoes/shared_examples/**/*.rb', __FILE__)
+shared_examples = File.join(SHOESSPEC_ROOT, '../../shoes-core/spec/shoes/shared_examples/**/*.rb')
 Dir[shared_examples].each { |f| require f }

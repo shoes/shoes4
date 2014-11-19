@@ -1,4 +1,4 @@
-require 'swt_shoes/spec_helper'
+require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::ImagePattern do
   let(:dsl)         { Shoes::ImagePattern.new("some/path/to") }

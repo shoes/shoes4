@@ -1,4 +1,3 @@
-require 'code_coverage'
 require "shoes/swt"
 require "spec_helper"
 

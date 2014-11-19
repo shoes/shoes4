@@ -1,5 +1,5 @@
 SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
-$LOAD_PATH << File.join('../lib', SHOESSPEC_ROOT)
+$LOAD_PATH << File.join(SHOESSPEC_ROOT)
 
 require 'code_coverage'
 require 'rspec'
