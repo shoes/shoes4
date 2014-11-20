@@ -248,9 +248,6 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
 
   def new_game level
     @field = Field.new self, level
-    #translate -@old_offset.first, -@old_offset.last unless @old_offset.nil?
-    #translate @field.offset.first, @field.offset.last
-    #@old_offset = @field.offset
     $x, $y = @field.offset.first, @field.offset.last
     render_field
   end
@@ -267,6 +264,6 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
 
     render_field
     alert("Winner!\nTotal time: #{@field.total_time}") if @field.all_found?
-    alert("Bang!\nYou loose.") if @field.game_over?
+    alert("Bang!\nYou lose.") if @field.game_over?
   end
 end
