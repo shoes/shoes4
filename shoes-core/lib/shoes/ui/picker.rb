@@ -39,7 +39,7 @@ class Shoes
         File.open(File.expand_path(File.join(bin_dir, "shoes-backend")), "w") do |file|
           # Contract with backends is to define generate_backend method that we
           # can call. Bit ugly, open to better options for that interchange.
-          file.write(generate_backend(bin_dir))
+          file.write(generate_backend(ENV["SHOES_PICKER_BIN_DIR"] || bin_dir))
         end
       end
     end

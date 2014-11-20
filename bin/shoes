@@ -1,1 +1,9 @@
-shoes-stub
+#!/usr/bin/env sh
+
+# This is NOT the primary shoes that's installed--just a helper for local
+# development purposes
+cd ./bin
+export SHOES_PICKER_BIN_DIR=`pwd -P`
+
+cd ..
+shoes/bin/shoes $@
