@@ -13,16 +13,16 @@ Gem::Specification.new do |s|
   s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.}
   s.license     = 'MIT'
 
-  s.files         = ShoesManifest.files
-  s.test_files    = ShoesManifest.test_files
+  s.files         = `git ls-files`.split($/)
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
   s.add_dependency "shoes-core", Shoes::VERSION
   s.add_dependency "shoes-swt",  Shoes::VERSION
-  s.add_dependency "shoes-highlighter", "~> 1.0.0"
+  s.add_dependency "shoes-highlighter", "~> 1.0", ">= 1.0.0"
 
-  s.add_dependency "furoshiki", ">=0.1.2" # For packaging
-  s.add_dependency "nokogiri" # For converting the manual to HTML
+  s.add_dependency "furoshiki", "~> 0.1", ">=0.1.2"      # For packaging
+  s.add_dependency "nokogiri", "~> 1.6.4.1", ">=1.6.4.1" # For converting the manual to HTML
 
   # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
   s.executables   = ['shoes-picker', 'shoes-stub']
