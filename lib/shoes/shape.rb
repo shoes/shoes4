@@ -10,7 +10,7 @@ class Shoes
 
     # Creates a new Shoes::Shape
     #
-    def initialize(app, parent, styles = {}, blk = nil)
+    def initialize(app, parent, left = 0, top = 0, styles = {}, blk = nil)
       @app = app
       @parent = parent
       style_init styles
@@ -18,6 +18,8 @@ class Shoes
       @parent.add_child self
       @gui = Shoes.backend_for self
       register_click
+
+      move left, top
 
       @blk = blk
       # True until we've asked the pen to draw

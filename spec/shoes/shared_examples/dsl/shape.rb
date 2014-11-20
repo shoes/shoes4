@@ -18,4 +18,33 @@ shared_examples_for "shape DSL method" do
     dsl.style[:stroke] = green
     expect(shape.stroke).to eq(green)
   end
+
+  describe "constructing" do
+    it "doesn't need any arguments" do
+      shape = dsl.shape
+      expect(shape.left).to eq(0)
+      expect(shape.top).to eq(0)
+    end
+
+    it "can accept some styles" do
+      white = Shoes::COLORS.fetch :white
+      shape = dsl.shape stroke: white
+      expect(shape.stroke).to eq(white)
+    end
+
+    it "can accept a left and top" do
+      left, top = 10, 20
+      shape = dsl.shape left, top
+      expect(shape.left).to eq(left)
+      expect(shape.top).to eq(top)
+    end
+
+    it "can accept a left, top, and some styles" do
+      left, top, white = 10, 20, Shoes::COLORS.fetch(:white)
+      shape = dsl.shape left, top, stroke: white
+      expect(shape.left).to eq(left)
+      expect(shape.top).to eq(top)
+      expect(shape.stroke).to eq(white)
+    end
+  end
 end
