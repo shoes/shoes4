@@ -433,7 +433,7 @@ EOS
     #   @param [Integer] left the x-coordinate of the top-left corner
     #   @param [Integer] top the y-coordinate of the top-left corner
     # @overload shape(left, top)
-    #   Creates a shape at (left, top &block)
+    #   Creates a shape at (left, top, &block)
     #   @param [Integer] left the x-coordinate of the top-left corner
     #   @param [Integer] top the y-coordinate of the top-left corner
     # @overload shape(styles, &block)
