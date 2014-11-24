@@ -22,8 +22,8 @@ shared_examples_for "shape DSL method" do
   describe "constructing" do
     it "doesn't need any arguments" do
       shape = dsl.shape
-      expect(shape.left).to eq(0)
-      expect(shape.top).to eq(0)
+      expect(shape.left).to eq(nil)
+      expect(shape.top).to eq(nil)
     end
 
     it "can accept some styles" do
@@ -35,6 +35,13 @@ shared_examples_for "shape DSL method" do
     it "can accept a left and top" do
       left, top = 10, 20
       shape = dsl.shape left, top
+      expect(shape.left).to eq(left)
+      expect(shape.top).to eq(top)
+    end
+
+    it "accepts left and top in styles" do
+      left, top = 10, 20
+      shape = dsl.shape left: left, top: top
       expect(shape.left).to eq(left)
       expect(shape.top).to eq(top)
     end

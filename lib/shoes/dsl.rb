@@ -442,22 +442,16 @@ EOS
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     def shape(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
-      case args.length
-      when 2
-        left, top = args
-      when 0
-        left = opts[:left] || 0
-        top = opts[:top] || 0
-      else
-        message = <<EOS
+      opts[:left], opts[:top] = args if args.length == 2
+
+      message = <<EOS
 Wrong number of arguments. Must be one of:
   - shape()
   - shape(left, top, [opts])
   - shape(styles)
 EOS
-        fail ArgumentError, message
-      end
-      create Shoes::Shape, left, top, style.merge(opts), blk
+      fail ArgumentError, message unless [0, 2].include? args.length
+      create Shoes::Shape, style.merge(opts), blk
     end
 
     # Define app-level setter methods

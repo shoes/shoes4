@@ -5,14 +5,14 @@ describe Shoes::Shape do
 
   let(:left) { 0 }
   let(:top) { 0 }
-  let(:style) { Hash.new }
+  let(:style) { {left: left, top: top} }
   let(:draw)  { Proc.new { } }
 
-  subject { Shoes::Shape.new app, parent, left, top, style, draw }
+  subject { Shoes::Shape.new app, parent, style, draw }
 
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::Shape.new(app, parent) }
-    let(:subject_with_style) { Shoes::Shape.new(app, parent, left, top, arg_styles) }
+    let(:subject_with_style) { Shoes::Shape.new(app, parent,  arg_styles) }
   end
 
   it_behaves_like "movable object"
@@ -40,6 +40,14 @@ describe Shoes::Shape do
     its(:height) { should eq app.height }
 
     it_behaves_like "movable object"
+
+    describe "when created without left and top values" do
+      let(:left) { nil }
+      let(:top) { nil }
+      
+      its(:left) { should eq(nil) }
+      its(:top) { should eq(nil) }
+    end
 
     describe "when created with left and top values" do
       let(:left) { 10 }
