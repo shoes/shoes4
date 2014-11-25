@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-require_relative 'lib/shoes/version'
-require_relative 'manifests/shoes'
+require File.expand_path('lib/shoes/version')
 
 Gem::Specification.new do |s|
   s.name        = "shoes"

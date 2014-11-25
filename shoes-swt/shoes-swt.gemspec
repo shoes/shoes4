@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require_relative 'lib/shoes/swt/version'
+require File.expand_path('lib/shoes/swt/version')
 
 Gem::Specification.new do |s|
   s.name        = "shoes-swt"
