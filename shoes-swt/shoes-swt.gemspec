@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 require_relative 'lib/shoes/swt/version'
-require_relative 'manifests/shoes-swt'
 
 Gem::Specification.new do |s|
   s.name        = "shoes-swt"
@@ -13,8 +12,8 @@ Gem::Specification.new do |s|
   s.description = %q{A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.}
   s.license     = 'MIT'
 
-  s.files         = ShoesSwtManifest.files
-  s.test_files    = ShoesSwtManifest.test_files
+  s.files         = `git ls-files`.split($/)
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
   s.add_dependency "swt", "~>4.4"
