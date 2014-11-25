@@ -1,6 +1,8 @@
 SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT)
+$LOAD_PATH << File.join(SHOESSPEC_ROOT, '../lib')
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/spec')
+$LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/lib')
 
 require 'shoes/swt/spec_helper'
 require 'code_coverage'
