@@ -3,14 +3,16 @@ require 'shoes/spec_helper'
 describe Shoes::Shape do
   include_context "dsl app"
 
-  let(:style) { Hash.new }
+  let(:left) { 0 }
+  let(:top) { 0 }
+  let(:style) { {left: left, top: top} }
   let(:draw)  { Proc.new { } }
 
   subject { Shoes::Shape.new app, parent, style, draw }
 
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::Shape.new(app, parent) }
-    let(:subject_with_style) { Shoes::Shape.new(app, parent, arg_styles) }
+    let(:subject_with_style) { Shoes::Shape.new(app, parent,  arg_styles) }
   end
 
   it_behaves_like "movable object"
@@ -28,8 +30,8 @@ describe Shoes::Shape do
       }
     }
 
-    its(:left) { should be_nil }
-    its(:top) { should be_nil }
+    its(:left) { should eq(0) }
+    its(:top) { should eq(0) }
     its(:left_bound) { should eq(130) }
     its(:top_bound) { should eq(100) }
     its(:right_bound) { should eq(370) }
@@ -39,8 +41,17 @@ describe Shoes::Shape do
 
     it_behaves_like "movable object"
 
+    describe "when created without left and top values" do
+      let(:left) { nil }
+      let(:top) { nil }
+      
+      its(:left) { should eq(nil) }
+      its(:top) { should eq(nil) }
+    end
+
     describe "when created with left and top values" do
-      let(:style) { {left: 10, top: 100} }
+      let(:left) { 10 }
+      let(:top) { 100 }
 
       its(:left) { should eq(10) }
       its(:top) { should eq(100) }

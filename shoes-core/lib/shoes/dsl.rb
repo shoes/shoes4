@@ -427,8 +427,31 @@ EOS
     end
 
     # Creates a new Shoes::Shape object
-    def shape(styles = {}, &blk)
-      create Shoes::Shape, styles, blk
+    #
+    # @overload shape(left, top, styles, &block)
+    #   Creates a shape at (left, top) with the given style
+    #   @param [Integer] left the x-coordinate of the top-left corner
+    #   @param [Integer] top the y-coordinate of the top-left corner
+    # @overload shape(left, top)
+    #   Creates a shape at (left, top, &block)
+    #   @param [Integer] left the x-coordinate of the top-left corner
+    #   @param [Integer] top the y-coordinate of the top-left corner
+    # @overload shape(styles, &block)
+    #   Creates a shape at (0, 0)
+    #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
+    #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    def shape(*args, &blk)
+      opts = style_normalizer.normalize pop_style(args)
+      opts[:left], opts[:top] = args if args.length == 2
+
+      message = <<EOS
+Wrong number of arguments. Must be one of:
+  - shape()
+  - shape(left, top, [opts])
+  - shape(styles)
+EOS
+      fail ArgumentError, message unless [0, 2].include? args.length
+      create Shoes::Shape, style.merge(opts), blk
     end
 
     # Define app-level setter methods
