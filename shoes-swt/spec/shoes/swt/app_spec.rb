@@ -81,4 +81,36 @@ describe Shoes::Swt::App do
   # which at the time is overkill imo
   it {is_expected.to respond_to :started?}
 
+  describe 'App dimensions' do
+    let(:client_area) {double 'client_area', width: width, height: height}
+    let(:vertical_bar) {double 'scroll bar', visible?: bar_visible}
+    let(:shell) {double('shell', client_area: client_area,
+                                 vertical_bar: vertical_bar)}
+    let(:width) {50}
+    let(:height) {80}
+    let(:bar_visible) {false}
+
+    before :each do
+      allow(subject).to receive(:shell).and_return(shell)
+    end
+
+    shared_examples_for 'reports client area dimensions' do
+      it 'always returns the client area width' do
+        expect(subject.width).to eq width
+      end
+
+      it 'returns the client area height' do
+        expect(subject.height).to eq height
+      end
+    end
+
+    it_behaves_like 'reports client area dimensions'
+
+    context 'with a scroll bar' do
+      let(:bar_visible) {true}
+
+      it_behaves_like 'reports client area dimensions'
+    end
+  end
+
 end
