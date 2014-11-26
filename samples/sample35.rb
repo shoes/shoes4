@@ -19,7 +19,7 @@ class PhotoFrame < Shoes
     background bg_color
     stack do
       inscription 'Shoes 4', left: 80
-      image File.join(Shoes::DIR, "samples/#{name.downcase}.png"),
+      image File.expand_path(File.join(__FILE__, "../#{name.downcase}.png")),
         left: 75, top: 25
       para fg(strong(message), fg_color),
         '  ->',

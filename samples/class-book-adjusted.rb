@@ -8,7 +8,7 @@ class Book < Shoes
     incident 0
   end
 
-  INCIDENTS = YAML.load_file File.join(Shoes::DIR, 'samples/class-book.yaml')
+  INCIDENTS = YAML.load_file File.expand_path(File.join(__FILE__, '../class-book.yaml'))
 
   def table_of_contents
     toc = []
