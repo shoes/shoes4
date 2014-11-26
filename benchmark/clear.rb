@@ -16,7 +16,7 @@ Shoes.app do
       rect 0, 396, 75, 4, curve: 3
     end
     stack do
-      path = 'static/shoes-icon.png'
+      path = File.join(Shoes::DIR, 'static/shoes-icon.png')
       image path
       flow do
         15.times do
