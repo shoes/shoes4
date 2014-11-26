@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('lib/shoes/version')
+require File.expand_path('lib/shoes/core/version')
 
 Gem::Specification.new do |s|
   s.name        = "shoes-core"
-  s.version     = Shoes::VERSION
+  s.version     = Shoes::Core::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Team Shoes"]
   s.email       = ["shoes@librelist.com"]
