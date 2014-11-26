@@ -58,11 +58,11 @@ class Shoes
       end
 
       def width
-        @shell.client_area.width
+        shell.client_area.width
       end
 
       def height
-        @shell.client_area.height
+        shell.client_area.height
       end
 
       def disposed?
