@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'nkf'
+require 'shoes/version'
 require 'shoes/highlighter'
 
 class Array
