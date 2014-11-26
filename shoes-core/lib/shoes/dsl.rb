@@ -58,7 +58,7 @@ class Shoes
   end
 end
 
-require 'shoes/version'
+require 'shoes/core/version'
 require 'shoes/renamed_delegate'
 require 'shoes/common/inspect'
 require 'shoes/dimension'
