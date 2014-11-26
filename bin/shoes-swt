@@ -1,1 +1,5 @@
-../shoes-swt/bin/shoes-swt
+#!/usr/bin/env jruby
+
+# This is NOT the shipped bin/shoes-swt--that's found under the shoes-swt gem.
+# It is present only to support running from source in the shoes repo.
+load File.expand_path("./shoes-swt/bin/shoes-swt")
