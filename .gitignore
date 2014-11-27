@@ -49,6 +49,7 @@ spec/test_app/pkg
 testing
 tmp/*
 bin/shoes-backend
+shoes/bin/shoes-backend
 
 # ignore built gem so you don't commit it accidentally
 *.gem

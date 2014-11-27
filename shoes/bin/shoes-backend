@@ -1,1 +1,0 @@
-jruby --1.9 -J-XstartOnFirstThread /Users/jclark/source/shoes4/bin/shoes-swt
