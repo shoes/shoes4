@@ -218,13 +218,11 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
     @new_world.clear
   end
 
-  stack(displace_left: 650) do
+  stack(top: 30, displace_left: 650) do
     @run_button  = button('Run',  width: 100){ play }
     @stop_button = button('Stop', width: 100){ stop }
     @stop_button.hide
-  end
 
-  stack(displace_left: 650) do
     button('Clear', width: 100) do
       clear
     end
