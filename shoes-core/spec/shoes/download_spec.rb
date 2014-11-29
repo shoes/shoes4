@@ -67,6 +67,7 @@ describe Shoes::Download do
 
     before :each do
       allow(download.gui).to receive :eval_block
+      allow(download).to receive(:wrap_block) { progress_proc }
       download.start
       download.join_thread
     end
@@ -96,6 +97,7 @@ describe Shoes::Download do
 
     before :each do
       allow(download.gui).to receive(:eval_block)
+      allow(download).to receive(:wrap_block) { input_block }
       download.start
       download.join_thread
     end
@@ -129,12 +131,11 @@ describe Shoes::Download do
     end
 
     context 'with a finish proc' do
-      let(:finish_proc) {Proc.new {}}
-      let(:opts) { {save: "nasa50th.gif", finish: finish_proc} }
+      let(:opts) { {save: "nasa50th.gif", finish: input_block} }
       subject(:download) { Shoes::Download.new app, parent, name, opts}
 
       it 'calls the finish proc' do
-        expect(download.gui).to have_received(:eval_block).with(finish_proc, result)
+        expect(download.gui).to have_received(:eval_block).with(input_block, subject)
       end
     end
 

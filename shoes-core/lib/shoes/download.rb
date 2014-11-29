@@ -13,9 +13,10 @@ class Shoes
     attr_reader :progress, :response, :content_length, :gui, :transferred
     UPDATE_STEPS = 100
 
-    def initialize(_app, _parent, url, opts = {}, &blk)
+    def initialize(app, _parent, url, opts = {}, &blk)
       @url = url
       @opts = opts
+      @slot = app.current_slot
       @blk = blk
       @gui = Shoes.configuration.backend_for(self)
 
@@ -106,7 +107,13 @@ class Shoes
     end
 
     def eval_block(blk, result)
-      @gui.eval_block(blk, result)
+      @gui.eval_block(wrap_block(blk), result)
+    end
+
+    def wrap_block(blk)
+      Proc.new do |*args|
+        @slot.eval_block(blk, *args)
+      end
     end
 
     def save_to_file(file_path)
