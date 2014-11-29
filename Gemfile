@@ -7,7 +7,9 @@ gem 'shoes-swt',  path: 'shoes-swt'
 group :development do
   gem "guard"
   gem "guard-rspec"
+
   gem "pry"
+  gem "pry-nav"
 
   gem "rspec", "~>3.0.0"
   gem "rspec-its", "~>1.0.1"
