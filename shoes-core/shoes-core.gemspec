@@ -15,4 +15,8 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split($/)
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
+
+  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
+  s.executables   = ['shoes-picker', 'shoes-stub']
+  s.extensions    = ['ext/install/Rakefile']
 end
