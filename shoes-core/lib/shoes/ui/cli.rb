@@ -24,7 +24,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
         end
 
         opts.on('-v', '--version', 'Shoes version') do
-          puts "Shoes #{VERSION}"
+          puts "Shoes #{Shoes::Core::VERSION}"
           exit
         end
 
