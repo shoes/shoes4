@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gemspec :name => 'shoes'
-gemspec :name => 'shoes-dsl'
-gemspec :name => 'shoes-swt'
+gem 'shoes',      path: 'shoes'
+gem 'shoes-core', path: 'shoes-core'
+gem 'shoes-swt',  path: 'shoes-swt'
 
 group :development do
   gem "guard"

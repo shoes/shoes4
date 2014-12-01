@@ -1,43 +1,35 @@
-require 'bundler/gem_helper'
-
-# Define placeholder tasks so we can name them as dependencies. The bodies
-# of these tasks will be defined by Bundler at runtime.
-task :build
-task :install
-task :release
-
 desc 'Build all gems'
 task 'build:all'
 
 desc 'Install all gems'
 task 'install:all'
 
+desc 'Forcibly uninstall all Shoes gems'
+task 'uninstall:all'
+
 desc 'Release all gems'
 task 'release:all' => [ 'build:all' ]
 
-['shoes-dsl', 'shoes-swt', 'shoes'].each do |lib|
-  # Defer installing Bundler gem tasks until runtime, so we can install them
-  # for a particular gem. Still create tasks that will show up in `rake --tasks`
-  # Note that executing #install_tasks multiple times will *add* to the defined
-  # tasks, so we can build up build:all and install:all tasks.
-  task "install_gem_tasks:#{lib}" do
-    Bundler::GemHelper.install_tasks :name => lib
+['shoes-core', 'shoes-swt', 'shoes'].each do |lib|
+  desc "Build the #{lib} gem"
+  task "build:#{lib}" do
+    sh "cd ./#{lib} && rake build"
   end
 
-  desc "Build the #{lib} gem"
-  task "build:#{lib}" => ["install_gem_tasks:#{lib}", :build]
+  task "install:#{lib}" do
+    sh "cd ./#{lib} && rake install"
+  end
 
-  desc "Install the #{lib} gem"
-  task "install:#{lib}" => ["install_gem_tasks:#{lib}", :install]
+  task "uninstall:#{lib}" do
+    sh "cd ./#{lib} && gem uninstall -x --force #{lib}"
+  end
 
-  desc "Release the #{lib} gem"
-  task "release:#{lib}" => ["install_gem_tasks:#{lib}", :release]
+  task "release:#{lib}" do
+    sh "cd ./#{lib} && rake release"
+  end
 
-  task "build:all" => "install_gem_tasks:#{lib}"
-  task "install:all" => "install_gem_tasks:#{lib}"
-  task "release:all" => ["release:#{lib}"]
+  task "build:all"     => "build:#{lib}"
+  task "install:all"   => "install:#{lib}"
+  task "uninstall:all" => "uninstall:#{lib}"
+  task "release:all"   => "release:#{lib}"
 end
-
-task 'build:all' => 'build'
-task 'install:all' => 'install'
-task 'release:all' => 'release'

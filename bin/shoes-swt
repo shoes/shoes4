@@ -1,11 +1,5 @@
 #!/usr/bin/env jruby
-lib_directory = File.expand_path('../../lib', __FILE__)
-$LOAD_PATH << lib_directory
 
-if File.exists?("Gemfile")
-  require "bundler/setup"
-  Bundler.require
-end
-
-require 'shoes/ui/cli'
-Shoes::CLI.new.run ARGV
+# This is NOT the shipped bin/shoes-swt--that's found under the shoes-swt gem.
+# It is present only to support running from source in the shoes repo.
+load File.expand_path("./shoes-swt/bin/shoes-swt")

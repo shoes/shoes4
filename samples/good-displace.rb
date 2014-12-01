@@ -20,7 +20,7 @@ class Layout
   end
 
   def image
-    @app.image "#{Shoes::DIR}/static/avatar.png", :left => left(:image), :top => top 
+    @app.image File.expand_path(File.join(__FILE__, "../avatar.png")), :left => left(:image), :top => top
   end
 
   def edit_box
