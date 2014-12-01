@@ -2,11 +2,9 @@
 
 Shoes 4 : the next version of Shoes
 
-## Pre-alpha
+## Preview Version
 
-Hi there, thanks for checking by! Shoes 4 is still pre-alpha software. It currently supports almost all of the shoes DSL, but there are still some spots where you might get surprising results. If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
-
-There is a first [preview release](https://rubygems.org/gems/shoes/versions/4.0.0.pre1) now :)
+Hi there, thanks for checking by! Shoes 4 is in the preview stage. It currently supports almost all of the shoes DSL, but there are still some unsupported spots and [known issues](https://github.com/shoes/shoes4/issues). We are now regularly releasing updated preview versions to [rubygems](http://rubygems.org/gems/shoes/versions/), for easy installation. If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
 
 ## Installing Shoes 4
 
