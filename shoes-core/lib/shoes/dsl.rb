@@ -453,9 +453,6 @@ EOS
       styles = style_normalizer.normalize pop_style(args)
 
       points, outer, inner, extras = args
-      points ||= 10
-      outer  ||= 100.0
-      inner  ||= 50.0
 
       if extras
         message = <<EOS

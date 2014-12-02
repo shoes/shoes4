@@ -12,6 +12,11 @@ class Shoes
       @app = app
       @parent = parent
 
+      # Don't use param defaults as DSL explicit passes nil for missing params
+      points ||= 10
+      outer  ||= 100.0
+      inner  ||= 50.0
+
       # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
       width = outer * 2
 
