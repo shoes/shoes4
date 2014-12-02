@@ -427,17 +427,20 @@ EOS
     #   Creates a star at (left, top) with the given style
     #   @param [Integer] left the x-coordinate of the top-left corner
     #   @param [Integer] top the y-coordinate of the top-left corner
+    #   @param [Hash] styles optional, additional styling for the element
     # @overload shape(left, top, points, styles, &block)
     #   Creates a star at (left, top) with the given style
     #   @param [Integer] left the x-coordinate of the top-left corner
     #   @param [Integer] top the y-coordinate of the top-left corner
     #   @param [Integer] points count of points on the star
+    #   @param [Hash] styles optional, additional styling for the element
     # @overload shape(left, top, points, outer, styles, &block)
     #   Creates a star at (left, top) with the given style
     #   @param [Integer] left the x-coordinate of the top-left corner
     #   @param [Integer] top the y-coordinate of the top-left corner
     #   @param [Integer] points count of points on the star
     #   @param [Integer] outer outer radius of star
+    #   @param [Hash] styles optional, additional styling for the element
     # @overload shape(left, top, points, outer, inner, styles, &block)
     #   Creates a star at (left, top) with the given style
     #   @param [Integer] left the x-coordinate of the top-left corner
@@ -445,6 +448,7 @@ EOS
     #   @param [Integer] points count of points on the star
     #   @param [Integer] outer outer radius of star
     #   @param [Integer] inner inner radius of star
+    #   @param [Hash] styles optional, additional styling for the element
     def star(left, top, *args, &blk)
       styles = style_normalizer.normalize pop_style(args)
 
@@ -456,10 +460,10 @@ EOS
       if extras
         message = <<EOS
 Wrong number of arguments. Must be one of:
-  - star(left, top, [opts])
-  - star(left, top, points, [opts])
-  - star(left, top, points, outer, [opts])
-  - star(left, top, points, outer, inner, [opts])
+  - star(left, top, [styles])
+  - star(left, top, points, [styles])
+  - star(left, top, points, outer, [styles])
+  - star(left, top, points, outer, inner, [styles])
 EOS
         fail ArgumentError, message
       end
