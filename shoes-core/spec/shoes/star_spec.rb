@@ -31,12 +31,18 @@ describe Shoes::Star do
   it_behaves_like 'object with parent'
 
   describe "in_bounds?" do
+    before do
+      # Gotta pretend like we've been positioned
+      subject.x_dimension.absolute_start = subject.left
+      subject.y_dimension.absolute_start = subject.top
+    end
+
     it "in bounds" do
-      expect(subject.in_bounds?(10, 10)).to be_true
+      expect(subject.in_bounds?(50, 50)).to eq(true)
     end
 
     it "out of bounds" do
-      expect(subject.in_bounds?(100, 100)).to be_false
+      expect(subject.in_bounds?(200, 200)).to eq(false)
     end
   end
 end
