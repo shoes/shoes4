@@ -2,16 +2,13 @@
 
 Shoes 4 : the next version of Shoes
 
-## Pre-alpha
+## Preview Version
 
-Hi there, thanks for checking by! Shoes 4 is still pre-alpha software. It currently supports almost all of the shoes DSL, but there are still some spots where you might get surprising results. If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
+Hi there, thanks for checking by! Shoes 4 is in the preview stage. It currently supports almost all of the shoes DSL, but there are still some unsupported spots and [known issues](https://github.com/shoes/shoes4/issues). We are now regularly releasing updated preview versions to [rubygems](http://rubygems.org/gems/shoes/versions/), for easy installation. If you're not too adventurous just yet you can still use the [old shoes](https://github.com/shoes/shoes)!
 
-There is a first [preview release](https://rubygems.org/gems/shoes/versions/4.0.0.pre1) now :)
+## Installing Shoes 4
 
-## Installing Shoes4
-
-There are two ways to get your hands on shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
-
+There are two ways to get your hands on Shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
 
 ### Get a JDK and JRuby
 
@@ -22,6 +19,8 @@ So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/
 **Important JRuby version note:** JRuby 1.7.14 and 1.7.15 have a bug where `bundle install` won't work with shoes4. Make sure to use JRuby 1.7.16 or JRuby-1.7.13 with shoes4.
     
 **JDK version note:** While shoes4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
+
+**SWT requirement:** Be aware that Shoes 4 builds on [SWT](http://www.eclipse.org/swt/) for its default backend. That is usually no concern (other than the need for JRuby/JDK, described above) as you do not have to install SWT yourself. However, that means we have the same basic system requirements SWT does. For Linux that means you need GTK+ >= 2.10 or >= 3.0 if you like. Moreover, as of now there is no ARM support (as the Raspberry Pi would need).
 
 ### Installing Shoes4 as a gem
 
