@@ -5,11 +5,11 @@ describe Shoes::Packager do
 
   it "creates packages" do
     expect(subject.backend).to receive(:create_package).and_call_original
-    subject.create_package("program", "package")
+    subject.create_package("program", "swt:app")
   end
 
   it "knows to run packaging if it created one" do
-    subject.create_package("program", "package")
+    subject.create_package("program", "swt:app")
     expect(subject.should_package?).to eq(true)
   end
 
