@@ -1,6 +1,6 @@
 class Shoes
   class Packager
-    attr_reader :packages
+    attr_reader :packages, :backend
 
     def initialize
       @backend = Shoes.configuration.backend_for(self)
