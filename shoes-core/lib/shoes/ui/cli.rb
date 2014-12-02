@@ -3,6 +3,8 @@ require 'shoes'
 
 class Shoes
   class CLI
+    attr_reader :packager
+
     def initialize
       @packager = Shoes::Packager.new
     end
