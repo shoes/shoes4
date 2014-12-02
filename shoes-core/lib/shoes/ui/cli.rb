@@ -51,7 +51,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
         exit(0)
       end
 
-      if @packager.run?
+      if @packager.should_package?
         @packager.run(args.shift)
       else
         execute_app(args.first)

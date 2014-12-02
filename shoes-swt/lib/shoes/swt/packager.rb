@@ -1,19 +1,15 @@
 class Shoes
   module Swt
     class Packager
-      def initialize(_dsl)
-        @packages = []
+      def initialize(dsl)
+        @dsl = dsl
       end
 
       def create_package(program_name, package)
         unless package =~ /^(swt):(app|jar)$/
           abort("#{program_name}: Can't package as '#{package}'. See '#{program_name} --help'")
         end
-        @packages << package.split(':')
-      end
-
-      def run?
-        @packages.any?
+        package.split(':')
       end
 
       def run(path)
@@ -23,7 +19,7 @@ class Shoes
         rescue Errno::ENOENT => e
           abort "shoes: #{e.message}"
         end
-        @packages.each do |backend, wrapper|
+        @dsl.packages.each do |backend, wrapper|
           puts "Packaging #{backend}:#{wrapper}..."
           packager = Furoshiki::Shoes.new(backend, wrapper, config)
           packager.package
