@@ -43,8 +43,8 @@ class Shoes
     def in_bounds?(x, y)
       dx = width / 2.0
       dy = height / 2.0
-      left - dx <= x && x <= element_right - dx &&
-        top - dy <= y && y <= element_bottom - dy
+      element_left - dx <= x && x <= element_right - dx &&
+        element_top - dy <= y && y <= element_bottom - dy
     end
   end
 end
