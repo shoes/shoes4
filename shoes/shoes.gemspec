@@ -20,8 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency "shoes-swt",  Shoes::VERSION
   s.add_dependency "shoes-manual", "~> 4.0.0", ">= 4.0.0"
 
-  # Strong chance all three of these should be someone else's dependency
-  s.add_dependency "furoshiki", "~> 0.1", ">=0.1.2"      # For packaging
-
   # shoes executables are actually installed from shoes-core
 end

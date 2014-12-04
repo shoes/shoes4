@@ -112,6 +112,8 @@ require 'shoes/swt/text_block/fitter'
 require 'shoes/swt/text_block/text_font_factory'
 require 'shoes/swt/text_block/text_style_factory'
 
+require 'shoes/swt/packager'
+
 require 'shoes/swt/tooling/leak_hunter' if ENV["LEAK_HUNTER"]
 
 # redrawing aspect needs to know all the classes
