@@ -27,6 +27,12 @@ Usage: #{opts.program_name} [-h] [-p package] file
           exit
         end
 
+        opts.on('-m', '--manual', 'Run the Shoes manual') do
+          require 'shoes/manual'
+          Shoes::Manual.run "English"
+          exit
+        end
+
         opts.separator @packager.help(opts.program_name)
       end
 

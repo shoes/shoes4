@@ -12,6 +12,11 @@ class Shoes
       @app = app
       @parent = parent
 
+      # Don't use param defaults as DSL explicit passes nil for missing params
+      points ||= 10
+      outer  ||= 100.0
+      inner  ||= 50.0
+
       # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
       width = outer * 2
 
@@ -38,7 +43,8 @@ class Shoes
     def in_bounds?(x, y)
       dx = width / 2.0
       dy = height / 2.0
-      left - dx <= x && x <= right - dx && top - dy <= y && y <= bottom - dy
+      element_left - dx <= x && x <= element_right - dx &&
+        element_top - dy <= y && y <= element_bottom - dy
     end
   end
 end

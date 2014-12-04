@@ -184,6 +184,9 @@ class Shoes
           segment
         end
 
+        # Splits the text into two pieces based on height. Allows one final
+        # line to exceed the requested height, which results in smoother
+        # flowing text between different sized fonts on a line.
         def split_text(layout, height)
           ending_offset = 0
           height_so_far = 0
@@ -191,9 +194,9 @@ class Shoes
           offsets = layout.line_offsets
           offsets[0...-1].each_with_index do |_, i|
             height_so_far += layout.line_bounds(i).height
-            break if height_so_far > height
-
             ending_offset = offsets[i + 1]
+
+            break if height_so_far > height
           end
           [layout.text[0...ending_offset], layout.text[ending_offset..-1]]
         end
