@@ -18,11 +18,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency "shoes-core", Shoes::VERSION
   s.add_dependency "shoes-swt",  Shoes::VERSION
+  s.add_dependency "shoes-manual", "~> 4.0.0", ">= 4.0.0"
 
   # Strong chance all three of these should be someone else's dependency
-  s.add_dependency "shoes-highlighter", "~> 1.0", ">= 1.0.0"
   s.add_dependency "furoshiki", "~> 0.1", ">=0.1.2"      # For packaging
-  s.add_dependency "nokogiri", "~> 1.6.4.1", ">=1.6.4.1" # For converting the manual to HTML
 
   # shoes executables are actually installed from shoes-core
 end
