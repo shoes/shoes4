@@ -14,7 +14,7 @@ class Shoes
       @style = opts
       @framerate = @style[:framerate] || 10
       @app = app
-      @blk = blk
+      @blk = @app.current_slot.create_block_bound_to_slot(blk)
       @current_frame = 0
       @stopped = false
       @gui = Shoes.configuration.backend_for(self, @app.gui)

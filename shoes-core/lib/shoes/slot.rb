@@ -53,6 +53,12 @@ class Shoes
       @app.current_slot = old_current_slot
     end
 
+    def create_block_bound_to_slot(blk)
+      Proc.new do |*args|
+        self.eval_block(blk, *args)
+      end
+    end
+
     def add_child(element)
       contents.add_element element
     end

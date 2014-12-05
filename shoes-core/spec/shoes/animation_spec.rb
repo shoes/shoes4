@@ -31,7 +31,8 @@ shared_examples_for Shoes::Animation do
 end
 
 describe Shoes::Animation do
-  let(:app) { double('app') }
+  let(:app) { double('app', current_slot: slot) }
+  let(:slot) { double('slot', create_block_bound_to_slot: block) }
   let(:app_gui) { double('app gui') }
   let(:opts) { {} }
   let(:block) { double('block') }
