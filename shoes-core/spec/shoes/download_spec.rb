@@ -8,14 +8,17 @@ describe Shoes::Download do
   let(:response_status) {["200", "OK"]}
   let(:response_headers) { { "content-length" => "42" }}
   let(:opts) { {save: "nasa50th.gif"} }
+
   subject(:download) { Shoes::Download.new app, parent, name, opts, &input_block }
 
   let(:percent) {download.percent}
   let(:length) {download.length}
   let(:content_length) {download.content_length}
 
+  let(:bound_block) { Proc.new {} }
+
   before do
-    allow(app.current_slot).to receive(:create_bound_block) { |blk| blk ? blk : nil }
+    expect(app.current_slot).to receive(:create_bound_block).at_least(1) { |blk| blk ? bound_block : nil }
 
     stub_request(:get, name)
       .to_return(:status => response_status, :body => response_body, :headers => response_headers)
@@ -76,7 +79,7 @@ describe Shoes::Download do
     context 'with content length' do
       it 'calls the progress proc from start, download and finish' do
         expect(download.gui).to have_received(:eval_block).
-                                  with(progress_proc, download).
+                                  with(bound_block, download).
                                   exactly(3).times
       end
     end
@@ -86,7 +89,7 @@ describe Shoes::Download do
 
       it 'does not call on progress, but called from content length and finish' do
         expect(download.gui).to have_received(:eval_block).
-          with(progress_proc, download).
+          with(bound_block, download).
           twice
       end
     end
@@ -104,7 +107,7 @@ describe Shoes::Download do
 
     context 'with a block' do
       it 'calls the block with a result' do
-        expect(download.gui).to have_received(:eval_block).with(input_block, result)
+        expect(download.gui).to have_received(:eval_block).with(bound_block, result)
       end
 
       describe 'response object' do
@@ -135,7 +138,7 @@ describe Shoes::Download do
       subject(:download) { Shoes::Download.new app, parent, name, opts }
 
       it 'calls the finish proc' do
-        expect(download.gui).to have_received(:eval_block).with(input_block, subject)
+        expect(download.gui).to have_received(:eval_block).with(bound_block, subject)
       end
     end
 

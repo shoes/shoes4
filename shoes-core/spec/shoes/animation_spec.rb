@@ -32,10 +32,11 @@ end
 
 describe Shoes::Animation do
   let(:app) { double('app', current_slot: slot) }
-  let(:slot) { double('slot', create_bound_block: block) }
+  let(:slot) { double('slot', create_bound_block: bound_block) }
   let(:app_gui) { double('app gui') }
   let(:opts) { {} }
   let(:block) { double('block') }
+  let(:bound_block) { double('bound block') }
   subject { Shoes::Animation.new( app, opts, block ) }
 
   before :each do
@@ -50,6 +51,10 @@ describe Shoes::Animation do
 
   it "sets current frame to 0" do
     expect(subject.current_frame).to eq(0)
+  end
+
+  it "calls through slot's context" do
+    expect(subject.blk).to eq(bound_block)
   end
 
   it { is_expected.not_to be_stopped }
