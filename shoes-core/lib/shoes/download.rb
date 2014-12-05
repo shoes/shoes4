@@ -16,11 +16,7 @@ class Shoes
     def initialize(app, _parent, url, opts = {}, &blk)
       @url = url
       @opts = opts
-
-      @slot = app.current_slot
-      @blk = @slot.create_block_bound_to_slot(blk)
-      @progress_blk = @slot.create_block_bound_to_slot(@opts[:progress])
-      @finish_blk = @slot.create_block_bound_to_slot(@opts[:finish])
+      initialize_blocks(app, blk)
 
       @gui = Shoes.configuration.backend_for(self)
 
@@ -28,6 +24,13 @@ class Shoes
       @finished = false
       @transferred = 0
       @content_length = 1 # non zero initialized to avoid Zero Div Errors
+    end
+
+    def initialize_blocks(app, blk)
+      slot = app.current_slot
+      @blk = slot.create_block_bound_to_slot(blk)
+      @progress_blk = slot.create_block_bound_to_slot(@opts[:progress])
+      @finish_blk = slot.create_block_bound_to_slot(@opts[:finish])
     end
 
     def start
