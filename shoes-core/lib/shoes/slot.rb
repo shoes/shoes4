@@ -55,7 +55,7 @@ class Shoes
 
     def create_bound_block(blk)
       Proc.new do |*args|
-        self.eval_block(blk, *args)
+        eval_block(blk, *args)
       end
     end
 

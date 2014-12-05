@@ -127,4 +127,17 @@ describe Shoes::Slot do
       subject.mouse_left
     end
   end
+
+  describe "create_bound_block" do
+    let(:callable) { double("block", call: nil) }
+    let(:block)    { Proc.new { callable.call(self) } }
+
+    it "calls within the slot's context" do
+      expect(subject).to receive(:eval_block).with(block)
+
+      bound = subject.create_bound_block(block)
+      bound.call
+    end
+
+  end
 end
