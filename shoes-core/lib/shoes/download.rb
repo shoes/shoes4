@@ -16,8 +16,12 @@ class Shoes
     def initialize(app, _parent, url, opts = {}, &blk)
       @url = url
       @opts = opts
+
       @slot = app.current_slot
-      @blk = blk
+      @blk = @slot.create_block_bound_to_slot(blk)
+      @progress_blk = @slot.create_block_bound_to_slot(@opts[:progress])
+      @finish_blk = @slot.create_block_bound_to_slot(@opts[:finish])
+
       @gui = Shoes.configuration.backend_for(self)
 
       @response = HttpResponse.new
@@ -63,7 +67,7 @@ class Shoes
       @thread = Thread.new do
         uri_opts = {}
         uri_opts[:content_length_proc] = content_length_proc
-        uri_opts[:progress_proc] = progress_proc if @opts[:progress]
+        uri_opts[:progress_proc] = progress_proc if @progress_blk
 
         open @url, uri_opts do |download_data|
           @response.body = download_data.read
@@ -78,7 +82,7 @@ class Shoes
     def content_length_proc
       lambda do |content_length|
         download_started(content_length)
-        eval_block(@opts[:progress], self) if @opts[:progress]
+        eval_block(@progress_blk, self)
       end
     end
 
@@ -88,7 +92,7 @@ class Shoes
            (size - transferred) > (content_length / UPDATE_STEPS) &&
            !@gui.busy?
           @gui.busy = true
-          eval_block(@opts[:progress], self)
+          eval_block(@progress_blk, self)
           @transferred = size
         end
       end
@@ -99,21 +103,16 @@ class Shoes
 
       # In case backend didn't catch the 100%
       @transferred = @content_length
-      eval_block(@opts[:progress], self) if @opts[:progress]
+      eval_block(@progress_blk, self)
 
       #:finish and block are the same
-      eval_block(@blk, self) if @blk
-      eval_block(@opts[:finish], self) if @opts[:finish]
+      eval_block(@blk, self)
+      eval_block(@finish_blk, self)
     end
 
     def eval_block(blk, result)
-      @gui.eval_block(wrap_block(blk), result)
-    end
-
-    def wrap_block(blk)
-      Proc.new do |*args|
-        @slot.eval_block(blk, *args)
-      end
+      return if blk.nil?
+      @gui.eval_block(blk, result)
     end
 
     def save_to_file(file_path)

@@ -15,6 +15,8 @@ describe Shoes::Download do
   let(:content_length) {download.content_length}
 
   before do
+    allow(app.current_slot).to receive(:create_block_bound_to_slot) { |blk| blk ? blk : nil }
+
     stub_request(:get, name)
       .to_return(:status => response_status, :body => response_body, :headers => response_headers)
   end
@@ -63,11 +65,10 @@ describe Shoes::Download do
   context 'with a progress proc' do
     let(:progress_proc) {Proc.new {}}
     let(:opts) { {save: "nasa50th.gif", progress: progress_proc} }
-    subject(:download) { Shoes::Download.new app, parent, name, opts}
+    subject(:download) {Shoes::Download.new app, parent, name, opts}
 
     before :each do
       allow(download.gui).to receive :eval_block
-      allow(download).to receive(:wrap_block) { progress_proc }
       download.start
       download.join_thread
     end
@@ -97,7 +98,6 @@ describe Shoes::Download do
 
     before :each do
       allow(download.gui).to receive(:eval_block)
-      allow(download).to receive(:wrap_block) { input_block }
       download.start
       download.join_thread
     end
@@ -132,7 +132,7 @@ describe Shoes::Download do
 
     context 'with a finish proc' do
       let(:opts) { {save: "nasa50th.gif", finish: input_block} }
-      subject(:download) { Shoes::Download.new app, parent, name, opts}
+      subject(:download) { Shoes::Download.new app, parent, name, opts }
 
       it 'calls the finish proc' do
         expect(download.gui).to have_received(:eval_block).with(input_block, subject)
