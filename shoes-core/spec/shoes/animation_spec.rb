@@ -32,7 +32,7 @@ end
 
 describe Shoes::Animation do
   let(:app) { double('app', current_slot: slot) }
-  let(:slot) { double('slot', create_block_bound_to_slot: block) }
+  let(:slot) { double('slot', create_bound_block: block) }
   let(:app_gui) { double('app gui') }
   let(:opts) { {} }
   let(:block) { double('block') }

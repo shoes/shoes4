@@ -28,9 +28,9 @@ class Shoes
 
     def initialize_blocks(app, blk)
       slot = app.current_slot
-      @blk = slot.create_block_bound_to_slot(blk)
-      @progress_blk = slot.create_block_bound_to_slot(@opts[:progress])
-      @finish_blk = slot.create_block_bound_to_slot(@opts[:finish])
+      @blk = slot.create_bound_block(blk)
+      @progress_blk = slot.create_bound_block(@opts[:progress])
+      @finish_blk = slot.create_bound_block(@opts[:finish])
     end
 
     def start

@@ -5,7 +5,7 @@ class Shoes
     def initialize(app, n = 1000, &blk)
       @app = app
       @n   = n
-      @blk = @app.current_slot.create_block_bound_to_slot(blk)
+      @blk = @app.current_slot.create_bound_block(blk)
       @gui = Shoes.configuration.backend_for(self, @app.gui, @blk)
     end
 

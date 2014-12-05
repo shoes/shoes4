@@ -15,7 +15,7 @@ describe Shoes::Download do
   let(:content_length) {download.content_length}
 
   before do
-    allow(app.current_slot).to receive(:create_block_bound_to_slot) { |blk| blk ? blk : nil }
+    allow(app.current_slot).to receive(:create_bound_block) { |blk| blk ? blk : nil }
 
     stub_request(:get, name)
       .to_return(:status => response_status, :body => response_body, :headers => response_headers)
