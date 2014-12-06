@@ -32,7 +32,8 @@ class Shoes
         end
 
         def move_textcursor(x, y)
-          textcursor.move(x, y)
+          height = textcursor.height
+          textcursor.move(x, y, x, y + height)
           textcursor.show
         end
 
