@@ -29,27 +29,31 @@ class Shoes
     end
 
     def left=(val)
-      @point_a.x < @point_b.x ? set_point_a(:x, val) : set_point_b(:x, val)
+      set_point_a(:x, val)
     end
 
     def right=(val)
-      @point_a.x > @point_b.x ? set_point_a(:x, val) : set_point_b(:x, val)
-    end
-
-    def top=(val)
-      @point_a.y < @point_b.y ? set_point_a(:y, val) : set_point_b(:y, val)
-    end
-
-    def bottom=(val)
-      @point_a.y > @point_b.y ? set_point_a(:y, val) : set_point_b(:y, val)
-    end
-
-    def x2=(val)
       set_point_b(:x, val)
     end
 
-    def y2=(val)
+    def top=(val)
+      set_point_a(:y, val)
+    end
+
+    def bottom=(val)
       set_point_b(:y, val)
+    end
+
+    alias_method :x2=, :right=
+    alias_method :y2=, :bottom=
+
+    def move(x, y, x2=nil, y2=nil)
+      @point_a.x = x
+      @point_a.y = y
+      @point_b.x = x2 if x2
+      @point_b.y = y2 if y2
+      enclosing_box_of_line
+      self
     end
 
     private
@@ -69,19 +73,12 @@ class Shoes
     end
 
     def enclosing_box_of_line
-      left = @point_a.left(@point_b)
-      top = @point_a.top(@point_b)
-      width = @point_a.width(@point_b)
-      height = @point_a.height(@point_b)
-      right = left + width
-      bottom = top + height
-
-      @dimensions = AbsoluteDimensions.new left:   left,
-                                           top:    top,
-                                           right:  right,
-                                           bottom: bottom,
-                                           width:  width,
-                                           height: height
+      @dimensions = AbsoluteDimensions.new left:   @point_a.x,
+                                           top:    @point_a.y,
+                                           right:  @point_b.x,
+                                           bottom: @point_b.y,
+                                           width:  @point_b.x - @point_a.x,
+                                           height: @point_b.y - @point_a.y
     end
   end
 end
