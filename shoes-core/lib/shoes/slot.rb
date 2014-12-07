@@ -46,11 +46,17 @@ class Shoes
       eval_block blk
     end
 
-    def eval_block(blk)
+    def eval_block(blk, *args)
       old_current_slot = @app.current_slot
       @app.current_slot = self
-      blk.call if blk
+      blk.call(*args) if blk
       @app.current_slot = old_current_slot
+    end
+
+    def create_bound_block(blk)
+      Proc.new do |*args|
+        eval_block(blk, *args)
+      end
     end
 
     def add_child(element)

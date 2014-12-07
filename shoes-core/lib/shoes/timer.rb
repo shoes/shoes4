@@ -3,7 +3,9 @@ class Shoes
     include Common::Inspect
 
     def initialize(app, n = 1000, &blk)
-      @app, @n, @blk = app, n, blk
+      @app = app
+      @n   = n
+      @blk = @app.current_slot.create_bound_block(blk)
       @gui = Shoes.configuration.backend_for(self, @app.gui, @blk)
     end
 
