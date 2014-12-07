@@ -1,4 +1,1 @@
-require 'tmpdir'
-require 'fileutils'
-
-require 'shoes/dsl'
+require 'shoes/core'
