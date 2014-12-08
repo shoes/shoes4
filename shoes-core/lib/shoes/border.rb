@@ -16,9 +16,5 @@ class Shoes
       @parent.add_child self
       @gui = Shoes.backend_for self
     end
-
-    def needs_to_be_positioned?
-      false
-    end
   end
 end

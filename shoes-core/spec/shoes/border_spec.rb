@@ -43,5 +43,4 @@ describe Shoes::Border do
   end
 
   it {is_expected.not_to be_takes_up_space}
-  it {is_expected.not_to be_needs_to_be_positioned}
 end

@@ -138,6 +138,49 @@ describe Shoes::Slot do
       bound = subject.create_bound_block(block)
       bound.call
     end
+  end
 
+  describe "compute_content_height" do
+    subject(:slot) { Shoes::Slot.new(app, parent) }
+
+    it "finds 0 without children" do
+      expect(compute_content_height).to eq(0)
+    end
+
+    describe "with children" do
+      let(:child) {
+        child_element = Shoes::FakeElement.new(subject, height: 100)
+        child_element.absolute_top = 0
+        child_element.gui = double('child gui').as_null_object
+        child_element
+      }
+
+      before do
+        subject.add_child(child)
+      end
+
+      it "finds height from child" do
+        expect(compute_content_height).to eq(100)
+      end
+
+      it "ignores unpositioned children" do
+        allow(child).to receive(:absolute_bottom) { nil }
+        expect(compute_content_height).to eq(0)
+      end
+
+      it "ignores hidden child" do
+        child.hide
+        expect(compute_content_height).to eq(0)
+      end
+
+      it "ignores child that doesn't take up space" do
+        allow(child).to receive(:takes_up_space?) { false }
+        expect(compute_content_height).to eq(0)
+      end
+    end
+
+    def compute_content_height
+      subject.send(:compute_content_height)
+    end
   end
 end
