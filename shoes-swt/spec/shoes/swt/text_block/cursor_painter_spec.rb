@@ -4,7 +4,7 @@ describe Shoes::Swt::TextBlock::CursorPainter do
   include_context "swt app"
 
   let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor, has_textcursor?: true) }
-  let(:textcursor) { double("textcursor", left:0, top: 0) }
+  let(:textcursor) { double("textcursor", left:0, top: 0, height: 10) }
   let(:segment_collection) { double('segment collection',
                                    cursor_height: 12,
                                    relative_text_position: 0)}
@@ -64,7 +64,9 @@ describe Shoes::Swt::TextBlock::CursorPainter do
           it "moves" do
             subject.draw
             expect(textcursor).to have_received(:move).with(left + position.x,
-                                                            top + position.y)
+                                                            top + position.y,
+                                                            left + position.x,
+                                                            top + position.y + textcursor.height)
             expect(textcursor).to have_received(:show)
           end
 
@@ -88,7 +90,9 @@ describe Shoes::Swt::TextBlock::CursorPainter do
           it "moves" do
             subject.draw
             expect(textcursor).to have_received(:move).with(left + position.x,
-                                                            top + 100 + position.y)
+                                                            top + 100 + position.y,
+                                                            left + position.x,
+                                                            top + 100 + position.y + textcursor.height)
             expect(textcursor).to have_received(:show)
           end
 

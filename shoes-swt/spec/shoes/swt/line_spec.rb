@@ -17,11 +17,6 @@ describe Shoes::Swt::Line do
     its(:dsl) { is_expected.to be(dsl) }
   end
 
-  it "properly disposes" do
-    expect(subject.transform).to receive(:dispose)
-    subject.dispose
-  end
-
   it_behaves_like "paintable"
   it_behaves_like "updating visibility"
   it_behaves_like "clickable backend"
@@ -41,8 +36,7 @@ describe Shoes::Swt::Line do
     it_behaves_like "stroke painter"
 
     specify "draws line" do
-      # coords as if drawn in box at (0,0)
-      expect(gc).to receive(:draw_line).with(0, 90, 290, 0)
+      expect(gc).to receive(:draw_line).with(10, 100, 300, 10)
       subject.paint_control(event)
     end
   end
