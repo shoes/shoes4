@@ -363,11 +363,12 @@ describe Shoes::Dimension do
       parent.margin_end   = margin
     end
 
-    describe 'it takes its parent values if no values are set' do
-      its(:start) {should eq parent_start}
+    describe 'it takes some parent values if no values are set' do
+      its(:start)  {should eq parent_start}
       its(:extent) {should eq parent_extent}
-      its(:margin_start) {should eq margin}
-      its(:margin_end) {should eq margin}
+
+      its(:margin_start) {should eq 0}
+      its(:margin_end)   {should eq 0}
 
       context 'with parent absolute_start set' do
         before :each do
@@ -375,8 +376,8 @@ describe Shoes::Dimension do
         end
 
         its(:absolute_start) {should eq 11}
-        its(:element_start) {should eq parent.element_start}
-        its(:element_end) {should eq parent.element_end}
+        its(:element_start)  {should eq parent.absolute_start}
+        its(:element_end)    {should eq parent.absolute_end}
       end
     end
 
