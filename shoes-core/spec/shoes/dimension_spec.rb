@@ -402,6 +402,28 @@ describe Shoes::Dimension do
         expect(subject.extent).to be_within(ONE_PIXEL).of(0.8 * parent.element_extent)
       end
     end
+
+    describe 'it obeys parent bounds' do
+      let(:parent_dimension) { double 'parent_dimension',
+                                  element_start:  10,
+                                  element_end:    20,
+                                  absolute_start: 10,
+                                  absolute_end:   20,
+                                  extent:         10,
+                                  element_extent: 10 }
+
+      subject {Shoes::ParentDimension.new parent_dimension}
+
+      it "can't extend beyond parent" do
+        subject.absolute_start = 15
+        expect(subject.extent).to eq(6)
+      end
+
+      it "can't start before parent" do
+        subject.absolute_start = 5
+        expect(subject.extent).to eq(16)
+      end
+    end
   end
 
 end

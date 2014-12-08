@@ -218,7 +218,7 @@ class Shoes
   end
 
   class ParentDimension < Dimension
-    SIMPLE_DELEGATE_METHODS = [:extent, :absolute_start, :start]
+    SIMPLE_DELEGATE_METHODS = [:absolute_start, :start]
 
     SIMPLE_DELEGATE_METHODS.each do |method|
       define_method method do
@@ -226,6 +226,22 @@ class Shoes
           super
         else
           parent.public_send(method)
+        end
+      end
+    end
+
+    def extent
+      if value_modified? :extent
+        if parent.absolute_end
+          [parent.absolute_end - absolute_start + 1, super].min
+        else
+          super
+        end
+      else
+        if parent.absolute_end
+          parent.absolute_end - absolute_start + 1
+        else
+          parent.extent
         end
       end
     end
