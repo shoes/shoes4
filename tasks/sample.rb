@@ -24,8 +24,9 @@ namespace :samples do
     system "bin/shoes #{sample_name}"
   end
 
-  def run_samples(samples)
+  def run_samples(samples, start_with=0)
     samples.each_with_index do |sample, index|
+      next unless index >= start_with
       run_sample(sample, index, samples.size)
     end
   end
@@ -37,9 +38,9 @@ namespace :samples do
   end
 
   desc "Run all working samples in alphabetical order"
-  task :good do |t|
+  task :good, [:start_with] do |t, args|
     puts t.comment
-    run_samples working_samples.sort
+    run_samples working_samples.sort, args[:start_with].to_i
   end
 
   desc "Run all non-working samples in random order"
