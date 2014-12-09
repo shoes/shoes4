@@ -105,4 +105,10 @@ namespace :spec do
   task :shoes, [:module] do |t, args|
     Rake::Task['spec:dsl'].invoke(args[:module])
   end
+
+  desc "Run specs for Shoes packaging"
+  task :package do
+    files = Dir['shoes-package/spec/**/*_spec.rb'].join ' '
+    jruby_rspec(files, {})
+  end
 end
