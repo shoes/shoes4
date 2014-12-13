@@ -218,8 +218,7 @@ class Shoes
   end
 
   class ParentDimension < Dimension
-    SIMPLE_DELEGATE_METHODS = [:extent, :absolute_start, :margin_start,
-                               :margin_end, :start]
+    SIMPLE_DELEGATE_METHODS = [:extent, :absolute_start, :start]
 
     SIMPLE_DELEGATE_METHODS.each do |method|
       define_method method do
