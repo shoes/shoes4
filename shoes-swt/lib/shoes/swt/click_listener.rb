@@ -42,12 +42,18 @@ class Shoes
           select { |dsl, _| !dsl.respond_to?(:hidden?) || !dsl.hidden? }.
           select { |dsl, _| dsl.in_bounds?(event.x, event.y) }
 
-        _, block = handlers.last
-        eval_block(event, block)
+        dsl, block = handlers.last
+        eval_block(event, dsl, block)
       end
 
-      def eval_block(event, block)
-        block.call unless block.nil?
+      def eval_block(event, dsl, block)
+        return if block.nil?
+
+        if dsl.pass_coordinates?
+          block.call event.button, event.x, event.y
+        else
+          block.call(dsl)
+        end
       end
     end
   end

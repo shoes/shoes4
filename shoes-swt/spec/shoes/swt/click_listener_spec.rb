@@ -3,7 +3,7 @@ require 'shoes/swt/spec_helper'
 describe Shoes::Swt::ClickListener do
   include_context 'swt app'
 
-  let(:dsl) { double('dsl') }
+  let(:dsl) { double('dsl', pass_coordinates?: false) }
   let(:swt) { double('swt', dsl: dsl) }
 
   let(:click_block)   { double("click block", call: nil) }
@@ -100,7 +100,7 @@ describe Shoes::Swt::ClickListener do
       end
 
       it "takes the last element to respond" do
-        other_dsl = double("other dsl", in_bounds?: true)
+        other_dsl = double("other dsl", in_bounds?: true, pass_coordinates?: false)
         other_swt = double("other swt", dsl: other_dsl)
         other_block = double("other block", call: nil)
 
@@ -120,6 +120,22 @@ describe Shoes::Swt::ClickListener do
         subject.handle_event(event)
 
         expect(block).to_not have_received(:call)
+      end
+
+      it "passes dsl along by default to event" do
+        event = double(type: event_type, x: 10, y: 10)
+        subject.handle_event(event)
+
+        expect(block).to have_received(:call).with(dsl)
+      end
+
+      it "can pass coordinates if requested" do
+        allow(dsl).to receive(:pass_coordinates?) { true }
+
+        event = double(type: event_type, x: 10, y: 10, button: 1)
+        subject.handle_event(event)
+
+        expect(block).to have_received(:call).with(1, 10, 10)
       end
     end
 
