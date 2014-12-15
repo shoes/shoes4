@@ -15,22 +15,15 @@ describe Shoes::Swt::Common::Remove do
     end
   }
 
-  let(:app)  { double("app", clickable_elements: clickable_elements) }
+  let(:app)  { double("app", click_listener: click_listener) }
   let(:dsl)  { double("dsl") }
-  let(:clickable_elements) { [dsl] }
+  let(:click_listener) { double("click listener") }
 
   subject { clazz.new(app, dsl) }
 
   before do
     expect(app).to receive(:remove_paint_listener)
-    expect(app).to receive(:remove_listener).at_least(:once)
-  end
-
-  describe "remove" do
-    it "cleans up clickable element" do
-      subject.remove
-      expect(clickable_elements).to be_empty
-    end
+    expect(click_listener).to receive(:remove_listeners_for).at_least(:once)
   end
 
   describe "real disposal" do

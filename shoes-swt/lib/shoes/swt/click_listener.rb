@@ -26,10 +26,10 @@ class Shoes
         @releases[swt.dsl] = block
       end
 
-      def remove_listeners_for(swt)
-        @clickable_elements.delete(swt.dsl)
-        @clicks.delete(swt.dsl)
-        @releases.delete(swt.dsl)
+      def remove_listeners_for(dsl)
+        @clickable_elements.delete(dsl)
+        @clicks.delete(dsl)
+        @releases.delete(dsl)
       end
 
       def add_clickable_element(dsl)

@@ -1,11 +1,17 @@
 shared_examples_for "removable" do
+  let(:click_listener) { double("click listener", remove_listeners_for: nil) }
+
+  before do
+    allow(swt_app).to receive(:click_listener) { click_listener }
+  end
+
   it "should respond to remove" do
     expect(subject).to respond_to :remove
   end
 
   it "should remove paint listener" do
     expect(swt_app).to receive(:remove_paint_listener)
-    expect(swt_app).to receive(:remove_listener).at_least(2).times
+    expect(click_listener).to receive(:remove_listeners_for)
     subject.remove
   end
 
@@ -21,19 +27,23 @@ shared_examples_for "removable" do
 end
 
 shared_examples_for "removable native element" do
+  let(:click_listener) { double("click listener", remove_listeners_for: nil) }
+
+  before do
+    allow(swt_app).to receive(:click_listener) { click_listener }
+  end
+
   it "should respond to remove" do
     expect(subject).to respond_to :remove
   end
 
   it "should dispose real when real is not disposed" do
-    allow(swt_app).to receive(:remove_listener)
     allow(real).to receive(:disposed?) { false }
     expect(real).to receive(:dispose)
     subject.remove
   end
 
   it "should not dispose real when real is already disposed" do
-    allow(swt_app).to receive(:remove_listener)
     allow(real).to receive(:disposed?) { true }
     expect(real).not_to receive(:dispose)
     subject.remove

@@ -9,6 +9,14 @@ describe Shoes::Swt::Link do
 
   its(:dsl) {is_expected.to eq dsl}
 
+  let(:click_listener) {
+    double("listener", add_click_listener: nil, add_release_listener: nil)
+  }
+
+  before do
+    allow(swt_app).to receive(:click_listener) { click_listener }
+  end
+
   it_behaves_like "clickable backend"
 
   context "creating link segments" do
@@ -20,13 +28,6 @@ describe Shoes::Swt::Link do
                                 get_location: double("position", x: 0, y: 0),
                                 element_left: 0, element_top: 0,
                                 layout: inner_layout) }
-
-    before(:each) do
-      allow(shoes_app).to receive(:add_listener)
-      allow(shoes_app).to receive(:add_clickable_element)
-
-      allow(swt_app).to receive(:clickable_elements) { [] }
-    end
 
     it "clears existing" do
       subject.link_segments << double("segment")
@@ -43,7 +44,7 @@ describe Shoes::Swt::Link do
     end
 
     it "clears links" do
-      expect(swt_app).to receive(:remove_listener)
+      expect(swt_app.click_listener).to receive(:remove_listeners_for).with(subject)
 
       subject.create_links_in([[layout, 0..10]])
       subject.remove

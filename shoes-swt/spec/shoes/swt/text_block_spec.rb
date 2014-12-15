@@ -11,6 +11,14 @@ describe Shoes::Swt::TextBlock do
                      margin_top: 0, margin_bottom: 0,
                      pass_coordinates?: nil).as_null_object }
 
+  let(:click_listener) { double("click listener",
+                                add_click_listener: nil,
+                                remove_listeners_for: nil) }
+
+  before do
+    allow(swt_app).to receive(:click_listener) { click_listener }
+  end
+
   subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 
   it_behaves_like "paintable"
@@ -117,8 +125,6 @@ describe Shoes::Swt::TextBlock do
         end
 
         it "should dispose all segments on remove" do
-          allow(swt_app).to receive(:remove_listener)
-
           expect(segment).to receive(:dispose).at_least(1).times
           expect(second_segment).to receive(:dispose).at_least(1).times
 
@@ -169,7 +175,6 @@ describe Shoes::Swt::TextBlock do
 
     before(:each) do
       allow(dsl).to receive(:links) { [link] }
-      allow(swt_app).to receive(:remove_listener)
     end
 
     it "clears links" do

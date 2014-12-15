@@ -43,7 +43,7 @@ describe Shoes::Swt::ClickListener do
 
   describe "removing" do
     it "removes safely when not added" do
-      subject.remove_listeners_for(swt)
+      subject.remove_listeners_for(dsl)
       expect(subject.clickable_elements).to be_empty
     end
 
@@ -51,7 +51,7 @@ describe Shoes::Swt::ClickListener do
       subject.add_click_listener(swt, click_block)
       subject.add_release_listener(swt, release_block)
 
-      subject.remove_listeners_for(swt)
+      subject.remove_listeners_for(dsl)
 
       expect(subject.clickable_elements).to be_empty
     end
