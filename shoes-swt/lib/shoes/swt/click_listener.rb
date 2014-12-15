@@ -36,13 +36,18 @@ class Shoes
         @clickable_elements << dsl unless @clickable_elements.include?(dsl)
       end
 
-      def handleEvent(event)
+      def handle_event(event)
         handlers = event.type == ::Swt::SWT::MouseDown ? @clicks : @releases
-        candidates = handlers.to_a.select do |dsl, _|
+        handlers = handlers.to_a
+        candidates = handlers.select do |dsl, _|
           dsl.in_bounds?(event.x, event.y)
         end
 
         _, block = candidates.last
+        eval_block(event, block)
+      end
+
+      def eval_block(event, block)
         block.call unless block.nil?
       end
     end

@@ -69,21 +69,21 @@ describe Shoes::Swt::ClickListener do
     shared_examples_for "mouse event" do
       it "triggers" do
         event = double(type: event_type, x: 10, y: 10)
-        subject.handleEvent(event)
+        subject.handle_event(event)
 
         expect(block).to have_received(:call)
       end
 
       it "doesn't trigger other block" do
         event = double(type: event_type, x: 10, y: 10)
-        subject.handleEvent(event)
+        subject.handle_event(event)
 
         expect(other_block).to_not have_received(:call)
       end
 
       it "doesn't trigger click out of bounds" do
         event = double(type: event_type, x: 20, y: 10)
-        subject.handleEvent(event)
+        subject.handle_event(event)
 
         expect(block).to_not have_received(:call)
       end
@@ -93,7 +93,7 @@ describe Shoes::Swt::ClickListener do
         subject.send(add_method, swt, another_block)
 
         event = double(type: event_type, x: 10, y: 10)
-        subject.handleEvent(event)
+        subject.handle_event(event)
 
         expect(block).to_not     have_received(:call)
         expect(another_block).to have_received(:call)
@@ -107,7 +107,7 @@ describe Shoes::Swt::ClickListener do
         subject.send(add_method, other_swt, other_block)
 
         event = double(type: event_type, x: 10, y: 10)
-        subject.handleEvent(event)
+        subject.handle_event(event)
 
         expect(block).to_not   have_received(:call)
         expect(other_block).to have_received(:call)
