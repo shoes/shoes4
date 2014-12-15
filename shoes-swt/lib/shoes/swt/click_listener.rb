@@ -38,12 +38,11 @@ class Shoes
 
       def handle_event(event)
         handlers = event.type == ::Swt::SWT::MouseDown ? @clicks : @releases
-        handlers = handlers.to_a
-        candidates = handlers.select do |dsl, _|
-          dsl.in_bounds?(event.x, event.y)
-        end
+        handlers = handlers.to_a.
+          select { |dsl, _| !dsl.respond_to?(:hidden?) || !dsl.hidden? }.
+          select { |dsl, _| dsl.in_bounds?(event.x, event.y) }
 
-        _, block = candidates.last
+        _, block = handlers.last
         eval_block(event, block)
       end
 

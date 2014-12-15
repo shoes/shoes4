@@ -112,6 +112,15 @@ describe Shoes::Swt::ClickListener do
         expect(block).to_not   have_received(:call)
         expect(other_block).to have_received(:call)
       end
+
+      it "won't call on hidden elements" do
+        allow(dsl).to receive(:hidden?) { true }
+
+        event = double(type: event_type, x: 10, y: 10)
+        subject.handle_event(event)
+
+        expect(block).to_not have_received(:call)
+      end
     end
 
     it_behaves_like "mouse event" do
