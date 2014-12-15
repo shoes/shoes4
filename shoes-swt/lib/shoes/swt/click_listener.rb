@@ -26,6 +26,12 @@ class Shoes
         @releases[swt.dsl] = block
       end
 
+      def remove_listeners_for(swt)
+        @clickable_elements.delete(swt.dsl)
+        @clicks.delete(swt.dsl)
+        @releases.delete(swt.dsl)
+      end
+
       def add_clickable_element(dsl)
         @clickable_elements << dsl unless @clickable_elements.include?(dsl)
       end
