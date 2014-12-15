@@ -10,16 +10,20 @@ class Shoes
 
       def initialize(swt_app)
         @clickable_elements = []
+        @clicks   = {}
+        @releases = {}
         swt_app.add_listener ::Swt::SWT::MouseDown, self
         swt_app.add_listener ::Swt::SWT::MouseUp, self
       end
 
-      def add_click_listener(swt)
+      def add_click_listener(swt, block)
         add_clickable_element(swt.dsl)
+        @clicks[swt.dsl] = block
       end
 
-      def add_release_listener(swt)
+      def add_release_listener(swt, block)
         add_clickable_element(swt.dsl)
+        @releases[swt.dsl] = block
       end
 
       def add_clickable_element(dsl)
@@ -27,6 +31,13 @@ class Shoes
       end
 
       def handleEvent(event)
+        handlers = event.type == ::Swt::SWT::MouseDown ? @clicks : @releases
+        candidates = handlers.to_a.select do |dsl, _|
+          dsl.in_bounds?(event.x, event.y)
+        end
+
+        _, block = candidates.last
+        block.call unless block.nil?
       end
     end
   end
