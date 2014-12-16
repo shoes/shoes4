@@ -659,7 +659,6 @@ describe Shoes::Dimensions do
 
   end
 
-  it {is_expected.to be_needs_to_be_positioned}
   it {is_expected.to be_takes_up_space}
 
   describe 'left/top/right/bottom not set so get them relative to parent' do

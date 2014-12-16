@@ -38,16 +38,5 @@ describe Shoes::Background do
     it_behaves_like "object with negative dimensions"
   end
 
-  describe '#needs_to_be_positioned?' do
-    context 'without absolute dimensions' do
-      let(:input_opts) {{}}
-      it {is_expected.not_to be_needs_to_be_positioned}
-    end
-
-    context 'with absolute dimensions' do
-      it {is_expected.to be_needs_to_be_positioned}
-    end
-  end
-
   it {is_expected.not_to be_takes_up_space}
 end
