@@ -143,7 +143,6 @@ class Shoes
     end
 
     def positioning(element, current_position)
-      return current_position unless element.needs_to_be_positioned?
       position_element element, current_position
       element.contents_alignment(current_position) if element.respond_to? :contents_alignment
       if element.takes_up_space?
@@ -241,9 +240,12 @@ class Shoes
     end
 
     def compute_content_height
-      max_bottom = contents.reject(&:hidden?)
-                   .map(&:absolute_bottom)
-                   .max
+      max_bottom = contents.
+                    select(&:takes_up_space?).
+                    reject(&:hidden?).
+                    map(&:absolute_bottom).
+                    max
+
       if max_bottom
         max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
       else

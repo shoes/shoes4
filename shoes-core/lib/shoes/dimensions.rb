@@ -91,12 +91,6 @@ class Shoes
       self.margin_right, self.margin_bottom =  margin
     end
 
-    # used by positioning code in slot and there to be overwritten if something
-    # does not need to be positioned like a background or so
-    def needs_to_be_positioned?
-      true
-    end
-
     def takes_up_space?
       true
     end
