@@ -231,19 +231,30 @@ class Shoes
     end
 
     def extent
-      if value_modified? :extent
-        if parent.absolute_end
-          [parent.absolute_end - absolute_start + 1, super].min
-        else
-          super
-        end
+      if parent.element_end
+        # Why subtracting an absolute from an element dimension value? A
+        # diagram helped me reason out what we wanted.
+        #
+        # parent.      parent.      self.       self.    parent.      parent.
+        # abs_start    elem_start   abs_start   abs_end  elem_end     abs_end
+        # |   margin   |            |           |        |   margin   |
+        #
+        # To get our extent respecting the parent's margins, it's our absolute
+        # start, minus parent's element end (so we don't blow past the margin)
+        extent_in_parent = parent.element_end - self.absolute_start - PIXEL_COUNTING_ADJUSTMENT
       else
-        if parent.absolute_end
-          parent.absolute_end - absolute_start + 1
-        else
-          parent.extent
-        end
+        # If we hit this, then the extent in parent isn't available and will be
+        # ignored by the min call below
+        extent_in_parent = Float::INFINITY
       end
+
+      if value_modified? :extent
+        my_extent = super
+      else
+        my_extent = parent.extent
+      end
+
+      [extent_in_parent, my_extent].min
     end
 
     private

@@ -373,11 +373,14 @@ describe Shoes::Dimension do
       context 'with parent absolute_start set' do
         before :each do
           parent.absolute_start = 11
+
+          # This would be set by positioning code
+          subject.absolute_start = parent.absolute_start + margin
         end
 
-        its(:absolute_start) {should eq 11}
-        its(:element_start)  {should eq parent.absolute_start}
-        its(:element_end)    {should eq parent.absolute_end}
+        its(:absolute_start) {should eq parent.absolute_start + margin}
+        its(:element_start)  {should eq parent.absolute_start + margin}
+        its(:element_end)    {should eq parent.element_end}
       end
     end
 
@@ -421,7 +424,7 @@ describe Shoes::Dimension do
 
       it "can't start before parent" do
         subject.absolute_start = 5
-        expect(subject.extent).to eq(16)
+        expect(subject.extent).to eq(10)
       end
     end
   end

@@ -13,8 +13,8 @@ describe Shoes::Background do
   subject(:background) { Shoes::Background.new(app, parent, blue, input_opts) }
 
   before do
-    parent.height = height
-    parent.width  = width
+    parent.height = height + 2
+    parent.width  = width + 2
   end
 
   it "retains app" do
