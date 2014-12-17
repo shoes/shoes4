@@ -231,6 +231,13 @@ class Shoes
     end
 
     def extent
+      [extent_in_parent, raw_extent(super)].min
+    end
+
+    private
+
+    # Represents the extent, bounded by the parent container's sizing
+    def extent_in_parent
       if parent.element_end
         # Why subtracting an absolute from an element dimension value? A
         # diagram helped me reason out what we wanted.
@@ -247,17 +254,12 @@ class Shoes
         # ignored by the min call below
         extent_in_parent = Float::INFINITY
       end
-
-      if value_modified? :extent
-        my_extent = super
-      else
-        my_extent = parent.extent
-      end
-
-      [extent_in_parent, my_extent].min
     end
 
-    private
+    # Represents the raw value set for extent, either on element or on parent
+    def raw_extent(original_value)
+      original_value || parent.extent
+    end
 
     def value_modified?(method)
       instance_variable = ('@' + method.to_s).to_sym
