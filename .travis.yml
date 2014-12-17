@@ -31,9 +31,11 @@ before_script:
   - "export SWT_GTK3=0"
   - "sh -e /etc/init.d/xvfb start"
   - "sleep 3"
+  - "bundle update" # recommended for caching for now see #981 for info
 after_script:
   - find -name '*.log' -exec cat {} \;
 sudo: false # new build environment
+cache: bundler
 addons:
   code_climate:
     repo_token: 45d4f3c5c1de9031011acf4c3c85867f152cea4200c61f3b69d881bcf2794e9f
