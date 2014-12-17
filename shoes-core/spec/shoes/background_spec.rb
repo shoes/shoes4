@@ -12,6 +12,11 @@ describe Shoes::Background do
   let(:input_opts){ {left: left, top: top, width: width, height: height, color: blue} }
   subject(:background) { Shoes::Background.new(app, parent, blue, input_opts) }
 
+  before do
+    parent.height = height + 2
+    parent.width  = width + 2
+  end
+
   it "retains app" do
     expect(background.app).to eq(app)
   end

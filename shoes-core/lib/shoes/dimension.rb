@@ -218,7 +218,7 @@ class Shoes
   end
 
   class ParentDimension < Dimension
-    SIMPLE_DELEGATE_METHODS = [:extent, :absolute_start, :start]
+    SIMPLE_DELEGATE_METHODS = [:absolute_start, :start]
 
     SIMPLE_DELEGATE_METHODS.each do |method|
       define_method method do
@@ -230,7 +230,36 @@ class Shoes
       end
     end
 
+    def extent
+      [extent_in_parent, raw_extent(super)].min
+    end
+
     private
+
+    # Represents the extent, bounded by the parent container's sizing
+    def extent_in_parent
+      if parent.element_end
+        # Why subtracting an absolute from an element dimension value? A
+        # diagram helped me reason out what we wanted.
+        #
+        # parent.      parent.      self.       self.    parent.      parent.
+        # abs_start    elem_start   abs_start   abs_end  elem_end     abs_end
+        # |   margin   |            |           |        |   margin   |
+        #
+        # To get our extent respecting the parent's margins, it's our absolute
+        # start, minus parent's element end (so we don't blow past the margin)
+        extent_in_parent = parent.element_end - self.absolute_start - PIXEL_COUNTING_ADJUSTMENT
+      else
+        # If we hit this, then the extent in parent isn't available and will be
+        # ignored by the min call below
+        extent_in_parent = Float::INFINITY
+      end
+    end
+
+    # Represents the raw value set for extent, either on element or on parent
+    def raw_extent(original_value)
+      original_value || parent.extent
+    end
 
     def value_modified?(method)
       instance_variable = ('@' + method.to_s).to_sym
