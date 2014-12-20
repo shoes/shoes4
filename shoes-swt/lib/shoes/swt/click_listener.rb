@@ -48,7 +48,11 @@ class Shoes
           select { |dsl, _| !dsl.respond_to?(:hidden?) || !dsl.hidden? }.
           select { |dsl, _| dsl.in_bounds?(event.x, event.y) }
 
+        # Take the last handler as an approximation of the "top-most" element
+        # since we don't have a true z-index. For layouts that aren't too
+        # dynamic this is sufficient to give the behavior we want.
         dsl, block = handlers.last
+
         eval_block(event, dsl, block)
       end
 
