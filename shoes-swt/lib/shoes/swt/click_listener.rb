@@ -37,7 +37,13 @@ class Shoes
       end
 
       def handle_event(event)
-        handlers = event.type == ::Swt::SWT::MouseDown ? @clicks : @releases
+        handlers = case event.type
+          when ::Swt::SWT::MouseDown then @clicks
+          when ::Swt::SWT::MouseUp   then @releases
+          else nil
+        end
+        return if handlers.nil? || handlers.empty?
+
         handlers = handlers.to_a.
           select { |dsl, _| !dsl.respond_to?(:hidden?) || !dsl.hidden? }.
           select { |dsl, _| dsl.in_bounds?(event.x, event.y) }

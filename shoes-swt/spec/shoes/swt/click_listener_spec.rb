@@ -135,6 +135,13 @@ describe Shoes::Swt::ClickListener do
 
         expect(block).to have_received(:call).with(1, 10, 10)
       end
+
+      it "ignores incorrect event types" do
+        event = double(type: ::Swt::SWT::KeyDown, x: 10, y: 10)
+        subject.handle_event(event)
+
+        expect(block).to_not have_received(:call)
+      end
     end
 
     it_behaves_like "mouse event" do
