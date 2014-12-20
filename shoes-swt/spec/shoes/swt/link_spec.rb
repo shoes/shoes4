@@ -9,14 +9,6 @@ describe Shoes::Swt::Link do
 
   its(:dsl) {is_expected.to eq dsl}
 
-  let(:click_listener) {
-    double("listener", add_click_listener: nil, add_release_listener: nil)
-  }
-
-  before do
-    allow(swt_app).to receive(:click_listener) { click_listener }
-  end
-
   it_behaves_like "clickable backend"
 
   context "creating link segments" do

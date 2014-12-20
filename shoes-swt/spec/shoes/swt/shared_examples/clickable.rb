@@ -1,12 +1,4 @@
 shared_examples 'clickable backend' do
-  let(:click_listener) {
-    double("listener", add_click_listener: nil, add_release_listener: nil)
-  }
-
-  before do
-    allow(swt_app).to receive(:click_listener) { click_listener }
-  end
-
   describe 'interaction with the swt app object' do
     it 'adds a listener for the MouseDown event when click is called' do
       subject.click Proc.new {}

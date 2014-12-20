@@ -11,14 +11,6 @@ describe Shoes::Swt::TextBlock do
                      margin_top: 0, margin_bottom: 0,
                      pass_coordinates?: nil).as_null_object }
 
-  let(:click_listener) { double("click listener",
-                                add_click_listener: nil,
-                                remove_listeners_for: nil) }
-
-  before do
-    allow(swt_app).to receive(:click_listener) { click_listener }
-  end
-
   subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 
   it_behaves_like "paintable"

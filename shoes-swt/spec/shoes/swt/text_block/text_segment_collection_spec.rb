@@ -22,13 +22,6 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     }
   }
 
-  let(:click_listener) { double("click listener",
-                                add_click_listener: nil,
-                                remove_listeners_for: nil) }
-  before do
-    allow(swt_app).to receive(:click_listener) { click_listener }
-  end
-
   describe "with one segment" do
     subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
                                                          [first_segment],

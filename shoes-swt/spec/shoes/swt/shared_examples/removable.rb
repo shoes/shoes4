@@ -1,10 +1,4 @@
 shared_examples_for "removable" do
-  let(:click_listener) { double("click listener", remove_listeners_for: nil) }
-
-  before do
-    allow(swt_app).to receive(:click_listener) { click_listener }
-  end
-
   it "should respond to remove" do
     expect(subject).to respond_to :remove
   end
@@ -27,12 +21,6 @@ shared_examples_for "removable" do
 end
 
 shared_examples_for "removable native element" do
-  let(:click_listener) { double("click listener", remove_listeners_for: nil) }
-
-  before do
-    allow(swt_app).to receive(:click_listener) { click_listener }
-  end
-
   it "should respond to remove" do
     expect(subject).to respond_to :remove
   end
