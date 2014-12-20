@@ -13,11 +13,6 @@ shared_examples 'clickable backend' do
       expect(click_listener).to have_received(:add_click_listener).at_least(1)
     end
 
-    it 'adds a listener for MouseDown on clickable call' do
-      subject.clickable subject, Proc.new {}
-      expect(click_listener).to have_received(:add_click_listener).at_least(1)
-    end
-
     it 'adds a listener for the MouseUp event when release is called' do
       subject.release Proc.new {}
       expect(click_listener).to have_received(:add_release_listener).at_least(1)
