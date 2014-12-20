@@ -4,7 +4,6 @@ describe Shoes::Swt::ClickListener do
   include_context 'swt app'
 
   let(:dsl) { double('dsl', pass_coordinates?: false) }
-  let(:swt) { double('swt', dsl: dsl) }
 
   let(:click_block)   { double("click block", call: nil) }
   let(:release_block) { double("release block", call: nil) }
@@ -25,18 +24,18 @@ describe Shoes::Swt::ClickListener do
 
   describe "adding listeners" do
     it "adds a click listener" do
-      subject.add_click_listener(swt, click_block)
+      subject.add_click_listener(dsl, click_block)
       expect(subject.clickable_elements).to eq([dsl])
     end
 
     it "adds a release listener" do
-      subject.add_release_listener(swt, release_block)
+      subject.add_release_listener(dsl, release_block)
       expect(subject.clickable_elements).to eq([dsl])
     end
 
     it "only reports each element once" do
-      subject.add_click_listener(swt, click_block)
-      subject.add_release_listener(swt, release_block)
+      subject.add_click_listener(dsl, click_block)
+      subject.add_release_listener(dsl, release_block)
       expect(subject.clickable_elements).to eq([dsl])
     end
   end
@@ -48,8 +47,8 @@ describe Shoes::Swt::ClickListener do
     end
 
     it "removes element" do
-      subject.add_click_listener(swt, click_block)
-      subject.add_release_listener(swt, release_block)
+      subject.add_click_listener(dsl, click_block)
+      subject.add_release_listener(dsl, release_block)
 
       subject.remove_listeners_for(dsl)
 
@@ -59,8 +58,8 @@ describe Shoes::Swt::ClickListener do
 
   describe "event handling" do
     before do
-      subject.add_click_listener(swt, click_block)
-      subject.add_release_listener(swt, release_block)
+      subject.add_click_listener(dsl, click_block)
+      subject.add_release_listener(dsl, release_block)
 
       allow(dsl).to receive(:in_bounds?) { false }
       allow(dsl).to receive(:in_bounds?).with(10, 10) { true }
@@ -90,7 +89,7 @@ describe Shoes::Swt::ClickListener do
 
       it "re-registering an element's click overwrites old one" do
         another_block = double("another block", call: nil)
-        subject.send(add_method, swt, another_block)
+        subject.send(add_method, dsl, another_block)
 
         event = double(type: event_type, x: 10, y: 10)
         subject.handle_event(event)
@@ -101,10 +100,9 @@ describe Shoes::Swt::ClickListener do
 
       it "takes the last element to respond" do
         other_dsl = double("other dsl", in_bounds?: true, pass_coordinates?: false)
-        other_swt = double("other swt", dsl: other_dsl)
         other_block = double("other block", call: nil)
 
-        subject.send(add_method, other_swt, other_block)
+        subject.send(add_method, other_dsl, other_block)
 
         event = double(type: event_type, x: 10, y: 10)
         subject.handle_event(event)

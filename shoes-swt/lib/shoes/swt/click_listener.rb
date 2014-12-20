@@ -16,14 +16,14 @@ class Shoes
         swt_app.add_listener ::Swt::SWT::MouseUp, self
       end
 
-      def add_click_listener(swt, block)
-        add_clickable_element(swt.dsl)
-        @clicks[swt.dsl] = block
+      def add_click_listener(dsl, block)
+        add_clickable_element(dsl)
+        @clicks[dsl] = block
       end
 
-      def add_release_listener(swt, block)
-        add_clickable_element(swt.dsl)
-        @releases[swt.dsl] = block
+      def add_release_listener(dsl, block)
+        add_clickable_element(dsl)
+        @releases[dsl] = block
       end
 
       def remove_listeners_for(dsl)
