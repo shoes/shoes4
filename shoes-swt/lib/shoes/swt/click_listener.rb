@@ -45,7 +45,7 @@ class Shoes
         return if handlers.nil? || handlers.empty?
 
         handlers = handlers.to_a.
-          select { |dsl, _| !dsl.respond_to?(:hidden?) || !dsl.hidden? }.
+          select { |dsl, _| !dsl.hidden? }.
           select { |dsl, _| dsl.in_bounds?(event.x, event.y) }
 
         # Take the last handler as an approximation of the "top-most" element

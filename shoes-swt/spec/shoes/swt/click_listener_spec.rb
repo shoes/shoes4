@@ -3,7 +3,7 @@ require 'shoes/swt/spec_helper'
 describe Shoes::Swt::ClickListener do
   include_context 'swt app'
 
-  let(:dsl) { double('dsl', pass_coordinates?: false) }
+  let(:dsl) { double('dsl', hidden?: false, pass_coordinates?: false) }
 
   let(:click_block)   { double("click block", call: nil) }
   let(:release_block) { double("release block", call: nil) }
@@ -99,7 +99,8 @@ describe Shoes::Swt::ClickListener do
       end
 
       it "takes the last element to respond" do
-        other_dsl = double("other dsl", in_bounds?: true, pass_coordinates?: false)
+        other_dsl = double("other dsl", in_bounds?: true,
+                           hidden?: false, pass_coordinates?: false)
         other_block = double("other block", call: nil)
 
         subject.send(add_method, other_dsl, other_block)
