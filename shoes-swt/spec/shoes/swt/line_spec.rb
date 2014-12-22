@@ -30,6 +30,8 @@ describe Shoes::Swt::Line do
     subject { Shoes::Swt::Line::Painter.new(shape) }
 
     before(:each) do
+      dsl.absolute_left = point_a.x
+      dsl.absolute_top  = point_a.y
       allow(dsl).to receive_messages(positioned?: true)
     end
 
