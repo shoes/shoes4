@@ -21,9 +21,7 @@ class Shoes
         private
 
         def remove_click_listeners
-          app.remove_listener ::Swt::SWT::MouseDown, @click_listener
-          app.remove_listener ::Swt::SWT::MouseUp, @click_listener
-          app.clickable_elements.delete dsl
+          app.click_listener.remove_listeners_for(dsl)
         end
       end
     end

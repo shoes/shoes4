@@ -24,10 +24,11 @@ describe Shoes::Swt::App do
   it_behaves_like "clickable backend" do
     let(:swt_app) { subject }
     let(:click_block_parameters) { click_block_coordinates }
+    let(:click_listener) { double("listener", add_click_listener: nil, add_release_listener: nil) }
 
     before do
       allow(dsl).to receive(:pass_coordinates?) { true }
-      allow(subject).to receive(:add_listener)
+      allow(subject).to receive(:click_listener) { click_listener }
     end
   end
 
