@@ -274,10 +274,8 @@ class Shoes
 
       def controlResized(event)
         shell = event.widget
-        width = shell.client_area.width
+        width  = shell.client_area.width
         height = shell.client_area.height
-        @app.dsl.top_slot.width   = width
-        @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
         @app.real.layout
         @app.dsl.resize_callbacks.each(&:call)
