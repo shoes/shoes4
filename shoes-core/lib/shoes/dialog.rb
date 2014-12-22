@@ -40,7 +40,9 @@ class Shoes
           end
         end
 
-        attr_reader :result
+        class << self
+          attr_reader :result
+        end
       end
 
       ask_me.wait_until_closed
