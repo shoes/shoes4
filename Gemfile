@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'shoes',        path: 'shoes'
+gem 'shoes',        path: '.'
 gem 'shoes-core',   path: 'shoes-core'
 gem 'shoes-swt',    path: 'shoes-swt'
 
