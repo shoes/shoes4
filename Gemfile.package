@@ -1,0 +1,18 @@
+source 'https://rubygems.org'
+
+# This Gemfile can be used for testing packaging which is unhappy working with
+# path-based gems. To do so, install the shoes gems, then run:
+#
+#   BUNDLE_GEMFILE=Gemfile.package bin/shoes -p swt:jar samples/packaging/package_me.rb
+
+gem 'shoes'
+gem 'shoes-core'
+gem 'shoes-swt'
+
+gem 'furoshiki', require: 'furoshiki/shoes'
+
+gem 'shoes-manual'
+gem 'shoes-highlighter'
+
+gem 'pry'
+gem 'pry-nav'
