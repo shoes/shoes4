@@ -50,3 +50,16 @@ task "build:all"     => "build:shoes"
 task "install:all"   => "install:shoes"
 task "uninstall:all" => "uninstall:shoes"
 task "release:all"   => "release:shoes"
+
+desc "Update gem versions based on ./VERSION file. Don't bundle exec"
+task :update_versions do
+  Dir["**/version.rb"].each do |file|
+    version = File.read("./VERSION").chomp
+
+    ruby = File.read(file)
+    ruby.gsub!(/^(\s*)VERSION(\s*)= .*?$/, "\\1VERSION = \"#{version}\"")
+    raise "Could not insert VERSION in #{file}" unless $1
+
+    File.open(file, 'w') { |f| f.write ruby }
+  end
+end
