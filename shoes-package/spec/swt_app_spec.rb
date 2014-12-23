@@ -1,15 +1,15 @@
 require_relative 'spec_helper'
-require 'pathname'
-require 'furoshiki/jar_app'
+require 'shoes/package/configuration'
+require 'shoes/package/jar_app'
 
 include PackageHelpers
 
-describe Furoshiki::JarApp do
+describe Shoes::Package::JarApp do
   include_context 'config'
   include_context 'package'
 
-  let(:config) {Shoes::Package::Configuration.load @config_filename }
-  subject {Furoshiki::JarApp.new config}
+  let(:config) { Shoes::Package::Configuration.load @config_filename }
+  subject { Shoes::Package::JarApp.new config }
 
   let(:launcher) { @output_file.join('Contents/MacOS/JavaAppLauncher') }
   let(:icon)  { @output_file.join('Contents/Resources/boots.icns') }
@@ -47,16 +47,15 @@ describe Furoshiki::JarApp do
 
   context "when creating a .app" do
     before :all do
-      #@output_dir.rmtree if @output_dir.exist?
+      @output_dir.rmtree if @output_dir.exist?
       @output_dir.mkpath
       app_name = 'Sugar Clouds.app'
       @output_file = @output_dir.join app_name
       config   = Shoes::Package::Configuration.load @config_filename
-      @subject = Furoshiki::JarApp.new config
-      Dir.chdir @app_dir do
-        @subject.package
-      end
+      @subject = Shoes::Package::JarApp.new config
+      @subject.package
     end
+
     subject { @subject }
 
     its(:template_path) { should exist }
@@ -123,7 +122,7 @@ describe Furoshiki::JarApp do
 
   describe "with an invalid configuration" do
     let(:config) { Shoes::Package::Configuration.create }
-    subject { Furoshiki::JarApp.new config }
+    subject { Shoes::Package::JarApp.new config }
 
     it "fails to initialize" do
       expect { subject }.to raise_error(Furoshiki::ConfigurationError)

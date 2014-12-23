@@ -33,9 +33,22 @@ describe Furoshiki::Jar do
       expect(File.size(output_file)).to be < 50 * 1024 * 1024
     end
 
-    it "excludes directories recursively" do
-      jar = Zip::File.new(output_file)
-      expect(jar.entries).not_to include("dir_to_ignore/file_to_ignore")
+    context "inspecting contents" do
+      let (:jar) { Zip::File.new(output_file) }
+
+      it "includes shoes-core" do
+        shoes_core = jar.glob "gems/shoes-core*"
+        expect(shoes_core.length).to equal(1)
+      end
+
+      it "includes shoes-swt" do
+        shoes_swt = jar.glob "gems/shoes-swt*"
+        expect(shoes_swt.length).to equal(1)
+      end
+
+      it "excludes directories recursively" do
+        expect(jar.entries).not_to include("dir_to_ignore/file_to_ignore")
+      end
     end
 
     its(:default_dir) { should eq(@output_dir) }
