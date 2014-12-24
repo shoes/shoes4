@@ -42,6 +42,9 @@ class Shoes
             r = (i % 2 == 0) ? outer : inner
             polygon << (left + r * ::Math.sin(angle)) << (top + r * ::Math.cos(angle))
           end
+          polygon.map! do |i|
+            i + obj.element_width / 2
+          end
           polygon
         end
       end
