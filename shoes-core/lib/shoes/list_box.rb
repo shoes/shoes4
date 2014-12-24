@@ -3,6 +3,7 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Changeable
+    extend ::AfterDo
 
     attr_reader :app, :parent, :dimensions, :gui
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
@@ -23,6 +24,11 @@ class Shoes
     def items=(values)
       style(items: values)
       @gui.update_items
+    end
+
+    after :items do |list_box|
+      puts list_box.gui
+      list_box.gui.update_items
     end
 
     def text
