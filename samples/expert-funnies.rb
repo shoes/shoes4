@@ -44,15 +44,17 @@ Shoes.app width: 800, height: 600 do
 
     @feeds.each do |feed|
       download feed do |dl|
-        stack width: "100%", margin: 10, border: 1 do
-          # Fall back to Shoes 3 syntax if necessary
-          body = dl.respond_to?(:read) ? dl.read : dl.response.body
-          c = Comic.new body
-          stack margin_right: gutter do
-            background "#333", curve: 4
-            caption c.title, stroke: "#CD9", margin: 4
+        # Fall back to Shoes 3 syntax if necessary
+        body = dl.respond_to?(:read) ? dl.read : dl.response.body
+        c = Comic.new body
+        if c.latest_image
+          stack width: "100%", margin: 10, border: 1 do
+            stack margin_right: gutter do
+              background "#333", curve: 4
+              caption c.title, stroke: "#CD9", margin: 4
+            end
+            image c.latest_image.first, margin: 8
           end
-          image c.latest_image.first, margin: 8
         end
       end
     end

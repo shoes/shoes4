@@ -9,6 +9,9 @@ class Shoes
         scrollable_height = dsl_app.top_slot.contents_alignment
         set_gui_size(height, scrollable_height)
 
+        dsl_app.top_slot.width  = dsl_app.width
+        dsl_app.top_slot.height = [scrollable_height, height].max
+
         vertical_bar = @gui_app.shell.getVerticalBar
         vertical_bar.setVisible(scrollable_height > height)
         if scrollable_height > height
