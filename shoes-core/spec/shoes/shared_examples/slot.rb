@@ -16,6 +16,7 @@ shared_examples_for "Slot" do
   it_behaves_like 'clearing'
   it_behaves_like 'element one positioned with bottom and right'
   it_behaves_like 'growing although relatively positioned elements'
+  it_behaves_like 'margin and positioning'
   it_behaves_like 'margin with a relative positioned child'
 end
 
@@ -359,6 +360,35 @@ shared_examples_for 'margin with a relative positioned child' do
 
     it 'keeps the top margin intact' do
       expect(element.absolute_top).to eq ele_top
+    end
+  end
+end
+
+shared_examples_for 'margin and positioning' do
+  include_context 'one slot child'
+  include_context 'contents_alignment'
+
+  describe 'margin top' do
+    include_context 'slot with a top margin'
+
+    it 'positions the element after margin_top' do
+      expect(element.absolute_top).to eq margin_top
+    end
+
+    it 'leaves the left value as zero' do
+      expect(element.absolute_left).to eq 0
+    end
+  end
+
+  describe 'margin left' do
+    include_context 'slot with a left margin'
+
+    it 'positions the element after margin_left' do
+      expect(element.absolute_left).to eq margin_left
+    end
+
+    it 'leaves the top value as zero' do
+      expect(element.absolute_top).to eq 0
     end
   end
 end
