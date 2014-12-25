@@ -40,8 +40,8 @@ class Shoes
           end
         end
 
-        class << self
-          attr_reader :result
+        def result
+          @result
         end
       end
 
