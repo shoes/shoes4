@@ -1,4 +1,25 @@
 class Shoes
+  class ProxyArray < BasicObject
+    attr_writer :gui
+    attr_reader :array
+
+    def initialize(array, gui)
+      @array = array
+      @gui = gui
+    end
+
+    def to_a
+      @array
+    end
+
+    private
+
+    def method_missing(method, *args, &block)
+      @array.send(method, *args, &block)
+      @gui.update_items
+    end
+  end
+
   class ListBox
     include Common::UIElement
     include Common::Style
@@ -15,13 +36,21 @@ class Shoes
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
+
+      @style[:items] = Shoes::ProxyArray.new(items, @gui)
       change(&blk) if blk
 
       choose @style[:choose]
+      @style[:items].gui = @gui
     end
 
-    def items=(values)
-      style(items: values)
+    def items
+      @style[:items].to_a
+    end
+
+    def items=(vanilla_array)
+      proxy_array = Shoes::ProxyArray.new(vanilla_array, @gui)
+      style(items: proxy_array)
       @gui.update_items
     end
 
