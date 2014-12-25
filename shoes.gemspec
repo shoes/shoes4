@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('lib/shoes/version')
+version = File.read(File.expand_path('../VERSION', __FILE__)).strip
 
 Gem::Specification.new do |s|
   s.name        = "shoes"
-  s.version     = Shoes::VERSION
+  s.version     = version
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Team Shoes"]
   s.email       = ["shoes@librelist.com"]
@@ -12,12 +12,10 @@ Gem::Specification.new do |s|
   s.description = %q{Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.}
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split($/)
-  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
-  s.require_paths = ["lib"]
+  s.files         = ["LICENSE", "README.md"]
 
-  s.add_dependency "shoes-core", Shoes::VERSION
-  s.add_dependency "shoes-swt",  Shoes::VERSION
+  s.add_dependency "shoes-core", version
+  s.add_dependency "shoes-swt",  version
   s.add_dependency "shoes-manual", "~> 4.0.0", ">= 4.0.0"
 
   # shoes executables are actually installed from shoes-core
