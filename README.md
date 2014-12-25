@@ -16,8 +16,6 @@ So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/
 
     $ rvm install jruby
 
-**Important JRuby version note:** JRuby 1.7.14 and 1.7.15 have a bug where `bundle install` won't work with Shoes 4. Make sure to use JRuby 1.7.16 or JRuby-1.7.13 with Shoes 4.
-
 **JDK version note:** While Shoes 4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
 
 **SWT requirement:** Be aware that Shoes 4 builds on [SWT](http://www.eclipse.org/swt/) for its default backend. That is usually no concern (other than the need for JRuby/JDK, described above) as you do not have to install SWT yourself. However, that means we have the same basic system requirements SWT does. For Linux that means you need GTK+ >= 2.10 or >= 3.0 if you like. Moreover, as of now there is no ARM support (as the Raspberry Pi would need).
