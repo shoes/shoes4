@@ -16,6 +16,7 @@ shared_examples_for "Slot" do
   it_behaves_like 'clearing'
   it_behaves_like 'element one positioned with bottom and right'
   it_behaves_like 'growing although relatively positioned elements'
+  it_behaves_like 'margin with a relative positioned child'
 end
 
 shared_context 'one slot child' do
@@ -69,6 +70,16 @@ end
 
 shared_context 'slot with set height and width' do
   let(:input_opts) {{width: 250, height: 300}}
+end
+
+shared_context 'slot with a top margin' do
+  let(:margin_top) {70}
+  let(:input_opts) {{margin_top: margin_top}}
+end
+
+shared_context 'slot with a left margin' do
+  let(:margin_left) {30}
+  let(:input_opts) {{margin_left: margin_left}}
 end
 
 shared_context 'element one with bottom and right' do
@@ -314,10 +325,40 @@ shared_examples_for 'clearing' do
   end
 
   describe 'Element#remove' do
-    it 'removees the element' do
+    it 'removes the element' do
       element.parent = subject
       element.remove
       expect(subject.contents).not_to include element
+    end
+  end
+end
+
+shared_examples_for 'margin with a relative positioned child' do
+  include_context 'one slot child'
+  include_context 'element one with top and left'
+  include_context 'contents_alignment'
+
+  describe 'margin top' do
+    include_context 'slot with a top margin'
+
+    it 'positions the first element taking the top margin into account' do
+      expect(element.absolute_top).to eq ele_top + margin_top
+    end
+
+    it 'still keeps the left value intact (only margin_top)' do
+      expect(element.absolute_left).to eq ele_left
+    end
+  end
+
+  describe 'left margin' do
+    include_context 'slot with a left margin'
+
+    it 'positions the element to take the left margin into account' do
+      expect(element.absolute_left).to eq ele_left + margin_left
+    end
+
+    it 'keeps the top margin intact' do
+      expect(element.absolute_top).to eq ele_top
     end
   end
 end
