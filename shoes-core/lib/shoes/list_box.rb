@@ -1,10 +1,30 @@
 require 'delegate'
 require 'after_do'
 class Shoes
-  class ProxyArray < SimpleDelegator; end
+  class ProxyArray < SimpleDelegator
+    attr_reader :array
+    attr_accessor :gui, :old_array
+    def initialize(array, gui)
+      @array = array
+      @old_array = array.clone
+      @gui = gui
+      __setobj__(array)
+    end
+  end
+
   ProxyArray.extend AfterDo
-  ProxyArray.after :method_missing do |method, *args, block|
-    puts "method was missing"
+
+  ProxyArray.before :method_missing do |method, *args, obj|
+    puts "before method missing old_array was #{obj.old_array}"
+    puts "and array was #{obj.array}"
+    obj.old_array = obj.array
+  end
+
+  ProxyArray.after :method_missing do |method, *args, obj|
+    puts "after method missing old_array is #{obj.old_array}"
+    puts "and array is #{obj.array}"
+    puts "and they are equal? => #{obj.array == obj.old_array}"
+    obj.gui.update_items unless obj.array == obj.old_array
   end
 
   class ListBox
@@ -23,7 +43,7 @@ class Shoes
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
-      proxy_array = Shoes::ProxyArray.new(items)
+      proxy_array = Shoes::ProxyArray.new(items, @gui)
       @style[:items] = proxy_array
       change(&blk) if blk
 
@@ -31,7 +51,7 @@ class Shoes
     end
 
     def items=(vanilla_array)
-      proxy_array = Shoes::ProxyArray.new(vanilla_array)
+      proxy_array = Shoes::ProxyArray.new(vanilla_array, @gui)
       style(items: proxy_array)
       @gui.update_items
     end
