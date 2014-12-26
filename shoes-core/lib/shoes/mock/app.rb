@@ -41,6 +41,9 @@ class Shoes
       def gutter
         16
       end
+
+      def wait_until_closed
+      end
     end
   end
 end
