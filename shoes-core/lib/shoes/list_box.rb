@@ -1,20 +1,10 @@
+require 'delegate'
+require 'after_do'
 class Shoes
-  class ProxyArray < BasicObject
-    attr_writer :gui
-    attr_reader :array
-
-    def initialize(array, gui)
-      @array = array
-      @gui = gui
-    end
-
-    private
-
-    def method_missing(method, *args, &block)
-      result = @array.send(method, *args, &block)
-      @gui.update_items
-      result
-    end
+  class ProxyArray < SimpleDelegator; end
+  ProxyArray.extend AfterDo
+  ProxyArray.after :method_missing do |method, *args, block|
+    puts "method was missing"
   end
 
   class ListBox
@@ -33,16 +23,15 @@ class Shoes
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
       @gui = Shoes.configuration.backend_for self, @parent.gui
-
-      @style[:items] = Shoes::ProxyArray.new(items, @gui)
+      proxy_array = Shoes::ProxyArray.new(items)
+      @style[:items] = proxy_array
       change(&blk) if blk
 
       choose @style[:choose]
-      @style[:items].gui = @gui
     end
 
     def items=(vanilla_array)
-      proxy_array = Shoes::ProxyArray.new(vanilla_array, @gui)
+      proxy_array = Shoes::ProxyArray.new(vanilla_array)
       style(items: proxy_array)
       @gui.update_items
     end
