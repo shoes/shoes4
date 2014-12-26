@@ -8,15 +8,12 @@ class Shoes
       @gui = gui
     end
 
-    def to_a
-      @array
-    end
-
     private
 
     def method_missing(method, *args, &block)
-      @array.send(method, *args, &block)
+      result = @array.send(method, *args, &block)
       @gui.update_items
+      result
     end
   end
 
@@ -42,10 +39,6 @@ class Shoes
 
       choose @style[:choose]
       @style[:items].gui = @gui
-    end
-
-    def items
-      @style[:items].to_a
     end
 
     def items=(vanilla_array)
