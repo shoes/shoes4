@@ -35,17 +35,34 @@ class Shoes
         def make_polygon(obj)
           outer, inner, points, left, top = obj.outer, obj.inner, obj.points,
                                             obj.element_left, obj.element_top
-          polygon = []
-          polygon << left << (top + outer)
+          @polygon = []
+          add_edge(left, top + outer)
           (1..points * 2).each do |i|
-            angle =  i * ::Math::PI / points
-            r = (i % 2 == 0) ? outer : inner
-            polygon << (left + r * ::Math.sin(angle)) << (top + r * ::Math.cos(angle))
+            make_edge(i, left, top, outer, inner, points)
           end
-          polygon.map! do |i|
-            i + obj.element_width / 2
+
+          translate_to_proper_start(obj.element_width)
+
+          @polygon
+        end
+
+        def add_edge(start, finish)
+          @polygon << start << finish
+        end
+
+        def make_edge(i, left, top, outer, inner, points)
+          r = (i % 2 == 0) ? outer : inner
+          angle =  i * ::Math::PI / points
+          add_edge(left + r * ::Math.sin(angle),
+                   top  + r * ::Math.cos(angle))
+        end
+
+        # Prior logic centers start on left/top, so translate to where we
+        # really want to start.
+        def translate_to_proper_start(width)
+          @polygon.map! do |x|
+            x + width / 2
           end
-          polygon
         end
       end
     end
