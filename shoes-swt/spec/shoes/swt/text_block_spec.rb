@@ -163,7 +163,7 @@ describe Shoes::Swt::TextBlock do
   end
 
   context "links" do
-    let(:link)     { Shoes::Link.new(shoes_app, subject, ["link"])  }
+    let(:link)     { Shoes::Link.new(shoes_app, ["link"])  }
 
     before(:each) do
       allow(dsl).to receive(:links) { [link] }

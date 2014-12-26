@@ -243,7 +243,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   end
 
   def create_link(text)
-    Shoes::Link.new(shoes_app, parent, [text])
+    Shoes::Link.new(shoes_app, [text])
   end
 
   def style_with(style={})

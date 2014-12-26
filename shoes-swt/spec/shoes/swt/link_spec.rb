@@ -3,7 +3,7 @@ require 'shoes/swt/spec_helper'
 describe Shoes::Swt::Link do
   include_context "swt app"
 
-  let(:dsl) { Shoes::Link.new shoes_app, parent, ["linky"] }
+  let(:dsl) { Shoes::Link.new shoes_app, ["linky"] }
 
   subject { Shoes::Swt::Link.new(dsl, swt_app) }
 
