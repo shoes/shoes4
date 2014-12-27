@@ -53,8 +53,6 @@ class Shoes
         pathname = Pathname.new(path)
         app_yaml = Pathname.new('app.yaml')
 
-        dummy_file = Struct.new(:read)
-
         if pathname.basename == app_yaml
           file, dir = pathname, pathname.dirname
         elsif pathname.directory?
@@ -62,17 +60,9 @@ class Shoes
         elsif pathname.file? && pathname.parent.children.include?(pathname.parent.join app_yaml)
           file, dir = pathname.parent.join(app_yaml), pathname.parent
         else
-          # Can't find any 'app.yaml', so assume we just want to wrap
-          # this file. If it exists, load default options. If not, let
-          # the filesystem raise an error.
-          default_options = {
-            run: pathname.basename.to_s,
-            name: pathname.basename(pathname.extname).to_s.gsub(/\W/, '-')
-          }.to_yaml
-          options = pathname.exist? ? default_options : pathname
-          file = dummy_file.new(options)
-          dir = pathname.parent
+          file, dir = config_for_single_file_app(pathname)
         end
+
         config = YAML.load(file.read)
         config[:working_dir] = dir
         create(config)
@@ -110,32 +100,45 @@ class Shoes
         Furoshiki::Configuration.new defaults.merge(symbolized_config)
       end
 
-      class Validator < Furoshiki::Validator
-        def validate
-          unless config.run && config.working_dir.join(config.run).exist?
-            add_missing_file_error(config.run, "Run file")
-          end
+      private
+      # If it exists, load default options. If not, let the filesystem raise an
+      # error.
+      def self.config_for_single_file_app(pathname)
+        default_options = {
+          run: pathname.basename.to_s,
+          name: pathname.basename(pathname.extname).to_s.gsub(/\W/, '-')
+        }.to_yaml
+        options = pathname.exist? ? default_options : pathname
+        dummy_file = Struct.new(:read)
+        [dummy_file.new(options), pathname.parent]
+      end
+    end
 
-          if config.icons[:osx] && !config.working_dir.join(config.icons[:osx]).exist?
-            add_missing_file_error(config.icons[:osx], "OS X icon file")
-          end
+    class Validator < Furoshiki::Validator
+      def validate
+        unless config.run && config.working_dir.join(config.run).exist?
+          add_missing_file_error(config.run, "Run file")
+        end
+
+        if config.icons[:osx] && !config.working_dir.join(config.icons[:osx]).exist?
+          add_missing_file_error(config.icons[:osx], "OS X icon file")
+        end
+      end
+    end
+
+    class WarblerExtensions < Furoshiki::WarblerExtensions
+      def customize(warbler_config)
+        warbler_config.tap do |warbler|
+          warbler.pathmaps.application = ['shoes-app/%p']
+          warbler.extend ShoesWarblerConfig
+          warbler.run = @config.run.split(/\s/).first
         end
       end
 
-      class WarblerExtensions < Furoshiki::WarblerExtensions
-        def customize(warbler_config)
-          warbler_config.tap do |warbler|
-            warbler.pathmaps.application = ['shoes-app/%p']
-            warbler.extend ShoesWarblerConfig
-            warbler.run = @config.run.split(/\s/).first
-          end
-        end
-
-        private
-        # Adds Shoes-specific functionality to the Warbler Config
-        module ShoesWarblerConfig
-          attr_accessor :run
-        end
+      private
+      # Adds Shoes-specific functionality to the Warbler Config
+      module ShoesWarblerConfig
+        attr_accessor :run
       end
     end
   end
