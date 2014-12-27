@@ -13,7 +13,8 @@ describe Shoes::Swt::Image do
   let(:top) { 200 }
   let(:height) { nil }
   let(:width) {nil}
-  let(:image) { "shoes-swt/spec/shoes/swt/minimal.png" }
+  let(:image_path) { File.dirname(__FILE__) + '/minimal.png' }
+  let(:image) { image_path }
 
   subject {
     allow(dsl).to receive(:file_path) { image }
@@ -41,7 +42,7 @@ describe Shoes::Swt::Image do
   end
 
   describe "painting raw images" do
-    let(:image) { File.read("shoes-swt/spec/shoes/swt/minimal.png", :mode => "rb") }
+    let(:image) { File.read(image_path, :mode => "rb") }
 
     specify "loads image from raw data" do
       subject.real.image_data.width = 3
