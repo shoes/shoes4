@@ -76,14 +76,16 @@ class Shoes
           release: 'Rookie',
           run: nil,
           ignore: 'pkg',
+          # TODO: Add actual paths. Keep these keys for compatibility with Shoes 3
           icons: {
             #osx: 'path/to/default/App.icns',
             #gtk: 'path/to/default/app.png',
             #win32: 'path/to/default/App.ico',
           },
+          # TODO: Add actual paths. Keep these keys for compatibility with Shoes 3
           dmg: {
-            ds_store: 'path/to/default/.DS_Store',
-            background: 'path/to/default/background.png'
+            #ds_store: 'path/to/default/.DS_Store',
+            #background: 'path/to/default/background.png'
           },
           working_dir: Dir.pwd,
           gems: ['shoes-core'],

@@ -17,6 +17,7 @@ describe Shoes::Package::Configuration do
     its(:working_dir) { should eq(Pathname.new(Dir.pwd)) }
     it { is_expected.not_to be_valid } # no :run
 
+    # TODO: Implement
     describe "#icons" do
       it 'osx is nil' do
         expect(subject.icons[:osx]).to be_nil
@@ -31,13 +32,14 @@ describe Shoes::Package::Configuration do
       end
     end
 
+    # TODO: Implement
     describe "#dmg" do
-      it "has ds_store" do
-        expect(subject.dmg[:ds_store]).to eq('path/to/default/.DS_Store')
+      it "ds_store is nil" do
+        expect(subject.dmg[:ds_store]).to be_nil
       end
 
-      it "has background" do
-        expect(subject.dmg[:background]).to eq('path/to/default/background.png')
+      it "background is nil" do
+        expect(subject.dmg[:background]).to be_nil
       end
     end
 
