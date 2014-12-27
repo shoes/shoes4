@@ -96,12 +96,15 @@ namespace :spec do
 
   desc "Run specs for Shoes DSL
   Limit the examples to specific :modules : "
-  task :dsl, [:module] do |t, args|
+  task :core, [:module] do |t, args|
     argh = args.to_hash
     argh[:require] = 'shoes-core/spec/spec_helper'
     files = Dir['shoes-core/spec/shoes/**/*_spec.rb'].join ' '
     jruby_rspec(files, argh)
   end
+
+  # Alias for old-schoolers
+  task :dsl => :core
 
   task :shoes, [:module] do |t, args|
     Rake::Task['spec:dsl'].invoke(args[:module])
