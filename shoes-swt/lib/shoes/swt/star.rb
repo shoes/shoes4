@@ -41,7 +41,7 @@ class Shoes
             make_edge(i, left, top, outer, inner, points)
           end
 
-          translate_to_proper_start(obj.element_width)
+          translate_to_proper_start(obj)
 
           @polygon
         end
@@ -59,9 +59,11 @@ class Shoes
 
         # Prior logic centers start on left/top, so translate to where we
         # really want to start.
-        def translate_to_proper_start(width)
+        def translate_to_proper_start(obj)
+          return if obj.dsl.style[:center]
+
           @polygon.map! do |x|
-            x + width / 2
+            x + obj.element_width / 2
           end
         end
       end
