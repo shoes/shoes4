@@ -5,7 +5,7 @@ $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/spec')
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/lib')
 
 require 'shoes/swt/spec_helper'
-require 'code_coverage'
+require_relative '../../spec/code_coverage'
 require 'rspec'
 require 'rspec/its'
 require 'pry'
