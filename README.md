@@ -1,4 +1,4 @@
-# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4.svg)](https://coveralls.io/r/shoes/shoes4?branch=master)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
+# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://codeclimate.com/github/shoes/shoes4/badges/gpa.svg)](https://codeclimate.com/github/shoes/shoes4)[![Test Coverage](https://codeclimate.com/github/shoes/shoes4/badges/coverage.svg)](https://codeclimate.com/github/shoes/shoes4/code?sort=covered_percent&sort_direction=desc)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
 
 Shoes 4 : the next version of Shoes
 
@@ -15,14 +15,12 @@ There are two ways to get your hands on Shoes 4 - the preview gem release and in
 So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
 
     $ rvm install jruby
-    
-**Important JRuby version note:** JRuby 1.7.14 and 1.7.15 have a bug where `bundle install` won't work with shoes4. Make sure to use JRuby 1.7.16 or JRuby-1.7.13 with shoes4.
-    
-**JDK version note:** While shoes4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
+
+**JDK version note:** While Shoes 4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
 
 **SWT requirement:** Be aware that Shoes 4 builds on [SWT](http://www.eclipse.org/swt/) for its default backend. That is usually no concern (other than the need for JRuby/JDK, described above) as you do not have to install SWT yourself. However, that means we have the same basic system requirements SWT does. For Linux that means you need GTK+ >= 2.10 or >= 3.0 if you like. Moreover, as of now there is no ARM support (as the Raspberry Pi would need).
 
-### Installing Shoes4 as a gem
+### Installing Shoes 4 as a gem
 
 #### *nix (Mac OSX/Linux)
 
@@ -32,7 +30,7 @@ So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/
 
     C:\tmp> jruby -S gem install shoes --pre
 
-### Installing Shoes4 from github
+### Installing Shoes 4 from github
 
 If you want to be on the bleeding edge or want to contribute code you need to install it straight from the github repository.
 
@@ -47,7 +45,7 @@ If you want to be on the bleeding edge or want to contribute code you need to in
         $ cd shoes4
         $ gem install bundler && bundle install
 
-Note: If you got rvm, rbenv or something like that installed it might complain that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. We recommend up to date versions though.
+  Note: If you got rvm, rbenv or something like that installed it might complain  that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. We recommend up to date versions though.
 
 3. You're ready to go!
 
@@ -71,7 +69,7 @@ Shoes 4 comes with a command-line app runner. Just pass it the filename of your 
 
     $ bin/shoes samples/simple-sound.rb
 
-**Note:** For Windows, `C:\tmp\shoes4>bin\shoes samples\simple-sound.rb` If you installed Shoes4 as a gem, just do `C:\tmp> shoes path\to\file.rb`
+**Note:** For Windows, `C:\tmp\shoes4>bin\shoes samples\simple-sound.rb` If you installed Shoes 4 as a gem, just do `C:\tmp> shoes path\to\file.rb`
 
 There is also a simple ruby starter script when using the SWT backend which you may use as follows:
 
@@ -153,7 +151,7 @@ With all you do, please make sure to write specs as Shoes 4 is developed TDD-sty
 
 If you feel unsure about testing or your implementation just open an issue or a pull request. Pull requests don't need to be done - they are great discussion starters! We're happy to help you get your contribution ready to be merged in order to help build Shoes 4!
 
-In fact we greatly appreciate early pull requests to review code and help you find your way around Shoes4! =)
+In fact we greatly appreciate early pull requests to review code and help you find your way around Shoes 4! =)
 
 If you have questions, also feel free to drop by on the #shoes channel on FreeNode irc. People might not respond instantly, but after some time someone will respond :-)
 

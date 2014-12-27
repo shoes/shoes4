@@ -21,13 +21,6 @@ describe Shoes::Swt::Link do
                                 element_left: 0, element_top: 0,
                                 layout: inner_layout) }
 
-    before(:each) do
-      allow(shoes_app).to receive(:add_listener)
-      allow(shoes_app).to receive(:add_clickable_element)
-
-      allow(swt_app).to receive(:clickable_elements) { [] }
-    end
-
     it "clears existing" do
       subject.link_segments << double("segment")
       subject.create_links_in([])
@@ -43,7 +36,7 @@ describe Shoes::Swt::Link do
     end
 
     it "clears links" do
-      expect(swt_app).to receive(:remove_listener)
+      expect(swt_app.click_listener).to receive(:remove_listeners_for).with(subject)
 
       subject.create_links_in([[layout, 0..10]])
       subject.remove

@@ -13,7 +13,7 @@ class Shoes
 
       def remove
         @link_segments.clear
-        remove_listener_for self, ::Swt::SWT::MouseDown
+        app.click_listener.remove_listeners_for(self)
       end
 
       def create_links_in(text_segment_ranges)

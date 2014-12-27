@@ -19,10 +19,9 @@ class Shoes
       include Common::Container
       include Common::Clickable
 
-      attr_reader :dsl, :real, :shell, :clickable_elements
+      attr_reader :dsl, :real, :shell, :click_listener
 
       def initialize(dsl)
-        @clickable_elements = []
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background])
@@ -117,8 +116,8 @@ class Shoes
         @shell.full_screen
       end
 
-      def add_clickable_element(element)
-        @clickable_elements << element
+      def clickable_elements
+        @click_listener.clickable_elements
       end
 
       def started?
@@ -219,6 +218,7 @@ class Shoes
         attach_shell_event_listeners
         attach_real_event_listeners
         attach_key_event_listeners
+        attach_click_listener
       end
 
       def attach_shell_event_listeners
@@ -258,6 +258,10 @@ class Shoes
         end
       end
 
+      def attach_click_listener
+        @click_listener = ClickListener.new(self)
+      end
+
       def for_this_shell?(evt)
         evt.widget.shell == @shell unless evt.widget.disposed?
       end
@@ -270,10 +274,8 @@ class Shoes
 
       def controlResized(event)
         shell = event.widget
-        width = shell.client_area.width
+        width  = shell.client_area.width
         height = shell.client_area.height
-        @app.dsl.top_slot.width   = width
-        @app.dsl.top_slot.height  = height
         @app.real.setSize width, height
         @app.real.layout
         @app.dsl.resize_callbacks.each(&:call)

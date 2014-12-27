@@ -93,6 +93,11 @@ class Shoes
 
     alias_method :start_as_fullscreen?, :start_as_fullscreen
 
+    # Necessary for click/mouse positioning checks
+    def hidden?
+      false
+    end
+
     def add_mouse_hover_control(element)
       unless mouse_hover_controls.include? element
         mouse_hover_controls << element

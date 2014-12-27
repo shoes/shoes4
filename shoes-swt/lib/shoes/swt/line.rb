@@ -27,8 +27,8 @@ class Shoes
 
       class Painter < Common::Painter
         def draw(gc)
-          point_a, point_b = @obj.dsl.point_a, @obj.dsl.point_b
-          gc.draw_line(point_a.x, point_a.y, point_b.x, point_b.y)
+          gc.draw_line(@obj.element_left, @obj.element_top,
+                       @obj.element_right + 1, @obj.element_bottom + 1)
         end
 
         # Don't do fill setup

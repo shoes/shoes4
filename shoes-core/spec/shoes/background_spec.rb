@@ -12,6 +12,11 @@ describe Shoes::Background do
   let(:input_opts){ {left: left, top: top, width: width, height: height, color: blue} }
   subject(:background) { Shoes::Background.new(app, parent, blue, input_opts) }
 
+  before do
+    parent.height = height + 2
+    parent.width  = width + 2
+  end
+
   it "retains app" do
     expect(background.app).to eq(app)
   end
@@ -36,17 +41,6 @@ describe Shoes::Background do
   context "negative dimensions" do
     subject { Shoes::Background.new(app, parent, blue, negative_opts) }
     it_behaves_like "object with negative dimensions"
-  end
-
-  describe '#needs_to_be_positioned?' do
-    context 'without absolute dimensions' do
-      let(:input_opts) {{}}
-      it {is_expected.not_to be_needs_to_be_positioned}
-    end
-
-    context 'with absolute dimensions' do
-      it {is_expected.to be_needs_to_be_positioned}
-    end
   end
 
   it {is_expected.not_to be_takes_up_space}

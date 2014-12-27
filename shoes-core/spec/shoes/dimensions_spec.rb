@@ -659,7 +659,6 @@ describe Shoes::Dimensions do
 
   end
 
-  it {is_expected.to be_needs_to_be_positioned}
   it {is_expected.to be_takes_up_space}
 
   describe 'left/top/right/bottom not set so get them relative to parent' do
@@ -719,22 +718,23 @@ describe Shoes::Dimensions do
       end
     end
   end
-  
+
   describe Shoes::ParentDimensions do
-    describe 'takes parent values if not specified' do
+    describe 'takes some parent values if not specified' do
       let(:parent) {Shoes::Dimensions.new nil, parent_left, parent_top,
                                           parent_width, parent_height,
                                           margin: 20}
       subject {Shoes::ParentDimensions.new parent}
 
-      its(:left) {should eq parent.left}
-      its(:top) {should eq parent.top}
-      its(:width) {should eq parent.width}
+      its(:left)   {should eq parent.left}
+      its(:top)    {should eq parent.top}
+      its(:width)  {should eq parent.width}
       its(:height) {should eq parent.height}
-      its(:margin_left) {should eq parent.margin_left}
-      its(:margin_top) {should eq parent.margin_top}
-      its(:margin_right) {should eq parent.margin_right}
-      its(:margin_bottom) {should eq parent.margin_bottom}
+
+      its(:margin_left)   {should eq 0}
+      its(:margin_top)    {should eq 0}
+      its(:margin_right)  {should eq 0}
+      its(:margin_bottom) {should eq 0}
 
       context 'with parent absolute_left/top set' do
         before :each do
@@ -743,9 +743,9 @@ describe Shoes::Dimensions do
         end
 
         its(:absolute_left) {should eq parent.absolute_left}
-        its(:absolute_top) {should eq parent.absolute_top}
-        its(:element_left) {should eq parent.element_left}
-        its(:element_top) {should eq parent.element_top}
+        its(:absolute_top)  {should eq parent.absolute_top}
+        its(:element_left)  {should eq parent.absolute_left}
+        its(:element_top)   {should eq parent.absolute_top}
       end
     end
 

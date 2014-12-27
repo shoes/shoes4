@@ -12,7 +12,7 @@ class Shoes
       NEED_TO_UPDATE =
           { Animation                        => [:eval_block],
             Button                           => [:eval_block],
-            Common::Clickable::ClickListener => [:eval_block],
+            ClickListener                    => [:eval_block],
             ::Shoes::InternalApp             => [:execute_block],
             Keypress                         => [:eval_block],
             Keyrelease                       => [:eval_block],

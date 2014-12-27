@@ -54,6 +54,14 @@ describe Shoes::Dialog do
     it 'responds to it' do
       expect(@dialog).to respond_to :ask
     end
+
+    it 'runs ask dialog' do
+      # Prevent the backend from actually running by stubbing out this method
+      allow_any_instance_of(Shoes.backend::App).to receive(:wait_until_closed)
+
+      result = @dialog.ask("What?", {})
+      expect(result).to be_nil
+    end
   end
 
   describe '#ask_color' do

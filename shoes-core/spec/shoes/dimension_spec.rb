@@ -363,20 +363,24 @@ describe Shoes::Dimension do
       parent.margin_end   = margin
     end
 
-    describe 'it takes its parent values if no values are set' do
-      its(:start) {should eq parent_start}
+    describe 'it takes some parent values if no values are set' do
+      its(:start)  {should eq parent_start}
       its(:extent) {should eq parent_extent}
-      its(:margin_start) {should eq margin}
-      its(:margin_end) {should eq margin}
+
+      its(:margin_start) {should eq 0}
+      its(:margin_end)   {should eq 0}
 
       context 'with parent absolute_start set' do
         before :each do
           parent.absolute_start = 11
+
+          # This would be set by positioning code
+          subject.absolute_start = parent.absolute_start + margin
         end
 
-        its(:absolute_start) {should eq 11}
-        its(:element_start) {should eq parent.element_start}
-        its(:element_end) {should eq parent.element_end}
+        its(:absolute_start) {should eq parent.absolute_start + margin}
+        its(:element_start)  {should eq parent.absolute_start + margin}
+        its(:element_end)    {should eq parent.element_end}
       end
     end
 
@@ -399,6 +403,28 @@ describe Shoes::Dimension do
       it 'can also still handle special values like relative values' do
         subject.extent = 0.8
         expect(subject.extent).to be_within(ONE_PIXEL).of(0.8 * parent.element_extent)
+      end
+    end
+
+    describe 'it obeys parent bounds' do
+      let(:parent_dimension) { double 'parent_dimension',
+                                  element_start:  10,
+                                  element_end:    20,
+                                  absolute_start: 10,
+                                  absolute_end:   20,
+                                  extent:         10,
+                                  element_extent: 10 }
+
+      subject {Shoes::ParentDimension.new parent_dimension}
+
+      it "can't extend beyond parent" do
+        subject.absolute_start = 15
+        expect(subject.extent).to eq(6)
+      end
+
+      it "can't start before parent" do
+        subject.absolute_start = 5
+        expect(subject.extent).to eq(10)
       end
     end
   end
