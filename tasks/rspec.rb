@@ -62,6 +62,7 @@ namespace :spec do
   task "all", [:module] do |t, args|
     Rake::Task["spec:shoes"].invoke(args[:module])
     Rake::Task["spec:swt"].invoke(args[:module])
+    Rake::Task["spec:package"].invoke(args[:module])
   end
 
   task :swt, [:module] do |t, args|
