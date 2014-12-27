@@ -3,7 +3,7 @@ Shoes.app do
   eles = []
   eles << oval(0, 0, 600, angle: 90)
   eles << rect(50, 50, 350, 350, curve: 10)
-  eles << star(300, 300, 30, 200, 180)
+  eles << star(100, 100, 30, 200, 180)
   eles << shape(left: 200, top: 150, width: 300, height: 300, rotate: [45, 300, 300]){
     move_to 200, 200
     line_to 200, 100
