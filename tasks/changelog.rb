@@ -2,7 +2,8 @@ class Changelog
   CATEGORY_MAPPING = [
     {pattern: 'Changelog: feature', heading: 'New features'},
     {pattern: 'Changelog: improvement', heading: 'Improvements'},
-    {pattern: 'Changelog: bugfix', heading: 'Bug Fixes'}
+    {pattern: 'Changelog: bugfix', heading: 'Bug Fixes'},
+    {pattern: 'Changelog: breaking', heading: 'Breaking Changes'}
   ]
 
   COMMIT_SEPARATOR     = '<--COMMIT-->'
