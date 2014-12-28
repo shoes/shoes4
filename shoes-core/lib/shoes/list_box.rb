@@ -2,29 +2,34 @@ require 'delegate'
 require 'after_do'
 class Shoes
   class ProxyArray < SimpleDelegator
-    attr_reader :array
-    attr_accessor :gui, :old_array
+    extend AfterDo
+    attr_accessor :gui
+
+    ARRAY_MODIFYING_METHODS = [:<<, :add, :delete, :map!, :select!]
+
     def initialize(array, gui)
-      @array = array
-      @old_array = array.clone
       @gui = gui
-      __setobj__(array)
+      super(array)
     end
-  end
 
-  ProxyArray.extend AfterDo
+    def method_missing(method, *args, &block)
+      res = super(method, *args, &block)
+      case res
+      when ProxyArray, Array
+        self
+      else
+        res
+      end
+    end
 
-  ProxyArray.before :method_missing do |method, *args, obj|
-    puts "before method missing old_array was #{obj.old_array}"
-    puts "and array was #{obj.array}"
-    obj.old_array = obj.array
-  end
+    def to_a
+      __getobj__
+    end
 
-  ProxyArray.after :method_missing do |method, *args, obj|
-    puts "after method missing old_array is #{obj.old_array}"
-    puts "and array is #{obj.array}"
-    puts "and they are equal? => #{obj.array == obj.old_array}"
-    obj.gui.update_items unless obj.array == obj.old_array
+    after :method_missing do |method, *args, obj|
+      obj.gui.update_items if ARRAY_MODIFYING_METHODS.include? method
+    end
+
   end
 
   class ListBox
