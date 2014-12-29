@@ -1,3 +1,54 @@
+4.0.0.pre3 (191 commits)
+----------------
+
+New features (1)
+----------------
+
+* In pre2 we updated our gem layout and found a few things we didn't like.
+  pre3 is now shaped how we expect to hold through 4.0!
+
+  * shoes -- Now a meta-gem with the default installation as dependencies. It
+    contains no code of its own (any shared code goes in shoes-core).
+  * shoes-core -- The DSL and supporting code to share between Shoes backends
+  * shoes-swt -- The first Shoes backend, based on SWT + JRuby
+  * shoes-package -- Shoes packaging logic, separated to avoid pulling
+    unneeded gems along in packaged apps
+  * shoes-highlighter -- Extracted syntax highlighting from Hackety-Hack
+  * shoes-manual -- Extracted content and display for Shoes manual
+
+Breaking Changes (1)
+--------------------
+
+* Star interprets left/top as upper left corner, like all elements [d2fd202]
+
+Improvements (4)
+----------------
+
+* Tetris sample game [1ac24ac]
+* Implement shape(left, top) [2e8048c]
+* Better input sizing on ask dialog [3df50d5]
+* Capture slot context for timer, download and animation [5f1bdc1]
+
+Bug Fixes (7)
+-------------
+
+* Fix overlapping text with differing text heights [4db98b0]
+* Use app click listener to only send click to one element [2a7fb92]
+* Limit parent-dimensioned elements to their parent's bounds [6b9d760]
+* Fix for background and border placement [4ddbbda]
+* Fix crash when using click on star element [cdf9dc4]
+* Do not count scroll bar into app width [7736b2d]
+* Fix a typo in the adjusted minesweeper sample [93f5ed3]
+
+
+Contributors (7)
+----------------
+
+Jason R. Clark, Tobias Pfeiffer, Kenneth Pullen, KC Erb, Jake Gordon, Eric
+Watson, Neil Northrop
+
+
+
 4.0.0.pre2 (438 commits)
 ----------------
 
