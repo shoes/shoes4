@@ -33,13 +33,13 @@ describe Shoes::Span do
     let(:red) {Shoes::COLORS[:red]}
     it 'does not try to merge with parent style when there are none' do
       parent = double 'parent'
-      span.parent_text = parent
+      span.parent = parent
       expect {span.style}.to_not raise_error()
     end
 
     it 'merges with the styles of the parent text' do
       parent = double 'parent', style: {stroke: white}
-      span.parent_text = parent
+      span.parent = parent
       expect(span.style[:stroke]).to eq(white)
     end
 
@@ -47,7 +47,7 @@ describe Shoes::Span do
       let(:style) {{stroke: red}}
       it 'prefers own values over parent text values' do
         parent = double 'parent', style: {stroke: white}
-        span.parent_text = parent
+        span.parent = parent
         expect(span.style[:stroke]).to eq(red)
       end
     end

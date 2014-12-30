@@ -4,7 +4,7 @@ require 'shoes/helpers/sample17_helper'
 describe Shoes::TextBlock do
   include_context "dsl app"
 
-  let(:text_link) { Shoes::Link.new(app, parent, ['Hello']) }
+  let(:text_link) { Shoes::Link.new(app, ['Hello']) }
   let(:text) { [text_link, ", world!"] }
   subject(:text_block) { Shoes::TextBlock.new(app, parent, text, {app: app}) }
 
@@ -256,11 +256,11 @@ describe Shoes::TextBlock do
     end
 
     it 'sets the parent_text of the non nested texts to the para' do
-      expect(helper.strong_breadsticks.parent_text).to eq para
+      expect(helper.strong_breadsticks.parent).to eq para
     end
 
     it 'sets the parent_text of nested fragments correctly' do
-      expect(helper.ins.parent_text).to eq helper.strong
+      expect(helper.ins.parent).to eq helper.strong
     end
 
     it 'lets the nested text fragements know what their text block is' do
