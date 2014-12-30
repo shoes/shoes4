@@ -6,8 +6,8 @@ class Shoes
     end
 
     def style
-      if @parent_text && @parent_text.respond_to?(:style)
-        @parent_text.style.merge(@style)
+      if @parent && @parent.respond_to?(:style)
+        @parent.style.merge(@style)
       else
         @style
       end

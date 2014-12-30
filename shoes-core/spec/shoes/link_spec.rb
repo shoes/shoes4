@@ -6,7 +6,7 @@ describe Shoes::Link do
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
 
-  subject { Shoes::Link.new(app, app, texts, {color: :blue}) }
+  subject { Shoes::Link.new(app, texts, {color: :blue}) }
 
   context "initialize" do
     it "should set up text" do
@@ -25,7 +25,7 @@ describe Shoes::Link do
     end
 
     context "overriding styles" do
-      subject { Shoes::Link.new(app, app, texts,
+      subject { Shoes::Link.new(app, texts,
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
@@ -43,7 +43,7 @@ describe Shoes::Link do
 
     context "with a block" do
       let(:callable) { double("callable") }
-      subject { Shoes::Link.new(internal_app, nil, texts, {}, Proc.new { callable.call }) }
+      subject { Shoes::Link.new(internal_app, texts, {}, Proc.new { callable.call }) }
 
       it "sets up for the click" do
         expect(callable).to receive(:call)
@@ -52,7 +52,7 @@ describe Shoes::Link do
     end
 
     context "with click option as text" do
-      subject { Shoes::Link.new(internal_app, nil, texts, click: "/url") }
+      subject { Shoes::Link.new(internal_app, texts, click: "/url") }
 
       it "should visit the url" do
         expect(app).to receive(:visit).with("/url")
@@ -62,7 +62,7 @@ describe Shoes::Link do
 
     context "with click option as Proc" do
       let(:callable) { double("callable", call: nil) }
-      subject { Shoes::Link.new(internal_app, nil, texts, click: Proc.new { callable.call }) }
+      subject { Shoes::Link.new(internal_app, texts, click: Proc.new { callable.call }) }
 
       it "calls the block" do
         expect(callable).to receive(:call)
@@ -73,7 +73,7 @@ describe Shoes::Link do
     context "calling click explicitly" do
       let(:original_block)    { double("original") }
       let(:replacement_block) { double("replacement") }
-      subject { Shoes::Link.new(internal_app, nil, texts) { original_block.call } }
+      subject { Shoes::Link.new(internal_app, texts) { original_block.call } }
 
       it "replaces original block" do
         expect(original_block).to_not receive(:call)
@@ -100,6 +100,19 @@ describe Shoes::Link do
     it 'forwards hidden? calls' do
       subject.hidden?
       expect(text_block).to have_received :hidden?
+    end
+  end
+
+  # #979
+  describe 'parent' do
+    let(:text_block) {double 'text block'}
+
+    before :each do
+      subject.parent = text_block
+    end
+
+    it 'has the correct parent, namingly he text block' do
+      expect(subject.parent).to eq text_block
     end
   end
 end
