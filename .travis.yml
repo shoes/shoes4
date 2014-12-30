@@ -1,7 +1,7 @@
 language: ruby
 script: "bundle exec rake spec:all"
 rvm:
-  - jruby-19mode
+  - jruby-1.7.17
   - jruby-head
 jdk:
   - openjdk7
