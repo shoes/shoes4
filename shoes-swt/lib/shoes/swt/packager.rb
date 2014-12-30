@@ -14,15 +14,23 @@ class Shoes
 
       def run(path)
         begin
-          require 'furoshiki/shoes'
-          config = Furoshiki::Shoes::Configuration.load(path)
+          require 'shoes/package'
+          config = ::Shoes::Package::Configuration.load(path)
         rescue Errno::ENOENT => e
           abort "shoes: #{e.message}"
         end
         @dsl.packages.each do |backend, wrapper|
           puts "Packaging #{backend}:#{wrapper}..."
-          packager = Furoshiki::Shoes.new(backend, wrapper, config)
+          packager = packager_class(backend, wrapper).new(config)
           packager.package
+        end
+      end
+
+      def packager_class(backend, wrapper)
+        if backend == "swt" && wrapper == "jar"
+          ::Shoes::Package::Jar
+        elsif backend == "swt" && wrapper == "app"
+          ::Shoes::Package::JarApp
         end
       end
 
