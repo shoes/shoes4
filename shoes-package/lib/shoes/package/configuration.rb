@@ -42,14 +42,17 @@ class Shoes
       # only bundle a single file, and your app will simply use the
       # Shoes app icon.
       #
-      # @overload load(path)
+      # @overload load(path, base_config)
       #   @param [String] path location of the app's 'app.yaml'
+      #   @param [Hash] base_config default values
       # @overload load(path)
       #   @param [String] path location of the directory that
       #      contains the app's 'app.yaml'
+      #   @param [Hash] base_config default values
       # @overload load(path)
       #   @param [String] path location of the app
-      def self.load(path = 'app.yaml')
+      #   @param [Hash] base_config default values
+      def self.load(path, base_config = {})
         pathname = Pathname.new(path)
         app_yaml = Pathname.new('app.yaml')
 
@@ -65,6 +68,7 @@ class Shoes
 
         config = YAML.load(file.read)
         config[:working_dir] = dir
+        config[:gems] = merge_gems(base_config, config)
         create(config)
       end
 
@@ -94,11 +98,7 @@ class Shoes
         }
 
         symbolized_config = deep_symbolize_keys(config)
-
-        # We want to retain all of the gems, but simply merging the hash will
-        # replace the default array
-        symbolized_config[:gems] = defaults[:gems].concat(Array(symbolized_config[:gems])).uniq
-
+        symbolized_config[:gems] = merge_gems(defaults, symbolized_config)
         Furoshiki::Configuration.new defaults.merge(symbolized_config)
       end
 
@@ -113,6 +113,15 @@ class Shoes
         options = pathname.exist? ? default_options : pathname
         dummy_file = Struct.new(:read)
         [dummy_file.new(options), pathname.parent]
+      end
+
+      # We want to retain all of the gems, but simply merging the hash will
+      # replace the whole array, so we handle the gems separately. Note that
+      # keys may not have been symbolized yet
+      def self.merge_gems(base, additional)
+        base_gems = base.fetch(:gems) rescue base['gems']
+        additional_gems = additional.fetch(:gems) rescue additional['gems']
+        Array(base_gems).concat(Array(additional_gems)).uniq
       end
     end
 

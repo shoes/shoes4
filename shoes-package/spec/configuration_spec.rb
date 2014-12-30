@@ -144,21 +144,6 @@ describe Shoes::Package::Configuration do
   context "auto-loading" do
     include_context 'config'
 
-    context "without a path" do
-      it "looks for 'app.yaml' in current directory" do
-        Dir.chdir @config_filename.parent do
-          config = Shoes::Package::Configuration.load
-          expect(config.shortname).to eq('sweet-nebulae')
-        end
-      end
-
-      it "blows up if it can't find the file" do
-        Dir.chdir File.dirname(__FILE__) do
-          expect { config = Shoes::Package::Configuration.load }.to raise_error
-        end
-      end
-    end
-
     shared_examples "config with path" do
       it "finds the config" do
         Dir.chdir File.dirname(__FILE__) do
@@ -194,6 +179,28 @@ describe Shoes::Package::Configuration do
     context "when the file doesn't exist" do
       it "blows up" do
         expect { Shoes::Package::Configuration.load('some/bogus/path') }.to raise_error
+      end
+    end
+
+    context "with additional gems" do
+      let(:path) { @config_filename }
+      let(:additional_config) { { gems: gems } }
+      let(:config) { config = Shoes::Package::Configuration.load(path, additional_config) }
+
+      context "one gem" do
+        let(:gems) { 'shoes-swt' }
+
+        it "adds one additional" do
+          expect(config.gems).to include('shoes-swt')
+        end
+      end
+
+      context "multiple gems" do
+        let(:gems) { ['shoes-swt', 'shoes-extras'] }
+
+        it "adds multiple additional gems" do
+          expect(config.gems & gems).to eq(gems)
+        end
       end
     end
   end
