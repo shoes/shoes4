@@ -1,0 +1,17 @@
+name: Sugar Clouds
+shortname: sweet-nebulae
+ignore:
+  - pkg
+  - dir_to_ignore
+run: bin/hello_world
+gems: rspec
+version: 0.0.1
+release: Mindfully
+icons:
+  osx: img/boots.icns
+  gtk: img/boots_512x512x32.png
+  win32: img/boots.ico
+dmg:
+  ds_store: path/to/custom/.DS_Store
+  background: path/to/custom/background.png
+custom: my custom feature
