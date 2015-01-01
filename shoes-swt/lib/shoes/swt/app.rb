@@ -97,14 +97,15 @@ class Shoes
         @shell.vertical_bar.selection = n
       end
 
+      # Java doesn't like ruby-style accessors here for some reason
       def clipboard
-        ::Swt::Clipboard.new(Shoes.display).contents ::Swt::TextTransfer.instance
+        ::Swt::Clipboard.new(Shoes.display).getContents ::Swt::TextTransfer.getInstance
       end
 
       def clipboard=(str)
         ::Swt::Clipboard.new(Shoes.display).setContents(
           [str].to_java,
-          [::Swt::TextTransfer.instance].to_java(::Swt::TextTransfer)
+          [::Swt::TextTransfer.getInstance].to_java(::Swt::TextTransfer)
         )
       end
 
