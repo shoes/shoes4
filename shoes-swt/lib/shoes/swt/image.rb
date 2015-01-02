@@ -11,14 +11,11 @@ class Shoes
       include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
-      BINARY_ENCODING = Encoding.find('binary')
-
       attr_reader :parent, :real, :dsl, :painter
 
       def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
-
         load_image(@dsl.file_path)
 
         add_paint_listener
@@ -41,7 +38,7 @@ class Shoes
       end
 
       def url?(name_or_data)
-        name_or_data =~ /^(http|https):\/\//
+        @dsl.url?(name_or_data)
       end
 
       def save_width_and_height
@@ -103,7 +100,7 @@ class Shoes
       end
 
       def raw_image_data?(name_or_data)
-        name_or_data.encoding == BINARY_ENCODING
+        @dsl.raw_image_data?(name_or_data)
       end
 
       def load_raw_image_data(name_or_data)
