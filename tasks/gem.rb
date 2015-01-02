@@ -12,7 +12,7 @@ task 'uninstall:all'
 desc 'Release all gems'
 task 'release:all' => [ 'build:all' ]
 
-['shoes-core', 'shoes-swt'].each do |lib|
+['shoes-core', 'shoes-swt', "shoes-package"].each do |lib|
   desc "Build the #{lib} gem"
   task "build:#{lib}" do
     sh "cd ./#{lib} && rake build"
