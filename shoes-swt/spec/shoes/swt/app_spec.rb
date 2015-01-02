@@ -71,7 +71,7 @@ describe Shoes::Swt::App do
 
   context "when attempting to copy text" do
     it "copies text to clipboard" do
-      skip 'Seems to be broken with tmux please see/fix #398'
+      # In case of failure when running tmux, please see #398
       text = "test"
       subject.clipboard = text
       expect(subject.clipboard).to eq(text)
