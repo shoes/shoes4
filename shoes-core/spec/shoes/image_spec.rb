@@ -56,8 +56,8 @@ describe Shoes::Image do
     end
 
     context 'relative path' do
-      let(:filename) { 'static/shoes-icon.png' }
-      its(:file_path) { should eq "#{Shoes::DIR}/#{filename}" }
+      let(:filename) { 'shoes-core/static/shoes-icon.png' }
+      its(:file_path) { should eq "#{Dir.pwd}/#{filename}" }
     end
 
     describe 'accepts web URL' do

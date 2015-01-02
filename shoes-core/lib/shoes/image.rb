@@ -45,7 +45,7 @@ class Shoes
     end
 
     def absolute_file_path(path)
-      path = File.join(Shoes::DIR, path) unless Pathname(path).absolute?
+      path = File.join(Dir.pwd, path) unless Pathname(path).absolute?
       fail FileNotFoundError, "#{path} not found." unless File.exist?(path)
       path
     end
