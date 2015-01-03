@@ -241,7 +241,7 @@ class Shoes
       create Shoes::Stack, opts, blk
     end
 
-    def button(text = 'Button', opts = {}, &blk)
+    def button(text = nil, opts = {}, &blk)
       create Shoes::Button, text, opts, blk
     end
 

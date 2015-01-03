@@ -10,6 +10,9 @@ class Shoes
     def initialize(app, parent, text, styles = {}, blk = nil)
       @app = app
       @parent = parent
+
+      text ||= 'Button'
+
       style_init styles, text: text
       @dimensions = Dimensions.new parent, @style
       @parent.add_child self
