@@ -10,6 +10,12 @@ class Shoes
     def initialize(app, parent, left, top, width, height, styles = {}, blk = nil)
       @app = app
       @parent = parent
+
+      left ||= styles[:left]
+      top ||= styles[:top]
+      width ||= styles[:diameter] || styles[:width] || (styles[:radius] || 0) * 2
+      height ||= styles[:height] || width
+
       style_init styles
       @dimensions = AbsoluteDimensions.new left, top, width, height, @style
       @parent.add_child self

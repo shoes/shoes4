@@ -346,27 +346,16 @@ class Shoes
     def oval(*opts, &blk)
       oval_style = pop_style(opts)
       oval_style = style_normalizer.normalize(oval_style)
-      case opts.length
-        when 3
-          left, top, width = opts
-          height = width
-        when 4
-          left, top, width, height = opts
-        when 0
-          left = oval_style[:left] || 0
-          top = oval_style[:top] || 0
-          width = oval_style[:diameter] || oval_style[:width] ||
-                  (oval_style[:radius] || 0) * 2
-          height = oval_style[:height] || width
-        else
-          message = <<EOS
+
+      left, top, width, height = opts
+
+      message = <<EOS
 Wrong number of arguments. Must be one of:
   - oval(left, top, diameter, [opts])
   - oval(left, top, width, height, [opts])
   - oval(styles)
 EOS
-          fail ArgumentError, message
-      end
+      fail ArgumentError, message unless [0, 3, 4].include? opts.size
       create Shoes::Oval, left, top, width, height, oval_style, blk
     end
 
