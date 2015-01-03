@@ -394,32 +394,18 @@ EOS
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
     def rect(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
-      case args.length
-      when 3
-        left, top, width = args
-        height = width
-        opts[:curve] ||= 0
-      when 4
-        left, top, width, height = args
-        opts[:curve] ||= 0
-      when 5
-        left, top, width, height, opts[:curve] = args
-      when 0
-        left = opts[:left] || 0
-        top = opts[:top] || 0
-        width = opts[:width] || 0
-        height = opts[:height] || width
-        opts[:curve] ||= 0
-      else
-        message = <<EOS
+
+      left, top, width, height, curve = args
+      opts[:curve] ||= curve
+
+      message = <<EOS
 Wrong number of arguments. Must be one of:
   - rect(left, top, side, [opts])
   - rect(left, top, width, height, [opts])
   - rect(left, top, width, height, curve, [opts])
   - rect(styles)
 EOS
-        fail ArgumentError, message
-      end
+      fail ArgumentError, message unless [0, 3, 4, 5].include? args.size
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
