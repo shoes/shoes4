@@ -1,5 +1,5 @@
-4.0.0.pre3 (191 commits)
-----------------
+4.0.0.pre3 (246 commits)
+------------------------
 
 New features (1)
 ----------------
@@ -21,6 +21,7 @@ Breaking Changes (1)
 
 * Star interprets left/top as upper left corner, like all elements [d2fd202]
 
+
 Improvements (4)
 ----------------
 
@@ -28,10 +29,14 @@ Improvements (4)
 * Implement shape(left, top) [2e8048c]
 * Better input sizing on ask dialog [3df50d5]
 * Capture slot context for timer, download and animation [5f1bdc1]
+* TextBlocks have #parent not #parent_text  [52fab93]
+* shoes.gemspec at top of project [369f7d3]
 
 Bug Fixes (7)
 -------------
 
+* Fix copying to/from system clipboard [e965e59]
+* Position a slot's elements correctly when the slot has a margin [d72d7ef]
 * Fix overlapping text with differing text heights [4db98b0]
 * Use app click listener to only send click to one element [2a7fb92]
 * Limit parent-dimensioned elements to their parent's bounds [6b9d760]
