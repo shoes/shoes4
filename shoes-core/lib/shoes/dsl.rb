@@ -66,6 +66,7 @@ require 'shoes/common/inspect'
 require 'shoes/dimension'
 require 'shoes/dimensions'
 require 'shoes/not_implemented_error'
+require 'shoes/file_not_found_error'
 require 'shoes/text_block_dimensions'
 
 require 'shoes/color'

@@ -40,10 +40,29 @@ describe Shoes::Image do
     end
   end
 
-  describe 'accepts web URL' do
-    let(:filename) { "http://is.gd/GVAGF7" }
+  describe 'file source' do
     subject { Shoes::Image.new(app, parent, filename, input_opts) }
 
-    its(:file_path) { should eq("http://is.gd/GVAGF7") }
+    context 'invalid path' do
+      let(:filename) { 'something_crazy' }
+      it 'should raise an error' do
+        expect { subject }.to raise_error Shoes::FileNotFoundError
+      end
+    end
+
+    context 'absolute path' do
+      let(:filename) { File.expand_path "../../../static/shoes-icon.png", __FILE__ }
+      its(:file_path) { should eq filename }
+    end
+
+    context 'relative path' do
+      let(:filename) { 'shoes-core/static/shoes-icon.png' }
+      its(:file_path) { should eq "#{Dir.pwd}/#{filename}" }
+    end
+
+    describe 'accepts web URL' do
+      let(:filename) { "http://is.gd/GVAGF7" }
+      its(:file_path) { should eq("http://is.gd/GVAGF7") }
+    end
   end
 end
