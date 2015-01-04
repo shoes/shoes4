@@ -21,18 +21,18 @@ Breaking Changes (1)
 
 * Star interprets left/top as upper left corner, like all elements [d2fd202]
 
-
-Improvements (4)
+Improvements (7)
 ----------------
 
 * Tetris sample game [1ac24ac]
 * Implement shape(left, top) [2e8048c]
+* Handle relative and missing image paths [9502dd7]
 * Better input sizing on ask dialog [3df50d5]
 * Capture slot context for timer, download and animation [5f1bdc1]
 * TextBlocks have #parent not #parent_text  [52fab93]
 * shoes.gemspec at top of project [369f7d3]
 
-Bug Fixes (7)
+Bug Fixes (9)
 -------------
 
 * Fix copying to/from system clipboard [e965e59]
@@ -46,11 +46,10 @@ Bug Fixes (7)
 * Fix a typo in the adjusted minesweeper sample [93f5ed3]
 
 
-Contributors (7)
+Contributors (8)
 ----------------
-
-Jason R. Clark, Tobias Pfeiffer, Kenneth Pullen, KC Erb, Jake Gordon, Eric
-Watson, Neil Northrop
+Jason R. Clark, Tobias Pfeiffer, Eric Watson, Teemu, Kenneth Pullen, KC Erb,
+Jake Gordon, Neil Northrop
 
 
 
