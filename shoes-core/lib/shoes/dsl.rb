@@ -385,7 +385,7 @@ EOS
       opts = style_normalizer.normalize pop_style(args)
 
       left, top, width, height, curve = args
-      opts[:curve] ||= curve
+      opts[:curve] = curve if curve
 
       message = <<EOS
 Wrong number of arguments. Must be one of:
