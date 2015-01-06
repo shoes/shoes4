@@ -83,6 +83,8 @@ class Shoes
         # segments apply, and what the relative ranges within each segment to use.
         def segment_ranges(text_range)
           return [] unless @segments.first # TODO WTF #636
+          return [] unless text_range.any?
+
           first_text = @segments.first.text
           slice = first_text[text_range]
 
