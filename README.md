@@ -174,7 +174,7 @@ There are two kinds of Shoes 4 specs:
    backend, in isolation from the DSL. Shoes 4 comes with an isolation spec
    suite for the Swt backend.
 
-There are rake tasks for running specs. Some examples:
+There are rake tasks for running specs. Some examples (run `rake --tasks` to see a more complete list):
 
     $ rake spec                      # Run the whole spec suite
     $ rake spec:shoes                # Run integration specs using the mock backend
@@ -187,6 +187,20 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
 
 **Note:** For Windows, `C:\tmp\shoes4>jruby -S rake spec`
+
+Sometimes you only want to run specs from individual files rather than entire suites. You can run individual specs from the project root directory like this:
+
+    $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
+    
+If you're on OS X and you are running specs that require SWT, you will have to set the `JRUBY_OPTS` environment variable first:
+
+    $ export JRUBY_OPTS=-J-XstartOnFirstThread
+    $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
+
+or set `JRUBY_OPTS` directly on the command line:
+
+    $ JRUBY_OPTS=-J-XstartOnFirstThread rspec shoes-swt/spec/shoes/swt/app_spec.rb
+    
 
 ## Contact
 
