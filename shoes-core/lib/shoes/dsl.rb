@@ -343,6 +343,7 @@ class Shoes
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
+    OVAL_ALLOWED_ARG_SIZES = [0, 3, 4]
     def oval(*opts, &blk)
       oval_style = pop_style(opts)
       oval_style = style_normalizer.normalize(oval_style)
@@ -355,7 +356,7 @@ Wrong number of arguments. Must be one of:
   - oval(left, top, width, height, [opts])
   - oval(styles)
 EOS
-      fail ArgumentError, message unless [0, 3, 4].include? opts.size
+      fail ArgumentError, message unless OVAL_ALLOWED_ARG_SIZES.include? opts.size
       create Shoes::Oval, left, top, width, height, oval_style, blk
     end
 
@@ -381,6 +382,7 @@ EOS
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
+    RECT_ALLOWED_ARG_SIZES = [0, 3, 4, 5]
     def rect(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
 
@@ -394,7 +396,7 @@ Wrong number of arguments. Must be one of:
   - rect(left, top, width, height, curve, [opts])
   - rect(styles)
 EOS
-      fail ArgumentError, message unless [0, 3, 4, 5].include? args.size
+      fail ArgumentError, message unless RECT_ALLOWED_ARG_SIZES.include? args.size
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
@@ -459,6 +461,7 @@ EOS
     #   Creates a shape at (0, 0)
     #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    SHAPE_ALLOWED_ARG_SIZES = [0, 2]
     def shape(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
       opts[:left], opts[:top] = args if args.length == 2
@@ -469,7 +472,7 @@ Wrong number of arguments. Must be one of:
   - shape(left, top, [opts])
   - shape(styles)
 EOS
-      fail ArgumentError, message unless [0, 2].include? args.length
+      fail ArgumentError, message unless SHAPE_ALLOWED_ARG_SIZES.include? args.length
       create Shoes::Shape, style.merge(opts), blk
     end
 
