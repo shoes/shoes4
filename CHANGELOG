@@ -1,4 +1,4 @@
-4.0.0.pre3 (195 commits)
+4.0.0.pre3 (199 commits)
 ------------------------
 
 New features (1)
@@ -32,9 +32,10 @@ Improvements (7)
 * TextBlocks have #parent not #parent_text  [52fab93]
 * shoes.gemspec at top of project [369f7d3]
 
-Bug Fixes (9)
+Bug Fixes (10)
 -------------
 
+* Links with empty text crash [a8fb745]
 * Fix copying to/from system clipboard [e965e59]
 * Position a slot's elements correctly when the slot has a margin [d72d7ef]
 * Fix overlapping text with differing text heights [4db98b0]
