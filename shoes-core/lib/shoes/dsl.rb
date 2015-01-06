@@ -1,5 +1,8 @@
+require 'delegate'
+require 'fileutils'
 require 'forwardable'
 require 'pathname'
+require 'tmpdir'
 require 'shoes/common/registration'
 
 class Shoes

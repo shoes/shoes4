@@ -1,5 +1,3 @@
-require 'delegate'
-
 class Shoes
   module Logger
     class Ruby < SimpleDelegator
