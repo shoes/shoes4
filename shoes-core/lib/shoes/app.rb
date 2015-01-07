@@ -85,14 +85,6 @@ class Shoes
 
     alias_method :fullscreen?, :fullscreen
 
-    def to_s
-      inject_title super
-    end
-
-    def inspect
-      inject_title super
-    end
-
     def eval_with_additional_context(context, &blk)
       @__additional_context__ = context
       instance_eval(&blk) if blk
@@ -107,6 +99,18 @@ class Shoes
         super
       end
     end
+
+    private
+
+    def inspect_details
+      " \"#{@__app__.app_title}\""
+    end
+
+    def to_s_details
+      inspect_details
+    end
+
+    public
 
     DELEGATE_BLACKLIST = [:parent, :app]
 
@@ -125,12 +129,6 @@ class Shoes
     def self.new_dsl_method(name, &blk)
       define_method name, blk
       @method_subscribers.each { |klazz| klazz.def_delegator :app, name }
-    end
-
-    protected
-
-    def inject_title(string)
-      "#{string.chop} \"#{@__app__.app_title}\"#{string[-1]}"
     end
   end
 end

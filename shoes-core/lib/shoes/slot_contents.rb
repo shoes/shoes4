@@ -33,11 +33,11 @@ class Shoes
       @contents.clear
     end
 
-    def inspect
-      super.insert(-2, " @size=#{size} @prepending=#{@prepending} @prepending_index=#{@prepending_index}")
-    end
-
     private
+
+    def inspect_details
+      " @size=#{size} @prepending=#{@prepending} @prepending_index=#{@prepending_index}"
+    end
 
     def append_element(element)
       @contents << element
