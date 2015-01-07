@@ -95,14 +95,6 @@ class Shoes
       true
     end
 
-    def inspect
-      nothing = '_'
-      detail = " relative:#{Point.new left, top}->#{Point.new right, bottom}" \
-                " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" \
-                " #{width || nothing}x#{height || nothing}"
-      add_detail_to_inspect super, detail
-    end
-
     def self.setup_delegations
       methods_to_rename = Dimension.public_instance_methods false
       renamed_delegate_to :x_dimension, methods_to_rename, 'start'  => 'left',
@@ -116,6 +108,13 @@ class Shoes
     setup_delegations
 
     private
+
+    def inspect_details
+      nothing = '_'
+      " relative:#{Point.new left, top}->#{Point.new right, bottom}" \
+        " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" \
+        " #{width || nothing}x#{height || nothing}"
+    end
 
     def hash_as_argument?(left)
       left.respond_to? :fetch

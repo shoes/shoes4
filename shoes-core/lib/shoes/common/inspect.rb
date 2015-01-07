@@ -2,25 +2,26 @@ class Shoes
   module Common
     module Inspect
       def to_s
-        "(#{self.class.name})"
+        "(#{self.class.name}#{to_s_details})"
       end
 
       # Object hex representation from https://github.com/michaeldv/awesome_print
+      # Example:
+      #   (Shoes::App:0x01234abc "Hello")
       def inspect
-        "(#{self.class.name}:#{'0x%08x' % (object_id * 2)})"
+        "(#{self.class.name}:#{'0x%08x' % (object_id * 2)}#{inspect_details})"
       end
 
-      protected
+      private
 
-      # Creates a new string with details placed before last character
-      # of string.
-      #
-      # Example:
-      #
-      # add_detail_to_inspect("(Shoes::Object)", 'o="eyelet"')
-      #     #=> (Shoes::Object o="eyelet")
-      def add_detail_to_inspect(string, detail)
-        "#{string.chop}#{detail}#{string[-1]}"
+      # Additional details to include in the inspect representation.
+      def inspect_details
+        ''
+      end
+
+      # Additional details to include in the to_s representation.
+      def to_s_details
+        ''
       end
     end
   end

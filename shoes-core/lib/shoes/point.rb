@@ -47,8 +47,10 @@ class Shoes
       "(#{@x || nothing},#{@y || nothing})"
     end
 
-    def inspect
-      add_detail_to_inspect super, " #{self}"
+    private
+
+    def inspect_details
+      " #{self}"
     end
   end
 end
