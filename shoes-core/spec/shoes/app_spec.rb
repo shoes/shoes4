@@ -58,7 +58,7 @@ describe Shoes::App do
         end
 
         it "shows title in #inspect" do
-          expect(subject.inspect).to match("(Shoes::App:#{shoes_object_id_pattern} \"#{defaults.fetch :title}\")")
+          expect(subject.inspect).to match(/\(Shoes::App:#{shoes_object_id_pattern} "#{defaults.fetch :title}"\)/)
         end
       end
     end
