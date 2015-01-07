@@ -34,8 +34,8 @@ class Shoes
     end
 
     def inspect
-      details = " @size=#{size} @prepending=#{@prepending} @prepending_index=#{@prepending_index}"
-      add_detail_to_inspect super, details
+      detail = " @size=#{size} @prepending=#{@prepending} @prepending_index=#{@prepending_index}"
+      add_detail_to_inspect super, detail
     end
 
     private

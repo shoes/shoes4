@@ -19,8 +19,8 @@ class Shoes
       #
       # add_detail_to_inspect("(Shoes::Object)", 'o="eyelet"')
       #     #=> (Shoes::Object o="eyelet")
-      def add_detail_to_inspect(string, details)
-        "#{string.chop}#{details}#{string[-1]}"
+      def add_detail_to_inspect(string, detail)
+        "#{string.chop}#{detail}#{string[-1]}"
       end
     end
   end

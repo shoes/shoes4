@@ -97,10 +97,10 @@ class Shoes
 
     def inspect
       nothing = '_'
-      details = " relative:#{Point.new left, top}->#{Point.new right, bottom}" \
+      detail = " relative:#{Point.new left, top}->#{Point.new right, bottom}" \
                 " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" \
                 " #{width || nothing}x#{height || nothing}"
-      add_detail_to_inspect super, details
+      add_detail_to_inspect super, detail
     end
 
     def self.setup_delegations
