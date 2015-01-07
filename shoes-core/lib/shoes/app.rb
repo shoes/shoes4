@@ -86,11 +86,11 @@ class Shoes
     alias_method :fullscreen?, :fullscreen
 
     def to_s
-      inject_title super
+      add_detail_to_inspect super, " \"#{@__app__.app_title}\""
     end
 
     def inspect
-      inject_title super
+      add_detail_to_inspect super, " \"#{@__app__.app_title}\""
     end
 
     def eval_with_additional_context(context, &blk)
@@ -125,12 +125,6 @@ class Shoes
     def self.new_dsl_method(name, &blk)
       define_method name, blk
       @method_subscribers.each { |klazz| klazz.def_delegator :app, name }
-    end
-
-    protected
-
-    def inject_title(string)
-      "#{string.chop} \"#{@__app__.app_title}\"#{string[-1]}"
     end
   end
 end

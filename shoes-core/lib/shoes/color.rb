@@ -80,7 +80,7 @@ EOS
     end
 
     def inspect
-      super.insert(-2, " #{self} alpha:#{@alpha}")
+      add_detail_to_inspect super, " #{self} alpha:#{@alpha}"
     end
 
     private

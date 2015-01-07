@@ -11,7 +11,7 @@ class Shoes
     attr_reader :alpha, :color1, :color2
 
     def inspect
-      super.insert(-2, " #{color1}->#{color2}")
+      add_detail_to_inspect super, " #{color1}->#{color2}"
     end
 
     def <=>(other) # arbitrarily compare 1st non-equal color

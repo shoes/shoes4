@@ -149,7 +149,7 @@ class Shoes
     end
 
     def inspect
-      super.insert(-2, " \"#{@app_title}\" #{@dimensions.inspect})")
+      add_detail_to_inspect super, " \"#{@app_title}\" #{@dimensions.inspect}"
     end
 
     def self.global_keypresses

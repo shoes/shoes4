@@ -18,7 +18,7 @@ class Shoes
     end
 
     def inspect
-      super.insert(-2, %( "#{self}"))
+      add_detail_to_inspect super, " \"#{self}\""
     end
   end
 end
