@@ -147,4 +147,16 @@ describe Shoes::Download do
     end
 
   end
+
+  describe 'when things go wrong' do
+    it 'reports back to the parent thread' do
+      error = StandardError.new("Nope")
+
+      expect(download.gui).to receive(:eval_block).with(anything, error)
+      allow(download).to receive(:open).and_raise(error)
+
+      download.start
+      download.join_thread
+    end
+  end
 end
