@@ -37,6 +37,8 @@ class Shoes
         dispose_existing_segments
         @segments = Fitter.new(self, current_position).fit_it_in
 
+        return if @segments.nil? || @segments.empty?
+
         set_absolutes_on_dsl(current_position)
         set_calculated_sizes
       end

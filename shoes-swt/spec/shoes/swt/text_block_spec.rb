@@ -124,6 +124,13 @@ describe Shoes::Swt::TextBlock do
           subject.remove
         end
       end
+
+      context "when doesn't fit" do
+        it "bails out early" do
+          allow(fitter).to receive(:fit_it_in).and_return([])
+          subject.contents_alignment(current_position)
+        end
+      end
     end
 
     describe "with two segments" do
