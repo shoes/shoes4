@@ -92,6 +92,10 @@ describe Shoes::Download do
           with(bound_block, download).
           twice
       end
+
+      it 'can call percent just fine thanks' do
+        expect(download.percent).to eq(0)
+      end
     end
   end
 
