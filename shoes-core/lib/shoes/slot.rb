@@ -150,6 +150,13 @@ class Shoes
       else
         current_position
       end
+    rescue => e
+      puts "SWALLOWED POSITIONING EXCEPTION ON #{element} - go take care of it: " + e.to_s
+      puts e.backtrace.join("\n\t")
+      puts 'Unfortunately we have to swallow it or risk SWT hanging.'
+      puts "It doesn't like exceptions during layout. :O"
+
+      current_position
     end
 
     def position_element(_element, _current_position)
