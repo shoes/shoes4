@@ -44,9 +44,12 @@ class Shoes
       end
 
       def adjust_current_position(current_position)
-        last_segment = segments.last
         current_position.y = @dsl.absolute_bottom
-        current_position.y -= last_segment.last_line_height unless @bumped_to_next_line
+
+        last_segment = segments.last
+        if last_segment && !@bumped_to_next_line
+          current_position.y -= last_segment.last_line_height
+        end
       end
 
       def set_absolutes_on_dsl(current_position)
