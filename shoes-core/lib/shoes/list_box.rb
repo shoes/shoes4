@@ -1,5 +1,3 @@
-require 'delegate'
-
 class Shoes
   class ProxyArray < SimpleDelegator
     attr_accessor :gui
