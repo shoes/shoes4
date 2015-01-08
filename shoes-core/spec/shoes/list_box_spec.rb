@@ -14,8 +14,6 @@ describe Shoes::ListBox do
 
   subject(:list_box) { Shoes::ListBox.new(app, parent, input_opts, input_block) }
 
-  let(:gui) {list_box.gui}
-
   it_behaves_like "an element that can respond to change"
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::ListBox.new(app, parent) }
