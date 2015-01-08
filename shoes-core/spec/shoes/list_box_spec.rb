@@ -14,6 +14,8 @@ describe Shoes::ListBox do
 
   subject(:list_box) { Shoes::ListBox.new(app, parent, input_opts, input_block) }
 
+  let(:gui) {list_box.gui}
+
   it_behaves_like "an element that can respond to change"
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::ListBox.new(app, parent) }
@@ -39,6 +41,18 @@ describe Shoes::ListBox do
   it "changes the items" do
     list_box.items = ["Pie", "Apple", "Pig"]
     expect(list_box.items).to eq(["Pie", "Apple", "Pig"])
+  end
+
+  describe 'Updating gui' do
+    it "updates the gui when array methods like size are called" do
+      expect(list_box.gui).to receive(:update_items)
+      list_box.items.size
+    end
+
+    it "updates the gui when self-modifying array methods like map! are called" do
+      expect(list_box.gui).to receive(:update_items)
+      list_box.items.map!{|item| "replaced!"}
+    end
   end
 
   describe 'Choosing' do
