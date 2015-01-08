@@ -1,5 +1,8 @@
+require 'delegate'
+require 'fileutils'
 require 'forwardable'
 require 'pathname'
+require 'tmpdir'
 require 'shoes/common/registration'
 
 class Shoes
@@ -66,6 +69,7 @@ require 'shoes/common/inspect'
 require 'shoes/dimension'
 require 'shoes/dimensions'
 require 'shoes/not_implemented_error'
+require 'shoes/file_not_found_error'
 require 'shoes/text_block_dimensions'
 
 require 'shoes/color'
@@ -558,7 +562,7 @@ EOS
 
     def link(*texts, &blk)
       opts = normalize_style_for_element(Shoes::Link, texts)
-      create Shoes::Link, texts, opts, blk
+      Shoes::Link.new @__app__, texts, opts, blk
     end
 
     def span(*texts)

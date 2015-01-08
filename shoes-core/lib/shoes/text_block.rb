@@ -84,7 +84,7 @@ class Shoes
       texts.each do |text|
         if text.is_a? Shoes::Text
           text.text_block  = self
-          text.parent_text = parent_text
+          text.parent      = parent_text
           end_point        = start_point + text.to_s.length - 1
 
           # If our endpoint is before our start, it's an empty string. We treat

@@ -79,11 +79,11 @@ EOS
       "rgb(#{red}, #{green}, #{blue})"
     end
 
-    def inspect
-      super.insert(-2, " #{self} alpha:#{@alpha}")
-    end
-
     private
+
+    def inspect_details
+      " #{self} alpha:#{@alpha}"
+    end
 
     def normalize_rgb(value)
       rgb = value.is_a?(Fixnum) ? value : (255 * value).round

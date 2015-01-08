@@ -85,6 +85,11 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
         result = subject.segment_ranges(0..first_segment.text.length + 10)
         expect(result).to eql([[first_segment, 0..first_segment.text.length]])
       end
+
+      it "picks properly with empty range" do
+        result = subject.segment_ranges(0...0)
+        expect(result).to be_empty
+      end
     end
 
     describe "relative text positions" do
@@ -243,7 +248,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   end
 
   def create_link(text)
-    Shoes::Link.new(shoes_app, parent, [text])
+    Shoes::Link.new(shoes_app, [text])
   end
 
   def style_with(style={})

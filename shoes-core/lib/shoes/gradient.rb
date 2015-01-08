@@ -10,10 +10,6 @@ class Shoes
 
     attr_reader :alpha, :color1, :color2
 
-    def inspect
-      super.insert(-2, " #{color1}->#{color2}")
-    end
-
     def <=>(other) # arbitrarily compare 1st non-equal color
       raise_class_mismatch_error(other) unless other.is_a?(self.class)
       if @color1 == other.color1
@@ -26,6 +22,12 @@ class Shoes
     def raise_class_mismatch_error(other)
       fail ArgumentError,
            "can't compare #{self.class.name} with #{other.class.name}"
+    end
+
+    private
+
+    def inspect_details
+      " #{color1}->#{color2}"
     end
   end
 end

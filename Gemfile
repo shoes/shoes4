@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'shoes',        path: 'shoes'
+gem 'shoes',        path: '.'
 gem 'shoes-core',   path: 'shoes-core'
 gem 'shoes-swt',    path: 'shoes-swt'
+gem 'shoes-package', path: 'shoes-package'
 
 gem 'shoes-manual'
 gem 'shoes-highlighter'
@@ -21,7 +22,6 @@ group :development do
   gem "yard"
   gem "kramdown"
   gem 'simplecov'
-  gem 'coveralls'
   gem "codeclimate-test-reporter"
   gem 'jruby-lint'
   gem 'webmock'

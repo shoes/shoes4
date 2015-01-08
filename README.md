@@ -1,4 +1,4 @@
-# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://img.shields.io/codeclimate/github/shoes/shoes4.svg)](https://codeclimate.com/github/shoes/shoes4)[![Coverage Status](https://img.shields.io/coveralls/shoes/shoes4.svg)](https://coveralls.io/r/shoes/shoes4?branch=master)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
+# shoes4 [![Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Code Climate](https://codeclimate.com/github/shoes/shoes4/badges/gpa.svg)](https://codeclimate.com/github/shoes/shoes4)[![Test Coverage](https://codeclimate.com/github/shoes/shoes4/badges/coverage.svg)](https://codeclimate.com/github/shoes/shoes4/code?sort=covered_percent&sort_direction=desc)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
 
 Shoes 4 : the next version of Shoes
 
@@ -15,8 +15,6 @@ There are two ways to get your hands on Shoes 4 - the preview gem release and in
 So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
 
     $ rvm install jruby
-
-**Important JRuby version note:** JRuby 1.7.14 and 1.7.15 have a bug where `bundle install` won't work with Shoes 4. Make sure to use JRuby 1.7.16 or JRuby-1.7.13 with Shoes 4.
 
 **JDK version note:** While Shoes 4 should generally work with JDK version 6 and up we recommend to use newer version. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
 
@@ -176,7 +174,7 @@ There are two kinds of Shoes 4 specs:
    backend, in isolation from the DSL. Shoes 4 comes with an isolation spec
    suite for the Swt backend.
 
-There are rake tasks for running specs. Some examples:
+There are rake tasks for running specs. Some examples (run `rake --tasks` to see a more complete list):
 
     $ rake spec                      # Run the whole spec suite
     $ rake spec:shoes                # Run integration specs using the mock backend
@@ -189,6 +187,20 @@ There are rake tasks for running specs. Some examples:
     $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
 
 **Note:** For Windows, `C:\tmp\shoes4>jruby -S rake spec`
+
+Sometimes you only want to run specs from individual files rather than entire suites. You can run individual specs from the project root directory like this:
+
+    $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
+    
+If you're on OS X and you are running specs that require SWT, you will have to set the `JRUBY_OPTS` environment variable first:
+
+    $ export JRUBY_OPTS=-J-XstartOnFirstThread
+    $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
+
+or set `JRUBY_OPTS` directly on the command line:
+
+    $ JRUBY_OPTS=-J-XstartOnFirstThread rspec shoes-swt/spec/shoes/swt/app_spec.rb
+    
 
 ## Contact
 

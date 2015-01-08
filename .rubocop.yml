@@ -21,3 +21,9 @@ Style/StringLiterals:
 # see discussion in #859
 Style/TrailingComma:
   Enabled: false
+
+# We have several places where, because of instance scoping in apps,
+# we don't want to use attr_reader. (Also misattributes on predicate
+# methods)
+Style/TrivialAccessors:
+  Enabled: false

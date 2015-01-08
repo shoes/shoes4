@@ -2,13 +2,12 @@ class Shoes
   class Link < Span
     include Common::Style
 
-    attr_reader :app, :parent, :gui, :blk
+    attr_reader :app, :gui, :blk
     style_with :common_styles, :text_block_styles
     STYLES = { underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil }
 
-    def initialize(app, parent, texts, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
+    def initialize(my_app, texts, styles = {}, blk = nil)
+      @app = my_app
       style_init styles
       @gui = Shoes.backend_for self
 

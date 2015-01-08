@@ -1,3 +1,59 @@
+4.0.0.pre3 (199 commits)
+------------------------
+
+New features (1)
+----------------
+
+* In pre2 we updated our gem layout and found a few things we didn't like.
+  pre3 is now shaped how we expect to hold through 4.0!
+
+  * shoes -- Now a meta-gem with the default installation as dependencies. It
+    contains no code of its own (any shared code goes in shoes-core).
+  * shoes-core -- The DSL and supporting code to share between Shoes backends
+  * shoes-swt -- The first Shoes backend, based on SWT + JRuby
+  * shoes-package -- Shoes packaging logic, separated to avoid pulling
+    unneeded gems along in packaged apps
+  * shoes-highlighter -- Extracted syntax highlighting from Hackety-Hack
+  * shoes-manual -- Extracted content and display for Shoes manual
+
+Breaking Changes (1)
+--------------------
+
+* Star interprets left/top as upper left corner, like all elements [d2fd202]
+
+Improvements (7)
+----------------
+
+* Tetris sample game [1ac24ac]
+* Implement shape(left, top) [2e8048c]
+* Handle relative and missing image paths [9502dd7]
+* Better input sizing on ask dialog [3df50d5]
+* Capture slot context for timer, download and animation [5f1bdc1]
+* TextBlocks have #parent not #parent_text  [52fab93]
+* shoes.gemspec at top of project [369f7d3]
+
+Bug Fixes (10)
+-------------
+
+* Links with empty text crash [a8fb745]
+* Fix copying to/from system clipboard [e965e59]
+* Position a slot's elements correctly when the slot has a margin [d72d7ef]
+* Fix overlapping text with differing text heights [4db98b0]
+* Use app click listener to only send click to one element [2a7fb92]
+* Limit parent-dimensioned elements to their parent's bounds [6b9d760]
+* Fix for background and border placement [4ddbbda]
+* Fix crash when using click on star element [cdf9dc4]
+* Do not count scroll bar into app width [7736b2d]
+* Fix a typo in the adjusted minesweeper sample [93f5ed3]
+
+
+Contributors (8)
+----------------
+Jason R. Clark, Tobias Pfeiffer, Eric Watson, Teemu, Kenneth Pullen, KC Erb,
+Jake Gordon, Neil Northrop
+
+
+
 4.0.0.pre2 (438 commits)
 ----------------
 
