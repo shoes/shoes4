@@ -1,7 +1,7 @@
 language: ruby
 script: "bundle exec rake spec:all"
 rvm:
-  - jruby-1.7.17
+  - jruby
   - jruby-head
 jdk:
   - openjdk7
@@ -25,12 +25,11 @@ notifications:
       - jason@jasonrclark.net
     on_success: change # [always|never|change] # default: change
     on_failure: change # [always|never|change] # default: always
-before_install:
-  - "bundle update" # recommended for caching for now see #981 for info
 before_script:
   - "export DISPLAY=:99.0"
   - "export SWT_GTK3=0"
   - "sh -e /etc/init.d/xvfb start"
+  - "bundle update" # recommended for caching for now see #981 for info
   - "sleep 3"
 after_script:
   - find -name '*.log' -exec cat {} \;
