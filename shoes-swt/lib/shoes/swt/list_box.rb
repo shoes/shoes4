@@ -28,7 +28,7 @@ class Shoes
       end
 
       def update_items
-        @real.items = @dsl.items.to_a
+        @real.items = @dsl.items.to_a.map(&:to_s)
       end
 
       def text
