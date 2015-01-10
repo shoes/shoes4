@@ -183,6 +183,20 @@ describe Shoes::Swt::TextBlock::Fitter do
         expect_segments(segments, [20, 76], [1, 96])
       end
     end
+
+    context "doesn't fit" do
+      it "with no width and unbounded height" do
+        allow(dsl).to receive_messages(desired_width: 0)
+        segments = when_fit_at(x: 0, y: 0, next_line_start: 0)
+        expect(segments).to be_empty
+      end
+
+      it "with no width and 0 height" do
+        allow(dsl).to receive_messages(desired_width: 0, containing_width: 0)
+        segments = when_fit_at(x: 0, y: 0, next_line_start: 1)
+        expect(segments).to be_empty
+      end
+    end
   end
 
   def with_text_split(first, second)

@@ -90,6 +90,11 @@ describe Shoes::Swt::TextBlock do
         expect(current_position.y).to eq(layout_height)
       end
 
+      it "is aligns and positions safely without segments" do
+        allow(fitter).to receive(:fit_it_in).and_return([])
+        when_aligns_and_positions
+      end
+
       it "disposes of prior segments" do
         subject.contents_alignment(current_position)
         expect(segment).to receive(:dispose)
@@ -122,6 +127,13 @@ describe Shoes::Swt::TextBlock do
 
           subject.contents_alignment(current_position)
           subject.remove
+        end
+      end
+
+      context "when doesn't fit" do
+        it "bails out early" do
+          allow(fitter).to receive(:fit_it_in).and_return([])
+          subject.contents_alignment(current_position)
         end
       end
     end
