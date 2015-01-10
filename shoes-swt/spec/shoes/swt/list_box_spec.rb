@@ -26,10 +26,10 @@ describe Shoes::Swt::ListBox do
   end
 
   it "should call 'items' when updating values" do
-    subject # creation already calls update_items once
     allow(dsl).to receive(:items).and_return ["hello"]
     subject.update_items
-    expect(real).to have_received(:items=).with(["hello"])
+    # creation already calls update_items once
+    expect(real).to have_received(:items=).with(["hello"]).twice
   end
 
   it "should respond to choose" do
@@ -44,6 +44,13 @@ describe Shoes::Swt::ListBox do
   it 'sets the items on real upon initialization' do
     subject
     expect(real).to have_received(:items=).with(items)
+  end
+
+  it 'converts array to string' do
+    allow(dsl).to receive(:items).and_return [1,2,3]
+    subject.update_items
+    # creation already calls update_items once
+    expect(real).to have_received(:items=).with(%w(1 2 3)).twice
   end
 
   describe "when the backend notifies us that the selection has changed" do
