@@ -10,6 +10,7 @@ class Shoes
 
     def handle_block(blk)
       change(&blk) if blk
+      update_visibility
     end
 
     def state=(value)

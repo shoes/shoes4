@@ -8,6 +8,7 @@ class Shoes
 
     def after_initialize(*_)
       @gui.fraction = @style[:fraction]
+      update_visibility
     end
 
     def handle_block(*_)
