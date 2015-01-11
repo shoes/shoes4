@@ -123,6 +123,7 @@ class Shoes
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
         set_dimensions(new_styles)
+        set_visibility(new_styles)
         click(&new_styles[:click]) if new_styles.key?(:click)
         @style.merge! normalized_style
       end
@@ -132,6 +133,12 @@ class Shoes
         new_styles.each do |key, value|
           send("#{key}=", value) if STYLE_GROUPS[:dimensions].include?(key)
         end
+      end
+
+      def set_visibility(new_styles)
+        return unless new_styles.include?(:hidden)
+        @style[:hidden] = new_styles[:hidden]
+        update_visibility
       end
 
       def update_dimensions # so that @style hash matches actual values
