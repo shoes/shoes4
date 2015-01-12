@@ -19,6 +19,6 @@ Gem.post_uninstall do |gem|
     # Everybody potentially has a generated backend file in their bin
     puts "Removing shoes-backend"
     backend = File.join(Gem.bindir, "shoes-backend")
-    FileUtils.rm(backend) if File.exists?(backend)
+    FileUtils.rm(backend) if File.exist?(backend)
   end
 end
