@@ -100,6 +100,14 @@ class Shoes
       self
     end
 
+    # Determines if a given point is in the boundary of the shape. Given the
+    # many possibilities of what a shape could contain, this just checks the
+    # outer bounding box of the shape, nothing more sophisticated.
+    def in_bounds?(x, y)
+      (@left_bound..@right_bound).include?(x) &&
+      (@top_bound..@bottom_bound).include?(y)
+    end
+
     private
 
     # Updates the bounds of this shape to include the rectangle described by
