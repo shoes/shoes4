@@ -16,13 +16,18 @@ class Shoes
         @parent.add_child self
         @gui = Shoes.backend_for self
 
-        register_click blk if blk
+        handle_block(blk)
 
         after_initialize
       end
 
       def create_dimensions(args)
         raise NotImplementedError.new
+      end
+
+      def handle_block(blk)
+        return unless blk
+        register_click blk
       end
 
       def before_initialize(styles)
