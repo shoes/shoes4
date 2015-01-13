@@ -47,11 +47,21 @@ class Shoes
     end
 
     def hidden?
-      @text_block.hidden?
+      text_block_guard && @text_block.hidden?
     end
 
     def visible?
-      @text_block.visible?
+      text_block_guard && @text_block.visible?
+    end
+
+    private
+    def text_block_guard
+      if @text_block
+        true
+      else
+        @app.warn 'Stray link without TextBlock detected! Links have to be part of a text block like a para or itle'
+        false
+      end
     end
   end
 end

@@ -2,7 +2,7 @@ require 'shoes/spec_helper'
 
 describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }
-  let(:app) { double("app", gui: gui, style: {}, element_styles: {}) }
+  let(:app) { double("app", gui: gui, style: {}, element_styles: {}, warn: true) }
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
 
@@ -88,23 +88,35 @@ describe Shoes::Link do
   describe 'visibility' do
     let(:text_block) {double 'text block', visible?: true, hidden?: false}
 
-    before :each do
-      subject.text_block = text_block
+    describe 'with a containing text block' do
+      before :each do
+        subject.text_block = text_block
+      end
+
+      it 'forwards #visible? calls' do
+        subject.visible?
+        expect(text_block).to have_received :visible?
+      end
+
+      it 'forwards #hidden? calls' do
+        subject.hidden?
+        expect(text_block).to have_received :hidden?
+      end
     end
 
-    it 'forwards visible? calls' do
-      subject.visible?
-      expect(text_block).to have_received :visible?
-    end
+    describe 'without a containing text block' do
+      it 'does not crash on #visibie?' do
+        expect {subject.visible?}.not_to raise_error
+      end
 
-    it 'forwards hidden? calls' do
-      subject.hidden?
-      expect(text_block).to have_received :hidden?
+      it 'does not crash on #hidden?' do
+        expect {subject.hidden?}.not_to raise_error
+      end
     end
   end
 
   # #979
-  describe 'parent' do
+  describe 'contining text block' do
     let(:text_block) {double 'text block'}
 
     before :each do
