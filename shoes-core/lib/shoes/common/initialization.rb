@@ -11,7 +11,7 @@ class Shoes
         @parent = parent
 
         style_init(styles)
-        create_dimensions(args)
+        create_dimensions(*args)
 
         @parent.add_child self
         @gui = Shoes.backend_for self
