@@ -59,7 +59,7 @@ class Shoes
       if @text_block
         true
       else
-        @app.warn 'Stray link without TextBlock detected! Links have to be part of a text block like a para or itle'
+        @app.warn 'Stray link without TextBlock detected! Links have to be part of a text block like a para or title'
         false
       end
     end

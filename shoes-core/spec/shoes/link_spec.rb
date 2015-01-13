@@ -116,7 +116,7 @@ describe Shoes::Link do
   end
 
   # #979
-  describe 'contining text block' do
+  describe 'containing text block' do
     let(:text_block) {double 'text block'}
 
     before :each do
