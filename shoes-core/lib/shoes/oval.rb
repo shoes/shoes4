@@ -1,5 +1,6 @@
 class Shoes
   class Oval
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable
@@ -7,14 +8,8 @@ class Shoes
     attr_reader :app, :parent, :dimensions, :gui
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
 
-    def initialize(app, parent, left, top, width, height, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles
+    def create_dimensions(left, top, width, height)
       @dimensions = AbsoluteDimensions.new left, top, width, height, @style
-      @parent.add_child self
-      @gui = Shoes.backend_for self
-      register_click blk
     end
   end
 end
