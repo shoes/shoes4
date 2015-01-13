@@ -1,17 +1,16 @@
 class Shoes
   class Star
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui
+
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points
     STYLES = { angle: 0 }
 
-    def initialize(app, parent, left, top, points, outer, inner, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-
+    def create_dimensions(left, top, points, outer, inner)
       # Don't use param defaults as DSL explicit passes nil for missing params
       points ||= 10
       outer  ||= 100.0
@@ -28,16 +27,9 @@ class Shoes
       inner_dimensions = AbsoluteDimensions.new 0, 0, inner * 2, 0
 
       # Get actual outer/inner from the dimension to handle relative values
-      outer = @dimensions.width / 2
-      inner = inner_dimensions.width / 2
-
-      # Now set style using adjust outer and inner
-      style_init(styles, inner: inner, outer: outer, points: points)
-
-      @parent.add_child self
-      @gui = Shoes.backend_for self
-
-      register_click blk
+      style[:outer]  = @dimensions.width / 2
+      style[:inner]  = inner_dimensions.width / 2
+      style[:points] = points
     end
 
     def in_bounds?(x, y)
