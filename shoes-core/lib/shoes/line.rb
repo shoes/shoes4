@@ -1,5 +1,6 @@
 class Shoes
   class Line
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable
@@ -9,18 +10,14 @@ class Shoes
     style_with :angle, :art_styles, :dimensions, :x2, :y2
     STYLES = { angle: 0 }
 
-    def initialize(app, parent, point_a, point_b, styles = {}, blk = nil)
-      @app     = app
-      @parent  = parent
+    def create_dimensions(point_a, point_b)
       @point_a = point_a
       @point_b = point_b
 
-      style_init styles, x2: point_b.x, y2: point_b.y
       enclosing_box_of_line
 
-      @parent.add_child self
-      @gui = Shoes.backend_for self
-      register_click blk
+      style[:x2] = point_b.x
+      style[:y2] = point_b.y
     end
 
     def update_style(new_styles)
