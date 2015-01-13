@@ -30,10 +30,6 @@ class Shoes
 
       def after_initialize
       end
-
-      def dimensions_class
-        AbsoluteDimensions
-      end
     end
   end
 end
