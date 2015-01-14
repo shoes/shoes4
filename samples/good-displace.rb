@@ -40,7 +40,7 @@ class Layout
   end
 
   def remember(name, element)
-    @app.info "Remembering #{name} at #{[element.left, element.top]}"
+    @app.info "Remembering #{name} at [#{element.left}, #{element.top}]"
     @position[name] = [element.left, element.top]
   end
 
@@ -83,7 +83,7 @@ Shoes.app do
           button "displace" do
             @layout.remember(name, @objects[name])
             position = [x - @layout.left(name), @layout.top]
-            info "#{name} displaces to #{position}" 
+            info "#{name} displaces to #{position}"
             @objects[name].displace(*position)
           end
           button "replace" do

@@ -8,14 +8,14 @@ module Shoes::Manual
   SUB_STYLE = {:stroke => "#CCC", :margin_top => 10}
   IMAGE_STYLE = {:margin => 8, :margin_left => 100}
   COLON = ": "
-  
+
   [INTRO_STYLE, SUB_STYLE].each do |h|
     h[:font] = "MS UI Gothic"
   end if Shoes.language == 'ja'
 
   def self.path
     path = "#{DIR}/static/manual-#{Shoes.language}.txt"
-    unless File.exists? path
+    unless File.exist? path
       path = "#{DIR}/static/manual-en.txt"
     end
     path
@@ -55,12 +55,12 @@ module Shoes::Manual
 
   def dewikify_code(str)
     str = str.gsub(/\A\n+/, '').chomp
-    stack :margin_bottom => 12 do 
+    stack :margin_bottom => 12 do
       background rgb(210, 210, 210), :curve => 4
-      para code(str), CODE_STYLE 
+      para code(str), CODE_STYLE
       stack :top => 0, :right => 2, :width => 70 do
         stack do
-          background "#8A7", :margin => [0, 2, 0, 2], :curve => 4 
+          background "#8A7", :margin => [0, 2, 0, 2], :curve => 4
           para link("Run this", :stroke => "#eee", :underline => "none") { run_code(str) },
             :margin => 4, :align => 'center', :weight => 'bold', :size => 9
         end
@@ -115,7 +115,7 @@ module Shoes::Manual
         when :samples
           sample_page
         when :list
-          text.each { |t| stack(:margin_left => 30) { 
+          text.each { |t| stack(:margin_left => 30) {
             fill black; oval -10, 7, 6; dewikify_p :para, t } }
         else
           dewikify_p sym, text
@@ -146,7 +146,7 @@ module Shoes::Manual
       end
     end
   end
-  
+
   def color_page
     color_names = (Shoes::COLORS.keys*"\n").split("\n").sort
     flow do
@@ -166,7 +166,7 @@ module Shoes::Manual
     Shoes.constants.each do |c|
       k = Shoes.const_get(c)
       next unless k.respond_to? :superclass
-      
+
       c = "Shoes::#{c}"
       if k.superclass == Object
         tree[c] ||= []
@@ -188,7 +188,7 @@ module Shoes::Manual
     index_p = proc do |k, subs|
       unless shown.include? k
         stack :margin_left => 20 do
-          flow do 
+          flow do
             para "▸ ", :font => case RUBY_PLATFORM
               when /mingw/; "MS UI Gothic"
               when /darwin/; "AppleGothic, Arial"
@@ -237,7 +237,7 @@ module Shoes::Manual
         end
 
         @search.add_document :uri => "S #{k}", :body => "#{k}\n#{sparts[0]}".downcase
-        hsh = {'description' => sparts[0], 'sections' => sections, 
+        hsh = {'description' => sparts[0], 'sections' => sections,
            'class' => "toc" + k.downcase.gsub(/\W+/, '')}
         @sections[k] = hsh
         [k, hsh]
@@ -319,7 +319,7 @@ module Shoes::Manual
     sect_cls = sect_h['class']
     @toc.each { |k,v| v.send(k == sect_cls ? :show : :hide) }
     @title.replace sect_s
-    @doc.clear(&dewikify_hi(sect_h['description'], terms, true)) 
+    @doc.clear(&dewikify_hi(sect_h['description'], terms, true))
     add_next_link(@docs.index { |x,| x == sect_s }, -1) rescue nil
     app.slot.scroll_top = 0
   end
@@ -334,7 +334,7 @@ module Shoes::Manual
       meth_h['methods'].each do |mname, expl|
         if meth_a.nil? or meth_a == mname
           sig, val = mname.split("»", 2)
-          stack(:margin_top => 8, :margin_bottom => 8) { 
+          stack(:margin_top => 8, :margin_bottom => 8) {
             background "#333".."#666", :curve => 3, :angle => 90
             tagline sig, (span("»", val, :stroke => "#BBB") if val), :margin => 4 }
           instance_eval &dewikify_hi(expl, terms)
@@ -409,7 +409,7 @@ def Shoes.make_help_page
     style(Shoes::Tagline, :size => 12, :weight => "bold", :stroke => "#eee", :margin => 6)
     style(Shoes::Caption, :size => 24)
     background "#ddd".."#fff", :angle => 90
-    
+
     [Shoes::LinkHover, Shoes::Para, Shoes::Tagline, Shoes::Caption].each do |type|
       style(type, :font => "MS UI Gothic")
     end if Shoes.language == 'ja'
@@ -417,7 +417,7 @@ def Shoes.make_help_page
     stack do
       background black
       stack :margin_left => 118 do
-        para "The Shoes Manual", :stroke => "#eee", :margin_top => 8, :margin_left => 17, 
+        para "The Shoes Manual", :stroke => "#eee", :margin_top => 8, :margin_left => 17,
           :margin_bottom => 0
         @title = title docs[0][0], :stroke => white, :margin => 4, :margin_left => 14,
           :margin_top => 0, :font => "Coolvetica"
@@ -456,7 +456,7 @@ def Shoes.make_help_page
       end
     end
     image :width => 120, :height => 120, :top => -18, :left => 6 do
-      image "#{DIR}/static/shoes-icon.png", :width => 100, :height => 100, :top => 10, :left => 10 
+      image "#{DIR}/static/shoes-icon.png", :width => 100, :height => 100, :top => 10, :left => 10
       glow 2
     end
   end
