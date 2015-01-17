@@ -5,7 +5,7 @@ class Shoes
         blk    = args.pop if args.last.is_a?(Proc) || args.last.nil?
         styles = args.last.is_a?(Hash) ? args.pop : {}
 
-        before_initialize(styles)
+        before_initialize(styles, *args)
 
         @app = app
         @parent = parent
@@ -30,7 +30,7 @@ class Shoes
         register_click blk
       end
 
-      def before_initialize(styles)
+      def before_initialize(styles, *_)
       end
 
       def after_initialize
