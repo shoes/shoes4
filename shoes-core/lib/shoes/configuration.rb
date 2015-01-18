@@ -43,8 +43,10 @@ class Shoes
       #   Shoes.configuration.backend_class(shoes_button) # => Shoes::Swt::Button
       def backend_class(shoes_object)
         class_name = shoes_object.class.name.split("::").last
-        fail ArgumentError, "#{shoes_object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name)
-        backend.const_get(class_name)
+        # Lookup with false to not consult modules higher in the chain Object
+        # because Shoes::Swt.const_defined? 'Range' => true
+        fail ArgumentError, "#{shoes_object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name, false)
+        backend.const_get(class_name, false)
       end
 
       # Creates an appropriate backend object, passing along additional arguments
