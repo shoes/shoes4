@@ -1,6 +1,5 @@
 class Shoes
   class Shape
-    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable

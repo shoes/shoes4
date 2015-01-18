@@ -1,6 +1,5 @@
 class Shoes
   class Slot
-    include Common::Initialization
     include Common::UIElement
     include Common::Clickable
     include Common::Style

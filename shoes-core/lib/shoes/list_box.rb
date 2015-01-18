@@ -26,7 +26,6 @@ class Shoes
   end
 
   class ListBox
-    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Changeable

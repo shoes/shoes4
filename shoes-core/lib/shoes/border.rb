@@ -1,6 +1,5 @@
 class Shoes
   class Border
-    include Common::Initialization
     include Common::UIElement
     include Common::BackgroundElement
     include Common::Style

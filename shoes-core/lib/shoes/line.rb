@@ -1,6 +1,5 @@
 class Shoes
   class Line
-    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable

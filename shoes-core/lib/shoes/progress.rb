@@ -1,6 +1,5 @@
 class Shoes
   class Progress
-    include Common::Initialization
     include Common::UIElement
     include Common::Style
 
