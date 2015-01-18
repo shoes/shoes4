@@ -4,7 +4,7 @@ require 'fileutils'
 # See ext/install/Rakefile for why this cleanup is our responsibility.
 # Decide if user uninstalled executables based on our actual Ruby script.
 Gem.post_uninstall do |gem|
-  uninstalling_shoes = gem.spec.name == "shoes"
+  uninstalling_shoes = gem.spec.name == "shoes-core"
   missing_executable = !File.exist?(File.join(Gem.bindir, "shoes-picker")) &&
                        !File.exist?(File.join(Gem.bindir, "shoes-picker.bat"))
 
@@ -19,6 +19,6 @@ Gem.post_uninstall do |gem|
     # Everybody potentially has a generated backend file in their bin
     puts "Removing shoes-backend"
     backend = File.join(Gem.bindir, "shoes-backend")
-    FileUtils.rm(backend) if File.exists?(backend)
+    FileUtils.rm(backend) if File.exist?(backend)
   end
 end

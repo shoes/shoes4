@@ -47,8 +47,10 @@ class Shoes
       "(#{@x || nothing},#{@y || nothing})"
     end
 
-    def inspect
-      super.insert(-2, " #{self}")
+    private
+
+    def inspect_details
+      " #{self}"
     end
   end
 end

@@ -20,6 +20,7 @@ describe Shoes::Swt::Shape do
   it_behaves_like "Swt::Shape"
   it_behaves_like "paintable"
   it_behaves_like "removable"
+  it_behaves_like 'clickable backend'
 
   it "properly disposes" do
     expect(subject.transform).to receive(:dispose)

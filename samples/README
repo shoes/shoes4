@@ -29,7 +29,6 @@ simple-guess-game.rb
 simple-keypress.rb
 simple-manual.rb
 simple-mouse-follow.rb
-simple-move.rb # (works but looks a bit weird on Linux, see issue #59)
 simple-oval.rb
 simple-sample-executor.rb
 simple-shoes-intro.rb
@@ -92,9 +91,7 @@ sample23.rb
 sample24.rb
 sample27.rb
 sample31.rb
-sample34.rb
 sample35.rb
 sample37.rb
 sample42.rb
-sample45.rb
 sample56.rb

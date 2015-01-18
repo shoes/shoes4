@@ -92,6 +92,10 @@ describe Shoes::Download do
           with(bound_block, download).
           twice
       end
+
+      it 'can call percent just fine thanks' do
+        expect(download.percent).to eq(0)
+      end
     end
   end
 
@@ -142,5 +146,17 @@ describe Shoes::Download do
       end
     end
 
+  end
+
+  describe 'when things go wrong' do
+    it 'reports back to the parent thread' do
+      error = StandardError.new("Nope")
+
+      expect(download.gui).to receive(:eval_block).with(anything, error)
+      allow(download).to receive(:open).and_raise(error)
+
+      download.start
+      download.join_thread
+    end
   end
 end

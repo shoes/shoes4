@@ -1,27 +1,51 @@
 class Shoes
+  class ProxyArray < SimpleDelegator
+    attr_accessor :gui
+
+    def initialize(array, gui)
+      @gui = gui
+      super(array)
+    end
+
+    def method_missing(method, *args, &block)
+      res = super(method, *args, &block)
+      gui.update_items
+
+      case res
+      when ProxyArray, Array
+        self
+      else
+        res
+      end
+    end
+
+    def to_a
+      __getobj__
+    end
+
+  end
+
   class ListBox
     include Common::UIElement
     include Common::Style
     include Common::Changeable
 
-    attr_reader :app, :parent, :dimensions, :gui
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
     STYLES = { width: 200, height: 20, items: [""] }
 
-    def initialize(app, parent, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles
-      @dimensions = Dimensions.new parent, @style
-      @parent.add_child self
-      @gui = Shoes.configuration.backend_for self, @parent.gui
+    def handle_block(blk)
       change(&blk) if blk
+    end
 
+    def after_initialize
+      proxy_array = Shoes::ProxyArray.new(items, @gui)
+      @style[:items] = proxy_array
       choose @style[:choose]
     end
 
-    def items=(values)
-      style(items: values)
+    def items=(vanilla_array)
+      proxy_array = Shoes::ProxyArray.new(vanilla_array, @gui)
+      style(items: proxy_array)
       @gui.update_items
     end
 

@@ -55,6 +55,10 @@ class Shoes
       self
     end
 
+    def gui
+      @__app__.gui
+    end
+
     def window(options = {}, &block)
       options.merge! owner: self
       self.class.new(options, &block)
@@ -85,14 +89,6 @@ class Shoes
 
     alias_method :fullscreen?, :fullscreen
 
-    def to_s
-      super.insert(-2, " \"#{@__app__.app_title}\"")
-    end
-
-    def inspect
-      super.insert(-2, " \"#{@__app__.app_title}\")")
-    end
-
     def eval_with_additional_context(context, &blk)
       @__additional_context__ = context
       instance_eval(&blk) if blk
@@ -107,6 +103,18 @@ class Shoes
         super
       end
     end
+
+    private
+
+    def inspect_details
+      " \"#{@__app__.app_title}\""
+    end
+
+    def to_s_details
+      inspect_details
+    end
+
+    public
 
     DELEGATE_BLACKLIST = [:parent, :app]
 

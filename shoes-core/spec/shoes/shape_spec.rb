@@ -16,6 +16,7 @@ describe Shoes::Shape do
   end
 
   it_behaves_like "movable object"
+  it_behaves_like "clickable object"
 
   describe "octagon" do
     let(:draw) {
@@ -44,7 +45,7 @@ describe Shoes::Shape do
     describe "when created without left and top values" do
       let(:left) { nil }
       let(:top) { nil }
-      
+
       its(:left) { should eq(nil) }
       its(:top) { should eq(nil) }
     end
@@ -90,6 +91,18 @@ describe Shoes::Shape do
     }
 
     it_behaves_like "movable object"
+  end
+
+  describe "in_bounds?" do
+    let(:draw) { Proc.new { line_to 100, 100 } }
+
+    it "is in bounds" do
+      expect(subject.in_bounds?(10, 10)).to be true
+    end
+
+    it "is out of bounds" do
+      expect(subject.in_bounds?(101, 101)).to be false
+    end
   end
 
   describe "accesses app" do

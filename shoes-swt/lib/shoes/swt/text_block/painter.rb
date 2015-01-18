@@ -15,6 +15,10 @@ class Shoes
         def paintControl(paint_event)
           reset_graphics_context(paint_event.gc)
           return if @dsl.hidden?
+          # See #636 for discussion, contents_alignment may not run or if the
+          # space is very narrow we might squish things down to be very narrow.
+          # If paint is triggered then, code later on will crash.
+          return if @dsl.gui.segments.empty?
 
           draw_layouts(paint_event.gc)
         end

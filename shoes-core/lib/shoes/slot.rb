@@ -10,28 +10,30 @@ class Shoes
     NEXT_ELEMENT_OFFSET = 1
 
     attr_reader :parent, :dimensions, :gui, :contents, :blk, :hover_proc, :leave_proc
+
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
     STYLES = { scroll: false }
 
-    def initialize(app, parent, styles = {}, blk = nil)
-      init_attributes(app, parent, styles, blk)
-      @parent.add_child self
-      @gui = Shoes.configuration.backend_for self, @parent.gui
-      eval_block blk
-      contents_alignment
-    end
+    def create_dimensions(*args)
+      super(*args)
 
-    def init_attributes(app, parent, styles, blk)
-      @app            = app
-      @parent         = parent
-      @contents       = SlotContents.new
-      @blk            = blk
-      style_init styles
-      @dimensions     = Dimensions.new parent, @style
-      @fixed_height   = height || false
-      @scroll_top     = 0
+      @fixed_height = height || false
+      @scroll_top   = 0
       set_default_dimension_values
       @pass_coordinates = true
+    end
+
+    def before_initialize(styles, *_)
+      @contents = SlotContents.new
+    end
+
+    def handle_block(blk)
+      @blk = blk
+      eval_block blk
+    end
+
+    def after_initialize(*_)
+      contents_alignment
     end
 
     def set_default_dimension_values
@@ -150,6 +152,13 @@ class Shoes
       else
         current_position
       end
+    rescue => e
+      puts "SWALLOWED POSITIONING EXCEPTION ON #{element} - go take care of it: " + e.to_s
+      puts e.backtrace.join("\n\t")
+      puts 'Unfortunately we have to swallow it or risk SWT hanging.'
+      puts "It doesn't like exceptions during layout. :O"
+
+      current_position
     end
 
     def position_element(_element, _current_position)

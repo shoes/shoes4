@@ -41,6 +41,18 @@ describe Shoes::ListBox do
     expect(list_box.items).to eq(["Pie", "Apple", "Pig"])
   end
 
+  describe 'Updating gui' do
+    it "updates the gui when array methods like size are called" do
+      expect(list_box.gui).to receive(:update_items)
+      list_box.items.size
+    end
+
+    it "updates the gui when self-modifying array methods like map! are called" do
+      expect(list_box.gui).to receive(:update_items)
+      list_box.items.map!{|item| "replaced!"}
+    end
+  end
+
   describe 'Choosing' do
     it "allows us to choose an option" do
       expect(list_box).to respond_to(:choose)

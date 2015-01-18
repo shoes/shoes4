@@ -108,6 +108,12 @@ shared_examples_for 'positioning through :_position' do
     expect(element).not_to receive(:_position)
     subject.contents_alignment
   end
+
+  it 'is resilient to exceptions during positioning' do
+    allow(element).to receive(:contents_alignment).and_raise("O_o")
+    allow(subject).to receive(:puts)  # Quiet, you
+    add_child_and_align
+  end
 end
 
 shared_examples_for 'element one positioned with top and left' do

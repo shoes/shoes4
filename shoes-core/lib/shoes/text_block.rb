@@ -8,24 +8,21 @@ class Shoes
     include Common::Clickable
     include TextBlockDimensionsDelegations
 
-    attr_reader :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
+    attr_reader :text, :contents, :text_styles
     attr_accessor :cursor, :textcursor
+
     style_with :common_styles, :dimensions, :text_block_styles
     STYLES = { font: "Arial" } # used in TextBlock specs only
 
-    def initialize(app, parent, text, styles = {})
-      @parent = parent
-      @app = app
-      style_init styles
-      @dimensions = TextBlockDimensions.new parent, @style
+    def create_dimensions(*_)
+      @dimensions = TextBlockDimensions.new @parent, @style
+    end
+
+    def after_initialize(text)
       handle_styles @style
-      @gui = Shoes.backend_for self
-      @parent.add_child self
 
       # Important to use accessor and do this after the backend exists!
       self.text = Array(text)
-
-      register_click
     end
 
     def in_bounds?(*args)

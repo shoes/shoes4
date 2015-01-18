@@ -51,6 +51,7 @@ class Shoes
     end
 
     def percent
+      return 0 if @transferred.nil? || @content_length.nil?;
       @transferred * 100 / @content_length
     end
 
@@ -68,17 +69,27 @@ class Shoes
     def start_download
       require 'open-uri'
       @thread = Thread.new do
-        uri_opts = {}
-        uri_opts[:content_length_proc] = content_length_proc
-        uri_opts[:progress_proc] = progress_proc if @progress_blk
+        begin
+          uri_opts = {}
+          uri_opts[:content_length_proc] = content_length_proc
+          uri_opts[:progress_proc] = progress_proc if @progress_blk
 
-        open @url, uri_opts do |download_data|
-          @response.body = download_data.read
-          @response.status = download_data.status
-          @response.headers = download_data.meta
-          save_to_file(@opts[:save]) if @opts[:save]
-          finish_download download_data
+          open @url, uri_opts do |download_data|
+            @response.body = download_data.read
+            @response.status = download_data.status
+            @response.headers = download_data.meta
+            save_to_file(@opts[:save]) if @opts[:save]
+            finish_download download_data
+          end
+        rescue => e
+          eval_block(error_proc, e)
         end
+      end
+    end
+
+    def error_proc
+      lambda do |exception|
+        raise exception
       end
     end
 

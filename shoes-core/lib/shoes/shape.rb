@@ -4,25 +4,29 @@ class Shoes
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :dimensions, :gui, :blk, :x, :y
-    attr_reader :left_bound, :top_bound, :right_bound, :bottom_bound
+    attr_reader :blk, :x, :y, :left_bound, :top_bound, :right_bound, :bottom_bound
+
     style_with :art_styles, :center, :common_styles, :dimensions
 
-    # Creates a new Shoes::Shape
-    #
-    def initialize(app, parent, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles
+    def create_dimensions()
       @dimensions = AbsoluteDimensions.new @style
-      @parent.add_child self
-      @gui = Shoes.backend_for self
+    end
+
+    def handle_block(blk)
+      # Will register click from styles if present, but blk is for drawing!
       register_click
 
       @blk = blk
-      # True until we've asked the pen to draw
+    end
+
+    def after_initialize(*_)
       @before_drawing = true
-      @app.eval_with_additional_context self, &blk
+      @app.eval_with_additional_context self, &@blk
+
+      # If we haven't drawn enough to get our bounds, default them out
+      if @left_bound.nil?
+        update_bounds([0], [0])
+      end
     end
 
     def width
@@ -98,6 +102,14 @@ class Shoes
       @x, @y = x, y
       @gui.arc(x, y, width, height, start_angle, arc_angle)
       self
+    end
+
+    # Determines if a given point is in the boundary of the shape. Given the
+    # many possibilities of what a shape could contain, this just checks the
+    # outer bounding box of the shape, nothing more sophisticated.
+    def in_bounds?(x, y)
+      (@left_bound..@right_bound).include?(x) &&
+      (@top_bound..@bottom_bound).include?(y)
     end
 
     private
