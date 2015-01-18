@@ -26,25 +26,27 @@ class Shoes
   end
 
   class ListBox
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Changeable
 
     attr_reader :app, :parent, :dimensions, :gui
+
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
     STYLES = { width: 200, height: 20, items: [""] }
 
-    def initialize(app, parent, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles
+    def create_dimensions(*_)
       @dimensions = Dimensions.new parent, @style
-      @parent.add_child self
-      @gui = Shoes.configuration.backend_for self, @parent.gui
+    end
+
+    def handle_block(blk)
+      change(&blk) if blk
+    end
+
+    def after_initialize
       proxy_array = Shoes::ProxyArray.new(items, @gui)
       @style[:items] = proxy_array
-      change(&blk) if blk
-
       choose @style[:choose]
     end
 
