@@ -1,19 +1,14 @@
 class Shoes
   class CheckButton
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable
 
     attr_reader :app, :parent, :dimensions, :gui
 
-    def initialize(app, parent, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles
+    def create_dimensions(*_)
       @dimensions = Dimensions.new parent, @style
-      @parent.add_child self
-      @gui = Shoes.configuration.backend_for self, @parent.gui
-      register_click blk
     end
 
     def checked?
