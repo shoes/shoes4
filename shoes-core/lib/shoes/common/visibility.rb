@@ -33,7 +33,7 @@ class Shoes
       private
 
       def update_visibility
-        gui.update_visibility if gui.respond_to?(:update_visibility)
+        gui.update_visibility
         self
       end
     end

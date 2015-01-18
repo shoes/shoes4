@@ -1,6 +1,7 @@
 class Shoes
   module Mock
     class Slot
+      include Shoes::Mock::CommonMethods
       include Shoes::Mock::Clickable
 
       def initialize(dsl, parent)

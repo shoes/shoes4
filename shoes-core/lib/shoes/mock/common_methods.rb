@@ -7,6 +7,9 @@ class Shoes
 
       def update_position
       end
+
+      def update_visibility
+      end
     end
   end
 end
