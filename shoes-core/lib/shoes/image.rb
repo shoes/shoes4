@@ -1,5 +1,6 @@
 class Shoes
   class Image
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Clickable
@@ -7,16 +8,15 @@ class Shoes
     BINARY_ENCODING = Encoding.find('binary')
 
     attr_reader :app, :parent, :dimensions, :gui
+
     style_with :art_styles, :common_styles, :dimensions, :file_path
 
-    def initialize(app, parent, file_path_or_data, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles, file_path: normalized_source(file_path_or_data)
-      @dimensions = Dimensions.new parent, @style
-      @parent.add_child self
-      @gui = Shoes.configuration.backend_for self, @parent.gui
-      register_click blk
+    def create_dimensions(*_)
+      @dimensions = Dimensions.new @parent, @style
+    end
+
+    def before_initialize(styles, file_path_or_data)
+      styles[:file_path] = normalized_source(file_path_or_data)
     end
 
     def path
