@@ -13,7 +13,7 @@ class Shoes
       @dimensions = Dimensions.new parent, @style
     end
 
-    def after_initialize
+    def after_initialize(*_)
       @gui.fraction = @style[:fraction]
     end
 

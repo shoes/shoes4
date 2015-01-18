@@ -20,7 +20,7 @@ class Shoes
       @blk = blk
     end
 
-    def after_initialize
+    def after_initialize(*_)
       @before_drawing = true
       @app.eval_with_additional_context self, &@blk
 

@@ -18,7 +18,7 @@ class Shoes
 
         handle_block(blk)
 
-        after_initialize
+        after_initialize(*args)
       end
 
       def create_dimensions(args)
@@ -33,7 +33,7 @@ class Shoes
       def before_initialize(styles, *_)
       end
 
-      def after_initialize
+      def after_initialize(*_)
       end
     end
   end
