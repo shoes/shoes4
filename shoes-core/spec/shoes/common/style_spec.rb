@@ -5,9 +5,12 @@ describe Shoes::Common::Style do
   let(:blue) { Shoes::COLORS[:blue] }
 
   class StyleTester
+    include Shoes::Common::Visibility
     include Shoes::Common::Style
+
     attr_accessor :left
     style_with :key, :left, :click, :strokewidth, :fill
+
     STYLES = {fill: Shoes::COLORS[:blue]}
 
     def initialize(app, styles = {})
@@ -23,7 +26,11 @@ describe Shoes::Common::Style do
     def click_blk
       @click
     end
+
+    def update_visibility
+    end
   end
+
   subject {StyleTester.new(app)}
 
   its(:style) { should eq (initial_style) }
@@ -55,6 +62,16 @@ describe Shoes::Common::Style do
     it 'writes new dimensions' do
       subject.style(left: 200)
       expect(subject.left).to eq 200
+    end
+
+    it 'reads visibility' do
+      subject.hide
+      expect(subject.style[:hidden]).to be true
+    end
+
+    it 'writes visibility' do
+      subject.style(hidden: true)
+      expect(subject.hidden?).to be true
     end
 
     it 'sets click' do

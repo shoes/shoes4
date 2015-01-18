@@ -2,6 +2,7 @@ class Shoes
   module Swt
     class Shape
       include Common::Clickable
+      include Common::Visibility
       include Common::Remove
       include Common::Fill
       include Common::Stroke

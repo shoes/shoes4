@@ -19,6 +19,7 @@ class Shoes
         @gui = Shoes.backend_for self
 
         handle_block(blk)
+        update_visibility
 
         after_initialize(*args)
       end
