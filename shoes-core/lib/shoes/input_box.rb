@@ -1,18 +1,21 @@
 class Shoes
   class InputBox
+    include Common::Initialization
     include Common::UIElement
     include Common::Style
     include Common::Changeable
 
     attr_reader :app, :parent, :dimensions, :gui
 
-    def initialize(app, parent, text, styles = {}, blk = nil)
-      @app = app
-      @parent = parent
-      style_init styles, text: text.to_s
+    def create_dimensions(*_)
       @dimensions = Dimensions.new parent, @style
-      @parent.add_child self
-      @gui = Shoes.configuration.backend_for self, @parent.gui
+    end
+
+    def before_initialize(styles, text)
+      styles[:text] = text.to_s
+    end
+
+    def handle_block(blk)
       change(&blk) if blk
     end
 
