@@ -12,9 +12,5 @@ class Shoes
     def before_initialize(styles, color)
       styles[:fill] = color
     end
-
-    def create_dimensions(*_)
-      @dimensions = ParentDimensions.new @parent, @style
-    end
   end
 end
