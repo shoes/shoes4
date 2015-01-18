@@ -35,10 +35,6 @@ class Shoes
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
     STYLES = { width: 200, height: 20, items: [""] }
 
-    def create_dimensions(*_)
-      @dimensions = Dimensions.new parent, @style
-    end
-
     def handle_block(blk)
       change(&blk) if blk
     end

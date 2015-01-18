@@ -6,10 +6,6 @@ class Shoes
 
     attr_reader :app, :parent, :dimensions, :gui
 
-    def create_dimensions(*_)
-      @dimensions = Dimensions.new parent, @style
-    end
-
     def checked?
       @gui.checked?
     end

@@ -12,10 +12,6 @@ class Shoes
       styles[:text] = text
     end
 
-    def create_dimensions(*_)
-      @dimensions = Dimensions.new @parent, @style
-    end
-
     def focus
       @gui.focus
     end

@@ -8,10 +8,6 @@ class Shoes
     style_with :common_styles, :dimensions, :fraction
     STYLES = { fraction: 0.0 }
 
-    def create_dimensions()
-      @dimensions = Dimensions.new parent, @style
-    end
-
     def after_initialize(*_)
       @gui.fraction = @style[:fraction]
     end

@@ -10,10 +10,6 @@ class Shoes
 
     style_with :art_styles, :common_styles, :dimensions, :file_path
 
-    def create_dimensions(*_)
-      @dimensions = Dimensions.new @parent, @style
-    end
-
     def before_initialize(styles, file_path_or_data)
       styles[:file_path] = normalized_source(file_path_or_data)
     end

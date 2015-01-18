@@ -14,8 +14,9 @@ class Shoes
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
     STYLES = { scroll: false }
 
-    def create_dimensions(*_)
-      @dimensions   = Dimensions.new @parent, @style
+    def create_dimensions(*args)
+      super(*args)
+
       @fixed_height = height || false
       @scroll_top   = 0
       set_default_dimension_values

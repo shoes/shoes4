@@ -21,8 +21,8 @@ class Shoes
         after_initialize(*args)
       end
 
-      def create_dimensions(args)
-        raise NotImplementedError.new
+      def create_dimensions(*args)
+        @dimensions = Dimensions.new @parent, @style
       end
 
       def handle_block(blk)
