@@ -8,7 +8,7 @@ class Shoes
     include Common::Clickable
     include TextBlockDimensionsDelegations
 
-    attr_reader :gui, :parent, :text, :contents, :app, :text_styles, :dimensions
+    attr_reader :text, :contents, :text_styles
     attr_accessor :cursor, :textcursor
 
     style_with :common_styles, :dimensions, :text_block_styles

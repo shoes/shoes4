@@ -4,7 +4,6 @@ class Shoes
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :dimensions, :gui
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
 
     def create_dimensions(left, top, width, height)

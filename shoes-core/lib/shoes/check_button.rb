@@ -4,8 +4,6 @@ class Shoes
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :dimensions, :gui
-
     def checked?
       @gui.checked?
     end

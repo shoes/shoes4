@@ -4,8 +4,6 @@ class Shoes
     include Common::Style
     include Common::Changeable
 
-    attr_reader :app, :parent, :dimensions, :gui
-
     def before_initialize(styles, text)
       styles[:text] = text.to_s
     end

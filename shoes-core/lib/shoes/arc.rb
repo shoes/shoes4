@@ -4,8 +4,6 @@ class Shoes
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :dimensions, :gui
-
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false }
 

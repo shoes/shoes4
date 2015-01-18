@@ -4,7 +4,7 @@ class Shoes
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :dimensions, :gui, :point_a, :point_b
+    attr_reader :point_a, :point_b
 
     style_with :angle, :art_styles, :dimensions, :x2, :y2
     STYLES = { angle: 0 }

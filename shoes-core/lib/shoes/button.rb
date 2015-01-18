@@ -4,8 +4,6 @@ class Shoes
     include Common::Style
     include Common::Clickable
 
-    attr_reader :app, :parent, :dimensions, :gui
-
     style_with :click, :common_styles, :dimensions, :state, :text
 
     def before_initialize(styles, text)

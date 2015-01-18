@@ -6,8 +6,6 @@ class Shoes
 
     BINARY_ENCODING = Encoding.find('binary')
 
-    attr_reader :app, :parent, :dimensions, :gui
-
     style_with :art_styles, :common_styles, :dimensions, :file_path
 
     def before_initialize(styles, file_path_or_data)

@@ -4,8 +4,6 @@ class Shoes
     include Common::BackgroundElement
     include Common::Style
 
-    attr_reader :app, :parent, :dimensions, :gui
-
     style_with :angle, :common_styles, :curve, :dimensions, :fill
     STYLES = { angle: 0, curve: 0 }
 
