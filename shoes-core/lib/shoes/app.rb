@@ -55,6 +55,10 @@ class Shoes
       self
     end
 
+    def gui
+      @__app__.gui
+    end
+
     def window(options = {}, &block)
       options.merge! owner: self
       self.class.new(options, &block)
