@@ -19,7 +19,7 @@ describe Shoes::Line do
     it_behaves_like 'object with parent'
   end
 
-  context "line with point a at leftmost, topmost" do
+  describe "line with point a at leftmost, topmost" do
     subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 15), Shoes::Point.new(100, 60), input_opts) }
     its(:left)   { should eq(10) }
     its(:top)    { should eq(15) }
@@ -29,7 +29,7 @@ describe Shoes::Line do
     its(:height) { should eq(45) }
   end
 
-  context "specified right-to-left, top-to-bottom" do
+  describe "specified right-to-left, top-to-bottom" do
     subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 60), Shoes::Point.new(10, 15), input_opts) }
     its(:left)   { should eq(100) }
     its(:top)    { should eq(60) }
@@ -39,7 +39,7 @@ describe Shoes::Line do
     its(:height) { should eq(-45) }
   end
 
-  context "setting dimensions" do
+  describe "setting dimensions" do
     subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 100), Shoes::Point.new(200, 200), input_opts) }
 
     it "moves point a with left and top" do
