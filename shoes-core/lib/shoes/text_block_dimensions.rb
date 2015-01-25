@@ -31,7 +31,7 @@ class Shoes
 
     # This is the width the text block initially wants to try and fit into.
     def desired_width(containing = containing_width)
-      parent.absolute_left + containing - absolute_left
+      parent.absolute_left + containing - absolute_left - margin_left - margin_right
     end
 
     # If an explicit width's set, use that when asking how much space we need.

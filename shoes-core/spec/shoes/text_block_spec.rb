@@ -174,6 +174,12 @@ describe Shoes::TextBlock do
         subject.absolute_left = 20
         expect(subject.desired_width(1000)).to eql(980)
       end
+
+      it "factors margins into desired width" do
+        subject.absolute_left = 0
+        subject.margin = 10
+        expect(subject.desired_width(1000)).to eql(980)
+      end
     end
 
     context "when explicitly set" do
