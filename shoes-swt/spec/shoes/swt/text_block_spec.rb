@@ -59,35 +59,36 @@ describe Shoes::Swt::TextBlock do
       end
 
       it "positions single line of text" do
-        expect(dsl).to receive(:absolute_right=).with(layout_width + 50)
-        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_right=).with(layout_width + 50 - 1)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height - 1)
 
         when_aligns_and_positions
 
-        expect(current_position.y).to eq(layout_height - line_height)
+        expect(current_position.y).to eq(layout_height - line_height + 1)
       end
 
       it "positions single line with margin" do
         allow(dsl).to receive_messages(margin_left: margin, margin_right: margin,
                  margin_top: margin, margin_bottom: margin)
 
-        expect(dsl).to receive(:absolute_right=).with(layout_width + 50 + margin)
-        expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin)
+        expect(dsl).to receive(:absolute_right=).with(layout_width + 50 + margin - 1)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin - 1)
 
         when_aligns_and_positions
 
-        expect(current_position.y).to eq(layout_height - line_height)
+        expect(current_position.y).to eq(layout_height - line_height + 1)
       end
 
       it "pushes to next line if ends in newline" do
         allow(dsl).to receive(:text) { "text\n" }
 
         expect(dsl).to receive(:absolute_right=).with(50)
-        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_right=).with(149)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height - 1)
 
         when_aligns_and_positions
 
-        expect(current_position.y).to eq(layout_height)
+        expect(current_position.y).to eq(layout_height + 1)
       end
 
       it "is aligns and positions safely without segments" do
@@ -152,24 +153,24 @@ describe Shoes::Swt::TextBlock do
       end
 
       it "positions in two segments" do
-        expect(dsl).to receive(:absolute_right=).with(layout_width)
-        expect(dsl).to receive(:absolute_bottom=).with(layout_height)
+        expect(dsl).to receive(:absolute_right=).with(layout_width - 1)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height - 1)
 
         when_aligns_and_positions
 
-        expect(current_position.y).to eq(layout_height - line_height)
+        expect(current_position.y).to eq(layout_height - line_height + 1)
       end
 
       it "positions in two segments with margins" do
         allow(dsl).to receive_messages(margin_left: margin, margin_right: margin,
                  margin_top: margin, margin_bottom: margin)
 
-        expect(dsl).to receive(:absolute_right=).with(layout_width + margin)
-        expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin)
+        expect(dsl).to receive(:absolute_right=).with(layout_width + margin - 1)
+        expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin - 1)
 
         when_aligns_and_positions
 
-        expect(current_position.y).to eq(layout_height - line_height)
+        expect(current_position.y).to eq(layout_height - line_height + 1)
       end
     end
   end
