@@ -20,7 +20,8 @@ ignore:
   - '*.app'
   - 'spec'
 
-# How to run the app
+# How to run the app or run your ruby file i.e.:
+# run: path/to/app.rb
 run: bin/hello_from_warbler
 
 # -----------------------------------------------------------------------------
