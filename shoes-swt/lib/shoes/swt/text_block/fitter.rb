@@ -136,7 +136,7 @@ class Shoes
             first_layout.position_at(@dsl.element_left,
                                      @dsl.element_top),
             second_layout.position_at(parent.absolute_left + @dsl.margin_left,
-                                      @dsl.element_top + first_height + 1)
+                                      @dsl.element_top + first_height)
           ]
         end
 
@@ -197,10 +197,10 @@ class Shoes
 
           offsets = layout.line_offsets
           offsets[0...-1].each_with_index do |_, i|
-            height_so_far += layout.line_bounds(i).height
+            height_so_far += layout.line_bounds(i).height + TextBlock::NEXT_ELEMENT_OFFSET
             ending_offset = offsets[i + 1]
 
-            break if height_so_far > height
+            break if height_so_far >= height
           end
           [layout.text[0...ending_offset], layout.text[ending_offset..-1]]
         end
