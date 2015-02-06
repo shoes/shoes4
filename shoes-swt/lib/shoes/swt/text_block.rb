@@ -7,6 +7,7 @@ class Shoes
       include ::Shoes::BackendDimensionsDelegations
 
       DEFAULT_SPACING = 4
+      NEXT_ELEMENT_OFFSET = 1
 
       attr_reader :dsl, :app
       attr_accessor :segments
@@ -44,11 +45,15 @@ class Shoes
       end
 
       def adjust_current_position(current_position)
-        current_position.y = @dsl.absolute_bottom + 1
+        current_position.y = @dsl.absolute_bottom + NEXT_ELEMENT_OFFSET
 
         last_segment = segments.last
         if last_segment && !@bumped_to_next_line
+          # Not quite sure why this is necessary. Could be a problem in some
+          # other part of positioning, or something about how text layouts
+          # actually draw themselves.
           current_position.x -= 1
+
           current_position.y -= last_segment.last_line_height
         end
       end
@@ -71,10 +76,10 @@ class Shoes
         last_segment = segments.last
 
         @dsl.absolute_right  = starting_left + last_segment.last_line_width +
-          margin_right - 1
+          margin_right - NEXT_ELEMENT_OFFSET
 
         @dsl.absolute_bottom = starting_top + last_segment.height +
-          margin_top + margin_bottom - 1
+          margin_top + margin_bottom - NEXT_ELEMENT_OFFSET
       end
 
       def bump_absolutes_to_next_line

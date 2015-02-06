@@ -197,7 +197,7 @@ class Shoes
 
           offsets = layout.line_offsets
           offsets[0...-1].each_with_index do |_, i|
-            height_so_far += layout.line_bounds(i).height + 1
+            height_so_far += layout.line_bounds(i).height + TextBlock::NEXT_ELEMENT_OFFSET
             ending_offset = offsets[i + 1]
 
             break if height_so_far >= height
