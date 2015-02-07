@@ -78,12 +78,12 @@ describe Shoes::Swt::TextBlock::TextSegment do
   end
 
   describe "shrinking on initialization" do
-    it "should not shrink when enough containing width" do
-      expect(subject.layout).to_not have_received(:width=)
+    it "happens when too long for container" do
+      bounds.width = segment_width + 10
+      expect(subject.layout).to have_received(:width=).with(segment_width)
     end
 
-    it "shrinks when too long for container" do
-      bounds.width = segment_width + 10
+    it "happens even when enough containing width" do
       expect(subject.layout).to have_received(:width=).with(segment_width)
     end
   end

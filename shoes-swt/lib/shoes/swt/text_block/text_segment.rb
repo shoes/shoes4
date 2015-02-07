@@ -27,7 +27,7 @@ class Shoes
           @style_factory = TextStyleFactory.new
 
           layout.text = text
-          layout.width = width unless layout_fits_in?(width)
+          layout.width = width
           style_from(font_styling, @dsl.style)
         end
 
@@ -76,10 +76,6 @@ class Shoes
               styles: [::Swt::SWT::NORMAL]
             }
           }
-        end
-
-        def layout_fits_in?(width)
-          layout.bounds.width <= width
         end
 
         def height
