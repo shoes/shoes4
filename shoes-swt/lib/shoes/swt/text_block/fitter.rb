@@ -121,6 +121,7 @@ class Shoes
         end
 
         def generate_two_layouts(first_layout, first_text, second_text, height)
+          first_layout.fill_background = true
           second_layout = generate_second_layout(second_text)
           position_two_segments(first_layout, second_layout, first_text, height)
         end

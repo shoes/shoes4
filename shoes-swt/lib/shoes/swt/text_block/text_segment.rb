@@ -14,7 +14,8 @@ class Shoes
       class TextSegment
         DEFAULT_SPACING = 4
 
-        attr_reader :layout, :element_left, :element_top
+        attr_reader   :layout, :element_left, :element_top
+        attr_accessor :fill_background
 
         extend Forwardable
         def_delegators :@layout, :text, :text=, :bounds, :width, :spacing,
@@ -23,11 +24,14 @@ class Shoes
         def initialize(dsl, text, width)
           @dsl = dsl
           @layout = ::Swt::TextLayout.new Shoes.display
+          @fill_background = false
+
           @font_factory = TextFontFactory.new
           @style_factory = TextStyleFactory.new
+          @color_factory = ColorFactory.new
 
           layout.text = text
-          layout.width = width unless layout_fits_in?(width)
+          layout.width = width
           style_from(font_styling, @dsl.style)
         end
 
@@ -35,6 +39,7 @@ class Shoes
           @layout.dispose unless @layout.disposed?
           @font_factory.dispose
           @style_factory.dispose
+          @color_factory.dispose
         end
 
         def position_at(element_left, element_top)
@@ -78,10 +83,6 @@ class Shoes
           }
         end
 
-        def layout_fits_in?(width)
-          layout.bounds.width <= width
-        end
-
         def height
           layout.bounds.height - layout.spacing
         end
@@ -95,6 +96,15 @@ class Shoes
         end
 
         def draw(graphics_context)
+          # Why not use TextLayout's background? Unfortunately it doesn't draw
+          # all the way to the edges--just around the literal text. This leaves
+          # things jagged when we flow, so do it ourselves.
+          if fill_background && @dsl.style[:fill]
+            background_color = @color_factory.create(@dsl.style[:fill])
+            background_color.apply_as_fill(graphics_context)
+            graphics_context.fill_rectangle(element_left, element_top, width, height)
+          end
+
           layout.draw(graphics_context, element_left, element_top)
         end
 

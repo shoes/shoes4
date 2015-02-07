@@ -144,6 +144,7 @@ describe Shoes::Swt::TextBlock::Fitter do
     context "to empty first segment" do
       before(:each) do
         allow(dsl).to receive_messages(containing_width: 100)
+        expect(segment).to receive(:fill_background=).with(true)
       end
 
       it "rolls to second segment when 0 remaining width" do
