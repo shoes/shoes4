@@ -14,7 +14,7 @@ class Changelog
     commit_range = commits_on_master_since_last_release
     changes = categorize_commits(categories, commit_range)
     changes << contributors(commit_range) if changes.any?
-    changes.compact.join("\n\n")
+    changes.compact.join("\n\n").gsub("\r",'')
   end
 
   private
