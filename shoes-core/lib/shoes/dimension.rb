@@ -248,11 +248,11 @@ class Shoes
         #
         # To get our extent respecting the parent's margins, it's our absolute
         # start, minus parent's element end (so we don't blow past the margin)
-        extent_in_parent = parent.element_end - self.absolute_start - PIXEL_COUNTING_ADJUSTMENT
+        parent.element_end - self.absolute_start - PIXEL_COUNTING_ADJUSTMENT
       else
         # If we hit this, then the extent in parent isn't available and will be
         # ignored by the min call below
-        extent_in_parent = Float::INFINITY
+        Float::INFINITY
       end
     end
 
