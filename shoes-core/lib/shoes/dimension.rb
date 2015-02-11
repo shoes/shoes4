@@ -32,7 +32,7 @@ class Shoes
       result = @extent
       if @parent
         result = calculate_relative(result) if relative?(result)
-        result = calculate_negative(result) if is_negative?(result)
+        result = calculate_negative(result) if negative?(result)
       end
       result
     end
@@ -146,7 +146,7 @@ class Shoes
       result.is_a?(String)
     end
 
-    def is_negative?(result)
+    def negative?(result)
       result && result < 0
     end
 
@@ -168,13 +168,8 @@ class Shoes
     end
 
     def parse_int_value(input)
-      if input.is_a?(Integer) || input.is_a?(Float)
-        input
-      elsif valid_integer_string?(input)
-        int_from_string(input)
-      else
-        nil
-      end
+      return input if input.is_a?(Integer) || input.is_a?(Float)
+      int_from_string(input) if valid_integer_string?(input)
     end
 
     def int_from_string(result)
