@@ -10,4 +10,4 @@ build: off
 shallow_clone: true
 
 test_script:
-  - rake spec
+  - rake spec:shoes
