@@ -178,11 +178,7 @@ class Shoes
     end
 
     def report_relative_to_parent_start
-      if element_start && parent && parent.element_start
-        element_start - parent.element_start
-      else
-        nil
-      end
+      element_start - parent.element_start if element_start && parent && parent.element_start
     end
 
     def report_relative_to_parent_end
