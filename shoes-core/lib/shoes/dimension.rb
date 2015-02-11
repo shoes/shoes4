@@ -31,7 +31,7 @@ class Shoes
     def extent
       result = @extent
       if @parent
-        result = calculate_relative(result) if is_relative?(result)
+        result = calculate_relative(result) if relative?(result)
         result = calculate_negative(result) if is_negative?(result)
       end
       result
@@ -104,7 +104,7 @@ class Shoes
       define_method method do
         instance_variable_name = '@' + method.to_s
         value = instance_variable_get(instance_variable_name) || 0
-        value = calculate_relative value if is_relative? value
+        value = calculate_relative value if relative? value
         value
       end
     end
@@ -123,12 +123,12 @@ class Shoes
 
     def basic_start_value
       value = @start
-      value = calculate_relative value if is_relative?(value)
+      value = calculate_relative value if relative?(value)
       value = report_relative_to_parent_start if value.nil?
       value
     end
 
-    def is_relative?(result)
+    def relative?(result)
       # as the value is relative to the parent values bigger than one don't
       # make much sense and are problematic. E.g. through calculations users
       # might end up with values like 5.14 meaning 5 pixel which would get
