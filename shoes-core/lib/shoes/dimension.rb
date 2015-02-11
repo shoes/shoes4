@@ -190,12 +190,7 @@ class Shoes
     end
 
     def adjust_start_for_center(value)
-      my_extent = extent
-      if my_extent && my_extent > 0
-        value - my_extent / 2
-      else
-        nil
-      end
+      value - extent / 2 if extent && extent > 0
     end
   end
 
