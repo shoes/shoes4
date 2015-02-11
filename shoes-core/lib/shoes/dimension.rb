@@ -182,11 +182,7 @@ class Shoes
     end
 
     def report_relative_to_parent_end
-      if element_end && parent && parent.element_end
-        parent.element_end - element_end
-      else
-        nil
-      end
+      parent.element_end - element_end if element_end && parent && parent.element_end
     end
 
     def start_as_center?
