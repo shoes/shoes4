@@ -39,7 +39,7 @@ class Shoes
 
     def extent=(value)
       @extent = value
-      @extent = parse_from_string @extent if is_string? @extent
+      @extent = parse_from_string @extent if string? @extent
       @extent
     end
 
@@ -142,7 +142,7 @@ class Shoes
       (result * @parent.element_extent).to_i
     end
 
-    def is_string?(result)
+    def string?(result)
       result.is_a?(String)
     end
 
