@@ -283,25 +283,6 @@ describe Shoes::App do
     end
   end
 
-  describe "#gutter" do
-    context "when app has a scrollbar" do
-      let(:input_opts) { {width: 100, height: 100} }
-      let(:input_block) { Proc.new { para "Round peg, square hole" * 200 } }
-
-      it "has gutter of 16" do
-        expect(app.gutter).to be_within(2).of(16)
-      end
-    end
-
-    context "when app has no scrollbar" do
-      let(:input_block) { Proc.new { para "Round peg, square hole" } }
-
-      it "has gutter of 16" do
-        expect(app.gutter).to be_within(2).of(16)
-      end
-    end
-  end
-
   describe "#parent" do
     context "for a top-level element (not explicitly in a slot)" do
       it "returns the top_slot" do
