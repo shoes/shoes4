@@ -178,13 +178,19 @@ class Shoes
     end
 
     def report_relative_to_parent_start
-      start_exists = element_start && parent && parent.element_start
-      element_start - parent.element_start if start_exists
+      element_start - parent.element_start if start_exists?
     end
 
     def report_relative_to_parent_end
-      end_exists = element_end && parent && parent.element_end
-      parent.element_end - element_end if end_exists
+      parent.element_end - element_end if end_exists?
+    end
+
+    def end_exists?
+      element_end && parent && parent.element_end
+    end
+
+    def start_exists?
+      element_start && parent && parent.element_start
     end
 
     def start_as_center?
