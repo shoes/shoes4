@@ -158,13 +158,8 @@ class Shoes
 
     def parse_from_string(result)
       match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
-      if match
-        match[1].to_f / 100.0
-      elsif valid_integer_string?(result)
-        int_from_string(result)
-      else
-        nil
-      end
+      return match[1].to_f / 100.0 if match
+      int_from_string(result) if valid_integer_string?(result)
     end
 
     def parse_int_value(input)
