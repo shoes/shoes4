@@ -31,15 +31,15 @@ class Shoes
     def extent
       result = @extent
       if @parent
-        result = calculate_relative(result) if is_relative?(result)
-        result = calculate_negative(result) if is_negative?(result)
+        result = calculate_relative(result) if relative?(result)
+        result = calculate_negative(result) if negative?(result)
       end
       result
     end
 
     def extent=(value)
       @extent = value
-      @extent = parse_from_string @extent if is_string? @extent
+      @extent = parse_from_string @extent if string? @extent
       @extent
     end
 
@@ -104,7 +104,7 @@ class Shoes
       define_method method do
         instance_variable_name = '@' + method.to_s
         value = instance_variable_get(instance_variable_name) || 0
-        value = calculate_relative value if is_relative? value
+        value = calculate_relative value if relative? value
         value
       end
     end
@@ -123,12 +123,12 @@ class Shoes
 
     def basic_start_value
       value = @start
-      value = calculate_relative value if is_relative?(value)
+      value = calculate_relative value if relative?(value)
       value = report_relative_to_parent_start if value.nil?
       value
     end
 
-    def is_relative?(result)
+    def relative?(result)
       # as the value is relative to the parent values bigger than one don't
       # make much sense and are problematic. E.g. through calculations users
       # might end up with values like 5.14 meaning 5 pixel which would get
@@ -142,11 +142,11 @@ class Shoes
       (result * @parent.element_extent).to_i
     end
 
-    def is_string?(result)
+    def string?(result)
       result.is_a?(String)
     end
 
-    def is_negative?(result)
+    def negative?(result)
       result && result < 0
     end
 
@@ -158,23 +158,13 @@ class Shoes
 
     def parse_from_string(result)
       match = result.gsub(/\s+/, "").match(PERCENT_REGEX)
-      if match
-        match[1].to_f / 100.0
-      elsif valid_integer_string?(result)
-        int_from_string(result)
-      else
-        nil
-      end
+      return match[1].to_f / 100.0 if match
+      int_from_string(result) if valid_integer_string?(result)
     end
 
     def parse_int_value(input)
-      if input.is_a?(Integer) || input.is_a?(Float)
-        input
-      elsif valid_integer_string?(input)
-        int_from_string(input)
-      else
-        nil
-      end
+      return input if input.is_a?(Integer) || input.is_a?(Float)
+      int_from_string(input) if valid_integer_string?(input)
     end
 
     def int_from_string(result)
@@ -188,19 +178,19 @@ class Shoes
     end
 
     def report_relative_to_parent_start
-      if element_start && parent && parent.element_start
-        element_start - parent.element_start
-      else
-        nil
-      end
+      element_start - parent.element_start if start_exists?
     end
 
     def report_relative_to_parent_end
-      if element_end && parent && parent.element_end
-        parent.element_end - element_end
-      else
-        nil
-      end
+      parent.element_end - element_end if end_exists?
+    end
+
+    def end_exists?
+      element_end && parent && parent.element_end
+    end
+
+    def start_exists?
+      element_start && parent && parent.element_start
     end
 
     def start_as_center?
@@ -208,12 +198,7 @@ class Shoes
     end
 
     def adjust_start_for_center(value)
-      my_extent = extent
-      if my_extent && my_extent > 0
-        value - my_extent / 2
-      else
-        nil
-      end
+      value - extent / 2 if extent && extent > 0
     end
   end
 
@@ -248,11 +233,11 @@ class Shoes
         #
         # To get our extent respecting the parent's margins, it's our absolute
         # start, minus parent's element end (so we don't blow past the margin)
-        extent_in_parent = parent.element_end - self.absolute_start - PIXEL_COUNTING_ADJUSTMENT
+        parent.element_end - absolute_start - PIXEL_COUNTING_ADJUSTMENT
       else
         # If we hit this, then the extent in parent isn't available and will be
         # ignored by the min call below
-        extent_in_parent = Float::INFINITY
+        Float::INFINITY
       end
     end
 
