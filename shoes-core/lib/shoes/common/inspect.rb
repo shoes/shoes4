@@ -9,7 +9,7 @@ class Shoes
       # Example:
       #   (Shoes::App:0x01234abc "Hello")
       def inspect
-        sprintf('(%s:%s%s)', self.class.name, hexy_object_id, inspect_details)
+        "(#{self.class.name}:#{hexy_object_id}#{inspect_details})"
       end
 
       private
