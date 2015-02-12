@@ -145,16 +145,16 @@ EOS
         if args.length == 1
           arg = args.first
           case arg
-            when String
-              image_file?(arg) ? image_pattern(arg) : color(arg)
-            when Shoes::Color
-              color arg
-            when Range, Shoes::Gradient
-              gradient(arg)
-            when Shoes::ImagePattern
-              arg
-            else
-              fail ArgumentError, "Bad pattern: #{arg.inspect}"
+          when String
+            image_file?(arg) ? image_pattern(arg) : color(arg)
+          when Shoes::Color
+            color arg
+          when Range, Shoes::Gradient
+            gradient(arg)
+          when Shoes::ImagePattern
+            arg
+          else
+            fail ArgumentError, "Bad pattern: #{arg.inspect}"
           end
         else
           gradient(*args)
@@ -186,20 +186,20 @@ EOS
       #   @param [Range<String>] range min color to max color
       def gradient(*args)
         case args.length
-          when 1
-            arg = args[0]
-            case arg
-              when Gradient
-                min, max = arg.color1, arg.color2
-              when Range
-                min, max = arg.first, arg.last
-              else
-                fail ArgumentError, "Can't make gradient out of #{arg.inspect}"
-            end
-          when 2
-            min, max = args[0], args[1]
+        when 1
+          arg = args[0]
+          case arg
+          when Gradient
+            min, max = arg.color1, arg.color2
+          when Range
+            min, max = arg.first, arg.last
           else
-            fail ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
+            fail ArgumentError, "Can't make gradient out of #{arg.inspect}"
+          end
+        when 2
+          min, max = args[0], args[1]
+        else
+          fail ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
         end
         Shoes::Gradient.new(color(min), color(max))
       end

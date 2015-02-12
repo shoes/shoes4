@@ -59,7 +59,7 @@ class Shoes
       @textcursor ||= app.textcursor(line_height)
     end
 
-    def has_textcursor?
+    def textcursor?
       @textcursor
     end
 

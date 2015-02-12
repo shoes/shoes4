@@ -18,19 +18,18 @@ class Shoes
     def self.setup
       Shoes.app do
         def update
-          if @hash != Shoes::LOG.hash
-            @hash = Shoes::LOG.hash
-            @log.clear do
-              Shoes::LOG.each_with_index do |(typ, msg), index|
-                stack do
-                  background "#f1f5e1" if index % 2 == 0
-                  background rgb(220, 220, 220) if index % 2 != 0
-                  para typ, stroke: blue
-                  flow do
-                    stack margin: 4 do
-                      s = msg.to_s
-                      para s, margin: 4, margin_top: 0
-                    end
+          return unless @hash == Shoes::LOG.hash
+          @hash = Shoes::LOG.hash
+          @log.clear do
+            Shoes::LOG.each_with_index do |(typ, msg), index|
+              stack do
+                background "#f1f5e1" if index.even?
+                background rgb(220, 220, 220) if index.odd?
+                para typ, stroke: blue
+                flow do
+                  stack margin: 4 do
+                    s = msg.to_s
+                    para s, margin: 4, margin_top: 0
                   end
                 end
               end

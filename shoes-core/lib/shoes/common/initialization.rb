@@ -27,7 +27,7 @@ class Shoes
       # Set the dimensions for the element. Defaults to using the Dimensions
       # class, but is expected to be overridden in other types (art elements,
       # text blocks) that require different dimensioning.
-      def create_dimensions(*args)
+      def create_dimensions(*_)
         @dimensions = Dimensions.new @parent, @style
       end
 
@@ -36,7 +36,7 @@ class Shoes
       #
       # It is intended for performing any additions to the styles hash before
       # that gets sent on to style_init.
-      def before_initialize(styles, *_)
+      def before_initialize(_styles, *_)
       end
 
       # This method handles the block passed in at creation of the DSL element.

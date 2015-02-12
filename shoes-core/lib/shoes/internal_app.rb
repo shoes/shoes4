@@ -99,9 +99,8 @@ class Shoes
     end
 
     def add_mouse_hover_control(element)
-      unless mouse_hover_controls.include? element
-        mouse_hover_controls << element
-      end
+      return if mouse_hover_controls.include?(element)
+      mouse_hover_controls << element
     end
 
     def open_gui

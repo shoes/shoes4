@@ -114,8 +114,6 @@ class Shoes
       inspect_details
     end
 
-    public
-
     DELEGATE_BLACKLIST = [:parent, :app]
 
     # class definitions are evaluated top to bottom, want to have all of them

@@ -23,7 +23,7 @@ class Shoes
       @pass_coordinates = true
     end
 
-    def before_initialize(styles, *_)
+    def before_initialize(*_)
       @contents = SlotContents.new
     end
 
@@ -56,7 +56,7 @@ class Shoes
     end
 
     def create_bound_block(blk)
-      Proc.new do |*args|
+      proc do |*args|
         eval_block(blk, *args)
       end
     end
@@ -212,9 +212,9 @@ class Shoes
 
     def absolute_x_position(element)
       if element.absolute_left_position?
-        self.element_left + element.left
+        element_left + element.left
       elsif element.absolute_right_position?
-        self.element_right - (element.right + element.width)
+        element_right - (element.right + element.width)
       end
     end
 
@@ -228,11 +228,11 @@ class Shoes
 
     def absolute_y_position(element)
       if element.absolute_top_position?
-        self.element_top + element.top
+        element_top + element.top
       elsif element.absolute_bottom_position?
         # TODO: slots grow... to really position it relative to the bottom
         # we probably need to position it after everything has been positioned
-        self.element_bottom - (element.bottom + element.height)
+        element_bottom - (element.bottom + element.height)
       end
     end
 
@@ -244,7 +244,7 @@ class Shoes
 
     def determine_slot_height
       content_height = compute_content_height
-      self.height = content_height if has_variable_height?
+      self.height = content_height if variable_height?
       content_height
     end
 
@@ -262,7 +262,7 @@ class Shoes
       end
     end
 
-    def has_variable_height?
+    def variable_height?
       !@fixed_height
     end
   end

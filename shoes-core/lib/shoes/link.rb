@@ -55,6 +55,7 @@ class Shoes
     end
 
     private
+
     def text_block_guard
       if @text_block
         true

@@ -22,7 +22,6 @@ class Shoes
     def to_a
       __getobj__
     end
-
   end
 
   class ListBox

@@ -109,7 +109,8 @@ class Shoes
         end
 
         private
-        def support_style group_style
+
+        def support_style(group_style)
           @supported_styles << group_style
         end
       end # end of StyleWith module

@@ -9,7 +9,7 @@ class Shoes
       # Example:
       #   (Shoes::App:0x01234abc "Hello")
       def inspect
-        "(#{self.class.name}:#{'0x%08x' % (object_id * 2)}#{inspect_details})"
+        sprintf('(%s:%s%s)', self.class.name, hexy_object_id, inspect_details)
       end
 
       private
@@ -22,6 +22,10 @@ class Shoes
       # Additional details to include in the to_s representation.
       def to_s_details
         ''
+      end
+
+      def hexy_object_id
+        sprintf('0x%08x', object_id * 2)
       end
     end
   end

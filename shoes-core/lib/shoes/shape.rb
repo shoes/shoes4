@@ -24,9 +24,7 @@ class Shoes
       @app.eval_with_additional_context self, &@blk
 
       # If we haven't drawn enough to get our bounds, default them out
-      if @left_bound.nil?
-        update_bounds([0], [0])
-      end
+      update_bounds([0], [0]) if @left_bound.nil?
     end
 
     def width
@@ -109,7 +107,7 @@ class Shoes
     # outer bounding box of the shape, nothing more sophisticated.
     def in_bounds?(x, y)
       (@left_bound..@right_bound).include?(x) &&
-      (@top_bound..@bottom_bound).include?(y)
+        (@top_bound..@bottom_bound).include?(y)
     end
 
     private

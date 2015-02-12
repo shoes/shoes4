@@ -51,7 +51,7 @@ class Shoes
     end
 
     def percent
-      return 0 if @transferred.nil? || @content_length.nil?;
+      return 0 if @transferred.nil? || @content_length.nil?
       @transferred * 100 / @content_length
     end
 

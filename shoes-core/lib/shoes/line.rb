@@ -43,7 +43,7 @@ class Shoes
     alias_method :x2=, :right=
     alias_method :y2=, :bottom=
 
-    def move(x, y, x2=nil, y2=nil)
+    def move(x, y, x2 = nil, y2 = nil)
       @point_a.x = x
       @point_a.y = y
       @point_b.x = x2 if x2
