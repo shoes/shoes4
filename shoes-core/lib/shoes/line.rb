@@ -1,3 +1,5 @@
+require 'matrix'
+
 class Shoes
   class Line
     include Common::UIElement
@@ -17,6 +19,26 @@ class Shoes
 
       style[:x2] = point_b.x
       style[:y2] = point_b.y
+    end
+
+    # Check out http://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment
+    # for explanations how the algorithm works
+    def in_bounds?(x, y)
+      # c is (x, y)
+      left_most, right_most = point_a.x < point_b.x ? [point_a, point_b] : [point_b, point_a]
+      left_c = Vector.elements (left_most - [x, y]).to_a, false
+      left_right = Vector.elements (left_most - right_most).to_a, false
+
+      boldness = style[:strokewidth].to_i / 2
+      left_c_dot_left_right = left_c.inner_product(left_right)
+      left_right_dot_left_right = left_right.inner_product(left_right)
+
+      if left_c_dot_left_right.between?(0, left_right_dot_left_right)
+        left_c_dot_left_c = left_c.inner_product(left_c)
+        left_right_dot_left_right * left_c_dot_left_c <= boldness ** 2 * left_right_dot_left_right + left_c_dot_left_right ** 2
+      else
+        false
+      end
     end
 
     def update_style(new_styles)

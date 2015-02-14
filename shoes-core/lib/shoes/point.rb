@@ -4,6 +4,7 @@ class Shoes
 
     def initialize(x, y)
       @x, @y = x, y
+      @dimensions = 2
     end
 
     attr_accessor :x, :y
@@ -30,6 +31,18 @@ class Shoes
       Shoes::Point.new(@x + x, @y + y)
     end
 
+    def +(other)
+      other = other.to_a
+      assert_dimensions_match(other.length)
+      Shoes::Point.new(x + other[0], y + other[1])
+    end
+
+    def -(other)
+      other = other.to_a
+      assert_dimensions_match(other.length)
+      Shoes::Point.new(x - other[0], y - other[1])
+    end
+
     def width(other = self)
       (@x - other.x).abs
     end
@@ -47,10 +60,18 @@ class Shoes
       "(#{@x || nothing},#{@y || nothing})"
     end
 
+    def to_a
+      [x, y]
+    end
+
     private
 
     def inspect_details
       " #{self}"
+    end
+
+    def assert_dimensions_match(other_dimension)
+      raise ArgumentError, "Dimensions mismatch: expected #{@dimensions}D point, given #{other_dimension}D point" if @dimensions != other_dimension
     end
   end
 end
