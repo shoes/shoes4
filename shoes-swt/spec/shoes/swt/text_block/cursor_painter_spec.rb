@@ -3,7 +3,7 @@ require 'shoes/swt/spec_helper'
 describe Shoes::Swt::TextBlock::CursorPainter do
   include_context "swt app"
 
-  let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor, has_textcursor?: true) }
+  let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor, textcursor?: true) }
   let(:textcursor) { double("textcursor", left:0, top: 0, height: 10) }
   let(:segment_collection) { double('segment collection',
                                    cursor_height: 12,
@@ -21,7 +21,7 @@ describe Shoes::Swt::TextBlock::CursorPainter do
     end
 
     it "shouldn't do anything without text cursor" do
-      allow(dsl).to receive(:has_textcursor?) { nil}
+      allow(dsl).to receive(:textcursor?) { nil}
       subject.draw
       expect(dsl).to_not have_received(:textcursor=)
     end

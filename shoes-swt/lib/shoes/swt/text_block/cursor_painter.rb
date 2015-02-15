@@ -42,7 +42,7 @@ class Shoes
         end
 
         def remove_textcursor
-          return unless @text_block_dsl.has_textcursor?
+          return unless @text_block_dsl.textcursor?
 
           @text_block_dsl.textcursor.remove
           @text_block_dsl.textcursor = nil
