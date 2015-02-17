@@ -191,7 +191,7 @@ class Shoes
     def setup_global_keypresses
       @app.keypress do |key|
         blk = self.class.global_keypresses[key]
-        @app.instance_eval(&blk) unless blk.nil?
+        execute_block(&blk) if blk
       end
     end
 

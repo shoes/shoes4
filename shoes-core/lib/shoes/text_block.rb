@@ -68,9 +68,7 @@ class Shoes
     end
 
     def links
-      return [] unless @contents
-
-      @contents.select do |element|
+      contents.to_a.select do |element|
         element.is_a?(Shoes::Link)
       end
     end

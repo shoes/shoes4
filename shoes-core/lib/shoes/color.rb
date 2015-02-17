@@ -60,7 +60,6 @@ EOS
     end
 
     def <=>(other)
-      raise_class_mismatch_error(other) unless other.is_a?(self.class)
       [red, green, blue, alpha] <=> [other.red, other.green, other.blue, other.alpha]
     end
 
@@ -86,11 +85,6 @@ EOS
       return 255 if rgb > 255
       return 0 if rgb < 0
       rgb
-    end
-
-    def raise_class_mismatch_error(other)
-      fail ArgumentError,
-           "can't compare #{self.class.name} with #{other.class.name}"
     end
 
     class HexConverter
