@@ -35,6 +35,10 @@ class Shoes
       end
 
       def open
+        # If something called quit during the app block's initial evaluation
+        # we might already be disposed of, in which case get out of here!
+        return if ::Shoes::Swt.main_app.disposed? || @shell.disposed?
+
         @shell.pack
         force_shell_size
         @shell.open
