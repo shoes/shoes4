@@ -44,7 +44,7 @@ class Shoes
     end
 
     def ask_save_file
-      Shoes::Dialog.new.dialog_chooser 'Save File...'
+      Shoes::Dialog.new.dialog_chooser 'Save File...', false, :save
     end
 
     def ask_open_folder
@@ -52,7 +52,7 @@ class Shoes
     end
 
     def ask_save_folder
-      Shoes::Dialog.new.dialog_chooser 'Save Folder...', :folder
+      Shoes::Dialog.new.dialog_chooser 'Save Folder...', :folder, :save
     end
 
     def ask(msg, args = {})

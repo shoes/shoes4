@@ -15,8 +15,8 @@ class Shoes
         confirmed? answer_id
       end
 
-      def dialog_chooser(title, folder = false)
-        style = ::Swt::SWT::OPEN
+      def dialog_chooser(title, folder = false, style = :open)
+        style = (style == :save ? ::Swt::SWT::SAVE : ::Swt::SWT::OPEN)
         shell = ::Swt::Widgets::Shell.new Shoes.display
         fd = folder ? ::Swt::Widgets::DirectoryDialog.new(shell, style) : ::Swt::Widgets::FileDialog.new(shell, style)
         fd.setText title
