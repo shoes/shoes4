@@ -12,9 +12,10 @@ class Shoes
       # Only bundle if we find a local Gemfile.  This allows us to work properly
       # running from source without finding gem-installed backends.
       def bundle
-        return unless File.exists?("Gemfile")
-        require 'bundler/setup'
-        Bundler.require
+        if File.exist?("Gemfile")
+          require 'bundler/setup'
+          Bundler.require(:shoes)
+        end
       end
 
       def select_generator
