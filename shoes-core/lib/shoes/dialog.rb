@@ -12,8 +12,8 @@ class Shoes
       @gui.confirm msg
     end
 
-    def dialog_chooser(title, folder = false)
-      @gui.dialog_chooser title, folder
+    def dialog_chooser(title, folder = false, style = :open)
+      @gui.dialog_chooser title, folder, style
     end
 
     def ask(msg, args)
