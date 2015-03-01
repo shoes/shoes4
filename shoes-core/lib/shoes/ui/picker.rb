@@ -10,7 +10,7 @@ class Shoes
       end
 
       # Only bundle if we find a local Gemfile.  This allows us to work properly
-      # running from source without finding gem-nstalled backends.
+      # running from source without finding gem-installed backends.
       def bundle
         return unless File.exists?("Gemfile")
         require 'bundler/setup'
