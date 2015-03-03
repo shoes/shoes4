@@ -88,7 +88,6 @@ module Othello
     end
 
     def skip_turn?
-      possibles = []
       @board.each_with_index { |col,col_index|
         col.each_with_index { |cell,row_index|
           return false if possible_move?([col_index,row_index])
@@ -99,7 +98,6 @@ module Othello
 
     def possible_move?(c=[0,0])
       return nil if board_at(c) != 0
-      possible_moves = []
       piece = current_player.piece
       opp_piece = current_player.opp_piece
       pieces_to_change = []
@@ -315,4 +313,3 @@ Shoes.app width: 520, height: 600 do
     end
   }
 end
-

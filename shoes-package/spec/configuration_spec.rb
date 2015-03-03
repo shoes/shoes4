@@ -185,7 +185,7 @@ describe Shoes::Package::Configuration do
     context "with additional gems" do
       let(:path) { @config_filename }
       let(:additional_config) { { gems: gems } }
-      let(:config) { config = Shoes::Package::Configuration.load(path, additional_config) }
+      let(:config) { Shoes::Package::Configuration.load(path, additional_config) }
 
       context "one gem" do
         let(:gems) { 'shoes-swt' }

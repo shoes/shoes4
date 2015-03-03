@@ -300,7 +300,7 @@ describe Shoes::App do
       it "returns the enclosing slot" do
         my_parent = nil
         my_stack  = nil
-        app = Shoes.app do
+        Shoes.app do
           my_stack = stack do
             flow do
               my_parent = parent
