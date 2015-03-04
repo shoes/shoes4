@@ -12,7 +12,7 @@ describe Shoes::Swt::MouseMoveListener do
   let(:x) {10}
   let(:y) {42}
   let(:block) {double 'Block', call: nil}
-  let(:mouse_event) {double'mouse event', x: x, y: y}
+  let(:mouse_event) {double 'mouse event', x: x, y: y}
 
   subject {Shoes::Swt::MouseMoveListener.new(app)}
   before :each do

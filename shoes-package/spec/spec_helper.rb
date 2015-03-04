@@ -38,7 +38,7 @@ module Guard
   #   end
   # end
   def platform_is(platform)
-    yield if self.send "platform_is_#{platform.to_s}"
+    yield if self.send "platform_is_#{platform}"
   end
 
   # Runs specs only if platform does not match
@@ -50,7 +50,7 @@ module Guard
   #   end
   # end
   def platform_is_not(platform)
-    yield unless self.send "platform_is_#{platform.to_s}"
+    yield unless self.send "platform_is_#{platform}"
   end
 
   def platform_is_windows
