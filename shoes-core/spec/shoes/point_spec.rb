@@ -29,6 +29,34 @@ describe Shoes::Point do
     end
   end
 
+  describe "#+" do
+    it "performs element-wise addition with other point" do
+      expect(subject + Shoes::Point.new(40, 50)).to eq(Shoes::Point.new(80, 100))
+    end
+
+    it "performs element-wise addition with an array" do
+      expect(subject + [40, 50]).to eq(Shoes::Point.new(80, 100))
+    end
+
+    it "doesn't perform addition when dimensions don't match" do
+      expect { subject + [40, 50, 60] }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe "#-" do
+    it "performs element-wise subtraction with other point" do
+      expect(subject - Shoes::Point.new(40, 50)).to eq(Shoes::Point.new(0, 0))
+    end
+
+    it "performs element-wise subtraction with an array" do
+      expect(subject - [40, 50]).to eq(Shoes::Point.new(0, 0))
+    end
+
+    it "doesn't perform subtraction when dimensions don't match" do
+      expect { subject - [40, 50, 60] }.to raise_error(ArgumentError)
+    end
+  end
+
   describe "#to" do
     it "positive" do
       expect(subject.to(24, 166)).to eq(Shoes::Point.new(64, 216))

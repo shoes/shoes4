@@ -84,4 +84,36 @@ describe Shoes::Line do
       expect(subject.point_b).to eq(Shoes::Point.new(20, 20))
     end
   end
+
+  describe "#in_bounds?" do
+    subject(:line) { Shoes::Line.new(app, app, Shoes::Point.new(100, 100), Shoes::Point.new(50, 50), input_opts) }
+
+    it "returns true if a point is in the end of the line" do
+      expect(subject.in_bounds?(100, 100)).to be true
+    end
+
+    it "returns true if a point is in the end of the line" do
+      expect(subject.in_bounds?(50, 50)).to be true
+    end
+
+    it "returns true if a point is in the middle of the line" do
+      expect(subject.in_bounds?(75, 75)).to be true
+    end
+
+    it "returns false if a point is not in the line" do
+      expect(subject.in_bounds?(201, 200)).to be false
+    end
+
+    it "takes into account :strokewidth style" do
+      line = Shoes::Line.new(app, app, Shoes::Point.new(50, 50), Shoes::Point.new(70, 50), input_opts) 
+      line.style(strokewidth: 20)
+      expect(line.in_bounds?(50, 52)).to be true
+      expect(line.in_bounds?(50, 48)).to be true
+      expect(line.in_bounds?(50, 60)).to be true
+      expect(line.in_bounds?(50, 40)).to be true
+      expect(line.in_bounds?(49, 50)).to be false
+      expect(line.in_bounds?(50, 61)).to be false
+      expect(line.in_bounds?(70, 50)).to be true
+    end
+  end
 end
