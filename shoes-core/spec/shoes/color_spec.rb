@@ -238,6 +238,17 @@ describe Shoes::Color do
         expect(green).to eq green
       end
 
+      # shoes 3 compatibility behavior
+      describe 'different colors' do
+        it 'takes the total of rgb values to compare, less is less' do
+          expect(create_rgb 100, 200, 0).to be < create_rgb(50, 100, 151)
+        end
+
+        it 'takes the total of rgb values to compare, more is more' do
+          expect(create_rgb 0, 200, 200).to be > create_rgb(150, 150, 99)
+        end
+      end
+
       context "same rgb values" do
         let(:color_2) { Shoes::Color.new(255, 69, 0, 254) }
         it "is less than when less opaque" do
@@ -249,6 +260,10 @@ describe Shoes::Color do
         end
       end
     end
+  end
+
+  def create_rgb(r, g, b)
+    Shoes::Color.new r, g, b
   end
 end
 

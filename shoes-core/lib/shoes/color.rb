@@ -60,7 +60,11 @@ EOS
     end
 
     def <=>(other)
-      [red, green, blue, alpha] <=> [other.red, other.green, other.blue, other.alpha]
+      if same_base_color?(other)
+        @alpha <=> other.alpha
+      else
+        less_or_greater_than other
+      end
     end
 
     # @return [String] a hex represenation of this color
@@ -86,6 +90,21 @@ EOS
       return 0 if rgb < 0
       rgb
     end
+
+    def same_base_color?(other)
+      @red == other.red && @green == other.green && @blue == other.blue
+    end
+
+    def less_or_greater_than(other)
+      own_sum = @red + @green + @blue
+      other_sum = other.red + other.green + other.blue
+      if own_sum > other_sum
+        1
+      else
+        -1
+      end
+    end
+
 
     class HexConverter
       def initialize(hex)
