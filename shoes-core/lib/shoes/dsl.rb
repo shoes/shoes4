@@ -486,13 +486,13 @@ EOS
     OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform, :translate]
 
     PATTERN_APP_STYLES.each do |style|
-      define_method style.to_s do |val|
+      define_method style do |val|
         @__app__.style[style] = pattern(val)
       end
     end
 
     OTHER_APP_STYLES.each do |style|
-      define_method style.to_s do |val|
+      define_method style do |val|
         @__app__.style[style] = val
       end
     end

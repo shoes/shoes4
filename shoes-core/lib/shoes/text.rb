@@ -14,7 +14,7 @@ class Shoes
     end
 
     def app
-      @parent.app
+      parent && parent.app
     end
 
     private

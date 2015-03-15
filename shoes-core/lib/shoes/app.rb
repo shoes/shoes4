@@ -29,6 +29,7 @@ class Shoes
     include DSL
     include BuiltinMethods
     include Common::Inspect
+    extend  Forwardable
 
     # Instantiates a new Shoes app.
     #
@@ -55,17 +56,9 @@ class Shoes
       self
     end
 
-    def gui
-      @__app__.gui
-    end
-
     def window(options = {}, &block)
       options.merge! owner: self
       self.class.new(options, &block)
-    end
-
-    def close
-      quit
     end
 
     def quit
@@ -73,19 +66,19 @@ class Shoes
       @__app__.quit
     end
 
+    alias_method :close, :quit
+
     def parent
       @__app__.current_slot.parent
     end
 
-    %w(
+    delegated_to_internal_app = %w(
       width height owner started? location left top absolute_left
       absolute_top click release clear fullscreen fullscreen=
-      contents wait_until_closed
-    ).each do |method|
-      define_method method do |*args, &block|
-        @__app__.public_send method, *args, &block
-      end
-    end
+      contents wait_until_closed gui
+    )
+
+    def_delegators :@__app__, *delegated_to_internal_app
 
     alias_method :fullscreen?, :fullscreen
 

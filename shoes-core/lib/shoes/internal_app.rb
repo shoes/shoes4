@@ -83,13 +83,12 @@ class Shoes
       true
     end
 
-    def fullscreen=(state)
-      gui.fullscreen = state
-    end
+    delegated_to_gui = %w(
+      fullscreen= fullscreen quit scroll_top= scroll_top
+      clipboard clipboard= gutter
+    )
 
-    def fullscreen
-      gui.fullscreen
-    end
+    def_delegators :gui, *delegated_to_gui
 
     alias_method :start_as_fullscreen?, :start_as_fullscreen
 
@@ -107,26 +106,6 @@ class Shoes
       gui.open
     end
 
-    def quit
-      @gui.quit
-    end
-
-    def scroll_top
-      gui.scroll_top
-    end
-
-    def scroll_top=(n)
-      gui.scroll_top = n
-    end
-
-    def clipboard
-      gui.clipboard
-    end
-
-    def clipboard=(str)
-      gui.clipboard = str
-    end
-
     def download(url, opts, &block)
       app.download url, opts, &block
     end
@@ -137,10 +116,6 @@ class Shoes
 
     def execute_block(blk)
       app.instance_eval(&blk)
-    end
-
-    def gutter
-      gui.gutter
     end
 
     def add_resize_callback(blk)
@@ -216,7 +191,7 @@ class Shoes
     def setup_global_keypresses
       @app.keypress do |key|
         blk = self.class.global_keypresses[key]
-        @app.instance_eval(&blk) unless blk.nil?
+        execute_block(&blk) if blk
       end
     end
 

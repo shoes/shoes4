@@ -52,7 +52,7 @@ class Shoes
     end
 
     def ==(other)
-      other.respond_to?(:x) && @x == other.x && other.respond_to?(:y) && @y == other.y
+      other.respond_to?(:x, :y) && [x, y] == [other.x, other.y]
     end
 
     def to_s
