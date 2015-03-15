@@ -14,7 +14,7 @@ class Shoes
       end
 
       def dispose
-        @real.dispose unless @real.disposed?
+        real.dispose
       end
 
       attr_reader :dsl
