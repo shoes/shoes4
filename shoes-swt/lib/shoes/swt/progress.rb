@@ -5,9 +5,10 @@ class Shoes
       include Common::Remove
       include Common::Visibility
       include Common::UpdatePosition
+      include DisposedProtection
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real, :dsl
+      attr_reader :parent, :dsl
 
       def initialize(dsl, parent)
         @dsl = dsl
@@ -15,20 +16,20 @@ class Shoes
 
         @real = ::Swt::Widgets::ProgressBar.new(@parent.real,
                                                 ::Swt::SWT::SMOOTH)
-        @real.minimum = 0
-        @real.maximum = 100
+        real.minimum = 0
+        real.maximum = 100
 
         if @dsl.element_width && @dsl.element_height
-          @real.setSize dsl.element_width, dsl.element_height
+          real.setSize dsl.element_width, dsl.element_height
         else
-          @real.pack
-          @dsl.element_width  = @real.size.x
-          @dsl.element_height = @real.size.y
+          real.pack
+          @dsl.element_width  = real.size.x
+          @dsl.element_height = real.size.y
         end
       end
 
       def fraction=(value)
-        @real.selection = (value * 100).to_i unless @real.disposed?
+        real.selection = (value * 100).to_i
       end
     end
   end
