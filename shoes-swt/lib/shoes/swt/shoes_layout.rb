@@ -39,21 +39,21 @@ class Shoes
       end
 
       def show_scrollbar(scrollbar, height, scroll_height)
-        scrollbar.setVisible true
-        scrollbar.setThumb height * height / scroll_height
-        scrollbar.setMaximum scroll_height - height + scrollbar.getThumb
+        scrollbar.visible   = true
+        scrollbar.thumb     = height * height / scroll_height
+        scrollbar.maximum   = scroll_height - height + scrollbar.thumb
         scrollbar.increment = 10
       end
 
       def hide_scrollbar(scrollbar, real_app)
-        scrollbar.setVisible false
-        location   = real_app.getLocation
+        scrollbar.visible = false
+        location   = real_app.location
         location.y = 0
-        real_app.setLocation location
+        real_app.location = location
       end
 
       def vertical_scrollbar
-        @gui_app.shell.getVerticalBar
+        @gui_app.shell.vertical_bar
       end
     end
   end

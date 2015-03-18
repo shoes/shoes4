@@ -10,17 +10,17 @@ describe Shoes::Swt::ShoesLayout do
 
   let(:gui_app)      { double('gui_app', dsl: dsl, real: real, shell: shell) }
   let(:real)         { double('real', set_size: nil,
-                              getLocation: location, setLocation: nil) }
+                              location: location, :location= => nil) }
   let(:size)         { double('size', height: 0, width: 0) }
   let(:location)     { double('location', :y= => nil) }
   let(:dsl)          { double('dsl', top_slot: top_slot,
                               height: 100, width: 100) }
   let(:top_slot)     { double('top_slot', contents_alignment: 0,
                               :width= => nil, :height= => nil) }
-  let(:shell)        { double('shell', getVerticalBar: vertical_bar) }
+  let(:shell)        { double('shell', vertical_bar: vertical_bar) }
   let(:vertical_bar) { double('vertical_bar', :increment= => nil,
-                              setVisible: nil, setMaximum: nil,
-                              setThumb: nil, getThumb: 0) }
+                              :visible= => nil, :maximum= => nil,
+                              :thumb= => nil, thumb: 0) }
 
   let(:scroll_height) { dsl.height * 2 }
 
@@ -56,25 +56,25 @@ describe Shoes::Swt::ShoesLayout do
 
   it "shows scrollbar" do
     when_contents_scroll
-    expect(vertical_bar).to receive(:setVisible).with(true)
+    expect(vertical_bar).to receive(:visible=).with(true)
     subject.layout
   end
 
   it "updates settings on scrollbar when visible" do
     when_contents_scroll
-    [:setThumb, :setMaximum, :increment=].each do |m|
+    [:thumb=, :maximum=, :increment=].each do |m|
       expect(vertical_bar).to receive(m)
     end
     subject.layout
   end
 
   it "hides scrollbar" do
-    expect(vertical_bar).to receive(:setVisible).with(false)
+    expect(vertical_bar).to receive(:visible=).with(false)
     subject.layout
   end
 
   it "sets gui location when scrollbar hidden" do
-    expect(real).to receive(:setLocation).with(location)
+    expect(real).to receive(:location=).with(location)
     subject.layout
   end
 
