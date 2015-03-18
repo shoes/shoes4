@@ -14,6 +14,8 @@ class Shoes
         end
       end
 
+      private
+
       def gather_height_info(dsl_app)
         height = dsl_app.height
         scroll_height = dsl_app.top_slot.contents_alignment
