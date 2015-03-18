@@ -4,42 +4,56 @@ class Shoes
       attr_accessor :gui_app
 
       def layout(*_dontcare)
-        dsl_app = @gui_app.dsl
-        height = dsl_app.height
-        scrollable_height = dsl_app.top_slot.contents_alignment
-        set_gui_size(height, scrollable_height)
+        height, scroll_height, is_scrolling = gather_height_info(@gui_app.dsl)
+        set_heights(@gui_app.dsl, @gui_app.real, height, scroll_height)
 
-        dsl_app.top_slot.width  = dsl_app.width
-        dsl_app.top_slot.height = [scrollable_height, height].max
-
-        vertical_bar = @gui_app.shell.getVerticalBar
-        vertical_bar.setVisible(scrollable_height > height)
-        if scrollable_height > height
-          handle_scroll_bar(vertical_bar, height, scrollable_height)
+        if is_scrolling
+          show_scrollbar(vertical_scrollbar, height, scroll_height)
         else
-          set_gui_location
+          hide_scrollbar(vertical_scrollbar, @gui_app.real)
         end
       end
 
       private
 
-      def set_gui_size(height, scrollable_height)
-        width          = @gui_app.dsl.width
-        maximum_height = [scrollable_height, height].max
-        size           = @gui_app.real.compute_trim 0, 0, width, maximum_height
-        @gui_app.real.set_size(size.width, size.height)
+      def gather_height_info(dsl_app)
+        height = dsl_app.height
+        scroll_height = dsl_app.top_slot.contents_alignment
+        [height, scroll_height, scroll_height > height]
       end
 
-      def handle_scroll_bar(vertical_bar, height, scrollable_height)
-        vertical_bar.setThumb height * height / scrollable_height
-        vertical_bar.setMaximum scrollable_height - height + vertical_bar.getThumb
-        vertical_bar.increment = 10
+      def set_heights(dsl_app, real_app, height, scroll_height)
+        maximum_height = [height, scroll_height].max
+        set_real_size(dsl_app, real_app, maximum_height)
+        set_top_slot_size(dsl_app, maximum_height)
       end
 
-      def set_gui_location
-        location   = @gui_app.real.getLocation
+      def set_real_size(dsl_app, real_app, maximum_height)
+        size  = real_app.compute_trim 0, 0, dsl_app.width, maximum_height
+        real_app.set_size(size.width, size.height)
+      end
+
+      def set_top_slot_size(dsl_app, maximum_height)
+        dsl_app.top_slot.width  = dsl_app.width
+        dsl_app.top_slot.height = maximum_height
+      end
+
+      def show_scrollbar(scrollbar, height, scroll_height)
+        scrollbar.visible   = true
+        scrollbar.thumb     = height * height / scroll_height
+        scrollbar.maximum   = scroll_height - height + scrollbar.thumb
+        scrollbar.increment = 10
+      end
+
+      def hide_scrollbar(scrollbar, real_app)
+        scrollbar.visible = false
+        location   = real_app.location
         location.y = 0
-        @gui_app.real.setLocation location
+        real_app.location = location
+      end
+
+      def vertical_scrollbar
+        @gui_app.shell.vertical_bar
       end
     end
   end
