@@ -16,9 +16,7 @@ class Shoes
       def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
-
-        load_image(@dsl.file_path)
-
+        update_image
         add_paint_listener
       end
 
