@@ -158,5 +158,16 @@ describe Shoes::Download do
       download.start
       download.join_thread
     end
+
+    it 'does not die on socket errors, but logs them' do
+      error = SocketError.new('Badumz')
+
+      expect(download.gui).not_to receive(:eval_block)
+      expect(Shoes.logger).to receive(:error).with error
+      allow(download).to receive(:open).and_raise(error)
+
+      download.start
+      download.join_thread
+    end
   end
 end

@@ -81,6 +81,8 @@ class Shoes
             save_to_file(@opts[:save]) if @opts[:save]
             finish_download download_data
           end
+        rescue SocketError => e
+          Shoes.logger.error e
         rescue => e
           eval_block(error_proc, e)
         end
