@@ -29,7 +29,6 @@ class Shoes
       # Adds styles, or just returns current style if no argument
       def style(new_styles = nil)
         update_style(new_styles) if need_to_update_style?(new_styles)
-        update_dimensions if styles_with_dimensions?
         @style
       end
 
@@ -144,7 +143,10 @@ class Shoes
 
       def update_dimensions # so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          @style[style] = send(style) if self.respond_to? style
+          if self.respond_to?(style)
+            value = send(style)
+            @style[style] = value if value
+          end
         end
       end
 
