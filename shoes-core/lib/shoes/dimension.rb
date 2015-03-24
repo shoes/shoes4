@@ -31,8 +31,8 @@ class Shoes
     def extent
       result = @extent
       if @parent
-        result = calculate_relative(result) if relative?(result)
-        result = calculate_negative(result) if negative?(result)
+        result = calculate_relative(result) if @extent_relative
+        result = calculate_negative(result) if @extent_negative
       end
       result
     end
@@ -40,6 +40,10 @@ class Shoes
     def extent=(value)
       @extent = value
       @extent = parse_from_string @extent if string? @extent
+
+      @extent_relative = relative?(@extent)
+      @extent_negative = negative?(@extent)
+
       @extent
     end
 
@@ -100,30 +104,53 @@ class Shoes
     # getter... reason being that for ParentDimensions we need to be able to
     # figure out if a value has been modified or if we should consult the
     # parent value - see ParentDimension implementation
-    [:margin_start, :margin_end, :displace_start].each do |method|
-      define_method method do
-        instance_variable_name = '@' + method.to_s
-        value = instance_variable_get(instance_variable_name) || 0
-        value = calculate_relative value if relative? value
-        value
-      end
+    def margin_start
+      value_factoring_in_relative(@margin_start, @margin_start_relative)
     end
 
-    def self.define_int_parsing_writer(name)
-      define_method "#{name}=" do |value|
-        instance_variable_set("@#{name}", parse_int_value(value))
-      end
+    def margin_end
+      value_factoring_in_relative(@margin_end, @margin_end_relative)
     end
 
-    %w(start end margin_start margin_end displace_start).each do |method|
-      define_int_parsing_writer method
+    def displace_start
+      value_factoring_in_relative(@displace_start, @displace_start_relative)
+    end
+
+    def value_factoring_in_relative(value, relative)
+      value ||= 0
+      value = calculate_relative value if relative
+      value
+    end
+
+    def start=(value)
+      @start_relative = relative?(value)
+      @start = parse_int_value(value)
+    end
+
+    def end=(value)
+      @end = parse_int_value(value)
+    end
+
+    def margin_start=(value)
+      @margin_start_relative = relative?(value)
+      @margin_start = parse_int_value(value)
+    end
+
+    def margin_end=(value)
+      @margin_end_relative = relative?(value)
+      @margin_end = parse_int_value(value)
+    end
+
+    def displace_start=(value)
+      @displace_start_relative = relative?(value)
+      @displace_start = parse_int_value(value)
     end
 
     private
 
     def basic_start_value
       value = @start
-      value = calculate_relative value if relative?(value)
+      value = calculate_relative value if @start_relative
       value = report_relative_to_parent_start if value.nil?
       value
     end
@@ -203,16 +230,12 @@ class Shoes
   end
 
   class ParentDimension < Dimension
-    SIMPLE_DELEGATE_METHODS = [:absolute_start, :start]
+    def absolute_start
+      @absolute_start ? super : parent.absolute_start
+    end
 
-    SIMPLE_DELEGATE_METHODS.each do |method|
-      define_method method do
-        if value_modified? method
-          super
-        else
-          parent.public_send(method)
-        end
-      end
+    def start
+      @start ? super : parent.start
     end
 
     def extent
@@ -244,11 +267,6 @@ class Shoes
     # Represents the raw value set for extent, either on element or on parent
     def raw_extent(original_value)
       original_value || parent.extent
-    end
-
-    def value_modified?(method)
-      instance_variable = ('@' + method.to_s).to_sym
-      instance_variable_get(instance_variable)
     end
   end
 end
