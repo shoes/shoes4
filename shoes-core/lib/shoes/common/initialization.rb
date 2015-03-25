@@ -14,6 +14,7 @@ class Shoes
 
         style_init(styles)
         create_dimensions(*args)
+        update_dimensions if styles_with_dimensions?
 
         @parent.add_child self
         @gui = Shoes.backend_for self

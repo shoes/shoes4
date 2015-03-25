@@ -6,17 +6,21 @@ describe Shoes::Common::Style do
 
   class StyleTester
     include Shoes::Common::Visibility
+    include Shoes::DimensionsDelegations
     include Shoes::Common::Style
 
-    attr_accessor :left
+    attr_reader :dimensions
     style_with :key, :left, :click, :strokewidth, :fill
 
     STYLES = {fill: Shoes::COLORS[:blue]}
 
     def initialize(app, styles = {})
       @app = app #needed for style init
+      @dimensions = Shoes::Dimensions.new(@app, left: 15)
+
+      # Would normally be done by Common::Initialization
       style_init(styles, key: 'value')
-      @left = 15
+      update_dimensions
     end
 
     def click(&arg)
@@ -34,12 +38,12 @@ describe Shoes::Common::Style do
   subject {StyleTester.new(app)}
 
   its(:style) { should eq (initial_style) }
-  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue} }
+  let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue,
+      margin: [0,0,0,0], margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0 } }
 
   describe 'reading and writing through #style(hash)' do
     let(:input_proc) { Proc.new {} }
     let(:changed_style) { {key: 'changed value'} }
-
 
     before :each do
       subject.style changed_style

@@ -184,9 +184,22 @@ class Shoes
     extend Forwardable
 
     UNDELEGATED_METHODS = [:to_s]
-    DELEGATED_METHODS = Dimensions.public_instance_methods(false) - UNDELEGATED_METHODS
+    CANDIDATE_METHODS = Dimensions.public_instance_methods(false) - UNDELEGATED_METHODS
+
+    WRITER_METHODS    = CANDIDATE_METHODS.select { |meth| meth.to_s.end_with?("=") }
+    DELEGATED_METHODS = CANDIDATE_METHODS - WRITER_METHODS
 
     def_delegators :dimensions, *DELEGATED_METHODS
+
+    # For performance reasons, it's critical to write out dimension values to
+    # the styles hash directly when they change, so do that here.
+    WRITER_METHODS.each do |meth|
+      key = meth.to_s.sub("=", "").to_sym
+      define_method(meth) do |value|
+        @style[key] = value if @style
+        self.dimensions.send(meth, value)
+      end
+    end
 
     def adjust_current_position(*_)
       # no-op by default for almost all elements
@@ -197,6 +210,6 @@ class Shoes
   module BackendDimensionsDelegations
     extend Forwardable
 
-    def_delegators :dsl, *DimensionsDelegations::DELEGATED_METHODS
+    def_delegators :dsl, *DimensionsDelegations::CANDIDATE_METHODS
   end
 end
