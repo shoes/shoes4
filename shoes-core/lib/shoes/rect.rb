@@ -5,7 +5,7 @@ class Shoes
     include Common::Clickable
 
     style_with :angle, :art_styles, :curve, :common_styles, :dimensions
-    STYLES = { angle: 0, curve: 0 }
+    STYLES = { angle: 0, curve: 0, fill: Shoes::COLORS[:black] }
 
     def create_dimensions(left, top, width, height)
       left   ||= @style[:left] || 0

@@ -12,7 +12,7 @@ class Shoes
     attr_reader :parent, :dimensions, :gui, :contents, :blk, :hover_proc, :leave_proc
 
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
-    STYLES = { scroll: false }
+    STYLES = { scroll: false, fill: Shoes::COLORS[:black] }
 
     def create_dimensions(*args)
       super(*args)

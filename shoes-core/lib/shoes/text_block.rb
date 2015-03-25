@@ -12,7 +12,7 @@ class Shoes
     attr_accessor :cursor, :textcursor
 
     style_with :common_styles, :dimensions, :text_block_styles
-    STYLES = { font: "Arial" } # used in TextBlock specs only
+    STYLES = { font: DEFAULT_TEXTBLOCK_FONT } # used in TextBlock specs only
 
     def create_dimensions(*_)
       @dimensions = TextBlockDimensions.new @parent, @style
@@ -130,7 +130,7 @@ class Shoes
     "Inscription" => { size: 10 }
   }.each do |name, styles|
     clazz = Class.new(TextBlock) do
-      const_set("STYLES", { font: "Arial", fill: nil }.merge(styles))
+      const_set("STYLES", { font: DEFAULT_TEXTBLOCK_FONT, fill: nil }.merge(styles))
     end
     Shoes.const_set(name, clazz)
   end
