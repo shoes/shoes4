@@ -27,4 +27,5 @@ group :development do
   gem 'webmock'
   gem 'hometown'
   gem 'rubocop'
+  gem 'benchmark-ips'
 end
