@@ -16,6 +16,7 @@ class Shoes
     def initialize(parent = nil, start_as_center = false)
       @parent          = parent
       @start_as_center = start_as_center
+      @combined_margins = 0
     end
 
     def start
@@ -57,7 +58,7 @@ class Shoes
       if my_extent.nil?
         nil
       else
-        extent - (margin_start + margin_end)
+        my_extent - @combined_margins
       end
     end
 
@@ -134,11 +135,17 @@ class Shoes
     def margin_start=(value)
       @margin_start_relative = relative?(value)
       @margin_start = parse_int_value(value)
+
+      @combined_margins = margin_start + margin_end
+      @margin_start
     end
 
     def margin_end=(value)
       @margin_end_relative = relative?(value)
       @margin_end = parse_int_value(value)
+
+      @combined_margins = margin_start + margin_end
+      @margin_end
     end
 
     def displace_start=(value)
