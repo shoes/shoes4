@@ -5,6 +5,7 @@ class Shoes
     include Common::Clickable
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
+    STYLES = { fill: Shoes::COLORS[:black] }
 
     def create_dimensions(left, top, width, height)
       left   ||= @style[:left]

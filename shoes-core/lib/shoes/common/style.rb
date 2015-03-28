@@ -8,7 +8,6 @@ class Shoes
   module Common
     module Style
       DEFAULT_STYLES = {
-        fill:        Shoes::COLORS[:black],
         rotate:      0,
         stroke:      Shoes::COLORS[:black],
         strokewidth: 1
@@ -34,11 +33,10 @@ class Shoes
 
       def style_init(arg_styles, new_styles = {})
         default_element_styles = {}
-        default_element_styles = self.class::STYLES if defined? self.class::STYLES
-
+        default_element_styles = self.class::STYLES if defined?(self.class::STYLES)
         create_style_hash
-        merge_app_styles
         @style.merge!(default_element_styles)
+        merge_app_styles
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
         @style.merge!(arg_styles)

@@ -8,6 +8,8 @@ class Shoes
 
     style_with :art_styles, :center, :common_styles, :dimensions
 
+    STYLES = { fill: Shoes::COLORS[:black] }
+
     def create_dimensions()
       @dimensions = AbsoluteDimensions.new @style
     end

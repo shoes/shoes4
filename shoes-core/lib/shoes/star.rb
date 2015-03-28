@@ -5,7 +5,7 @@ class Shoes
     include Common::Clickable
 
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points
-    STYLES = { angle: 0 }
+    STYLES = { angle: 0, file: Shoes::COLORS[:black] }
 
     def create_dimensions(left, top, points, outer, inner)
       # Don't use param defaults as DSL explicit passes nil for missing params
