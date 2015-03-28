@@ -138,6 +138,7 @@ describe Shoes::Common::Style do
 
   describe "style priorities" do
     subject {StyleTester.new(app, key: 'pumpkin')}
+    let(:green) { Shoes::COLORS[:green] }
 
     it 'uses arguments-styles over element-styles' do
       expect(subject.key).to eq 'pumpkin'
@@ -145,6 +146,25 @@ describe Shoes::Common::Style do
 
     it "uses element-defaults over app-defaults" do
       expect(subject.fill).to eq blue
+    end
+
+    describe "with app level styles applied" do
+      app_with_app_level_styles = nil
+
+      before :each do
+        app_with_app_level_styles = Shoes::App.new
+      end
+
+      it "should override class level defaults with app level styles provided those app styles are supported by the class" do
+        app_with_app_level_styles.style(fill: green)
+        expect(app_with_app_level_styles.line(0, 0, 10, 10).fill).to eq green
+      end
+
+      it "should not override class level defaults with app level styles for already instanciated objects" do
+        line_instance = app_with_app_level_styles.line(0, 0, 10, 10)
+        app_with_app_level_styles.style(fill: green)
+        expect(line_instance.fill).not_to eq green
+      end
     end
 
     #related priority specs are tested individually in spec/shared_examples/style
