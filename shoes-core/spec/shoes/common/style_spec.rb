@@ -149,20 +149,16 @@ describe Shoes::Common::Style do
     end
 
     describe "with app level styles applied" do
-      app_with_app_level_styles = nil
-
-      before :each do
-        app_with_app_level_styles = Shoes::App.new
-      end
+      let(:app) { Shoes::App.new}
 
       it "should override class level defaults with app level styles provided those app styles are supported by the class" do
-        app_with_app_level_styles.style(fill: green)
-        expect(app_with_app_level_styles.line(0, 0, 10, 10).fill).to eq green
+        app.style(fill: green)
+        expect(app.line(0, 0, 10, 10).fill).to eq green
       end
 
       it "should not override class level defaults with app level styles for already instanciated objects" do
-        line_instance = app_with_app_level_styles.line(0, 0, 10, 10)
-        app_with_app_level_styles.style(fill: green)
+        line_instance = app.line(0, 0, 10, 10)
+        app.style(fill: green)
         expect(line_instance.fill).not_to eq green
       end
     end
