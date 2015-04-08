@@ -1,10 +1,12 @@
 require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Common::Painter do
-  let(:object) {double 'object', dsl: dsl}
-  let(:dsl) {double 'dsl', visible?: true, positioned?: true}
+  let(:object) {double 'object', dsl: dsl, transform: transform,
+                       apply_fill: nil, apply_stroke: nil}
+  let(:dsl) {double 'dsl', visible?: true, positioned?: true, style: Hash.new}
   let(:event) {double 'paint event', gc: graphics_context}
   let(:graphics_context) { double 'graphics_context',
+                                  dispose: nil,
                                   set_antialias: nil, set_line_cap: nil,
                                   set_transform: nil, setTransform: nil }
   let(:transform) { double 'transform', disposed?: false }
@@ -32,13 +34,32 @@ describe Shoes::Swt::Common::Painter do
       subject.paint_control event
     end
 
+    it 'rotates' do
+      allow(subject).to receive(:needs_rotate?) { true }
+
+      allow(dsl).to receive(:rotate) { 10 }
+      allow(dsl).to receive(:element_left)   { 0 }
+      allow(dsl).to receive(:element_width)  { 0 }
+      allow(dsl).to receive(:element_top)    { 0 }
+      allow(dsl).to receive(:element_height) { 0 }
+
+      expect_transform_for_rotate
+
+      subject.paint_control event
+    end
+
+    it "doesn't rotate if doesn't need it" do
+      allow(subject).to receive(:needs_rotate?) { false }
+
+      expect(transform).not_to receive(:translate)
+      expect(transform).not_to receive(:rotate)
+      subject.paint_control event
+    end
   end
 
   context "set_rotate" do
     it "disposes of transform" do
-      expect(transform).to receive(:dispose)
-      expect(transform).to receive(:translate).at_least(:once)
-      expect(transform).to receive(:rotate).at_least(:once)
+      expect_transform_for_rotate
 
       subject.set_rotate graphics_context, 0, 0, 0 do
         #no-op
@@ -46,4 +67,9 @@ describe Shoes::Swt::Common::Painter do
     end
   end
 
+  def expect_transform_for_rotate
+    expect(transform).to receive(:dispose)
+    expect(transform).to receive(:translate).at_least(:once)
+    expect(transform).to receive(:rotate).at_least(:once)
+  end
 end
