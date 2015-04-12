@@ -2,6 +2,7 @@ require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::ImagePattern do
   let(:dsl)         { Shoes::ImagePattern.new("some/path/to") }
+  let(:applied_to)  { double("applied to") }
   let(:swt_image)   { double("swt image") }
   let(:swt_pattern) { double("swt pattern") }
 
@@ -24,12 +25,21 @@ describe Shoes::Swt::ImagePattern do
     end
   end
 
+  describe "#apply_as_stroke" do
+    let(:gc) { double("gc") }
+
+    it "sets foreground" do
+      expect(gc).to receive(:set_foreground_pattern)
+      subject.apply_as_stroke(gc, applied_to)
+    end
+  end
+
   describe "#apply_as_fill" do
     let(:gc) { double("gc") }
 
     it "sets background" do
       expect(gc).to receive(:set_background_pattern)
-      subject.apply_as_fill(gc, 10, 20, 100, 200)
+      subject.apply_as_fill(gc, applied_to)
     end
   end
 end
