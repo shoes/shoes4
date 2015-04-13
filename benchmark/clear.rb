@@ -6,11 +6,10 @@ Shoes.app do
 
   # no this code does not make any sense, it just piles up a lot of objects
   # onto the application
-  # paras are commented out due to #322
   def fill_up_app_with_senseless_stuff
     stack do
-      #create_paras 4
-      #flow do create_paras 2 end
+      create_paras 4
+      flow do create_paras 2 end
       oval 0, 0, 20, 20, fill: forestgreen, stroke: nil
       rect 0, 0, 75, 4, curve: 3
       rect 0, 396, 75, 4, curve: 3
@@ -34,10 +33,10 @@ Shoes.app do
       end
       stack do
         image path
-        #para ' ' * 20 + 'Powered by JRuby and SWT!'
+        para ' ' * 20 + 'Powered by JRuby and SWT!'
         24.times do
           flow do
-            #create_paras 12
+            create_paras 12
             button 'Hello I am a button!' do alert 'hi you all' end
           end
         end
