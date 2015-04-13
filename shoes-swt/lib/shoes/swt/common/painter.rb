@@ -35,7 +35,7 @@ class Shoes
           graphics_context.set_transform(@obj.transform)
 
           obj = @obj.dsl
-          if needs_rotate?
+          if obj.needs_rotate?
             set_rotate graphics_context, obj.rotate,
                        obj.element_left + obj.element_width / 2.0,
                        obj.element_top + obj.element_height / 2.0 do
@@ -64,15 +64,6 @@ class Shoes
 
         # Implement in subclass
         def draw(_graphics_context)
-        end
-
-        def needs_rotate?
-          dsl = @obj.dsl
-          supports_rotate?(dsl) && dsl.rotate != 0
-        end
-
-        def supports_rotate?(dsl)
-          dsl.is_a?(::Shoes::Oval) || dsl.is_a?(::Shoes::Rect)
         end
 
         def set_rotate(graphics_context, angle, left, top)

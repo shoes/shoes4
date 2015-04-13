@@ -35,8 +35,7 @@ describe Shoes::Swt::Common::Painter do
     end
 
     it 'rotates' do
-      allow(subject).to receive(:needs_rotate?) { true }
-
+      allow(dsl).to receive(:needs_rotate?) { true }
       allow(dsl).to receive(:rotate) { 10 }
       allow(dsl).to receive(:element_left)   { 0 }
       allow(dsl).to receive(:element_width)  { 0 }
@@ -49,7 +48,7 @@ describe Shoes::Swt::Common::Painter do
     end
 
     it "doesn't rotate if doesn't need it" do
-      allow(subject).to receive(:needs_rotate?) { false }
+      allow(dsl).to receive(:needs_rotate?) { false }
 
       expect(transform).not_to receive(:translate)
       expect(transform).not_to receive(:rotate)
