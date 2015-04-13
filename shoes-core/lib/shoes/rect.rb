@@ -1,8 +1,10 @@
 class Shoes
   class Rect
     include Common::UIElement
-    include Common::Style
+    include Common::Fill
+    include Common::Stroke
     include Common::Clickable
+    include Common::Style
 
     style_with :angle, :art_styles, :curve, :common_styles, :dimensions
     STYLES = { angle: 0, curve: 0, fill: Shoes::COLORS[:black] }

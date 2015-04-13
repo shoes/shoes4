@@ -9,8 +9,10 @@ class Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's fill color
         def fill
+          return @swt_fill if @swt_fill
+
           @color_factory ||= ::Shoes::Swt::ColorFactory.new
-          @color_factory.create(dsl.fill)
+          @swt_fill = @color_factory.create(dsl.fill)
         end
 
         # This object's fill alpha value
@@ -23,6 +25,11 @@ class Shoes
         # @return [Integer] the angle to use when filling with a pattern
         def angle
           @angle || 0
+        end
+
+        # Just clear it out and let next paint recreate and save our SWT color
+        def update_fill
+          @swt_fill = nil
         end
 
         def apply_fill(context)

@@ -200,5 +200,11 @@ class Shoes
         Logger.setup
       end
     end
+
+    def update_fill
+    end
+
+    def update_stroke
+    end
   end
 end

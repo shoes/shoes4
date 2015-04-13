@@ -3,6 +3,7 @@ require 'matrix'
 class Shoes
   class Line
     include Common::UIElement
+    include Common::Stroke
     include Common::Style
     include Common::Clickable
 
