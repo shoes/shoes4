@@ -6,6 +6,7 @@ class Shoes
       include Common::Visibility
       include Common::Positioning
       include Common::Remove
+      include Common::Rotate
       include DimensionsDelegations
     end
   end

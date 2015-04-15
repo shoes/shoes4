@@ -15,5 +15,9 @@ class Shoes
 
       @dimensions = AbsoluteDimensions.new left, top, width, height, @style
     end
+
+    def needs_rotate?
+      rotate != 0
+    end
   end
 end
