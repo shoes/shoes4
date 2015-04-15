@@ -29,17 +29,31 @@ class Shoes
         @dsl.alpha
       end
 
-      def apply_as_fill(gc, left, top, width, height, angle = 0)
-        pattern = create_pattern(left, top, width, height, -angle)
+      def apply_as_fill(gc, dsl)
+        left, top, width, height, angle = extract_dimensions(dsl)
+        pattern = create_pattern(left, top, width, height, angle)
         gc.set_background_pattern pattern
       end
 
-      def apply_as_stroke(gc, left, top, width, height, angle = 0)
-        pattern = create_pattern(left, top, width, height, -angle)
+      def apply_as_stroke(gc, dsl)
+        left, top, width, height, angle = extract_dimensions(dsl)
+        pattern = create_pattern(left, top, width, height, angle)
         gc.set_foreground_pattern pattern
       end
 
       private
+
+      def extract_dimensions(dsl)
+        if dsl.is_a?(Star)
+          left = dsl.element_left - dsl.element_width / 2.0
+          top  = dsl.element_top - dsl.element_height / 2.0
+        else
+          left = dsl.element_left
+          top  = dsl.element_top
+        end
+
+        [left, top, dsl.element_width, dsl.element_height, -dsl.angle]
+      end
 
       def create_pattern(left, top, width, height, angle)
         width  = width * 0.5

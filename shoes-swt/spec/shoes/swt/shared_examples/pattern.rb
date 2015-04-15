@@ -4,10 +4,6 @@ shared_examples_for "an swt pattern" do
 
   describe "#apply_as_stroke" do
     let(:gc) { double("graphics context") }
-    let(:left) { 0 }
-    let(:top) { 0 }
-    let(:width) { 10 }
-    let(:height) { 10 }
 
     it "sets foreground" do
       if subject.is_a? Shoes::Swt::Color
@@ -16,7 +12,7 @@ shared_examples_for "an swt pattern" do
       else
         expect(gc).to receive(:set_foreground_pattern)
       end
-      subject.apply_as_stroke(gc, left, top, width, height)
+      subject.apply_as_stroke(gc, applied_to)
     end
 
     it "sets alpha" do
@@ -26,7 +22,7 @@ shared_examples_for "an swt pattern" do
       else
         expect(gc).to receive(:set_foreground_pattern)
       end
-      subject.apply_as_stroke(gc, left, top, width, height)
+      subject.apply_as_stroke(gc, applied_to)
     end
   end
 end

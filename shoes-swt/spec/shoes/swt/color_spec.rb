@@ -1,7 +1,8 @@
 require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Color do
-  subject(:color) { Shoes::Swt::Color.create(Shoes::COLORS[:salmon]) }
+  subject(:color)  { Shoes::Swt::Color.create(Shoes::COLORS[:salmon]) }
+  let(:applied_to) { double("applied to") }
 
   it_behaves_like "an swt pattern"
 
@@ -33,19 +34,20 @@ describe Shoes::Swt::Color do
     it "sets background" do
       allow(gc).to receive(:set_alpha)
       expect(gc).to receive(:set_background).with(color.real)
-      color.apply_as_fill(gc)
+      color.apply_as_fill(gc, applied_to)
     end
 
     it "sets alpha" do
       allow(gc).to receive(:set_background)
       expect(gc).to receive(:set_alpha)
-      color.apply_as_fill(gc, 10, 20, 100, 200)
+      color.apply_as_fill(gc, applied_to)
     end
   end
 end
 
 describe Shoes::Swt::NullColor do
-  subject(:color) { Shoes::Swt::Color.create(nil) }
+  subject(:color)  { Shoes::Swt::Color.create(nil) }
+  let(:applied_to) { double("applied to") }
 
   it { is_expected.to be_instance_of(Shoes::Swt::NullColor) }
   its(:real) { is_expected.to be_nil }
@@ -56,11 +58,11 @@ describe Shoes::Swt::NullColor do
     let(:gc) { double("graphics context") }
 
     it "sends no messages in #apply_as_fill" do
-      color.apply_as_fill(gc)
+      color.apply_as_fill(gc, applied_to)
     end
 
     it "sends no messages in #apply_as_stroke" do
-      color.apply_as_stroke(gc)
+      color.apply_as_stroke(gc, applied_to)
     end
   end
 end

@@ -9,8 +9,10 @@ class Shoes
         #
         # @return [Swt::Graphics::Color] The Swt representation of this object's fill color
         def fill
+          return @cached_swt_fill if @cached_swt_fill
+
           @color_factory ||= ::Shoes::Swt::ColorFactory.new
-          @color_factory.create(dsl.fill)
+          @cached_swt_fill = @color_factory.create(dsl.fill)
         end
 
         # This object's fill alpha value
@@ -25,10 +27,14 @@ class Shoes
           @angle || 0
         end
 
+        # Just clear it out and let next paint recreate and save our SWT color
+        def update_fill
+          @cached_swt_fill = nil
+        end
+
         def apply_fill(context)
           if fill
-            left, top = self.is_a?(Star) ? [element_left - element_width / 2.0, element_top - element_height / 2.0] : [element_left, element_top]
-            fill.apply_as_fill(context, left, top, element_width, element_height, angle)
+            fill.apply_as_fill(context, self)
             true
           end
         end
