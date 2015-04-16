@@ -41,6 +41,12 @@ describe Shoes::Swt::ListBox do
     subject.choose "Bacon"
   end
 
+  it "should notify dsl of changes when choosing" do
+    allow(real).to receive(:text=)
+    expect(dsl).to receive(:call_change_listeners)
+    subject.choose "Bacon"
+  end
+
   it 'sets the items on real upon initialization' do
     subject
     expect(real).to have_received(:items=).with(items)

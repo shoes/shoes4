@@ -38,6 +38,7 @@ class Shoes
 
       def choose(item)
         @real.text = item
+        @dsl.call_change_listeners
       end
 
       def enabled(value)
