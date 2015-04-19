@@ -44,13 +44,8 @@ class Shoes
       private
 
       def extract_dimensions(dsl)
-        if dsl.is_a?(Star)
-          left = dsl.element_left - dsl.element_width / 2.0
-          top  = dsl.element_top - dsl.element_height / 2.0
-        else
-          left = dsl.element_left
-          top  = dsl.element_top
-        end
+        left = dsl.element_left
+        top  = dsl.element_top
 
         [left, top, dsl.element_width, dsl.element_height, -dsl.angle]
       end
