@@ -3,7 +3,8 @@ class Shoes
     class TextBlock
       class TextSegmentCollection
         extend Forwardable
-        def_delegators :@segments, :length
+        def_delegators :@segments, :length, :last, :inject,
+                                   :one?, :any?, :empty?
 
         attr_reader :dsl, :default_text_styles
 
@@ -13,12 +14,24 @@ class Shoes
           @default_text_styles = default_text_styles
         end
 
+        def clear
+          @segments.map(&:dispose)
+          @segments.clear
+        end
+
         def paint_control(graphic_context)
-          style_from(dsl.style)
-          style_segment_ranges(dsl.text_styles)
-          create_links(dsl.text_styles)
+          ensure_styled
           draw(graphic_context)
           draw_cursor
+        end
+
+        def ensure_styled
+          return if @styled
+
+          style_from(@dsl.style)
+          style_segment_ranges(@dsl.text_styles)
+          create_links(@dsl.text_styles)
+          @styled = true
         end
 
         def style_from(style)
