@@ -196,7 +196,7 @@ describe Shoes::Swt::TextBlock do
   def create_segment(name="segment", width=layout_width,
                     height=layout_height, line_height=line_height)
     bounds = double("bounds", width: width, height: height)
-    double(name, disposed?: false,
+    double(name, disposed?: false, style_from: nil,
            width: width, height: height,
            last_line_width: width, last_line_height: line_height,
            bounds: bounds)

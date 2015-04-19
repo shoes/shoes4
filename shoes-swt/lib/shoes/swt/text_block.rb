@@ -13,10 +13,10 @@ class Shoes
       attr_accessor :segments
 
       def initialize(dsl, app)
-        @dsl            = dsl
-        @app            = app
-        @segments       = []
-        @painter        = Painter.new @dsl
+        @dsl      = dsl
+        @app      = app
+        @segments = TextSegmentCollection.new(@dsl, [], default_text_styles)
+        @painter  = Painter.new @dsl
         @app.add_paint_listener @painter
       end
 
@@ -36,12 +36,31 @@ class Shoes
 
       def contents_alignment(current_position)
         dispose_existing_segments
-        @segments = Fitter.new(self, current_position).fit_it_in
+        raw_segments = Fitter.new(self, current_position).fit_it_in
 
-        return if @segments.nil? || @segments.empty?
+        if raw_segments && raw_segments.any?
+          @segments = TextSegmentCollection.new(@dsl, raw_segments, default_text_styles)
+          set_absolutes_on_dsl(current_position)
+          set_calculated_sizes
+        else
+          @segments = TextSegmentCollection.new(@dsl, [], default_text_styles)
+        end
+      end
 
-        set_absolutes_on_dsl(current_position)
-        set_calculated_sizes
+      def default_text_styles
+        style = @dsl.style
+
+        {
+          fg: style[:fg],
+          bg: style[:bg],
+          strikecolor: style[:strikecolor],
+          undercolor: style[:undercolor],
+          font_detail: {
+            name: @dsl.font,
+            size: @dsl.size,
+            styles: [::Swt::SWT::NORMAL]
+          }
+        }
       end
 
       def adjust_current_position(current_position)
@@ -115,7 +134,6 @@ class Shoes
       end
 
       def dispose_existing_segments
-        @segments.map(&:dispose)
         @segments.clear
       end
 

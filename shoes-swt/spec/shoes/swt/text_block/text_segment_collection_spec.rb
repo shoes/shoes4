@@ -5,7 +5,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   let(:first_segment) { create_segment("first", "first") }
   let(:second_segment) { create_segment("second", "rest") }
-  let(:dsl) { double("dsl", font: "", size: 16, style:{}) }
+  let(:dsl) { double("dsl", font: "", size: 16, style:{},
+                     text_styles: {(0..-1) => ["whatever"]}) }
 
   let(:gc) { double("gc") }
   let(:default_text_styles) {
@@ -162,7 +163,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
       expected_style = style_with(stroke: :blue, fg: :blue)
       expect(first_segment).to have_received(:set_style).with(expected_style, 0..2)
-      expect(second_segment).to_not have_received(:set_style)
+      expect(second_segment).to_not have_received(:set_style).with({stroke: :blue})
     end
 
     it "applies segment styling in second segment" do
@@ -170,7 +171,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
-      expect(first_segment).to_not have_received(:set_style)
+      expect(first_segment).to_not have_received(:set_style).with({stroke: :blue})
       expect(second_segment).to have_received(:set_style).with(expected_style, 0..2)
     end
 
@@ -236,7 +237,11 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   def create_segment(name, text)
     bounds = double("bounds", x: 0, y: 0, height: 0)
     layout = double(name, text: text,
-                          line_bounds: bounds, line_count: 1)
+                    :justify= => nil, :spacing= => nil, :alignment= => nil,
+                    line_bounds: bounds, line_count: 1)
+
+
+    allow_any_instance_of(Shoes::Swt::TextFontFactory).to receive(:create_font)
 
     segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, text, 1)
     segment.position_at(0, 0)
