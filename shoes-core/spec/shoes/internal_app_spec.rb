@@ -65,6 +65,14 @@ describe Shoes::InternalApp do
     end
   end
 
+  describe '#inspect' do
+    let(:input_opts) {{title: 'Dupa'}}
+
+    it 'shows the title in inspect' do
+      expect(subject.inspect).to include 'Dupa'
+    end
+  end
+
   describe '#clear' do
     context 'when called after the initial input block' do
       let(:input_block) {
