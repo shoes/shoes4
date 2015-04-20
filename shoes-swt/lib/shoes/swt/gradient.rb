@@ -30,38 +30,26 @@ class Shoes
       end
 
       def apply_as_fill(gc, dsl)
-        left, top, width, height, angle = extract_dimensions(dsl)
-        pattern = create_pattern(left, top, width, height, angle)
+        pattern = create_pattern(dsl)
         gc.set_background_pattern pattern
       end
 
       def apply_as_stroke(gc, dsl)
-        left, top, width, height, angle = extract_dimensions(dsl)
-        pattern = create_pattern(left, top, width, height, angle)
+        pattern = create_pattern(dsl)
         gc.set_foreground_pattern pattern
       end
 
       private
+      def create_pattern(dsl)
+        width  = dsl.element_width * 0.5
+        height = dsl.element_height * 0.5
+        angle  = normalize_angle(-dsl.angle)
+        left, top, width, height  = determine_args_based_on_angle(angle,
+                                      dsl.element_left, dsl.element_top,
+                                      width, height)
 
-      def extract_dimensions(dsl)
-        if dsl.is_a?(Star)
-          left = dsl.element_left - dsl.element_width / 2.0
-          top  = dsl.element_top - dsl.element_height / 2.0
-        else
-          left = dsl.element_left
-          top  = dsl.element_top
-        end
-
-        [left, top, dsl.element_width, dsl.element_height, -dsl.angle]
-      end
-
-      def create_pattern(left, top, width, height, angle)
-        width  = width * 0.5
-        height = height * 0.5
-        angle  = normalize_angle(angle)
-        left, top, width, height  = determine_args_based_on_angle(angle, left, top, width, height)
-
-        pattern = ::Swt::Pattern.new Shoes.display, left, top, width, height, color1.real, color2.real
+        pattern = ::Swt::Pattern.new Shoes.display, left, top, width, height,
+                                     color1.real, color2.real
         @patterns << pattern
         pattern
       end

@@ -122,8 +122,8 @@ class Shoes
       @resize_callbacks << blk
     end
 
-    def inspect
-      add_detail_to_inspect super, " \"#{@app_title}\" #{@dimensions.inspect}"
+    def inspect_details
+      "\"#{@app_title}\" #{@dimensions.inspect}"
     end
 
     def self.global_keypresses
