@@ -8,4 +8,4 @@ if File.exists?("Gemfile")
 end
 
 require 'shoes/ui/cli'
-Shoes::CLI.new.run ARGV, "swt"
+Shoes::CLI.new("swt").run ARGV

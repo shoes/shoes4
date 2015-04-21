@@ -5,7 +5,11 @@ class Shoes
   class CLI
     attr_reader :packager
 
-    def initialize
+    def initialize(backend)
+      $LOAD_PATH.unshift(Dir.pwd)
+      backend_const = Shoes.load_backend(backend)
+      backend_const.initialize_backend
+
       @packager = Shoes::Packager.new
     end
 
@@ -44,13 +48,11 @@ Usage: #{opts.program_name} [-h] [-p package] file
     #
     # @param [String] app the location of the app to run
     # @param [String] backend name of backend to load with the app
-    def execute_app(app, backend)
-      $LOAD_PATH.unshift(Dir.pwd)
-      require "shoes/#{backend}"
+    def execute_app(app)
       load app
     end
 
-    def run(args, backend)
+    def run(args)
       opts = parse!(args)
       if args.empty?
         puts opts.banner
@@ -61,7 +63,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
       if @packager.should_package?
         @packager.run(args.shift)
       else
-        execute_app(args.first, backend)
+        execute_app(args.first)
       end
     end
   end

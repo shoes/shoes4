@@ -1,6 +1,8 @@
 require "shoes/swt"
 require "spec_helper"
 
+Shoes.load_backend("swt").initialize_backend
+
 RSpec.configure do |config|
   config.before(:each) do
     allow(Swt).to receive(:event_loop)
