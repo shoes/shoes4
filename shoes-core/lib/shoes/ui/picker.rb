@@ -3,6 +3,11 @@ class Shoes
     # This class is used for interactively (if necessary) picking the Shoes
     # backend that the user will run their Shoes app with.
     class Picker
+      def initialize(input=STDIN, output=STDOUT)
+        @input  = input
+        @output = output
+      end
+
       def run
         bundle
         generator_file = select_generator
@@ -21,15 +26,47 @@ class Shoes
       end
 
       def select_generator
-        puts "Selecting Shoes backend to use. This is a one-time operation."
         candidates = Gem.find_files("shoes/**/generate-backend.rb")
         if candidates.one?
-          generator_file = candidates.first
+          candidate = candidates.first
+          @output.puts "Selecting #{name_for_candidate(candidate)} backend to use. This is a one-time operation."
+          candidate
         else
-          fail NotImplementedError("Currently can't interactively select a backend. See #929")
+          output_candidates(candidates)
+          prompt_for_candidate(candidates)
+        end
+      end
+
+      def output_candidates(candidates)
+        @output.puts
+        @output.puts "Select a Shoes backend to use (This is a one-time operation):"
+
+        candidates.each_with_index do |candidate, index|
+          @output.puts " #{index + 1}. #{name_for_candidate(candidate)}"
         end
 
-        generator_file
+        @output.print "> "
+      end
+
+      def prompt_for_candidate(candidates)
+        candidate = nil
+
+        until candidate
+          entered_index = @input.readline.to_i
+          if entered_index > 0
+            if candidate = candidates[entered_index - 1]
+              break
+            end
+          end
+          @output.puts "Invalid selection. Try again with a number from 1 to #{candidates.size}."
+        end
+
+        candidate
+      end
+
+      def name_for_candidate(candidate)
+        /.*lib\/shoes\/(.*)\/generate-backend.rb/.match(candidate)
+        return "shoes-#{$1.gsub("/", "-")}"
       end
 
       def write_backend(generator_file)
