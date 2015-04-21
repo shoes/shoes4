@@ -43,13 +43,14 @@ Usage: #{opts.program_name} [-h] [-p package] file
     # Execute a shoes app.
     #
     # @param [String] app the location of the app to run
-    def execute_app(app)
+    # @param [String] backend name of backend to load with the app
+    def execute_app(app, backend)
       $LOAD_PATH.unshift(Dir.pwd)
-      require 'shoes/swt'
+      require "shoes/#{backend}"
       load app
     end
 
-    def run(args)
+    def run(args, backend)
       opts = parse!(args)
       if args.empty?
         puts opts.banner
@@ -60,7 +61,7 @@ Usage: #{opts.program_name} [-h] [-p package] file
       if @packager.should_package?
         @packager.run(args.shift)
       else
-        execute_app(args.first)
+        execute_app(args.first, backend)
       end
     end
   end
