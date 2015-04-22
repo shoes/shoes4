@@ -8,10 +8,10 @@ class Shoes
         @output = output
       end
 
-      def run
+      def run(bin_dir)
         bundle
         generator_file = select_generator
-        write_backend(generator_file)
+        write_backend(generator_file, bin_dir)
       end
 
       # Only bundle if we find a local Gemfile.  This allows us to work properly
@@ -69,11 +69,8 @@ class Shoes
         return "shoes-#{$1.gsub("/", "-")}"
       end
 
-      def write_backend(generator_file)
+      def write_backend(generator_file, bin_dir)
         require generator_file
-
-        # On Windows getting odd paths with trailing double-quote
-        bin_dir = ARGV[0].gsub('"', '')
 
         File.open(File.expand_path(File.join(bin_dir, "shoes-backend")), "w") do |file|
           # Contract with backends is to define generate_backend method that we

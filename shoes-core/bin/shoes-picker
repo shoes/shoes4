@@ -3,4 +3,8 @@ lib_directory = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH << lib_directory
 
 require 'shoes/ui/picker'
-Shoes::UI::Picker.new.run
+
+# On Windows getting odd paths with trailing double-quote
+bin_dir = ARGV[0].gsub('"', '')
+
+Shoes::UI::Picker.new.run(bin_dir)
