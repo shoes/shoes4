@@ -32,6 +32,7 @@ class Shoes
           @output.puts "Selecting #{name_for_candidate(candidate)} backend to use. This is a one-time operation."
           candidate
         else
+          candidates.sort!
           output_candidates(candidates)
           prompt_for_candidate(candidates)
         end
