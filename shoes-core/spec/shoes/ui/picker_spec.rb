@@ -52,6 +52,16 @@ describe Shoes::UI::Picker do
       expect(subject.select_generator).to eq(faux_backend)
     end
 
+    it "fails if no matches" do
+      allow(Gem).to receive(:find_files) { [ ] }
+      expect { subject.select_generator }.to raise_error(ArgumentError)
+    end
+
+    it "selects by name" do
+      allow(Gem).to receive(:find_files) { [ swt_backend ] }
+      expect(subject.select_generator("swt")).to eq(swt_backend)
+    end
+
     def select(typed_input)
       input.write(typed_input)
       input.rewind
