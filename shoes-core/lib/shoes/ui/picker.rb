@@ -39,7 +39,7 @@ class Shoes
 
       def output_candidates(candidates)
         @output.puts
-        @output.puts "Select a Shoes backend to use (This is a one-time operation):"
+        @output.puts "Enter a number to select a Shoes backend (This is a one-time operation):"
 
         candidates.each_with_index do |candidate, index|
           @output.puts " #{index + 1}. #{name_for_candidate(candidate)}"
