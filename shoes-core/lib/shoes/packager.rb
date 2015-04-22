@@ -3,7 +3,11 @@ class Shoes
     attr_reader :packages, :backend
 
     def initialize
-      @backend = Shoes.configuration.backend_for(self)
+      begin
+        @backend = Shoes.configuration.backend_for(self)
+      rescue ArgumentError
+        # Packaging unsupported by this backend
+      end
       @packages = []
     end
 
@@ -16,10 +20,12 @@ class Shoes
     end
 
     def run(path)
+      raise "Packaging unsupported by this backend" if @backend.nil?
       @backend.run(path)
     end
 
     def help(program_name)
+      return "" if @backend.nil?
       @backend.help(program_name)
     end
   end
