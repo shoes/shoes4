@@ -10,6 +10,8 @@ if not exist !bin_dir!\shoes-backend (
   jruby --1.9 !bin_dir!\shoes-picker !bin_dir!
 )
 
+set shoes_bin_dir=!bin_dir!
 set /p command=<!bin_dir!/shoes-backend
+
 call !command! %*
 endlocal

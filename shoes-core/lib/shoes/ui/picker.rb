@@ -8,10 +8,10 @@ class Shoes
         @output = output
       end
 
-      def run
+      def run(bin_dir, desired_backend=nil)
         bundle
-        generator_file = select_generator
-        write_backend(generator_file)
+        generator_file = select_generator(desired_backend)
+        write_backend(generator_file, bin_dir)
       end
 
       # Only bundle if we find a local Gemfile.  This allows us to work properly
@@ -25,16 +25,26 @@ class Shoes
         require 'bundler/setup'
       end
 
-      def select_generator
-        candidates = Gem.find_files("shoes/**/generate-backend.rb")
-        if candidates.one?
+      def select_generator(desired_backend=nil)
+        candidates = find_candidates(desired_backend)
+
+        if candidates.empty?
+          raise ArgumentError.new("No gems found matching '#{desired_backend}'")
+        elsif candidates.one?
           candidate = candidates.first
           @output.puts "Selecting #{name_for_candidate(candidate)} backend to use. This is a one-time operation."
           candidate
         else
+          candidates.sort!
           output_candidates(candidates)
           prompt_for_candidate(candidates)
         end
+      end
+
+      def find_candidates(desired_backend)
+        search_string = "shoes/**/#{desired_backend}/generate-backend.rb"
+        search_string.gsub!("//", "/")
+        candidates = Gem.find_files(search_string)
       end
 
       def output_candidates(candidates)
@@ -69,11 +79,8 @@ class Shoes
         return "shoes-#{$1.gsub("/", "-")}"
       end
 
-      def write_backend(generator_file)
+      def write_backend(generator_file, bin_dir)
         require generator_file
-
-        # On Windows getting odd paths with trailing double-quote
-        bin_dir = ARGV[0].gsub('"', '')
 
         File.open(File.expand_path(File.join(bin_dir, "shoes-backend")), "w") do |file|
           # Contract with backends is to define generate_backend method that we

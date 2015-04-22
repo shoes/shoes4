@@ -37,6 +37,12 @@ Usage: #{opts.program_name} [-h] [-p package] file
           exit
         end
 
+        opts.on('-b', '--backend [BACKEND]', 'Select a Shoes backend') do |backend|
+          require 'shoes/ui/picker'
+          Shoes::UI::Picker.new.run(ENV["SHOES_BIN_DIR"], backend)
+          exit
+        end
+
         opts.separator @packager.help(opts.program_name)
       end
 
