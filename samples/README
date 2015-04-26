@@ -39,6 +39,8 @@ simple-timer.rb
 simple-tictactoe.rb
 simple-visibility.rb
 
+shape-arc_to.rb
+
 good-arc.rb
 good-clock.rb
 good-follow.rb
