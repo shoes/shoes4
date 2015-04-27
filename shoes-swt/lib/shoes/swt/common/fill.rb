@@ -34,8 +34,8 @@ class Shoes
 
         def apply_fill(context)
           if fill
+            # Return value determines whether to continue upstream.
             fill.apply_as_fill(context, self)
-            true
           end
         end
       end

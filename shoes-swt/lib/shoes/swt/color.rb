@@ -29,6 +29,7 @@ class Shoes
       def apply_as_fill(gc, _dsl = nil)
         gc.set_background real
         gc.set_alpha alpha
+        true
       end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply stroke
@@ -36,6 +37,7 @@ class Shoes
       def apply_as_stroke(gc, _dsl = nil)
         gc.set_foreground real
         gc.set_alpha alpha
+        true
       end
     end
 

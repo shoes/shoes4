@@ -36,9 +36,10 @@ class Shoes
 
         def apply_stroke(context)
           if stroke
-            stroke.apply_as_stroke(context, self)
             context.set_line_width strokewidth
-            true
+
+            # Return value determines whether to continue upstream.
+            stroke.apply_as_stroke(context, self)
           end
         end
       end
