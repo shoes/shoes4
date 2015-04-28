@@ -13,7 +13,7 @@ class Shoes
       def curve_to(*_args)
       end
 
-      def arc(*_args)
+      def arc_to(*_args)
       end
     end
   end

@@ -86,7 +86,7 @@ describe Shoes::Shape do
   describe "arc" do
     let(:draw) {
       Proc.new {
-        arc 10, 10, 100, 100, Shoes::PI, Shoes::TWO_PI
+        arc_to 10, 10, 100, 100, Shoes::PI, Shoes::TWO_PI
       }
     }
 

@@ -45,6 +45,11 @@ describe Shoes::Swt::Shape do
       expect(element).to receive(:line_to).with(20, 30)
       subject.line_to 20, 30
     end
+
+    it "delegates #arc_to" do
+      expect(element).to receive(:add_arc).with(25, 45, 50, 20, 0.0, -90.0)
+      subject.arc_to 50, 55, 50, 20, 0, Shoes::PI/2
+    end
   end
 
   describe "moving" do
