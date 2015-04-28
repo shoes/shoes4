@@ -33,24 +33,45 @@ class Shoes
 
         cols.times do |col|
           rows.times do |row|
-            desired_width = bounds.width
-            desired_height = bounds.height
-
             left   = dsl.element_left + (col * bounds.width)
-            right  = left + desired_width
+            right  = left + bounds.width
+
             top    = dsl.element_top + (row * bounds.height)
-            bottom = top + desired_height
+            bottom = top + bounds.height
 
-            if left < dsl.element_right && top < dsl.element_bottom
-              desired_width = dsl.element_right - left  if right > dsl.element_right
-              desired_height = dsl.element_bottom - top if bottom > dsl.element_bottom
-
-              gc.draw_image @image,
-                            0, 0, desired_width, desired_height,
-                            left, top, desired_width, desired_height
+            if fits_in_dsl?(left, top, dsl)
+              draw_image(gc, left, top,
+                         desired_width(left, right, bounds, dsl),
+                         desired_height(top, bottom, bounds, dsl))
             end
           end
         end
+      end
+
+      def fits_in_dsl?(left, top, dsl)
+        left < dsl.element_right && top < dsl.element_bottom
+      end
+
+      def desired_width(left, right, bounds, dsl)
+        if right > dsl.element_right
+          dsl.element_right - left
+        else
+          bounds.width
+        end
+      end
+
+      def desired_height(top, bottom, bounds, dsl)
+        if bottom > dsl.element_bottom
+          dsl.element_bottom - top
+        else
+          bounds.height
+        end
+      end
+
+      def draw_image(gc, left, top, desired_width, desired_height)
+        gc.draw_image @image,
+                      0, 0, desired_width, desired_height,
+                      left, top, desired_width, desired_height
       end
     end
   end
