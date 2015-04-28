@@ -12,12 +12,21 @@ class Changelog
 
   def generate(categories = CATEGORY_MAPPING)
     commit_range = commits_on_master_since_last_release
-    changes = categorize_commits(categories, commit_range)
+    changes = changelog_header(commit_range)
+    changes << categorize_commits(categories, commit_range)
     changes << contributors(commit_range) if changes.any?
-    changes.compact.join("\n\n").gsub("\r",'')
+    changes.flatten.compact.join("\n\n").gsub("\r",'')
   end
 
   private
+
+  def changelog_header(commit_range)
+    heading = "SINCE #{last_release} (#{commit_count(commit_range)} commits)\n"
+    heading += "-" * (heading.length - 1)
+
+    [heading]
+  end
+
   def categorize_commits(categories, commit_range)
     categorized_commits = []
 
@@ -81,9 +90,16 @@ class Changelog
   end
 
   def commits_on_master_since_last_release
+    commit_range = "#{last_release}..master"
+  end
+
+  def commit_count(commit_range)
+    `git log --no-merges --format=oneline #{commit_range} | wc -l`.chomp.strip
+  end
+
+  def last_release
     last_sha = `git rev-list --tags --max-count=1`.chomp
     last_release = `git describe #{last_sha}`.chomp
-    commit_range = "#{last_release}..master"
   end
 end
 
