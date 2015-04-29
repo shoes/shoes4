@@ -26,6 +26,8 @@ simple-flow-wrap.rb
 simple-font.rb
 simple-fullscreen.rb
 simple-guess-game.rb
+simple-image-fill.rb
+simple-image-stroke.rb
 simple-keypress.rb
 simple-manual.rb
 simple-mouse-follow.rb
