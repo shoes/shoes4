@@ -35,8 +35,10 @@ class Shoes
 
     def replace(*texts)
       opts = texts.pop if texts.last.is_a?(Hash)
-      style(opts)
-      handle_styles(opts || {}) # handle fonts, after any other merge
+      if opts
+        style(opts)
+        handle_styles(opts)
+      end
 
       # Order here matters as well--backend#replace shouldn't rely on DSL state
       # but the texts that it's passed if it needs information at this point.
