@@ -34,6 +34,12 @@ class Shoes
     end
 
     def replace(*texts)
+      opts = texts.pop if texts.last.is_a?(Hash)
+      if opts
+        style(opts)
+        handle_styles(opts)
+      end
+
       # Order here matters as well--backend#replace shouldn't rely on DSL state
       # but the texts that it's passed if it needs information at this point.
       @gui.replace(*texts)

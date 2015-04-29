@@ -6,6 +6,7 @@
 
 simple-anim-shapes.rb
 simple-animate.rb
+simple-anim-text.rb
 # simple-arc.rb  Pending on #423
 simple-bounce.rb
 simple-brightness-transitions.rb

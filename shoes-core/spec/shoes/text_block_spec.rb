@@ -72,6 +72,17 @@ describe Shoes::TextBlock do
       text_block.replace "Later Gator"
       expect(text_block.text_styles).to be_empty
     end
+
+    it "updates styles from options hash" do
+      text_block.replace "Later Gator", stroke: Shoes::COLORS[:aquamarine]
+      expect(text_block.stroke).to eq(Shoes::COLORS[:aquamarine])
+    end
+
+    it "updates font from options hash" do
+      text_block.replace "Later Gator", font: 'Monospace 18px'
+      expect(text_block.font).to eq('Monospace')
+      expect(text_block.size).to eq(18)
+    end
   end
 
   describe "#contents" do
