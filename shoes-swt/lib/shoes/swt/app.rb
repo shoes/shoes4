@@ -235,6 +235,7 @@ class Shoes
       def unregister_app
         proc do |_event|
           ::Shoes::Swt.unregister(self)
+          ::Shoes.unregister(self.dsl.app)
         end
       end
 
