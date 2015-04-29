@@ -1,9 +1,9 @@
 Shoes.app width: 320, height: 420 do
   static_dir = File.expand_path(File.join(__FILE__, ".."))
   background File.join(static_dir, "menu-gray.png")
-  background File.join(static_dir, "menu-top.png"), height: 50
-  background File.join(static_dir, "menu-left.png"), top: 50, width: 55
-  background File.join(static_dir, "menu-right.png"), right: 0, top: 50, width: 55
+  image File.join(static_dir, "menu-top.png"), height: 50
+  image File.join(static_dir, "menu-left.png"), top: 50, width: 55
+  image File.join(static_dir, "menu-right.png"), right: 0, top: 50, width: 55
   image File.join(static_dir, "menu-corner1.png"), top: 0, left: 0
   image File.join(static_dir, "menu-corner2.png"), right: 0, top: 0
 
