@@ -231,7 +231,8 @@ module Shoes::Manual
               @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{_k}", :body => "#{_k}\n#{_v}".downcase
               @mindex["#{k2t}.#{_k[/[\w\.]+/]}"] = [k2t, _k]
               [_k, _v]
-          }}
+            }
+          }
           @methods[k2t] = hsh
           [k2t, hsh]
         end

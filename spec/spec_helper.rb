@@ -6,7 +6,7 @@ dirs = ARGV.map do |path|
 end
 
 dirs.select! do |path|
-  path.match /^shoes-.*\//
+  path.match(/^shoes-.*\//)
 end
 
 dirs.map! do |path|
