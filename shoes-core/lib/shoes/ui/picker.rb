@@ -17,7 +17,7 @@ class Shoes
       # Only bundle if we find a local Gemfile.  This allows us to work properly
       # running from source without finding gem-installed backends.
       def bundle
-        return unless File.exists?("Gemfile")
+        return unless File.exist?("Gemfile")
 
         # Only need bundler/setup to get our paths right--we don't need to
         # actually require the gems, since we find the generate-backend.rb's
