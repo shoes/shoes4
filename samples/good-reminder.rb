@@ -73,7 +73,7 @@ Shoes.app title: "A Gentle Reminder",
     @gui_completed.append do
       background white
 
-      @completed.keys.sort.reverse.each { |day|
+      @completed.keys.sort.reverse_each { |day|
         stack do
           background lightgray
           para strong(day.strftime('%B %d, %Y')), stroke: white
