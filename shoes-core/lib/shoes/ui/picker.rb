@@ -44,7 +44,7 @@ class Shoes
       def find_candidates(desired_backend)
         search_string = "shoes/**/#{desired_backend}/generate-backend.rb"
         search_string.gsub!("//", "/")
-        candidates = Gem.find_files(search_string)
+        Gem.find_files(search_string)
       end
 
       def output_candidates(candidates)

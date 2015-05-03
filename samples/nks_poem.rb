@@ -6,7 +6,7 @@ Shoes.app :width => 280, :height => 350 do
     stack :width => "80px" do
       para "Goes like:"
     end
-    s = stack :width => "-90px" do
+    stack :width => "-90px" do
       para "the sun.\n",
            "a lemon.\n",
            "the goalie.\n",

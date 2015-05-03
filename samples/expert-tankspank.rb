@@ -158,7 +158,7 @@ class Tank
     Opp.draw_opp_rect @x - 20, @x + 20, @y - 15, @y + 15, 1.05, @tank_angle
     #Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
     Opp.draw_opp_rect @x - 10, @x + 10, @y - 7, @y + 7, 1.05, @aim_angle
-    x, unused1, y, unused2 = Opp.project(@x, 0, @y, 0, 1.05)
+    x, _unused1, y, _unused2 = Opp.project(@x, 0, @y, 0, 1.05)
     $app.line x, y, x + 25 * Math.cos(@aim_angle), y + 25 * Math.sin(@aim_angle)
 
     $app.stroke $app.red
@@ -369,7 +369,6 @@ Shoes.app width: $width, height: $height do
     end
   end
 
-  game_over_count = -1
   animate(60) do
     Opp.read_input if @playing
     Opp.update_scene

@@ -90,7 +90,7 @@ class Changelog
   end
 
   def commits_on_master_since_last_release
-    commit_range = "#{last_release}..master"
+    "#{last_release}..master"
   end
 
   def commit_count(commit_range)
@@ -99,7 +99,7 @@ class Changelog
 
   def last_release
     last_sha = `git rev-list --tags --max-count=1`.chomp
-    last_release = `git describe #{last_sha}`.chomp
+    `git describe #{last_sha}`.chomp
   end
 end
 
