@@ -44,7 +44,7 @@ Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
       NOTES << (@note = load_note)
       load_list
     end]
-    @list.replace *note_list
+    @list.replace(*note_list)
   end
 
   def load_note(note = ['New Note', ''])

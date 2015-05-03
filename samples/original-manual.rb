@@ -116,7 +116,7 @@ module Shoes::Manual
           sample_page
         when :list
           text.each { |t| stack(:margin_left => 30) {
-            fill black; oval -10, 7, 6; dewikify_p :para, t } }
+            fill black; oval(-10, 7, 6); dewikify_p :para, t } }
         else
           dewikify_p sym, text
         end
@@ -203,7 +203,7 @@ module Shoes::Manual
         shown << k
       end
     end
-    tree.sort.each &index_p
+    tree.sort.each(&index_p)
   end
 
   def run_code str
@@ -330,7 +330,7 @@ module Shoes::Manual
     @title.replace meth_h['title']
     @doc.clear do
       unless meth_a
-        instance_eval &dewikify_hi(meth_h['description'], terms, true)
+        instance_eval(&dewikify_hi(meth_h['description'], terms, true))
       end
       meth_h['methods'].each do |mname, expl|
         if meth_a.nil? or meth_a == mname
@@ -338,7 +338,7 @@ module Shoes::Manual
           stack(:margin_top => 8, :margin_bottom => 8) {
             background "#333".."#666", :curve => 3, :angle => 90
             tagline sig, (span("»", val, :stroke => "#BBB") if val), :margin => 4 }
-          instance_eval &dewikify_hi(expl, terms)
+          instance_eval(&dewikify_hi(expl, terms))
         end
       end
     end
@@ -371,7 +371,7 @@ module Shoes::Manual
           end
           body do
             div.main! do
-              div.manual! &blk
+              div.manual!(&blk)
               div.sidebar do
                 img :src => "static/shoes-icon.png"
                 ul do
@@ -443,7 +443,7 @@ def Shoes.make_help_page
                 [link(meth_s) { open_methods(meth_s) }, "\n"]
               end.flatten
               links[-1] = {:size => 9, :margin => 4, :margin_left => 10}
-              para *links
+              para(*links)
             end
         end
       end

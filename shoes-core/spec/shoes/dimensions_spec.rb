@@ -211,8 +211,8 @@ describe Shoes::Dimensions do
         let(:parent_height) {300}
         subject {Shoes::Dimensions.new parent, "- 100", "-20px", "- 50px", "- 80"}
 
-        its(:left) {should eq -100}
-        its(:top) {should eq -20}
+        its(:left) {should eq(-100)}
+        its(:top) {should eq(-20)}
         its(:width) {should eq(parent_width - 50)}
         its(:height) {should eq(parent_height - 80)}
       end

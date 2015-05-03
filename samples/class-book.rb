@@ -18,7 +18,7 @@ class Book < Shoes
         " / "
     end
     toc.pop
-    span *toc
+    span(*toc)
   end
 
   def incident(num)

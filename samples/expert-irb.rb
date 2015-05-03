@@ -107,7 +107,7 @@ Shoes.app do
     when :alt_v
       @cmd += self.clipboard
     end
-    @console.replace *(@str + [@cmd])
+    @console.replace(*(@str + [@cmd]))
     @scroll.scroll_top = @scroll.scroll_max
   end
 end
