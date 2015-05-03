@@ -23,8 +23,6 @@ class Shoes
         @dsl.angle
       end
 
-      private
-
       class Painter < Common::Painter
         def draw(gc)
           gc.draw_line(@obj.element_left, @obj.element_top,
