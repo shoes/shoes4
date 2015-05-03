@@ -40,7 +40,6 @@ class Shoes
         handlers = case event.type
           when ::Swt::SWT::MouseDown then @clicks
           when ::Swt::SWT::MouseUp   then @releases
-          else nil
         end
         return if handlers.nil? || handlers.empty?
 

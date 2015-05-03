@@ -309,7 +309,7 @@ Shoes.app width: 520, height: 600 do
         alert(e.message)
       end
     else
-      # alert("Not a piece.")
+      alert("Not a piece.")
     end
   }
 end
