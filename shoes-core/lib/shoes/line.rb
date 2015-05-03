@@ -27,8 +27,8 @@ class Shoes
     def in_bounds?(x, y)
       # c is (x, y)
       left_most, right_most = point_a.x < point_b.x ? [point_a, point_b] : [point_b, point_a]
-      left_c = Vector.elements (left_most - [x, y]).to_a, false
-      left_right = Vector.elements (left_most - right_most).to_a, false
+      left_c = Vector.elements((left_most - [x, y]).to_a, false)
+      left_right = Vector.elements((left_most - right_most).to_a, false)
 
       boldness = style[:strokewidth].to_i / 2
       left_c_dot_left_right = left_c.inner_product(left_right)

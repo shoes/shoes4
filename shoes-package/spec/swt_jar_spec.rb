@@ -34,7 +34,7 @@ describe Furoshiki::Jar do
     end
 
     context "inspecting contents" do
-      let (:jar) { Zip::File.new(output_file) }
+      let(:jar) { Zip::File.new(output_file) }
 
       it "includes shoes-core" do
         shoes_core = jar.glob "gems/shoes-core*"

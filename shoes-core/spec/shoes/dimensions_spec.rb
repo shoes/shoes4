@@ -213,8 +213,8 @@ describe Shoes::Dimensions do
 
         its(:left) {should eq -100}
         its(:top) {should eq -20}
-        its(:width) {should eq (parent_width - 50)}
-        its(:height) {should eq (parent_height - 80)}
+        its(:width) {should eq(parent_width - 50)}
+        its(:height) {should eq(parent_height - 80)}
       end
     end
 
@@ -553,12 +553,12 @@ describe Shoes::Dimensions do
         subject.margin_right = 7
         expect(subject.margin).to eq([margin, margin, 7, margin])
       end
-      
+
       it 'adapts margins when margin is changed with single value' do
         subject.margin = 7
         expect(subject.margin).to eq([7, 7, 7, 7])
       end
-      
+
       it 'adapts margin when margin is changed with array' do
         subject.margin = [7, 7, 7, 7]
         expect(subject.margin).to eq([7, 7, 7, 7])
@@ -759,7 +759,7 @@ describe Shoes::Dimensions do
 
       it 'can also still handle special values like a negative width' do
         subject.width = -10
-        expect(subject.width).to eq (parent.width - 10)
+        expect(subject.width).to eq(parent.width - 10)
       end
 
       it 'can also still handle special values like a relative height' do

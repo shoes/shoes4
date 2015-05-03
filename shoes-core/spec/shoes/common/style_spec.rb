@@ -37,7 +37,7 @@ describe Shoes::Common::Style do
 
   subject {StyleTester.new(app)}
 
-  its(:style) { should eq (initial_style) }
+  its(:style) { should eq(initial_style) }
   let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue,
       margin: [0,0,0,0], margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0 } }
 

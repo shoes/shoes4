@@ -258,10 +258,10 @@ module Othello
 
             if cell != 0
               strokewidth 0
-              fill (cell == 1 ? rgb(100,100,100) : rgb(155,155,155))
+              fill(cell == 1 ? rgb(100,100,100) : rgb(155,155,155))
               oval(left+3, top+4, PIECE_WIDTH-10, PIECE_HEIGHT-10)
 
-              fill (cell == 1 ? black : white)
+              fill(cell == 1 ? black : white)
               oval(left+5, top+5, PIECE_WIDTH-10, PIECE_HEIGHT-10)
             end
           end
