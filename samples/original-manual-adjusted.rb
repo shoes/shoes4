@@ -324,7 +324,7 @@ module Shoes::Manual
     @toc.each { |k,v| v.send(k == sect_cls ? :show : :hide) }
     @title.replace sect_s
     @doc.clear(&dewikify_hi(sect_h['description'], terms, true))
-    add_next_link(@docs.index { |x,| x == sect_s }, -1) rescue nil
+    add_next_link(@docs.index { |x| x == sect_s }, -1) rescue nil
     app.slot.scroll_top = 0
   end
 
@@ -346,7 +346,7 @@ module Shoes::Manual
       end
     end
     optn = nil
-    docn = @docs.index { |_,h| optn = h['sections'].index { |x,| x == meth_s } } rescue nil
+    docn = @docs.index { |_,h| optn = h['sections'].index { |x| x == meth_s } } rescue nil
     add_next_link(docn, optn) if docn
     app.slot.scroll_top = 0
   end
