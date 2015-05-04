@@ -1,3 +1,48 @@
+4.0.0.pre4 (153 commits)
+-------------------------------
+
+Improvements (18)
+-----------------
+
+* Support click on shape [83bfd8a]
+* Modify #replace to use options hash and parse fonts [cd1313f]
+* Rename Shape#arc to Shape#arc_to (Compatibility) [f6adf46]
+* Allow for selecting between multiple backends [ede7c19, 579e441]
+* Only apply styling to TextSegmentCollection once [74d5681]
+* Cache colors and reduce dimension calculations when painting [0c4be36]
+* Optimize painting to only rotate art elements when necessary [c06f93b]
+* Use benchmark-ips where appropriate in benchmarks [51238f3]
+* Improve performance on Dimension [15121ad, 0167f41]
+* Improve performance on Common::Visibility [77eeb90]
+* Support the hidden style on all elements [63afeca]
+* Move defaulting out of dsl.rb into DSL classes [81092b9]
+* Move guard against empty text segments further up in the chain [f121cac]
+* Use ProxyArray in ListBox to update appropriately when list changes [36546ab]
+
+Bug Fixes (12)
+--------------
+
+* Remove zombie apps when Shoes window closes [2f8fcbf]
+* Call change blocks on programmatic list updates [bc5f66d]
+* Default class styles do not override app styles [9915998]
+* Correct Click regions for Shoes::Line [a814dd7]
+* Don't Bundler.require during Picker to avoid Thread Access error [4ae3fc6]
+* Do not crash when quit is called in the initial app block [6235ab5]
+* Fix crash on global keypress [bfa45e7]
+* Fix gradient on Star elements [507c623]
+* Fix text wrapping behavior to avoid clipping and extend background [1e0d948]
+* Fix gem name check on uninstall to avoid stale executables [3707655]
+* Fix for hang during content alignment with text [e2a8bfd]
+* Fix download crash on missing Content-Length header [81f2ebb]
+
+Contributors (12)
+-----------------
+
+Jason R. Clark, Tobias Pfeiffer, jaredmoody, KC Erb, seethemhigh, Eric Watson,
+Thomas Graves, David English, Emily Bookstein, bx10000, matugm, Tyler Lemburg
+
+
+
 4.0.0.pre3 (199 commits)
 ------------------------
 
