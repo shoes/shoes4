@@ -47,8 +47,9 @@ class MimickIRB < RubyLex
     $stdout.rewind
     [output, obj]
   rescue Object => e
-    case e when Empty, Continue
-    else @line = ""
+    case e
+      when Empty, Continue
+      else @line = ""
     end
     raise e
   ensure
@@ -69,7 +70,7 @@ Shoes.app do
     stack width: 1.0, height: 50 do
       para "Interactive Ruby ready.", fill: white, stroke: red
     end
-    @console = para *@str, font: "Lucida Console", stroke: "#dfa"
+    @console = para(*@str, font: "Lucida Console", stroke: "#dfa")
     @console.cursor = -1
   end
   keypress do |k|
@@ -103,7 +104,7 @@ Shoes.app do
     when :alt_v
       @cmd += self.clipboard
     end
-    @console.replace *(@str + [@cmd])
+    @console.replace(*(@str + [@cmd]))
     tmp = @scroll.height - app.height
     @scroll.scroll_top = tmp > 0 ? tmp : 0
   end

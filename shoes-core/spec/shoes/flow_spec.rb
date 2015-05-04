@@ -37,7 +37,7 @@ describe Shoes::Flow do
     expect(flow).to receive(:clear) do |&blk|
       expect(blk).to eq(input_block)
     end
-    flow.clear &input_block
+    flow.clear(&input_block)
   end
 
   describe "positioning" do

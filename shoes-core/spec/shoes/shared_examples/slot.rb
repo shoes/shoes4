@@ -133,11 +133,11 @@ shared_examples_for 'element one positioned with bottom and right' do
   include_context 'slot with set height and width'
 
   it 'positions the element from its right' do
-    expect(element.absolute_right).to eq (subject.absolute_right - ele_right - 1)
+    expect(element.absolute_right).to eq(subject.absolute_right - ele_right - 1)
   end
 
   it 'positions the element from its bottom' do
-    expect(element.absolute_bottom).to eq (subject.absolute_bottom - ele_bottom - 1)
+    expect(element.absolute_bottom).to eq(subject.absolute_bottom - ele_bottom - 1)
   end
 end
 
@@ -175,11 +175,11 @@ shared_examples_for 'arranges elements underneath each other' do
   end
 
   it 'has a stack height according to its contents' do
-    expect(subject.height).to eq (element.height + element2.height)
+    expect(subject.height).to eq(element.height + element2.height)
   end
 
   it 'has an absolute_bottom of top + height' do
-    expect(subject.absolute_bottom).to eq (subject.absolute_top + subject.height - 1)
+    expect(subject.absolute_bottom).to eq(subject.absolute_top + subject.height - 1)
   end
 
   describe 'element one with top and left' do
@@ -202,7 +202,7 @@ shared_examples_for 'set height and contents alignment' do
   include_context 'two slot children'
 
   it 'contents_alignment returns the height of the content' do
-    expect(subject.contents_alignment).to eq (element.height + element2.height)
+    expect(subject.contents_alignment).to eq(element.height + element2.height)
   end
 
   it 'still has the same height though' do

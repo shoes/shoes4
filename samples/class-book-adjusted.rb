@@ -30,7 +30,7 @@ class Book < Shoes
 
     flow do
       flow width: 180, margin_left: 10 do
-        para  *table_of_contents, size: 8
+        para(*table_of_contents, size: 8)
       end
 
       stack width: width-180, margin: [20, 0, 10, 0] do

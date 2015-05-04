@@ -29,9 +29,9 @@ class Building
 
     color = (1..3).collect { 0.2 + 0.4 * rand }
     color << 0.9
-    @stroke = $app.rgb *color
+    @stroke = $app.rgb(*color)
     color[-1] = 0.3
-    @fill = $app.rgb *color
+    @fill = $app.rgb(*color)
   end
 
   def draw
@@ -158,7 +158,7 @@ class Tank
     Opp.draw_opp_rect @x - 20, @x + 20, @y - 15, @y + 15, 1.05, @tank_angle
     #Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
     Opp.draw_opp_rect @x - 10, @x + 10, @y - 7, @y + 7, 1.05, @aim_angle
-    x, unused1, y, unused2 = Opp.project(@x, 0, @y, 0, 1.05)
+    x, _unused1, y, _unused2 = Opp.project(@x, 0, @y, 0, 1.05)
     $app.line x, y, x + 25 * Math.cos(@aim_angle), y + 25 * Math.sin(@aim_angle)
 
     $app.stroke $app.red
@@ -207,7 +207,7 @@ class Opp
       [-500, 0, 750, 1000],
       [-1000, -500, 0, 500],
       [400, 600, -350, -150]
-    ].collect { |p| Building.new *p }
+    ].collect { |p| Building.new(*p) }
     @shells = []
     @boundary = [-1250, 1500, -1250, 1250]
     @tank = Tank.new
@@ -252,7 +252,7 @@ class Opp
 
       $app.stroke $app.red(0.9)
       $app.nofill
-      draw_opp_box *(@boundary + [1.1, 1.0, false])
+      draw_opp_box(*(@boundary + [1.1, 1.0, false]))
 
       @tank.draw
       @shells.each { |s| s.draw }
@@ -314,10 +314,10 @@ class Opp
         cy + (x - cx) * sin + (y - cy) * cos]
     end
 
-    $app.line *(points[0] + points[1])
-    $app.line *(points[1] + points[2])
-    $app.line *(points[2] + points[3])
-    $app.line *(points[3] + points[0])
+    $app.line(*(points[0] + points[1]))
+    $app.line(*(points[1] + points[2]))
+    $app.line(*(points[2] + points[3]))
+    $app.line(*(points[3] + points[0]))
   end
 
   def self.draw_opp_oval left, right, top, bottom, depth
@@ -369,7 +369,6 @@ Shoes.app width: $width, height: $height do
     end
   end
 
-  game_over_count = -1
   animate(60) do
     Opp.read_input if @playing
     Opp.update_scene

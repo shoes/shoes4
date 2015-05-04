@@ -21,7 +21,7 @@ class Shoes
       # Convenience method for loading config from a file. Note that you
       # can pass four kinds of paths to the loader. Given the following
       # file structure:
-      #  
+      #
       #   ├── a
       #   │   ├── app.yaml
       #   │   └── shoes-app-a.rb
@@ -146,7 +146,6 @@ class Shoes
         end
       end
 
-      private
       # Adds Shoes-specific functionality to the Warbler Config
       module ShoesWarblerConfig
         attr_accessor :run
