@@ -496,10 +496,6 @@ Style/StringLiteralsInInterpolation:
 Style/SymbolProc:
   Enabled: false
 
-# Offense count: 4
-Style/UnlessElse:
-  Enabled: false
-
 # Offense count: 8
 # Cop supports --auto-correct.
 Style/UnneededPercentQ:

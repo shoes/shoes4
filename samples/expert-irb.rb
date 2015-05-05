@@ -17,9 +17,7 @@ class MimickIRB < RubyLex
     @io << str
     @io.rewind
     l = lex
-    unless l
-      raise Empty if @line == ''
-    else
+    if l
       case l.strip
       when "reset"
         @line = ""
@@ -31,6 +29,8 @@ class MimickIRB < RubyLex
           raise Continue
         end
       end
+    else
+      raise Empty if @line == ''
     end
     unless @line.empty?
       obj = eval @line, TOPLEVEL_BINDING, "(irb)", @line_no
