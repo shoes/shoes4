@@ -502,10 +502,6 @@ Style/SymbolProc:
 Style/TrailingBlankLines:
   Enabled: false
 
-# Offense count: 23
-# Cop supports --auto-correct.
-Style/TrailingWhitespace:
-  Enabled: false
 
 # Offense count: 4
 Style/UnlessElse:

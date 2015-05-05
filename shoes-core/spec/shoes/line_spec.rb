@@ -105,7 +105,7 @@ describe Shoes::Line do
     end
 
     it "takes into account :strokewidth style" do
-      line = Shoes::Line.new(app, app, Shoes::Point.new(50, 50), Shoes::Point.new(70, 50), input_opts) 
+      line = Shoes::Line.new(app, app, Shoes::Point.new(50, 50), Shoes::Point.new(70, 50), input_opts)
       line.style(strokewidth: 20)
       expect(line.in_bounds?(50, 52)).to be true
       expect(line.in_bounds?(50, 48)).to be true

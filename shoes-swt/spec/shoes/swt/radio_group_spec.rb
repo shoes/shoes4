@@ -15,7 +15,7 @@ describe Shoes::Swt::RadioGroup do
 
   describe "#add" do
     it "monitors selection" do
-      expect(real).to receive(:add_selection_listener) 
+      expect(real).to receive(:add_selection_listener)
       subject.add(radio)
     end
 
@@ -57,12 +57,12 @@ describe Shoes::Swt::RadioGroup do
       subject.add(radio)
       subject.add(radio_selected)
     end
-    after :each do 
-      subject.select_only_one_radio_in_group(radio_selected) 
+    after :each do
+      subject.select_only_one_radio_in_group(radio_selected)
     end
 
     it "turns on the selected radio" do
-      expect(real_selected).to receive(:set_selection).with(true) 
+      expect(real_selected).to receive(:set_selection).with(true)
     end
 
     it "turns off the non-selected radios" do

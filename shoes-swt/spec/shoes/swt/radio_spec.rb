@@ -33,7 +33,7 @@ describe Shoes::Swt::Radio do
     let(:radio_group) { double("radio_group").as_null_object }
     let(:group_lookup) { double('group_lookup', :[] => radio_group).as_null_object }
     before :each do
-      allow(Shoes::Swt::RadioGroup).to receive(:group_lookup) { group_lookup }  
+      allow(Shoes::Swt::RadioGroup).to receive(:group_lookup) { group_lookup }
     end
 
     it "changes the group" do

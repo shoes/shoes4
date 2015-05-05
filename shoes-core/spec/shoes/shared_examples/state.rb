@@ -8,7 +8,7 @@ shared_examples_for "object with state" do
   it "should enable" do
     expect(subject.gui).to receive(:enabled).with(true)
     subject.state = nil
-    expect(subject.state).to eq(nil) 
+    expect(subject.state).to eq(nil)
   end
 
   it "should disable" do
