@@ -11,13 +11,13 @@ Shoes.app do
             stack margin: 10 do
               dl = nil
               para @url.text, " [", link("cancel") { dl.abort }, "]", margin: 0
-              d = inscription "Beginning transfer.", margin: 0
+              status = inscription "Beginning transfer.", margin: 0
               p = progress width: 1.0, height: 14
               dl = download @url.text, save: File.basename(@url.text),
-                progress: proc { |dl|
-                  d.text = "Transferred #{dl.transferred} of #{dl.length} bytes (#{dl.percent}%)"
-                  p.fraction = dl.percent * 0.01 },
-                finish: proc { |dl| d.text = "Download completed" }
+                progress: proc { |d|
+                  status.text = "Transferred #{d.transferred} of #{d.length} bytes (#{d.percent}%)"
+                  p.fraction = d.percent * 0.01 },
+                finish: proc { |d| status.text = "Download completed" }
             end
           end
         end

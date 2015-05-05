@@ -19,15 +19,15 @@ Shoes.app width: 420, height: 420, resizable: false do
     rotation = -(Shoes::HALF_PI / wide)
     clear do
       background gray(240)
-      10.times do |i|
-        strokewidth sw * i
-        size = (basesize + step * i) / 3
+      10.times do |j|
+        strokewidth sw * j
+        size = (basesize + step * j) / 3
         top = (self.height - size) / 2
         left = (self.width - size) / 2
         arc top, left,
           size, size,
-          rotation * i,
-          rotation * i + Shoes::TWO_PI - Shoes::HALF_PI
+          rotation * j,
+          rotation * j + Shoes::TWO_PI - Shoes::HALF_PI
       end
     end
 
