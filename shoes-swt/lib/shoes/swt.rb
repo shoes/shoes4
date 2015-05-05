@@ -123,6 +123,17 @@ class Shoes
       require 'shoes/swt/redrawing_aspect'
 
       @initialized = true
+    rescue Java::OrgEclipseSwt::SWTException => e
+      if e.message == "Invalid thread access"
+        puts "Ooops, we couldn't start properly. We'll try again."
+        puts ""
+        puts "To avoid this restarting behavior, try one of the following:"
+        puts "  * Use the shoes executable to start your app"
+        puts "  * Add JRUBY_OPTS='-J-XstartOnFirstThread' to your environment before starting."
+
+        `JRUBY_OPTS=-J-XstartOnFirstThread #{$0} #{ARGV.join(" ")}`
+        exit $?.exitstatus
+      end
     end
   end
 end
