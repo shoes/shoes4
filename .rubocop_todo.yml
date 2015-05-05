@@ -106,12 +106,6 @@ Style/BlockDelimiters:
 Style/BlockEndNewline:
   Enabled: false
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/BracesAroundHashParameters:
-  Enabled: false
-
 # Offense count: 24
 # Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep.
 Style/CaseIndentation:

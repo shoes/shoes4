@@ -6,7 +6,7 @@ describe Shoes::TextBlock do
 
   let(:text_link) { Shoes::Link.new(app, ['Hello']) }
   let(:text) { [text_link, ", world!"] }
-  subject(:text_block) { Shoes::TextBlock.new(app, parent, text, {app: app}) }
+  subject(:text_block) { Shoes::TextBlock.new(app, parent, text, app: app) }
 
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::TextBlock.new(app, parent, text) }
@@ -149,7 +149,7 @@ describe Shoes::TextBlock do
 
   describe "stroke" do
     it "should accept a hex code" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], { stroke: "#fda", app: app })
+      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], stroke: "#fda", app: app )
       color = s.style[:stroke]
       expect(color.red).to eql 255
       expect(color.green).to eql 221
@@ -194,7 +194,7 @@ describe Shoes::TextBlock do
     end
 
     context "when explicitly set" do
-      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], { width: 120 }) }
+      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], width: 120) }
 
       it "gets returned" do
         expect(subject.width).to eql 120

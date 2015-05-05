@@ -63,7 +63,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
         dsl_style = dsl_link.style
         default_style = default_text_styles.merge(dsl_style)
-        expected_style = default_style.merge({underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil})
+        expected_style = default_style.merge(underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil)
         expect(first_segment).to have_received(:set_style).with(expected_style, 0..1)
       end
 
@@ -163,7 +163,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
       expected_style = style_with(stroke: :blue, fg: :blue)
       expect(first_segment).to have_received(:set_style).with(expected_style, 0..2)
-      expect(second_segment).to_not have_received(:set_style).with({stroke: :blue})
+      expect(second_segment).to_not have_received(:set_style).with(stroke: :blue)
     end
 
     it "applies segment styling in second segment" do
@@ -171,7 +171,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
-      expect(first_segment).to_not have_received(:set_style).with({stroke: :blue})
+      expect(first_segment).to_not have_received(:set_style).with(stroke: :blue)
       expect(second_segment).to have_received(:set_style).with(expected_style, 0..2)
     end
 
