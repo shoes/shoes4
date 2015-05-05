@@ -34,7 +34,7 @@ Shoes.app title: 'Snake Game v0.1' do
   end
 
   def eat? s
-    @foods.each_with_index do |f, i|
+    @foods.each do |f|
       (f.move @rx[], @ry[]; return true) if f.left == s.left and f.top == s.top
     end
     return false

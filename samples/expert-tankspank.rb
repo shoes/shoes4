@@ -359,7 +359,7 @@ Shoes.app width: $width, height: $height do
     end
   end
 
-  click do |button, x, y|
+  click do |button|
     if @playing
       if button == 1
         Opp.tank.set_destination

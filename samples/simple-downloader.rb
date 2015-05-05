@@ -17,7 +17,7 @@ Shoes.app do
                 progress: proc { |d|
                   status.text = "Transferred #{d.transferred} of #{d.length} bytes (#{d.percent}%)"
                   p.fraction = d.percent * 0.01 },
-                finish: proc { |d| status.text = "Download completed" }
+                finish: proc { status.text = "Download completed" }
             end
           end
         end

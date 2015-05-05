@@ -248,7 +248,7 @@ module Shoes::Manual
   end
 
   def show_search
-    @toc.each { |k,v| v.hide }
+    @toc.each { |_k,v| v.hide }
     @title.replace "Search"
     @doc.clear do
       dewikify_p :para, "Try method names (like `button` or `arrow`) or topics (like `slots`)", :align => 'center'
@@ -350,7 +350,7 @@ module Shoes::Manual
 
   def manual_search(terms)
     terms += " " if terms.length == 1
-    @search.find_all(terms).map do |title, count|
+    @search.find_all(terms).map do |title|
       title.split(" ", 2)
     end
   end
@@ -439,7 +439,7 @@ def Shoes.make_help_page
             :size => 11, :margin => 4, :margin_top => 0
           @toc[sect_cls] =
             stack :hidden => @toc.empty? ? false : true do
-              links = sect_h['sections'].map do |meth_s, meth_h|
+              links = sect_h['sections'].map do |meth_s|
                 [link(meth_s) { open_methods(meth_s) }, "\n"]
               end.flatten
               links[-1] = {:size => 9, :margin => 4, :margin_left => 10}
