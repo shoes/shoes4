@@ -149,7 +149,7 @@ describe Shoes::TextBlock do
 
   describe "stroke" do
     it "should accept a hex code" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], stroke: "#fda", app: app )
+      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], stroke: "#fda", app: app)
       color = s.style[:stroke]
       expect(color.red).to eql 255
       expect(color.green).to eql 221

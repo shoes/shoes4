@@ -37,7 +37,7 @@ describe Shoes::Animation do
   let(:opts) { {} }
   let(:block) { double('block') }
   let(:bound_block) { double('bound block') }
-  subject { Shoes::Animation.new( app, opts, block ) }
+  subject { Shoes::Animation.new(app, opts, block) }
 
   before :each do
     expect(app).to receive(:gui) { app_gui }

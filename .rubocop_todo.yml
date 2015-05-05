@@ -474,11 +474,6 @@ Style/SpaceInsideBrackets:
 Style/SpaceInsideHashLiteralBraces:
   Enabled: false
 
-# Offense count: 13
-# Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Enabled: false
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/SpecialGlobalVars:

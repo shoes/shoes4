@@ -3,7 +3,7 @@ shared_examples_for "style DSL method" do
     let(:stroke) { Shoes::COLORS[:chartreuse] }
     let(:size)   { 42 }
     let(:fill)   { Shoes::COLORS[:peru] }
-    let(:font )  { "SOME FONT" }
+    let(:font)  { "SOME FONT" }
     let(:style)  { {:stroke => stroke, :size => size, :fill => fill, :font => font} }
 
     %w(Banner Title Subtitle Tagline Caption Para Inscription).each do |text_block|
