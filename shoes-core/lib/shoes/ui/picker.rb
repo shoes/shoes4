@@ -64,9 +64,8 @@ class Shoes
         until candidate
           entered_index = @input.readline.to_i
           if entered_index > 0
-            if candidate = candidates[entered_index - 1]
-              break
-            end
+            candidate = candidates[entered_index - 1]
+            break if candidate
           end
           @output.puts "Invalid selection. Try again with a number from 1 to #{candidates.size}."
         end

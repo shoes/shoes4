@@ -307,7 +307,8 @@ Shoes.app width: 520, height: 600 do
   draw_board
 
   click { |button, x, y|
-    if coords = find_piece(x,y)
+    coords = find_piece(x,y)
+    if coords
       begin
         GAME.lay_piece(coords)
         GAME.next_turn

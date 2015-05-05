@@ -43,7 +43,8 @@ class Cell
   end
 
   def set_next_state
-    if @live = @next_state
+    @live = @next_state
+    if @live
       @world.live_cells.push(self)
     else
       cell_index = @world.live_cells.index(self)

@@ -16,7 +16,8 @@ class MimickIRB < RubyLex
     obj = nil
     @io << str
     @io.rewind
-    unless l = lex
+    l = lex
+    unless l
       raise Empty if @line == ''
     else
       case l.strip
