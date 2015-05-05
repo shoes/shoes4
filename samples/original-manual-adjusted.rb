@@ -230,10 +230,10 @@ module Shoes::Manual
 
           hsh = {'title' => k2, 'section' => k,
             'description' => meth[0],
-            'methods' => (meth[1..-1]/2).map { |_k,_v|
-              @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{_k}", :body => "#{_k}\n#{_v}".downcase
-              @mindex["#{k2t}.#{_k[/[\w\.]+/]}"] = [k2t, _k]
-              [_k, _v]
+            'methods' => (meth[1..-1]/2).map { |k3,v3|
+              @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", :body => "#{k3}\n#{v3}".downcase
+              @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+              [k3, v3]
             }
           }
           @methods[k2t] = hsh

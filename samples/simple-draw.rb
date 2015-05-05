@@ -2,12 +2,12 @@ Shoes.app do
   background "#999"
   stroke "#000"
   x, y = nil, nil
-  motion do |_x, _y|
-    if x and y and (x != _x or y != _y)
+  motion do |x2, y2|
+    if x and y and (x != x2 or y != y2)
       append do
-        line x, y, _x, _y
+        line x, y, x2, y2
       end
     end
-    x, y = _x, _y
+    x, y = x2, y2
   end
 end

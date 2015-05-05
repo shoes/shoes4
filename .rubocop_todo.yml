@@ -17,10 +17,6 @@ Lint/HandleExceptions:
 Lint/RescueException:
   Enabled: false
 
-# Offense count: 4
-Lint/UnderscorePrefixedVariableName:
-  Enabled: false
-
 # Offense count: 35
 # Cop supports --auto-correct.
 Lint/UnusedBlockArgument:
