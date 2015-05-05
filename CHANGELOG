@@ -1,9 +1,16 @@
-4.0.0.pre4 (153 commits)
+4.0.0.pre4 (154 commits)
 -------------------------------
 
-Improvements (18)
+This release saw a lot of bug fixing, but no big structural changes (hurray!).
+
+Along with the bugs, the first big performance tuning work got underway,
+focused on the manual and the Game of Life sample
+(samples/expert-game-of-life-adjusted.rb). Here's to faster Shoes!
+
+Improvements (19)
 -----------------
 
+* Add fallback to retry launching app on thread access error [92257ba]
 * Support click on shape [83bfd8a]
 * Modify #replace to use options hash and parse fonts [cd1313f]
 * Rename Shape#arc to Shape#arc_to (Compatibility) [f6adf46]
@@ -38,7 +45,7 @@ Bug Fixes (12)
 Contributors (12)
 -----------------
 
-Jason R. Clark, Tobias Pfeiffer, jaredmoody, KC Erb, seethemhigh, Eric Watson,
+Jason Clark, Tobias Pfeiffer, Jared Moody, KC Erb, seethemhigh, Eric Watson,
 Thomas Graves, David English, Emily Bookstein, bx10000, matugm, Tyler Lemburg
 
 
