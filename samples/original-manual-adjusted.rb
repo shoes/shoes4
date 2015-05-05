@@ -193,8 +193,8 @@ module Shoes::Manual
         stack :margin_left => 20 do
           flow do
             para "▸ ", :font => case RUBY_PLATFORM
-              when /mingw/; "MS UI Gothic"
-              when /darwin/; "AppleGothic, Arial"
+              when /mingw/  then "MS UI Gothic"
+              when /darwin/ then "AppleGothic, Arial"
               else "Arial"
               end
             para k

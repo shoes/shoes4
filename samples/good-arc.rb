@@ -32,14 +32,15 @@ Shoes.app width: 420, height: 420, resizable: false do
     end
 
     case stage
-    when 1; wide -= 0.1
-    when 2; wide += 0.1
-    when 3; basesize -= 1
-    when 4; basesize += 2
-    when 5; sw += 0.1
-    when 6; sw = [sw - 0.1, 0.1].max
-    when 7; step += 2
-    else    step -= 1
+    when 1 then wide -= 0.1
+    when 2 then wide += 0.1
+    when 3 then basesize -= 1
+    when 4 then basesize += 2
+    when 5 then sw += 0.1
+    when 6 then sw = [sw - 0.1, 0.1].max
+    when 7 then step += 2
+    else
+      step -= 1
     end
   end
 end

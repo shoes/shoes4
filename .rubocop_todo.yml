@@ -521,11 +521,6 @@ Style/UnneededPercentQ:
 Style/VariableInterpolation:
   Enabled: false
 
-# Offense count: 18
-# Cop supports --auto-correct.
-Style/WhenThen:
-  Enabled: false
-
 # Offense count: 13
 # Cop supports --auto-correct.
 # Configuration parameters: WordRegex.
