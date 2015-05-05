@@ -46,4 +46,3 @@ describe Shoes::Swt::DisposedProtection do
     end
   end
 end
-

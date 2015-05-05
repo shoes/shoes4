@@ -9,4 +9,3 @@ Shoes.app do
     oval left, top, 360, 360
   end
 end
-

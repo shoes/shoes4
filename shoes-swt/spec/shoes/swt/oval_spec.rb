@@ -48,4 +48,3 @@ describe Shoes::Swt::Oval do
     end
   end
 end
-

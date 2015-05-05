@@ -66,4 +66,3 @@ describe Shoes::Swt::NullColor do
     end
   end
 end
-
