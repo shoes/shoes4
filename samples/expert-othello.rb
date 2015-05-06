@@ -70,11 +70,11 @@ module Othello
       raise "Spot already taken." if board_at(c) != 0
       if check_adjacent_pieces
         pieces_to_change = []
-        pieces_to_change << check_direction(c, [ 0, 1], piece, opp_piece) # N
-        pieces_to_change << check_direction(c, [ 1, 1], piece, opp_piece) # NE
-        pieces_to_change << check_direction(c, [ 1, 0], piece, opp_piece) # E
-        pieces_to_change << check_direction(c, [ 1,-1], piece, opp_piece) # SE
-        pieces_to_change << check_direction(c, [ 0,-1], piece, opp_piece) # S
+        pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
+        pieces_to_change << check_direction(c, [1, 1], piece, opp_piece) # NE
+        pieces_to_change << check_direction(c, [1, 0], piece, opp_piece) # E
+        pieces_to_change << check_direction(c, [1,-1], piece, opp_piece) # SE
+        pieces_to_change << check_direction(c, [0,-1], piece, opp_piece) # S
         pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
         pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
         pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
@@ -101,11 +101,11 @@ module Othello
       piece = current_player.piece
       opp_piece = current_player.opp_piece
       pieces_to_change = []
-      pieces_to_change << check_direction(c, [ 0, 1], piece, opp_piece) # N
-      pieces_to_change << check_direction(c, [ 1, 1], piece, opp_piece) # NE
-      pieces_to_change << check_direction(c, [ 1, 0], piece, opp_piece) # E
-      pieces_to_change << check_direction(c, [ 1,-1], piece, opp_piece) # SE
-      pieces_to_change << check_direction(c, [ 0,-1], piece, opp_piece) # S
+      pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
+      pieces_to_change << check_direction(c, [1, 1], piece, opp_piece) # NE
+      pieces_to_change << check_direction(c, [1, 0], piece, opp_piece) # E
+      pieces_to_change << check_direction(c, [1,-1], piece, opp_piece) # SE
+      pieces_to_change << check_direction(c, [0,-1], piece, opp_piece) # S
       pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
       pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
       pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
