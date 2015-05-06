@@ -79,16 +79,16 @@ Shoes.app do
     when "\n"
       begin
         out, obj = IRBalike.run(@cmd + ';')
-        @str += ["#@cmd\n",
+        @str += ["#{@cmd}\n",
           fg("#{out}=> #{obj.inspect}\n", "#fda"),
           "#{CURSOR} "]
         @cmd = ""
       rescue MimickIRB::Empty
       rescue MimickIRB::Continue
-        @str += ["#@cmd\n.. "]
+        @str += ["#{@cmd}\n.. "]
         @cmd = ""
       rescue Object => e
-        @str += ["#@cmd\n", fg("#{e.class}: #{e.message}\n", "#fcf"),
+        @str += ["#{@cmd}\n", fg("#{e.class}: #{e.message}\n", "#fcf"),
           "#{CURSOR} "]
         @cmd = ""
       end

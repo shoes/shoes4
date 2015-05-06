@@ -3,7 +3,7 @@ Shoes.app height: 150, width: 250 do
   stack margin: 10 do
     button "Start" do
       @time = Time.now
-      @label.replace "Stop watch started at #@time"
+      @label.replace "Stop watch started at #{@time}"
     end
 
     button "Stop" do
