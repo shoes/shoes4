@@ -232,7 +232,7 @@ class Opp
       @tank.collide_and_stop if b.intersects? @tank
     end
 
-    @shells.each { |s| s.update }
+    @shells.each(&:update)
     @buildings.each do |b|
       @shells.reject! do |s|
         b.contains?(s.x, s.y)
@@ -255,8 +255,8 @@ class Opp
       draw_opp_box(*(@boundary + [1.1, 1.0, false]))
 
       @tank.draw
-      @shells.each { |s| s.draw }
-      @buildings.each { |b| b.draw }
+      @shells.each(&:draw)
+      @buildings.each(&:draw)
     end
   end
 

@@ -78,7 +78,7 @@ module Othello
         pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
         pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
         pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
-        raise "You must move to a spot that will turn your opponent's piece." if pieces_to_change.compact.all? { |a| a.empty? }
+        raise "You must move to a spot that will turn your opponent's piece." if pieces_to_change.compact.all?(&:empty?)
         pieces_to_change.compact.each { |direction| direction.each { |i| @board[i[0]][i[1]] = piece } }
       end
       current_player.pieces -= 1
@@ -109,7 +109,7 @@ module Othello
       pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
       pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
       pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
-      return nil if pieces_to_change.compact.all? { |a| a.empty? }
+      return nil if pieces_to_change.compact.all?(&:empty?)
       true
     end
 

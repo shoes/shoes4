@@ -72,7 +72,7 @@ module Shoes::Manual
   end
 
   def wiki_tokens(str, intro = false)
-    paras = str.split(PARA_RE).reject { |x| x.empty? }
+    paras = str.split(PARA_RE).reject(&:empty?)
     if intro
       yield :intro, paras.shift
     end

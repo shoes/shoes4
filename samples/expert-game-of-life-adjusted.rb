@@ -64,7 +64,7 @@ class Cell
   end
 
   def iterate
-    live_cells_count = @neighbours.count {|c| c.live? }
+    live_cells_count = @neighbours.count(&:live?)
     if live?
       if live_cells_count < 2 || live_cells_count > 3
         die!
@@ -112,13 +112,13 @@ class World
   end
 
   def draw
-    cells.each {|c| c.draw }
+    cells.each(&:draw)
   end
 
   def tick
     @changed_cells = []
-    actual_cells.each {|c| c.iterate }.each {|c| c.set_next_state }
-    @changed_cells.each {|c| c.draw }
+    actual_cells.each(&:iterate).each(&:set_next_state)
+    @changed_cells.each(&:draw)
   end
 
   def clear
