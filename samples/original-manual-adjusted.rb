@@ -193,8 +193,8 @@ module Shoes::Manual
         stack :margin_left => 20 do
           flow do
             para "▸ ", :font => case RUBY_PLATFORM
-              when /mingw/; "MS UI Gothic"
-              when /darwin/; "AppleGothic, Arial"
+              when /mingw/  then "MS UI Gothic"
+              when /darwin/ then "AppleGothic, Arial"
               else "Arial"
               end
             para k
@@ -230,10 +230,10 @@ module Shoes::Manual
 
           hsh = {'title' => k2, 'section' => k,
             'description' => meth[0],
-            'methods' => (meth[1..-1]/2).map { |_k,_v|
-              @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{_k}", :body => "#{_k}\n#{_v}".downcase
-              @mindex["#{k2t}.#{_k[/[\w\.]+/]}"] = [k2t, _k]
-              [_k, _v]
+            'methods' => (meth[1..-1]/2).map { |k3,v3|
+              @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", :body => "#{k3}\n#{v3}".downcase
+              @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+              [k3, v3]
             }
           }
           @methods[k2t] = hsh
@@ -251,7 +251,7 @@ module Shoes::Manual
   end
 
   def show_search
-    @toc.each { |k,v| v.hide }
+    @toc.each { |_k,v| v.hide }
     @title.replace "Search"
     @doc.clear do
       dewikify_p :para, "Try method names (like `button` or `arrow`) or topics (like `slots`)", :align => 'center'
@@ -353,7 +353,7 @@ module Shoes::Manual
 
   def manual_search(terms)
     terms += " " if terms.length == 1
-    @search.find_all(terms).map do |title, count|
+    @search.find_all(terms).map do |title|
       title.split(" ", 2)
     end
   end
@@ -442,7 +442,7 @@ def Shoes.make_help_page
             :size => 11, :margin => 4, :margin_top => 0
           @toc[sect_cls] =
             stack :hidden => @toc.empty? ? false : true do
-              links = sect_h['sections'].map do |meth_s, meth_h|
+              links = sect_h['sections'].map do |meth_s|
                 [link(meth_s) { open_methods(meth_s) }, "\n"]
               end.flatten
               links[-1] = {:size => 9, :margin => 4, :margin_left => 10}

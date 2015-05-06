@@ -43,7 +43,8 @@ class Cell
   end
 
   def set_next_state
-    if @live = @next_state
+    @live = @next_state
+    if @live
       @world.live_cells.push(self)
     else
       cell_index = @world.live_cells.index(self)
@@ -192,9 +193,9 @@ end
 Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) do
   background white
   @animate = false
-  stack(margin: 10) do |board_holder|
+  stack(margin: 10) do
     @new_world = World.new(40, 40, self)
-    animate(10) do |frame|
+    animate(10) do
       if @animate
         @new_world.tick
       end

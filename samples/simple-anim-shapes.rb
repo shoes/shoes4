@@ -6,7 +6,7 @@ Shoes.app do
     rect(0, 0, 100, 100),
     rect(0, 0, 75, 75)
   ]
-  animate(24) do |i|
+  animate(24) do
     rects.each do |r|
       r.move(rand(0..400), rand(0..400))
     end

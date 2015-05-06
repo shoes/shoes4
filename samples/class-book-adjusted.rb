@@ -12,7 +12,7 @@ class Book < Shoes
 
   def table_of_contents
     toc = []
-    INCIDENTS.each_with_index do |(title, story), i|
+    INCIDENTS.each_with_index do |(title, _story), i|
       toc.push "(#{i + 1}) ",
         link(title){visit "/incidents/#{i}"},
         " / "

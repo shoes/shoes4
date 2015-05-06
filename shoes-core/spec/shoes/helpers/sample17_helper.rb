@@ -10,16 +10,16 @@
 #   end
 #
 class Sample17Helper
-  
+
   def initialize(app)
     # This gives us the Shoes::App
     @app = app.app
   end
-  
+
   def create_para
     @app.para("Testing, test, test. ", strong_breadsticks, em, code, bg, sub)
   end
-  
+
   def breadsticks
     "Breadsticks. "
   end

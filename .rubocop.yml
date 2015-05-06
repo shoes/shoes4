@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 # We sometimes need Java method names for interoperability
 # Like java calling our methods like `controlResized`
 Style/MethodName:
@@ -10,7 +12,7 @@ Style/ClassCheck:
 # Don't ever try to take my `inject` from me, reduce is ok too
 Style/CollectionMethods:
   PreferredMethods:
-      inject: 'inject'
+    inject: 'inject'
 
 # We like to be flexible if we want to add in interpolation
 # see discussion #859

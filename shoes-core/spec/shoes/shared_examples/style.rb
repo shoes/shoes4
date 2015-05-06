@@ -9,7 +9,7 @@ shared_examples_for "object with style" do
   end
 
   describe 'using app-level styles' do
-    
+
     it 'initially uses app defaults' do
       app.style.each do |key, value|
         expect(subject.style[key]).to eq(value) if uses_app_default? key

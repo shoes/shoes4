@@ -29,5 +29,5 @@ describe Shoes::Swt::Font do
       subject.add_font font_path
     end
   end
-  
+
 end

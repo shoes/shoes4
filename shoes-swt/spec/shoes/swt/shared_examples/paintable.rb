@@ -4,4 +4,3 @@ shared_examples_for "paintable" do
     subject
   end
 end
-

@@ -299,7 +299,7 @@ describe "Shoes built in gray" do
   end
 
   specify "float parameters should be normalised" do
-    expect(app.gray(1.0, 0.5)).to eq(Shoes::Color.new( 255, 255, 255, 128 ))
+    expect(app.gray(1.0, 0.5)).to eq(Shoes::Color.new(255, 255, 255, 128))
   end
 
   it 'hangles 0.93 right as well' do

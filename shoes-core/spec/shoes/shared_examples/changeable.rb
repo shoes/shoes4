@@ -9,7 +9,7 @@ shared_examples "an element that can respond to change" do
   describe "when setting up a callback with #change" do
     it "should notify the callback of change events" do
       called = false
-      subject.change do |element|
+      subject.change do
         called = true
       end
       subject.call_change_listeners

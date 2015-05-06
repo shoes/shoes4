@@ -8,13 +8,13 @@ Shoes.app width: 700, height: 600 do
   end
 
   flow width: 0.6 do
-    tagline "It's simple and straightforward. ", 
-      link("Shoes "){alert "Yay!"}, 
-      "was born to be easy! ", 
-      link("Shoes "){alert "Yay!"}, 
-      "was born to be easy! ", 
-      link("Shoes "){alert "Yay!"}, 
-      "was born to be easy! ", 
+    tagline "It's simple and straightforward. ",
+      link("Shoes "){alert "Yay!"},
+      "was born to be easy! ",
+      link("Shoes "){alert "Yay!"},
+      "was born to be easy! ",
+      link("Shoes "){alert "Yay!"},
+      "was born to be easy! ",
       "Really, it was made for absolute beginners. "
   end
 
