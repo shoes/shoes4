@@ -23,7 +23,7 @@ describe Shoes::Stack do
     end
 
     it 'does not change the context' do
-      app = Shoes.app do ; end
+      app = Shoes.app do; end
       context_object = ContextObject.new app
       inside_stack = context_object.check_self_inside_stack
       expect(inside_stack).to be context_object
