@@ -256,7 +256,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     Shoes::Link.new(shoes_app, [text])
   end
 
-  def style_with(style={})
+  def style_with(style = {})
     default_text_styles.merge(style)
   end
 

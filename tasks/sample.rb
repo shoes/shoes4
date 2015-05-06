@@ -24,7 +24,7 @@ namespace :samples do
     system "bin/shoes #{sample_name}"
   end
 
-  def run_samples(samples, start_with=0)
+  def run_samples(samples, start_with = 0)
     samples.each_with_index do |sample, index|
       next unless index >= start_with
       run_sample(sample, index, samples.size)

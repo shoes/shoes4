@@ -29,7 +29,7 @@ module Othello
       lay_initial_pieces
     end
 
-    def next_turn(check_available_moves=true)
+    def next_turn(check_available_moves = true)
       @current_player = next_player
       if check_available_moves && skip_turn?
         # FIXME Possible infinite loop if neither player has a good move?
@@ -67,7 +67,7 @@ module Othello
       next_turn(false)
     end
 
-    def lay_piece(c=[0,0], check_adjacent_pieces=true)
+    def lay_piece(c = [0,0], check_adjacent_pieces = true)
       memorize_board
       piece = current_player.piece
       opp_piece = current_player.opp_piece
@@ -100,7 +100,7 @@ module Othello
       true
     end
 
-    def possible_move?(c=[0,0])
+    def possible_move?(c = [0,0])
       return nil if board_at(c) != 0
       piece = current_player.piece
       opp_piece = current_player.opp_piece
@@ -173,7 +173,7 @@ module Othello
     end
 
     # Is this a valid location on board?
-    def valid_location?(c=[1,1])
+    def valid_location?(c = [1,1])
       c[0] >= 0 && c[1] >= 0 && c[0] < BOARD_SIZE[0] && c[1] < BOARD_SIZE[1]
     end
 
@@ -197,7 +197,7 @@ module Othello
     class Player
       attr_accessor :pieces, :color, :pieces_on_board
 
-      def initialize(color=:black,pieces=0)
+      def initialize(color = :black,pieces = 0)
         @pieces = pieces
         @pieces_on_board = 0 # used only in calculating winner
         @color = color
@@ -213,9 +213,9 @@ module Othello
     end
   end
 
-  def draw_player_1(first_turn=false)
-    stack width: width-5, height: 50 do
-      if GAME.current_player==GAME.p1
+  def draw_player_1(first_turn = false)
+    stack width: width - 5, height: 50 do
+      if GAME.current_player == GAME.p1
         background yellow
         border black, strokewidth: 10
         para strong("Player 1 (#{GAME.current_player.color}) turn"), margin: [20, 15, 0, 0]
@@ -228,9 +228,9 @@ module Othello
     end
   end
 
-  def draw_player_2(first_turn=false)
-    stack width: width-5, height: 50 do
-      if GAME.current_player==GAME.p2
+  def draw_player_2(first_turn = false)
+    stack width: width - 5, height: 50 do
+      if GAME.current_player == GAME.p2
         background yellow
         border black, strokewidth: 10
         para strong("Player 2 (#{GAME.current_player.color}) turn"), margin: [20, 15, 0, 0]

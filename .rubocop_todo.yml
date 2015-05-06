@@ -434,12 +434,6 @@ Style/SpaceAfterComma:
 Style/SpaceAfterControlKeyword:
   Enabled: false
 
-# Offense count: 30
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
 # Offense count: 385
 # Cop supports --auto-correct.
 # Configuration parameters: MultiSpaceAllowedForOperators.
