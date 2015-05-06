@@ -413,11 +413,11 @@ describe Shoes::Color::DSLHelpers do
 
   describe '#gradient' do
     it 'raises an argument error for no arguments supplied' do
-      expect{subject.gradient}.to raise_error ArgumentError
+      expect {subject.gradient}.to raise_error ArgumentError
     end
 
     it 'raises an argument error for too many (> 2) args supplied' do
-      expect{subject.gradient 1, 2, 3}.to raise_error ArgumentError
+      expect {subject.gradient 1, 2, 3}.to raise_error ArgumentError
     end
   end
 end

@@ -9,7 +9,7 @@ describe Shoes::Background do
   let(:height) { 200 }
 
   let(:blue)  { Shoes::COLORS[:blue] }
-  let(:input_opts){ {left: left, top: top, width: width, height: height, color: blue} }
+  let(:input_opts) { {left: left, top: top, width: width, height: height, color: blue} }
   subject(:background) { Shoes::Background.new(app, parent, blue, input_opts) }
 
   before do

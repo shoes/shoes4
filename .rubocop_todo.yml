@@ -446,13 +446,6 @@ Style/SpaceAroundEqualsInParameterDefault:
 Style/SpaceAroundOperators:
   Enabled: false
 
-# Offense count: 107
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
-
 # Offense count: 1230
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.

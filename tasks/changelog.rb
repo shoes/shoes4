@@ -54,7 +54,7 @@ class Changelog
     commits =`#{log_command}`
     raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
 
-    commits.split(COMMIT_SEPARATOR + "\n").map{|commit| uniform_change_log(commit)}
+    commits.split(COMMIT_SEPARATOR + "\n").map {|commit| uniform_change_log(commit)}
   end
 
   def uniform_change_log(commit)

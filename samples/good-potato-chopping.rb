@@ -18,5 +18,5 @@ Shoes.app title: 'potacho', width: 175, height: 160 do
     end
   end
 
-  button('  start  '){potacho}.move 10, 130
+  button('  start  ') {potacho}.move 10, 130
 end

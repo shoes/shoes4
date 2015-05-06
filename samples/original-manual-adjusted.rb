@@ -50,7 +50,7 @@ module Shoes::Manual
       eval("#{ele}(#{str}, *args)")
     else
       flow do
-        a[0...-1].each{|s| eval("#{ele}(#{s}, ',', *args)")}
+        a[0...-1].each {|s| eval("#{ele}(#{s}, ',', *args)")}
         eval("#{ele}(#{a[-1]}, *args)")
       end
     end
@@ -141,8 +141,8 @@ module Shoes::Manual
         subtitle k
         flow do
           v.each do |file|
-            para link(File.basename(file).split('-')[1..-1].join('-')[0..-4]){
-              Dir.chdir(folder){eval IO.read(file).force_encoding("UTF-8"), TOPLEVEL_BINDING}
+            para link(File.basename(file).split('-')[1..-1].join('-')[0..-4]) {
+              Dir.chdir(folder) {eval IO.read(file).force_encoding("UTF-8"), TOPLEVEL_BINDING}
             }
           end
         end

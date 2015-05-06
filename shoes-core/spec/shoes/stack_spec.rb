@@ -36,17 +36,17 @@ describe Shoes::Stack do
     it_behaves_like 'arranges elements underneath each other'
 
     describe 'small stack height' do
-      let(:input_opts){{height: element.height + 10}}
+      let(:input_opts) {{height: element.height + 10}}
       it_behaves_like 'set height and contents alignment'
     end
 
     describe 'big stack height' do
-      let(:input_opts){{height: 1000}}
+      let(:input_opts) {{height: 1000}}
       it_behaves_like 'set height and contents alignment'
     end
 
     describe 'with margin' do
-      let(:input_opts){{margin: 27}}
+      let(:input_opts) {{margin: 27}}
       it_behaves_like 'taking care of margin'
     end
   end

@@ -52,7 +52,7 @@ namespace :samples do
   desc "Create list of non-working samples"
   task :bad_list do |t|
     puts t.comment
-    non_samples.each{|non_sample| puts non_sample}
+    non_samples.each {|non_sample| puts non_sample}
   end
 
   desc "Run all samples listed in samples/filename"
