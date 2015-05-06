@@ -320,7 +320,7 @@ Shoes.app :title => 'Tetris', :width => WIDTH, :height => HEIGHT do
       banner "Game Over", :align => 'center', :stroke => black
       animate.stop
     else
-      subtitle "Score: #{format("%6.6d", game.score)}", :stroke => green, :align => 'right'
+      subtitle "Score: #{format('%6.6d', game.score)}", :stroke => green, :align => 'right'
     end
 
     last = now
