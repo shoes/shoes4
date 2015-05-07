@@ -25,6 +25,10 @@ class Shoes
           @dsl.call_change_listeners
         end
         update_items
+
+        # Set initial selection without triggering callbacks!
+        choice = @dsl.style[:choose]
+        @real.text = choice if choice
       end
 
       def update_items

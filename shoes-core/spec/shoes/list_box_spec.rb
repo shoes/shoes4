@@ -68,8 +68,8 @@ describe Shoes::ListBox do
       list_box.choose "Wine"
     end
 
-    it 'should call @gui.choose when the choose option is passed' do
-      expect_gui_choose_with 'Wine'
+    it 'should not call @gui.choose when the choose option is passed' do
+      expect_any_instance_of(Shoes.configuration.backend::ListBox).to_not receive(:choose)
       Shoes::ListBox.new app, parent, input_opts.merge(choose: 'Wine')
     end
   end

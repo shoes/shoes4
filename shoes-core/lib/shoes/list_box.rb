@@ -39,7 +39,6 @@ class Shoes
     def after_initialize
       proxy_array = Shoes::ProxyArray.new(items, @gui)
       @style[:items] = proxy_array
-      choose @style[:choose]
     end
 
     def items=(vanilla_array)
