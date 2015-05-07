@@ -25,6 +25,7 @@ simple-editor.rb
 simple-face.rb
 simple-flow-wrap.rb
 simple-font.rb
+simple-form.rb
 simple-fullscreen.rb
 simple-guess-game.rb
 simple-image-fill.rb
