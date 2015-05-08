@@ -29,3 +29,7 @@ Style/TrailingComma:
 # methods)
 Style/TrivialAccessors:
   Enabled: false
+
+# We don't care if you use %w or literal string arrays
+Style/WordArray:
+  Enabled: false
