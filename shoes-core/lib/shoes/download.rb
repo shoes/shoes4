@@ -31,6 +31,7 @@ class Shoes
       @blk = slot.create_bound_block(blk)
       @progress_blk = slot.create_bound_block(@opts[:progress])
       @finish_blk = slot.create_bound_block(@opts[:finish])
+      @error_blk = slot.create_bound_block(@opts[:error] || default_error_proc)
     end
 
     def start
@@ -84,14 +85,16 @@ class Shoes
         rescue SocketError => e
           Shoes.logger.error e
         rescue => e
-          eval_block(error_proc, e)
+          eval_block(@error_blk, e)
         end
       end
     end
 
-    def error_proc
+    def default_error_proc
       lambda do |exception|
-        raise exception
+        Shoes.logger.error "Failure downloading #{@url}. To handle this yourself, pass `:error` option to the download call."
+        Shoes.logger.error exception.message
+        Shoes.logger.error exception.backtrace.join("\n\t")
       end
     end
 

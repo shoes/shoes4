@@ -15,10 +15,8 @@ describe Shoes::Download do
   let(:length) {download.length}
   let(:content_length) {download.content_length}
 
-  let(:bound_block) { Proc.new {} }
-
   before do
-    expect(app.current_slot).to receive(:create_bound_block).at_least(1) { |blk| blk ? bound_block : nil }
+    expect(app.current_slot).to receive(:create_bound_block).at_least(1) { |blk| blk ? blk : nil }
 
     stub_request(:get, name)
       .to_return(:status => response_status, :body => response_body, :headers => response_headers)
@@ -79,7 +77,7 @@ describe Shoes::Download do
     context 'with content length' do
       it 'calls the progress proc from start, download and finish' do
         expect(download.gui).to have_received(:eval_block).
-                                  with(bound_block, download).
+                                  with(progress_proc, download).
                                   exactly(3).times
       end
     end
@@ -89,7 +87,7 @@ describe Shoes::Download do
 
       it 'does not call on progress, but called from content length and finish' do
         expect(download.gui).to have_received(:eval_block).
-          with(bound_block, download).
+          with(progress_proc, download).
           twice
       end
 
@@ -111,7 +109,7 @@ describe Shoes::Download do
 
     context 'with a block' do
       it 'calls the block with a result' do
-        expect(download.gui).to have_received(:eval_block).with(bound_block, result)
+        expect(download.gui).to have_received(:eval_block).with(input_block, result)
       end
 
       describe 'response object' do
@@ -138,11 +136,12 @@ describe Shoes::Download do
     end
 
     context 'with a finish proc' do
-      let(:opts) { {save: "nasa50th.gif", finish: input_block} }
+      let(:finish_proc) { Proc.new {} }
+      let(:opts) { {save: "nasa50th.gif", finish: finish_proc} }
       subject(:download) { Shoes::Download.new app, parent, name, opts }
 
       it 'calls the finish proc' do
-        expect(download.gui).to have_received(:eval_block).with(bound_block, subject)
+        expect(download.gui).to have_received(:eval_block).with(finish_proc, subject)
       end
     end
 
@@ -168,6 +167,21 @@ describe Shoes::Download do
 
       download.start
       download.join_thread
+    end
+
+    describe 'with custom error blocks' do
+      let(:error_proc) { Proc.new { } }
+      let(:opts) { {save: "nasa50th.gif", error: error_proc} }
+
+      it 'gets called' do
+        error = StandardError.new("Nope")
+
+        expect(download.gui).to receive(:eval_block).with(error_proc, error)
+        allow(download).to receive(:open).and_raise(error)
+
+        download.start
+        download.join_thread
+      end
     end
   end
 end
