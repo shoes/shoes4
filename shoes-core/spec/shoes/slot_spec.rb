@@ -30,7 +30,7 @@ describe Shoes::Slot do
 
   describe '#clear' do
     def add_text_block
-      Shoes::TextBlock.new app, slot, ['text']
+      Shoes::Para.new app, slot, ['text']
     end
 
     before :each do
