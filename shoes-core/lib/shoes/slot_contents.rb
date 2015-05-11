@@ -9,6 +9,10 @@ class Shoes
       super(@contents)
     end
 
+    def prepending?
+      @prepending
+    end
+
     def add_element(element)
       if @prepending
         prepend_element element
