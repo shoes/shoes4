@@ -71,30 +71,41 @@ class Shoes
         else
           original_height = self.height
           @current_position = positioning(element, @current_position)
-          determine_slot_height
 
-          height_delta = self.height - original_height
-          if height_delta > 0 && parent.respond_to?(:bump_current_position)
-            parent.bump_current_position(self, height_delta)
-          end
+          height_delta = slot_grew_by(original_height)
+          bump_parent_current_position(height_delta)
         end
       end
+    end
+
+    def slot_grew_by(original_height)
+      determine_slot_height
+      self.height - original_height
+    end
+
+    def bump_parent_current_position(height_delta)
+      return unless height_delta > 0
+      return unless parent.respond_to?(:bump_current_position)
+
+      parent.bump_current_position(self, height_delta)
     end
 
     # This method gets called when one of our child slots got larger, so we
     # need to move our current position to accomodate.
     def bump_current_position(growing_slot, height_delta)
-      next_sibling  = contents.index(growing_slot) + 1
-      next_siblings = contents[next_sibling..-1]
-      sibling_slots_following = next_siblings.any? { |e| e.is_a?(Slot) }
-
       # If intermediate child changed, give up and hit it with the big hammer
-      if sibling_slots_following
+      if any_sibling_slots_following?(growing_slot)
         contents_alignment
       else
         @current_position.y += height_delta
         @current_position.next_line_start += height_delta
       end
+    end
+
+    def any_sibling_slots_following?(growing_slot)
+      next_sibling  = contents.index(growing_slot) + 1
+      next_siblings = contents[next_sibling..-1]
+      next_siblings.any? { |e| e.is_a?(Slot) }
     end
 
     def remove_child(element)
