@@ -11,6 +11,14 @@ describe Shoes::Slot do
   let(:input_opts) { {left: left, top: top, width: width, height: height} }
   subject(:slot) { Shoes::Slot.new(app, parent, input_opts) }
 
+  before do
+    # In production this is filled in by Stack and Flow, but we don't want to
+    # trip it in our tests against Slot directly.
+    allow(slot).to receive(:position_element) do |element, current_position|
+      slot.send(:move_to_next_line, element, current_position)
+    end
+  end
+
   it_behaves_like "object with dimensions"
 
   it_behaves_like "object with style" do

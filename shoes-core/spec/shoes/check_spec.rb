@@ -3,6 +3,7 @@ require 'shoes/spec_helper'
 describe Shoes::Check do
   include_context "dsl app"
 
+  let(:input_opts) { { width: 22, height: 22 } }
   subject { Shoes::Check.new(app, parent, input_opts, input_block) }
 
   it_behaves_like "checkable"

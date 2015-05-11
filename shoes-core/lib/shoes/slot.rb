@@ -28,12 +28,11 @@ class Shoes
     end
 
     def handle_block(blk)
+      @current_position = CurrentPosition.new element_left,
+                                              element_top,
+                                              element_top
       @blk = blk
       eval_block blk
-    end
-
-    def after_initialize(*_)
-      contents_alignment
     end
 
     def set_default_dimension_values
@@ -63,6 +62,39 @@ class Shoes
 
     def add_child(element)
       contents.add_element element
+
+      if !element.hidden? && element.takes_up_space?
+        # Prepending would entail repositioning everyone after us, so just give
+        # it up and let contents_alignment save us the work.
+        if contents.prepending?
+          contents_alignment
+        else
+          original_height = self.height
+          @current_position = positioning(element, @current_position)
+          determine_slot_height
+
+          height_delta = self.height - original_height
+          if height_delta > 0 && parent.respond_to?(:bump_current_position)
+            parent.bump_current_position(self, height_delta)
+          end
+        end
+      end
+    end
+
+    # This method gets called when one of our child slots got larger, so we
+    # need to move our current position to accomodate.
+    def bump_current_position(growing_slot, height_delta)
+      next_sibling  = contents.index(growing_slot) + 1
+      next_siblings = contents[next_sibling..-1]
+      sibling_slots_following = next_siblings.any? { |e| e.is_a?(Slot) }
+
+      # If intermediate child changed, give up and hit it with the big hammer
+      if sibling_slots_following
+        contents_alignment
+      else
+        @current_position.y += height_delta
+        @current_position.next_line_start += height_delta
+      end
     end
 
     def remove_child(element)
@@ -133,15 +165,15 @@ class Shoes
     CurrentPosition = Struct.new(:x, :y, :next_line_start)
 
     def position_contents
-      current_position = CurrentPosition.new element_left,
+      @current_position = CurrentPosition.new element_left,
                                              element_top,
                                              element_top
 
       contents.each do |element|
         next if element.hidden?
-        current_position = positioning(element, current_position)
+        @current_position = positioning(element, @current_position)
       end
-      current_position
+      @current_position
     end
 
     def positioning(element, current_position)
