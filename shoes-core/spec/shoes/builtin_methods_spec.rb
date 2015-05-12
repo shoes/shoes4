@@ -96,7 +96,6 @@ describe Shoes::BuiltinMethods do
       end
     end
 
-
     describe 'does not get to the nitty gritty helper_methods' do
       helper_methods = [:image_file?, :image_pattern]
 

@@ -54,7 +54,6 @@ describe Shoes::Swt::Keypress do
     test_character_press(character, state_modifier, result)
   end
 
-
   describe 'works with simple keys such as' do
     it '"a"' do
       test_character_press 'a'
@@ -260,7 +259,6 @@ describe Shoes::Swt::Keypress do
     let(:shell){Java::OrgEclipseSwtWidgets::Shell.new}
     let(:style) {0}
     let(:keyCode) {character.downcase.ord}
-
 
     subject{key_listener.ignore_event? event}
 

@@ -14,7 +14,6 @@ describe Shoes::Swt::LinkSegment do
     10.times {|i| stub_line_bounds(i)}
   end
 
-
   # ....................
   context "empty link" do
     let(:range) { (0...0) }

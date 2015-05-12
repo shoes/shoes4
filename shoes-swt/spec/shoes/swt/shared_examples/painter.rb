@@ -18,7 +18,6 @@ shared_context "painter context" do
   end
 end
 
-
 shared_examples_for "movable painter" do
   describe "when moved" do
     let(:transform) { double("transform").as_null_object }

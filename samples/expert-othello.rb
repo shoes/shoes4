@@ -237,7 +237,6 @@ module Othello
     end
   end
 
-
   def draw_board
     clear do
       background black

@@ -165,11 +165,6 @@ Style/DotPosition:
 Style/EmptyLineBetweenDefs:
   Enabled: false
 
-# Offense count: 34
-# Cop supports --auto-correct.
-Style/EmptyLines:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/EmptyLiteral:

@@ -332,7 +332,6 @@ describe Shoes::Dimensions do
     end
   end
 
-
   describe 'setting ' do
     it 'has a setter for left' do
       subject.left = 66

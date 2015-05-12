@@ -2,7 +2,6 @@
 # by fuksito
 # vitaliy@yanchuk.me
 
-
 class Cell
   WIDTH = 15
   attr_accessor :live, :next_state, :y, :x, :neighbours, :live_neighbours, :app, :shoes_cell

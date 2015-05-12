@@ -240,7 +240,6 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
                     :justify= => nil, :spacing= => nil, :alignment= => nil,
                     line_bounds: bounds, line_count: 1)
 
-
     allow_any_instance_of(Shoes::Swt::TextFontFactory).to receive(:create_font)
 
     segment = Shoes::Swt::TextBlock::TextSegment.new(dsl, text, 1)

@@ -105,7 +105,6 @@ EOS
       end
     end
 
-
     class HexConverter
       def initialize(hex)
         @hex = validate(hex) || fail(ArgumentError, "Bad hex color: #{hex}")

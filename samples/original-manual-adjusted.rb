@@ -468,7 +468,6 @@ rescue => e
   p e.class
 end
 
-
 Shoes::Help = Shoes.make_help_page
 p Shoes::Help
 # added to start the app, was Shoes.manual_as :shoes

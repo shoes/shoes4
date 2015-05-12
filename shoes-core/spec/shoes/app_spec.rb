@@ -128,7 +128,6 @@ describe Shoes::App do
       end
     end
 
-
     describe "default styles" do
       it "are independent among Shoes::App instances" do
         app1 = Shoes::App.new

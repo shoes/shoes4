@@ -243,7 +243,6 @@ module Othello
     end
   end
 
-
   def draw_board
     clear do
       background black
@@ -298,7 +297,6 @@ module Othello
     return false
   end
 end
-
 
 Shoes.app width: 520, height: 600 do
   extend Othello
