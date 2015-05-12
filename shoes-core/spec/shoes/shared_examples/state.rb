@@ -1,5 +1,5 @@
 shared_examples_for "object with state" do
-  let(:input_opts) { {:state => "disabled"} }
+  let(:input_opts) { {state: "disabled"} }
 
   it "should initialize" do
     expect(subject.state).to eq("disabled")

@@ -16,7 +16,7 @@ require 'shoes/helpers/fake_element'
 require 'shoes/helpers/inspect_helpers'
 
 require 'webmock/rspec'
-WebMock.disable_net_connect!(:allow => "codeclimate.com")
+WebMock.disable_net_connect!(allow: "codeclimate.com")
 
 shared_examples = File.join(SHOESSPEC_ROOT, '../../shoes-core/spec/shoes/shared_examples/**/*.rb')
 Dir[shared_examples].each { |f| require f }

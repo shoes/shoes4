@@ -31,7 +31,7 @@ describe Shoes::InternalApp do
     end
 
     context "with custom opts" do
-      let(:input_opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
+      let(:input_opts) { {width: 150, height: 2, title: "Shoes::App Spec", resizable: false} }
 
       it "sets title", :qt do
         expect(subject.app_title).to eq input_opts[:title]
@@ -52,7 +52,7 @@ describe Shoes::InternalApp do
   end
 
   describe 'fullscreen' do
-    let(:input_opts) { {:fullscreen => true} }
+    let(:input_opts) { {fullscreen: true} }
 
     it "sets fullscreen" do
       expect(subject.start_as_fullscreen?).to be_truthy

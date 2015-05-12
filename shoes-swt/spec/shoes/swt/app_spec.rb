@@ -1,20 +1,20 @@
 require "shoes/swt/spec_helper"
 
 describe Shoes::Swt::App do
-  let(:opts) { {:background => Shoes::COLORS[:salmon], :resizable => true} }
+  let(:opts) { {background: Shoes::COLORS[:salmon], resizable: true} }
   let(:app)  { double('app') }
-  let(:dsl)  { double('dsl', :app => app,
-                             :opts => opts,
-                             :width => width,
-                             :height => 0,
-                             :app_title => 'double') }
+  let(:dsl)  { double('dsl', app: app,
+                             opts: opts,
+                             width: width,
+                             height: 0,
+                             app_title: 'double') }
 
-  let(:opts_unresizable) { {:background => Shoes::COLORS[:salmon],
-                            :resizable => false} }
-  let(:app_unresizable) { double('app', :opts => opts_unresizable,
-                                        :width => 0,
-                                        :height => 0,
-                                        :app_title => 'double') }
+  let(:opts_unresizable) { {background: Shoes::COLORS[:salmon],
+                            resizable: false} }
+  let(:app_unresizable) { double('app', opts: opts_unresizable,
+                                        width: 0,
+                                        height: 0,
+                                        app_title: 'double') }
   let(:width) {0}
 
   subject { Shoes::Swt::App.new(dsl) }

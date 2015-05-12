@@ -401,7 +401,7 @@ describe Shoes::Dimensions do
 
   describe 'centered (e.g. left and top are seen as coords for the center)' do
     describe '5 arguments' do
-      subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, :center => true}
+      subject {Shoes::Dimensions.new parent, 100, 50, 40, 20, center: true}
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}

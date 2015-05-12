@@ -44,7 +44,7 @@ def swt_args(args)
   args
 end
 
-task :default => :spec
+task default: :spec
 
 desc "Run all specs"
 task :spec, [:module] => "spec:all"
@@ -104,7 +104,7 @@ namespace :spec do
   end
 
   # Alias for old-schoolers
-  task :dsl => :core
+  task dsl: :core
 
   task :shoes, [:module] do |_t, args|
     Rake::Task['spec:dsl'].invoke(args[:module])

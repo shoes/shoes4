@@ -19,7 +19,7 @@ describe Shoes::Download do
     expect(app.current_slot).to receive(:create_bound_block).at_least(1) { |blk| blk ? blk : nil }
 
     stub_request(:get, name)
-      .to_return(:status => response_status, :body => response_body, :headers => response_headers)
+      .to_return(status: response_status, body: response_body, headers: response_headers)
   end
 
   after do

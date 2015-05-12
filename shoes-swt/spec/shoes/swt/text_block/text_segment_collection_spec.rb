@@ -11,14 +11,14 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   let(:gc) { double("gc") }
   let(:default_text_styles) {
     {
-      :fg          => :fg,
-      :bg          => :bg,
-      :strikecolor => :strikecolor,
-      :undercolor  => :undercolor,
-      :font_detail => {
-        :name   => "font name",
-        :size   => 12,
-        :styles => [::Swt::SWT::NORMAL]
+      fg: :fg,
+      bg: :bg,
+      strikecolor: :strikecolor,
+      undercolor: :undercolor,
+      font_detail: {
+        name: "font name",
+        size: 12,
+        styles: [::Swt::SWT::NORMAL]
       }
     }
   }

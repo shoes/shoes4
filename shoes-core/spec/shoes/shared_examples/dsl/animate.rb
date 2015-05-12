@@ -20,7 +20,7 @@ shared_examples_for "animate DSL method" do
   end
 
   context "with hash argument" do
-    let(:animation) { dsl.animate(:framerate => 17) {} }
+    let(:animation) { dsl.animate(framerate: 17) {} }
 
     it "sets framerate" do
       expect(animation.framerate).to eq(17)

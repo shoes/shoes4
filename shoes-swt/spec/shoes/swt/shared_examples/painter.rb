@@ -1,8 +1,8 @@
 # Provide `shape` (a double) and `subject` (a Painter)
 
 shared_context "painter context" do
-  let(:event) { double("event", :gc => gc) }
-  let(:gc) { double("gc", :get_line_width => sw).as_null_object }
+  let(:event) { double("event", gc: gc) }
+  let(:gc) { double("gc", get_line_width: sw).as_null_object }
   let(:fill) { Shoes::Swt::Color.new(Shoes::Color.new(11, 12, 13, fill_alpha)) }
   let(:stroke) { Shoes::Swt::Color.new(Shoes::Color.new(111, 112, 113, stroke_alpha)) }
   let(:fill_alpha) { 70 }

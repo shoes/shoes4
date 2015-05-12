@@ -3,9 +3,9 @@ require 'shoes/swt/spec_helper'
 describe Shoes::Swt::TextFontFactory do
   let(:font_details) {
     {
-      :name   => "Helvetica",
-      :size   => 16,
-      :styles => [::Swt::SWT::BOLD]
+      name: "Helvetica",
+      size: 16,
+      styles: [::Swt::SWT::BOLD]
     }
   }
 
