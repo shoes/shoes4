@@ -9,7 +9,6 @@
 # FIXME bug if it memorizes it but it's not a valid move
 #
 module Othello
-
   PIECE_WIDTH  = 62
   PIECE_HEIGHT = 62
   TOP_OFFSET   = 47
