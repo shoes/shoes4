@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Team Shoes"]
   s.email       = ["shoes@librelist.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
-  s.summary     = %q{Application packaging for Shoes, the best little GUI toolkit for Ruby.}
-  s.description = %q{Application packaging for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.}
+  s.summary     = 'Application packaging for Shoes, the best little GUI toolkit for Ruby.'
+  s.description = 'Application packaging for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.'
   s.license     = 'MIT'
 
   s.files         = `git ls-files`.split($/)

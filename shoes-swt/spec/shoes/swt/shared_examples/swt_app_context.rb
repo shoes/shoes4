@@ -28,4 +28,3 @@ shared_context "swt app" do
                            gui: parent, x_dimension: double.as_null_object,
                            y_dimension: double.as_null_object)}
 end
-

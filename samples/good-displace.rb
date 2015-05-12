@@ -12,11 +12,11 @@ class Layout
   attr_reader :art, :elements, :width, :margin, :top
 
   def oval
-    @app.oval *position(:oval), width
+    @app.oval(*position(:oval), width)
   end
 
   def rect
-    @app.rect *position(:rect), width
+    @app.rect(*position(:rect), width)
   end
 
   def image
@@ -65,12 +65,12 @@ Shoes.app do
   stack do
     title "Art"
     flow :height => 100 do
-      @art.each &@create_object
+      @art.each(&@create_object)
     end
 
     title "Elements"
     flow :height => 100 do
-      @elements.each &@create_object
+      @elements.each(&@create_object)
     end
 
     flow do

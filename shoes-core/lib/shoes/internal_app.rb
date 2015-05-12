@@ -122,8 +122,8 @@ class Shoes
       @resize_callbacks << blk
     end
 
-    def inspect
-      add_detail_to_inspect super, " \"#{@app_title}\" #{@dimensions.inspect}"
+    def inspect_details
+      "\"#{@app_title}\" #{@dimensions.inspect}"
     end
 
     def self.global_keypresses
@@ -191,7 +191,7 @@ class Shoes
     def setup_global_keypresses
       @app.keypress do |key|
         blk = self.class.global_keypresses[key]
-        execute_block(&blk) if blk
+        execute_block(blk) if blk
       end
     end
 
@@ -199,6 +199,12 @@ class Shoes
       self.class.add_global_keypress(:"alt_/") do
         Logger.setup
       end
+    end
+
+    def update_fill
+    end
+
+    def update_stroke
     end
   end
 end

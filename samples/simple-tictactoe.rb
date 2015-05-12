@@ -91,7 +91,6 @@ class Board
     tics.each do |tic| # Each tic in this array is of the format: [rect, x, y]
       @tics << Tic.new(tic)
     end
-
   end
 
   # Actions for each of the tic's rectangle

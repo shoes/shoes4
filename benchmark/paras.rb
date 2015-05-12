@@ -1,6 +1,10 @@
 require 'benchmark'
 require File.dirname(__FILE__) + '/para_creator'
 
+# doesn't use benchmark/ips as one of the main purposes here is seeing how the
+# app deals with a lot of content (in this case paras/stacks/flows) which is
+# good to measure with explicit numbers. It doesn't get cleared inbetween so
+# per iteration times seems irrelevant.
 Shoes.app do
   extend ParaCreator
 

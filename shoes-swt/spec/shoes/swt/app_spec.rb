@@ -2,11 +2,12 @@ require "shoes/swt/spec_helper"
 
 describe Shoes::Swt::App do
   let(:opts) { {:background => Shoes::COLORS[:salmon], :resizable => true} }
-  let(:app) { double('app', :opts => opts,
-                            :width => width,
-                            :height => 0,
-                            :app_title => 'double') }
-  let(:dsl) { app }
+  let(:app)  { double('app') }
+  let(:dsl)  { double('dsl', :app => app,
+                             :opts => opts,
+                             :width => width,
+                             :height => 0,
+                             :app_title => 'double') }
 
   let(:opts_unresizable) { {:background => Shoes::COLORS[:salmon],
                             :resizable => false} }
@@ -16,7 +17,7 @@ describe Shoes::Swt::App do
                                         :app_title => 'double') }
   let(:width) {0}
 
-  subject { Shoes::Swt::App.new(app) }
+  subject { Shoes::Swt::App.new(dsl) }
 
   it { is_expected.to respond_to :clipboard }
   it { is_expected.to respond_to :clipboard= }
@@ -42,6 +43,14 @@ describe Shoes::Swt::App do
       subject
       expect(Shoes::Swt.apps.length).to eq(old_apps_length + 1)
       expect(Shoes::Swt.apps.include?(subject)).to be_truthy
+    end
+
+    it "unregisters" do
+      old_apps_length = Shoes::Swt.apps.length
+      expect(Shoes).to receive(:unregister)
+
+      subject.send(:unregister_app).call()
+      expect(Shoes::Swt.apps.length).to eq(old_apps_length)
     end
   end
 

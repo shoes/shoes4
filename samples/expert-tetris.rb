@@ -8,7 +8,7 @@
 #  up - rotate the piece 90 degrees clockwise
 #  down - drop the piece faster
 #  esc - quit the game
-# 
+#
 # For more details see http://codeincomplete.com/posts/2014/11/7/tetris_shoes/
 #
 
@@ -83,7 +83,6 @@ class Tetris
   #----------------------------------------------------------------------------
 
   def update(seconds)
-
     action = actions.shift
     case action
     when :left   then move(:left)
@@ -97,7 +96,6 @@ class Tetris
       @dt = dt - pace
       drop
     end
-
   end
 
   #----------------------------------------------------------------------------
@@ -157,7 +155,7 @@ class Tetris
   def reward_for_piece
     @score = score + 10
   end
-  
+
   def reward_lines(lines)
     @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1))   # e.g. 1: 100, 2: 200, 3: 400, 4: 800
     @pace  = [pace - lines*PACE[:step], PACE[:min]].max
@@ -178,7 +176,7 @@ class Tetris
   def new_bag
     [I,I,I,I,J,J,J,J,L,L,L,L,O,O,O,O,S,S,S,S,T,T,T,T,Z,Z,Z,Z].shuffle
   end
-    
+
   def random_piece
     @bag = new_bag if bag.empty?
     Piece.new(bag.pop)
@@ -331,4 +329,3 @@ Shoes.app :title => 'Tetris', :width => WIDTH, :height => HEIGHT do
 end
 
 #==================================================================================================
-

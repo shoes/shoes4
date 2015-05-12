@@ -6,7 +6,7 @@ describe Shoes::Link do
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
 
-  subject { Shoes::Link.new(app, texts, {color: :blue}) }
+  subject { Shoes::Link.new(app, texts, color: :blue) }
 
   context "initialize" do
     it "should set up text" do

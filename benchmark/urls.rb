@@ -1,4 +1,4 @@
-require 'benchmark'
+require 'benchmark/ips'
 require File.dirname(__FILE__) + '/para_creator'
 
 
@@ -10,14 +10,9 @@ class UrlBenachmark < Shoes
 
   def index
     button 'Start benchmark' do
-      Benchmark.bm do |benchmark|
-
-        benchmark.report '10 switches' do
-          10.times do visit_both end
-        end
-
-        benchmark.report ' 30 switches' do
-          30.times do visit_both end
+      Benchmark.ips do |benchmark|
+        benchmark.report 'visit both urls' do
+          visit_both
         end
       end
     end

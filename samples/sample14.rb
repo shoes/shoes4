@@ -33,12 +33,12 @@ Shoes.app width: 537, height: 500 do
         ry = Math::sin(d) * 100
         center_x = -current_size/2 + rx + mx
         center_y = -current_size/2 + ry + my
-        unless red_circles.size == 10
-          red_circles << oval(center_x, center_y, current_size, current_size)
-        else
+        if red_circles.size == 10
           r = red_circles[i]
           r.style fill: red(color)
           r.left, r.top, r.width, r.height = center_x, center_y, current_size, current_size
+        else
+          red_circles << oval(center_x, center_y, current_size, current_size)
         end
       end
 
@@ -51,12 +51,12 @@ Shoes.app width: 537, height: 500 do
         ry = Math::sin(d) * 150
         center_x = -current_size/2 + rx + mx
         center_y = -current_size/2 + ry + my
-        unless blue_circles.size == 20
-          blue_circles << oval(center_x, center_y, current_size, current_size)
-        else
+        if blue_circles.size == 20
           b = blue_circles[i]
           b.style fill: blue(color)
           b.left, b.top, b.width, b.height = center_x, center_y, current_size, current_size
+        else
+          blue_circles << oval(center_x, center_y, current_size, current_size)
         end
       end
     #end

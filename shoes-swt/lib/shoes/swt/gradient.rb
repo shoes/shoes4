@@ -29,25 +29,27 @@ class Shoes
         @dsl.alpha
       end
 
-      def apply_as_fill(gc, left, top, width, height, angle = 0)
-        pattern = create_pattern(left, top, width, height, -angle)
+      def apply_as_fill(gc, dsl)
+        pattern = create_pattern(dsl)
         gc.set_background_pattern pattern
       end
 
-      def apply_as_stroke(gc, left, top, width, height, angle = 0)
-        pattern = create_pattern(left, top, width, height, -angle)
+      def apply_as_stroke(gc, dsl)
+        pattern = create_pattern(dsl)
         gc.set_foreground_pattern pattern
       end
 
       private
+      def create_pattern(dsl)
+        width  = dsl.element_width * 0.5
+        height = dsl.element_height * 0.5
+        angle  = normalize_angle(-dsl.angle)
+        left, top, width, height  = determine_args_based_on_angle(angle,
+                                      dsl.element_left, dsl.element_top,
+                                      width, height)
 
-      def create_pattern(left, top, width, height, angle)
-        width  = width * 0.5
-        height = height * 0.5
-        angle  = normalize_angle(angle)
-        left, top, width, height  = determine_args_based_on_angle(angle, left, top, width, height)
-
-        pattern = ::Swt::Pattern.new Shoes.display, left, top, width, height, color1.real, color2.real
+        pattern = ::Swt::Pattern.new Shoes.display, left, top, width, height,
+                                     color1.real, color2.real
         @patterns << pattern
         pattern
       end

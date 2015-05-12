@@ -2,7 +2,7 @@
 # based on the cairo curve_to example
 # http://www.cairographics.org/samples/curve_to/
 #
-Shoes.app do  
+Shoes.app do
   x, y = 25.6, 128.0
   x1 = 102.4; y1 = 230.4
   x2 = 153.6; y2 = 25.6

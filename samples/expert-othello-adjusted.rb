@@ -92,9 +92,8 @@ module Othello
     end
 
     def skip_turn?
-      possibles = []
       @board.each_with_index { |col,col_index|
-        col.each_with_index { |cell,row_index|
+        col.each_with_index { |_cell,row_index|
           return false if possible_move?([col_index,row_index])
         }
       }
@@ -103,7 +102,6 @@ module Othello
 
     def possible_move?(c=[0,0])
       return nil if board_at(c) != 0
-      possible_moves = []
       piece = current_player.piece
       opp_piece = current_player.opp_piece
       pieces_to_change = []
@@ -267,10 +265,10 @@ module Othello
 
             if cell != 0
               strokewidth 0
-              fill (cell == 1 ? rgb(100,100,100) : rgb(155,155,155))
+              fill(cell == 1 ? rgb(100,100,100) : rgb(155,155,155))
               oval(left+3, top+4, PIECE_WIDTH-10, PIECE_HEIGHT-10)
 
-              fill (cell == 1 ? black : white)
+              fill(cell == 1 ? black : white)
               oval(left+5, top+5, PIECE_WIDTH-10, PIECE_HEIGHT-10)
             end
           end
@@ -291,7 +289,7 @@ module Othello
 
   def find_piece(x,y)
     GAME.board.each_with_index { |row_array, row|
-      row_array.each_with_index { |col_array, col|
+      row_array.each_with_index { |_col_array, col|
         left, top = left_top_corner_of_piece(col, row).map { |i| i - 5}
         right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i -5 }
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
@@ -308,8 +306,9 @@ Shoes.app width: 520, height: 600 do
 
   draw_board
 
-  click { |button, x, y|
-    if coords = find_piece(x,y)
+  click { |_button, x, y|
+    coords = find_piece(x,y)
+    if coords
       begin
         GAME.lay_piece(coords)
         GAME.next_turn
@@ -319,7 +318,7 @@ Shoes.app width: 520, height: 600 do
         alert(e.message)
       end
     else
-      # alert("Not a piece.")
+      alert("Not a piece.")
     end
   }
 end

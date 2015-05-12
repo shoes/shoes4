@@ -14,4 +14,3 @@ Benchmark.ips do |benchmark|
     dimension.element_extent
   end
 end
-

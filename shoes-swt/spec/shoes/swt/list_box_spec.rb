@@ -10,7 +10,7 @@ describe Shoes::Swt::ListBox do
   let(:block)  { ->(){} }
   let(:real)   { double('real', text: "", :items= => true,
                         set_size: true, add_selection_listener: true,
-                        disposed?: false ) }
+                        disposed?: false) }
 
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 
@@ -38,6 +38,12 @@ describe Shoes::Swt::ListBox do
 
   it "should call text= when choosing" do
     expect(real).to receive(:text=).with "Bacon"
+    subject.choose "Bacon"
+  end
+
+  it "should notify dsl of changes when choosing" do
+    allow(real).to receive(:text=)
+    expect(dsl).to receive(:call_change_listeners)
     subject.choose "Bacon"
   end
 

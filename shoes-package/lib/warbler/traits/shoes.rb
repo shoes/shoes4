@@ -27,7 +27,7 @@ module Warbler
       end
 
       def after_configure
-        config.init_contents << StringIO.new("require 'shoes'\nShoes.configuration.backend = :swt\n")
+        config.init_contents << StringIO.new("require 'shoes'\nrequire 'shoes/swt'\nShoes::Swt.initialize_backend\n")
       end
 
       def update_archive(jar)

@@ -43,7 +43,7 @@ class Shoes
         @element.cubic_to(cx1, cy1, cx2, cy2, x, y)
       end
 
-      def arc(x, y, width, height, start_angle, arc_angle)
+      def arc_to(x, y, width, height, start_angle, arc_angle)
         @element.add_arc(x - (width / 2), y - (height / 2), width, height,
                          -start_angle * 180 / ::Shoes::PI,
                          (start_angle - arc_angle) * 180 / ::Shoes::PI)

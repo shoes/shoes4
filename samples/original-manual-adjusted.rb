@@ -119,7 +119,7 @@ module Shoes::Manual
           sample_page
         when :list
           text.each { |t| stack(:margin_left => 30) {
-            fill black; oval -10, 7, 6; dewikify_p :para, t } }
+            fill black; oval(-10, 7, 6); dewikify_p :para, t } }
         else
           dewikify_p sym, text
         end
@@ -193,8 +193,8 @@ module Shoes::Manual
         stack :margin_left => 20 do
           flow do
             para "▸ ", :font => case RUBY_PLATFORM
-              when /mingw/; "MS UI Gothic"
-              when /darwin/; "AppleGothic, Arial"
+              when /mingw/  then "MS UI Gothic"
+              when /darwin/ then "AppleGothic, Arial"
               else "Arial"
               end
             para k
@@ -206,7 +206,7 @@ module Shoes::Manual
         shown << k
       end
     end
-    tree.sort.each &index_p
+    tree.sort.each(&index_p)
   end
 
   def run_code str
@@ -230,10 +230,10 @@ module Shoes::Manual
 
           hsh = {'title' => k2, 'section' => k,
             'description' => meth[0],
-            'methods' => (meth[1..-1]/2).map { |_k,_v|
-              @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{_k}", :body => "#{_k}\n#{_v}".downcase
-              @mindex["#{k2t}.#{_k[/[\w\.]+/]}"] = [k2t, _k]
-              [_k, _v]
+            'methods' => (meth[1..-1]/2).map { |k3,v3|
+              @search.add_document :uri => "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", :body => "#{k3}\n#{v3}".downcase
+              @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+              [k3, v3]
             }
           }
           @methods[k2t] = hsh
@@ -251,7 +251,7 @@ module Shoes::Manual
   end
 
   def show_search
-    @toc.each { |k,v| v.hide }
+    @toc.each { |_k,v| v.hide }
     @title.replace "Search"
     @doc.clear do
       dewikify_p :para, "Try method names (like `button` or `arrow`) or topics (like `slots`)", :align => 'center'
@@ -324,7 +324,7 @@ module Shoes::Manual
     @toc.each { |k,v| v.send(k == sect_cls ? :show : :hide) }
     @title.replace sect_s
     @doc.clear(&dewikify_hi(sect_h['description'], terms, true))
-    add_next_link(@docs.index { |x,| x == sect_s }, -1) rescue nil
+    add_next_link(@docs.index { |x| x == sect_s }, -1) rescue nil
     app.slot.scroll_top = 0
   end
 
@@ -333,7 +333,7 @@ module Shoes::Manual
     @title.replace meth_h['title']
     @doc.clear do
       unless meth_a
-        instance_eval &dewikify_hi(meth_h['description'], terms, true)
+        instance_eval(&dewikify_hi(meth_h['description'], terms, true))
       end
       meth_h['methods'].each do |mname, expl|
         if meth_a.nil? or meth_a == mname
@@ -341,19 +341,19 @@ module Shoes::Manual
           stack(:margin_top => 8, :margin_bottom => 8) {
             background "#333".."#666", :curve => 3, :angle => 90
             tagline sig, (span("»", val, :stroke => "#BBB") if val), :margin => 4 }
-          instance_eval &dewikify_hi(expl, terms)
+          instance_eval(&dewikify_hi(expl, terms))
         end
       end
     end
     optn = nil
-    docn = @docs.index { |_,h| optn = h['sections'].index { |x,| x == meth_s } } rescue nil
+    docn = @docs.index { |_,h| optn = h['sections'].index { |x| x == meth_s } } rescue nil
     add_next_link(docn, optn) if docn
     app.slot.scroll_top = 0
   end
 
   def manual_search(terms)
     terms += " " if terms.length == 1
-    @search.find_all(terms).map do |title, count|
+    @search.find_all(terms).map do |title|
       title.split(" ", 2)
     end
   end
@@ -374,7 +374,7 @@ module Shoes::Manual
           end
           body do
             div.main! do
-              div.manual! &blk
+              div.manual!(&blk)
               div.sidebar do
                 img :src => "static/shoes-icon.png"
                 ul do
@@ -442,11 +442,11 @@ def Shoes.make_help_page
             :size => 11, :margin => 4, :margin_top => 0
           @toc[sect_cls] =
             stack :hidden => @toc.empty? ? false : true do
-              links = sect_h['sections'].map do |meth_s, meth_h|
+              links = sect_h['sections'].map do |meth_s|
                 [link(meth_s) { open_methods(meth_s) }, "\n"]
               end.flatten
               links[-1] = {:size => 9, :margin => 4, :margin_left => 10}
-              para *links
+              para(*links)
             end
         end
       end

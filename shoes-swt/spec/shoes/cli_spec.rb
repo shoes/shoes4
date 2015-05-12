@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::CLI do
-  subject {Shoes::CLI.new}
+  subject {Shoes::CLI.new("swt")}
 
   before :each do
     allow(subject.packager).to receive :run

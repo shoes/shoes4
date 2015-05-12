@@ -7,7 +7,7 @@ def jruby_run(cmd, swt = false)
 
   # see https://github.com/jruby/jruby/wiki/FAQs
   # "How can I increase the heap/memory size when launching a sub-JRuby?"
-  sh( "jruby --debug --1.9 -Ispec #{opts} -S #{cmd}" )
+  sh("jruby --debug --1.9 -Ispec #{opts} -S #{cmd}")
 end
 
 def rspec(files, options = "")
@@ -59,20 +59,20 @@ namespace :spec do
 
   ie. $ rake spec:all[Flow]
   "
-  task "all", [:module] do |t, args|
+  task "all", [:module] do |_t, args|
     Rake::Task["spec:shoes"].invoke(args[:module])
     Rake::Task["spec:swt"].invoke(args[:module])
     Rake::Task["spec:package"].invoke(args[:module])
   end
 
-  task :swt, [:module] do |t, args|
+  task :swt, [:module] do |_t, args|
     Rake::Task['spec:swt:all'].invoke(args[:module])
   end
 
   namespace :swt do
     desc "Run all specs with SWT backend
     Limit the examples to specific :modules : "
-    task :all, [:module] do |t, args|
+    task :all, [:module] do |_t, args|
       argh = swt_args(args)
       files = (Dir['shoes-swt/spec/shoes/**/*_spec.rb'] +
                Dir['shoes-core/spec/shoes/**/*_spec.rb']).join ' '
@@ -80,14 +80,14 @@ namespace :spec do
     end
 
     desc "Run SWT backend specs isolated from DSL"
-    task :isolation, [:module] do |t, args|
+    task :isolation, [:module] do |_t, args|
       argh = swt_args(args)
       files = Dir['shoes-swt/spec/shoes/**/*_spec.rb'].join ' '
       jruby_rspec(files, argh)
     end
 
     desc "Run DSL specs integrated with SWT backend"
-    task :integration, [:module] do |t, args|
+    task :integration, [:module] do |_t, args|
       argh = swt_args(args)
       files = Dir['shoes-core/spec/shoes/**/*_spec.rb'].join ' '
       jruby_rspec(files, argh)
@@ -96,7 +96,7 @@ namespace :spec do
 
   desc "Run specs for Shoes DSL
   Limit the examples to specific :modules : "
-  task :core, [:module] do |t, args|
+  task :core, [:module] do |_t, args|
     argh = args.to_hash
     argh[:require] = 'shoes-core/spec/spec_helper'
     files = Dir['shoes-core/spec/shoes/**/*_spec.rb'].join ' '
@@ -106,7 +106,7 @@ namespace :spec do
   # Alias for old-schoolers
   task :dsl => :core
 
-  task :shoes, [:module] do |t, args|
+  task :shoes, [:module] do |_t, args|
     Rake::Task['spec:dsl'].invoke(args[:module])
   end
 

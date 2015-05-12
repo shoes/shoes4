@@ -307,9 +307,8 @@ describe Shoes::Dimension do
     it {is_expected.to be_in_bounds 105}
     it {is_expected.to be_in_bounds 20.021}
     it {is_expected.not_to be_in_bounds absolute_end + ONE_PIXEL}
-    it {is_expected.not_to be_in_bounds absolute_start - ONE_PIXEL
-    }
-    it {is_expected.not_to be_in_bounds -5}
+    it {is_expected.not_to be_in_bounds absolute_start - ONE_PIXEL }
+    it {is_expected.not_to be_in_bounds(-5)}
     it {is_expected.not_to be_in_bounds 0}
     it {is_expected.not_to be_in_bounds 150}
     it {is_expected.not_to be_in_bounds 123178}
@@ -334,12 +333,12 @@ describe Shoes::Dimension do
 
     it 'parses negative values' do
       subject.start = '-13'
-      expect(subject.start).to eq -13
+      expect(subject.start).to eq(-13)
     end
 
     it 'even parses negative values with px' do
       subject.start = '-22px'
-      expect(subject.start).to eq -22
+      expect(subject.start).to eq(-22)
     end
 
     it 'returns nil for unknown values' do
@@ -397,7 +396,7 @@ describe Shoes::Dimension do
 
       it 'can still handle special values like a negative extent' do
         subject.extent = -10
-        expect(subject.extent).to eq (parent_extent - 2 * margin) - 10
+        expect(subject.extent).to eq(parent_extent - 2 * margin - 10)
       end
 
       it 'can also still handle special values like relative values' do
@@ -430,4 +429,3 @@ describe Shoes::Dimension do
   end
 
 end
-

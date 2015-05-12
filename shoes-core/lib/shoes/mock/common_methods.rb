@@ -10,6 +10,12 @@ class Shoes
 
       def update_visibility
       end
+
+      def update_fill
+      end
+
+      def update_stroke
+      end
     end
   end
 end

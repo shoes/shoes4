@@ -56,11 +56,13 @@ Shoes.app title: "A Gentle Reminder",
 
 
   def refresh_todo
-    @gui_todo.replace *(
-      @todo.map { |item|
-        [ item, '  ' ] + [ link('Done') { complete_todo item } ] + [ '  ' ] +
-            [ link('Forget it') { forget_todo item } ] + [ "\n" ]
-      }.flatten
+    @gui_todo.replace(
+      *(
+        @todo.map { |item|
+          [ item, '  ' ] + [ link('Done') { complete_todo item } ] + [ '  ' ] +
+              [ link('Forget it') { forget_todo item } ] + [ "\n" ]
+        }.flatten
+      )
     )
   end
 
@@ -73,18 +75,20 @@ Shoes.app title: "A Gentle Reminder",
     @gui_completed.append do
       background white
 
-      @completed.keys.sort.reverse.each { |day|
+      @completed.keys.sort.reverse_each { |day|
         stack do
           background lightgray
           para strong(day.strftime('%B %d, %Y')), stroke: white
         end
 
         stack do
-          inscription *(
-            @completed[day].map { |item|
-              [ item ] + [ '  ' ] + [ link('Not Done') { undo_todo day, item } ] +
-                  (@completed[day].index(item) == @completed[day].length - 1 ? [ '' ] : [ "\n" ])
-            }.flatten
+          inscription(
+            *(
+              @completed[day].map { |item|
+                [ item ] + [ '  ' ] + [ link('Not Done') { undo_todo day, item } ] +
+                    (@completed[day].index(item) == @completed[day].length - 1 ? [ '' ] : [ "\n" ])
+              }.flatten
+            )
           )
         end
 
