@@ -76,7 +76,7 @@ class Tank
   # ^ sounds like insurance
 
   @@collide_size = 15
-  
+
   def west; @x - @@collide_size; end
   def east; @x + @@collide_size; end
   def north; @y - @@collide_size; end

@@ -160,11 +160,6 @@ Style/DotPosition:
   Enabled: false
 
 # Offense count: 1
-# Cop supports --auto-correct.
-Style/EmptyLiteral:
-  Enabled: false
-
-# Offense count: 1
 Style/EndOfLine:
   Enabled: false
 
