@@ -59,6 +59,7 @@ class Shoes
       end
 
       private
+
       # Copy the master config (including singleton class), since we may be
       # packaging for more than one backend
       def create_config(master_config, backend)

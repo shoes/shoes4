@@ -180,6 +180,7 @@ module Othello
     end
 
     private
+
     def pieces_per_player
       total_squares / 2
     end
