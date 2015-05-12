@@ -14,7 +14,6 @@ describe Shoes::Swt::Keypress do
   end
 
   describe "subclasses" do
-
     describe "Subclass Keypress" do
       it "adds key listener on creation" do
         expect(app).to receive(:add_key_listener)
@@ -187,7 +186,6 @@ describe Shoes::Swt::Keypress do
   end
 
   describe 'special keys' do
-
     ARROW_LEFT = ::Swt::SWT::ARROW_LEFT
 
     def special_key_test(code, expected, modifier = 0)
@@ -253,7 +251,6 @@ describe Shoes::Swt::Keypress do
   end
 
   describe '#ignore_event?' do
-
     let(:character) {'a'}
     let(:event) {double 'key event',
                         widget: widget,
@@ -321,5 +318,4 @@ describe Shoes::Swt::Keypress do
       it_behaves_like 'accepts normal characters'
     end
   end
-
 end

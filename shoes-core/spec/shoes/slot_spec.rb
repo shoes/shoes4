@@ -29,7 +29,6 @@ describe Shoes::Slot do
   end
 
   describe '#clear' do
-
     def add_text_block
       Shoes::TextBlock.new app, slot, ['text']
     end
@@ -61,7 +60,6 @@ describe Shoes::Slot do
         expect(subject.contents.size).to eq 1
       end
     end
-
   end
 
   describe '#remove_child' do

@@ -8,5 +8,4 @@ describe Shoes::Keyrelease do
   it "should clear" do
     expect(keyrelease).to respond_to(:remove)
   end
-
 end

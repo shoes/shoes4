@@ -3,7 +3,6 @@ require 'spec_helper'
 # also for stuff that is hard/brittle to test in isolation
 describe 'Integration specs' do
   describe 'hover & leave' do
-
     # that #hover and #leave are called with @__app__.current_slot is hard to
     # test since therefore there needs to be a current slot which is only during
     # block execution, stubbing it seems fairly brittle and dependent on

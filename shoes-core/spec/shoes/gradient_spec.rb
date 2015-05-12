@@ -27,6 +27,5 @@ describe Shoes::Gradient do
       gradient_2 = Shoes::Gradient.new(color1, new_color)
       expect(subject).not_to eq(gradient_2)
     end
-
   end
 end

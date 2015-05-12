@@ -68,7 +68,6 @@ describe Shoes::Flow do
         let(:input_opts) {{width: element.width + element2.width}}
         it_behaves_like 'positioning in the same line'
       end
-
     end
 
     describe 'when the elements dont fit next to each other' do

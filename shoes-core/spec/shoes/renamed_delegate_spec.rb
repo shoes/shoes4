@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe RenamedDelegate do
-
   class ToDelegate
     def method_key
     end

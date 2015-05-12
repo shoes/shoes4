@@ -1,7 +1,6 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Dimensions do
-
   let(:parent_left) {left}
   let(:parent_top) {top}
   let(:parent_width) {width}
@@ -104,7 +103,6 @@ describe Shoes::Dimensions do
       its(:height) {should be_within(ONE_PIXEL).of 0.5 * parent.height}
 
       describe 'width/height change of the parent' do
-
         # note that here the first assertion/call is necessary as otherwise
         # the subject will only lazily get initialized after the parent width
         # is already adjusted and therefore wrong impls WILL PASS the tests
@@ -140,7 +138,6 @@ describe Shoes::Dimensions do
 
         its(:height) {should eq parent.element_height}
       end
-
     end
 
     describe 'with percentages' do
@@ -447,7 +444,6 @@ describe Shoes::Dimensions do
   end
 
   describe 'in_bounds?' do
-
     let(:left) {10}
     let(:top) {20}
     let(:width) {100}
@@ -530,7 +526,6 @@ describe Shoes::Dimensions do
       before :each do subject.bottom = bottom end
       it_behaves_like 'absolute_y_position'
     end
-
   end
 
   describe 'margins' do
@@ -605,7 +600,6 @@ describe Shoes::Dimensions do
   end
 
   describe 'displace' do
-
     before :each do
       # need to have a rough positon
       subject.absolute_left = 0
@@ -656,7 +650,6 @@ describe Shoes::Dimensions do
         end
       end
     end
-
   end
 
   it {is_expected.to be_takes_up_space}
@@ -771,7 +764,6 @@ describe Shoes::Dimensions do
 end
 
 describe Shoes::DimensionsDelegations do
-
   describe 'with a DSL class and a dimensions method' do
     let(:dimensions) {double('dimensions')}
 
@@ -833,5 +825,4 @@ describe Shoes::DimensionsDelegations do
       expect {subject.parent}.to raise_error
     end
   end
-
 end

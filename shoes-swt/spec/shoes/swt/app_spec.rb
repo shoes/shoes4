@@ -122,5 +122,4 @@ describe Shoes::Swt::App do
       it_behaves_like 'reports client area dimensions'
     end
   end
-
 end

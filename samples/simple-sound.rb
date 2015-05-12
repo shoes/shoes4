@@ -1,5 +1,4 @@
 Shoes.app do
-
   boing     = sound("./samples/sounds/61847__simon-rue__boink-v3.wav")
   fog_horn  = sound("./samples/sounds/145622__andybrannan__train-fog-horn-long-wyomming.aiff")
   explosion = sound("./samples/sounds/102719__sarge4267__explosion.mp3")
@@ -25,6 +24,4 @@ Shoes.app do
     puts "Shields clicked"
     shields.play
   end
-
-
 end

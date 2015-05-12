@@ -41,7 +41,6 @@ Shoes.app height: 250, width: 200, resizable: false do
   background "#EEC".."#996", curve: 5, margin: 2
 
   stack margin: 2 do
-
     stack margin: 8 do
       number_field = para strong(number)
     end
@@ -65,5 +64,4 @@ Shoes.app height: 250, width: 200, resizable: false do
       end
     end
   end
-
 end

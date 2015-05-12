@@ -101,7 +101,6 @@ describe Shoes::Swt::TextBlock::Fitter do
       allow(segment).to receive(:position_at) { segment }
       allow(segment).to receive(:spacing) { 4 }
       allow(segment).to receive(:layout)  { layout }
-
     end
 
     context "to one segment" do

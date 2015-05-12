@@ -205,7 +205,6 @@ describe Shoes::TextBlock do
         expect(subject.desired_width).to eql 100
       end
     end
-
   end
 
   context "cursor management" do

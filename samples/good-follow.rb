@@ -22,5 +22,4 @@ Shoes.app width: 200, height: 200, resizable: false do
       end
     end
   end
-
 end

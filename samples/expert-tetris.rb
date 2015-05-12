@@ -279,7 +279,6 @@ end # class Piece
 #==================================================================================================
 
 Shoes.app :title => 'Tetris', :width => WIDTH, :height => HEIGHT do
-
   game = Tetris.new
 
   keypress do |k|
@@ -321,7 +320,6 @@ Shoes.app :title => 'Tetris', :width => WIDTH, :height => HEIGHT do
 
     last = now
   end
-
 end
 
 #==================================================================================================

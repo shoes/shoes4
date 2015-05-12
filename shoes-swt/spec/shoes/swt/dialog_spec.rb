@@ -3,7 +3,6 @@ require 'shoes/swt/spec_helper'
 main_object = self
 
 describe Shoes::Swt::Dialog do
-
   def double_message_box
     create_double_message_box double(:mb, open: true, :message= => true)
   end
@@ -77,7 +76,6 @@ describe Shoes::Swt::Dialog do
 
   describe 'on the main object' do
     describe '#alert' do
-
       it 'returns nil' do
         double_message_box
         expect(main_object.alert('Something')).to be_nil
@@ -96,5 +94,4 @@ describe Shoes::Swt::Dialog do
       end
     end
   end
-
 end

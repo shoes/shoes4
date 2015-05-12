@@ -5,7 +5,6 @@ require 'shoes/spec_helper'
 main_object = self
 
 describe Shoes::Dialog do
-
   before :each do
     @dialog = Shoes::Dialog.new
   end
@@ -167,5 +166,4 @@ describe Shoes::Dialog do
       expect(@app).to respond_to :ask_color
     end
   end
-
 end

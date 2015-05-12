@@ -1,7 +1,6 @@
 require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::ShoesLayout do
-
   subject do
     result = Shoes::Swt::ShoesLayout.new
     result.gui_app = gui_app

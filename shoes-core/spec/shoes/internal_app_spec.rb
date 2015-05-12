@@ -144,6 +144,5 @@ describe Shoes::InternalApp do
         end
       end
     end
-
   end
 end

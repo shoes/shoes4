@@ -33,5 +33,4 @@ describe Shoes::Font do
       FileUtils.rm_r tmp_font_dir
     end
   end
-
 end

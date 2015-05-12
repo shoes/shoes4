@@ -90,7 +90,6 @@ shared_context 'element one with bottom and right' do
 end
 
 shared_examples_for 'positioning through :_position' do
-
   let(:element) {Shoes::FakeElement.new nil, height: 100, width: 50}
 
   def add_child_and_align

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Shoes::Dimension do
-
   subject {Shoes::Dimension.new parent_dimension}
   let(:start) {10}
   let(:extent) {21}
@@ -218,7 +217,6 @@ describe Shoes::Dimension do
   end
 
   describe '#margins' do
-
     let(:margin_start) {11}
     let(:margin_end) {17}
 
@@ -427,5 +425,4 @@ describe Shoes::Dimension do
       end
     end
   end
-
 end

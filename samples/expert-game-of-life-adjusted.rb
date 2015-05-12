@@ -244,5 +244,4 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
       @new_world.add_diehard
     end
   end
-
 end

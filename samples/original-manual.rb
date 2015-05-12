@@ -386,7 +386,6 @@ module Shoes::Manual
                       end
                     end
                   end
-
                 end
               end
             end
