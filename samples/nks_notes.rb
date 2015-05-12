@@ -1,5 +1,5 @@
 Shoes.app do
-  stack :margin => 20, :width => 250 do
+  stack margin: 20, width: 250 do
     subtitle "Shoes Notebook"
     para "Add a note."
     @add = edit_line
@@ -12,5 +12,5 @@ Shoes.app do
       @add.text = ""
     end
   end
-  @notes = stack :margin => 20, :width => -250
+  @notes = stack margin: 20, width: -250
 end

@@ -29,15 +29,15 @@ describe Shoes::Link do
                                 underline: false, bg: Shoes::COLORS[:green]) }
 
       it "should include defaults" do
-        expect(subject.style).to include(:stroke => Shoes::COLORS[:blue])
+        expect(subject.style).to include(stroke: Shoes::COLORS[:blue])
       end
 
       it "should override defaults" do
-        expect(subject.style).to include(:underline => false)
+        expect(subject.style).to include(underline: false)
       end
 
       it "should include other options" do
-        expect(subject.style).to include(:bg => Shoes::COLORS[:green])
+        expect(subject.style).to include(bg: Shoes::COLORS[:green])
       end
     end
 

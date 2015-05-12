@@ -42,7 +42,7 @@ describe Shoes::Swt::Image do
   end
 
   describe "painting raw images" do
-    let(:image) { File.read(image_path, :mode => "rb") }
+    let(:image) { File.read(image_path, mode: "rb") }
 
     specify "loads image from raw data" do
       subject.real.image_data.width = 3

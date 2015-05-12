@@ -3,9 +3,9 @@ Shoes.app do
   position_report = lambda { |button, button_text| @position_report.replace "#{button_text}: (#{button.left}, #{button.top})" }
   flow margin: 12 do
     # Set up three buttons
-    button "One", :click => proc { |button| position_report.call(button, "One") }
-    @two = button "Two", :click => proc { |button| position_report.call(button, "Two") }
-    button "Three", :click => proc { |button| position_report.call(button, "Three") }
+    button "One", click: proc { |button| position_report.call(button, "One") }
+    @two = button "Two", click: proc { |button| position_report.call(button, "Two") }
+    button "Three", click: proc { |button| position_report.call(button, "Three") }
     @position_report = para ''
     # Bounce the second button
     animate do |i|
