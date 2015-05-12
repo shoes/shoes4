@@ -63,6 +63,7 @@ module Life
   def dead?
     @health == 0
   end
+
   def hurt damage
     @health = [@health - damage, 0].max
   end
@@ -75,6 +76,7 @@ class Tank
   # ^ sounds like insurance
 
   @@collide_size = 15
+  
   def west; @x - @@collide_size; end
   def east; @x + @@collide_size; end
   def north; @y - @@collide_size; end
