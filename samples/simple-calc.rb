@@ -33,7 +33,6 @@ class Calc
     @number = @previous.send(@op, @number.to_i) unless (@previous.nil? or @op.nil? or @number.nil?)
     @op = nil
   end
-
 end
 
 number_field = nil

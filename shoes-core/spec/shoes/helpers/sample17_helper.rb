@@ -10,7 +10,6 @@
 #   end
 #
 class Sample17Helper
-
   def initialize(app)
     # This gives us the Shoes::App
     @app = app.app

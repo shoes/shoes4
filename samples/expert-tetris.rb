@@ -58,7 +58,6 @@ Z = { blocks: {:up => 0x0C60, :right => 0x4C80, :down => 0xC600, :left => 0x2640
 #==================================================================================================
 
 class Tetris
-
   attr :dt,       # time since the current active piece last dropped a row
        :score,    # the current score
        :lost,     # bool to indicate when the game is lost
@@ -214,7 +213,6 @@ class Tetris
       end
     end
   end
-
 end # class Tetris
 
 #==================================================================================================
@@ -222,7 +220,6 @@ end # class Tetris
 #==================================================================================================
 
 class Piece
-
   attr :tetromino,  # the tetromino type
        :direction,  # the rotation direction (:up, :down, :left, :right)
        :x, :y       # the (x,y) position on the board
@@ -275,7 +272,6 @@ class Piece
       bit = bit >> 1
     end
   end
-
 end # class Piece
 
 #==================================================================================================

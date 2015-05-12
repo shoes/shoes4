@@ -56,7 +56,6 @@ class MimickIRB < RubyLex
   ensure
     set_input(StringIO.new)
   end
-
 end
 
 CURSOR = ">>"
