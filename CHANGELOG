@@ -1,4 +1,4 @@
-4.0.0.pre4 (167 commits)
+4.0.0.pre4 (170 commits)
 -------------------------------
 
 This release saw a lot of bug fixing, but no big structural changes (hurray!).
@@ -27,7 +27,7 @@ Improvements (20)
 * Use ProxyArray in ListBox to update appropriately when list changes [36546ab]
 * Rubocop offense fixes [#1112, #1113, #1117]
 
-Bug Fixes (12)
+Bug Fixes (14)
 --------------
 
 * Remove zombie apps when Shoes window closes [2f8fcbf]
@@ -42,6 +42,8 @@ Bug Fixes (12)
 * Fix gem name check on uninstall to avoid stale executables [3707655]
 * Fix for hang during content alignment with text [e2a8bfd]
 * Fix download crash on missing Content-Length header [81f2ebb]
+* Don't choose at DSL level during initialization [acc5d41]
+* Gentler, kinder error handling for downloads [e7409a7]
 
 Contributors (12)
 -----------------
