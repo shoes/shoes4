@@ -8,7 +8,8 @@ describe Shoes::Swt::ListBox do
                         items: items, opts: {},
                         element_width: 200, element_height: 20).as_null_object }
   let(:block)  { ->(){} }
-  let(:real)   { double('real', text: "", :items= => true,
+  let(:real)   { double('real', text: "",
+                        :items= => true, :text= => true,
                         set_size: true, add_selection_listener: true,
                         disposed?: false) }
 
@@ -30,6 +31,12 @@ describe Shoes::Swt::ListBox do
     subject.update_items
     # creation already calls update_items once
     expect(real).to have_received(:items=).with(["hello"]).twice
+  end
+
+  it "should set real text if initialized with choose option" do
+    allow(dsl).to receive(:style) { { choose: "Apple" } }
+    subject
+    expect(real).to have_received(:text=).with("Apple")
   end
 
   it "should respond to choose" do
