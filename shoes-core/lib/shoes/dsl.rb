@@ -107,6 +107,7 @@ require 'shoes/color'
 require 'shoes/dialog'
 require 'shoes/download'
 require 'shoes/font'
+require 'shoes/gif'
 require 'shoes/gradient'
 require 'shoes/image'
 require 'shoes/image_pattern'
@@ -201,6 +202,10 @@ class Shoes
 
     def image(path, styles = {}, &blk)
       create Shoes::Image, path, styles, blk
+    end
+
+    def gif(path, styles = {}, &blk)
+      create Shoes::Gif, path, styles, blk
     end
 
     def border(color, styles = {})
