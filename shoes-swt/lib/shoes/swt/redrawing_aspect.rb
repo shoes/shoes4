@@ -26,6 +26,7 @@ class Shoes
       # These need to trigger a redraw
       SAME_POSITION    = { Common::Visibility      => [:update_visibility],
                            Image                   => [:create_image],
+                           Gif                     => [:create_gif],
                            ::Shoes::Common::Style  => [:update_style],
                            ::Shoes::Common::Remove => [:remove],
                            ::Shoes::Slot           => [:mouse_hovered,
