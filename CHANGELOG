@@ -1,3 +1,58 @@
+4.0.0.pre4 (170 commits)
+-------------------------------
+
+This release saw a lot of bug fixing, but no big structural changes (hurray!).
+
+Along with the bugs, the first big performance tuning work got underway,
+focused on the manual and the Game of Life sample
+(samples/expert-game-of-life-adjusted.rb). Here's to faster Shoes!
+
+Improvements (20)
+-----------------
+
+* Add fallback to retry launching app on thread access error [92257ba]
+* Support click on shape [83bfd8a]
+* Modify #replace to use options hash and parse fonts [cd1313f]
+* Rename Shape#arc to Shape#arc_to (Compatibility) [f6adf46]
+* Allow for selecting between multiple backends [ede7c19, 579e441]
+* Only apply styling to TextSegmentCollection once [74d5681]
+* Cache colors and reduce dimension calculations when painting [0c4be36]
+* Optimize painting to only rotate art elements when necessary [c06f93b]
+* Use benchmark-ips where appropriate in benchmarks [51238f3]
+* Improve performance on Dimension [15121ad, 0167f41]
+* Improve performance on Common::Visibility [77eeb90]
+* Support the hidden style on all elements [63afeca]
+* Move defaulting out of dsl.rb into DSL classes [81092b9]
+* Move guard against empty text segments further up in the chain [f121cac]
+* Use ProxyArray in ListBox to update appropriately when list changes [36546ab]
+* Rubocop offense fixes [#1112, #1113, #1117]
+
+Bug Fixes (14)
+--------------
+
+* Remove zombie apps when Shoes window closes [2f8fcbf]
+* Call change blocks on programmatic list updates [bc5f66d]
+* Default class styles do not override app styles [9915998]
+* Correct Click regions for Shoes::Line [a814dd7]
+* Don't Bundler.require during Picker to avoid Thread Access error [4ae3fc6]
+* Do not crash when quit is called in the initial app block [6235ab5]
+* Fix crash on global keypress [bfa45e7]
+* Fix gradient on Star elements [507c623]
+* Fix text wrapping behavior to avoid clipping and extend background [1e0d948]
+* Fix gem name check on uninstall to avoid stale executables [3707655]
+* Fix for hang during content alignment with text [e2a8bfd]
+* Fix download crash on missing Content-Length header [81f2ebb]
+* Don't choose at DSL level during initialization [acc5d41]
+* Gentler, kinder error handling for downloads [e7409a7]
+
+Contributors (12)
+-----------------
+
+Jason Clark, Tobias Pfeiffer, Jared Moody, KC Erb, seethemhigh, Eric Watson,
+Thomas Graves, David English, Emily Bookstein, bx10000, matugm, Tyler Lemburg
+
+
+
 4.0.0.pre3 (199 commits)
 ------------------------
 

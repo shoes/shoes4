@@ -41,7 +41,7 @@ describe Shoes::Package::JarApp do
       end
     end
 
-    its(:template_path) { should eq(cache_dir.join('shoes-app-template.zip')) }
+    its(:template_path) { should eq(cache_dir.join('shoes-app-template-0.0.2.zip')) }
     its(:remote_template_url) { should eq(Shoes::Package::Configuration::JAR_APP_TEMPLATE_URL) }
   end
 

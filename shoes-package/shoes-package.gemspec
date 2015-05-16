@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "shoes-core", Shoes::Package::VERSION
-  s.add_dependency "furoshiki", "~> 0.3.0"
+  s.add_dependency "furoshiki", "~> 0.3.1"
 end
