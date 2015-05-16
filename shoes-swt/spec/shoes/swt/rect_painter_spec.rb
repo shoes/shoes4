@@ -4,8 +4,8 @@ describe Shoes::Swt::RectPainter do
   include_context "painter context"
 
   let(:corners) { 0 }
-  let(:app) { double('app', :real => container, :add_paint_listener => true, :dsl => dsl) }
-  let(:container) { double('container', :disposed? => false) }
+  let(:app) { double('app', real: container, add_paint_listener: true, dsl: dsl) }
+  let(:container) { double('container', disposed?: false) }
   let(:dsl) { double("dsl object", hidden: false, rotate: 0,
                      element_left: left, element_top: top,
                      element_width: width, element_height: height,

@@ -2,9 +2,9 @@ require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Animation do
   include_context 'swt app'
-  let(:dsl) { double('dsl', :stopped? => false, :removed? => false,
-                     :framerate => 10, :current_frame => nil,
-                     :increment_frame => nil, :blk => block) }
+  let(:dsl) { double('dsl', stopped?: false, removed?: false,
+                     framerate: 10, current_frame: nil,
+                     increment_frame: nil, blk: block) }
   let(:block) { double 'block', call: nil }
   let(:display) { ::Swt.display }
   subject { Shoes::Swt::Animation.new dsl, swt_app }
@@ -51,7 +51,7 @@ describe Shoes::Swt::Animation do
     describe 'disabled' do
       describe 'stopped?' do
         before :each do
-          allow(dsl).to receive_messages :stopped? => true
+          allow(dsl).to receive_messages stopped?: true
           task.call
         end
 
@@ -67,7 +67,7 @@ describe Shoes::Swt::Animation do
 
       describe 'removed?' do
         before :each do
-          allow(dsl).to receive_messages :removed? => true
+          allow(dsl).to receive_messages removed?: true
           task.call
         end
 

@@ -11,7 +11,7 @@ describe Shoes::Flow do
   it_behaves_like "Slot"
 
   describe "initialize" do
-    let(:input_opts) { {:width => 131, :height => 137} }
+    let(:input_opts) { {width: 131, height: 137} }
     it "sets accessors" do
       expect(flow.parent).to eq(parent)
       expect(flow.width).to eq(131)

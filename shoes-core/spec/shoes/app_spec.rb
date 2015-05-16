@@ -64,7 +64,7 @@ describe Shoes::App do
     end
 
     context "from opts" do
-      let(:opts) { {:width => 150, :height => 2, :title => "Shoes::App Spec", :resizable => false} }
+      let(:opts) { {width: 150, height: 2, title: "Shoes::App Spec", resizable: false} }
 
       it "sets width", :qt do
         expect(subject.width).to eq opts[:width]

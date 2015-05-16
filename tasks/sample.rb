@@ -62,6 +62,6 @@ namespace :samples do
   end
 end
 
-task :samples     => ['samples:random']
-task :non_samples => ['samples:bad']
-task :list_non_samples => ['samples:bad_list']
+task samples: ['samples:random']
+task non_samples: ['samples:bad']
+task list_non_samples: ['samples:bad_list']

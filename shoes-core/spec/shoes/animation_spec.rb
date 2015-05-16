@@ -60,7 +60,7 @@ describe Shoes::Animation do
   it { is_expected.not_to be_stopped }
 
   describe "with framerate" do
-    let(:opts) { {:framerate => 36, :app => app} }
+    let(:opts) { {framerate: 36, app: app} }
 
     it "sets framerate" do
       expect(subject.framerate).to eq(36)

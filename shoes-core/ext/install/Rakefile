@@ -15,7 +15,7 @@ require 'fileutils'
 # We also provide a Rubygems plugin to clean up our manual file on uninstall.
 # Post-install hooks didn't seem to work, though, hence the extension trick.
 
-task :default => ['install_script']
+task default: ['install_script']
 
 task :install_script do
   if Gem.win_platform?

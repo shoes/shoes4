@@ -101,7 +101,7 @@ describe Shoes::Package::Configuration do
   end
 
   context "with name, but without explicit shortname" do
-    let(:options) { {:name => "Sugar Clouds"} }
+    let(:options) { {name: "Sugar Clouds"} }
     subject { Shoes::Package::Configuration.create options }
 
     its(:name) { should eq("Sugar Clouds") }
@@ -109,7 +109,7 @@ describe Shoes::Package::Configuration do
   end
 
   context "when the file to run doens't exist" do
-    let(:options) { {:run => "path/to/non-existent/file"} }
+    let(:options) { {run: "path/to/non-existent/file"} }
     subject { Shoes::Package::Configuration.create options }
 
     it { is_expected.not_to be_valid }
@@ -118,7 +118,7 @@ describe Shoes::Package::Configuration do
   context "when osx icon is not specified" do
     include_context 'config'
     let(:valid_config) { Shoes::Package::Configuration.load(@config_filename) }
-    let(:options) { valid_config.to_hash.merge(:icons => {}) }
+    let(:options) { valid_config.to_hash.merge(icons: {}) }
     subject { Shoes::Package::Configuration.create(options) }
 
     it "sets osx icon path to nil" do
@@ -131,7 +131,7 @@ describe Shoes::Package::Configuration do
   end
 
   context "when osx icon is specified, but doesn't exist" do
-    let(:options) { ({:icons => {:osx => "path/to/non-existent/file"}}) }
+    let(:options) { ({icons: {osx: "path/to/non-existent/file"}}) }
     subject { Shoes::Package::Configuration.create options }
 
     it "sets osx icon path" do
