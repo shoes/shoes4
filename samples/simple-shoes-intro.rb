@@ -9,13 +9,13 @@ Shoes.app width: 700, height: 600 do
 
   flow width: 0.6 do
     tagline "It's simple and straightforward. ",
-      link("Shoes ") {alert "Yay!"},
-      "was born to be easy! ",
-      link("Shoes ") {alert "Yay!"},
-      "was born to be easy! ",
-      link("Shoes ") {alert "Yay!"},
-      "was born to be easy! ",
-      "Really, it was made for absolute beginners. "
+            link("Shoes ") {alert "Yay!"},
+            "was born to be easy! ",
+            link("Shoes ") {alert "Yay!"},
+            "was born to be easy! ",
+            link("Shoes ") {alert "Yay!"},
+            "was born to be easy! ",
+            "Really, it was made for absolute beginners. "
   end
 
   subtitle link(strong em("There's ", fg(bg("really ", "really ", yellow), "#f00"), "nothing to it. ")) {alert "Have fun!"}

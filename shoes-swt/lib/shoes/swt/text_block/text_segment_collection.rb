@@ -4,7 +4,7 @@ class Shoes
       class TextSegmentCollection
         extend Forwardable
         def_delegators :@segments, :length, :last, :inject,
-                                   :one?, :any?, :empty?
+                       :one?, :any?, :empty?
 
         attr_reader :dsl, :default_text_styles
 

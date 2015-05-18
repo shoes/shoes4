@@ -20,7 +20,7 @@ describe Shoes::Font do
       result = Shoes::Font.font_paths_from_dir(Shoes::FONT_DIR)
 
       expect(result).to include(Shoes::FONT_DIR + 'Coolvetica.ttf',
-                            Shoes::FONT_DIR + 'Lacuna.ttf')
+                                Shoes::FONT_DIR + 'Lacuna.ttf')
     end
 
     it 'handles sub directories' do

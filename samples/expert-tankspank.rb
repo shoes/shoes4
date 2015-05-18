@@ -107,7 +107,7 @@ class Tank
 
   def fire
     Opp.add_shell Shell.new(@x + 30 * Math.cos(@aim_angle),
-      @y + 30 * Math.sin(@aim_angle), @aim_angle)
+                            @y + 30 * Math.sin(@aim_angle), @aim_angle)
   end
 
   def update button, mouse_x, mouse_y
@@ -313,7 +313,7 @@ class Opp
     cx, cy = (pr + pl) / 2.0, (pb + pt) / 2.0
     points = [[pl, pt], [pr, pt], [pr, pb], [pl, pb]].collect do |x, y|
       [cx + (x - cx) * cos - (y - cy) * sin,
-        cy + (x - cx) * sin + (y - cy) * cos]
+       cy + (x - cx) * sin + (y - cy) * cos]
     end
 
     $app.line(*(points[0] + points[1]))

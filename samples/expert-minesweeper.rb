@@ -80,7 +80,7 @@ class Field
     @app.line(x*cell_size+cell_size / 4 + 1, y*cell_size + cell_size / 5, x*cell_size+cell_size / 4 + 1, y*cell_size+cell_size / 5 * 4)
     @app.fill "#A00"
     @app.rect(x*cell_size+cell_size / 4+2, y*cell_size + cell_size / 5,
-      cell_size / 3, cell_size / 4)
+              cell_size / 3, cell_size / 4)
   end
 
   def render_bomb(x, y)
@@ -110,7 +110,7 @@ class Field
     if self[x, y].number != 0 then
       @app.nostroke
       @app.para self[x, y].number.to_s, left: x*cell_size + 3, top: y*cell_size - 2,
-        font: '13px', stroke: COLORS[self[x, y].number - 1]
+                                        font: '13px', stroke: COLORS[self[x, y].number - 1]
     end
   end
 

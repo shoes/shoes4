@@ -62,7 +62,7 @@ module Shoes::Manual
         stack do
           background "#8A7", margin: [0, 2, 0, 2], curve: 4
           para link("Run this", stroke: "#eee", underline: "none") { run_code(str) },
-            margin: 4, align: 'center', weight: 'bold', size: 9
+               margin: 4, align: 'center', weight: 'bold', size: 9
         end
       end
     end
@@ -155,7 +155,7 @@ module Shoes::Manual
           c = send(color)
           background c
           para strong(color), "\n", c, stroke: (c.dark? ? white : black),
-            margin: 4, align: 'center'
+                                       margin: 4, align: 'center'
         end
       end
     end
@@ -226,12 +226,12 @@ module Shoes::Manual
           @search.add_document uri: "T #{k2t}", body: "#{k2}\n#{meth_plain}".downcase
 
           hsh = {'title' => k2, 'section' => k,
-            'description' => meth[0],
-            'methods' => (meth[1..-1]/2).map { |k3,v3|
+                 'description' => meth[0],
+                 'methods' => (meth[1..-1]/2).map { |k3,v3|
               @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
               @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
               [k3, v3]
-            }
+                 }
           }
           @methods[k2t] = hsh
           [k2t, hsh]
@@ -239,7 +239,7 @@ module Shoes::Manual
 
         @search.add_document uri: "S #{k}", body: "#{k}\n#{sparts[0]}".downcase
         hsh = {'description' => sparts[0], 'sections' => sections,
-           'class' => "toc" + k.downcase.gsub(/\W+/, '')}
+               'class' => "toc" + k.downcase.gsub(/\W+/, '')}
         @sections[k] = hsh
         [k, hsh]
       end
@@ -306,12 +306,12 @@ module Shoes::Manual
     opt1, optn = @docs[docn][1], optn + 1
     if opt1['sections'][optn]
       @doc.para "Next: ",
-        link(opt1['sections'][optn][1]['title']) { open_methods(opt1['sections'][optn][0]) },
-        align: "right"
+                link(opt1['sections'][optn][1]['title']) { open_methods(opt1['sections'][optn][0]) },
+                align: "right"
     elsif @docs[docn + 1]
       @doc.para "Next: ",
-        link(@docs[docn + 1][0]) { open_section(@docs[docn + 1][0].gsub(/\W/, '')) },
-        align: "right"
+                link(@docs[docn + 1][0]) { open_section(@docs[docn + 1][0].gsub(/\W/, '')) },
+                align: "right"
     end
   end
 
@@ -418,16 +418,16 @@ def Shoes.make_help_page
       background black
       stack margin_left: 118 do
         para "The Shoes Manual", stroke: "#eee", margin_top: 8, margin_left: 17,
-          margin_bottom: 0
+                                 margin_bottom: 0
         @title = title docs[0][0], stroke: white, margin: 4, margin_left: 14,
-          margin_top: 0, font: "Coolvetica"
+                                   margin_top: 0, font: "Coolvetica"
       end
       background "rgb(66, 66, 66, 180)".."rgb(0, 0, 0, 0)", height: 0.7
       background "rgb(66, 66, 66, 100)".."rgb(255, 255, 255, 0)", height: 20, bottom: 0
     end
     @doc =
       stack margin_left: 130, margin_top: 20, margin_bottom: 50, margin_right: 50 + gutter,
-        &dewikify(docs[0][-1]['description'], true)
+            &dewikify(docs[0][-1]['description'], true)
     add_next_link(0, -1)
     stack top: 80, left: 0, attach: Shoes::Window do
       @toc = {}
@@ -435,7 +435,7 @@ def Shoes.make_help_page
         docs.each do |sect_s, sect_h|
           sect_cls = sect_h['class']
           para strong(link(sect_s, stroke: black) { open_section(sect_s) }),
-            size: 11, margin: 4, margin_top: 0
+               size: 11, margin: 4, margin_top: 0
           @toc[sect_cls] =
             stack hidden: @toc.empty? ? false : true do
               links = sect_h['sections'].map do |meth_s|
@@ -452,7 +452,7 @@ def Shoes.make_help_page
       end
       stack margin: 12, width: 118 do
         inscription "Shoes #{Shoes::RELEASE_NAME}\nRevision: #{Shoes::REVISION}",
-          size: 7, align: "center", stroke: "#999"
+                    size: 7, align: "center", stroke: "#999"
       end
     end
     image width: 120, height: 120, top: -18, left: 6 do

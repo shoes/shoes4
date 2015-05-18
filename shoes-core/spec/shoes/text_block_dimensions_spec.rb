@@ -62,8 +62,8 @@ describe Shoes::TextBlockDimensions do
 
     describe "with parent" do
       let(:parent) { double('parent', element_width: 100,
-                            x_dimension: double("x"),
-                            y_dimension: double("y")) }
+                                      x_dimension: double("x"),
+                                      y_dimension: double("y")) }
       subject { Shoes::TextBlockDimensions.new(parent, left, top, nil, height) }
 
       it "delegates to parent if no width of its own" do

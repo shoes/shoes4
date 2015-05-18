@@ -43,8 +43,8 @@ describe Shoes::Swt::Keypress do
   def test_character_press(character, state_modifier = 0, result_char = character)
     expect(block).to receive(:call).with(result_char)
     event = double  character: character.ord,
-                  stateMask: 0 | state_modifier,
-                  keyCode: character.downcase.ord
+                    stateMask: 0 | state_modifier,
+                    keyCode: character.downcase.ord
     subject.handle_key_event(event)
   end
 
@@ -190,8 +190,8 @@ describe Shoes::Swt::Keypress do
     def special_key_test(code, expected, modifier = 0)
       expect(block).to receive(:call).with(expected)
       event = double stateMask: modifier,
-                   keyCode: code,
-                   character: 0
+                     keyCode: code,
+                     character: 0
       subject.handle_key_event(event)
     end
 

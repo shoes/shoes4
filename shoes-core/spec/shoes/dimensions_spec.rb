@@ -423,10 +423,10 @@ describe Shoes::Dimensions do
 
     describe 'hash' do
       subject {Shoes::Dimensions.new parent, left:   100,
-                                     top:    50,
-                                     width:  40,
-                                     height: 20,
-                                     center: true }
+                                             top:    50,
+                                             width:  40,
+                                             height: 20,
+                                             center: true }
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}
@@ -457,7 +457,7 @@ describe Shoes::Dimensions do
       it {is_expected.to be_in_bounds 30, 40}
       it {is_expected.to be_in_bounds left, top}
       it {is_expected.to be_in_bounds left + width - ONE_PIXEL,
-                              top + height - ONE_PIXEL}
+                                      top + height - ONE_PIXEL}
       it {is_expected.not_to be_in_bounds left + width, top + height}
       it {is_expected.not_to be_in_bounds 30, top + height}
       it {is_expected.not_to be_in_bounds left + width, 40}
@@ -484,7 +484,7 @@ describe Shoes::Dimensions do
       it {is_expected.to be_in_bounds 200, absolute_top}
       it {is_expected.to be_in_bounds absolute_left, absolute_top}
       it {is_expected.to be_in_bounds absolute_left + width - ONE_PIXEL,
-                              absolute_top + height - ONE_PIXEL
+                                      absolute_top + height - ONE_PIXEL
       }
       it {is_expected.not_to be_in_bounds 80, 400}
     end

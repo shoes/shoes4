@@ -5,9 +5,9 @@ describe Shoes::Swt::Radio do
 
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', :app => shoes_app,
-                     :width= => true, :width => 100,
-                     :height= => true, :height => 200,
-                     :group => nil, :blk => block).as_null_object }
+                            :width= => true, :width => 100,
+                            :height= => true, :height => 200,
+                            :group => nil, :blk => block).as_null_object }
   let(:block) { proc {} }
   let(:real) { double('real').as_null_object }
 

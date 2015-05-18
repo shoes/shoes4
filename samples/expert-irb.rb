@@ -82,8 +82,8 @@ Shoes.app do
       begin
         out, obj = IRBalike.run(@cmd + ';')
         @str += ["#{@cmd}\n",
-          span("#{out}=> #{obj.inspect}\n", stroke: "#fda"),
-          "#{CURSOR} "]
+                 span("#{out}=> #{obj.inspect}\n", stroke: "#fda"),
+                 "#{CURSOR} "]
         @cmd = ""
       rescue MimickIRB::Empty
       rescue MimickIRB::Continue
@@ -91,7 +91,7 @@ Shoes.app do
         @cmd = ""
       rescue Object => e
         @str += ["#{@cmd}\n", span("#{e.class}: #{e.message}\n", stroke: "#fcf"),
-          "#{CURSOR} "]
+                 "#{CURSOR} "]
         @cmd = ""
       end
     when String

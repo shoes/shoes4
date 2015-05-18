@@ -6,7 +6,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   let(:first_segment) { create_segment("first", "first") }
   let(:second_segment) { create_segment("second", "rest") }
   let(:dsl) { double("dsl", font: "", size: 16, style:{},
-                     text_styles: {(0..-1) => ["whatever"]}) }
+                            text_styles: {(0..-1) => ["whatever"]}) }
 
   let(:gc) { double("gc") }
   let(:default_text_styles) {
@@ -25,8 +25,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   describe "with one segment" do
     subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
-                                                         [first_segment],
-                                                         default_text_styles) }
+                                                               [first_segment],
+                                                               default_text_styles) }
 
     before do
       allow(dsl).to receive(:text) { first_segment.text }
@@ -130,8 +130,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   describe "with two segments" do
     subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
-                                                         [first_segment, second_segment],
-                                                         default_text_styles) }
+                                                               [first_segment, second_segment],
+                                                               default_text_styles) }
 
     before do
       allow(dsl).to receive(:text) { first_segment.text + second_segment.text }
@@ -237,8 +237,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   def create_segment(name, text)
     bounds = double("bounds", x: 0, y: 0, height: 0)
     layout = double(name, text: text,
-                    :justify= => nil, :spacing= => nil, :alignment= => nil,
-                    line_bounds: bounds, line_count: 1)
+                          :justify= => nil, :spacing= => nil, :alignment= => nil,
+                          line_bounds: bounds, line_count: 1)
 
     allow_any_instance_of(Shoes::Swt::TextFontFactory).to receive(:create_font)
 

@@ -10,10 +10,10 @@ describe Shoes::Swt::Arc do
   let(:angle1) { Shoes::PI }
   let(:angle2) { Shoes::HALF_PI }
   let(:dsl) { double("dsl object", app: shoes_app, element_width: width,
-                     element_height: height, element_left: left,
-                     element_top: top, angle1: angle1, angle2: angle2,
-                     wedge?: false, pass_coordinates?: nil,
-                     hidden: false).as_null_object }
+                                   element_height: height, element_left: left,
+                                   element_top: top, angle1: angle1, angle2: angle2,
+                                   wedge?: false, pass_coordinates?: nil,
+                                   hidden: false).as_null_object }
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 

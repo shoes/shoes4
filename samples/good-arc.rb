@@ -25,9 +25,9 @@ Shoes.app width: 420, height: 420, resizable: false do
         top = (self.height - size) / 2
         left = (self.width - size) / 2
         arc top, left,
-          size, size,
-          rotation * j,
-          rotation * j + Shoes::TWO_PI - Shoes::HALF_PI
+            size, size,
+            rotation * j,
+            rotation * j + Shoes::TWO_PI - Shoes::HALF_PI
       end
     end
 

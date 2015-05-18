@@ -20,11 +20,11 @@ class PhotoFrame < Shoes
     stack do
       inscription 'Shoes 4', left: 80
       image File.expand_path(File.join(__FILE__, "../#{name.downcase}.png")),
-        left: 75, top: 25
+            left: 75, top: 25
       para fg(strong(message), fg_color),
-        '  ->',
-        link(strong(other), click:"/#{other.downcase}"),
-        left: 35, top: 85
+           '  ->',
+           link(strong(other), click:"/#{other.downcase}"),
+           left: 35, top: 85
     end
   end
 end

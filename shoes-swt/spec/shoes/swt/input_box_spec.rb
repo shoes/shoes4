@@ -8,7 +8,7 @@ describe Shoes::Swt::InputBox do
                             secret?: secret,
                             call_change_listeners: true).as_null_object }
   let(:real) { double('real', disposed?: false, text: text,
-                      add_modify_listener: true).as_null_object }
+                              add_modify_listener: true).as_null_object }
   let(:styles) {::Swt::SWT::SINGLE | ::Swt::SWT::BORDER}
   let(:secret) {false}
   let(:text) {'Some text...'}

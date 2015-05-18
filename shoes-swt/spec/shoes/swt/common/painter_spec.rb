@@ -2,7 +2,7 @@ require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Common::Painter do
   let(:object) {double 'object', dsl: dsl, transform: transform,
-                       apply_fill: nil, apply_stroke: nil}
+                                 apply_fill: nil, apply_stroke: nil}
   let(:dsl) {double 'dsl', visible?: true, positioned?: true, style: {}}
   let(:event) {double 'paint event', gc: graphics_context}
   let(:graphics_context) { double 'graphics_context',

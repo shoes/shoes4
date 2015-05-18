@@ -1,7 +1,7 @@
 require 'yaml'
 
 Shoes.app title: "A Gentle Reminder",
-  width: 370, height: 560, resizable: false do
+          width: 370, height: 560, resizable: false do
   background white
   background tan, height: 40
 
