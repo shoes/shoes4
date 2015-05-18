@@ -21,7 +21,8 @@ namespace :samples do
 
   def run_sample(sample_name, index, total)
     puts "Running #{sample_name} (#{index + 1} of #{total})...quit to run next sample"
-    system "bin/shoes #{sample_name}"
+    shoes_executable = ENV["SHOES_USE_INSTALLED"] ? "shoes" : "bin/shoes"
+    system "#{shoes_executable} #{sample_name}"
   end
 
   def run_samples(samples, start_with = 0)
