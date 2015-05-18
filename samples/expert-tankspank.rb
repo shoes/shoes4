@@ -313,7 +313,7 @@ class Opp
     cx, cy = (pr + pl) / 2.0, (pb + pt) / 2.0
     points = [[pl, pt], [pr, pt], [pr, pb], [pl, pb]].collect do |x, y|
       [cx + (x - cx) * cos - (y - cy) * sin,
-        cy + (x - cx) * sin + (y - cy) * cos]
+       cy + (x - cx) * sin + (y - cy) * cos]
     end
 
     $app.line(*(points[0] + points[1]))

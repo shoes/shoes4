@@ -86,9 +86,9 @@ describe Shoes::BuiltinMethods do
   # elsewhere
   describe 'are builtin methods are also available from Shoes' do
     builtin_methods = [:alert, :ask, :ask_color, :ask_open_file, :ask_save_file,
-                     :ask_open_folder, :ask_save_folder, :confirm, :color,
-                     :debug, :error, :font, :gradient, :gray, :rgb, :info,
-                     :pattern, :warn]
+                       :ask_open_folder, :ask_save_folder, :confirm, :color,
+                       :debug, :error, :font, :gradient, :gray, :rgb, :info,
+                       :pattern, :warn]
 
     builtin_methods.each do |method|
       it "responds to #{method}" do
