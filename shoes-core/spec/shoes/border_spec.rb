@@ -13,7 +13,7 @@ end
 describe Shoes::Border do
   include_context "dsl app"
   let(:parent) { Shoes::FakeElement.new nil, left, top, width, height}
-  let(:opts){ {left: left, top: top, width: width, height: height} }
+  let(:opts) { {left: left, top: top, width: width, height: height} }
 
   let(:left) { 10 }
   let(:top) { 20 }

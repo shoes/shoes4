@@ -129,25 +129,19 @@ class Board
   end
 
   def clear_screen
-    @screen.each do |item|
-      item.hide
-    end
+    @screen.each(&:hide)
   end
 
   def show_screen(title)
     @over = true
-    @screen.each do |item|
-      item.show
-    end
+    @screen.each(&:show)
     @screen[0].text = title
   end
 
   def restart
     clear_screen
     @over = false
-    @tics.each do |tic|
-      tic.reset
-    end
+    @tics.each(&:reset)
     game.restart
   end
 
@@ -176,7 +170,7 @@ class Board
   end
 
   def full?
-    @tics.select { |tic| tic.checked }.length == 9
+    @tics.select(&:checked).length == 9
   end
 end
 

@@ -71,7 +71,7 @@ describe Shoes::Flow do
     end
 
     describe 'when the elements dont fit next to each other' do
-      let(:input_opts){ {width: element.width + element2.width - 10} }
+      let(:input_opts) { {width: element.width + element2.width - 10} }
       it_behaves_like 'arranges elements underneath each other'
 
       describe 'and a third element that goes into the second line' do
@@ -94,12 +94,12 @@ describe Shoes::Flow do
     end
 
     describe 'elements dont fit next to each other and set big height' do
-      let(:input_opts){ {width: element.width + 10, height: 1000} }
+      let(:input_opts) { { width: element.width + 10, height: 1000 } }
       it_behaves_like 'set height and contents alignment'
     end
 
     describe 'with margins and two elements not fitting next to each other' do
-      let(:input_opts){{width: element.width + 10, margin: 27}}
+      let(:input_opts) {{ width: element.width + 10, margin: 27 }}
       it_behaves_like 'taking care of margin'
     end
   end

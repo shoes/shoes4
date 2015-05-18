@@ -15,7 +15,7 @@ describe Shoes::Swt::ShellControlListener do
   end
 
   describe 'resize' do
-    let(:resize_callbacks){[block]}
+    let(:resize_callbacks) {[block]}
     it 'calls the resize block' do
       expect(block).to have_received(:call)
     end

@@ -51,10 +51,10 @@ class Changelog
     log_command_template = "git log --regexp-ignore-case --grep '#{grep_placeholder}' --format='%s#{BODY_START_SEPARATOR}%b#{BODY_END_SEPARATOR} [%h]#{COMMIT_SEPARATOR}' #{commit_range}"
     log_command = log_command_template.gsub(grep_placeholder, pattern)
 
-    commits =`#{log_command}`
-    raise "Bad \`git log\` command. Using <#{log_command}>" unless $?.success?
+    commits = `#{log_command}`
+    raise "Bad \`git log\` command. Using <#{log_command}>" unless $CHILD_STATUS.success?
 
-    commits.split(COMMIT_SEPARATOR + "\n").map{|commit| uniform_change_log(commit)}
+    commits.split(COMMIT_SEPARATOR + "\n").map {|commit| uniform_change_log(commit)}
   end
 
   def uniform_change_log(commit)

@@ -1,5 +1,5 @@
 Shoes.app width: 700, height: 600 do
-  title "Shoes is a ", link("tiny"){alert "Cool!"}, " graphics toolkit. "
+  title "Shoes is a ", link("tiny") {alert "Cool!"}, " graphics toolkit. "
 
   flow width: 0.4 do
     image File.join(Shoes::DIR, 'static/shoes-icon.png') do
@@ -9,14 +9,14 @@ Shoes.app width: 700, height: 600 do
 
   flow width: 0.6 do
     tagline "It's simple and straightforward. ",
-      link("Shoes "){alert "Yay!"},
+      link("Shoes ") {alert "Yay!"},
       "was born to be easy! ",
-      link("Shoes "){alert "Yay!"},
+      link("Shoes ") {alert "Yay!"},
       "was born to be easy! ",
-      link("Shoes "){alert "Yay!"},
+      link("Shoes ") {alert "Yay!"},
       "was born to be easy! ",
       "Really, it was made for absolute beginners. "
   end
 
-  subtitle link(strong em("There's ", fg(bg("really ", "really ", yellow), "#f00"), "nothing to it. ")){alert "Have fun!"}
+  subtitle link(strong em("There's ", fg(bg("really ", "really ", yellow), "#f00"), "nothing to it. ")) {alert "Have fun!"}
 end

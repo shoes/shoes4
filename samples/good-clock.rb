@@ -41,7 +41,7 @@ Shoes.app height: 260, width: 250 do
     line(@centerx, @centery + 95, @centerx, @centery + 102)
   end
 
-  def clock_hand(time, sw, unit=30, color=black)
+  def clock_hand(time, sw, unit = 30, color = black)
     radius_local = unit == 30 ? @radius : @radius - 15
     x = radius_local * Math.sin(time * Math::PI / unit)
     y = radius_local * Math.cos(time * Math::PI / unit)

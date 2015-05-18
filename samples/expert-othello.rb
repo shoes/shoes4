@@ -24,7 +24,7 @@ module Othello
       lay_initial_pieces
     end
 
-    def next_turn(check_available_moves=true)
+    def next_turn(check_available_moves = true)
       @current_player = next_player
       if check_available_moves && skip_turn?
         # FIXME Possible infinite loop if neither player has a good move?
@@ -62,22 +62,22 @@ module Othello
       next_turn(false)
     end
 
-    def lay_piece(c=[0,0], check_adjacent_pieces=true)
+    def lay_piece(c = [0,0], check_adjacent_pieces = true)
       memorize_board
       piece = current_player.piece
       opp_piece = current_player.opp_piece
       raise "Spot already taken." if board_at(c) != 0
       if check_adjacent_pieces
         pieces_to_change = []
-        pieces_to_change << check_direction(c, [ 0, 1], piece, opp_piece) # N
-        pieces_to_change << check_direction(c, [ 1, 1], piece, opp_piece) # NE
-        pieces_to_change << check_direction(c, [ 1, 0], piece, opp_piece) # E
-        pieces_to_change << check_direction(c, [ 1,-1], piece, opp_piece) # SE
-        pieces_to_change << check_direction(c, [ 0,-1], piece, opp_piece) # S
+        pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
+        pieces_to_change << check_direction(c, [1, 1], piece, opp_piece) # NE
+        pieces_to_change << check_direction(c, [1, 0], piece, opp_piece) # E
+        pieces_to_change << check_direction(c, [1,-1], piece, opp_piece) # SE
+        pieces_to_change << check_direction(c, [0,-1], piece, opp_piece) # S
         pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
         pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
         pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
-        raise "You must move to a spot that will turn your opponent's piece." if pieces_to_change.compact.all? { |a| a.empty? }
+        raise "You must move to a spot that will turn your opponent's piece." if pieces_to_change.compact.all?(&:empty?)
         pieces_to_change.compact.each { |direction| direction.each { |i| @board[i[0]][i[1]] = piece } }
       end
       current_player.pieces -= 1
@@ -95,20 +95,20 @@ module Othello
       true
     end
 
-    def possible_move?(c=[0,0])
+    def possible_move?(c = [0,0])
       return nil if board_at(c) != 0
       piece = current_player.piece
       opp_piece = current_player.opp_piece
       pieces_to_change = []
-      pieces_to_change << check_direction(c, [ 0, 1], piece, opp_piece) # N
-      pieces_to_change << check_direction(c, [ 1, 1], piece, opp_piece) # NE
-      pieces_to_change << check_direction(c, [ 1, 0], piece, opp_piece) # E
-      pieces_to_change << check_direction(c, [ 1,-1], piece, opp_piece) # SE
-      pieces_to_change << check_direction(c, [ 0,-1], piece, opp_piece) # S
+      pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
+      pieces_to_change << check_direction(c, [1, 1], piece, opp_piece) # NE
+      pieces_to_change << check_direction(c, [1, 0], piece, opp_piece) # E
+      pieces_to_change << check_direction(c, [1,-1], piece, opp_piece) # SE
+      pieces_to_change << check_direction(c, [0,-1], piece, opp_piece) # S
       pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
       pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
       pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
-      return nil if pieces_to_change.compact.all? { |a| a.empty? }
+      return nil if pieces_to_change.compact.all?(&:empty?)
       true
     end
 
@@ -168,7 +168,7 @@ module Othello
     end
 
     # Is this a valid location on board?
-    def valid_location?(c=[1,1])
+    def valid_location?(c = [1,1])
       c[0] >= 0 && c[1] >= 0 && c[0] < BOARD_SIZE[0] && c[1] < BOARD_SIZE[1]
     end
 
@@ -193,7 +193,7 @@ module Othello
     class Player
       attr_accessor :pieces, :color, :pieces_on_board
 
-      def initialize(color=:black,pieces=0)
+      def initialize(color = :black,pieces = 0)
         @pieces = pieces
         @pieces_on_board = 0 # used only in calculating winner
         @color = color
@@ -209,7 +209,7 @@ module Othello
     end
   end
 
-  def draw_player_1(first_turn=false)
+  def draw_player_1(first_turn = false)
     stack margin: 10 do
       if GAME.current_player==GAME.p1
         background yellow
@@ -223,7 +223,7 @@ module Othello
     end
   end
 
-  def draw_player_2(first_turn=false)
+  def draw_player_2(first_turn = false)
     stack top: 550, left: 0, margin: 10 do
       if GAME.current_player==GAME.p2
         background yellow

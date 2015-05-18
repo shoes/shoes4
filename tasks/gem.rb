@@ -10,7 +10,7 @@ desc 'Forcibly uninstall all Shoes gems'
 task 'uninstall:all'
 
 desc 'Release all gems'
-task 'release:all' => [ 'build:all' ]
+task 'release:all' => ['build:all']
 
 ['shoes-core', 'shoes-package', 'shoes-swt'].each do |lib|
   desc "Build the #{lib} gem"

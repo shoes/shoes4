@@ -11,13 +11,13 @@ describe Shoes::UI::Picker do
   subject  { Shoes::UI::Picker.new(input, output) }
 
   it "selects single backend generator" do
-    allow(Gem).to receive(:find_files) { [ swt_backend ] }
+    allow(Gem).to receive(:find_files) { [swt_backend] }
     expect(subject.select_generator).to eq(swt_backend)
   end
 
   describe "with multiple backend generators" do
     before do
-      allow(Gem).to receive(:find_files) { [ faux_backend, swt_backend ] }
+      allow(Gem).to receive(:find_files) { [faux_backend, swt_backend] }
     end
 
     it "prompts with multiple backend generators" do
@@ -52,12 +52,12 @@ describe Shoes::UI::Picker do
     end
 
     it "fails if no matches" do
-      allow(Gem).to receive(:find_files) { [ ] }
+      allow(Gem).to receive(:find_files) { [] }
       expect { subject.select_generator }.to raise_error(ArgumentError)
     end
 
     it "selects by name" do
-      allow(Gem).to receive(:find_files) { [ swt_backend ] }
+      allow(Gem).to receive(:find_files) { [swt_backend] }
       expect(subject.select_generator("swt")).to eq(swt_backend)
     end
 

@@ -56,8 +56,8 @@ Shoes.app title: "A Gentle Reminder",
     @gui_todo.replace(
       *(
         @todo.map { |item|
-          [ item, '  ' ] + [ link('Done') { complete_todo item } ] + [ '  ' ] +
-              [ link('Forget it') { forget_todo item } ] + [ "\n" ]
+          [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
+              [link('Forget it') { forget_todo item }] + ["\n"]
         }.flatten
       )
     )
@@ -81,8 +81,8 @@ Shoes.app title: "A Gentle Reminder",
           inscription(
             *(
               @completed[day].map { |item|
-                [ item ] + [ '  ' ] + [ link('Not Done') { undo_todo day, item } ] +
-                    (@completed[day].index(item) == @completed[day].length - 1 ? [ '' ] : [ "\n" ])
+                [item] + ['  '] + [link('Not Done') { undo_todo day, item }] +
+                    (@completed[day].index(item) == @completed[day].length - 1 ? [''] : ["\n"])
               }.flatten
             )
           )
@@ -97,7 +97,7 @@ Shoes.app title: "A Gentle Reminder",
     if @completed.keys.include? day
       @completed[day] << item
     else
-      @completed[day] = [ item ]
+      @completed[day] = [item]
     end
 
     @todo.delete(item)
@@ -157,7 +157,7 @@ Shoes.app title: "A Gentle Reminder",
 
   def save
     File.open(data_path, 'w') { |f|
-      f.write [ @todo, @completed ].to_yaml
+      f.write [@todo, @completed].to_yaml
     }
   end
 

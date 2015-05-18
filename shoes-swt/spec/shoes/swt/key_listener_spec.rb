@@ -4,7 +4,7 @@ require 'shoes/swt/spec_helper'
 describe Shoes::Swt::Keypress do
   let(:app) { double('app', add_key_listener: nil, remove_key_listener: nil) }
   let(:dsl) { double('dsl') }
-  let(:block) { proc{ |key| key} }
+  let(:block) { proc { |key| key} }
   let(:key_listener) {Shoes::Swt::Keypress.new(dsl, app, &block)}
 
   describe '.get_swt_constant' do
@@ -256,11 +256,11 @@ describe Shoes::Swt::Keypress do
                         stateMask: 0,
                         keyCode:  keyCode,
                         character: character.ord }
-    let(:shell){Java::OrgEclipseSwtWidgets::Shell.new}
+    let(:shell) {Java::OrgEclipseSwtWidgets::Shell.new}
     let(:style) {0}
     let(:keyCode) {character.downcase.ord}
 
-    subject{key_listener.ignore_event? event}
+    subject {key_listener.ignore_event? event}
 
     shared_examples_for 'ignores space and enter' do
       describe 'with a space' do
@@ -277,12 +277,12 @@ describe Shoes::Swt::Keypress do
     shared_examples_for 'accepts normal characters' do
       describe 'with a normal character' do
         let(:character) {'a'}
-        it{is_expected.to be_falsey}
+        it {is_expected.to be_falsey}
       end
     end
 
     context 'on a Shell' do
-      let(:widget){shell}
+      let(:widget) {shell}
       it {is_expected.to be_falsey}
 
       describe 'even with enter' do
@@ -292,7 +292,7 @@ describe Shoes::Swt::Keypress do
     end
 
     context 'on a Text' do
-      let(:widget){Java::OrgEclipseSwtWidgets::Text.new(shell, style)}
+      let(:widget) {Java::OrgEclipseSwtWidgets::Text.new(shell, style)}
       it {is_expected.to be_truthy}
     end
 
@@ -310,7 +310,7 @@ describe Shoes::Swt::Keypress do
 
       describe 'with up' do
         let(:keyCode) {::Swt::SWT::ARROW_UP}
-        it{is_expected.to be_truthy}
+        it {is_expected.to be_truthy}
       end
 
       it_behaves_like 'accepts normal characters'

@@ -566,7 +566,7 @@ describe Shoes::Dimensions do
       let(:margin_bottom) {17}
 
       shared_examples_for 'all distinct margins' do
-        its(:margin){should == [margin_left, margin_top, margin_right, margin_bottom]}
+        its(:margin) {should == [margin_left, margin_top, margin_right, margin_bottom]}
         its(:margin_left) {should == margin_left}
         its(:margin_top) {should == margin_top}
         its(:margin_right) {should == margin_right}
@@ -610,7 +610,7 @@ describe Shoes::Dimensions do
       it 'modifies the value of element_left' do
         expect do
           subject.displace_left = displace_left
-        end.to change{subject.element_left}.by(displace_left)
+        end.to change {subject.element_left}.by(displace_left)
       end
 
       it 'does not modify the value of absolute_left' do
@@ -633,7 +633,7 @@ describe Shoes::Dimensions do
       it 'modifies the value of element_top' do
         expect do
           subject.displace_top = displace_top
-        end.to change{subject.element_top}.by(displace_top)
+        end.to change {subject.element_top}.by(displace_top)
       end
 
       it 'does not modify the value of absolute_top' do
@@ -800,7 +800,7 @@ describe Shoes::DimensionsDelegations do
   end
 
   describe 'with any backend class that has a defined dsl method' do
-    let(:dsl){double 'dsl'}
+    let(:dsl) {double 'dsl'}
 
     class AnotherDummyClass
       include Shoes::BackendDimensionsDelegations

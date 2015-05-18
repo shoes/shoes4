@@ -14,7 +14,7 @@ class Cell
     @app = app
     @world = world
     @shoes_cell = @app.rect(left: WIDTH * y, top: WIDTH * x, width: WIDTH)
-    @shoes_cell.click{ toggle_state }
+    @shoes_cell.click { toggle_state }
   end
 
   def live?
@@ -63,7 +63,7 @@ class Cell
   end
 
   def iterate
-    live_cells_count = @neighbours.count{|c| c.live? }
+    live_cells_count = @neighbours.count(&:live?)
     if live?
       if live_cells_count < 2 || live_cells_count > 3
         die!
@@ -111,13 +111,13 @@ class World
   end
 
   def draw
-    cells.each{|c| c.draw }
+    cells.each(&:draw)
   end
 
   def tick
     @changed_cells = []
-    actual_cells.each{|c| c.iterate }.each{|c| c.set_next_state }
-    @changed_cells.each{|c| c.draw }
+    actual_cells.each(&:iterate).each(&:set_next_state)
+    @changed_cells.each(&:draw)
   end
 
   def clear
@@ -219,8 +219,8 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
   end
 
   stack(top: 30, displace_left: 650) do
-    @run_button  = button('Run',  width: 100){ play }
-    @stop_button = button('Stop', width: 100){ stop }
+    @run_button  = button('Run',  width: 100) { play }
+    @stop_button = button('Stop', width: 100) { stop }
     @stop_button.hide
 
     button('Clear', width: 100) do

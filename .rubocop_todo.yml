@@ -24,7 +24,7 @@ Lint/UnusedMethodArgument:
 
 # Offense count: 115
 Metrics/AbcSize:
-  Max: 75
+  Max: 81.15
 
 # Offense count: 15
 # Configuration parameters: CountComments.
@@ -43,7 +43,7 @@ Metrics/LineLength:
 # Offense count: 107
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 68
+  Max: 78
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -389,27 +389,10 @@ Style/SpaceAfterComma:
 Style/SpaceAfterControlKeyword:
   Enabled: false
 
-# Offense count: 30
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
 # Offense count: 385
 # Cop supports --auto-correct.
 # Configuration parameters: MultiSpaceAllowedForOperators.
 Style/SpaceAroundOperators:
-  Enabled: false
-
-# Offense count: 107
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceBeforeSemicolon:
   Enabled: false
 
 # Offense count: 1230
@@ -418,35 +401,8 @@ Style/SpaceBeforeSemicolon:
 Style/SpaceInsideBlockBraces:
   Enabled: false
 
-# Offense count: 53
-# Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
-  Enabled: false
-
 # Offense count: 200
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces, SupportedStyles.
 Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/SpecialGlobalVars:
-  Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiteralsInInterpolation:
-  Enabled: false
-
-# Offense count: 23
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoredMethods.
-Style/SymbolProc:
-  Enabled: false
-
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/VariableInterpolation:
   Enabled: false

@@ -3,12 +3,12 @@ class Shoes
     # This class is used for interactively (if necessary) picking the Shoes
     # backend that the user will run their Shoes app with.
     class Picker
-      def initialize(input=STDIN, output=STDOUT)
+      def initialize(input = STDIN, output = STDOUT)
         @input  = input
         @output = output
       end
 
-      def run(bin_dir, desired_backend=nil)
+      def run(bin_dir, desired_backend = nil)
         bundle
         generator_file = select_generator(desired_backend)
         write_backend(generator_file, bin_dir)
@@ -25,7 +25,7 @@ class Shoes
         require 'bundler/setup'
       end
 
-      def select_generator(desired_backend=nil)
+      def select_generator(desired_backend = nil)
         candidates = find_candidates(desired_backend)
 
         if candidates.empty?
@@ -75,7 +75,7 @@ class Shoes
 
       def name_for_candidate(candidate)
         /.*lib\/shoes\/(.*)\/generate-backend.rb/.match(candidate)
-        return "shoes-#{$1.gsub("/", "-")}"
+        return "shoes-#{$1.gsub('/', '-')}"
       end
 
       def write_backend(generator_file, bin_dir)

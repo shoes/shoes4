@@ -17,7 +17,7 @@ describe Shoes::Check do
     let(:top) { 20 }
     let(:width) { 100 }
     let(:height) { 200 }
-    let(:input_opts){ {left: left, top: top, width: width, height: height} }
+    let(:input_opts) { {left: left, top: top, width: width, height: height} }
     subject { Shoes::Check.new(app, parent, input_opts) }
 
     it_behaves_like "object with dimensions"

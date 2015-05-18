@@ -9,7 +9,7 @@ def unpack_styles(styles)
   supported_styles = []
   styles.each do |style|
     if Shoes::Common::Style::STYLE_GROUPS[style]
-      Shoes::Common::Style::STYLE_GROUPS[style].each{|s| supported_styles << s}
+      Shoes::Common::Style::STYLE_GROUPS[style].each {|s| supported_styles << s}
     else
       supported_styles << style
     end

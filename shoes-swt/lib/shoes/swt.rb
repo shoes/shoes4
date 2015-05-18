@@ -131,8 +131,8 @@ class Shoes
         puts "  * Use the shoes executable to start your app"
         puts "  * Add JRUBY_OPTS='-J-XstartOnFirstThread' to your environment before starting."
 
-        `JRUBY_OPTS=-J-XstartOnFirstThread #{$0} #{ARGV.join(" ")}`
-        exit $?.exitstatus
+        `JRUBY_OPTS=-J-XstartOnFirstThread #{$PROGRAM_NAME} #{ARGV.join(" ")}`
+        exit $CHILD_STATUS.exitstatus
       end
     end
   end

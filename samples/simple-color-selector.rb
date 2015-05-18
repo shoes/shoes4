@@ -6,5 +6,5 @@ Shoes.app do
   @p = para
   nostroke
   @o = oval 100, 100, 100, 100
-  button('print'){para lb.text}.move(500, 0)
+  button('print') {para lb.text}.move(500, 0)
 end

@@ -12,7 +12,7 @@ describe Shoes::Swt::Button do
 
   before :each do
     allow(parent).to receive(:real)
-    allow(parent).to receive(:dsl){double(contents: [])}
+    allow(parent).to receive(:dsl) {double(contents: [])}
     allow(dsl).to receive(:width=)
     allow(dsl).to receive(:height=)
     allow(::Swt::Widgets::Button).to receive(:new) { real }
@@ -37,7 +37,7 @@ describe Shoes::Swt::Button do
 
       before :each do
         allow(parent).to receive(:real)
-        allow(parent).to receive(:dsl){double(contents: [])}
+        allow(parent).to receive(:dsl) {double(contents: [])}
         allow(::Swt::Widgets::Button).to receive(:new) { real }
       end
 
