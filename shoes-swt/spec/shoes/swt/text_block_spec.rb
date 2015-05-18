@@ -7,9 +7,9 @@ describe Shoes::Swt::TextBlock do
   let(:width)  { 200 }
   let(:margin) { 10 }
   let(:dsl) { double("dsl", app: shoes_app, text: "text",
-                     margin_left: 0, margin_right: 0,
-                     margin_top: 0, margin_bottom: 0,
-                     pass_coordinates?: nil).as_null_object }
+                            margin_left: 0, margin_right: 0,
+                            margin_top: 0, margin_bottom: 0,
+                            pass_coordinates?: nil).as_null_object }
 
   subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 
@@ -69,7 +69,7 @@ describe Shoes::Swt::TextBlock do
 
       it "positions single line with margin" do
         allow(dsl).to receive_messages(margin_left: margin, margin_right: margin,
-                 margin_top: margin, margin_bottom: margin)
+                                       margin_top: margin, margin_bottom: margin)
 
         expect(dsl).to receive(:absolute_right=).with(layout_width + 50 + margin - 1)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin - 1)
@@ -163,7 +163,7 @@ describe Shoes::Swt::TextBlock do
 
       it "positions in two segments with margins" do
         allow(dsl).to receive_messages(margin_left: margin, margin_right: margin,
-                 margin_top: margin, margin_bottom: margin)
+                                       margin_top: margin, margin_bottom: margin)
 
         expect(dsl).to receive(:absolute_right=).with(layout_width + margin - 1)
         expect(dsl).to receive(:absolute_bottom=).with(layout_height + 2 * margin - 1)
@@ -197,9 +197,9 @@ describe Shoes::Swt::TextBlock do
                     height = layout_height, line_height = line_height)
     bounds = double("bounds", width: width, height: height)
     double(name, disposed?: false, style_from: nil,
-           width: width, height: height,
-           last_line_width: width, last_line_height: line_height,
-           bounds: bounds)
+                 width: width, height: height,
+                 last_line_width: width, last_line_height: line_height,
+                 bounds: bounds)
   end
 
   def when_aligns_and_positions

@@ -423,10 +423,10 @@ describe Shoes::Dimensions do
 
     describe 'hash' do
       subject {Shoes::Dimensions.new parent, left:   100,
-                                     top:    50,
-                                     width:  40,
-                                     height: 20,
-                                     center: true }
+                                             top:    50,
+                                             width:  40,
+                                             height: 20,
+                                             center: true }
 
       its(:left) {should eq 80}
       its(:top) {should eq 40}

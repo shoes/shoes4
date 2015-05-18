@@ -39,8 +39,7 @@ Shoes.app width: 800, height: 600 do
 
   stack margin: 10 do
     title strong(@title), align: "center", stroke: "#DFA", margin: 0
-    para "(loaded from RSS feeds)", align: "center", stroke: "#DFA",
-      margin: 0
+    para "(loaded from RSS feeds)", align: "center", stroke: "#DFA", margin: 0
 
     @feeds.each do |feed|
       download feed do |dl|

@@ -5,13 +5,13 @@ describe Shoes::Swt::ListBox do
 
   let(:items)  { ["Pie", "Apple", "Sand"] }
   let(:dsl)    { double('dsl', app: shoes_app,
-                        items: items, opts: {},
-                        element_width: 200, element_height: 20).as_null_object }
+                               items: items, opts: {},
+                               element_width: 200, element_height: 20).as_null_object }
   let(:block)  { ->() {} }
   let(:real)   { double('real', text: "",
-                        :items= => true, :text= => true,
-                        set_size: true, add_selection_listener: true,
-                        disposed?: false) }
+                                :items= => true, :text= => true,
+                                set_size: true, add_selection_listener: true,
+                                disposed?: false) }
 
   subject { Shoes::Swt::ListBox.new dsl, parent, &block }
 

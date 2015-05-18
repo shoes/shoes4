@@ -6,7 +6,7 @@ describe Shoes::Swt::LinkSegment do
   let(:line_height)   { 14 }
   let(:layout)        { double('swt layout', width: line_width, line_count: 10) }
   let(:text_segment)  { double('text segment', layout: layout,
-                               element_left: 0, element_top: 0) }
+                                               element_left: 0, element_top: 0) }
 
   subject { Shoes::Swt::LinkSegment.new(text_segment, range) }
 

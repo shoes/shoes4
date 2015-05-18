@@ -39,5 +39,4 @@ class Book < Shoes
   end
 end
 
-Shoes.app width: 640, height: 700,
-  title: "Incidents, a Book"
+Shoes.app width: 640, height: 700, title: "Incidents, a Book"

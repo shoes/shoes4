@@ -10,10 +10,10 @@ describe Shoes::Swt::Background do
   let(:corners) { 0 }
   let(:fill) { Shoes::COLORS[:salmon] }
   let(:dsl) { double("dsl object", app: shoes_app,
-                     element_left: left, element_top: top,
-                     element_width: width, element_height: height,
-                     strokewidth: 1, curve: corners, fill: fill,
-                     hidden: false).as_null_object}
+                                   element_left: left, element_top: top,
+                                   element_width: width, element_height: height,
+                                   strokewidth: 1, curve: corners, fill: fill,
+                                   hidden: false).as_null_object}
 
   subject {
     Shoes::Swt::Background.new dsl, swt_app

@@ -100,7 +100,7 @@ describe Shoes::Swt::ClickListener do
 
       it "takes the last element to respond" do
         other_dsl = double("other dsl", in_bounds?: true,
-                           hidden?: false, pass_coordinates?: false)
+                                        hidden?: false, pass_coordinates?: false)
         other_block = double("other block", call: nil)
 
         subject.send(add_method, other_dsl, other_block)

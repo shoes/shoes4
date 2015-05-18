@@ -4,7 +4,7 @@ describe Shoes::Swt::Flow do
   include_context "swt app"
 
   let(:dsl) { double('dsl', app: shoes_app,
-                     pass_coordinates?: true).as_null_object }
+                            pass_coordinates?: true).as_null_object }
   let(:real) { double('real', disposed?: false) }
   let(:parent_real) { double('parent_real', get_layout: "ok") }
 

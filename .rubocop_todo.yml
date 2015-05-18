@@ -63,12 +63,6 @@ Performance/Sample:
 Style/AccessorMethodName:
   Enabled: false
 
-# Offense count: 109
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-Style/AlignHash:
-  Enabled: false
-
 # Offense count: 79
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

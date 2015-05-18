@@ -2,17 +2,17 @@ require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::TextBlock::Fitter do
   let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
-                     desired_width: 85, centered?:    false,
-                     absolute_left: 25, absolute_top: 75,
-                     element_left:  26, element_top:  76,
-                     margin_left:   1,  margin_top:   1) }
+                            desired_width: 85, centered?:    false,
+                            absolute_left: 25, absolute_top: 75,
+                            element_left:  26, element_top:  76,
+                            margin_left:   1,  margin_top:   1) }
 
   let(:parent_dsl) { double('parent_dsl', parent: grandparent_dsl,
-                            absolute_top: 0, absolute_left: 0, absolute_right: 100,
-                            width: parent_width, height: 200) }
+                                          absolute_top: 0, absolute_left: 0, absolute_right: 100,
+                                          width: parent_width, height: 200) }
 
   let(:grandparent_dsl) { double('grandparent_dsl', parent: app,
-                                 width: grandparent_width) }
+                                                    width: grandparent_width) }
 
   let(:app) { double('app', width: app_width) }
 

@@ -158,7 +158,7 @@ module Shoes::Manual
           c = send(color)
           background c
           para strong(color), "\n", c, stroke: (c.dark? ? white : black),
-            margin: 4, align: 'center'
+                                       margin: 4, align: 'center'
         end
       end
     end
@@ -229,12 +229,12 @@ module Shoes::Manual
           @search.add_document uri: "T #{k2t}", body: "#{k2}\n#{meth_plain}".downcase
 
           hsh = {'title' => k2, 'section' => k,
-            'description' => meth[0],
-            'methods' => (meth[1..-1]/2).map { |k3,v3|
+                 'description' => meth[0],
+                 'methods' => (meth[1..-1]/2).map { |k3,v3|
               @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
               @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
               [k3, v3]
-            }
+                 }
           }
           @methods[k2t] = hsh
           [k2t, hsh]
@@ -242,7 +242,7 @@ module Shoes::Manual
 
         @search.add_document uri: "S #{k}", body: "#{k}\n#{sparts[0]}".downcase
         hsh = {'description' => sparts[0], 'sections' => sections,
-           'class' => "toc" + k.downcase.gsub(/\W+/, '')}
+               'class' => "toc" + k.downcase.gsub(/\W+/, '')}
         @sections[k] = hsh
         [k, hsh]
       end
@@ -421,9 +421,9 @@ def Shoes.make_help_page
       background black
       stack margin_left: 118 do
         para "The Shoes Manual", stroke: "#eee", margin_top: 8, margin_left: 17,
-          margin_bottom: 0
+                                 margin_bottom: 0
         @title = title docs[0][0], stroke: white, margin: 4, margin_left: 14,
-          margin_top: 0, font: "Coolvetica"
+                                   margin_top: 0, font: "Coolvetica"
       end
       background "rgb(66, 66, 66, 180)".."rgb(0, 0, 0, 0)", height: 0.7
       background "rgb(66, 66, 66, 100)".."rgb(255, 255, 255, 0)", height: 20, bottom: 0

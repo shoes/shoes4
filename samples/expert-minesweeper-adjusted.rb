@@ -112,7 +112,7 @@ class Field
       @app.nofill
       @app.oval($x+x*cell_size + 3, $y+y*cell_size - 2, 10)
       @app.para self[x, y].number.to_s, left: $x+x*cell_size + 3, top: $y+y*cell_size - 2,
-        size: 13, stroke: COLORS[self[x, y].number - 1]
+                                        size: 13, stroke: COLORS[self[x, y].number - 1]
     end
   end
 

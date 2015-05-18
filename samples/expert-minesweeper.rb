@@ -110,7 +110,7 @@ class Field
     if self[x, y].number != 0 then
       @app.nostroke
       @app.para self[x, y].number.to_s, left: x*cell_size + 3, top: y*cell_size - 2,
-        font: '13px', stroke: COLORS[self[x, y].number - 1]
+                                        font: '13px', stroke: COLORS[self[x, y].number - 1]
     end
   end
 

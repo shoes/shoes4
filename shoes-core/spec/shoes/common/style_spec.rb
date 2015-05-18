@@ -39,7 +39,7 @@ describe Shoes::Common::Style do
 
   its(:style) { should eq(initial_style) }
   let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue,
-      margin: [0,0,0,0], margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0 } }
+                         margin: [0,0,0,0], margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0 } }
 
   describe 'reading and writing through #style(hash)' do
     let(:input_proc) { Proc.new {} }
