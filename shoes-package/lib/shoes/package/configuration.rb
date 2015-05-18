@@ -103,6 +103,7 @@ class Shoes
       end
 
       private
+
       # If it exists, load default options. If not, let the filesystem raise an
       # error.
       def self.config_for_single_file_app(pathname)

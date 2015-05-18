@@ -33,7 +33,6 @@ describe Shoes::Swt::InputBox do
     end
 
     describe 'change listeners' do
-
       it "should set up a listener that delegates change events" do
         expect(dsl).to receive(:call_change_listeners)
         expect(real).to receive(:add_modify_listener) do |&blk|
@@ -74,7 +73,6 @@ describe Shoes::Swt::InputBox do
             expect(dsl).to_not have_received :call_change_listeners
           end
         end
-
       end
     end
   end

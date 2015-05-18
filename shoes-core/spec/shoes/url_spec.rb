@@ -64,5 +64,4 @@ describe 'Shoes.url' do
   it 'instances report class as klazz (regression, do not ask...)' do
     expect(klazz.new.class).to eq klazz
   end
-
 end

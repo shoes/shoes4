@@ -1,5 +1,4 @@
 shared_examples_for "object with style" do
-
   def uses_app_default?(key)
     if defined? self.class::STYLES
       subject.style[key] && !subject.class::STYLES[key]
@@ -9,7 +8,6 @@ shared_examples_for "object with style" do
   end
 
   describe 'using app-level styles' do
-
     it 'initially uses app defaults' do
       app.style.each do |key, value|
         expect(subject.style[key]).to eq(value) if uses_app_default? key
@@ -37,7 +35,6 @@ shared_examples_for "object with style" do
   end
 
   describe 'using the style method' do
-
     it "merges new styles" do
       old_style = subject.style
       subject.style(left: 100, top: 50)
@@ -65,7 +62,6 @@ shared_examples_for "object with style" do
   end
 
   describe 'using setters and getters' do
-
     it 'has a style setter for all styles' do
       subject.supported_styles.each do |style|
         expect(subject).to respond_to("#{style}=".to_sym)
@@ -78,5 +74,4 @@ shared_examples_for "object with style" do
       end
     end
   end
-
 end

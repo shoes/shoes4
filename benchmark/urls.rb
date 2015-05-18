@@ -1,7 +1,6 @@
 require 'benchmark/ips'
 require File.dirname(__FILE__) + '/para_creator'
 
-
 class UrlBenachmark < Shoes
   include ParaCreator
   url '/', :index

@@ -178,7 +178,5 @@ describe Shoes::Common::Style do
         expect(subject).to respond_to "#{style}="
       end
     end
-
   end
-
 end

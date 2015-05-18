@@ -106,6 +106,5 @@ shared_examples_for "star DSL method" do
         expect { subject }.to raise_error(ArgumentError)
       end
     end
-
   end
 end

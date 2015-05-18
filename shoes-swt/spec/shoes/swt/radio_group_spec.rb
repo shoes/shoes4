@@ -69,5 +69,4 @@ describe Shoes::Swt::RadioGroup do
       expect(real).to receive(:set_selection).with(false)
     end
   end
-
 end

@@ -23,7 +23,6 @@ describe Shoes::Package::JarApp do
       ENV['FUROSHIKI_HOME'] = nil
     end
 
-
     its(:cache_dir) { should eq(Pathname.new(Dir.home).join('.furoshiki', 'cache')) }
 
     after do

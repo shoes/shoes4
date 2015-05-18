@@ -81,6 +81,5 @@ describe Shoes::Swt::Animation do
         end
       end
     end
-
   end
 end

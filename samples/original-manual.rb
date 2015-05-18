@@ -386,7 +386,6 @@ module Shoes::Manual
                       end
                     end
                   end
-
                 end
               end
             end
@@ -465,7 +464,6 @@ rescue => e
   p e.message
   p e.class
 end
-
 
 Shoes::Help = Shoes.make_help_page
 

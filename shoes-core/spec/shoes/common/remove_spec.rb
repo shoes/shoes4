@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Shoes::Common::Remove do
-
   let(:parent) {double 'parent', add_child: true, remove_child: true}
   let(:gui) {double 'gui', remove: true}
   let(:test_class) {Class.new {include Shoes::Common::Remove}}

@@ -9,7 +9,6 @@ describe Shoes::Stack do
   it_behaves_like "Slot"
 
   describe 'Context' do
-
     class ContextObject
       def initialize(app)
         @app = app

@@ -52,7 +52,6 @@ describe Shoes::Swt::Image do
 
   # note the image used is 3x1 pixel big
   describe 'dimensions' do
-
     it 'has the given width' do
       expect(subject.width).to eq(IMAGE_WIDTH)
     end

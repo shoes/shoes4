@@ -2,7 +2,6 @@ require 'yaml'
 
 Shoes.app title: "A Gentle Reminder",
   width: 370, height: 560, resizable: false do
-
   background white
   background tan, height: 40
 
@@ -31,7 +30,6 @@ Shoes.app title: "A Gentle Reminder",
 
   @gui_completed = stack width: 1.0, height: 207, margin_right: 20
 
-
   def data_path
     if RUBY_PLATFORM =~ /win32/
       if ENV['USERPROFILE']
@@ -54,7 +52,6 @@ Shoes.app title: "A Gentle Reminder",
     return File.join(user_data_directory, "data.yaml")
   end
 
-
   def refresh_todo
     @gui_todo.replace(
       *(
@@ -65,7 +62,6 @@ Shoes.app title: "A Gentle Reminder",
       )
     )
   end
-
 
   def refresh
     refresh_todo
@@ -91,11 +87,9 @@ Shoes.app title: "A Gentle Reminder",
             )
           )
         end
-
       }
     end
   end
-
 
   def complete_todo(item)
     day = Date.today
@@ -113,7 +107,6 @@ Shoes.app title: "A Gentle Reminder",
     refresh
   end
 
-
   def undo_todo(day, item)
     @completed[day].delete item
 
@@ -125,7 +118,6 @@ Shoes.app title: "A Gentle Reminder",
 
     refresh
   end
-
 
   def add_todo(item)
     item = item.strip
@@ -144,7 +136,6 @@ Shoes.app title: "A Gentle Reminder",
     refresh_todo
   end
 
-
   def forget_todo(item)
     @todo.delete item
 
@@ -152,7 +143,6 @@ Shoes.app title: "A Gentle Reminder",
 
     refresh_todo
   end
-
 
   def load
     if File.exist?(data_path)
@@ -165,14 +155,11 @@ Shoes.app title: "A Gentle Reminder",
     refresh
   end
 
-
   def save
     File.open(data_path, 'w') { |f|
       f.write [ @todo, @completed ].to_yaml
     }
   end
 
-
   load
-
 end

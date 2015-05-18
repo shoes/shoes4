@@ -9,6 +9,7 @@ module Accordion
       a.stop if stack.height == 240
     end
   end
+
   def page title, text
     @pages ||= []
     @pages <<

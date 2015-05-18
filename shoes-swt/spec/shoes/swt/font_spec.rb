@@ -1,7 +1,6 @@
 require 'shoes/swt/spec_helper'
 
 describe Shoes::Swt::Font do
-
   subject {Shoes::Swt::Font}
 
   describe 'Shoes::FONTS' do
@@ -29,5 +28,4 @@ describe Shoes::Swt::Font do
       subject.add_font font_path
     end
   end
-
 end

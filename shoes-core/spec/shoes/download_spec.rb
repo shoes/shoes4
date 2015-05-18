@@ -144,7 +144,6 @@ describe Shoes::Download do
         expect(download.gui).to have_received(:eval_block).with(finish_proc, subject)
       end
     end
-
   end
 
   describe 'when things go wrong' do

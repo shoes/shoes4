@@ -40,6 +40,7 @@ class Shoes
       end
 
       private
+
       def create_pattern(dsl)
         width  = dsl.element_width * 0.5
         height = dsl.element_height * 0.5

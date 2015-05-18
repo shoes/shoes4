@@ -7,13 +7,11 @@ describe Shoes, 'load_backend' do
 end
 
 describe Shoes, 'setup' do
-
   it 'knows this method' do
     expect(Shoes).to respond_to :setup
   end
 
   describe 'outputting on standard error' do
-
     def expect_stderr_puts(regex)
       expect($stderr).to receive(:puts).with(regex)
     end
@@ -40,5 +38,4 @@ describe Shoes, 'setup' do
       end
     end
   end
-
 end

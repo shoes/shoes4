@@ -9,7 +9,6 @@
 # FIXME bug if it memorizes it but it's not a valid move
 #
 module Othello
-
   PIECE_WIDTH  = 62
   PIECE_HEIGHT = 62
   TOP_OFFSET   = 47
@@ -185,6 +184,7 @@ module Othello
     end
 
     private
+
     def pieces_per_player
       total_squares / 2
     end
@@ -243,7 +243,6 @@ module Othello
     end
   end
 
-
   def draw_board
     clear do
       background black
@@ -298,7 +297,6 @@ module Othello
     return false
   end
 end
-
 
 Shoes.app width: 520, height: 600 do
   extend Othello

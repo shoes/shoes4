@@ -64,5 +64,4 @@ Shoes.app do
       end
     end
   end
-
 end

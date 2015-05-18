@@ -14,7 +14,6 @@ describe Shoes::Swt::Keypress do
   end
 
   describe "subclasses" do
-
     describe "Subclass Keypress" do
       it "adds key listener on creation" do
         expect(app).to receive(:add_key_listener)
@@ -54,7 +53,6 @@ describe Shoes::Swt::Keypress do
     result = ('alt_' + character).to_sym
     test_character_press(character, state_modifier, result)
   end
-
 
   describe 'works with simple keys such as' do
     it '"a"' do
@@ -187,7 +185,6 @@ describe Shoes::Swt::Keypress do
   end
 
   describe 'special keys' do
-
     ARROW_LEFT = ::Swt::SWT::ARROW_LEFT
 
     def special_key_test(code, expected, modifier = 0)
@@ -253,7 +250,6 @@ describe Shoes::Swt::Keypress do
   end
 
   describe '#ignore_event?' do
-
     let(:character) {'a'}
     let(:event) {double 'key event',
                         widget: widget,
@@ -263,7 +259,6 @@ describe Shoes::Swt::Keypress do
     let(:shell){Java::OrgEclipseSwtWidgets::Shell.new}
     let(:style) {0}
     let(:keyCode) {character.downcase.ord}
-
 
     subject{key_listener.ignore_event? event}
 
@@ -321,5 +316,4 @@ describe Shoes::Swt::Keypress do
       it_behaves_like 'accepts normal characters'
     end
   end
-
 end

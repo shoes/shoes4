@@ -16,7 +16,6 @@ There is no save button, the jot is saved as you edit.
 END
 
 Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
-
   @note = NOTES.first
   background "#C7EAFB"
   stack width: 400, margin: 20 do

@@ -2,7 +2,6 @@
 # by fuksito
 # vitaliy@yanchuk.me
 
-
 class Cell
   WIDTH = 15
   attr_accessor :live, :next_state, :y, :x, :neighbours, :live_neighbours, :app, :shoes_cell
@@ -240,5 +239,4 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
       @new_world.add_diehard
     end
   end
-
 end

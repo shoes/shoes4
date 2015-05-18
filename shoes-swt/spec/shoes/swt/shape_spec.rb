@@ -65,7 +65,6 @@ describe Shoes::Swt::Shape do
       expect(transform).to receive(:translate).with(20, 30)
       subject.update_position
     end
-
   end
 
   describe "painter" do

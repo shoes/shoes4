@@ -7,6 +7,5 @@ describe Shoes::Configuration do
         expect(Shoes.configuration.backend).to eq(Shoes::Swt)
       end
     end
-
   end
 end

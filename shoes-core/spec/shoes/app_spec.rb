@@ -125,10 +125,8 @@ describe Shoes::App do
         it "passes default to objects" do
           expect(subject.line(0, 100, 100, 0).style[key]).to eq(value)
         end
-
       end
     end
-
 
     describe "default styles" do
       it "are independent among Shoes::App instances" do
@@ -140,7 +138,6 @@ describe Shoes::App do
 
         # .. but does not affect app2
         expect(app2.line(0, 100, 100, 0).style[:strokewidth]).not_to eq(10)
-
       end
     end
   end
@@ -164,7 +161,6 @@ describe Shoes::App do
         expect(subject.line(0, 100, 100, 0).style[style]).to eq('val')
       end
     end
-
   end
 
   describe "connecting with gui" do
@@ -311,7 +307,6 @@ describe Shoes::App do
         expect(my_parent).to eq my_stack
       end
     end
-
   end
 
   describe "additional context" do
@@ -352,7 +347,6 @@ describe Shoes::App do
   end
 
   describe 'subscribing to DSL methods' do
-
     class TestSubscribeClass
       attr_reader :app
       def initialize(app)
@@ -384,7 +378,6 @@ describe Shoes::App do
     end
 
     describe '.new_dsl_method (for widget method notifications etc.)' do
-
       before :each do
         Shoes::App.new_dsl_method :widget_method do
           # noop
@@ -417,7 +410,6 @@ describe Shoes::App do
         it {is_expected.not_to include :parent, :app}
       end
     end
-
   end
 end
 

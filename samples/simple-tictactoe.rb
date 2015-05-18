@@ -36,14 +36,11 @@ class Tic
       @rect.style fill: '#FFFF44'
     end
   end
-
 end
-
 
 # Mostly keeps track of the Player.
 # 'class Player' would imply two.
 class Game
-
   def initialize(player_label)
     @player = false
     @label = player_label
@@ -74,9 +71,7 @@ class Game
     @player =! @player
     "#{player_color} won!"
   end
-
 end
-
 
 # Organizes the Tics and
 # checks for winning configurations
@@ -125,7 +120,6 @@ class Board
       return false
     end
   end
-
 
   # In this case, the screen is the
   # end screen, including the transparent
@@ -186,7 +180,6 @@ class Board
   end
 end
 
-
 # Main GUI App
 Shoes.app width: SIZE::WIDTH, height: SIZE::HEIGHT, title: 'Tic Tac Toe' do
   background gradient(slategray, slateblue)
@@ -209,7 +202,6 @@ Shoes.app width: SIZE::WIDTH, height: SIZE::HEIGHT, title: 'Tic Tac Toe' do
       tics << [rectangle, i, j]
     end
   end
-
 
   stroke black
 

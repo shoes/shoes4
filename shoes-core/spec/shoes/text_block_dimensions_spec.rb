@@ -70,6 +70,5 @@ describe Shoes::TextBlockDimensions do
         expect(subject.containing_width).to eq(100)
       end
     end
-
   end
 end
