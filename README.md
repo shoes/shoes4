@@ -92,6 +92,8 @@ On OS X you still need to supply the additional parameters to JRuby
 You can run `rake samples` and random samples we believe are working will be run until you quit with Ctr + C. Some of them are really simple, while others are more complex or even games!
 If you notice any issue with those samples please [let us know](https://github.com/shoes/shoes4/issues/new)!
 
+By setting the `SHOES_USE_INSTALLED` environment variable to true, you can also use your installed version of shoes (`shoes` command) to run the samples instead of the local `bin/shoes`.
+
 ## Packaging a Shoes App
 
 Packaging is just a baby, so be gentle.
