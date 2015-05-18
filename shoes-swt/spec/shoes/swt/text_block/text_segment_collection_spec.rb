@@ -25,8 +25,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   describe "with one segment" do
     subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
-                                                         [first_segment],
-                                                         default_text_styles) }
+                                                               [first_segment],
+                                                               default_text_styles) }
 
     before do
       allow(dsl).to receive(:text) { first_segment.text }
@@ -130,8 +130,8 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   describe "with two segments" do
     subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
-                                                         [first_segment, second_segment],
-                                                         default_text_styles) }
+                                                               [first_segment, second_segment],
+                                                               default_text_styles) }
 
     before do
       allow(dsl).to receive(:text) { first_segment.text + second_segment.text }

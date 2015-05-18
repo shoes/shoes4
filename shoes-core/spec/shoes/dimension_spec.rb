@@ -405,12 +405,12 @@ describe Shoes::Dimension do
 
     describe 'it obeys parent bounds' do
       let(:parent_dimension) { double 'parent_dimension',
-                                  element_start:  10,
-                                  element_end:    20,
-                                  absolute_start: 10,
-                                  absolute_end:   20,
-                                  extent:         10,
-                                  element_extent: 10 }
+                                      element_start:  10,
+                                      element_end:    20,
+                                      absolute_start: 10,
+                                      absolute_end:   20,
+                                      extent:         10,
+                                      element_extent: 10 }
 
       subject {Shoes::ParentDimension.new parent_dimension}
 

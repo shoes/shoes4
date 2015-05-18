@@ -107,7 +107,7 @@ class Tank
 
   def fire
     Opp.add_shell Shell.new(@x + 30 * Math.cos(@aim_angle),
-      @y + 30 * Math.sin(@aim_angle), @aim_angle)
+                            @y + 30 * Math.sin(@aim_angle), @aim_angle)
   end
 
   def update button, mouse_x, mouse_y

@@ -36,7 +36,7 @@ Shoes.app do
   background white
   stack margin: 10 do
     para link("slide out") { slide_out @lipsum }, " | ",
-      link("slide in") { slide_in @lipsum }
+         link("slide in") { slide_in @lipsum }
     @lipsum = stack width: 1.0, height: 150 do
       stack do
         background "#ddd"

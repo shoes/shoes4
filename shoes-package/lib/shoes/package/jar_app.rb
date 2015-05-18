@@ -7,7 +7,7 @@ class Shoes
       extend Forwardable
 
       def_delegators :@packager, :package, :default_package_dir, :cache_dir,
-                                 :remote_template_url, :template_path
+                     :remote_template_url, :template_path
 
       def initialize(config)
         config.gems << 'shoes-swt'

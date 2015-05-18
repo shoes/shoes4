@@ -63,12 +63,6 @@ Performance/Sample:
 Style/AccessorMethodName:
   Enabled: false
 
-# Offense count: 79
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/AlignParameters:
-  Enabled: false
-
 # Offense count: 52
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

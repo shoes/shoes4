@@ -26,7 +26,7 @@ Shoes.app width: 400, height: 400, resizable: false do
     # check for game over
     if @ball.top + ball_diameter < 0 or @ball.top > app.height
       para strong("GAME OVER", size: 32), "\n",
-        @ball.top < 0 ? "You win!" : "Computer wins", top: 140, align: 'center'
+           @ball.top < 0 ? "You win!" : "Computer wins", top: 140, align: 'center'
       @ball.hide and @anim.stop
     end
 

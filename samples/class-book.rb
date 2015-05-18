@@ -14,8 +14,8 @@ class Book < Shoes
     toc = []
     INCIDENTS.each_with_index do |(title, _story), i|
       toc.push "(#{i + 1}) ",
-        link(title, click: "/incidents/#{i}"),
-        " / "
+               link(title, click: "/incidents/#{i}"),
+               " / "
     end
     toc.pop
     span(*toc)

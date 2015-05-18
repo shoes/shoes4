@@ -16,7 +16,7 @@ class MenuPanel < Shoes::Widget
     @stack = stack(args) do
       background color
       para link("Box #{@@boxes.length}", fg: white, fill: nil, click: "/"),
-        margin: 18, align: "center", size: 20
+           margin: 18, align: "center", size: 20
       hover { expand }
     end
   end

@@ -80,7 +80,7 @@ class Field
     @app.line($x+x*cell_size+cell_size / 4 + 1, $y+y*cell_size + cell_size / 5, $x+x*cell_size+cell_size / 4 + 1, $y+y*cell_size+cell_size / 5 * 4)
     @app.fill "#A00"
     @app.rect($x+x*cell_size+cell_size / 4+2, $y+y*cell_size + cell_size / 5,
-      cell_size / 3, cell_size / 4)
+              cell_size / 3, cell_size / 4)
   end
 
   def render_bomb(x, y)
