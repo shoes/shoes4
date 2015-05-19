@@ -13,6 +13,7 @@ class Shoes
           { Animation                        => [:eval_block],
             Button                           => [:eval_block],
             ClickListener                    => [:eval_block],
+            ::Shoes::Common::Hover           => [:eval_hover_block],
             ::Shoes::InternalApp             => [:execute_block],
             Keypress                         => [:eval_block],
             Keyrelease                       => [:eval_block],

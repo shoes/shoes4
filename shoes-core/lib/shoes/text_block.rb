@@ -32,6 +32,13 @@ class Shoes
       @gui.in_bounds?(*args)
     end
 
+    def remove
+      super
+      links.each do |link|
+        @app.remove_mouse_hover_control(link)
+      end
+    end
+
     def text=(*texts)
       replace(*texts[0])
     end

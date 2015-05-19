@@ -1,6 +1,7 @@
 class Shoes
   class Link < Span
     include Common::Style
+    include Common::Hover
 
     attr_reader :app, :gui, :blk
     style_with :common_styles, :text_block_styles
@@ -13,6 +14,11 @@ class Shoes
 
       setup_click blk
       super texts, @style
+    end
+
+    # Force hovering evaluation up in parent where we have actual dimensions
+    def eval_in_parent?
+      true
     end
 
     # Doesn't use Common::Clickable because of URL flavor option clicks
