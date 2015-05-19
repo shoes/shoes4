@@ -6,6 +6,7 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Clickable
+    include Common::Hover
     include TextBlockDimensionsDelegations
 
     attr_reader :text, :contents, :text_styles
