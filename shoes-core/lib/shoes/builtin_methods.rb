@@ -37,6 +37,13 @@ class Shoes
       Shoes.logger.error message
     end
 
+    def exit(message = '')
+      Shoes::LOG << ['exit', message]
+      for app in Shoes.apps
+        app.quit
+      end
+    end
+
     alias_method :confirm?, :confirm
 
     def ask_open_file
