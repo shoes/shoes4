@@ -86,7 +86,6 @@ class Shoes
       require 'shoes/swt/dialog'
       require 'shoes/swt/download'
       require 'shoes/swt/font'
-      require 'shoes/swt/gif'
       require 'shoes/swt/gradient'
       require 'shoes/swt/image'
       require 'shoes/swt/image_pattern'
