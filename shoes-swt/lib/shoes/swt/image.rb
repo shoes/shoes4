@@ -17,21 +17,21 @@ class Shoes
         @dsl = dsl
         @parent = parent
         @is_image = File.extname(@dsl.file_path) != ".gif"
-        update_image_or_gif
+        update_image
         add_paint_listener if @is_image
       end
 
-      def update_image_or_gif
-        load_image_or_gif(@dsl.file_path)
+      def update_image
+        load_image(@dsl.file_path)
       end
 
       private
 
-      def load_image_or_gif(name_or_data)
+      def load_image(name_or_data)
         if url?(name_or_data)
           save_width_and_height
-          display_temporary_download_image_or_gif
-          download_and_display_real_image_or_gif(name_or_data)
+          display_temporary_download_image
+          download_and_display_real_image(name_or_data)
         else
           display_image_or_gif(name_or_data)
         end
@@ -46,12 +46,12 @@ class Shoes
         @saved_height = dsl.element_height
       end
 
-      def display_temporary_download_image_or_gif
+      def display_temporary_download_image
         temporary_download_image = File.join(DIR, 'static/downloading.png')
-        create_image_or_gif(temporary_download_image)
+        create_image(temporary_download_image)
       end
 
-      def create_image_or_gif(data)
+      def create_image(data)
         @real = ::Swt::Graphics::Image.new(::Swt.display, data)
         @full_width        = @real.getImageData.width
         @full_height       = @real.getImageData.height
@@ -77,7 +77,7 @@ class Shoes
         end
       end
 
-      def download_and_display_real_image_or_gif(url)
+      def download_and_display_real_image(url)
         if @is_image
           @tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}.png") unless @tmpname_or_data
         else
@@ -86,7 +86,7 @@ class Shoes
         @dsl.app.download url, save: @tmpname do
           restore_width_and_height
           if @is_image
-            create_image_or_gif @tmpname
+            create_image @tmpname
           else
             display_gif @tmpname
           end
@@ -107,18 +107,18 @@ class Shoes
       end
 
       def display_image(name_or_data)
-        if raw_image_or_gif_data?(name_or_data)
-          data = load_raw_image_or_gif_data(::Swt::Graphics::ImageLoader.new, name_or_data)
+        if raw_image_data?(name_or_data)
+          data = load_raw_image_data(::Swt::Graphics::ImageLoader.new, name_or_data)
         else
           data = name_or_data
         end
-        create_image_or_gif(data)
+        create_image(data)
       end
 
       def display_gif(name_or_data)
         loader = ::Swt::Graphics::ImageLoader.new
-        if raw_image_or_gif_data?(name_or_data)
-          data = load_raw_image_or_gif_data(loader, name_or_data)
+        if raw_image_data?(name_or_data)
+          data = load_raw_image_data(loader, name_or_data)
         else
           begin
             data = loader.load(name_or_data)
@@ -127,7 +127,7 @@ class Shoes
           end
         end
 
-        create_image_or_gif(data[0])
+        create_image(data[0])
 
         Thread.new {
           frame_nr = 0
@@ -175,11 +175,11 @@ class Shoes
         }
       end
 
-      def raw_image_or_gif_data?(name_or_data)
+      def raw_image_data?(name_or_data)
         @dsl.raw_image_data?(name_or_data)
       end
 
-      def load_raw_image_or_gif_data(loader, name_or_data)
+      def load_raw_image_data(loader, name_or_data)
         stream = ByteArrayInputStream.new(name_or_data.to_java_bytes)
         begin
           data = @is_image ? loader.load(stream).first : loader.new.load(stream)
