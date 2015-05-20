@@ -164,9 +164,20 @@ class Shoes
         end
 
         # This could be smarter, basing height on the actual line the cursor's
-        # in. For now, just use the first line's height.
+        # in. For now, just use the first line's (purported) height.
         def cursor_height
-          @segments.first.line_bounds(0).height
+          if @segments.first.text.empty?
+            # Heights are off for empty text layouts. Fake it to make it (it
+            # being a real height).
+            new_segment = TextSegment.new(@dsl, "Hi", 100)
+            height_from_segment(new_segment)
+          else
+            height_from_segment(@segments.first)
+          end
+        end
+
+        def height_from_segment(segment)
+          segment.line_bounds(0).height
         end
       end
     end
