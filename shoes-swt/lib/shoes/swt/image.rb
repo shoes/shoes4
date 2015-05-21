@@ -134,18 +134,17 @@ class Shoes
           repeat_count = loader.repeatCount
           frame = data[0]
 
-          ::Swt.display.asyncExec do
-            @off_screen_image = ::Swt::Graphics::Image.new(::Swt.display, loader.logicalScreenWidth, loader.logicalScreenHeight)
-            @gc_shell = ::Swt::Graphics::GC.new(app.shell)
-            @off_screen_img_gc = ::Swt::Graphics::GC.new(@off_screen_image)
-            @off_screen_img_gc.setBackground(app.shell.getBackground)
-            @off_screen_img_gc.fillRectangle(0, 0, loader.logicalScreenWidth, loader.logicalScreenHeight)
-            @off_screen_img_gc.drawImage(::Swt::Graphics::Image.new(::Swt.display, frame), 0, 0, frame.width, frame.height, frame.x, frame.y, frame.width, frame.height)#dsl.element_width, dsl.element_height)
-          end
-
           # repeat constantly (loader.repeatCount==0) or repeat_count times
           while loader.repeatCount == 0 or repeat_count > 0
+
             ::Swt.display.asyncExec do
+              @off_screen_image = ::Swt::Graphics::Image.new(::Swt.display, loader.logicalScreenWidth, loader.logicalScreenHeight)
+              @gc_shell = ::Swt::Graphics::GC.new(app.shell)
+              @off_screen_img_gc = ::Swt::Graphics::GC.new(@off_screen_image)
+              @off_screen_img_gc.setBackground(app.shell.getBackground)
+              @off_screen_img_gc.fillRectangle(0, 0, loader.logicalScreenWidth, loader.logicalScreenHeight)
+              @off_screen_img_gc.drawImage(::Swt::Graphics::Image.new(::Swt.display, frame), 0, 0, frame.width, frame.height, frame.x, frame.y, frame.width, frame.height)#dsl.element_width, dsl.element_height)
+
               #fill background if necessary
               if frame_nr == data.length - 1 || frame.disposalMethod == ::Swt::SWT::DM_FILL_BACKGROUND
                 if loader.backgroundPixel != -1
