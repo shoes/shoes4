@@ -18,6 +18,10 @@ Style/CollectionMethods:
   PreferredMethods:
     inject: 'inject'
 
+# We don't have a strong opinion on how you use spaces inside braces
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
 # We like to be flexible if we want to add in interpolation
 # see discussion #859
 Style/StringLiterals:
