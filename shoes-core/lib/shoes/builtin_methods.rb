@@ -37,9 +37,8 @@ class Shoes
       Shoes.logger.error message
     end
 
-    def exit(message = '')
-      Shoes::LOG << ['exit', message]
-      for app in Shoes.apps
+    def exit
+      Shoes.apps.each do |app|
         app.quit
       end
     end
