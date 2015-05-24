@@ -42,7 +42,6 @@ class Shoes
         @shell.pack
         force_shell_size
         @shell.open
-        @dsl.top_slot.contents_alignment
         @started = true
         self.fullscreen = true if dsl.start_as_fullscreen?
         flush
