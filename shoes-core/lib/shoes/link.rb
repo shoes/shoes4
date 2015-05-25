@@ -1,6 +1,8 @@
 class Shoes
   class Link < Span
     include Common::Style
+    include Common::Fill
+    include Common::Stroke
     include Common::Hover
 
     attr_reader :app, :gui, :blk

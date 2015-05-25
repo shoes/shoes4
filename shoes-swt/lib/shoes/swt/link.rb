@@ -2,6 +2,8 @@ class Shoes
   module Swt
     class Link
       include Common::Clickable
+      include Common::Fill
+      include Common::Stroke
 
       attr_reader :app, :link_segments, :dsl
 
