@@ -4,6 +4,7 @@
 # NOTE: Comment out anything that isn't a filename, so we can execute this list.
 #       See the `rake samples` task
 
+simple-alert.rb
 simple-anim-shapes.rb
 simple-animate.rb
 simple-anim-text.rb
@@ -34,6 +35,7 @@ simple-keypress.rb
 simple-manual.rb
 simple-mouse-follow.rb
 simple-oval.rb
+simple-position-as-we-go.rb
 simple-sample-executor.rb
 simple-shoes-intro.rb
 simple-slide.rb
