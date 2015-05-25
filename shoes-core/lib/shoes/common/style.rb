@@ -41,6 +41,8 @@ class Shoes
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
         @style = StyleNormalizer.new.normalize(@style)
+
+        set_hovers(@style)
       end
 
       def create_style_hash
@@ -123,6 +125,7 @@ class Shoes
         set_dimensions(new_styles)
         set_visibility(new_styles)
         set_coloring(new_styles)
+        set_hovers(new_styles)
         click(&new_styles[:click]) if new_styles.key?(:click)
         @style.merge! normalized_style
       end
@@ -143,6 +146,11 @@ class Shoes
       def set_coloring(new_styles)
         update_fill   if new_styles.include?(:fill)
         update_stroke if new_styles.include?(:stroke)
+      end
+
+      def set_hovers(new_styles)
+        hover(&new_styles[:hover]) if new_styles.include?(:hover)
+        leave(&new_styles[:leave]) if new_styles.include?(:leave)
       end
 
       def update_dimensions # so that @style hash matches actual values

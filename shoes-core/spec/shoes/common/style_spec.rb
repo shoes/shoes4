@@ -8,8 +8,9 @@ describe Shoes::Common::Style do
     include Shoes::Common::Visibility
     include Shoes::DimensionsDelegations
     include Shoes::Common::Style
+    include Shoes::Common::Hover
 
-    attr_reader :dimensions
+    attr_reader :app, :dimensions
     style_with :key, :left, :click, :strokewidth, :fill
 
     STYLES = {fill: Shoes::COLORS[:blue]}
@@ -178,5 +179,15 @@ describe Shoes::Common::Style do
         expect(subject).to respond_to "#{style}="
       end
     end
+  end
+
+  describe 'sets hover and leave from styles' do
+    let(:hover_blk) { Proc.new {} }
+    let(:leave_blk) { Proc.new {} }
+
+    subject { StyleTester.new(app, hover: hover_blk, leave: leave_blk) }
+
+    its(:hover_blk) { should eq(hover_blk) }
+    its(:leave_blk) { should eq(leave_blk) }
   end
 end
