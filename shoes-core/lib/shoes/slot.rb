@@ -292,6 +292,9 @@ class Shoes
   end
 
   class Flow < Slot
+    # Included to generate the *Hover class
+    include Common::Hover
+
     def position_element(element, current_position)
       if fits_on_the_same_line?(element, current_position.x)
         position_in_current_line(element, current_position)
@@ -302,6 +305,9 @@ class Shoes
   end
 
   class Stack < Slot
+    # Included to generate the *Hover class
+    include Common::Hover
+
     def position_element(element, current_position)
       move_to_next_line(element, current_position)
     end
