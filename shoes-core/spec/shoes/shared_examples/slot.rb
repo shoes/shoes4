@@ -260,8 +260,8 @@ end
 
 shared_examples_for 'prepending' do
   include_context 'two slot children'
-  let(:prepend1) {double 'prepend1'}
-  let(:prepend2) {double 'prepend2'}
+  let(:prepend1) { Shoes::FakeElement.new(nil, width: 100) }
+  let(:prepend2) { Shoes::FakeElement.new(nil, width: 100) }
 
   describe 'one element' do
     before :each do
@@ -303,7 +303,7 @@ shared_examples_for 'prepending' do
   describe 'two times' do
     before :each do
       subject.prepend { subject.add_child prepend1 }
-      subject.prepend {subject.add_child prepend2 }
+      subject.prepend { subject.add_child prepend2 }
     end
 
     it 'has the last prepended element as the first' do

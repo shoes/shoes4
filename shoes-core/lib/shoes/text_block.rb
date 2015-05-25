@@ -18,11 +18,14 @@ class Shoes
       @dimensions = TextBlockDimensions.new @parent, @style
     end
 
-    def after_initialize(text)
+    def add_to_parent(text)
       handle_styles @style
 
-      # Important to use accessor and do this after the backend exists!
+      # Important to use accessor and do this after the backend exists, but
+      # before we place ourselves in the parent container!
       self.text = Array(text)
+
+      super
     end
 
     def in_bounds?(*args)

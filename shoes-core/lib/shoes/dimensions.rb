@@ -166,6 +166,10 @@ class Shoes
     def initialize(*args)
       super(nil, *args)
     end
+
+    def takes_up_space?
+      false
+    end
   end
 
   # for objects that are more defined by their parents, delegates method calls

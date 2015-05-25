@@ -6,11 +6,11 @@ describe Shoes::TextBlock do
 
   let(:text_link) { Shoes::Link.new(app, ['Hello']) }
   let(:text) { [text_link, ", world!"] }
-  subject(:text_block) { Shoes::TextBlock.new(app, parent, text, app: app) }
+  subject(:text_block) { Shoes::Para.new(app, parent, text, app: app) }
 
   it_behaves_like "object with style" do
-    let(:subject_without_style) { Shoes::TextBlock.new(app, parent, text) }
-    let(:subject_with_style) { Shoes::TextBlock.new(app, parent, text, arg_styles) }
+    let(:subject_without_style) { Shoes::Para.new(app, parent, text) }
+    let(:subject_with_style) { Shoes::Para.new(app, parent, text, arg_styles) }
   end
 
   describe "initialize" do
@@ -92,7 +92,7 @@ describe Shoes::TextBlock do
   end
 
   describe "font" do
-    let(:text_block) { Shoes::TextBlock.new(app, parent, ["Hello, world!"], style) }
+    let(:text_block) { Shoes::Para.new(app, parent, ["Hello, world!"], style) }
 
     context "with defaults" do
       let(:style) { Hash.new }
@@ -149,7 +149,7 @@ describe Shoes::TextBlock do
 
   describe "stroke" do
     it "should accept a hex code" do
-      s = Shoes::TextBlock.new(app, parent, ["Hello, world!"], stroke: "#fda", app: app)
+      s = Shoes::Para.new(app, parent, ["Hello, world!"], stroke: "#fda", app: app)
       color = s.style[:stroke]
       expect(color.red).to eql 255
       expect(color.green).to eql 221
@@ -164,7 +164,7 @@ describe Shoes::TextBlock do
     end
 
     context "when not explicitly set" do
-      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"]) }
+      subject(:text_block) { Shoes::Para.new(app, parent, ["text"]) }
 
       it "delegates to calculated width" do
         subject.calculated_width = 240
@@ -194,7 +194,7 @@ describe Shoes::TextBlock do
     end
 
     context "when explicitly set" do
-      subject(:text_block) { Shoes::TextBlock.new(app, parent, ["text"], width: 120) }
+      subject(:text_block) { Shoes::Para.new(app, parent, ["text"], width: 120) }
 
       it "gets returned" do
         expect(subject.width).to eql 120

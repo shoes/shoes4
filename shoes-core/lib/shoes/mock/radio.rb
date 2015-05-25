@@ -5,6 +5,9 @@ class Shoes
       include Shoes::Mock::Clickable
 
       def initialize(*_opts)
+        # SWT backend sets a size, so mimic that in the mock
+        super
+        @dsl.width ||= 22
       end
 
       def checked?

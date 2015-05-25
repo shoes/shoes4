@@ -16,13 +16,22 @@ class Shoes
         create_dimensions(*args)
         update_dimensions if styles_with_dimensions?
 
-        @parent.add_child self
-        @gui = Shoes.backend_for self
+        create_backend
+        add_to_parent(*args)
 
         handle_block(blk)
         update_visibility
 
         after_initialize(*args)
+      end
+
+
+      # This method will get called with the incoming styles hash and the
+      # other arguments passed to initialize.
+      #
+      # It is intended for performing any additions to the styles hash before
+      # that gets sent on to style_init.
+      def before_initialize(_styles, *_)
       end
 
       # Set the dimensions for the element. Defaults to using the Dimensions
@@ -32,12 +41,16 @@ class Shoes
         @dimensions = Dimensions.new @parent, @style
       end
 
-      # This method will get called with the incoming styles hash and the
-      # other arguments passed to initialize.
-      #
-      # It is intended for performing any additions to the styles hash before
-      # that gets sent on to style_init.
-      def before_initialize(_styles, *_)
+      # Call to create the backend (aka @gui)
+      def create_backend
+        @gui = Shoes.backend_for self
+      end
+
+      # Calls to add child in parent, after the backend has been created.
+      # Can be overridden for operations that must happen after backend, but
+      # before addition to parent (and hence positioning)
+      def add_to_parent(*_)
+        @parent.add_child self
       end
 
       # This method handles the block passed in at creation of the DSL element.
