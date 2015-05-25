@@ -1,6 +1,8 @@
 class Shoes
   module Common
     module Hover
+      attr_reader :hover_blk, :leave_blk
+
       def hover(&blk)
         @hover_blk = blk
         app.add_mouse_hover_control(self)

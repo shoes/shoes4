@@ -18,6 +18,7 @@ describe Shoes::Oval do
     it_behaves_like "movable object"
     it_behaves_like "left, top as center"
     it_behaves_like "object with parent"
+    it_behaves_like "object with hover"
 
     #it_styles_with :art_styles, :center, :dimensions, :radius
   end

@@ -16,7 +16,8 @@ describe Shoes::Line do
       let(:subject_with_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), arg_styles) }
     end
     it_behaves_like "object with dimensions"
-    it_behaves_like 'object with parent'
+    it_behaves_like "object with parent"
+    it_behaves_like "object with hover"
   end
 
   describe "line with point a at leftmost, topmost" do

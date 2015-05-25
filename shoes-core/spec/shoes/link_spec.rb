@@ -2,11 +2,25 @@ require 'shoes/spec_helper'
 
 describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }
-  let(:app) { double("app", gui: gui, style: {}, element_styles: {}, warn: true) }
+  let(:app) { double("app", gui: gui, style: {}, element_styles: {},
+                     warn: true, add_mouse_hover_control: nil) }
+  let(:parent) { double("parent") }
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
 
-  subject { Shoes::Link.new(app, texts, color: :blue) }
+  subject {
+    link = Shoes::Link.new(app, texts, color: :blue)
+    link.parent = parent
+    link
+  }
+
+  before do
+    allow(parent).to receive(:eval_hover_block) do |blk|
+      blk.call(subject) if blk
+    end
+  end
+
+  it_behaves_like "object with hover"
 
   context "initialize" do
     it "should set up text" do
