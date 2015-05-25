@@ -5,12 +5,12 @@ class Shoes
 
       def hover(&blk)
         @hover_blk = blk
-        app.add_mouse_hover_control(self)
+        add_mouse_hover_control
       end
 
       def leave(&blk)
         @leave_blk = blk
-        app.add_mouse_hover_control(self)
+        add_mouse_hover_control
       end
 
       def hovered?
@@ -39,6 +39,10 @@ class Shoes
         target = self
         target = parent if eval_in_parent?
         target.eval_hover_block(@leave_blk)
+      end
+
+      def add_mouse_hover_control
+        app.add_mouse_hover_control(self)
       end
 
       def eval_hover_block(blk)

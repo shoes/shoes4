@@ -568,11 +568,11 @@ EOS
     # hover and leave just delegate to the current slot as hover and leave
     # are just defined for slots but self is always the app.
     def hover(&blk)
-      @__app__.current_slot.hover(blk)
+      @__app__.current_slot.hover(&blk)
     end
 
     def leave(&blk)
-      @__app__.current_slot.leave(blk)
+      @__app__.current_slot.leave(&blk)
     end
 
     def keypress(&blk)

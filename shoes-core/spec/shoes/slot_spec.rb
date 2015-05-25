@@ -20,6 +20,7 @@ describe Shoes::Slot do
   end
 
   it_behaves_like "object with dimensions"
+  it_behaves_like "object with hover"
 
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::Slot.new(app, parent) }
@@ -97,40 +98,6 @@ describe Shoes::Slot do
       it 'has the second element remaining' do
         expect(subject.contents).to include element2
       end
-    end
-  end
-
-  describe "hover" do
-    let(:callable) { double("block", call: nil) }
-    let(:block)    { Proc.new { callable.call } }
-
-    it "doesn't need hover proc to be called" do
-      expect(callable).to_not receive(:call)
-      subject.mouse_hovered
-    end
-
-    it "calls block on mouse_hovered" do
-      expect(callable).to receive(:call)
-
-      subject.hover(block)
-      subject.mouse_hovered
-    end
-  end
-
-  describe "leave" do
-    let(:callable) { double("block", call: nil) }
-    let(:block)    { Proc.new { callable.call } }
-
-    it "doesn't need leave proc to be called" do
-      expect(callable).to_not receive(:call)
-      subject.mouse_left
-    end
-
-    it "calls block on mouse_left" do
-      expect(callable).to receive(:call)
-
-      subject.leave(block)
-      subject.mouse_left
     end
   end
 

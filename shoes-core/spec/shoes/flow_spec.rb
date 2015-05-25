@@ -7,8 +7,8 @@ describe Shoes::Flow do
   subject(:flow) { Shoes::Flow.new(app, parent, input_opts, input_block) }
 
   it_behaves_like "clickable object"
-  it_behaves_like "hover and leave events"
   it_behaves_like "Slot"
+  it_behaves_like "object with hover"
 
   describe "initialize" do
     let(:input_opts) { {width: 131, height: 137} }

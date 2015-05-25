@@ -1,11 +1,11 @@
 shared_examples "object with hover" do
   it "registers hover" do
-    expect(subject.app).to receive(:add_mouse_hover_control).with(subject)
+    expect(subject).to receive(:add_mouse_hover_control)
     subject.hover { }
   end
 
   it "registers with leave" do
-    expect(subject.app).to receive(:add_mouse_hover_control).with(subject)
+    expect(subject).to receive(:add_mouse_hover_control)
     subject.leave { }
   end
 
