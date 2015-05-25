@@ -13,7 +13,6 @@ class Shoes
           { Animation                        => [:eval_block],
             Button                           => [:eval_block],
             ClickListener                    => [:eval_block],
-            ::Shoes::Common::Hover           => [:eval_hover_block],
             ::Shoes::InternalApp             => [:execute_block],
             Keypress                         => [:eval_block],
             Keyrelease                       => [:eval_block],
@@ -21,19 +20,22 @@ class Shoes
             TextBlock::CursorPainter         => [:move_textcursor],
             Timer                            => [:eval_block],
             ::Shoes::Common::Changeable      => [:call_change_listeners] }
+
       # only the main thread may draw
       NEED_TO_ASYNC_UPDATE_GUI = { ::Shoes::Download => [:eval_block] }
 
       # These need to trigger a redraw
       SAME_POSITION    = { Common::Visibility      => [:update_visibility],
                            Image                   => [:create_image],
+                           ::Shoes::Common::Hover  => [:eval_hover_block],
                            ::Shoes::Common::Style  => [:update_style],
                            ::Shoes::Common::Remove => [:remove],
                            ::Shoes::Slot           => [:mouse_hovered,
                                                        :mouse_left],
                            ::Shoes::TextBlock      => [:replace] }
 
-      CHANGED_POSITION = { ::Shoes::Common::Positioning => [:_position] }
+      CHANGED_POSITION = { ::Shoes::Common::Positioning => [:_position],
+                           ::Shoes::Common::Hover       => [:eval_hover_block] }
 
       attr_reader :app
 
