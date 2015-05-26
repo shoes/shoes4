@@ -149,6 +149,11 @@ class Shoes
     clazz = Class.new(TextBlock) do
       const_set("STYLES", { font: DEFAULT_TEXTBLOCK_FONT, fill: nil }.merge(styles))
     end
+
     Shoes.const_set(name, clazz)
+
+    clazz.class_eval do
+      include Shoes::Common::Hover
+    end
   end
 end
