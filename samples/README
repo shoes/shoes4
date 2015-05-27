@@ -1,8 +1,11 @@
-  # Here's a list of the samples in this directory that work. Please
+# Here's a list of the samples in this directory that work. Please
 # add to this list as you implement features!
 #
 # NOTE: Comment out anything that isn't a filename, so we can execute this list.
 #       See the `rake samples` task
+#
+# Curious to know more? See https://github.com/shoes/shoes4/wiki/Samples-Guide
+# for more information about writing samples!
 
 simple-alert.rb
 simple-anim-shapes.rb
