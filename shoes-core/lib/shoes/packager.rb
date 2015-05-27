@@ -4,7 +4,7 @@ class Shoes
 
     def initialize
       begin
-        @backend = Shoes.configuration.backend_for(self)
+        @backend = Shoes.backend_for(self)
       rescue ArgumentError
         # Packaging unsupported by this backend
       end

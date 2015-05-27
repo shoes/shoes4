@@ -49,19 +49,24 @@ class Shoes
         backend.const_get(class_name, false)
       end
 
-      # Creates an appropriate backend object, passing along additional arguments
-      #
-      # @param [Object] shoes_object A Shoes object
-      # @return [Object] An appropriate backend object
-      # @example
-      #   Shoes.configuration.backend_for(button, args) # => <Shoes::Swt::Button:0x12345678>
       def backend_for(shoes_object, *args)
         backend_factory(shoes_object).call(shoes_object, *args)
       end
 
-      # Experimental replacement for #backend_for
+      # Creates an appropriate backend object, passing along additional
+      # arguments
+      #
+      # @param [Object] shoes_object A Shoes object
+      # @return [Object] An appropriate backend object
+      #
+      # @example
+      #   Shoes.backend_for(button, args) # => <Shoes::Swt::Button:0x12345678>
       def backend_with_app_for(shoes_object, *args, &blk)
-        backend_factory(shoes_object).call(shoes_object, shoes_object.app.gui, *args, &blk)
+        # Some element types (packager for instance) legitimately don't have
+        # an app. In those cases, don't try to get it to pass along.
+        args.unshift(shoes_object.app.gui) if shoes_object.respond_to?(:app)
+
+        backend_factory(shoes_object).call(shoes_object, *args, &blk)
       end
 
       def backend_factory(shoes_object)
