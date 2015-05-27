@@ -10,15 +10,17 @@ class Shoes
   end
 
   class Download
-    attr_reader :progress, :response, :content_length, :gui, :transferred
+    attr_reader :app, :progress, :response, :content_length, :gui, :transferred
+
     UPDATE_STEPS = 100
 
     def initialize(app, _parent, url, opts = {}, &blk)
+      @app = app
       @url = url
       @opts = opts
       initialize_blocks(app, blk)
 
-      @gui = Shoes.configuration.backend_for(self)
+      @gui = Shoes.backend_for(self)
 
       @response = HttpResponse.new
       @finished = false

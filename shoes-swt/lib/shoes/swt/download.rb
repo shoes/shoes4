@@ -2,7 +2,7 @@ class Shoes
   module Swt
     class Download
       attr_accessor :busy
-      def initialize(_dsl)
+      def initialize(_dsl, _app)
         @busy = false
       end
 
