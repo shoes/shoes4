@@ -3,13 +3,14 @@ class Shoes
     include Common::Inspect
 
     def initialize(parent, filepath, _opts = {}, &_blk)
+      @app    = parent
       @parent = parent
       @filepath = filepath
 
-      @gui = Shoes.configuration.backend_for(self)
+      @gui = Shoes.backend_for(self)
     end
 
-    attr_reader :gui, :filepath, :parent
+    attr_reader :app, :gui, :filepath, :parent
 
     def play
       @gui.play

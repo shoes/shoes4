@@ -1,7 +1,8 @@
 require 'shoes/spec_helper'
 
 describe Shoes::Sound do
-  let(:parent) { double("parent") }
+  let(:app_gui) { double("app gui") }
+  let(:parent) { double("parent", gui: app_gui) }
   let(:filepath) { "../../samples/sounds/61847__simon-rue__boink-v3.wav" }
   subject { Shoes::Sound.new(parent, filepath) }
 
