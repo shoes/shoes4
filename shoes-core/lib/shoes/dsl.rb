@@ -203,6 +203,10 @@ class Shoes
       create Shoes::Image, path, styles, blk
     end
 
+    def gif(path, styles = {}, &blk)
+      create Shoes::Gif, path, styles, blk
+    end
+
     def border(color, styles = {})
       create Shoes::Border, pattern(color), styles
     end
