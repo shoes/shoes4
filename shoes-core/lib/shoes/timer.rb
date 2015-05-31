@@ -6,9 +6,9 @@ class Shoes
       @app = app
       @n   = n
       @blk = @app.current_slot.create_bound_block(blk)
-      @gui = Shoes.configuration.backend_for(self, @app.gui, @blk)
+      @gui = Shoes.backend_for(self, @blk)
     end
 
-    attr_reader :n, :gui
+    attr_reader :app, :n, :gui
   end
 end

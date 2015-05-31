@@ -19,7 +19,7 @@ class Shoes
 
       BufferSize = 4096
 
-      def initialize(dsl)
+      def initialize(dsl, _app)
         @dsl = dsl
       end
 

@@ -17,10 +17,10 @@ class Shoes
       @blk = @app.current_slot.create_bound_block(blk)
       @current_frame = 0
       @stopped = false
-      @gui = Shoes.configuration.backend_for(self, @app.gui)
+      @gui = Shoes.backend_for(self)
     end
 
-    attr_reader :current_frame, :framerate, :blk
+    attr_reader :current_frame, :framerate, :blk, :app
 
     def start
       @stopped = false
