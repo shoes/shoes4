@@ -1,8 +1,6 @@
 class Shoes
   module Swt
     class Image
-      import java.io.ByteArrayInputStream
-
       include Common::Child
       include Common::Resource
       include Common::Clickable
@@ -11,12 +9,14 @@ class Shoes
       include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
+      import java.io.ByteArrayInputStream
+
       attr_reader :parent, :real, :dsl, :painter
 
       def initialize(dsl, parent)
         @dsl = dsl
         @parent = parent
-        @is_image = File.extname(@dsl.file_path) != ".gif"
+        @is_image = is_image?
         update_image
         add_paint_listener if @is_image
       end
@@ -26,6 +26,11 @@ class Shoes
       end
 
       private
+      def is_image?
+        # TODO: raw_image check for gif vs. the rest?
+        return true if @dsl.raw_image_data?(@dsl.file_path)
+        File.extname(@dsl.file_path) != ".gif"
+      end
 
       def load_image(name_or_data)
         if url?(name_or_data)
@@ -52,7 +57,7 @@ class Shoes
       end
 
       def create_image(data)
-        @real = ::Swt::Graphics::Image.new(::Swt.display, data)
+        @real              = ::Swt::Graphics::Image.new(::Swt.display, data)
         @full_width        = @real.getImageData.width
         @full_height       = @real.getImageData.height
         dsl.element_width  ||= default_width
