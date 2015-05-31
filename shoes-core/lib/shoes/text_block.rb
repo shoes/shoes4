@@ -6,6 +6,7 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Clickable
+    include Common::Hover
     include TextBlockDimensionsDelegations
 
     attr_reader :text, :contents, :text_styles
@@ -30,6 +31,13 @@ class Shoes
 
     def in_bounds?(*args)
       @gui.in_bounds?(*args)
+    end
+
+    def remove
+      super
+      links.each do |link|
+        @app.remove_mouse_hover_control(link)
+      end
     end
 
     def text=(*texts)
@@ -141,6 +149,11 @@ class Shoes
     clazz = Class.new(TextBlock) do
       const_set("STYLES", { font: DEFAULT_TEXTBLOCK_FONT, fill: nil }.merge(styles))
     end
+
     Shoes.const_set(name, clazz)
+
+    clazz.class_eval do
+      include Shoes::Common::Hover
+    end
   end
 end

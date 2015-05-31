@@ -4,6 +4,7 @@ class Shoes
     include Common::Fill
     include Common::Stroke
     include Common::Clickable
+    include Common::Hover
     include Common::Style
 
     style_with :angle, :art_styles, :curve, :common_styles, :dimensions

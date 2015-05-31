@@ -78,6 +78,7 @@ require 'shoes/common/background_element'
 require 'shoes/common/changeable'
 require 'shoes/common/clickable'
 require 'shoes/common/fill'
+require 'shoes/common/hover'
 require 'shoes/common/initialization'
 require 'shoes/common/positioning'
 require 'shoes/common/remove'
@@ -113,7 +114,6 @@ require 'shoes/image_pattern'
 require 'shoes/key_event'
 require 'shoes/line'
 require 'shoes/link'
-require 'shoes/link_hover'
 require 'shoes/list_box'
 require 'shoes/logger'
 require 'shoes/oval'
@@ -567,11 +567,11 @@ EOS
     # hover and leave just delegate to the current slot as hover and leave
     # are just defined for slots but self is always the app.
     def hover(&blk)
-      @__app__.current_slot.hover(blk)
+      @__app__.current_slot.hover(&blk)
     end
 
     def leave(&blk)
-      @__app__.current_slot.leave(blk)
+      @__app__.current_slot.leave(&blk)
     end
 
     def keypress(&blk)

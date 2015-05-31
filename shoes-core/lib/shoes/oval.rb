@@ -5,6 +5,7 @@ class Shoes
     include Common::Stroke
     include Common::Style
     include Common::Clickable
+    include Common::Hover
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
     STYLES = { fill: Shoes::COLORS[:black] }

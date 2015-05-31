@@ -3,6 +3,7 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Clickable
+    include Common::Hover
 
     BINARY_ENCODING = Encoding.find('binary')
 

@@ -2,6 +2,7 @@ class Shoes
   class Slot
     include Common::UIElement
     include Common::Clickable
+    include Common::Hover
     include Common::Style
 
     # We need that offset because otherwise element overlap e.g. occupy
@@ -9,7 +10,7 @@ class Shoes
     # See #update_current_position
     NEXT_ELEMENT_OFFSET = 1
 
-    attr_reader :parent, :dimensions, :gui, :contents, :blk, :hover_proc, :leave_proc
+    attr_reader :parent, :dimensions, :gui, :contents, :blk
 
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
     STYLES = { scroll: false, fill: Shoes::COLORS[:black] }
@@ -127,28 +128,8 @@ class Shoes
       determine_slot_height
     end
 
-    def hovered?
-      @hovered
-    end
-
-    def hover(blk)
-      @hover_proc = blk
-      @app.add_mouse_hover_control self
-    end
-
-    def leave(blk)
-      @leave_proc = blk
-      @app.add_mouse_hover_control self
-    end
-
-    def mouse_hovered
-      @hovered = true
-      @hover_proc.call(self) if @hover_proc
-    end
-
-    def mouse_left
-      @hovered = false
-      @leave_proc.call(self) if @leave_proc
+    def add_mouse_hover_control
+      @app.add_mouse_hover_control(self)
     end
 
     def scroll_height
@@ -311,6 +292,9 @@ class Shoes
   end
 
   class Flow < Slot
+    # Included to generate the *Hover class
+    include Common::Hover
+
     def position_element(element, current_position)
       if fits_on_the_same_line?(element, current_position.x)
         position_in_current_line(element, current_position)
@@ -321,6 +305,9 @@ class Shoes
   end
 
   class Stack < Slot
+    # Included to generate the *Hover class
+    include Common::Hover
+
     def position_element(element, current_position)
       move_to_next_line(element, current_position)
     end

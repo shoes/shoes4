@@ -23,6 +23,7 @@ describe Shoes::Image do
 
     it_behaves_like "movable object"
     it_behaves_like "object with dimensions"
+    it_behaves_like "object with hover"
 
     it_behaves_like "object with style" do
       let(:subject_without_style) { Shoes::Image.new(app, parent, filename) }

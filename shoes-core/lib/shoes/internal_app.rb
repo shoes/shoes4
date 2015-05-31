@@ -102,6 +102,10 @@ class Shoes
       mouse_hover_controls << element
     end
 
+    def remove_mouse_hover_control(element)
+      mouse_hover_controls.delete(element)
+    end
+
     def open_gui
       gui.open
     end

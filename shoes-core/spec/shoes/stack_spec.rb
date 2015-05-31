@@ -7,6 +7,7 @@ describe Shoes::Stack do
   subject(:stack) { Shoes::Stack.new(app, app, input_opts) }
 
   it_behaves_like "Slot"
+  it_behaves_like "object with hover"
 
   describe 'Context' do
     class ContextObject

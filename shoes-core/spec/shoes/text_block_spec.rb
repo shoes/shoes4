@@ -13,6 +13,8 @@ describe Shoes::TextBlock do
     let(:subject_with_style) { Shoes::Para.new(app, parent, text, arg_styles) }
   end
 
+  it_behaves_like "object with hover"
+
   describe "initialize" do
     it "creates gui object" do
       expect(text_block.gui).not_to be_nil
