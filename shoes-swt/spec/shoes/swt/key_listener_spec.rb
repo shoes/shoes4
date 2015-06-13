@@ -37,6 +37,7 @@ describe Shoes::Swt::Keypress do
   CTRL = ::Swt::SWT::CTRL
   ALT = ::Swt::SWT::ALT
   SHIFT = ::Swt::SWT::SHIFT
+  COMMAND = ::Swt::SWT::COMMAND
 
   subject {key_listener}
 
@@ -51,6 +52,12 @@ describe Shoes::Swt::Keypress do
   def test_alt_character_press(character, state_mask_modifier = 0)
     state_modifier = ALT | state_mask_modifier
     result = ('alt_' + character).to_sym
+    test_character_press(character, state_modifier, result)
+  end
+
+  def test_command_character_press(character, state_mask_modifier = 0)
+    state_modifier = COMMAND | state_mask_modifier
+    result = ('super_' + character).to_sym
     test_character_press(character, state_modifier, result)
   end
 
@@ -152,6 +159,20 @@ describe Shoes::Swt::Keypress do
     end
   end
 
+  describe 'works with command key pressed such as' do
+    it ':super_a' do
+      test_command_character_press 'a'
+    end
+
+    it ':super_z' do
+      test_command_character_press 'z'
+    end
+
+    it ':super_/' do
+      test_command_character_press '/'
+    end
+  end
+
   describe 'only modifier keys yield nothing' do
     def test_receive_nothing_with_modifier(modifier, last_key_press = modifier)
       expect(block).not_to receive :call
@@ -171,8 +192,16 @@ describe Shoes::Swt::Keypress do
       test_receive_nothing_with_modifier CTRL
     end
 
+    it 'command' do
+      test_receive_nothing_with_modifier COMMAND
+    end
+
     it 'shift + ctrl' do
       test_receive_nothing_with_modifier SHIFT | CTRL, SHIFT
+    end
+
+    it 'shift + command' do
+      test_receive_nothing_with_modifier SHIFT | COMMAND, SHIFT
     end
 
     it 'ctrl + alt' do
@@ -181,6 +210,10 @@ describe Shoes::Swt::Keypress do
 
     it 'shift + ctrl + alt' do
       test_receive_nothing_with_modifier CTRL | SHIFT | ALT, ALT
+    end
+
+    it 'shift + ctrl + command + alt' do
+      test_receive_nothing_with_modifier CTRL | SHIFT | ALT | COMMAND, ALT
     end
   end
 
