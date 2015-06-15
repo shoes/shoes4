@@ -3,7 +3,6 @@ class Shoes
     class Image
       import java.io.ByteArrayInputStream
 
-      include Common::Child
       include Common::Resource
       include Common::Clickable
       include Common::PainterUpdatesPosition
@@ -11,11 +10,11 @@ class Shoes
       include Common::Remove
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real, :dsl, :painter
+      attr_reader :app, :real, :dsl, :painter
 
-      def initialize(dsl, parent)
+      def initialize(dsl, app)
         @dsl = dsl
-        @parent = parent
+        @app = app
         update_image
         add_paint_listener
       end
