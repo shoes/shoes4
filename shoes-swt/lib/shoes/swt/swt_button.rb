@@ -6,14 +6,14 @@ class Shoes
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :real, :dsl
+      attr_reader :app, :real, :dsl
 
-      def initialize(dsl, parent, type)
+      def initialize(dsl, app, type)
         @dsl = dsl
-        @parent = parent
+        @app = app
 
         @type = type
-        @real = ::Swt::Widgets::Button.new(@parent.real, @type)
+        @real = ::Swt::Widgets::Button.new(@app.real, @type)
 
         yield(@real) if block_given?
 

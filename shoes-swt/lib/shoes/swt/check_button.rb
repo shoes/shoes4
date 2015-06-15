@@ -1,10 +1,8 @@
 class Shoes
   module Swt
     class CheckButton < SwtButton
-      include Common::Child
-
-      def initialize(dsl, parent, type)
-        super(dsl, parent, type)
+      def initialize(dsl, app, type)
+        super(dsl, app, type)
       end
 
       def checked?

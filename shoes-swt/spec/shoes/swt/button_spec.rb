@@ -8,11 +8,9 @@ describe Shoes::Swt::Button do
   let(:block) { proc {} }
   let(:real) { double('real', disposed?: false).as_null_object }
 
-  subject { Shoes::Swt::Button.new dsl, parent }
+  subject { Shoes::Swt::Button.new dsl, swt_app }
 
   before :each do
-    allow(parent).to receive(:real)
-    allow(parent).to receive(:dsl) {double(contents: [])}
     allow(dsl).to receive(:width=)
     allow(dsl).to receive(:height=)
     allow(::Swt::Widgets::Button).to receive(:new) { real }
@@ -36,8 +34,6 @@ describe Shoes::Swt::Button do
       let(:real) {double('button real', size: size, pack: true).as_null_object}
 
       before :each do
-        allow(parent).to receive(:real)
-        allow(parent).to receive(:dsl) {double(contents: [])}
         allow(::Swt::Widgets::Button).to receive(:new) { real }
       end
 
@@ -50,7 +46,7 @@ describe Shoes::Swt::Button do
         dsl = dsl_for_dimensions input_width, input_height
         expect(dsl).to receive(:element_width=).with(expected_width) unless input_width
         expect(dsl).to receive(:element_height=).with(expected_height) unless input_height
-        Shoes::Swt::Button.new dsl, parent
+        Shoes::Swt::Button.new dsl, swt_app
       end
 
       it 'uses only real when width and height are not specified' do
