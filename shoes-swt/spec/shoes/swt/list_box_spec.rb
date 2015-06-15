@@ -13,10 +13,9 @@ describe Shoes::Swt::ListBox do
                                 set_size: true, add_selection_listener: true,
                                 disposed?: false) }
 
-  subject { Shoes::Swt::ListBox.new dsl, parent, &block }
+  subject { Shoes::Swt::ListBox.new dsl, swt_app, &block }
 
   before :each do
-    allow(parent).to receive(:real)
     allow(::Swt::Widgets::Combo).to receive(:new) { real }
   end
 

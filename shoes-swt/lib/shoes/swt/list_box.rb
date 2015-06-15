@@ -1,23 +1,18 @@
 class Shoes
   module Swt
     class ListBox
-      include Common::Child
       include Common::Remove
       include Common::Visibility
       include Common::UpdatePosition
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :dsl, :parent
+      attr_reader :dsl, :app
 
-      # Create a list box
-      #
-      # @param dsl    [Shoes::List_box] The Shoes DSL list box this represents
-      # @param parent [::Swt::Widgets::Composite] The parent element of this button
-      def initialize(dsl, parent)
+      def initialize(dsl, app)
         @dsl = dsl
-        @parent = parent
+        @app = app
         @real = ::Swt::Widgets::Combo.new(
-          @parent.real,
+          @app.real,
           ::Swt::SWT::DROP_DOWN | ::Swt::SWT::READ_ONLY
         )
         @real.set_size dsl.element_width, dsl.element_height
