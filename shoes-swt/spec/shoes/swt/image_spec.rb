@@ -18,7 +18,7 @@ describe Shoes::Swt::Image do
 
   subject {
     allow(dsl).to receive(:file_path) { image }
-    Shoes::Swt::Image.new(dsl, parent)
+    Shoes::Swt::Image.new(dsl, swt_app)
   }
 
   it_behaves_like "paintable"

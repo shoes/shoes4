@@ -56,7 +56,6 @@ class Shoes
       require 'shoes/swt/click_listener'
       require 'shoes/swt/color'
       require 'shoes/swt/color_factory'
-      require 'shoes/swt/common/child'
       require 'shoes/swt/common/remove'
       require 'shoes/swt/common/clickable'
       require 'shoes/swt/common/container'

@@ -1,20 +1,19 @@
 class Shoes
   module Swt
     class Progress
-      include Common::Child
       include Common::Remove
       include Common::Visibility
       include Common::UpdatePosition
       include DisposedProtection
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :parent, :dsl
+      attr_reader :app, :dsl
 
-      def initialize(dsl, parent)
+      def initialize(dsl, app)
         @dsl = dsl
-        @parent = parent
+        @app = app
 
-        @real = ::Swt::Widgets::ProgressBar.new(@parent.real,
+        @real = ::Swt::Widgets::ProgressBar.new(@app.real,
                                                 ::Swt::SWT::SMOOTH)
         real.minimum = 0
         real.maximum = 100

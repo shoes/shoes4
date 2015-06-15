@@ -13,7 +13,7 @@ describe Shoes::Swt::InputBox do
   let(:secret) {false}
   let(:text) {'Some text...'}
 
-  subject { Shoes::Swt::InputBox.new dsl, parent, styles }
+  subject { Shoes::Swt::InputBox.new dsl, swt_app, styles }
 
   before :each do
     allow(::Swt::Widgets::Text).to receive(:new) { real }
@@ -90,13 +90,13 @@ describe Shoes::Swt::InputBox do
   end
 
   describe Shoes::Swt::EditLine do
-    subject {Shoes::Swt::EditLine.new dsl, parent}
+    subject {Shoes::Swt::EditLine.new dsl, swt_app}
     describe ":secret option" do
       context "when NOT set" do
         it "does NOT set PASSWORD style" do
           options = Shoes::Swt::EditLine::DEFAULT_STYLES
           allow(dsl).to receive(:secret?) { false }
-          expect(::Swt::Widgets::Text).to receive(:new).with(parent.real, options)
+          expect(::Swt::Widgets::Text).to receive(:new).with(swt_app.real, options)
           subject
         end
       end
@@ -105,7 +105,7 @@ describe Shoes::Swt::InputBox do
         it "sets PASSWORD style" do
           options = Shoes::Swt::EditLine::DEFAULT_STYLES | ::Swt::SWT::PASSWORD
           allow(dsl).to receive(:secret?) { true }
-          expect(::Swt::Widgets::Text).to receive(:new).with(parent.real, options)
+          expect(::Swt::Widgets::Text).to receive(:new).with(swt_app.real, options)
           subject
         end
       end

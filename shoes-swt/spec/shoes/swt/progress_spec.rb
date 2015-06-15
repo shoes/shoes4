@@ -8,10 +8,10 @@ describe Shoes::Swt::Progress do
   let(:real) { double('real', disposed?: real_disposed).as_null_object }
   let(:real_disposed) {false}
 
-  subject { Shoes::Swt::Progress.new dsl, parent }
+  subject { Shoes::Swt::Progress.new dsl, swt_app }
 
   before :each do
-    allow(parent).to receive(:real)
+    allow(swt_app).to receive(:real)
     allow(::Swt::Widgets::ProgressBar).to receive(:new) { real }
   end
 
