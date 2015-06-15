@@ -79,6 +79,7 @@ class Shoes
         modifier_keys += 'control_' if control?(event)
         modifier_keys += 'shift_' if shift?(event) && special_key?(event)
         modifier_keys += 'alt_' if alt?(event)
+        modifier_keys += 'super_' if super?(event)
         modifier_keys
       end
 
@@ -86,18 +87,23 @@ class Shoes
         is_this_modifier_key?(event, ::Swt::SWT::ALT)
       end
 
-      # NOTE: state_mask and key_code error for me so the java version is used
-      def is_this_modifier_key?(event, key)
-        (event.stateMask & key) == key
+      def control?(event)
+        is_this_modifier_key?(event, ::Swt::SWT::CTRL)
       end
 
       def shift?(event)
         is_this_modifier_key?(event, ::Swt::SWT::SHIFT)
       end
 
-      def control?(event)
-        is_this_modifier_key?(event, ::Swt::SWT::CTRL)
+      def super?(event)
+        is_this_modifier_key?(event, ::Swt::SWT::COMMAND)
       end
+
+      # NOTE: state_mask and key_code error for me so the java version is used
+      def is_this_modifier_key?(event, key)
+        (event.stateMask & key) == key
+      end
+
 
       def character_key(event)
         return '' if current_key_is_modifier?(event)
