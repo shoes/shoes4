@@ -193,7 +193,7 @@ There are rake tasks for running specs. Some examples (run `rake --tasks` to see
 Sometimes you only want to run specs from individual files rather than entire suites. You can run individual specs from the project root directory like this:
 
     $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
-    
+
 If you're on OS X and you are running specs that require SWT, you will have to set the `JRUBY_OPTS` environment variable first:
 
     $ export JRUBY_OPTS=-J-XstartOnFirstThread
@@ -202,7 +202,15 @@ If you're on OS X and you are running specs that require SWT, you will have to s
 or set `JRUBY_OPTS` directly on the command line:
 
     $ JRUBY_OPTS=-J-XstartOnFirstThread rspec shoes-swt/spec/shoes/swt/app_spec.rb
-    
+
+
+## Code of Conduct
+
+Way way back in the day, there was a guy named _why. He created a project known as Hackety Hack to teach programming to everyone. In order to reach all corners of the earth, _why decided to make Hackety Hack work on Windows, Mac OS X, and Linux. This was a lot of work, and so _why decided to share his toolkit with the world. Thus, Shoes was born.
+
+Shoes was born to teach programming to everyone, in all corners of the earth. It's not cool to make new programmers or programmers with bad English feel bad because they don't write Ruby / English very well. And clearly any other anti-social comments directed at someone's religion, ethnicity, race, gender identity, or any of that personal stuff won't be tolerated here in the land of chunky-bacon! If community members feel like your comments are out of line in any project space (code, issues, chat rooms, mailing lists), they'll kindly let you know how to improve per our [code of conduct](https://github.com/shoes/shoes4/blob/master/CODE_OF_CONDUCT.md).
+
+The bottom-line is: Have Fun with Shoes!
 
 ## Contact
 
