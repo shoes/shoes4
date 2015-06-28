@@ -1,5 +1,4 @@
 # Contributor Code of Conduct
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
 
 As contributors and maintainers of this project, we pledge to respect all people who contribute through reporting issues, posting feature requests, updating documentation, submitting pull requests or patches, and other activities.
 
