@@ -29,6 +29,8 @@ class Shoes
       # @example
       #   Shoes::Configuration.backend = :swt # => Shoes::Swt
       def backend=(name)
+        return if @backend_name == name
+
         unless @backend.nil?
           fail "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
         end
