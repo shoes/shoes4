@@ -27,6 +27,7 @@ class Shoes
     end
 
     def setup_gui
+      ensure_backend_loaded
       @gui = Shoes.configuration.backend::App.new self
 
       self.current_slot = create_top_slot
@@ -35,6 +36,13 @@ class Shoes
 
       setup_global_keypresses
       register_console_keypress
+    end
+
+    def ensure_backend_loaded
+      if !defined?(Shoes.configuration.backend::App)
+        backend_const = Shoes.load_backend(Shoes.configuration.backend_name)
+        backend_const.initialize_backend
+      end
     end
 
     attr_reader :gui, :top_slot, :app, :dimensions,
