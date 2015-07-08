@@ -55,3 +55,4 @@ shoes-core/bin/shoes-backend
 *.gem
 
 samples/packaging/pkg/*
+.furoshiki
