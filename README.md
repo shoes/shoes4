@@ -45,7 +45,7 @@ If you want to be on the bleeding edge or want to contribute code you need to in
         $ cd shoes4
         $ gem install bundler && bundle install
 
-  Note: If you got rvm, rbenv or something like that installed it might complain  that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. We recommend up to date versions though.
+  Note: If you got rvm, rbenv or something like that installed it might complain  that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. Yes it even works with the brand new JRuby 9.0.0.0! We recommend up to date versions though.
 
 3. You're ready to go!
 
