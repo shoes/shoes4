@@ -178,7 +178,9 @@ describe Shoes::Package::Configuration do
 
     context "when the file doesn't exist" do
       it "blows up" do
-        expect { Shoes::Package::Configuration.load('some/bogus/path') }.to raise_error
+        expect do
+          Shoes::Package::Configuration.load('some/bogus/path')
+        end.to raise_error /No such file or directory/
       end
     end
 
