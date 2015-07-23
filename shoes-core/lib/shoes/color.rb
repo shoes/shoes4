@@ -60,6 +60,7 @@ EOS
     end
 
     def <=>(other)
+      return nil unless other.is_a?(self.class)
       if same_base_color?(other)
         @alpha <=> other.alpha
       else
