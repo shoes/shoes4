@@ -5,5 +5,5 @@ def generate_backend(path)
     options = "-J-XstartOnFirstThread"
   end
 
-  "jruby --1.9 #{options} #{path}/shoes-swt"
+  "jruby #{options} #{path}/shoes-swt"
 end

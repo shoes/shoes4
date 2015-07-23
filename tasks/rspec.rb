@@ -7,7 +7,7 @@ def jruby_run(cmd, swt = false)
 
   # see https://github.com/jruby/jruby/wiki/FAQs
   # "How can I increase the heap/memory size when launching a sub-JRuby?"
-  sh("jruby --debug --1.9 -Ispec #{opts} -S #{cmd}")
+  sh("jruby --debug -Ispec #{opts} -S #{cmd}")
 end
 
 def rspec(files, options = "")
