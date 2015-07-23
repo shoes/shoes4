@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 require 'shoes/helpers/sample17_helper'
 
 describe Shoes::TextBlock do

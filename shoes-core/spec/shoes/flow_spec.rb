@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 require 'shoes/helpers/fake_element'
 
 describe Shoes::Flow do

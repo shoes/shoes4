@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::InternalApp do
   include_context "dsl app"

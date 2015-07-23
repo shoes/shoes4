@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Dimensions do
   let(:parent_left) {left}

@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 class Smile < Shoes::Widget
   def initialize(caption)

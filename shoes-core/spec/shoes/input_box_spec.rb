@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::InputBox do
   include_context "dsl app"

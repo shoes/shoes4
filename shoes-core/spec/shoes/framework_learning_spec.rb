@@ -1,4 +1,4 @@
-require "shoes/spec_helper"
+require 'spec_helper'
 
 module Learning
   class App

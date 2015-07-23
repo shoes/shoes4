@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 shared_examples_for "basic star" do
   it "retains app" do

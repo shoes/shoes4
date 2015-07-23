@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 require 'shoes/ui/picker'
 
 describe Shoes::UI::Picker do

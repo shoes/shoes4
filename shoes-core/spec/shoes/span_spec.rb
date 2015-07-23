@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Span do
   let(:app) { Shoes::App.new }
