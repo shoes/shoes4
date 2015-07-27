@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::TextBlockDimensions do
   let(:left)   { 0 }

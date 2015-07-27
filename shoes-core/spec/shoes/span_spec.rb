@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Span do
   let(:app) { Shoes::App.new }
@@ -34,7 +34,7 @@ describe Shoes::Span do
     it 'does not try to merge with parent style when there are none' do
       parent = double 'parent'
       span.parent = parent
-      expect {span.style}.to_not raise_error()
+      expect {span.style}.to_not raise_error
     end
 
     it 'merges with the styles of the parent text' do

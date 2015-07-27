@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Sound do
   let(:app_gui) { double("app gui") }

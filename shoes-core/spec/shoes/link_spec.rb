@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }

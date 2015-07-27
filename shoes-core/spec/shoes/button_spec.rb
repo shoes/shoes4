@@ -1,4 +1,4 @@
-require "shoes/spec_helper"
+require 'spec_helper'
 
 describe Shoes::Button do
   include_context "dsl app"

@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Point do
   subject { Shoes::Point.new(40, 50) }

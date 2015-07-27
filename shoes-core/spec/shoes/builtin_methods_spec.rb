@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::BuiltinMethods do
   let(:input_blk) { Proc.new {} }

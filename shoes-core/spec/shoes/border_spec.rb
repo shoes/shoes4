@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 shared_examples_for "basic border" do
   it "retains app" do

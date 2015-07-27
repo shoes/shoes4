@@ -1,7 +1,11 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 class Smile < Shoes::Widget
   def initialize(caption)
+    smile_magic caption
+  end
+
+  def smile_magic(caption)
     banner caption
   end
 end
@@ -50,10 +54,14 @@ describe Shoes::Widget do
         include RSpec::Matchers
 
         url '/', :check_smile
-        url '/smile', :smile
+        url '/smile', :smile_little_one
 
         def check_smile
           expect(self).to respond_to :smile
+        end
+
+        def smile_little_one
+          smile 'little one'
         end
       end
     end
@@ -63,7 +71,7 @@ describe Shoes::Widget do
     end
 
     it 'really smiles' do
-      expect_any_instance_of(Smile).to receive(:initialize)
+      expect_any_instance_of(Smile).to receive(:smile_magic)
       Shoes.app do visit '/smile' end
     end
   end

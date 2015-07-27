@@ -7,7 +7,7 @@ def jruby_run(cmd, swt = false)
 
   # see https://github.com/jruby/jruby/wiki/FAQs
   # "How can I increase the heap/memory size when launching a sub-JRuby?"
-  sh("jruby --debug --1.9 -Ispec #{opts} -S #{cmd}")
+  sh("jruby --debug -Ispec #{opts} -S #{cmd}")
 end
 
 def rspec(files, options = "")
@@ -36,9 +36,6 @@ end
 def swt_args(args)
   args = args.to_hash
   args[:swt] = true
-  args[:require] = 'shoes-swt/spec/spec_helper'
-  # Adjust includes/excludes appropriately
-  # args[:includes] = [:swt]
   args[:excludes] = [:no_swt]
   args[:excludes] << :fails_on_osx if RbConfig::CONFIG["host_os"] =~ /darwin/
   args
@@ -98,7 +95,6 @@ namespace :spec do
   Limit the examples to specific :modules : "
   task :core, [:module] do |_t, args|
     argh = args.to_hash
-    argh[:require] = 'shoes-core/spec/spec_helper'
     files = Dir['shoes-core/spec/shoes/**/*_spec.rb'].join ' '
     jruby_rspec(files, argh)
   end

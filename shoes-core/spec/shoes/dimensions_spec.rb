@@ -1,4 +1,4 @@
-require 'shoes/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Dimensions do
   let(:parent_left) {left}
@@ -821,7 +821,7 @@ describe Shoes::DimensionsDelegations do
 
     it 'does not forward calls to parent' do
       expect(dsl).not_to receive :parent
-      expect {subject.parent}.to raise_error
+      expect {subject.parent}.to raise_error(NoMethodError)
     end
   end
 end
