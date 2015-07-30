@@ -1,4 +1,4 @@
-require 'shoes/swt/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Swt::Gradient do
   let(:color1) { Shoes::Color.create(Shoes::COLORS[:honeydew]) }

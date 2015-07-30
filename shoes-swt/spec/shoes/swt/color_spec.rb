@@ -1,4 +1,4 @@
-require 'shoes/swt/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Swt::Color do
   subject(:color)  { Shoes::Swt::Color.create(Shoes::COLORS[:salmon]) }

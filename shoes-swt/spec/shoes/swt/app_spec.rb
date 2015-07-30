@@ -1,4 +1,4 @@
-require "shoes/swt/spec_helper"
+require 'spec_helper'
 
 describe Shoes::Swt::App do
   let(:opts) { {background: Shoes::COLORS[:salmon], resizable: true} }
