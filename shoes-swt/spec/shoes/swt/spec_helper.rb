@@ -13,6 +13,17 @@ RSpec.configure do |config|
     # which then fail because some doubles are not made for the methods called
     allow(Shoes::Swt::RedrawingAspect).to receive_messages new: true
   end
+
+  # https://github.com/jruby/jruby/wiki/Persistence
+  # mostly to allow stubbing/mocking of said java classes
+  config.before(:all) do
+    Swt::Widgets::Shell.__persistent__      = true
+    Swt::Widgets::MessageBox.__persistent__ = true
+    Swt::Path.__persistent__                = true
+    Swt::Transform.__persistent__           = true
+    Swt::Font.__persistent__                = true
+    Swt::Widgets::Display.__persistent__    = true
+  end
 end
 
 # as we do not create real apps most of the time there are no redraws and we
