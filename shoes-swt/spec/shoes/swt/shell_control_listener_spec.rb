@@ -1,4 +1,4 @@
-require 'shoes/swt/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Swt::ShellControlListener do
   let(:app) {double 'SWT App', dsl: dsl_app, shell: shell, real: real}

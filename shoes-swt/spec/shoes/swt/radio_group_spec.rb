@@ -1,4 +1,4 @@
-require 'shoes/swt/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Swt::RadioGroup do
   let(:name) { "Group Name" }

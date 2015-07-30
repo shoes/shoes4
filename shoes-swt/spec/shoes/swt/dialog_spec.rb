@@ -1,4 +1,4 @@
-require 'shoes/swt/spec_helper'
+require 'spec_helper'
 
 main_object = self
 

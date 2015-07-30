@@ -1,4 +1,4 @@
-require 'shoes/swt/spec_helper'
+require 'spec_helper'
 
 describe Shoes::Swt::Common::Painter do
   let(:object) {double 'object', dsl: dsl, transform: transform,
