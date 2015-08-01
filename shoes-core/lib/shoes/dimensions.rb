@@ -91,6 +91,10 @@ class Shoes
       self.margin_right, self.margin_bottom =  margin
     end
 
+    def needs_positioning?
+      true
+    end
+
     def takes_up_space?
       true
     end

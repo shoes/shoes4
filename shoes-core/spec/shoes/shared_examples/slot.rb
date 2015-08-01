@@ -108,10 +108,33 @@ shared_examples_for 'positioning through :_position' do
     subject.contents_alignment
   end
 
+  it 'does not send _position if element does not need positioning' do
+    allow(element).to receive(:takes_up_space?)    { false }
+    allow(element).to receive(:needs_positioning?) { false }
+    expect(element).not_to receive(:_position)
+    add_child_and_align
+  end
+
+  it 'sends _position even when element does not take up space' do
+    allow(element).to receive(:takes_up_space?)    { false }
+    allow(element).to receive(:needs_positioning?) { true }
+    expect(element).to receive(:_position).and_call_original
+    add_child_and_align
+  end
+
   it 'is resilient to exceptions during positioning' do
     allow(element).to receive(:contents_alignment).and_raise("O_o")
     allow(subject).to receive(:puts)  # Quiet, you
     add_child_and_align
+  end
+
+  describe 'absolute dimensions' do
+    let(:element) { Shoes::FakeAbsoluteElement.new }
+
+    it 'positions element via _position' do
+      expect(element).to receive(:_position).and_call_original
+      add_child_and_align
+    end
   end
 end
 
