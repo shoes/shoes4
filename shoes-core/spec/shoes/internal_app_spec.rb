@@ -54,7 +54,7 @@ describe Shoes::InternalApp do
   describe 'fullscreen' do
     let(:input_opts) { {fullscreen: true} }
 
-    it "sets fullscreen" do
+    it "sets fullscreen", :fullscreen do
       expect(subject.start_as_fullscreen?).to be_truthy
     end
   end

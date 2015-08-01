@@ -230,7 +230,7 @@ describe Shoes::App do
         expect(app).not_to be_fullscreen
       end
 
-      it 'can enter fullscreen' do
+      it 'can enter fullscreen', :fullscreen do
         app.fullscreen = true
         expect(app).to be_fullscreen
       end
@@ -244,18 +244,15 @@ describe Shoes::App do
         app.fullscreen = false
       end
 
-      # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'is not in fullscreen', :fails_on_osx do
+      it 'is not in fullscreen', :fullscreen do
         expect(app).not_to be_fullscreen
       end
 
-      # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'has its origina', :fails_on_osx do
+      it 'has its original', :fullscreen do
         expect(app.width).to eq(defaults[:width])
       end
 
-      # Failing on Mac fullscreen doesnt seem to work see #397
-      it 'has its original height', :fails_on_osx do
+      it 'has its original height', :fullscreen do
         expect(app.height).to eq(defaults[:height])
       end
     end

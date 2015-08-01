@@ -37,7 +37,9 @@ def swt_args(args)
   args = args.to_hash
   args[:swt] = true
   args[:excludes] = [:no_swt]
-  args[:excludes] << :fails_on_osx if RbConfig::CONFIG["host_os"] =~ /darwin/
+
+  # Fullscreen on later Mac OS's is awkward (grabs screen away), so skip them
+  args[:excludes] << :fullscreen if RbConfig::CONFIG["host_os"] =~ /darwin/
   args
 end
 
