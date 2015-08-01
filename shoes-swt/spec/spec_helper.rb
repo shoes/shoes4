@@ -13,6 +13,7 @@ require 'shoes'
 require 'shoes/ui/cli'
 require 'fileutils'
 require 'shoes/helpers/fake_element'
+require 'shoes/helpers/fake_absolute_element'
 require 'shoes/helpers/inspect_helpers'
 
 require 'webmock/rspec'
