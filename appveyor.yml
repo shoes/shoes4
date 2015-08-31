@@ -1,0 +1,7 @@
+install:
+  - set PATH=C:\jruby-9.0.0.0\bin;%PATH%
+  - bundle
+build: off
+shallow_clone: true
+test_script:
+  - rake spec:shoes
