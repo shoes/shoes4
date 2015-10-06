@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-case "${MACHTYPE:-}" in
-  (*darwin*)
-    swt_opt="-J-XstartOnFirstThread"
-    ;;
-esac
-
-eval "JRUBY_OPTS=${swt_opt:-} bundle exec guard"
