@@ -2,7 +2,7 @@ class Shoes
   class HttpResponse
     # Struct might be better?
     attr_accessor :headers, :body, :status
-    def initalize
+    def initialize
       @headers = {}
       @body = ''
       @status = []
