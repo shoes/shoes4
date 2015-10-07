@@ -157,6 +157,18 @@ describe Shoes::Download do
       download.join_thread
     end
 
+    it 'reports empty values for the response' do
+      error = StandardError.new("Nope")
+      allow(download).to receive(:open).and_raise(error)
+
+      download.start
+      download.join_thread
+
+      expect(download.response.body).to be_empty
+      expect(download.response.headers).to be_empty
+      expect(download.response.status).to be_empty
+    end
+
     it 'does not die on socket errors, but logs them' do
       error = SocketError.new('Badumz')
 
