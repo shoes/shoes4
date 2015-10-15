@@ -24,7 +24,7 @@ class Shoes
       def initialize(dsl)
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
-        @background = Color.new(@dsl.opts[:background])
+        initialize_background
         @started = false
         initialize_shell
         initialize_real
@@ -154,6 +154,14 @@ class Shoes
 
       private
 
+      def initialize_background
+        @background = if @dsl.opts[:background]
+          Color.new(@dsl.opts[:background]).real
+        else
+          Color.system_background
+       end
+      end
+
       def initialize_scroll_bar
         scroll_bar = @shell.vertical_bar
         scroll_bar.increment = 10
@@ -201,7 +209,7 @@ class Shoes
         @shell.image = @image
         @shell.text = (@dsl.app_title)
         @shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
-        @shell.background = @background.real
+        @shell.background = @background
       end
 
       def initialize_real
