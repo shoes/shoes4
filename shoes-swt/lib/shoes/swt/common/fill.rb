@@ -13,6 +13,7 @@ class Shoes
 
           @color_factory ||= ::Shoes::Swt::ColorFactory.new
           @cached_swt_fill = @color_factory.create(dsl.fill)
+          @cached_swt_fill
         end
 
         # This object's fill alpha value

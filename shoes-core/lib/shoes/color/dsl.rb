@@ -163,7 +163,7 @@ class Shoes
 
     # define the system colors
     def system_background
-      Shoes::Color::SystemColor.new(:system_background)
+      Shoes::SystemColor.new(:system_background)
     end
   end
 end
