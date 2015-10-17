@@ -1,7 +1,7 @@
 class Shoes
   # Create all of the built-in Shoes colors
   COLORS = {}
-  
+
   module DSL
     colors = [
       [:aliceblue, 240, 248, 255],
@@ -149,10 +149,10 @@ class Shoes
       [:whitesmoke, 245, 245, 245],
       [:yellow, 255, 255, 0],
       [:yellowgreen, 154, 205, 50],
-      [:shoes_background, 237, 237, 237],
+      [:system_background, 237, 237, 237], # fallback value if backend doesn't define it
     ]
 
-    colors.each do |color_name, r, g, b|
+    def self.define_shoes_color(color_name, r, g, b)
       Shoes::COLORS[color_name] = Shoes::Color.new(r, g, b)
       define_method(color_name) do |alpha = Shoes::Color::OPAQUE|
         color = Shoes::COLORS.fetch(color_name)
@@ -160,5 +160,7 @@ class Shoes
         Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
     end
+
+    colors.each { |color_name, r, g, b| define_shoes_color(color_name, r, g, b) }
   end
 end

@@ -141,17 +141,34 @@ describe Shoes::Swt::App do
   end
 
   describe 'App Background color' do
-    it 'should have the given background when specified' do
+    it 'has the given background when specified' do
       not_resizable = Shoes::Swt::App.new app_unresizable
       background = not_resizable.shell.background
       expect(background).to eq swt_salmon
     end
 
-    it 'should have the default system background when unspecified' do
-      plain = Shoes::Swt::App.new plain_app
+
+    it 'has the default system background when unspecified' do
       default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
-      background = plain.shell.background
+      app = Shoes::Swt::App.new(Shoes::InternalApp.new(Shoes::App.new, {}))
+      background = app.shell.background
+      puts background.red
+      puts background.green
+      puts background.blue
+      puts default_background.red
+      puts default_background.green
+      puts default_background.blue
       expect(background).to eq default_background
+    end
+
+    it 'setup_system_colors' do
+      default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
+      expect(::Shoes::DSL).to receive(:define_shoes_color)
+                              .with(:system_background,
+                                    default_background.red,
+                                    default_background.green,
+                                    default_background.blue)
+      subject.setup_system_colors
     end
   end
 end

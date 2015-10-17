@@ -277,6 +277,12 @@ describe "Shoes built-in colors" do
   its(:papayawhip) { should eq(Shoes::Color.new(255, 239, 213)) }
   its(:aquamarine) { should eq(Shoes::Color.new(127, 255, 212)) }
   its(:tomato) { should eq(Shoes::Color.new(255, 99, 71)) }
+
+  # define colors spec here since this has the other custom colors?
+  it 'can use define_shoes_color to create built-in colors' do
+    Shoes::DSL.define_shoes_color(:test_color, 0, 1, 2)
+    expect(subject.test_color).to eq Shoes::Color.new(0, 1, 2)
+  end
 end
 
 describe "Shoes built in gray" do
