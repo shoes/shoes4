@@ -158,7 +158,7 @@ class Shoes
         @background = if @dsl.opts[:background]
           Color.new(@dsl.opts[:background]).real
         else
-          Color.system_background_color
+          Color.system_background
        end
       end
 

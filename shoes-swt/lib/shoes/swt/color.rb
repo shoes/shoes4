@@ -3,7 +3,7 @@ class Shoes
     class Color
       include DisposedProtection
 
-      def self.system_background_color
+      def self.system_background
         Shoes.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
       end
 
