@@ -1,7 +1,7 @@
 class Shoes
   # Create all of the built-in Shoes colors
   COLORS = {}
-  
+
   module DSL
     colors = [
       [:aliceblue, 240, 248, 255],
@@ -159,6 +159,11 @@ class Shoes
         return color if alpha == Shoes::Color::OPAQUE
         Shoes::Color.new(color.red, color.green, color.blue, alpha)
       end
+    end
+
+    # define the system colors
+    def system_background
+      Shoes::Color::SystemColor.new(:system_background)
     end
   end
 end
