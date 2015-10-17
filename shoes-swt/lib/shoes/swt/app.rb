@@ -156,9 +156,9 @@ class Shoes
 
       def initialize_background
         @background = if @dsl.opts[:background]
-          Color.new(@dsl.opts[:background]).real
+          Color.new(@dsl.opts[:background])
         else
-          Color.system_background
+          SystemColor.new(:sytem_background)
        end
       end
 
@@ -208,7 +208,7 @@ class Shoes
         @shell.image = @image
         @shell.text = (@dsl.app_title)
         @shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
-        @shell.background = @background
+        @shell.background = @background.real
       end
 
       def initialize_real
