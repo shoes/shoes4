@@ -203,8 +203,12 @@ describe Shoes::TextBlock do
       end
 
       it "is used for desired width" do
-        subject.absolute_left = 20
-        expect(subject.desired_width).to eql 100
+        expect(subject.desired_width).to eql 120
+      end
+
+      it "factors in if parent space is too small" do
+        subject.absolute_left = parent.element_width - 100
+        expect(subject.desired_width).to eql(100)
       end
     end
   end

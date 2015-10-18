@@ -56,6 +56,7 @@ describe Shoes::Swt::TextBlock do
         allow(dsl).to receive(:absolute_left)   { 50 }
         allow(dsl).to receive(:absolute_top)    { 0 }
         allow(dsl).to receive(:absolute_bottom) { layout_height }
+        allow(dsl).to receive(:element_width)   { nil }
       end
 
       it "positions single line of text" do
@@ -143,6 +144,7 @@ describe Shoes::Swt::TextBlock do
       before(:each) do
         allow(dsl).to receive(:parent) { double("dsl parent", absolute_left: 0) }
         allow(dsl).to receive(:absolute_bottom) { layout_height }
+        allow(dsl).to receive(:element_width)   { nil }
 
         current_position.next_line_start = 0
 

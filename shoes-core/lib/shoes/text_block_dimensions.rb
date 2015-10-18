@@ -29,15 +29,31 @@ class Shoes
       10
     end
 
-    # This is the width the text block initially wants to try and fit into.
-    def desired_width(containing = containing_width)
-      parent.absolute_left + containing - absolute_left - margin_left - margin_right
+    # This is the width the text block initially wants to try to fit in.
+    #
+    # If an explicit containing width is provided, trust that most
+    # If we've gotten an explicit width, use that but check that we fit still
+    # Last but certainly not least, consult what's remaining in our parent.
+    def desired_width(containing = nil)
+      if containing
+        desired = parent.absolute_left + containing - absolute_left
+      elsif element_width
+        desired = [element_width, remaining_in_parent].min
+      else
+        desired = remaining_in_parent
+      end
+
+      desired - margin_left - margin_right
     end
 
     # If an explicit width's set, use that when asking how much space we need.
     # If not, we look to the parent.
     def containing_width
       element_width || parent.element_width
+    end
+
+    def remaining_in_parent
+      parent.absolute_left + parent.element_width - absolute_left
     end
   end
 
