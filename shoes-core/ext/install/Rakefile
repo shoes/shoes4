@@ -19,10 +19,10 @@ task default: ['install_script']
 
 task :install_script do
   if Gem.win_platform?
-    source_path = File.join(ENV["PWD"], "shoes.bat")
+    source_path = File.join(Dir.pwd, "shoes.bat")
     dest_path = File.join(Gem.bindir(Gem.user_dir), "shoes.bat")
   else
-    source_path = File.join(ENV["PWD"], "..", "..", "bin", "shoes-stub")
+    source_path = File.join(Dir.pwd, "..", "..", "bin", "shoes-stub")
     dest_path = File.join(Gem.bindir(Gem.user_dir), "shoes")
   end
   FileUtils.cp(source_path, dest_path)
