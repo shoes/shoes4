@@ -20,7 +20,10 @@ class Shoes
                     @dsl.gui.segments.empty?
 
           reset_graphics_context(paint_event.gc)
-          @dsl.gui.segments.paint_control(paint_event.gc)
+
+          clip_context_to(paint_event.gc, @dsl.parent) do |gc|
+            @dsl.gui.segments.paint_control(gc)
+          end
         end
       end
     end

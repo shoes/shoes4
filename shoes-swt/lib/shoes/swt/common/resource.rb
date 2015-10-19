@@ -23,6 +23,18 @@ class Shoes
         def track_graphics_context(graphics_context)
           @graphic_contexts << graphics_context
         end
+
+        def clip_context_to(graphics_context, element)
+          clipping = graphics_context.get_clipping
+          graphics_context.set_clipping(element.absolute_left, element.absolute_top,
+                                        element.width, element.height)
+          yield graphics_context
+        ensure
+          if clipping
+            graphics_context.set_clipping(clipping.x, clipping.y,
+                                          clipping.width, clipping.height)
+          end
+        end
       end
     end
   end
