@@ -3,10 +3,14 @@ require 'spec_helper'
 describe Shoes::Swt::Common::Painter do
   let(:object) {double 'object', dsl: dsl, transform: transform,
                                  apply_fill: nil, apply_stroke: nil}
-  let(:dsl) {double 'dsl', visible?: true, positioned?: true, style: {}}
+  let(:parent) {double 'parent', absolute_left: 0, absolute_top: 0,
+                       height: 100, width: 200}
+  let(:dsl) {double 'dsl', parent: parent,
+                    visible?: true, positioned?: true, style: {}}
   let(:event) {double 'paint event', gc: graphics_context}
   let(:graphics_context) { double 'graphics_context',
                                   dispose: nil,
+                                  get_clipping: nil, set_clipping: nil,
                                   set_antialias: nil, set_line_cap: nil,
                                   set_transform: nil, setTransform: nil }
   let(:transform) { double 'transform', disposed?: false }

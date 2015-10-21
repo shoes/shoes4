@@ -3,9 +3,10 @@ require 'spec_helper'
 describe Shoes::Swt::TextBlock::Painter do
   include_context "swt app"
 
-  let(:dsl)   { double("dsl", app: shoes_app, gui: gui, hidden?: false) }
-  let(:gui)   { double("gui", dispose: nil, segments: segment_collection) }
-  let(:event) { double("event").as_null_object }
+  let(:dsl)    { double("dsl", app: shoes_app, gui: gui, parent: parent, hidden?: false) }
+  let(:gui)    { double("gui", dispose: nil, segments: segment_collection) }
+  let(:event)  { double("event").as_null_object }
+  let(:parent) { double("parent", absolute_left: 0, absolute_top: 0, height: 100, width: 200) }
   let(:segment_collection) { double("segment collection", empty?: false) }
 
   subject { Shoes::Swt::TextBlock::Painter.new(dsl) }
