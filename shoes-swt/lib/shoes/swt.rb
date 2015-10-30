@@ -55,7 +55,6 @@ class Shoes
       require 'shoes/swt/disposed_protection'
       require 'shoes/swt/click_listener'
       require 'shoes/swt/color'
-      require 'shoes/swt/system_color'
       require 'shoes/swt/color_factory'
       require 'shoes/swt/common/remove'
       require 'shoes/swt/common/clickable'

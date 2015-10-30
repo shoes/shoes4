@@ -5,7 +5,8 @@ shared_examples_for "rgb DSL method" do
   let(:alpha) { 133 } # cornflowerblue
 
   it "sends args to Shoes::Color" do
-    expect(Shoes::Color).to receive(:new).with(red, green, blue, alpha)
+    expect(Shoes::Color).to receive(:new).ordered
+    expect(Shoes::Color).to receive(:new).ordered.with(red, green, blue, alpha)
     dsl.rgb(red, green, blue, alpha)
   end
 

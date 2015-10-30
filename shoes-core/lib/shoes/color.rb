@@ -108,7 +108,6 @@ EOS
   end
 end
 
-require 'shoes/color/system_color'
 require 'shoes/color/hex_converter'
 require 'shoes/color/dsl_helpers'
 require 'shoes/color/dsl'

@@ -16,7 +16,8 @@ class Shoes
     DEFAULT_OPTIONS = { width: 600,
                         height: 500,
                         title: "Shoes 4",
-                        resizable: true }.freeze
+                        resizable: true,
+                        background: Shoes::COLORS.fetch(:system_background) }.freeze
 
     def initialize(app, opts, &blk)
       @app = app
@@ -35,6 +36,8 @@ class Shoes
 
       setup_global_keypresses
       register_console_keypress
+
+      @gui.setup_system_colors
     end
 
     def ensure_backend_loaded

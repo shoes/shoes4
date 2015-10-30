@@ -19,11 +19,8 @@ class Shoes
         @swt_elements.clear
       end
 
-      # Create a backend for the color unless it is nil, a system color, or
-      # already exists. In those cases return what we got.
       def create(element)
         return nil if element.nil?
-        return element.gui if element.is_a? ::Shoes::SystemColor
         return @swt_elements[element] if @swt_elements.include?(element)
         swt_element = ::Shoes.backend_for(element)
         @swt_elements[element] = swt_element

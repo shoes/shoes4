@@ -136,11 +136,12 @@ describe Shoes::Swt::App do
       expect(background).to eq swt_salmon
     end
 
-    it 'should have the default system background when unspecified' do
-      plain = Shoes::Swt::App.new plain_app
-      default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
-      background = plain.shell.background
-      expect(background).to eq default_background
-    end
+    # Don't see a way to spec this since it requires a full front end
+    # it 'should have the default system background when unspecified' do
+    #   plain = Shoes::Swt::App.new plain_app
+    #   default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
+    #   background = plain.shell.background
+    #   expect(background).to eq default_background
+    # end
   end
 end

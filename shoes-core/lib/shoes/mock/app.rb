@@ -44,6 +44,9 @@ class Shoes
 
       def wait_until_closed
       end
+
+      def setup_system_colors
+      end
     end
   end
 end

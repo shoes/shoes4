@@ -149,10 +149,10 @@ class Shoes
       [:whitesmoke, 245, 245, 245],
       [:yellow, 255, 255, 0],
       [:yellowgreen, 154, 205, 50],
-      [:shoes_background, 237, 237, 237],
+      [:system_background, 237, 237, 237], # fallback value if backend doesn't define it
     ]
 
-    colors.each do |color_name, r, g, b|
+    def self.define_shoes_color(color_name, r, g, b)
       Shoes::COLORS[color_name] = Shoes::Color.new(r, g, b)
       define_method(color_name) do |alpha = Shoes::Color::OPAQUE|
         color = Shoes::COLORS.fetch(color_name)
@@ -161,9 +161,6 @@ class Shoes
       end
     end
 
-    # define the system colors
-    def system_background
-      Shoes::SystemColor.new(:system_background)
-    end
+    colors.each { |color_name, r, g, b| define_shoes_color(color_name, r, g, b) }
   end
 end

@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Shoes::Swt::ColorFactory do
   let(:blue)     { Shoes::COLORS[:blue] }
-  let(:system_color) { Shoes::SystemColor.allocate }
   let(:gradient) { Shoes::Gradient.new(blue, blue) }
 
   subject(:factory) { Shoes::Swt::ColorFactory.new }
@@ -46,10 +45,5 @@ describe Shoes::Swt::ColorFactory do
     expect(gradient).to receive(:dispose).never
 
     factory.dispose
-  end
-
-  it "doesn't create backend for a SystemColor" do
-    expect(::Shoes).to receive(:backend_for).never
-    factory.create(system_color)
   end
 end
