@@ -15,10 +15,6 @@ describe Shoes::Swt::App do
                                         width: 0,
                                         height: 0,
                                         app_title: 'double') }
-  let(:plain_app) { double('app', opts: {},
-                                  width: 2,
-                                  height: 2,
-                                  app_title: 'double') }
   let(:width) {0}
 
   let(:swt_salmon) { Shoes::Swt::Color.new(Shoes::COLORS[:salmon]).real }
@@ -130,18 +126,34 @@ describe Shoes::Swt::App do
   end
 
   describe 'App Background color' do
-    it 'should have the given background when specified' do
+    it 'has the given background when specified' do
       not_resizable = Shoes::Swt::App.new app_unresizable
       background = not_resizable.shell.background
       expect(background).to eq swt_salmon
     end
 
-    # Don't see a way to spec this since it requires a full front end
-    # it 'should have the default system background when unspecified' do
-    #   plain = Shoes::Swt::App.new plain_app
-    #   default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
-    #   background = plain.shell.background
-    #   expect(background).to eq default_background
-    # end
+
+    it 'has the default system background when unspecified' do
+      allow(Shoes::App)
+        .to receive_messages(app_title: 'double',
+                             width: 0,
+                             height: 0,
+                             opts: { background: Shoes::COLORS[:system_background] })
+
+      default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
+      app = Shoes::Swt::App.new(Shoes::App)
+      background = app.shell.background
+      expect(background).to eq default_background
+    end
+
+    it 'setup_system_colors' do
+      default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
+      expect(::Shoes::DSL).to receive(:define_shoes_color)
+                              .with(:system_background,
+                                    default_background.red,
+                                    default_background.green,
+                                    default_background.blue)
+      subject.setup_system_colors
+    end
   end
 end
