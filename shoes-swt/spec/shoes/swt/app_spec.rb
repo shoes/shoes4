@@ -134,15 +134,15 @@ describe Shoes::Swt::App do
 
 
     it 'has the default system background when unspecified' do
-      allow(Shoes::App)
-        .to receive_messages(app_title: 'double',
-                             width: 0,
-                             height: 0,
-                             opts: { background: Shoes::COLORS[:system_background] })
-
       default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
-      app = Shoes::Swt::App.new(Shoes::App)
+      app = Shoes::Swt::App.new(Shoes::InternalApp.new(Shoes::App.new, {}))
       background = app.shell.background
+      puts background.red
+      puts background.green
+      puts background.blue
+      puts default_background.red
+      puts default_background.green
+      puts default_background.blue
       expect(background).to eq default_background
     end
 
