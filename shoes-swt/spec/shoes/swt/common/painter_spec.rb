@@ -38,6 +38,12 @@ describe Shoes::Swt::Common::Painter do
       subject.paint_control event
     end
 
+    it 'clips to parent region' do
+      allow(dsl).to receive(:needs_rotate?) { false }
+      expect(graphics_context).to receive(:set_clipping).with(0, 0, 200, 100)
+      subject.paint_control event
+    end
+
     it 'rotates' do
       allow(dsl).to receive(:needs_rotate?) { true }
       allow(dsl).to receive(:rotate) { 10 }
