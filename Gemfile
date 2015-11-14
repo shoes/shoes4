@@ -23,7 +23,6 @@ group :development do
   gem "kramdown"
   gem 'simplecov'
   gem "codeclimate-test-reporter"
-  gem 'jruby-lint'
   gem 'webmock'
   gem 'hometown'
   gem 'rubocop'
