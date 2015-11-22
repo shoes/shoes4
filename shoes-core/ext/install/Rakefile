@@ -18,12 +18,22 @@ require 'fileutils'
 task default: ['install_script']
 
 task :install_script do
-  if Gem.win_platform?
-    source_path = File.join(File.dirname(__FILE__), "shoes.bat")
-    dest_path = File.join(Gem.bindir, "shoes.bat")
+  # If we're run via jruby-complete.jar, bindir is within the jar itself so
+  # look for bin based on user directory. Otherwise, prefer Gem.bindir.
+  if Gem.bindir.start_with?("uri:classloader")
+    dest_dir = Gem.bindir(Gem.user_dir)
   else
-    source_path = File.join(File.dirname(__FILE__), "..", "..", "bin", "shoes-stub")
-    dest_path = File.join(Gem.bindir, "shoes")
+    dest_dir = Gem.bindir
   end
+
+  if Gem.win_platform?
+    source_path = File.join(Dir.pwd, "shoes.bat")
+    dest_path = File.join(dest_dir, "shoes.bat")
+  else
+    source_path = File.join(Dir.pwd, "..", "..", "bin", "shoes-stub")
+    dest_path = File.join(dest_dir, "shoes")
+  end
+
+  FileUtils.mkdir_p(dest_dir)
   FileUtils.cp(source_path, dest_path)
 end
