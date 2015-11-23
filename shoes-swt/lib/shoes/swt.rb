@@ -121,6 +121,7 @@ class Shoes
       # redrawing aspect needs to know all the classes
       require 'shoes/swt/redrawing_aspect'
 
+      ::Shoes::Swt::App.setup_system_colors
       @initialized = true
     rescue Java::OrgEclipseSwt::SWTException => e
       if e.message == "Invalid thread access"

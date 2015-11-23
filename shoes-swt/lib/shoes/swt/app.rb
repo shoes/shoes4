@@ -24,7 +24,8 @@ class Shoes
       def initialize(dsl)
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
-        @background = Color.new(@dsl.opts[:background])
+        @background = Color.new(@dsl.opts[:background] ||
+                               ::Shoes::COLORS.fetch(:system_background))
         @started = false
         initialize_shell
         initialize_real
@@ -152,7 +153,7 @@ class Shoes
         end
       end
 
-      def setup_system_colors
+      def self.setup_system_colors
         # just one color for now
         background_color = Shoes.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
         ::Shoes::DSL.define_shoes_color(:system_background, background_color.red,

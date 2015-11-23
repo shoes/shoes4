@@ -152,12 +152,6 @@ describe Shoes::Swt::App do
       default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
       app = Shoes::Swt::App.new(Shoes::InternalApp.new(Shoes::App.new, {}))
       background = app.shell.background
-      puts background.red
-      puts background.green
-      puts background.blue
-      puts default_background.red
-      puts default_background.green
-      puts default_background.blue
       expect(background).to eq default_background
     end
 
@@ -168,7 +162,7 @@ describe Shoes::Swt::App do
                                     default_background.red,
                                     default_background.green,
                                     default_background.blue)
-      subject.setup_system_colors
+      subject.class.setup_system_colors
     end
   end
 end
