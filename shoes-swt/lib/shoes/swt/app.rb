@@ -190,6 +190,7 @@ class Shoes
         style  = ::Swt::SWT::CLOSE | ::Swt::SWT::MIN | ::Swt::SWT::V_SCROLL
         style |= ::Swt::SWT::RESIZE | ::Swt::SWT::MAX if @dsl.opts[:resizable]
         style |= ::Swt::SWT::APPLICATION_MODAL        if @dsl.opts[:modal]
+        style |= ::Swt::SWT::ON_TOP if @dsl.opts[:always_on_top]
         style
       end
 

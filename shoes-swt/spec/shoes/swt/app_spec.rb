@@ -15,6 +15,12 @@ describe Shoes::Swt::App do
                                         width: 0,
                                         height: 0,
                                         app_title: 'double') }
+  let(:opts_always_on_top) { {background: Shoes::COLORS[:salmon],
+                              always_on_top: true} }
+  let(:app_always_on_top) { double('app', opts: opts_always_on_top,
+                                          width: 0,
+                                          height: 0,
+                                          app_title: 'double') }
   let(:width) {0}
 
   subject { Shoes::Swt::App.new(dsl) }
@@ -75,6 +81,11 @@ describe Shoes::Swt::App do
     it "should return a bitmask that represents not being resizable" do
       not_resizable = Shoes::Swt::App.new app_unresizable
       expect(not_resizable.send(:main_window_style)).to eq(BASE_BITMASK)
+    end
+
+    it "should return a bitmask that represents always being on top" do
+      always_on_top = Shoes::Swt::App.new app_always_on_top
+      expect(always_on_top.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::ON_TOP)
     end
   end
 
