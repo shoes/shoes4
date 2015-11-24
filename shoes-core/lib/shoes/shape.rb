@@ -39,6 +39,10 @@ class Shoes
       @app.height
     end
 
+    def fixed_height?
+      false
+    end
+
     # Moves the shape
     #
     # @param [Integer] left The new left value
