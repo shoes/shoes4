@@ -152,6 +152,14 @@ class Shoes
       "#<#{self.class}:0x#{hash.to_s(16)} @contents=#{@contents.inspect} and so much stuff literally breaks the memory limit. Look at it selectively.>"
     end
 
+    def fixed_height?
+      !!@fixed_height
+    end
+
+    def variable_height?
+      !@fixed_height
+    end
+
     protected
 
     CurrentPosition = Struct.new(:x, :y, :next_line_start)
@@ -287,10 +295,6 @@ class Shoes
       else
         0
       end
-    end
-
-    def variable_height?
-      !@fixed_height
     end
   end
 

@@ -24,10 +24,12 @@ class Shoes
           @graphic_contexts << graphics_context
         end
 
-        def clip_context_to(graphics_context, element)
+        def clip_context_to(graphics_context, element, use_element_height = true)
           clipping = graphics_context.clipping
+          height   = use_element_height ? element.height : clipping.height
+
           graphics_context.set_clipping(element.absolute_left, element.absolute_top,
-                                        element.width, element.height)
+                                        element.width, height)
           yield graphics_context
         ensure
           if clipping
