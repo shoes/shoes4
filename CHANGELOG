@@ -1,3 +1,34 @@
+v4.0.0.pre5 (96 commits)
+------------------------------
+
+Improvements (8)
+----------------
+
+* Add always on top support to App configuration [d458994]
+* Provide OS-specific system background color [???]
+* Support hover on all elements together with hover based styling [b527f6f]
+* Position element as they are added [2817bf7]
+* Flag to use installed shoes in sample tasks [37d3f96]
+* Restore running guard after gem reorganization [8982848]
+* Clipping to containing slot for text and art elements [???]
+* Get rid of JRuby 9k deprecations [370594d]
+
+Bug Fixes (5)
+-------------
+
+* Correct cursor height for empty text layouts [b74e0d9]
+* Fix installation for jruby-complete [fa65ab0]
+* Remove the cached app template from repo (and gem) [68bd6a8]
+* Fix handling of explicitly set text widths [8ca2096]
+* Don't consider backgrounds and borders in positioning [18d337b]
+
+Contributors (5)
+----------------
+
+Jason R. Clark, Tobias Pfeiffer, Jared Moody, AStrangeEnigma, Rin Raeuber
+
+
+
 4.0.0.pre4 (170 commits)
 -------------------------------
 
