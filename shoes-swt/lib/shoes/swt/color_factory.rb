@@ -22,7 +22,6 @@ class Shoes
       def create(element)
         return nil if element.nil?
         return @swt_elements[element] if @swt_elements.include?(element)
-
         swt_element = ::Shoes.backend_for(element)
         @swt_elements[element] = swt_element
         swt_element

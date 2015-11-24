@@ -63,7 +63,6 @@ class Shoes
         # Some element types (packager for instance) legitimately don't have
         # an app. In those cases, don't try to get it to pass along.
         args.unshift(shoes_object.app.gui) if shoes_object.respond_to?(:app)
-
         backend_factory(shoes_object).call(shoes_object, *args, &blk)
       end
 
