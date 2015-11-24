@@ -25,7 +25,7 @@ class Shoes
         end
 
         def clip_context_to(graphics_context, element)
-          clipping = graphics_context.get_clipping
+          clipping = graphics_context.clipping
           graphics_context.set_clipping(element.absolute_left, element.absolute_top,
                                         element.width, element.height)
           yield graphics_context

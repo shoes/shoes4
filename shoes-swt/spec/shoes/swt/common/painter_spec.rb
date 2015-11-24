@@ -10,7 +10,7 @@ describe Shoes::Swt::Common::Painter do
   let(:event) {double 'paint event', gc: graphics_context}
   let(:graphics_context) { double 'graphics_context',
                                   dispose: nil,
-                                  get_clipping: nil, set_clipping: nil,
+                                  clipping: nil, set_clipping: nil,
                                   set_antialias: nil, set_line_cap: nil,
                                   set_transform: nil, setTransform: nil }
   let(:transform) { double 'transform', disposed?: false }
