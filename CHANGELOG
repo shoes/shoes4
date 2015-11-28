@@ -1,16 +1,18 @@
 v4.0.0.pre5 (96 commits)
 ------------------------------
 
-Improvements (8)
+Improvements (10)
 ----------------
 
+* Shoes has a Code of Conduct [43d4ec0]
+* Scripts can use `require 'shoes`' without the shoes executable [00b91bb]
 * Add always on top support to App configuration [d458994]
-* Provide OS-specific system background color [???]
+* Provide OS-specific system background color [2085c9e]
 * Support hover on all elements together with hover based styling [b527f6f]
 * Position element as they are added [2817bf7]
+* Clip to containing slot for text and art elements [e22db7b]
 * Flag to use installed shoes in sample tasks [37d3f96]
 * Restore running guard after gem reorganization [8982848]
-* Clipping to containing slot for text and art elements [???]
 * Get rid of JRuby 9k deprecations [370594d]
 
 Bug Fixes (5)
