@@ -192,7 +192,8 @@ end
 Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) do
   background white
   @animate = false
-  stack(margin: 10) do
+
+  stack(margin: 10, width: 650, height: 620) do
     @new_world = World.new(40, 40, self)
     animate(10) do
       if @animate

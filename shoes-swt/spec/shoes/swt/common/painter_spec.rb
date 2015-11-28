@@ -3,10 +3,14 @@ require 'spec_helper'
 describe Shoes::Swt::Common::Painter do
   let(:object) {double 'object', dsl: dsl, transform: transform,
                                  apply_fill: nil, apply_stroke: nil}
-  let(:dsl) {double 'dsl', visible?: true, positioned?: true, style: {}}
+  let(:parent) {double 'parent', absolute_left: 0, absolute_top: 0,
+                       width: 200, height: 100, fixed_height?: true}
+  let(:dsl) {double 'dsl', parent: parent,
+                    visible?: true, positioned?: true, style: {}}
   let(:event) {double 'paint event', gc: graphics_context}
   let(:graphics_context) { double 'graphics_context',
                                   dispose: nil,
+                                  clipping: nil, set_clipping: nil,
                                   set_antialias: nil, set_line_cap: nil,
                                   set_transform: nil, setTransform: nil }
   let(:transform) { double 'transform', disposed?: false }
@@ -31,6 +35,12 @@ describe Shoes::Swt::Common::Painter do
     it 'does not paint the object if it is not positioned' do
       allow(dsl).to receive_messages positioned?: false
       expect(subject).not_to receive(:paint_object)
+      subject.paint_control event
+    end
+
+    it 'clips to parent region' do
+      allow(dsl).to receive(:needs_rotate?) { false }
+      expect(graphics_context).to receive(:set_clipping).with(0, 0, 200, 100)
       subject.paint_control event
     end
 

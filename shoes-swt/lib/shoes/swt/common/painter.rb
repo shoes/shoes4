@@ -35,14 +35,16 @@ class Shoes
           graphics_context.set_transform(@obj.transform)
 
           obj = @obj.dsl
-          if obj.needs_rotate?
-            set_rotate graphics_context, obj.rotate,
-                       obj.element_left + obj.element_width / 2.0,
-                       obj.element_top + obj.element_height / 2.0 do
+          clip_context_to(graphics_context, obj.parent, obj.parent.fixed_height?) do
+            if obj.needs_rotate?
+              set_rotate graphics_context, obj.rotate,
+                         obj.element_left + obj.element_width / 2.0,
+                         obj.element_top + obj.element_height / 2.0 do
+                fill_and_draw(graphics_context)
+              end
+            else
               fill_and_draw(graphics_context)
             end
-          else
-            fill_and_draw(graphics_context)
           end
         end
 
