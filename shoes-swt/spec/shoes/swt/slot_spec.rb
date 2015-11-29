@@ -14,11 +14,17 @@ describe Shoes::Swt::Slot do
       expect(swt_app.real).not_to have_received(:set_visible)
     end
 
-    # spec may be deleted if we can hide slots as a whole and not each element
-    # on its own
+    # spec may be deleted if we can hide entire rather than their contents
     it 'tries to hide the content' do
       subject.update_visibility
       expect(content).to have_received :hide
+    end
+
+    # spec may be deleted if we can hide entire rather than their contents
+    it 'only hides on visibility changes' do
+      subject.update_visibility
+      subject.update_visibility
+      expect(content).to have_received(:hide).once
     end
   end
 end
