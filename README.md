@@ -163,46 +163,15 @@ Refer to the following section for information on how to run the specs, that wer
 
 ## Running Specs
 
-Shoes 4 is developed in a TDD style. You should be writing and running the specs :)
+Shoes 4 is developed in a TDD style using RSpec. You should be writing and running the specs :)
 
-There are two kinds of Shoes 4 specs:
+The simplest way to do this is with rake tasks.
 
-1. **Integration specs:** These specify the functionality of the Shoes
-   DSL. They can be run with any compatible Shoes backend. Shoes 4 comes
-   with a mock backend and an Swt backend that can run the integration
-   specs.
+    $ rake spec
 
-2. **Isolation specs:** These specify the internal behavior of a Shoes
-   backend, in isolation from the DSL. Shoes 4 comes with an isolation spec
-   suite for the Swt backend.
+(Try `rake --tasks` for a full list)
 
-There are rake tasks for running specs. Some examples (run `rake --tasks` to see a more complete list):
-
-    $ rake spec                      # Run the whole spec suite
-    $ rake spec:shoes                # Run integration specs using the mock backend
-    $ rake spec:swt                  # Run integration specs using the Swt backend, plus isolation specs for the Swt backend
-    $ rake spec:swt:isolation        # Run isolation specs for the Swt backend
-    $ rake spec:swt:integration      # Run integration specs using the Swt backend
-    $ rake spec[Shape]               # Run the whole spec suite, but only for Shape
-    $ rake spec:shoes[Shape]         # Run integration specs for Shape using the mock backend
-    $ rake spec:swt[Shape]           # Run integration and isolation specs for Shape, using the Swt backend
-    $ rake spec:swt:isolation[Shape] # Run isolation specs for Shape using the Swt backend
-
-**Note:** For Windows, `C:\tmp\shoes4>jruby -S rake spec`
-
-Sometimes you only want to run specs from individual files rather than entire suites. You can run individual specs from the project root directory like this:
-
-    $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
-
-If you're on OS X and you are running specs that require SWT, you will have to set the `JRUBY_OPTS` environment variable first:
-
-    $ export JRUBY_OPTS=-J-XstartOnFirstThread
-    $ rspec shoes-swt/spec/shoes/swt/app_spec.rb
-
-or set `JRUBY_OPTS` directly on the command line:
-
-    $ JRUBY_OPTS=-J-XstartOnFirstThread rspec shoes-swt/spec/shoes/swt/app_spec.rb
-
+If you want more details on other modes to run specs in, philosophy on how and what to tests, check out the [Testing Shoes entry in the wiki](https://github.com/shoes/shoes4/wiki/Testing-Shoes).
 
 ## Code of Conduct
 
