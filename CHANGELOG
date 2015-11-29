@@ -1,4 +1,4 @@
-v4.0.0.pre5 (109 commits)
+v4.0.0.pre5 (111 commits)
 ------------------------------
 
 Improvements (10)
@@ -15,7 +15,7 @@ Improvements (10)
 * Restore running guard after gem reorganization [8982848]
 * Get rid of JRuby 9k deprecations [370594d]
 
-Bug Fixes (5)
+Bug Fixes (6)
 -------------
 
 * Correct cursor height for empty text layouts [b74e0d9]
@@ -23,6 +23,7 @@ Bug Fixes (5)
 * Remove the cached app template from repo (and gem) [68bd6a8]
 * Fix handling of explicitly set text widths [8ca2096]
 * Don't consider backgrounds and borders in positioning [18d337b]
+* Only touch contents visibility on actual state change [5bf27d0]
 
 Contributors (5)
 ----------------
