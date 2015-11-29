@@ -25,7 +25,10 @@ class Shoes
       # responsibility, although this is more DSL code
       # #904 #905
       def update_visibility
-        if dsl.hidden?
+        # Only alter contents on a visibility change
+        return if @last_hidden_state == dsl.hidden?
+
+        if @last_hidden_state = dsl.hidden?
           dsl.contents.each(&:hide)
         else
           dsl.contents.each(&:show)
