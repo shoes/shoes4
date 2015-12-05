@@ -10,6 +10,10 @@ class Shoes
       styles[:text] = text.to_s
     end
 
+    def after_initialize(*_)
+      update_enabled
+    end
+
     def handle_block(blk)
       change(&blk) if blk
       update_visibility
@@ -17,7 +21,7 @@ class Shoes
 
     def state=(value)
       style(state: value)
-      @gui.enabled(enabled?)
+      update_enabled
     end
 
     def focus
@@ -44,6 +48,10 @@ class Shoes
     private
     def enabled?
       !(state.to_s == DISABLED_STATE)
+    end
+
+    def update_enabled
+      @gui.enabled(enabled?)
     end
   end
 

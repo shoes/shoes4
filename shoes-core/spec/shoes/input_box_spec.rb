@@ -58,7 +58,12 @@ describe Shoes::InputBox do
 
   describe Shoes::EditLine do
     describe "secret" do
-      subject { Shoes::EditLine.new(app, parent, text, secret: true) }
+      subject { Shoes::EditLine.new(app, parent, text, secret: true, state: 'disabled') }
+
+      it 'respects state passed along in initial opts' do
+        expect_any_instance_of(Shoes.backend.const_get('EditLine')).to receive(:enabled).with(false)
+        subject
+      end
 
       it "gets initialized" do
         expect(subject.secret).to eq(true)
