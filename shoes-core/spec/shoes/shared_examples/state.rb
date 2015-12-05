@@ -16,4 +16,10 @@ shared_examples_for "object with state" do
     subject.state = "disabled"
     expect(subject.state).to eq("disabled")
   end
+
+  it "does not disable when a string other than disabled is passed" do
+    expect(subject.gui).to receive(:enabled).with(true)
+    subject.state = "enabled"
+    expect(subject.state).to eq("enabled")
+  end
 end

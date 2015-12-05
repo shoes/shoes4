@@ -4,6 +4,8 @@ class Shoes
     include Common::Style
     include Common::Changeable
 
+    DISABLED_STATE = "disabled"
+
     def before_initialize(styles, text)
       styles[:text] = text.to_s
     end
@@ -15,7 +17,7 @@ class Shoes
 
     def state=(value)
       style(state: value)
-      @gui.enabled value.nil?
+      @gui.enabled(enabled?)
     end
 
     def focus
@@ -37,6 +39,11 @@ class Shoes
 
     def caret_to(index)
       @gui.caret_to(index)
+    end
+
+    private
+    def enabled?
+      !(state.to_s == DISABLED_STATE)
     end
   end
 
