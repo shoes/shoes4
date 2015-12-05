@@ -32,5 +32,20 @@ describe Shoes::Configuration do
         expect { Shoes.backend_for(1..100) }.to raise_error(ArgumentError)
       end
     end
+
+    describe '#backend_class' do
+      it 'returns the backend class for a dsl object' do
+        expect(Shoes.configuration.backend_class(dsl_object)).to eq(Shoes.configuration.backend::Shape)
+      end
+
+      it 'returns the backend class if fed with a class' do
+        expect(Shoes.configuration.backend_class(Shoes::Shape)).to eq(Shoes.configuration
+                                                .backend::Shape)
+      end
+
+      it 'raises an error when fed with a non existant class' do
+        expect { Shoes.configuration.backend_class(Array) }.to raise_error(ArgumentError)
+      end
+    end
   end
 end
