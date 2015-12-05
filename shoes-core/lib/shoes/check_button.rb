@@ -3,6 +3,7 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Clickable
+    include Common::State
 
     def checked?
       @gui.checked?
@@ -15,11 +16,6 @@ class Shoes
 
     def focus
       @gui.focus
-    end
-
-    def state=(value)
-      style(state: value)
-      @gui.enabled value.nil?
     end
   end
 

@@ -3,25 +3,16 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Changeable
+    include Common::State
 
-    DISABLED_STATE = "disabled"
 
     def before_initialize(styles, text)
       styles[:text] = text.to_s
     end
 
-    def after_initialize(*_)
-      update_enabled
-    end
-
     def handle_block(blk)
       change(&blk) if blk
       update_visibility
-    end
-
-    def state=(value)
-      style(state: value)
-      update_enabled
     end
 
     def focus
@@ -43,15 +34,6 @@ class Shoes
 
     def caret_to(index)
       @gui.caret_to(index)
-    end
-
-    private
-    def enabled?
-      !(state.to_s == DISABLED_STATE)
-    end
-
-    def update_enabled
-      @gui.enabled(enabled?)
     end
   end
 

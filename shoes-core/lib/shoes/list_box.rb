@@ -28,6 +28,7 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Changeable
+    include Common::State
 
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
     STYLES = { width: 200, height: 20, items: [""] }
@@ -37,6 +38,7 @@ class Shoes
     end
 
     def after_initialize
+      super
       proxy_array = Shoes::ProxyArray.new(items, @gui)
       @style[:items] = proxy_array
     end
@@ -63,10 +65,5 @@ class Shoes
     end
 
     alias_method :choose=, :choose
-
-    def state=(value)
-      style(state: value)
-      @gui.enabled value.nil?
-    end
   end
 end

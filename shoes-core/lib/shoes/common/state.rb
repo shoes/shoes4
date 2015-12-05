@@ -1,15 +1,29 @@
 class Shoes
   module Common
     module State
-      attr_reader :state
+      DISABLED_STATE = "disabled"
+
+      def after_initialize(*_)
+        super
+        update_enabled
+      end
 
       def state=(value)
-        @state = value
-        @gui.enabled value.nil?
+        style(state: value)
+        update_enabled
       end
 
       def state_options(opts)
         self.state = opts[:state]
+      end
+
+      private
+      def enabled?
+        !(state.to_s == DISABLED_STATE)
+      end
+
+      def update_enabled
+        @gui.enabled(enabled?)
       end
     end
   end
