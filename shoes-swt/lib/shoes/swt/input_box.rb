@@ -32,7 +32,7 @@ class Shoes
       end
 
       def enabled(value)
-        @real.enable_widget value
+        @real.enabled = value
       end
 
       def highlight_text(start_index, final_index)

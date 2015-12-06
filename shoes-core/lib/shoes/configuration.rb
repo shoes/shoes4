@@ -37,17 +37,18 @@ class Shoes
         @backend_name ||= name
       end
 
-      # Finds the appropriate backend class for the given Shoes object
+      # Finds the appropriate backend class for the given Shoes object or class
       #
-      # @param [Object] shoes_object A Shoes object
+      # @param [Object] object A Shoes object or a class
       # @return [Object] An appropriate backend class
       # @example
       #   Shoes.configuration.backend_class(shoes_button) # => Shoes::Swt::Button
-      def backend_class(shoes_object)
-        class_name = shoes_object.class.name.split("::").last
+      def backend_class(object)
+        klazz = object.is_a?(Class) ? object : object.class
+        class_name = klazz.name.split("::").last
         # Lookup with false to not consult modules higher in the chain Object
         # because Shoes::Swt.const_defined? 'Range' => true
-        fail ArgumentError, "#{shoes_object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name, false)
+        fail ArgumentError, "#{object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name, false)
         backend.const_get(class_name, false)
       end
 

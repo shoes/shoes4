@@ -3,6 +3,8 @@ class Shoes
     include Common::UIElement
     include Common::Style
     include Common::Changeable
+    include Common::State
+
 
     def before_initialize(styles, text)
       styles[:text] = text.to_s
@@ -11,11 +13,6 @@ class Shoes
     def handle_block(blk)
       change(&blk) if blk
       update_visibility
-    end
-
-    def state=(value)
-      style(state: value)
-      @gui.enabled value.nil?
     end
 
     def focus

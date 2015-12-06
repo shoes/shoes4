@@ -58,7 +58,7 @@ describe Shoes::InputBox do
 
   describe Shoes::EditLine do
     describe "secret" do
-      subject { Shoes::EditLine.new(app, parent, text, secret: true) }
+      subject { Shoes::EditLine.new(app, parent, text, secret: true, state: 'disabled') }
 
       it "gets initialized" do
         expect(subject.secret).to eq(true)
