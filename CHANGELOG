@@ -1,4 +1,4 @@
-v4.0.0.pre5 (111 commits)
+v4.0.0.pre5 (118 commits)
 ------------------------------
 
 Improvements (10)
@@ -15,7 +15,7 @@ Improvements (10)
 * Restore running guard after gem reorganization [8982848]
 * Get rid of JRuby 9k deprecations [370594d]
 
-Bug Fixes (6)
+Bug Fixes (8)
 -------------
 
 * Correct cursor height for empty text layouts [b74e0d9]
@@ -24,6 +24,8 @@ Bug Fixes (6)
 * Fix handling of explicitly set text widths [8ca2096]
 * Don't consider backgrounds and borders in positioning [18d337b]
 * Only touch contents visibility on actual state change [5bf27d0]
+* Fix enabled state for edit line box [aacffc3]
+* Always set up Bundler for packaging [d509141]
 
 Contributors (5)
 ----------------
