@@ -42,7 +42,7 @@ mac_readlink_f () {
   echo $RESULT
 }
 
-case "${MACHTYPE:-}" in
+case "${MACHTYPE:-}${OSTYPE:-}" in
   (*darwin*)
     SCRIPT=$(mac_readlink_f $0);;
   (*)
