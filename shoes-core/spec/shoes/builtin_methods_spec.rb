@@ -4,6 +4,7 @@ describe Shoes::BuiltinMethods do
   let(:input_blk) { Proc.new {} }
   let(:app) { Shoes::App.new({}, &input_blk) }
   let(:logger) { double("logger") }
+  let(:dialog) { double('dialog') }
 
   before :each do
     Shoes::LOG.clear
@@ -22,63 +23,33 @@ describe Shoes::BuiltinMethods do
     end
   end
 
-  describe "info" do
-    before :each do
-      allow(logger).to receive(:info)
-      app.info("test")
-    end
+  %w(info debug warn error).each do |level|
+    describe "##{level}" do
+      before :each do
+        allow(logger).to receive(level)
+        app.public_send(level, "test")
+      end
 
-    it "sets Shoes::LOG" do
-      expect(Shoes::LOG).to eq([["info", "test"]])
-    end
+      it 'sets Shoes::LOG' do
+        expect(Shoes::LOG).to eq([[level, 'test']])
+      end
 
-    it "sends message to logger" do
-      expect(logger).to have_received(:info)
-    end
-  end
-
-  describe "debug" do
-    before :each do
-      allow(logger).to receive(:debug)
-      app.debug("test")
-    end
-
-    it "sets Shoes::LOG" do
-      expect(Shoes::LOG).to eq([["debug", "test"]])
-    end
-
-    it "sends message to logger" do
-      expect(logger).to have_received(:debug)
+      it 'sends message to logger' do
+        expect(logger).to have_received(level)
+      end
     end
   end
 
-  describe "warn" do
-    before :each do
-      allow(logger).to receive(:warn)
-      app.warn("test")
-    end
+  %w(open_file save_file open_folder save_folder).each do |chooser_action|
+    describe "#ask_#{chooser_action}" do
+      before do
+        allow(Shoes::Dialog).to receive(:new).and_return(dialog)
+        expect(dialog).to receive(:dialog_chooser).and_return(dialog)
+      end
 
-    it "sets Shoes::LOG" do
-      expect(Shoes::LOG).to eq([["warn", "test"]])
-    end
-
-    it "sends message to logger" do
-      expect(logger).to have_received(:warn)
-    end
-  end
-
-  describe "error" do
-    before :each do
-      allow(logger).to receive(:error)
-      app.error("test")
-    end
-
-    it "sets Shoes::LOG" do
-      expect(Shoes::LOG).to eq([["error", "test"]])
-    end
-
-    it "sends message to logger" do
-      expect(logger).to have_received(:error)
+      it 'creates a new chooser dialog' do
+        expect(app.public_send("ask_#{chooser_action}")).to eq(dialog)
+      end
     end
   end
 
@@ -104,6 +75,48 @@ describe Shoes::BuiltinMethods do
           expect(Shoes).not_to respond_to method
         end
       end
+    end
+  end
+
+  %w(alert confirm).each do |type|
+    describe '##{alert}' do
+     let(:message) { double('message') }
+
+      before do
+        allow(Shoes::Dialog).to receive(:new).and_return(dialog)
+        expect(dialog).to receive(type).with(message).and_return(dialog)
+      end
+
+      it 'creates a new dialog' do
+        expect(app.public_send(type, message)).to eq(dialog)
+      end
+    end
+  end
+
+  describe '#ask' do
+    let(:message) { double('message') }
+    let(:args) { double('args') }
+
+    before do
+      allow(Shoes::Dialog).to receive(:new).and_return(dialog)
+      expect(dialog).to receive(:ask).with(message, args).and_return(dialog)
+    end
+
+    it 'creates a new dialog' do
+      expect(app.ask(message, args)).to eq(dialog)
+    end
+  end
+
+  describe '#ask_color' do
+    let(:title) { double('title') }
+
+    before do
+      allow(Shoes::Dialog).to receive(:new).and_return(dialog)
+      expect(dialog).to receive(:ask_color).with(title).and_return(dialog)
+    end
+
+    it 'creates a new dialog' do
+      expect(app.ask_color(title)).to eq(dialog)
     end
   end
 end
