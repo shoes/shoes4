@@ -17,24 +17,11 @@ class Shoes
       Shoes::Dialog.new.confirm(message)
     end
 
-    def info(message = '')
-      Shoes::LOG << ['info', message]
-      Shoes.logger.info message
-    end
-
-    def debug(message = '')
-      Shoes::LOG << ['debug', message]
-      Shoes.logger.debug message
-    end
-
-    def warn(message = '')
-      Shoes::LOG << ['warn', message]
-      Shoes.logger.warn message
-    end
-
-    def error(message = '')
-      Shoes::LOG << ['error', message]
-      Shoes.logger.error message
+    %w(info debug warn error).each do |log_level|
+      define_method(log_level) do |message = ''|
+        Shoes::LOG << [log_level, message]
+        Shoes.logger.public_send(log_level, message)
+      end
     end
 
     alias_method :confirm?, :confirm
