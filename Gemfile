@@ -15,7 +15,7 @@ group :development do
   gem "pry"
   gem "pry-nav"
 
-  gem "rspec", "~>3.3.0"
+  gem "rspec", "~>3.4.0"
   gem "rspec-its", "~>1.2.0"
   gem "rake"
 
