@@ -237,12 +237,14 @@ class Shoes
   end
 
   class ParentDimension < Dimension
-    def absolute_start
-      @absolute_start ? super : parent.absolute_start
-    end
 
-    def start
-      @start ? super : parent.start
+    LOOKUP_PARENT_VALUES = %w(start end absolute_start)
+    LOOKUP_PARENT_VALUES.each do |value|
+      eval <<-ACCESSOR
+def #{value}
+  @#{value} ? super : parent.#{value}
+end
+      ACCESSOR
     end
 
     def extent

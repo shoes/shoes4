@@ -177,10 +177,8 @@ class Shoes
     end
 
     def positioning(element, current_position)
-      if element.needs_positioning?
-        position_element element, current_position
-        element.contents_alignment(current_position) if element.respond_to? :contents_alignment
-      end
+      position_element element, current_position
+      element.contents_alignment(current_position) if element.respond_to? :contents_alignment
 
       if element.takes_up_space?
         update_current_position(current_position, element)
