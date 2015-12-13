@@ -238,11 +238,7 @@ class Shoes
 
   class ParentDimension < Dimension
     def absolute_start
-      @absolute_start ? super : parent.absolute_start
-    end
-
-    def start
-      @start ? super : parent.start
+      parent.element_start
     end
 
     def extent
@@ -253,27 +249,18 @@ class Shoes
 
     # Represents the extent, bounded by the parent container's sizing
     def extent_in_parent
-      if parent.element_end
-        # Why subtracting an absolute from an element dimension value? A
-        # diagram helped me reason out what we wanted.
-        #
-        # parent.      parent.      self.       self.    parent.      parent.
-        # abs_start    elem_start   abs_start   abs_end  elem_end     abs_end
-        # |   margin   |            |           |        |   margin   |
-        #
-        # To get our extent respecting the parent's margins, it's our absolute
-        # start, minus parent's element end (so we don't blow past the margin)
-        parent.element_end - absolute_start - PIXEL_COUNTING_ADJUSTMENT
+      if parent.element_extent
+        parent.element_extent
       else
         # If we hit this, then the extent in parent isn't available and will be
-        # ignored by the min call below
+        # ignored by the min call in extent
         Float::INFINITY
       end
     end
 
     # Represents the raw value set for extent, either on element or on parent
-    def raw_extent(original_value)
-      original_value || parent.extent
+    def raw_extent(own_original_extent)
+      own_original_extent || parent.extent
     end
   end
 end

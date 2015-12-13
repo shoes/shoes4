@@ -718,10 +718,10 @@ describe Shoes::Dimensions do
                                           margin: 20}
       subject {Shoes::ParentDimensions.new parent}
 
-      its(:left)   {should eq parent.left}
-      its(:top)    {should eq parent.top}
-      its(:width)  {should eq parent.width}
-      its(:height) {should eq parent.height}
+      its(:left)   {should eq nil}
+      its(:top)    {should eq nil}
+      its(:width)  {should eq parent.element_width}
+      its(:height) {should eq parent.element_height}
 
       its(:margin_left)   {should eq 0}
       its(:margin_top)    {should eq 0}
@@ -734,10 +734,10 @@ describe Shoes::Dimensions do
           parent.absolute_top  = top
         end
 
-        its(:absolute_left) {should eq parent.absolute_left}
-        its(:absolute_top)  {should eq parent.absolute_top}
-        its(:element_left)  {should eq parent.absolute_left}
-        its(:element_top)   {should eq parent.absolute_top}
+        its(:absolute_left) {should eq parent.element_left}
+        its(:absolute_top)  {should eq parent.element_top}
+        its(:element_left)  {should eq parent.element_left}
+        its(:element_top)   {should eq parent.element_top}
       end
     end
 

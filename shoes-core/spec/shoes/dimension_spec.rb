@@ -356,12 +356,9 @@ describe Shoes::Dimension do
     before :each do
       parent.start        = parent_start
       parent.extent       = parent_extent
-      parent.margin_start = margin
-      parent.margin_end   = margin
     end
 
     describe 'it takes some parent values if no values are set' do
-      its(:start)  {should eq parent_start}
       its(:extent) {should eq parent_extent}
 
       its(:margin_start) {should eq 0}
@@ -370,14 +367,20 @@ describe Shoes::Dimension do
       context 'with parent absolute_start set' do
         before :each do
           parent.absolute_start = 11
-
-          # This would be set by positioning code
-          subject.absolute_start = parent.absolute_start + margin
         end
 
-        its(:absolute_start) {should eq parent.absolute_start + margin}
-        its(:element_start)  {should eq parent.absolute_start + margin}
+        its(:absolute_start) {should eq parent.element_start}
+        its(:element_start)  {should eq parent.element_start}
         its(:element_end)    {should eq parent.element_end}
+      end
+
+      context 'but it takes the parent margins into account' do
+        before :each do
+          parent.margin_start = margin
+          parent.margin_end   = margin
+        end
+
+        its(:extent) {is_expected.to eq 17}
       end
     end
 
@@ -385,7 +388,7 @@ describe Shoes::Dimension do
       before :each do
         subject.start = start
         subject.extent = extent
-        subject.absolute_start = 17
+        parent.absolute_start = 17
       end
 
       its(:start) {should eq start}
@@ -394,12 +397,17 @@ describe Shoes::Dimension do
 
       it 'can still handle special values like a negative extent' do
         subject.extent = -10
-        expect(subject.extent).to eq(parent_extent - 2 * margin - 10)
+        expect(subject.extent).to eq(parent.element_extent - 10)
       end
 
       it 'can also still handle special values like relative values' do
         subject.extent = 0.8
         expect(subject.extent).to be_within(ONE_PIXEL).of(0.8 * parent.element_extent)
+      end
+
+      it 'takes the margins of parent into account' do
+        parent.margin_start = 10
+        expect(subject.absolute_start).to eq 27
       end
     end
 
@@ -414,14 +422,18 @@ describe Shoes::Dimension do
 
       subject {Shoes::ParentDimension.new parent_dimension}
 
-      it "can't extend beyond parent" do
-        subject.absolute_start = 15
-        expect(subject.extent).to eq(6)
+      it "gets the parent element_extent" do
+        expect(subject.extent).to eq(10)
       end
 
-      it "can't start before parent" do
-        subject.absolute_start = 5
+      it "can't extend beyond the parent" do
+        subject.extent = 25
         expect(subject.extent).to eq(10)
+      end
+
+      it 'can get smaller than the parent' do
+        subject.extent = 5
+        expect(subject.extent).to eq(5)
       end
     end
   end
