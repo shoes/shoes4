@@ -279,7 +279,7 @@ class Shoes
 
     def determine_slot_height
       content_height = compute_content_height
-      self.height = content_height if variable_height?
+      self.element_height = content_height if variable_height?
       content_height
     end
 
@@ -291,7 +291,7 @@ class Shoes
                     max
 
       if max_bottom
-        max_bottom - self.absolute_top + NEXT_ELEMENT_OFFSET
+        max_bottom - self.element_top + NEXT_ELEMENT_OFFSET
       else
         0
       end

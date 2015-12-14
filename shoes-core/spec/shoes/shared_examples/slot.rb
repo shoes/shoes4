@@ -406,6 +406,14 @@ shared_examples_for 'margin and positioning' do
     it 'leaves the left value as zero' do
       expect(element.absolute_left).to eq 0
     end
+
+    it 'sets the slot element_height to the height of the child + adjustment' do
+      expect(subject.element_height).to eq element.height
+    end
+
+    it 'sets the slot total height to element height + margin' do
+      expect(subject.height).to eq element.height + margin_top
+    end
   end
 
   describe 'margin left' do
