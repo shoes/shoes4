@@ -1,4 +1,4 @@
-v4.0.0.pre5 (118 commits)
+v4.0.0.pre5 (125 commits)
 ------------------------------
 
 Improvements (10)
@@ -15,9 +15,12 @@ Improvements (10)
 * Restore running guard after gem reorganization [8982848]
 * Get rid of JRuby 9k deprecations [370594d]
 
-Bug Fixes (8)
+Bug Fixes (11)
 -------------
 
+* Correctly using parents margin for background [a173f02]
+* Correct slot height when margins are in play [e1cbb2f]
+* Only touch contents visibility on actual state change [5bf27d0]
 * Correct cursor height for empty text layouts [b74e0d9]
 * Fix installation for jruby-complete [fa65ab0]
 * Remove the cached app template from repo (and gem) [68bd6a8]
@@ -27,10 +30,12 @@ Bug Fixes (8)
 * Fix enabled state for edit line box [aacffc3]
 * Always set up Bundler for packaging [d509141]
 
+
 Contributors (5)
 ----------------
 
-Jason R. Clark, Tobias Pfeiffer, Jared Moody, Richard McCormack, Rin Raeuber
+Jason R. Clark, Tobias Pfeiffer, Carsten Wirth, KC Erb, Jared Moody, Richard
+McCormack, Rin Raeuber
 
 
 
