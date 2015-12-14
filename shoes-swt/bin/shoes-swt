@@ -2,8 +2,8 @@
 lib_directory = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH << lib_directory
 
-require "bundler/setup"
 if File.exist?("Gemfile")
+  require "bundler/setup"
   Bundler.require
 end
 
