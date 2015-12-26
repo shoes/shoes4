@@ -14,5 +14,10 @@ class Shoes
     def focus
       @gui.focus
     end
+
+    def text=(value)
+      style(text: value.to_s)
+      @gui.text = value.to_s
+    end
   end
 end
