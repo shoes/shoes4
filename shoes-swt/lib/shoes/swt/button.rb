@@ -13,7 +13,6 @@ class Shoes
       end
 
       def text=(value)
-        @last_text = @real.text
         @real.text = value
       end
     end
