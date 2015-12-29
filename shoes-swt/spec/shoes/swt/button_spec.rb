@@ -94,4 +94,11 @@ describe Shoes::Swt::Button do
       subject.click block
     end
   end
+
+  describe ".text=" do
+    it "sets text on real element" do
+      expect(real).to receive(:text=).with("some text")
+      subject.text = "some text"
+    end
+  end
 end

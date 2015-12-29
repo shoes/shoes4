@@ -11,6 +11,10 @@ class Shoes
           button.set_text @dsl.text
         end
       end
+
+      def text=(value)
+        @real.text = value
+      end
     end
   end
 end

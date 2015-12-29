@@ -23,6 +23,7 @@ describe Shoes::Button do
 
   it { is_expected.to respond_to :click }
   it { is_expected.to respond_to :focus }
+  it { is_expected.to respond_to :text= }
 
   describe "initialize" do
     its(:parent) { should eq(parent) }
@@ -30,6 +31,14 @@ describe Shoes::Button do
     its(:width) { should eq(131) }
     its(:height) { should eq(137) }
     its(:state) { should eq("disabled") }
+  end
+
+  describe ".text=" do
+    it "changes the text" do
+      expect(subject.gui).to receive(:text=).with("something else")
+      subject.text = "something else"
+      expect(subject.text).to eq "something else"
+    end
   end
 
   describe "relative dimensions" do
