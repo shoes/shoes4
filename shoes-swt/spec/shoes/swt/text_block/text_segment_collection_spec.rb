@@ -238,7 +238,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     bounds = double("bounds", x: 0, y: 0, height: 0)
     layout = double(name, text: text,
                           :justify= => nil, :spacing= => nil, :alignment= => nil,
-                          line_bounds: bounds, line_count: 1)
+                          get_line_bounds: bounds, line_count: 1)
 
     allow_any_instance_of(Shoes::Swt::TextFontFactory).to receive(:create_font)
 

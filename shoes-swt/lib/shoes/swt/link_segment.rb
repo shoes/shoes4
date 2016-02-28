@@ -33,7 +33,7 @@ class Shoes
 
       def line_bounds
         (0..layout.line_count - 1).map do |index|
-          layout.line_bounds(index)
+          layout.get_line_bounds(index)
         end
       end
 

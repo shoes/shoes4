@@ -108,7 +108,7 @@ describe Shoes::Swt::LinkSegment do
   end
 
   def stub_line_bounds(index)
-    allow(layout).to receive(:line_bounds).with(index) {
+    allow(layout).to receive(:get_line_bounds).with(index) {
       double("line #{index}",
              x: 0,
              y: index * line_height,

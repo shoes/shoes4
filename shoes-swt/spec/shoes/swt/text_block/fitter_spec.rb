@@ -76,15 +76,15 @@ describe Shoes::Swt::TextBlock::Fitter do
   describe "finding what didn't fit" do
     it "splits when one line past requested height" do
       segment = double('segment', line_offsets: [0, 5, 10], text: "Text Split")
-      allow(segment).to receive(:line_bounds) { double('line_bounds', height: 25)}
+      allow(segment).to receive(:get_line_bounds) { double('line_bounds', height: 25)}
 
       expect(subject.split_text(segment, 24)).to eq(["Text ", "Split"])
     end
 
     it "should be able to split text when too small" do
       segment = double('segment', line_offsets: [0, 10], text: "Text Split")
-      allow(segment).to receive(:line_bounds).with(0) { double('line_bounds', height: 21)}
-      allow(segment).to receive(:line_bounds).with(1) { raise "Boom" }
+      allow(segment).to receive(:get_line_bounds).with(0) { double('line_bounds', height: 21)}
+      allow(segment).to receive(:get_line_bounds).with(1) { raise "Boom" }
 
       expect(subject.split_text(segment, 33)).to eq(["Text Split", ""])
     end
@@ -118,7 +118,7 @@ describe Shoes::Swt::TextBlock::Fitter do
 
     context "to two segments" do
       before(:each) do
-        allow(segment).to receive_messages(line_count: 2, line_bounds: double(height: 15))
+        allow(segment).to receive_messages(line_count: 2, get_line_bounds: double(height: 15))
         allow(bounds).to receive_messages(width: 50)
         allow(dsl).to receive_messages(containing_width: :unused)
       end

@@ -177,7 +177,7 @@ class Shoes
         end
 
         def height_from_segment(segment)
-          segment.line_bounds(0).height
+          segment.get_line_bounds(0).height
         end
       end
     end
