@@ -12,7 +12,7 @@ describe Shoes::Swt::Link do
   it_behaves_like "clickable backend"
 
   context "creating link segments" do
-    let(:bounds)       { double("bounds", height: 0) }
+    let(:bounds)       { double("bounds", x: 0, y: 0, height: 0) }
     let(:inner_layout) { double("inner layout",
                                 get_line_bounds: bounds, line_count: 1) }
     let(:layout)       { double("layout",
