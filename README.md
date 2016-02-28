@@ -1,6 +1,14 @@
-# shoes4 [![Linux Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Windows Build status](https://ci.appveyor.com/api/projects/status/ejrrqefbfuhdmahj/branch/master?svg=true)](https://ci.appveyor.com/project/PragTob/shoes4/branch/master)[![Code Climate](https://codeclimate.com/github/shoes/shoes4/badges/gpa.svg)](https://codeclimate.com/github/shoes/shoes4)[![Test Coverage](https://codeclimate.com/github/shoes/shoes4/badges/coverage.svg)](https://codeclimate.com/github/shoes/shoes4/code?sort=covered_percent&sort_direction=desc)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
+# Shoes 4 [![Linux Build Status](https://secure.travis-ci.org/shoes/shoes4.svg?branch=master)](http://travis-ci.org/shoes/shoes4)[![Windows Build status](https://ci.appveyor.com/api/projects/status/ejrrqefbfuhdmahj/branch/master?svg=true)](https://ci.appveyor.com/project/PragTob/shoes4/branch/master)[![Code Climate](https://codeclimate.com/github/shoes/shoes4/badges/gpa.svg)](https://codeclimate.com/github/shoes/shoes4)[![Test Coverage](https://codeclimate.com/github/shoes/shoes4/badges/coverage.svg)](https://codeclimate.com/github/shoes/shoes4/code?sort=covered_percent&sort_direction=desc)[![Dependency Status](https://img.shields.io/gemnasium/shoes/shoes4.svg)](https://gemnasium.com/shoes/shoes4)
 
 Shoes 4 : the next version of Shoes
+
+## About Shoes
+
+Shoes is a little DSL for cross-platform (Mac, Windows, and Linux) GUI programming. It feels like real Ruby, rather than just another C++ library wrapper. For some samples, the manual, and a free book, check out [the Shoes website](http://shoesrb.com/).
+
+##Some history about Shoes
+
+Way way back in the day, there was a guy named \_why. He created a project known as [Hackety Hack](http://hackety-hack.com) to teach programming to everyone. In order to reach all corners of the earth, \_why decided to make Hackety Hack work on Windows, Mac OS X, and Linux. This was a lot of work, and so \_why decided to share his toolkit with the world. Thus, Shoes was born.
 
 ## Preview Version
 
@@ -180,6 +188,15 @@ Way way back in the day, there was a guy named _why. He created a project known 
 Shoes was born to teach programming to everyone, in all corners of the earth. It's not cool to make new programmers or programmers with bad English feel bad because they don't write Ruby / English very well. And clearly any other anti-social comments directed at someone's religion, ethnicity, race, gender identity, or any of that personal stuff won't be tolerated here in the land of chunky-bacon! If community members feel like your comments are out of line in any project space (code, issues, chat rooms, mailing lists), they'll kindly let you know how to improve per our [code of conduct](https://github.com/shoes/shoes4/blob/master/CODE_OF_CONDUCT.md).
 
 The bottom-line is: Have Fun with Shoes!
+
+## Shoes Around the Web
+
+If you want to keep up to date with what's going on with Shoes, you can find us in various places:
+
+* [Official Shoes Site](http://shoesrb.com/)
+* [Source Code @ GitHub](http://github.com/shoes/shoes4)
+* [Issue tracker @ GitHub](http://github.com/shoes/shoes4/issues)
+* [Twitter account](http://twitter.com/shoooesrb)
 
 ## Contact
 
