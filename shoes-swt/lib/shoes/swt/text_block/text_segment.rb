@@ -12,14 +12,15 @@ class Shoes
       #
       # These are only expected to be called during contents_alignment
       class TextSegment
+        extend Forwardable
+
         DEFAULT_SPACING = 4
 
         attr_reader   :layout, :element_left, :element_top
         attr_accessor :fill_background
 
-        extend Forwardable
         def_delegators :@layout, :text, :text=, :bounds, :width, :spacing,
-                       :line_bounds, :line_count, :line_offsets
+                       :get_line_bounds, :line_count, :line_offsets
 
         def initialize(dsl, text, width)
           @dsl = dsl
