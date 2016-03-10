@@ -33,6 +33,10 @@ class Shoes
       @gui.in_bounds?(*args)
     end
 
+    def takes_up_space?
+      @style[:align] != "right"
+    end
+
     def remove
       super
       links.each do |link|
