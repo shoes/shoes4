@@ -47,6 +47,22 @@ describe Shoes::TextBlock do
     end
   end
 
+  describe "#takes_up_space?" do
+    it "does with default alignment" do
+      expect(text_block.takes_up_space?).to eq(true)
+    end
+
+    it "does when left aligned" do
+      text_block.align = "left"
+      expect(text_block.takes_up_space?).to eq(true)
+    end
+
+    it "doesn't when right aligned" do
+      text_block.align = "right"
+      expect(text_block.takes_up_space?).to eq(false)
+    end
+  end
+
   describe "#to_s" do
     it "is the same as #text" do
       text = text_block.text
