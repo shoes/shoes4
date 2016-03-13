@@ -6,6 +6,29 @@ Shoes 4 : the next version of Shoes
 
 Shoes is a little DSL for cross-platform (Mac, Windows, and Linux) GUI programming. It feels like real Ruby, rather than just another C++ library wrapper. For some samples, the manual, and a free book, check out [the Shoes website](http://shoesrb.com/).
 
+## Basic Usage
+
+Want to see what Shoes looks like? Well, here you go! Given the script:
+
+```ruby
+Shoes.app width: 300, height: 200 do
+  background lime..blue
+
+  stack do
+    para "Welcome to the world of Shoes!"
+    button "Click me" do alert "Nice click!" end
+    image "http://shoesrb.com/img/shoes-icon.png",
+          margin_top: 20, margin_left: 10
+  end
+end
+```
+
+This results in the following application:
+
+![shoes 4 screenshot Linux](http://www.pragtob.info/images/Shoes%204%20_004.png)
+
+The look and feel will differ for your operating system, as Shoes 4 uses native widgets.
+
 ##Some history about Shoes
 
 Way way back in the day, there was a guy named \_why. He created a project known as [Hackety Hack](http://hackety-hack.com) to teach programming to everyone. In order to reach all corners of the earth, \_why decided to make Hackety Hack work on Windows, Mac OS X, and Linux. This was a lot of work, and so \_why decided to share his toolkit with the world. Thus, Shoes was born.
