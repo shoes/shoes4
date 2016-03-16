@@ -200,7 +200,7 @@ class Shoes
         style |= ::Swt::SWT::RESIZE | ::Swt::SWT::MAX if @dsl.opts[:resizable]
         style |= ::Swt::SWT::APPLICATION_MODAL        if @dsl.opts[:modal]
         style |= ::Swt::SWT::ON_TOP                   if @dsl.opts[:always_on_top]
-        style |= ::Swt::SWT::NO_TRIM                  if @dsl.opts[:borderless]
+        style |= ::Swt::SWT::NO_TRIM                  unless @dsl.opts.fetch(:border, true)
         style
       end
 

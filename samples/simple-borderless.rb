@@ -1,3 +1,3 @@
-Shoes.app borderless: true do
+Shoes.app border: false do
   title "Look, no borders!"
 end

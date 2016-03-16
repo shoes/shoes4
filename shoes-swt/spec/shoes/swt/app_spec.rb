@@ -2,17 +2,11 @@ require 'spec_helper'
 
 describe Shoes::Swt::App do
   let(:opts) { {background: Shoes::COLORS[:salmon], resizable: true} }
-  let(:app)  { double('app') }
-  let(:dsl)  { double('dsl', app: app,
-                             opts: opts,
-                             width: width,
-                             height: 0,
-                             app_title: 'double') }
   let(:width) {0}
+  let(:dsl) { dsl_app_with_opts(opts) }
+  let(:app) {double 'app' }
 
-  let(:swt_salmon) {  }
-
-  subject { Shoes::Swt::App.new(dsl) }
+  subject { described_class.new dsl }
 
   it { is_expected.to respond_to :clipboard }
   it { is_expected.to respond_to :clipboard= }
@@ -73,12 +67,12 @@ describe Shoes::Swt::App do
     end
 
     it "should return a bitmask that represents always being on top" do
-      always_on_top = app_with_opts always_on_top: true
+      always_on_top = app_with_opts always_on_top: true, resizable: false
       expect(always_on_top.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::ON_TOP)
     end
 
     it "should return an bitmask that indicates no trim" do
-      no_border = app_with_opts(borderless: true)
+      no_border = app_with_opts(border: false, resizable: false)
       expect(no_border.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::NO_TRIM)
     end
   end
@@ -155,12 +149,18 @@ describe Shoes::Swt::App do
   end
 
   def app_with_opts(opts)
-    dsl_app_double = double('app',
-                            opts: opts,
-                            width: 0,
-                            height: 0,
-                            app_title: 'double')
+    dsl_app_double = dsl_app_with_opts(opts)
 
     Shoes::Swt::App.new dsl_app_double
   end
+
+  def dsl_app_with_opts(opts)
+    double('app',
+           app:       app,
+           opts:      Shoes::InternalApp::DEFAULT_OPTIONS.merge(opts),
+           width:     0,
+           height:    0,
+           app_title: 'double')
+  end
+
 end
