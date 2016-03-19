@@ -2,34 +2,11 @@ require 'spec_helper'
 
 describe Shoes::Swt::App do
   let(:opts) { {background: Shoes::COLORS[:salmon], resizable: true} }
-  let(:app)  { double('app') }
-  let(:dsl)  { double('dsl', app: app,
-                             opts: opts,
-                             width: width,
-                             height: 0,
-                             app_title: 'double') }
-
-  let(:opts_unresizable) { { background: Shoes::COLORS[:salmon],
-                            resizable: false } }
-  let(:app_unresizable) { double('app', opts: opts_unresizable,
-                                        width: 0,
-                                        height: 0,
-                                        app_title: 'double') }
-  let(:opts_always_on_top) { {background: Shoes::COLORS[:salmon],
-                              always_on_top: true} }
-  let(:app_always_on_top) { double('app', opts: opts_always_on_top,
-                                          width: 0,
-                                          height: 0,
-                                          app_title: 'double') }
-  let(:plain_app) { double('app', opts: {},
-                                  width: 2,
-                                  height: 2,
-                                  app_title: 'double') }
   let(:width) {0}
+  let(:dsl) { dsl_app_with_opts(opts) }
+  let(:app) {double 'app' }
 
-  let(:swt_salmon) { Shoes::Swt::Color.new(Shoes::COLORS[:salmon]).real }
-
-  subject { Shoes::Swt::App.new(dsl) }
+  subject { described_class.new dsl }
 
   it { is_expected.to respond_to :clipboard }
   it { is_expected.to respond_to :clipboard= }
@@ -85,13 +62,18 @@ describe Shoes::Swt::App do
     end
 
     it "should return a bitmask that represents not being resizable" do
-      not_resizable = Shoes::Swt::App.new app_unresizable
+      not_resizable = app_with_opts resizable: false
       expect(not_resizable.send(:main_window_style)).to eq(BASE_BITMASK)
     end
 
     it "should return a bitmask that represents always being on top" do
-      always_on_top = Shoes::Swt::App.new app_always_on_top
+      always_on_top = app_with_opts always_on_top: true, resizable: false
       expect(always_on_top.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::ON_TOP)
+    end
+
+    it "should return an bitmask that indicates no trim" do
+      no_border = app_with_opts(border: false, resizable: false)
+      expect(no_border.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::NO_TRIM)
     end
   end
 
@@ -142,11 +124,11 @@ describe Shoes::Swt::App do
 
   describe 'App Background color' do
     it 'has the given background when specified' do
-      not_resizable = Shoes::Swt::App.new app_unresizable
-      background = not_resizable.shell.background
-      expect(background).to eq swt_salmon
+      color = Shoes::COLORS[:salmon]
+      colored = app_with_opts background: color
+      background = colored.shell.background
+      expect(background).to eq Shoes::Swt::Color.new(color).real
     end
-
 
     it 'has the default system background when unspecified' do
       default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
@@ -165,4 +147,20 @@ describe Shoes::Swt::App do
       subject.class.setup_system_colors
     end
   end
+
+  def app_with_opts(opts)
+    dsl_app_double = dsl_app_with_opts(opts)
+
+    Shoes::Swt::App.new dsl_app_double
+  end
+
+  def dsl_app_with_opts(opts)
+    double('app',
+           app:       app,
+           opts:      Shoes::InternalApp::DEFAULT_OPTIONS.merge(opts),
+           width:     0,
+           height:    0,
+           app_title: 'double')
+  end
+
 end
