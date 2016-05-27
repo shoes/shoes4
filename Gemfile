@@ -11,6 +11,7 @@ gem 'shoes-highlighter'
 group :development do
   gem "guard"
   gem "guard-rspec"
+  gem "listen", "< 3.1" # while we want to support 1.7 series no newer listen
 
   gem "pry"
   gem "pry-nav"
