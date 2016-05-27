@@ -288,7 +288,7 @@ describe Shoes::Dimension do
   describe '#in_bounds?' do
     let(:absolute_start) {20}
     let(:extent) {100}
-    let(:absolute_end) {20 + 100 -ONE_PIXEL} # -1 due to pixel counting adjustment
+    let(:absolute_end) {20 + 100 - ONE_PIXEL} # -1 due to pixel counting adjustment
 
     before :each do
       subject.absolute_start = absolute_start
