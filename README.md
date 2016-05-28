@@ -11,6 +11,8 @@ Shoes is a little DSL for cross-platform (Mac, Windows, and Linux) GUI programmi
 Want to see what Shoes looks like? Well, here you go! Given the script:
 
 ```ruby
+require 'shoes'
+
 Shoes.app width: 300, height: 200 do
   background lime..blue
 
