@@ -165,47 +165,53 @@ class World
     result.compact
   end
 
-  def add_specie(*cells)
+  def add_species(*cells)
     cells.each do |y,x|
       @board[y][x].toggle_state
     end
   end
 
-  def add_glinder
-    add_specie [4,2], [4,3], [4,4], [3,4], [2,3]
+  def add_glider
+    add_species [4,2], [4,3], [4,4], [3,4], [2,3]
   end
 
   def add_spaceship
-    add_specie [12,3], [12,6], [13,7], [14,3], [14,7], [15,4], [15,5], [15,6], [15,7]
+    add_species [12,3], [12,6], [13,7], [14,3], [14,7], [15,4], [15,5], [15,6], [15,7]
   end
 
   def add_diehard
-    add_specie [18,12], [12,13], [13,13], [13,14], [17,14], [18,14], [19,14]
+    add_species [18,12], [12,13], [13,13], [13,14], [17,14], [18,14], [19,14]
   end
 end
 
 Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) do
   background white
-  @animate = false
+  @running = false
   stack(margin: 10) do
     @new_world = World.new(40, 40, self)
     animate(10) do
-      if @animate
+      if @running
         @new_world.tick
       end
     end
   end
 
-  def play
-    @animate = true
-    @run_button.style(displace_top: -100)
-    @stop_button.style(displace_top: 0)
+  def run
+    @running = true
+    @run_stop_button.text = 'Stop'
   end
 
   def stop
-    @animate = false
-    @stop_button.style(displace_top: -100)
-    @run_button.style(displace_top: 0)
+    @running = false
+    @run_stop_button.text = 'Run'
+  end
+
+  def toggle_run_stop
+    if @running
+      stop
+    else
+      run
+    end
   end
 
   def clear
@@ -214,8 +220,7 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
   end
 
   flow(displace_left: 650) do
-    @run_button  = button('Run',  displace_top: 0,                         width: 100) { play }
-    @stop_button = button('Stop', displace_top: -100, displace_left: -100, width: 100) { stop }
+    @run_stop_button = button('Run',  displace_top: 0, width: 100) { toggle_run_stop }
   end
 
   stack(displace_left: 650) do
@@ -224,9 +229,9 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
     end
 
     para "Species"
-    button('Glinder', width: 100) do
+    button('Glider', width: 100) do
       clear
-      @new_world.add_glinder
+      @new_world.add_glider
     end
 
     button('Spaceship', width: 100) do
