@@ -354,7 +354,7 @@ Style/SingleLineMethods:
 
 # Offense count: 10
 # Cop supports --auto-correct.
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 
 # Offense count: 13
@@ -369,7 +369,7 @@ Style/SpaceAfterComma:
 
 # Offense count: 6
 # Cop supports --auto-correct.
-Style/SpaceAfterControlKeyword:
+Style/SpaceAroundKeyword:
   Enabled: false
 
 # Offense count: 385

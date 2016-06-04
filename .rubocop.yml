@@ -29,7 +29,7 @@ Style/StringLiterals:
 
 # We like the flexibility of adding additional items to the hash
 # see discussion in #859
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 # We have several places where, because of instance scoping in apps,
