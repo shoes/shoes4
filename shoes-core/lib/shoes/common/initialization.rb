@@ -25,7 +25,6 @@ class Shoes
         after_initialize(*args)
       end
 
-
       # This method will get called with the incoming styles hash and the
       # other arguments passed to initialize.
       #
