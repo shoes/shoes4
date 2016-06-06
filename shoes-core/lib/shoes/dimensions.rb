@@ -88,7 +88,7 @@ class Shoes
     def margin=(margin)
       margin = [margin, margin, margin, margin] unless margin.is_a? Array
       self.margin_left, self.margin_top,
-      self.margin_right, self.margin_bottom =  margin
+      self.margin_right, self.margin_bottom = margin
     end
 
     def needs_positioning?

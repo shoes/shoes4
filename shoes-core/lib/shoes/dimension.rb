@@ -202,7 +202,7 @@ class Shoes
     end
 
     def int_from_string(result)
-      (result.gsub(' ', '')).to_i
+      result.gsub(' ', '').to_i
     end
 
     NUMBER_REGEX = /^-?\s*\d+/

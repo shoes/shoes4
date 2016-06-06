@@ -18,6 +18,7 @@ class Shoes
       end
 
       private
+
       def enabled?
         !(state.to_s == DISABLED_STATE)
       end

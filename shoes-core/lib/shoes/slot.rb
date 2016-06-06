@@ -166,8 +166,8 @@ class Shoes
 
     def position_contents
       @current_position = CurrentPosition.new element_left,
-                                             element_top,
-                                             element_top
+                                              element_top,
+                                              element_top
 
       contents.each do |element|
         next if element.hidden?

@@ -5,7 +5,6 @@ class Shoes
     include Common::Changeable
     include Common::State
 
-
     def before_initialize(styles, text)
       styles[:text] = text.to_s
     end
