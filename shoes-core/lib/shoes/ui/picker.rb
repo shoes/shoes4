@@ -74,8 +74,8 @@ class Shoes
       end
 
       def name_for_candidate(candidate)
-        /.*lib\/shoes\/(.*)\/generate-backend.rb/.match(candidate)
-        return "shoes-#{$1.gsub('/', '-')}"
+        /.*lib\/shoes\/(.*)\/generate-backend.rb/ =~ candidate
+        return "shoes-#{$1.tr('/', '-')}"
       end
 
       def write_backend(generator_file, bin_dir)
