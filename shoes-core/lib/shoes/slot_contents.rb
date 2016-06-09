@@ -24,7 +24,7 @@ class Shoes
     def prepend(&blk)
       @prepending_index = 0
       @prepending = true
-      blk.call
+      yield
       @prepending = false
     end
 

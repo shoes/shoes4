@@ -583,7 +583,7 @@ EOS
     end
 
     def append(&blk)
-      blk.call if blk
+      yield if blk
     end
 
     def visit(url)

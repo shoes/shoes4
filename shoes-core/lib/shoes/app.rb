@@ -57,7 +57,7 @@ class Shoes
     end
 
     def window(options = {}, &block)
-      options.merge! owner: self
+      options[:owner] = self
       self.class.new(options, &block)
     end
 
