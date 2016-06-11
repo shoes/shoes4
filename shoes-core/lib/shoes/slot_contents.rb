@@ -21,10 +21,10 @@ class Shoes
       end
     end
 
-    def prepend(&blk)
+    def prepend
       @prepending_index = 0
       @prepending = true
-      blk.call
+      yield if block_given?
       @prepending = false
     end
 

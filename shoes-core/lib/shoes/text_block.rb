@@ -129,7 +129,7 @@ class Shoes
       style_regex = /none|bold|normal|oblique|italic/i # TODO: add more
 
       font_family = type.gsub(style_regex, '').gsub(size_regex, '')
-                    .split(',').map { |x| x.strip.gsub(/["]/, '') }
+                        .split(',').map { |x| x.strip.gsub(/["]/, '') }
 
       @style[:font] = font_family.first unless (font_family.size == 1 &&
         font_family[0] == "") || font_family.size == 0
