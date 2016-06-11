@@ -582,8 +582,8 @@ EOS
       Shoes::Keyrelease.new @__app__, &blk
     end
 
-    def append(&blk)
-      yield if blk
+    def append
+      yield if block_given?
     end
 
     def visit(url)
