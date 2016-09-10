@@ -8,18 +8,25 @@
 # for more information about writing samples!
 
 simple-alert.rb
+simple-altered-para.rb
 simple-anim-shapes.rb
 simple-animate.rb
 simple-anim-text.rb
 # simple-arc.rb  Pending on #423
 simple-borderless.rb
+simple-border-image.rb
 simple-bounce.rb
+simple-breadsticks.rb
+simple-breadsticks2.rb
 simple-brightness-transitions.rb
+simple-buttons.rb
 simple-button-animate.rb
 simple-calc.rb
 simple-calc-2.rb
 simple-color-selector.rb
 simple-color-transitions.rb
+simple-concentric-circles.rb
+simple-count-and-draw.rb
 simple-curve.rb
 simple-dialogs.rb
 simple-dialogs-outside.rb
@@ -28,23 +35,37 @@ simple-downloader.rb
 simple-draw.rb
 simple-editor.rb
 simple-face.rb
+simple-flashing.rb
 simple-flow-wrap.rb
 simple-font.rb
 simple-form.rb
 simple-fullscreen.rb
+simple-gradient-shapes.rb
 simple-guess-game.rb
 simple-image-fill.rb
 simple-image-stroke.rb
+simple-image-as-stroke.rb
+simple-info.rb
+simple-iterated-content.rb
 simple-keypress.rb
+simple-logo-display.rb
+simple-loogink-cy.rb
+simple-lorem-ipsum.rb
 simple-manual.rb
 simple-mouse-follow.rb
 simple-oval.rb
+simple-polygon-line.rb
 simple-position-as-we-go.rb
+simple-progress-bar.rb
+simple-random-bubbles.rb
 simple-sample-executor.rb
+simple-sesame-street-shoes.rb
 simple-shoes-intro.rb
 simple-slide.rb
 simple-sound.rb
+simple-stack-flow-buttons.rb
 simple-stripes.rb
+simple-text-movement.rb
 simple-timer.rb
 simple-tictactoe.rb
 simple-visibility.rb
@@ -56,6 +77,7 @@ good-clock.rb
 good-follow.rb
 good-image-dl.rb
 good-potato-chopping.rb
+good-psychidelic-circles.rb
 good-reminder.rb
 good-vjot.rb
 
@@ -85,26 +107,3 @@ nks_trurl.rb
 
 class-book-adjusted.rb
 
-sample1.rb
-sample2.rb
-sample3.rb
-sample4.rb
-sample6.rb
-sample7.rb
-sample8.rb
-sample9.rb
-sample12.rb
-sample13.rb
-sample14.rb
-sample15.rb
-sample16.rb
-sample17.rb
-sample21.rb
-sample23.rb
-sample24.rb
-sample27.rb
-sample31.rb
-sample35.rb
-sample37.rb
-sample42.rb
-sample56.rb

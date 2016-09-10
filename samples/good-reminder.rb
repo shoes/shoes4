@@ -19,7 +19,7 @@ Shoes.app title: "A Gentle Reminder",
     flow margin_top: 10 do
       para "Remember to"
       @add = edit_line(margin_left: 10, width: 180)
-      button("Add", margin_left: 5)  { add_todo(@add.text); @add.text = '' }
+      button("Add", margin_left: 5) { add_todo(@add.text); @add.text = '' }
     end
   end
 
@@ -33,7 +33,7 @@ Shoes.app title: "A Gentle Reminder",
   def data_path
     if RUBY_PLATFORM =~ /win32/
       if ENV['USERPROFILE']
-        if File.exist?(File.join(File.expand_path(ENV['USERPROFILE']), "Application Data"))
+        if (File.join(File.expand_path(ENV['USERPROFILE']), "Application Data"))
           user_data_directory = File.join File.expand_path(ENV['USERPROFILE']), "Application Data", "GentleReminder"
         else
           user_data_directory = File.join File.expand_path(ENV['USERPROFILE']), "GentleReminder"
@@ -53,14 +53,12 @@ Shoes.app title: "A Gentle Reminder",
   end
 
   def refresh_todo
-    @gui_todo.replace(
-      *(
-        @todo.map { |item|
-          [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
-              [link('Forget it') { forget_todo item }] + ["\n"]
-        }.flatten
-      )
-    )
+    @gui_todo.replace( *
+    	@todo.map { |item|
+        [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
+            [link('Forget it') { forget_todo item }] + ["\n"]
+      }.flatten
+  	)
   end
 
   def refresh
@@ -78,13 +76,11 @@ Shoes.app title: "A Gentle Reminder",
         end
 
         stack do
-          inscription(
-            *(
-              @completed[day].map { |item|
-                [item] + ['  '] + [link('Not Done') { undo_todo day, item }] +
-                    (@completed[day].index(item) == @completed[day].length - 1 ? [''] : ["\n"])
-              }.flatten
-            )
+          inscription( *
+            @completed[day].map { |item|
+              [item] + ['  '] + [link('Not Done') { undo_todo day, item }] +
+                  (@completed[day].index(item) == @completed[day].length - 1 ? [''] : ["\n"])
+            }.flatten
           )
         end
       }
