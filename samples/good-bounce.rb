@@ -1,3 +1,4 @@
+#The Shoes logo/icon bounces on the screen. The logo/icon responds to menu options and if clicked on.
 xspeed, yspeed = 10, 6
 xdir, ydir = 1, 1
 
