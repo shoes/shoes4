@@ -41,7 +41,7 @@ Hi there, thanks for checking by! Shoes 4 is in the preview stage. It currently 
 
 There are two ways to get your hands on Shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
 
-As a not on versions, currently 1.7.x should still work (along with JDK 6) but we removed testing against it as dependencies started acting up and JRuby 9k has been out fairly long and the upgrade is relatively painless. **We recommend using JRuby 9+**.
+Currently 1.7.x should still work (along with JDK 6) but we removed testing against it as dependencies started acting up and JRuby 9k has been out fairly long and the upgrade is relatively painless. **We recommend using JRuby 9+**.
 
 ### Get a JDK and JRuby
 
