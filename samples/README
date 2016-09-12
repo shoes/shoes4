@@ -73,6 +73,7 @@ simple-visibility.rb
 shape-arc_to.rb
 
 good-arc.rb
+good-bounce.rb
 good-clock.rb
 good-follow.rb
 good-image-dl.rb
