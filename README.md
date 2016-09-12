@@ -41,13 +41,15 @@ Hi there, thanks for checking by! Shoes 4 is in the preview stage. It currently 
 
 There are two ways to get your hands on Shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
 
+Currently 1.7.x should still work (along with JDK 6) but we removed testing against it as dependencies started acting up and JRuby 9k has been out fairly long and the upgrade is relatively painless. **We recommend using JRuby 9+**.
+
 ### Get a JDK and JRuby
 
 So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
 
     $ rvm install jruby
 
-**JDK version note:** While Shoes 4 should generally work with JDK version 6 and up we recommend to use newer version. Also please note that the newest JRuby version 9 requires a JDK version of **7 and up**. If you want to stick with JDK 6 you can do `rvm install jruby-1.7`. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
+**JDK version note:** JRuby version 9 requires a JDK version of **7 and up**. Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
 
 **SWT requirement:** Be aware that Shoes 4 builds on [SWT](http://www.eclipse.org/swt/) for its default backend. That is usually no concern (other than the need for JRuby/JDK, described above) as you do not have to install SWT yourself. However, that means we have the same basic system requirements SWT does. For Linux that means you need GTK+ >= 2.10 or >= 3.0 if you like. Moreover, as of now there is no ARM support (as the Raspberry Pi would need).
 
@@ -76,7 +78,7 @@ If you want to be on the bleeding edge or want to contribute code you need to in
         $ cd shoes4
         $ gem install bundler && bundle install
 
-  Note: If you got rvm, rbenv or something like that installed it might complain  that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 1.7.0. Yes it even works with the brand new JRuby 9.0.0.0! We recommend up to date versions though.
+  Note: If you got rvm, rbenv or something like that installed it might complain  that you should use jruby version xx. That's because we keep our .ruby-version files up to date. You should be able to run it with a JRuby version >= 9.0.0.0 We recommend up to date versions though.
 
 3. You're ready to go!
 
