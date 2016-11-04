@@ -9,23 +9,23 @@ describe Shoes::Gradient do
     let(:new_color) { Shoes::COLORS[:limegreen] }
 
     it "is equal when values are equal" do
-      gradient_2 = Shoes::Gradient.new(color1, color2)
-      expect(subject).to eq(gradient_2)
+      gradient2 = Shoes::Gradient.new(color1, color2)
+      expect(subject).to eq(gradient2)
     end
 
     it "is not equal when color 1 is different" do
-      gradient_2 = Shoes::Gradient.new(new_color, color2)
-      expect(subject).not_to eq(gradient_2)
+      gradient2 = Shoes::Gradient.new(new_color, color2)
+      expect(subject).not_to eq(gradient2)
     end
 
     it "is not equal when color 2 is different" do
-      gradient_2 = Shoes::Gradient.new(new_color, color2)
-      expect(subject).not_to eq(gradient_2)
+      gradient2 = Shoes::Gradient.new(new_color, color2)
+      expect(subject).not_to eq(gradient2)
     end
 
     it "is not equal to just a color" do
-      gradient_2 = Shoes::Gradient.new(color1, new_color)
-      expect(subject).not_to eq(gradient_2)
+      gradient2 = Shoes::Gradient.new(color1, new_color)
+      expect(subject).not_to eq(gradient2)
     end
   end
 end

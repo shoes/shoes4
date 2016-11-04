@@ -990,12 +990,6 @@ Style/VariableName:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 11
-# Configuration parameters: SupportedStyles.
-# SupportedStyles: snake_case, normalcase, non_integer
-Style/VariableNumber:
-  EnforcedStyle: normalcase
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/ZeroLengthPredicate:
