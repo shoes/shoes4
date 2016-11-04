@@ -114,16 +114,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 15
 
-# Offense count: 10
-# Cop supports --auto-correct.
-Performance/RangeInclude:
-  Exclude:
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-pong.rb'
-    - 'shoes-core/lib/shoes/shape.rb'
-    - 'shoes-swt/lib/shoes/swt/link_segment.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Performance/StringReplacement:

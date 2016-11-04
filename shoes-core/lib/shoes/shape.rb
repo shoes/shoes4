@@ -114,8 +114,8 @@ class Shoes
     # many possibilities of what a shape could contain, this just checks the
     # outer bounding box of the shape, nothing more sophisticated.
     def in_bounds?(x, y)
-      (@left_bound..@right_bound).include?(x) &&
-        (@top_bound..@bottom_bound).include?(y)
+      (@left_bound..@right_bound).cover?(x) &&
+        (@top_bound..@bottom_bound).cover?(y)
     end
 
     private

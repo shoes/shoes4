@@ -151,7 +151,7 @@ class Field
   private
 
   def cell_exists?(x, y)
-    ((0...@w).include? x) && ((0...@h).include? y)
+    ((0...@w).cover? x) && ((0...@h).cover? y)
   end
 
   def has_flag?(x, y)
