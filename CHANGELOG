@@ -1,3 +1,33 @@
+v4.0.0.pre6 (33 commits)
+------------------------------
+
+Improvements (4)
+----------------
+
+* Create borderless windows [f85f8f2]
+* Lighten the load on Travis a bit [9ab21f5]
+* README friendliness with screenshots [f4b1aae]
+* Buttons implement .text=() method [f28e2f7]
+
+Bug Fixes (2)
+-------------
+
+* Don't advance position for right aligned text [12fb028]
+* Fix line bounds calls for JRuby 9.x [c33dcea, fd50a0b]
+
+Breaking Changes (1)
+--------------------
+
+* Remove JRuby 1.7 support [66eeb29]
+
+Contributors (8)
+----------------
+
+Arne Brasseur, Daniel Catalan, Jason R. Clark, Luis M. Rodriguez-R, Rafael
+Fidelis, Roden Monte, Tobias Pfeiffer, Wayne Vucenic
+
+
+
 v4.0.0.pre5 (125 commits)
 ------------------------------
 
