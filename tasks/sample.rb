@@ -1,4 +1,4 @@
-SAMPLES_DIR = "samples"
+SAMPLES_DIR = "samples".freeze
 
 namespace :samples do
   def samples_from_file(filename)

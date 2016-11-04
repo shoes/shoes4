@@ -1,6 +1,6 @@
 class Shoes
   # Create all of the built-in Shoes colors
-  COLORS = {}
+  COLORS = {}.freeze
 
   module DSL
     colors = [

@@ -8,7 +8,7 @@ reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 culpa qui officia deserunt mollit anim id est laborum.
 EOS
 
-NL = "\n\n"
+NL = "\n\n".freeze
 
 Shoes.app do
   lines = TEXT.split("\n")
