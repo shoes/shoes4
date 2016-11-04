@@ -327,19 +327,6 @@ Style/CommentIndentation:
     - 'samples/good-psychidelic-circles.rb'
     - 'samples/original-manual-adjusted.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, SingleLineConditionsOnly.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'samples/good-arc.rb'
-    - 'shoes-core/ext/install/Rakefile'
-    - 'shoes-core/lib/shoes/internal_app.rb'
-    - 'shoes-core/lib/shoes/text_block.rb'
-    - 'shoes-core/lib/shoes/text_block_dimensions.rb'
-    - 'shoes-swt/lib/shoes/swt/image.rb'
-
 # Offense count: 1
 Style/ConstantName:
   Exclude:

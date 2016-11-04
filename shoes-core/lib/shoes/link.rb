@@ -26,12 +26,12 @@ class Shoes
     # Doesn't use Common::Clickable because of URL flavor option clicks
     def setup_click(blk)
       if blk.nil?
-        if @style[:click].respond_to? :call
-          blk = @style[:click]
-        else
-          # Slightly awkward, but we need App, not InternalApp, to call visit
-          blk = proc { app.app.visit @style[:click] }
-        end
+        blk = if @style[:click].respond_to? :call
+                @style[:click]
+              else
+                # Slightly awkward, but we need App, not InternalApp, to call visit
+                proc { app.app.visit @style[:click] }
+              end
       end
 
       click(&blk)
