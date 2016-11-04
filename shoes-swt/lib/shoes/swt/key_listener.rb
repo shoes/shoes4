@@ -7,7 +7,7 @@ class Shoes
         ::Swt::SWT.const_get name
       end
 
-      SPECIAL_KEY_NAMES = {}
+      SPECIAL_KEY_NAMES = {}.freeze
 
       %w(TAB PAGE_UP PAGE_DOWN HOME END F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
          F13 F14 F15).each do|key|
@@ -44,7 +44,7 @@ class Shoes
         @app.remove_key_listener(self)
       end
 
-      BUTTON_EXCLUDES = ["\n", " "]
+      BUTTON_EXCLUDES = ["\n", " "].freeze
       COMBO_EXCLUDES  = %w(up down) + BUTTON_EXCLUDES
 
       # For a variety of SWT controls, certain characters should not be passed

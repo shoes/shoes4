@@ -11,7 +11,7 @@ class Shoes
         rotate:      0,
         stroke:      Shoes::COLORS[:black],
         strokewidth: 1
-      }
+      }.freeze
 
       STYLE_GROUPS = {
         art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth, :transform, :translate],
@@ -23,7 +23,7 @@ class Shoes
                                :justify, :kerning, :leading, :rise, :size, :stretch,
                                :strikecolor, :strikethrough, :stroke, :undercolor,
                                :underline, :weight, :wrap],
-      }
+      }.freeze
 
       # Adds styles, or just returns current style if no argument
       def style(new_styles = nil)

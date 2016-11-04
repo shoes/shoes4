@@ -3,11 +3,11 @@ module Shoes::Manual
   PARA_RE = /\s*?(\{{3}(?:.+?)\}{3})|\n\n/m
   CODE_RE = /\{{3}(?:\s*\#![^\n]+)?(.+?)\}{3}/m
   IMAGE_RE = /\!(\{([^}\n]+)\})?([^!\n]+\.\w+)\!/
-  CODE_STYLE = {size: 9, margin: 12}
-  INTRO_STYLE = {size: 16, margin_bottom: 20, stroke: "#000"}
-  SUB_STYLE = {stroke: "#CCC", margin_top: 10}
-  IMAGE_STYLE = {margin: 8, margin_left: 100}
-  COLON = ": "
+  CODE_STYLE = {size: 9, margin: 12}.freeze
+  INTRO_STYLE = {size: 16, margin_bottom: 20, stroke: "#000"}.freeze
+  SUB_STYLE = {stroke: "#CCC", margin_top: 10}.freeze
+  IMAGE_STYLE = {margin: 8, margin_left: 100}.freeze
+  COLON = ": ".freeze
 
   [INTRO_STYLE, SUB_STYLE].each do |h|
     h[:font] = "MS UI Gothic"

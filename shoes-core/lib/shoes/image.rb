@@ -9,7 +9,7 @@ class Shoes
 
     style_with :art_styles, :common_styles, :dimensions, :file_path
 
-    STYLES = { fill: Shoes::COLORS[:black] }
+    STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def before_initialize(styles, file_path_or_data)
       styles[:file_path] = normalized_source(file_path_or_data)

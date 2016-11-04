@@ -11,7 +11,7 @@ class Shoes
     attr_reader :point_a, :point_b
 
     style_with :angle, :art_styles, :dimensions, :x2, :y2
-    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }
+    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(point_a, point_b)
       @point_a = point_a
