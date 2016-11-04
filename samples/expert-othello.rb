@@ -209,7 +209,7 @@ module Othello
     end
   end
 
-  def draw_player_1(first_turn = false)
+  def draw_player_1(_first_turn = false)
     stack margin: 10 do
       if GAME.current_player==GAME.p1
         background yellow
@@ -223,7 +223,7 @@ module Othello
     end
   end
 
-  def draw_player_2(first_turn = false)
+  def draw_player_2(_first_turn = false)
     stack top: 550, left: 0, margin: 10 do
       if GAME.current_player==GAME.p2
         background yellow

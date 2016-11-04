@@ -64,21 +64,6 @@ Lint/UnneededSplatExpansion:
   Exclude:
     - 'shoes-core/spec/shoes/shared_examples/dsl/text_elements.rb'
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-tankspank.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/lib/shoes/arc.rb'
-    - 'shoes-core/spec/shoes/helpers/fake_absolute_element.rb'
-    - 'shoes-core/spec/shoes/helpers/fake_element.rb'
-    - 'shoes-swt/spec/shoes/swt/spec_helper.rb'
-
 # Offense count: 2
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:

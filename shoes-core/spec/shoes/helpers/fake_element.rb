@@ -5,7 +5,7 @@ class Shoes
     include Common::Positioning
     include Common::Remove
 
-    def add_child(element)
+    def add_child(_element)
       true
     end
 

@@ -32,7 +32,7 @@ module Shoes::Manual
     dewikify(str, intro)
   end
 
-  def dewikify_p(ele, str, *args)
+  def dewikify_p(ele, str, *_args)
     str = str.gsub(/\n+\s*/, " ").dump.
       gsub(/`(.+?)`/m, '", code("\1"), "').gsub(/\[\[BR\]\]/i, "\n").
       gsub(/\^(.+?)\^/m, '\1').

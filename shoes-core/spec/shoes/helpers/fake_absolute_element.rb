@@ -11,7 +11,7 @@ class Shoes
       @dimensions = AbsoluteDimensions.new 0, 0, 100, 100
     end
 
-    def add_child(element)
+    def add_child(_element)
       true
     end
 

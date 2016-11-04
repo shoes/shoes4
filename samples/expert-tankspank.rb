@@ -110,7 +110,7 @@ class Tank
                             @y + 30 * Math.sin(@aim_angle), @aim_angle)
   end
 
-  def update button, mouse_x, mouse_y
+  def update _button, mouse_x, mouse_y
     @target_x, @target_y = mouse_x, mouse_y
 
     if @moving
@@ -306,7 +306,7 @@ class Opp
     $app.rect near_left, near_top, near_right - near_left, near_bottom - near_top
   end
 
-  def self.draw_opp_rect left, right, top, bottom, depth, angle, with_x = false
+  def self.draw_opp_rect left, right, top, bottom, depth, angle, _with_x = false
     pl, pr, pt, pb = project(left, right, top, bottom, depth)
     cos = Math.cos(angle)
     sin = Math.sin(angle)
