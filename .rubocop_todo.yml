@@ -114,13 +114,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 15
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Performance/StringReplacement:
-  Exclude:
-    - 'shoes-core/bin/shoes-picker'
-    - 'tasks/changelog.rb'
-
 # Offense count: 13
 Style/AccessorMethodName:
   Exclude:
