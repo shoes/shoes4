@@ -64,6 +64,6 @@ class Shoes
       end
     end
 
-    alias_method :choose=, :choose
+    alias choose= choose
   end
 end

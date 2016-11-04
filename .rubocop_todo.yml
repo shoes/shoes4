@@ -124,21 +124,6 @@ Style/AccessorMethodName:
     - 'shoes-swt/lib/shoes/swt/text_block.rb'
     - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
 
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'shoes-core/lib/shoes/app.rb'
-    - 'shoes-core/lib/shoes/builtin_methods.rb'
-    - 'shoes-core/lib/shoes/color/dsl_helpers.rb'
-    - 'shoes-core/lib/shoes/common/visibility.rb'
-    - 'shoes-core/lib/shoes/internal_app.rb'
-    - 'shoes-core/lib/shoes/line.rb'
-    - 'shoes-core/lib/shoes/list_box.rb'
-    - 'shoes-swt/lib/shoes/swt/shape.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.

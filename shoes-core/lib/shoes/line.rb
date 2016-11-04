@@ -64,8 +64,8 @@ class Shoes
       set_point_b(:y, val)
     end
 
-    alias_method :x2=, :right=
-    alias_method :y2=, :bottom=
+    alias x2= right=
+    alias y2= bottom=
 
     def move(x, y, x2 = nil, y2 = nil)
       @point_a.x = x
