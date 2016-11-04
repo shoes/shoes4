@@ -10,8 +10,8 @@ describe Shoes::Swt::TextBlock::Painter do
 
   let(:event)  { double("event", gc: graphics_context).as_null_object }
   let(:graphics_context) { double("graphics context", set_antialias: nil,
-                                  set_line_cap: nil, set_transform: nil,
-                                  clipping: nil, set_clipping: nil) }
+                                                      set_line_cap: nil, set_transform: nil,
+                                                      clipping: nil, set_clipping: nil) }
 
   subject { Shoes::Swt::TextBlock::Painter.new(dsl) }
 
