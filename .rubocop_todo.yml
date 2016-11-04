@@ -466,13 +466,6 @@ Style/IfWithSemicolon:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-# Configuration parameters: SupportedStyles, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_brackets
-Style/IndentArray:
-  EnforcedStyle: special_inside_parentheses
-
-# Offense count: 1
-# Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
 Style/IndentAssignment:
   Exclude:
