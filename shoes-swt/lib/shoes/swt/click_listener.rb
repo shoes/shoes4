@@ -38,9 +38,9 @@ class Shoes
 
       def handle_event(event)
         handlers = case event.type
-          when ::Swt::SWT::MouseDown then @clicks
-          when ::Swt::SWT::MouseUp   then @releases
-        end
+                   when ::Swt::SWT::MouseDown then @clicks
+                   when ::Swt::SWT::MouseUp   then @releases
+                   end
         return if handlers.nil? || handlers.empty?
 
         handlers = handlers.to_a.

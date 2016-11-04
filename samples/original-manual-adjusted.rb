@@ -193,10 +193,10 @@ module Shoes::Manual
         stack margin_left: 20 do
           flow do
             para "▸ ", font: case RUBY_PLATFORM
-              when /mingw/  then "MS UI Gothic"
-              when /darwin/ then "AppleGothic, Arial"
-              else "Arial"
-              end
+                             when /mingw/  then "MS UI Gothic"
+                             when /darwin/ then "AppleGothic, Arial"
+                             else "Arial"
+                             end
             para k
           end
           subs.uniq.sort.each do |s|

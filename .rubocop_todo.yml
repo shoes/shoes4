@@ -23,17 +23,6 @@ Lint/EmptyWhen:
     - 'samples/expert-irb-adjusted.rb'
     - 'samples/expert-irb.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AlignWith, SupportedStyles, AutoCorrect.
-# SupportedStyles: keyword, variable, start_of_line
-Lint/EndAlignment:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-calc.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-
 # Offense count: 14
 Lint/Eval:
   Exclude:
