@@ -58,12 +58,6 @@ Lint/RescueException:
     - 'samples/expert-funnies.rb'
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/UnifiedInteger:
-  Exclude:
-    - 'shoes-core/lib/shoes/color.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Lint/UnneededSplatExpansion:
