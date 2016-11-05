@@ -160,15 +160,6 @@ Style/ClassVars:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/good-reminder.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: Keywords.

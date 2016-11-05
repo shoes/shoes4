@@ -26,7 +26,7 @@ module Shoes::Manual
       code = []
       str = str.
         gsub(CODE_RE) { |x| code << x; "CODE#[#{code.length-1}]" }.
-        gsub(/#{Regexp::quote(terms)}/i, '@\0@').
+        gsub(/#{Regexp.quote(terms)}/i, '@\0@').
         gsub(/CODE#\[(\d+)\]/) { code[$1.to_i] }
     end
     dewikify(str, intro)

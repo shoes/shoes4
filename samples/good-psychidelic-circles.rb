@@ -29,8 +29,8 @@ Shoes.app width: 537, height: 500 do
       10.times do |i|
         current_size = 100 + size
         d = to_radians(i * 60 + degree)
-        rx = Math::cos(d) * 100
-        ry = Math::sin(d) * 100
+        rx = Math.cos(d) * 100
+        ry = Math.sin(d) * 100
         center_x = -current_size/2 + rx + mx
         center_y = -current_size/2 + ry + my
         if red_circles.size == 10
@@ -47,8 +47,8 @@ Shoes.app width: 537, height: 500 do
       20.times do |i|
         current_size = 50 + size
         d = to_radians(i * 30 - degree)
-        rx = Math::cos(d) * 150
-        ry = Math::sin(d) * 150
+        rx = Math.cos(d) * 150
+        ry = Math.sin(d) * 150
         center_x = -current_size/2 + rx + mx
         center_y = -current_size/2 + ry + my
         if blue_circles.size == 20
