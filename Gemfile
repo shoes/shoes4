@@ -23,7 +23,7 @@ group :development do
   gem "yard"
   gem "kramdown"
   gem 'simplecov'
-  gem "codeclimate-test-reporter"
+  gem "codeclimate-test-reporter", "~> 1.0"
   gem 'webmock'
   gem 'hometown'
   gem 'rubocop'
