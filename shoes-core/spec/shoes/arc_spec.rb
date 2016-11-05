@@ -23,7 +23,7 @@ describe Shoes::Arc do
     it_behaves_like "object with parent"
     it_behaves_like "object with hover"
 
-    #it_styles_with :art_styles, :center, :dimensions, :radius
+    # it_styles_with :art_styles, :center, :dimensions, :radius
 
     it "is a Shoes::Arc" do
       expect(arc.class).to be(Shoes::Arc)

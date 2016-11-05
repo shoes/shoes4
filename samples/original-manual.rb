@@ -39,7 +39,7 @@ module Shoes::Manual
       .gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "')
       .gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "')
       .gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{DIR}/static/\3") }; #{ele}("')
-    #debug str if str =~ /The list of special keys/
+    # debug str if str =~ /The list of special keys/
     a = str.split(', ", ", ')
     if a.size == 1
       eval("#{ele}(#{str}, *args)")
@@ -170,7 +170,7 @@ module Shoes::Manual
       else
         k.ancestors[1..-1].each do |sk|
           break if [Object, Kernel].include? sk
-          next unless sk.is_a? Class #don't show mixins
+          next unless sk.is_a? Class # don't show mixins
           (tree[sk.name] ||= []) << c
           c = sk.name
         end
@@ -227,10 +227,10 @@ module Shoes::Manual
             'section' => k,
             'description' => meth[0],
             'methods' => (meth[1..-1]/2).map { |k3,v3|
-               @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
-               @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
-               [k3, v3]
-             }
+                           @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
+                           @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+                           [k3, v3]
+                         }
           }
           @methods[k2t] = hsh
           [k2t, hsh]
@@ -255,7 +255,7 @@ module Shoes::Manual
         edit_line width: -60 do |terms|
           @results.clear do
             termd = terms.text.downcase
-            #found = termd.empty? ? [] : manual_search(termd)
+            # found = termd.empty? ? [] : manual_search(termd)
             found = (termd.empty? || (termd[0] == 'z') || (termd[0] == 'y')) ? [] : manual_search(termd)
             para "#{found.length} matches", align: "center", margin_bottom: 0
             found.each do |typ, head|

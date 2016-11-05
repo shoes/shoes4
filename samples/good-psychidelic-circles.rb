@@ -13,7 +13,7 @@ Shoes.app width: 537, height: 500 do
 
   mx, my = (500/2).to_i, (537/2).to_i
   animate(36) do
-    #clear do
+    # clear do
       # Manage color
     nostroke
       # Update some variables
@@ -59,6 +59,6 @@ Shoes.app width: 537, height: 500 do
         blue_circles << oval(center_x, center_y, current_size, current_size)
       end
     end
-    #end
+    # end
   end
 end

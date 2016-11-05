@@ -14,13 +14,13 @@ module Shoes::Manual
 
   [INTRO_STYLE, SUB_STYLE].each do |h|
     h[:font] = "MS UI Gothic"
-  end #if Shoes.language == 'ja'
+  end # if Shoes.language == 'ja'
 
   def self.path
-    #path = "#{Shoes::DIR}/static/manual-#{Shoes.language}.txt"
-    #unless File.exists? path
+    # path = "#{Shoes::DIR}/static/manual-#{Shoes.language}.txt"
+    # unless File.exists? path
     path = "#{Shoes::DIR}/static/manual-en.txt"
-    #end
+    # end
     path
   end
 
@@ -44,7 +44,7 @@ module Shoes::Manual
       .gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "')
       .gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "')
       .gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{Shoes::DIR}/static/\3") }; #{ele}("')
-    #debug str if str =~ /The list of special keys/
+    # debug str if str =~ /The list of special keys/
     a = str.split(', ", ", ')
     if a.size == 1
       eval("#{ele}(#{str}, *args)")
@@ -175,7 +175,7 @@ module Shoes::Manual
       else
         k.ancestors[1..-1].each do |sk|
           break if [Object, Kernel].include? sk
-          next unless sk.is_a? Class #don't show mixins
+          next unless sk.is_a? Class # don't show mixins
           (tree[sk.name] ||= []) << c
           c = sk.name
         end
@@ -258,7 +258,7 @@ module Shoes::Manual
         edit_line width: -60 do |terms|
           @results.clear do
             termd = terms.text.downcase
-            #found = termd.empty? ? [] : manual_search(termd)
+            # found = termd.empty? ? [] : manual_search(termd)
             found = (termd.empty? || (termd[0] == 'z') || (termd[0] == 'y')) ? [] : manual_search(termd)
             para "#{found.length} matches", align: "center", margin_bottom: 0
             found.each do |typ, head|
@@ -399,7 +399,7 @@ module Shoes::Manual
 end
 
 def Shoes.make_help_page
-  #font "#{Shoes::DIR}/fonts/Coolvetica.ttf" unless Shoes::FONTS.include? "Coolvetica"
+  # font "#{Shoes::DIR}/fonts/Coolvetica.ttf" unless Shoes::FONTS.include? "Coolvetica"
   proc do
     extend Shoes::Manual
     docs = load_docs Shoes::Manual.path

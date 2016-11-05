@@ -158,7 +158,7 @@ class Tank
     $app.stroke $app.blue
     $app.fill $app.blue(0.4)
     Opp.draw_opp_rect @x - 20, @x + 20, @y - 15, @y + 15, 1.05, @tank_angle
-    #Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
+    # Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
     Opp.draw_opp_rect @x - 10, @x + 10, @y - 7, @y + 7, 1.05, @aim_angle
     x, _unused1, y, _unused2 = Opp.project(@x, 0, @y, 0, 1.05)
     $app.line x, y, x + 25 * Math.cos(@aim_angle), y + 25 * Math.sin(@aim_angle)
@@ -240,10 +240,10 @@ class Opp
         b.contains?(s.x, s.y)
       end
     end
-    #collide shells with tanks -- don't need this until there are enemy tanks
-    #@shells.reject! do |s|
+    # collide shells with tanks -- don't need this until there are enemy tanks
+    # @shells.reject! do |s|
     # @tank.contains?(s.x, s.y)
-    #end
+    # end
 
     $app.clear do
       @offset_x += $camera_tightness * (@tank.x - @offset_x)
