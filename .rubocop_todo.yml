@@ -258,15 +258,6 @@ Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'samples/simple-displace.rb'
-    - 'shoes-core/spec/shoes/color_spec.rb'
-
 # Offense count: 32
 # Cop supports --auto-correct.
 Style/LeadingCommentSpace:
