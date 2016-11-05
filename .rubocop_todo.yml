@@ -258,12 +258,6 @@ Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/LineEndConcatenation:
-  Exclude:
-    - 'samples/simple-slide.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/MethodCallParentheses:
