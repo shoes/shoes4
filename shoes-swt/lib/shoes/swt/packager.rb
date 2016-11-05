@@ -40,7 +40,7 @@ class Shoes
         EOS
       end
 
-      def package_types()
+      def package_types
         <<-EOS
     swt:app     A standalone OS X executable with the Swt backend
     swt:jar     An executable JAR with the Swt backend

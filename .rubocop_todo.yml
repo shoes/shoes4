@@ -181,13 +181,6 @@ Style/ConstantName:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/DefWithParentheses:
-  Exclude:
-    - 'shoes-core/lib/shoes/shape.rb'
-    - 'shoes-swt/lib/shoes/swt/packager.rb'
-
 # Offense count: 247
 Style/Documentation:
   Enabled: false
