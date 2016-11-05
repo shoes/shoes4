@@ -31,19 +31,19 @@ Shoes.app title: "A Gentle Reminder",
   @gui_completed = stack width: 1.0, height: 207, margin_right: 20
 
   def data_path
-    if RUBY_PLATFORM =~ /win32/
-      if ENV['USERPROFILE']
-        if (File.join(File.expand_path(ENV['USERPROFILE']), "Application Data"))
-          user_data_directory = File.join File.expand_path(ENV['USERPROFILE']), "Application Data", "GentleReminder"
-        else
-          user_data_directory = File.join File.expand_path(ENV['USERPROFILE']), "GentleReminder"
-        end
-      else
-        user_data_directory = File.join File.expand_path(Dir.getwd), "data"
-      end
-    else
-      user_data_directory = File.expand_path(File.join("~", ".gentlereminder"))
-    end
+    user_data_directory = if RUBY_PLATFORM =~ /win32/
+                            if ENV['USERPROFILE']
+                              if (File.join(File.expand_path(ENV['USERPROFILE']), "Application Data"))
+                                File.join File.expand_path(ENV['USERPROFILE']), "Application Data", "GentleReminder"
+                              else
+                                File.join File.expand_path(ENV['USERPROFILE']), "GentleReminder"
+                              end
+                            else
+                              File.join File.expand_path(Dir.getwd), "data"
+                            end
+                          else
+                            File.expand_path(File.join("~", ".gentlereminder"))
+                          end
 
     unless File.exist?(user_data_directory)
       Dir.mkdir(user_data_directory)

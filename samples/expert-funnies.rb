@@ -35,7 +35,7 @@ Shoes.app width: 800, height: 600 do
     "http://www.daybydaycartoon.com/index.xml",
     "http://www.questionablecontent.net/QCRSS.xml",
     "http://indexed.blogspot.com/feeds/posts/default?alt=rss"
-    ]
+  ]
 
   stack margin: 10 do
     title strong(@title), align: "center", stroke: "#DFA", margin: 0

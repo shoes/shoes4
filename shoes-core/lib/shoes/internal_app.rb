@@ -164,17 +164,15 @@ class Shoes
     end
 
     def create_execution_block(blk)
-      if blk
-        execution_blk = proc do
-          execute_block blk
-        end
-      elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
-        execution_blk = proc do
-          app.visit '/'
-        end
-      else
-        execution_blk = nil
-      end
+      execution_blk = if blk
+                        proc do
+                          execute_block blk
+                        end
+                      elsif Shoes::URL.urls.keys.any? { |page| page.match '/' }
+                        proc do
+                          app.visit '/'
+                        end
+                      end
       execution_blk
     end
 

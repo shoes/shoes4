@@ -10,11 +10,11 @@ Shoes.app width: 420, height: 420, resizable: false do
   animate 40 do |i|
     stage = rand(1...8) if i % 40 == 0
     if wide.abs < 0.1
-      if stage == 6
-        wide = -0.1
-      else
-        wide = 0.1
-      end
+      wide = if stage == 6
+               -0.1
+             else
+               0.1
+             end
     end
     rotation = -(Shoes::HALF_PI / wide)
     clear do

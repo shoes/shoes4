@@ -35,13 +35,13 @@ class Shoes
     # If we've gotten an explicit width, use that but check that we fit still
     # Last but certainly not least, consult what's remaining in our parent.
     def desired_width(containing = nil)
-      if containing
-        desired = parent.absolute_left + containing - absolute_left
-      elsif element_width
-        desired = [element_width, remaining_in_parent].min
-      else
-        desired = remaining_in_parent
-      end
+      desired = if containing
+                  parent.absolute_left + containing - absolute_left
+                elsif element_width
+                  [element_width, remaining_in_parent].min
+                else
+                  remaining_in_parent
+                end
 
       desired - margin_left - margin_right
     end

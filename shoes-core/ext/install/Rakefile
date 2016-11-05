@@ -20,11 +20,11 @@ task default: ['install_script']
 task :install_script do
   # If we're run via jruby-complete.jar, bindir is within the jar itself so
   # look for bin based on user directory. Otherwise, prefer Gem.bindir.
-  if Gem.bindir.start_with?("uri:classloader")
-    dest_dir = Gem.bindir(Gem.user_dir)
-  else
-    dest_dir = Gem.bindir
-  end
+  dest_dir = if Gem.bindir.start_with?("uri:classloader")
+               Gem.bindir(Gem.user_dir)
+             else
+               Gem.bindir
+             end
 
   if Gem.win_platform?
     source_path = File.join(Dir.pwd, "shoes.bat")

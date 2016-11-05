@@ -89,11 +89,11 @@ class Shoes
       end
 
       def display_image(name_or_data)
-        if raw_image_data?(name_or_data)
-          data = load_raw_image_data(name_or_data)
-        else
-          data = name_or_data
-        end
+        data = if raw_image_data?(name_or_data)
+                 load_raw_image_data(name_or_data)
+               else
+                 name_or_data
+               end
         create_image(data)
       end
 

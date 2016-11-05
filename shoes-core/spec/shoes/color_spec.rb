@@ -211,23 +211,23 @@ describe Shoes::Color do
     end
 
     describe "comparable" do
-      let(:color_1) { Shoes::Color.new(255, 69, 0) }
+      let(:color1) { Shoes::Color.new(255, 69, 0) }
       let(:red) {Shoes::Color.new 255, 0, 0}
       let(:green) {Shoes::Color.new 0, 255, 0}
 
       it "is equal when values are equal" do
-        color_2 = Shoes::Color.new(255, 69, 0)
-        expect(color_1).to eq(color_2)
+        color2 = Shoes::Color.new(255, 69, 0)
+        expect(color1).to eq(color2)
       end
 
       it "is less than when darker" do
-        color_2 = Shoes::Color.new(255, 70, 0)
-        expect(color_1).to be < color_2
+        color2 = Shoes::Color.new(255, 70, 0)
+        expect(color1).to be < color2
       end
 
       it "is greater than when lighter" do
-        color_2 = Shoes::Color.new(255, 68, 0)
-        expect(color_1).to be > color_2
+        color2 = Shoes::Color.new(255, 68, 0)
+        expect(color1).to be > color2
       end
 
       it 'does not claim for full red and full green to be equal' do
@@ -250,13 +250,13 @@ describe Shoes::Color do
       end
 
       context "same rgb values" do
-        let(:color_2) { Shoes::Color.new(255, 69, 0, 254) }
+        let(:color2) { Shoes::Color.new(255, 69, 0, 254) }
         it "is less than when less opaque" do
-          expect(color_2).to be < color_1
+          expect(color2).to be < color1
         end
 
         it "is greater than when more opaque" do
-          expect(color_1).to be > color_2
+          expect(color1).to be > color2
         end
       end
     end
@@ -309,8 +309,8 @@ describe "Shoes built in gray" do
   end
 
   it 'hangles 0.93 right as well' do
-    result_93 = (0.93 * 255).to_i
-    expect(app.gray(0.93)).to eq(Shoes::Color.new(result_93, result_93, result_93))
+    result93 = (0.93 * 255).to_i
+    expect(app.gray(0.93)).to eq(Shoes::Color.new(result93, result93, result93))
   end
 
   it 'also has a grey alias for our BE friends' do
