@@ -18,9 +18,9 @@ module TextPlugin
   end
 end
 
-  class Learning::App
-    include TextPlugin::App
-  end
+class Learning::App
+  include TextPlugin::App
+end
 
 describe "A Shoes Framework" do
   it "should include Framework Plugins" do

@@ -82,14 +82,14 @@ describe Shoes::BuiltinMethods do
     describe '##{alert}' do
      let(:message) { double('message') }
 
-      before do
-        allow(Shoes::Dialog).to receive(:new).and_return(dialog)
-        expect(dialog).to receive(type).with(message).and_return(dialog)
-      end
+     before do
+       allow(Shoes::Dialog).to receive(:new).and_return(dialog)
+       expect(dialog).to receive(type).with(message).and_return(dialog)
+     end
 
-      it 'creates a new dialog' do
-        expect(app.public_send(type, message)).to eq(dialog)
-      end
+     it 'creates a new dialog' do
+       expect(app.public_send(type, message)).to eq(dialog)
+     end
     end
   end
 

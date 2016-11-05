@@ -258,16 +258,6 @@ Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: normal, rails
-Style/IndentationConsistency:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'shoes-core/spec/shoes/builtin_methods_spec.rb'
-    - 'shoes-core/spec/shoes/framework_learning_spec.rb'
-
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: Width.

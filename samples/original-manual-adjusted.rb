@@ -21,7 +21,7 @@ module Shoes::Manual
     #unless File.exists? path
       path = "#{Shoes::DIR}/static/manual-en.txt"
     #end
-    path
+      path
   end
 
   def dewikify_hi(str, terms, intro = false)
