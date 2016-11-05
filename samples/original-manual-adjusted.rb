@@ -73,9 +73,7 @@ module Shoes::Manual
 
   def wiki_tokens(str, intro = false)
     paras = str.split(PARA_RE).reject(&:empty?)
-    if intro
-      yield :intro, paras.shift
-    end
+    yield :intro, paras.shift if intro
     paras.map do |ps|
       if ps =~ CODE_RE
         yield :code, $1

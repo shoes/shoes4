@@ -207,9 +207,7 @@ class Tetris
   def each_occupied_block
     NY.times do |y|
       NX.times do |x|
-        unless blocks[x][y].nil?
-          yield x, y, blocks[x][y][:color]
-        end
+        yield x, y, blocks[x][y][:color] unless blocks[x][y].nil?
       end
     end
   end
@@ -261,9 +259,7 @@ class Piece
     col = 0
     blocks = tetromino[:blocks][direction]
     until bit.zero?
-      if (blocks & bit) == bit
-        yield x+col, y+row
-      end
+      yield x+col, y+row if (blocks & bit) == bit
       col = col + 1
       if col == 4
         col = 0

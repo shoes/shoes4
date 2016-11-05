@@ -253,12 +253,6 @@ Style/IfInsideElse:
     - 'samples/expert-irb.rb'
     - 'samples/expert-tankspank.rb'
 
-# Offense count: 43
-# Cop supports --auto-correct.
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
-
 # Offense count: 2
 Style/IfWithSemicolon:
   Exclude:

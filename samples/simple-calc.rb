@@ -21,9 +21,7 @@ class Calc
 
   {add: '+', sub: '-', times: '*', div: '/'}.each do |meth, op|
     define_method "press_#{meth}" do
-      if @op
-        press_equals
-      end
+      press_equals if @op
       @op = op
       @previous, @number = @number, nil
     end

@@ -90,9 +90,7 @@ class Shoes
           while bytes_read != -1
 
             bytes_read = decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
-            if bytes_read != -1
-              line.write(sampled_data, 0, bytes_read)
-            end
+            line.write(sampled_data, 0, bytes_read) if bytes_read != -1
           end
           # Stop
           line.drain

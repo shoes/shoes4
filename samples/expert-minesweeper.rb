@@ -86,9 +86,7 @@ class Field
   def render_bomb(x, y)
     render_cell(x, y)
     if (game_over? || all_found?) then # draw bomb
-      if self[x, y].exploded then
-        render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5))
-      end
+      render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
       @app.nostroke
       @app.fill @app.rgb(0, 0, 0, 0.8)
       @app.oval(x*cell_size+3, y*cell_size+3, 13)

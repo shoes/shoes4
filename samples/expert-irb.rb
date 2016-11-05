@@ -25,16 +25,12 @@ class MimickIRB < RubyLex
         @line = "puts %{You started \#{IRBalike.started.since} ago.}"
       else
         @line << l << "\n"
-        if @ltype || @continue || @indent > 0
-          raise Continue
-        end
+        raise Continue if @ltype || @continue || @indent > 0
       end
     else
       raise Empty if @line == ''
     end
-    unless @line.empty?
-      obj = eval @line, TOPLEVEL_BINDING, "(irb)", @line_no
-    end
+    obj = eval @line, TOPLEVEL_BINDING, "(irb)", @line_no unless @line.empty?
     @line_no += @line.scan(/\n/).length
     @line = ''
     @exp_line_no = @line_no

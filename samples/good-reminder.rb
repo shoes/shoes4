@@ -45,9 +45,7 @@ Shoes.app title: "A Gentle Reminder",
                             File.expand_path(File.join("~", ".gentlereminder"))
                           end
 
-    unless File.exist?(user_data_directory)
-      Dir.mkdir(user_data_directory)
-    end
+    Dir.mkdir(user_data_directory) unless File.exist?(user_data_directory)
 
     return File.join(user_data_directory, "data.yaml")
   end
