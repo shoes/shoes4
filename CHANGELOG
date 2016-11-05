@@ -1,11 +1,10 @@
 v4.0.0.pre6 (33 commits)
 ------------------------------
 
-Improvements (4)
+Improvements (3)
 ----------------
 
 * Create borderless windows [f85f8f2]
-* Lighten the load on Travis a bit [9ab21f5]
 * README friendliness with screenshots [f4b1aae]
 * Buttons implement .text=() method [f28e2f7]
 
