@@ -24,23 +24,23 @@ module Shoes::Manual
   def dewikify_hi(str, terms, intro = false)
     if terms
       code = []
-      str = str.
-        gsub(CODE_RE) { |x| code << x; "CODE#[#{code.length-1}]" }.
-        gsub(/#{Regexp.quote(terms)}/i, '@\0@').
-        gsub(/CODE#\[(\d+)\]/) { code[$1.to_i] }
+      str = str
+        .gsub(CODE_RE) { |x| code << x; "CODE#[#{code.length-1}]" }
+        .gsub(/#{Regexp.quote(terms)}/i, '@\0@')
+        .gsub(/CODE#\[(\d+)\]/) { code[$1.to_i] }
     end
     dewikify(str, intro)
   end
 
   def dewikify_p(ele, str, *_args)
-    str = str.gsub(/\n+\s*/, " ").dump.
-      gsub(/`(.+?)`/m, '", code("\1"), "').gsub(/\[\[BR\]\]/i, "\n").
-      gsub(/\^(.+?)\^/m, '\1').
-      gsub(/@(.+?)@/m, '", strong("\1", :fill => yellow), "').
-      gsub(/'''(.+?)'''/m, '", strong("\1"), "').gsub(/''(.+?)''/m, '", em("\1"), "').
-      gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "').
-      gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "').
-      gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{DIR}/static/\3") }; #{ele}("')
+    str = str.gsub(/\n+\s*/, " ").dump
+      .gsub(/`(.+?)`/m, '", code("\1"), "').gsub(/\[\[BR\]\]/i, "\n")
+      .gsub(/\^(.+?)\^/m, '\1')
+      .gsub(/@(.+?)@/m, '", strong("\1", :fill => yellow), "')
+      .gsub(/'''(.+?)'''/m, '", strong("\1"), "').gsub(/''(.+?)''/m, '", em("\1"), "')
+      .gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "')
+      .gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "')
+      .gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{DIR}/static/\3") }; #{ele}("')
     #debug str if str =~ /The list of special keys/
     a = str.split(', ", ", ')
     if a.size == 1

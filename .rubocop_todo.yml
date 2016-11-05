@@ -185,23 +185,6 @@ Style/ConstantName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 38
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: leading, trailing
-Style/DotPosition:
-  Exclude:
-    - 'samples/expert-definr.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-accordion.rb'
-    - 'shoes-core/lib/shoes/slot.rb'
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/list_box_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_spec.rb'
-
 # Offense count: 1
 Style/DoubleNegation:
   Exclude:

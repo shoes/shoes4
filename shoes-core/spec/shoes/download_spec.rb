@@ -76,9 +76,9 @@ describe Shoes::Download do
 
     context 'with content length' do
       it 'calls the progress proc from start, download and finish' do
-        expect(download.gui).to have_received(:eval_block).
-                                  with(progress_proc, download).
-                                  exactly(3).times
+        expect(download.gui).to have_received(:eval_block)
+                                  .with(progress_proc, download)
+                                  .exactly(3).times
       end
     end
 
@@ -86,9 +86,9 @@ describe Shoes::Download do
       let(:response_headers) { Hash.new }
 
       it 'does not call on progress, but called from content length and finish' do
-        expect(download.gui).to have_received(:eval_block).
-          with(progress_proc, download).
-          twice
+        expect(download.gui).to have_received(:eval_block)
+          .with(progress_proc, download)
+          .twice
       end
 
       it 'can call percent just fine thanks' do

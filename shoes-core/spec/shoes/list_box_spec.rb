@@ -59,8 +59,8 @@ describe Shoes::ListBox do
     end
 
     def expect_gui_choose_with(string)
-      expect_any_instance_of(Shoes.configuration.backend::ListBox).
-      to receive(:choose).with string
+      expect_any_instance_of(Shoes.configuration.backend::ListBox)
+      .to receive(:choose).with string
     end
 
     it "should call @gui.choose when we choose something" do
@@ -75,8 +75,8 @@ describe Shoes::ListBox do
   end
 
   it "should delegate #text to the backend" do
-    expect_any_instance_of(Shoes.configuration.backend::ListBox).
-        to receive(:text).and_return("Sneakers & Sandals")
+    expect_any_instance_of(Shoes.configuration.backend::ListBox)
+        .to receive(:text).and_return("Sneakers & Sandals")
     expect(list_box.text).to eq("Sneakers & Sandals")
   end
 
