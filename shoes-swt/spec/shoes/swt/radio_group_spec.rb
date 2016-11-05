@@ -21,7 +21,7 @@ describe Shoes::Swt::RadioGroup do
 
     describe 'after adding a button' do
       before :each do
-         subject.add radio
+        subject.add radio
       end
 
       it "only one button is added" do

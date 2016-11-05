@@ -19,9 +19,9 @@ module Shoes::Manual
   def self.path
     #path = "#{Shoes::DIR}/static/manual-#{Shoes.language}.txt"
     #unless File.exists? path
-      path = "#{Shoes::DIR}/static/manual-en.txt"
+    path = "#{Shoes::DIR}/static/manual-en.txt"
     #end
-      path
+    path
   end
 
   def dewikify_hi(str, terms, intro = false)
@@ -230,9 +230,9 @@ module Shoes::Manual
           hsh = {'title' => k2, 'section' => k,
                  'description' => meth[0],
                  'methods' => (meth[1..-1]/2).map { |k3,v3|
-              @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
-              @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
-              [k3, v3]
+                   @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
+                   @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+                   [k3, v3]
                  }
           }
           @methods[k2t] = hsh

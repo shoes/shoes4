@@ -258,18 +258,6 @@ Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: Width.
-Style/IndentationWidth:
-  Exclude:
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/nks_notes.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/spec/shoes/builtin_methods_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/radio_group_spec.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

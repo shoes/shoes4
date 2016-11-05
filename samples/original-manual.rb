@@ -222,13 +222,15 @@ module Shoes::Manual
           meth_plain = meth[0].gsub(IMAGE_RE, '')
           @search.add_document uri: "T #{k2t}", body: "#{k2}\n#{meth_plain}".downcase
 
-          hsh = {'title' => k2, 'section' => k,
-                 'description' => meth[0],
-                 'methods' => (meth[1..-1]/2).map { |k3,v3|
-              @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
-              @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
-              [k3, v3]
-                 }
+          hsh = {
+            'title' => k2,
+            'section' => k,
+            'description' => meth[0],
+            'methods' => (meth[1..-1]/2).map { |k3,v3|
+               @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
+               @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+               [k3, v3]
+             }
           }
           @methods[k2t] = hsh
           [k2t, hsh]
