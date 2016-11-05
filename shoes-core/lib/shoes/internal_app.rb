@@ -14,12 +14,12 @@ class Shoes
     extend Forwardable
 
     DEFAULT_OPTIONS = {
-                        width:     600,
-                        height:    500,
-                        title:     "Shoes 4",
-                        resizable: true,
-                        border:    true
-                      }.freeze
+      width:     600,
+      height:    500,
+      title:     "Shoes 4",
+      resizable: true,
+      border:    true
+    }.freeze
 
     def initialize(app, opts, &blk)
       @app = app
