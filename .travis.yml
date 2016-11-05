@@ -32,6 +32,7 @@ before_script:
   - "bundle update" # recommended for caching for now see #981 for info
   - "sleep 3"
 after_script:
+  - bundle exec codeclimate-test-reporter
   - find -name '*.log' -exec cat {} \;
 sudo: false # new build environment
 cache: bundler
