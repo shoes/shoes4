@@ -38,7 +38,7 @@ describe Shoes::Swt::App do
       old_apps_length = Shoes::Swt.apps.length
       expect(Shoes).to receive(:unregister)
 
-      subject.send(:unregister_app).call()
+      subject.send(:unregister_app).call
       expect(Shoes::Swt.apps.length).to eq(old_apps_length)
     end
   end

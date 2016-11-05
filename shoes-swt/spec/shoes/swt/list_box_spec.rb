@@ -69,7 +69,7 @@ describe Shoes::Swt::ListBox do
     it "should call the change listeners" do
       expect(dsl).to receive(:call_change_listeners)
       expect(real).to receive(:add_selection_listener) do |&blk|
-        blk.call()
+        blk.call
       end
       subject
     end

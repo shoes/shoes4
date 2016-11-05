@@ -9,7 +9,7 @@ describe Shoes::Swt::TextFontFactory do
     }
   }
 
-  subject { Shoes::Swt::TextFontFactory.new() }
+  subject { Shoes::Swt::TextFontFactory.new }
 
   it "creates a font" do
     font = subject.create_font(font_details)

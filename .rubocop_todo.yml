@@ -258,15 +258,6 @@ Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/MethodCallParentheses:
-  Exclude:
-    - 'shoes-swt/spec/shoes/swt/app_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/list_box_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_font_factory_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block_spec.rb'
-
 # Offense count: 31
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
