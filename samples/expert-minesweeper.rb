@@ -238,7 +238,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
       end
       stack do @status = para stroke: white end
       @field.paint
-      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white,  font: "11px"
+      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white, font: "11px"
     end
   end
 

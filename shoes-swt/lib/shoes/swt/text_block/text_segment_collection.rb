@@ -119,7 +119,7 @@ class Shoes
           # If first == last, then requested range was longer than our one and
           # only segment, so just stick with full range of the first segment.
           if @segments.first != @segments.last
-            result << [@segments.last,  (0..text_range.count - slice.length - 1)]
+            result << [@segments.last, (0..text_range.count - slice.length - 1)]
           end
           result
         end

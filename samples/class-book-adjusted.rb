@@ -23,7 +23,7 @@ class Book < Shoes
   def incident num
     self.scroll_top = 0
     num = num.to_i
-    stack  margin_left: 200 do
+    stack margin_left: 200 do
       banner "Incident", margin: [0, 10, 0, 30]
       para strong("No. #{num + 1}: #{INCIDENTS[num][0]}"), margin_bottom: 5
     end

@@ -52,7 +52,7 @@ class Shoes
 
         def make_edge(i, left, top, outer, inner, points)
           r = i.even? ? outer : inner
-          angle =  i * ::Math::PI / points
+          angle = i * ::Math::PI / points
           add_edge(left + r * ::Math.sin(angle),
                    top  + r * ::Math.cos(angle))
         end

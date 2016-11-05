@@ -216,12 +216,6 @@ Style/EndOfLine:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/check_button.rb'
 
-# Offense count: 33
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Style/ExtraSpacing:
-  Enabled: false
-
 # Offense count: 99
 # Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts.
 Style/FileName:

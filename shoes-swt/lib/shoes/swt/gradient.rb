@@ -45,9 +45,8 @@ class Shoes
         width  = dsl.element_width * 0.5
         height = dsl.element_height * 0.5
         angle  = normalize_angle(-dsl.angle)
-        left, top, width, height  = determine_args_based_on_angle(angle,
-                                                                  dsl.element_left, dsl.element_top,
-                                                                  width, height)
+        left, top, width, height = determine_args_based_on_angle(angle, dsl.element_left,
+                                                                 dsl.element_top, width, height)
 
         pattern = ::Swt::Pattern.new Shoes.display, left, top, width, height,
                                      color1.real, color2.real

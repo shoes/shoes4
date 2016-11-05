@@ -220,7 +220,7 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
   end
 
   flow(displace_left: 650) do
-    @run_stop_button = button('Run',  displace_top: 0, width: 100) { toggle_run_stop }
+    @run_stop_button = button('Run', displace_top: 0, width: 100) { toggle_run_stop }
   end
 
   stack(displace_left: 650) do

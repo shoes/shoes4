@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::Swt::Common::Remove do
-  let(:clazz)  {
+  let(:clazz) {
     Class.new do
       include Shoes::Swt::Common::Remove
 

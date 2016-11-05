@@ -36,8 +36,8 @@ Shoes.app width: 400, height: 400, resizable: false do
 
     # move the @comp paddle, speed based on `compuspeed` variable
     @comp.left +=
-      if nx + (ball_diameter / 2) > @comp.left + paddle_size;  compuspeed
-      elsif nx < @comp.left;                                  -compuspeed
+      if nx + (ball_diameter / 2) > @comp.left + paddle_size; compuspeed
+      elsif nx < @comp.left; -compuspeed
       else 0
       end
 

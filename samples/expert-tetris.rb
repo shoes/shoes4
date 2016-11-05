@@ -25,7 +25,7 @@ DY     = HEIGHT / NY    # pixel height of a single tetris block
 FPS    = 60             # game animation frame rate (fps)
 
 PACE   = { start: 0.5, step: 0.005, min: 0.1 } # how long before a piece drops by 1 row (seconds)
-SCORE  = { line: 100, multiplier: 2 }             # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
+SCORE  = { line: 100, multiplier: 2 }          # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
 
 #==================================================================================================
 # The 7 Tetromino Types
@@ -73,7 +73,7 @@ class Tetris
     @dt      = 0
     @score   = 0
     @pace    = PACE[:start]
-    @blocks  = Array.new(NX) { Array.new(NY) }   # awkward way to initialize an already sized 2 dimensional array
+    @blocks  = Array.new(NX) { Array.new(NY) } # awkward way to initialize an already sized 2 dimensional array
     @actions = []
     @bag     = new_bag
     @current = random_piece
@@ -156,7 +156,7 @@ class Tetris
   end
 
   def reward_lines(lines)
-    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1))   # e.g. 1: 100, 2: 200, 3: 400, 4: 800
+    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1)) # e.g. 1: 100, 2: 200, 3: 400, 4: 800
     @pace  = [pace - lines*PACE[:step], PACE[:min]].max
   end
 
@@ -229,7 +229,7 @@ class Piece
   def initialize(tetromino, x = nil, y = nil, direction = nil)
     @tetromino = tetromino
     @direction = direction || :up
-    @x         = x         || rand(NX - tetromino[:size])   # default to a random horizontal position (that fits)
+    @x         = x         || rand(NX - tetromino[:size]) # default to a random horizontal position (that fits)
     @y         = y         || 0
   end
 
@@ -255,7 +255,7 @@ class Piece
 
   #----------------------------------------------------------------------------
 
-  def each_occupied_block           # a bit complex, for more details see - http://codeincomplete.com/posts/2011/10/10/javascript_tetris/
+  def each_occupied_block # a bit complex, for more details see - http://codeincomplete.com/posts/2011/10/10/javascript_tetris/
     bit = 0b1000000000000000
     row = 0
     col = 0

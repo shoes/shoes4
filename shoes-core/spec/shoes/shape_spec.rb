@@ -12,7 +12,7 @@ describe Shoes::Shape do
 
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::Shape.new(app, parent) }
-    let(:subject_with_style) { Shoes::Shape.new(app, parent,  arg_styles) }
+    let(:subject_with_style) { Shoes::Shape.new(app, parent, arg_styles) }
   end
 
   it_behaves_like "movable object"
