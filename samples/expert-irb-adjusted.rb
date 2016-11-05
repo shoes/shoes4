@@ -49,8 +49,8 @@ class MimickIRB < RubyLex
     [output, obj]
   rescue Object => e
     case e
-      when Empty, Continue
-      else @line = ""
+    when Empty, Continue
+    else @line = ""
     end
     raise e
   ensure

@@ -59,20 +59,20 @@ class Shoes
 
       def decode_input_stream(audio_format, audio_input_stream)
         case audio_format.encoding
-          when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding, Java::JavazoomSpiMpegSampledFile::MpegEncoding
-            decoded_format = AudioFormat.new(AudioFormat::Encoding::PCM_SIGNED,
-                                             audio_format.getSampleRate,
-                                             16,
-                                             audio_format.getChannels,
-                                             audio_format.getChannels * 2,
-                                             audio_format.getSampleRate,
-                                             false)
-            decoded_audio_input_stream = AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
+        when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding, Java::JavazoomSpiMpegSampledFile::MpegEncoding
+          decoded_format = AudioFormat.new(AudioFormat::Encoding::PCM_SIGNED,
+                                           audio_format.getSampleRate,
+                                           16,
+                                           audio_format.getChannels,
+                                           audio_format.getChannels * 2,
+                                           audio_format.getSampleRate,
+                                           false)
+          decoded_audio_input_stream = AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
 
-            return decoded_format, decoded_audio_input_stream
+          return decoded_format, decoded_audio_input_stream
 
-          else
-            return audio_format, audio_input_stream
+        else
+          return audio_format, audio_input_stream
         end
       end
 

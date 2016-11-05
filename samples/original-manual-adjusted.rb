@@ -107,7 +107,8 @@ module Shoes::Manual
   def dewikify(str, intro = false)
     proc do
       wiki_tokens(str, intro) do |sym, text|
-        case sym when :intro
+        case sym
+        when :intro
           dewikify_p :para, text, INTRO_STYLE
         when :code
           dewikify_code(text)

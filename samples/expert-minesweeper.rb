@@ -119,9 +119,9 @@ class Field
       0.upto @w-1 do |x|
         @app.nostroke
         case self[x, y]
-          when EmptyCell then render_cell(x, y)
-          when Bomb then render_bomb(x, y)
-          when OpenCell then render_number(x, y)
+        when EmptyCell then render_cell(x, y)
+        when Bomb then render_bomb(x, y)
+        when OpenCell then render_number(x, y)
         end
         render_flag(x, y) if has_flag?(x, y) && !(game_over? && bomb?(x, y))
       end

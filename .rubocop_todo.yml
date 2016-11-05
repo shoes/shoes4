@@ -103,7 +103,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 368
+  Max: 369
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -144,22 +144,6 @@ Style/BlockDelimiters:
 # Cop supports --auto-correct.
 Style/BlockEndNewline:
   Enabled: false
-
-# Offense count: 24
-# Cop supports --auto-correct.
-# Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Style/CaseIndentation:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-calc.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
 
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
