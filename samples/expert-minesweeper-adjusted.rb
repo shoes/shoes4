@@ -244,7 +244,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
     end
   end
 
-  def new_game level
+  def new_game(level)
     @field = Field.new self, level
     $x, $y = @field.offset.first, @field.offset.last
     render_field

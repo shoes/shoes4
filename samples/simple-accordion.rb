@@ -1,5 +1,5 @@
 module Accordion
-  def open_page stack
+  def open_page(stack)
     active = app.slot.contents.map { |x| x.contents[1] }
       .detect { |x| x.height > 0 }
     return if active == stack
@@ -10,7 +10,7 @@ module Accordion
     end
   end
 
-  def page title, text
+  def page(title, text)
     @pages ||= []
     @pages <<
       stack do

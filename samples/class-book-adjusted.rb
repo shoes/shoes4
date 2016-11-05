@@ -20,7 +20,7 @@ class Book < Shoes
     toc[0...-1] << "\n"*5
   end
 
-  def incident num
+  def incident(num)
     self.scroll_top = 0
     num = num.to_i
     stack margin_left: 200 do

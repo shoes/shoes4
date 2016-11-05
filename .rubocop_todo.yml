@@ -258,24 +258,6 @@ Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
 
-# Offense count: 31
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_no_parentheses_except_multiline
-Style/MethodDefParentheses:
-  Exclude:
-    - 'samples/class-book-adjusted.rb'
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/expert-tankspank.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-accordion.rb'
-    - 'samples/simple-guess-game.rb'
-    - 'samples/simple-slide.rb'
-    - 'tasks/changelog.rb'
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:

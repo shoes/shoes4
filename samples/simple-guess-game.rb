@@ -1,6 +1,6 @@
 class Answer < Shoes::Widget
   attr_reader :mark
-  def initialize word
+  def initialize(word)
     mark = nil
     flow do
       flow(width: 70, height: 20) {para word}

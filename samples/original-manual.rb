@@ -203,11 +203,11 @@ module Shoes::Manual
     tree.sort.each(&index_p)
   end
 
-  def run_code str
+  def run_code(str)
     eval(str, TOPLEVEL_BINDING)
   end
 
-  def load_docs path
+  def load_docs(path)
     return @docs if @docs
     str = Shoes.read_file(path)
     @search = Shoes::Search.new

@@ -240,7 +240,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
     end
   end
 
-  def new_game level
+  def new_game(level)
     @field = Field.new self, level
     translate(-@old_offset.first, -@old_offset.last) unless @old_offset.nil?
     translate(@field.offset.first, @field.offset.last)
