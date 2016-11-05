@@ -124,28 +124,6 @@ Style/AccessorMethodName:
     - 'shoes-swt/lib/shoes/swt/text_block.rb'
     - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
 
-# Offense count: 52
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-pong.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/expert-tankspank.rb'
-    - 'samples/good-bounce.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-bounce.rb'
-    - 'samples/simple-calc.rb'
-    - 'samples/simple-draw.rb'
-    - 'samples/simple-menu.rb'
-    - 'samples/simple-tictactoe.rb'
-
 # Offense count: 6
 Style/AsciiComments:
   Exclude:

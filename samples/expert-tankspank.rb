@@ -9,12 +9,12 @@ $camera_tightness = 0.1
 
 module Collisions
   def contains? x, y
-    not (x < west or x > east or y < north or y > south)
+    not (x < west || x > east || y < north || y > south)
   end
 
   def intersects? other
-    not (other.east < west or other.west > east or
-      other.south < north or other.north > south)
+    not (other.east < west || other.west > east ||
+      other.south < north || other.north > south)
   end
 end
 
@@ -44,7 +44,7 @@ end
 module Guidance
   def guidance_system x, y, dest_x, dest_y, angle
     vx, vy = dest_x - x, dest_y - y
-    if vx.abs < 0.1 and vy.abs <= 0.1
+    if vx.abs < 0.1 && (vy.abs <= 0.1)
       yield 0, 0
     else
       length = Math.sqrt(vx * vx + vy * vy)
@@ -297,10 +297,10 @@ class Opp
     $app.line far_right, far_top, far_right, far_bottom if draw_right
 
     # draw lines to connect the front and back
-    $app.line near_left, near_top, far_left, far_top if draw_left or draw_top
-    $app.line near_right, near_top, far_right, far_top if draw_right or draw_top
-    $app.line near_left, near_bottom, far_left, far_bottom if draw_left or draw_bottom
-    $app.line near_right, near_bottom, far_right, far_bottom if draw_right or draw_bottom
+    $app.line near_left, near_top, far_left, far_top if draw_left || draw_top
+    $app.line near_right, near_top, far_right, far_top if draw_right || draw_top
+    $app.line near_left, near_bottom, far_left, far_bottom if draw_left || draw_bottom
+    $app.line near_right, near_bottom, far_right, far_bottom if draw_right || draw_bottom
 
     # draw the front, filled
     $app.rect near_left, near_top, near_right - near_left, near_bottom - near_top
@@ -348,9 +348,9 @@ Shoes.app width: $width, height: $height do
 
   keypress do |key|
     if @playing
-      if key == "1" or key == "z"
+      if (key == "1") || (key == "z")
         Opp.tank.set_destination
-      elsif key == "2" or key == "x" or key == " "
+      elsif (key == "2") || (key == "x") || (key == " ")
         Opp.tank.fire
       end
     else

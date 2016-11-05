@@ -3,7 +3,7 @@ Shoes.app do
   stroke "#000"
   x, y = nil, nil
   motion do |x2, y2|
-    if x and y and (x != x2 or y != y2)
+    if x && y && ((x != x2) || (y != y2))
       append do
         line x, y, x2, y2
       end

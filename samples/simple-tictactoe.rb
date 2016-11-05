@@ -47,7 +47,7 @@ class Game
   end
 
   def restart
-    @player = true and toggle_player # English syntax!
+    (@player = true) && toggle_player # English syntax!
   end
 
   def toggle_player
@@ -92,7 +92,7 @@ class Board
   def set_tic_actions
     @tics.each do |tic|
       tic.rect.click do
-        unless tic.checked or @over
+        unless tic.checked || @over
           @game.toggle_player
           tic.player = @game.player_symbol
           tic.check

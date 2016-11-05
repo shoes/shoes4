@@ -25,7 +25,7 @@ class MimickIRB < RubyLex
         @line = "puts %{You started \#{IRBalike.started.since} ago.}"
       else
         @line << l << "\n"
-        if @ltype or @continue or @indent > 0
+        if @ltype || @continue || @indent > 0
           raise Continue
         end
       end
