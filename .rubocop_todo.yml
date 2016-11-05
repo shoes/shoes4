@@ -130,12 +130,6 @@ Style/AsciiComments:
     - 'shoes-core/lib/shoes/common/positioning.rb'
     - 'shoes-package/lib/shoes/package/configuration.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Attr:
-  Exclude:
-    - 'samples/expert-tetris.rb'
-
 # Offense count: 166
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.

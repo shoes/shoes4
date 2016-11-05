@@ -58,14 +58,14 @@ Z = { blocks: {up: 0x0C60, right: 0x4C80, down: 0xC600, left: 0x2640}, color: '#
 #==================================================================================================
 
 class Tetris
-  attr :dt,       # time since the current active piece last dropped a row
-       :score,    # the current score
-       :lost,     # bool to indicate when the game is lost
-       :pace,     # current game pace - how long until the current piece drops a single row
-       :blocks,   # 2 dimensional array (NX*NY) represeting the tetris court - either empty block or occupied by a piece
-       :actions,  # queue of user inputs collected by the game loop
-       :bag,      # a collection of random pieces to be used
-       :current   # the current active piece
+  attr_reader :dt,       # time since the current active piece last dropped a row
+              :score,    # the current score
+              :lost,     # bool to indicate when the game is lost
+              :pace,     # current game pace - how long until the current piece drops a single row
+              :blocks,   # 2 dimensional array (NX*NY) represeting the tetris court - either empty block or occupied by a piece
+              :actions,  # queue of user inputs collected by the game loop
+              :bag,      # a collection of random pieces to be used
+              :current   # the current active piece
 
   #----------------------------------------------------------------------------
 
@@ -220,9 +220,9 @@ end # class Tetris
 #==================================================================================================
 
 class Piece
-  attr :tetromino,  # the tetromino type
-       :direction,  # the rotation direction (:up, :down, :left, :right)
-       :x, :y       # the (x,y) position on the board
+  attr_reader :tetromino,  # the tetromino type
+              :direction,  # the rotation direction (:up, :down, :left, :right)
+              :x, :y       # the (x,y) position on the board
 
   #----------------------------------------------------------------------------
 
