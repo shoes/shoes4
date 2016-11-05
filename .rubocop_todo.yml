@@ -160,12 +160,6 @@ Style/ClassVars:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/ClosingParenthesisIndentation:
-  Exclude:
-    - 'samples/good-reminder.rb'
-
 # Offense count: 7
 # Cop supports --auto-correct.
 Style/ColonMethodCall:

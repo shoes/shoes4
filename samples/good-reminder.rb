@@ -58,7 +58,7 @@ Shoes.app title: "A Gentle Reminder",
         [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
           [link('Forget it') { forget_todo item }] + ["\n"]
       }.flatten
-    )
+                     )
   end
 
   def refresh
@@ -76,8 +76,8 @@ Shoes.app title: "A Gentle Reminder",
         end
 
         stack do
-          inscription( *
-            @completed[day].map { |item|
+          inscription(
+            * @completed[day].map { |item|
               [item] + ['  '] + [link('Not Done') { undo_todo day, item }] +
                   (@completed[day].index(item) == @completed[day].length - 1 ? [''] : ["\n"])
             }.flatten
