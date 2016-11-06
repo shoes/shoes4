@@ -60,7 +60,7 @@ class Shoes
           file, dir = pathname, pathname.dirname
         elsif pathname.directory?
           file, dir = pathname.join(app_yaml), pathname
-        elsif pathname.file? && pathname.parent.children.include?(pathname.parent.join app_yaml)
+        elsif pathname.file? && pathname.parent.children.include?(pathname.parent.join(app_yaml))
           file, dir = pathname.parent.join(app_yaml), pathname.parent
         else
           file, dir = config_for_single_file_app(pathname)

@@ -24,7 +24,7 @@ shared_examples_for "object with stroke" do
 
   # Be sure the subject does *not* have the stroke set previously
   specify "defaults to black" do
-    expect(subject.stroke).to eq(Shoes::COLORS.fetch :black)
+    expect(subject.stroke).to eq(Shoes::COLORS.fetch(:black))
   end
 
   describe "strokewidth" do
@@ -55,6 +55,6 @@ shared_examples_for "object with fill" do
 
   # Be sure the subject does *not* have the stroke set previously
   specify "defaults to black" do
-    expect(subject.fill).to eq(Shoes::COLORS.fetch :black)
+    expect(subject.fill).to eq(Shoes::COLORS.fetch(:black))
   end
 end

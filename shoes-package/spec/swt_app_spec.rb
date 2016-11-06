@@ -36,7 +36,7 @@ describe Shoes::Package::JarApp do
 
     it "sets package dir to {pwd}/pkg" do
       Dir.chdir @app_dir do
-        expect(subject.default_package_dir).to eq(@app_dir.join 'pkg')
+        expect(subject.default_package_dir).to eq(@app_dir.join('pkg'))
       end
     end
 
@@ -94,7 +94,7 @@ describe Shoes::Package::JarApp do
     describe "Info.plist" do
       require 'plist'
       before :all do
-        @plist = Plist.parse_xml(@output_file.join 'Contents/Info.plist')
+        @plist = Plist.parse_xml(@output_file.join('Contents/Info.plist'))
       end
 
       it "sets identifier" do

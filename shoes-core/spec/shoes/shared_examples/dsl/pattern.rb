@@ -13,7 +13,7 @@ shared_examples_for "pattern DSL method" do
     let(:pattern) { dsl.pattern honeydew..salmon }
 
     it "returns a gradient" do
-      expect(pattern).to eq(dsl.gradient honeydew..salmon)
+      expect(pattern).to eq(dsl.gradient(honeydew..salmon))
     end
   end
 
@@ -28,7 +28,7 @@ shared_examples_for "pattern DSL method" do
     let(:pattern) { dsl.pattern honeydew.hex..salmon.hex }
 
     it "returns a gradient" do
-      expect(pattern).to eq(dsl.gradient honeydew..salmon)
+      expect(pattern).to eq(dsl.gradient(honeydew..salmon))
     end
   end
 end
