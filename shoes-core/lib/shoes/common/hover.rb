@@ -70,7 +70,7 @@ class Shoes
         hover_style = @app.element_styles[self.hover_class]
         return unless hover_style
 
-        @pre_hover_style = hover_style.inject({}) do |memo, (key, _)|
+        @pre_hover_style = hover_style.each_with_object({}) do |(key, _), memo|
           memo[key] = self.style[key]
           memo
         end

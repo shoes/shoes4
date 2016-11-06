@@ -192,12 +192,6 @@ Style/DoubleNegation:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/EachWithObject:
-  Exclude:
-    - 'shoes-core/lib/shoes/common/hover.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Style/EmptyLines:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
