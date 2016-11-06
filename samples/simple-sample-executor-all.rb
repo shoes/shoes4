@@ -1,5 +1,4 @@
 Shoes.app title: 'Samples Executor', width: 540, height: 640 do
-
   BUTTON_HEIGHT = 20
 
   samples = File.join(File.dirname(__FILE__), "*.rb")
@@ -11,5 +10,4 @@ Shoes.app title: 'Samples Executor', width: 540, height: 640 do
       button.style top: (BUTTON_HEIGHT * index), height: BUTTON_HEIGHT
     end
   end
-
 end
