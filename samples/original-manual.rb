@@ -9,9 +9,11 @@ module Shoes::Manual
   IMAGE_STYLE = {margin: 8, margin_left: 100}
   COLON = ": "
 
-  [INTRO_STYLE, SUB_STYLE].each do |h|
-    h[:font] = "MS UI Gothic"
-  end if Shoes.language == 'ja'
+  if Shoes.language == 'ja'
+    [INTRO_STYLE, SUB_STYLE].each do |h|
+      h[:font] = "MS UI Gothic"
+    end
+  end
 
   def self.path
     path = "#{DIR}/static/manual-#{Shoes.language}.txt"
@@ -193,9 +195,11 @@ module Shoes::Manual
                              end
             para k
           end
-          subs.uniq.sort.each do |s|
-            index_p[s, tree[s]]
-          end if subs
+          if subs
+            subs.uniq.sort.each do |s|
+              index_p[s, tree[s]]
+            end
+          end
         end
         shown << k
       end
@@ -409,9 +413,11 @@ def Shoes.make_help_page
     style(Shoes::Caption, size: 24)
     background "#ddd".."#fff", angle: 90
 
-    [Shoes::LinkHover, Shoes::Para, Shoes::Tagline, Shoes::Caption].each do |type|
-      style(type, font: "MS UI Gothic")
-    end if Shoes.language == 'ja'
+    if Shoes.language == 'ja'
+      [Shoes::LinkHover, Shoes::Para, Shoes::Tagline, Shoes::Caption].each do |type|
+        style(type, font: "MS UI Gothic")
+      end
+    end
 
     stack do
       background black

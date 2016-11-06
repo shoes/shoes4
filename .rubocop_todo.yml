@@ -279,13 +279,6 @@ Style/MultilineHashBraceLayout:
     - 'samples/original-manual-adjusted.rb'
     - 'samples/original-manual.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/MultilineIfModifier:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 Style/MultilineIfThen:
