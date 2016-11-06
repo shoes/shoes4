@@ -85,7 +85,7 @@ class Field
 
   def render_bomb(x, y)
     render_cell(x, y)
-    if (game_over? || all_found?) then # draw bomb
+    if (game_over? || all_found?) # draw bomb
       render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
       @app.nostroke
       @app.fill @app.rgb(0, 0, 0, 0.8)
@@ -105,7 +105,7 @@ class Field
 
   def render_number(x, y)
     render_cell(x, y, "#999", false)
-    if self[x, y].number != 0 then
+    if self[x, y].number != 0
       @app.nostroke
       @app.nofill
       @app.oval($x+x*cell_size + 3, $y+y*cell_size - 2, 10)
@@ -139,7 +139,7 @@ class Field
   def reveal!(x, y)
     return unless cell_exists?(x, y)
     return unless self[x, y].is_a?(Field::OpenCell)
-    if flags_around(x, y) >= self[x, y].number then
+    if flags_around(x, y) >= self[x, y].number
       (-1..1).each do |v|
         (-1..1).each { |h| click!(x+h, y+v) unless (v==0 && h==0) || has_flag?(x+h, y+v) }
       end
