@@ -104,7 +104,6 @@ class Shoes
         (event.stateMask & key) == key
       end
 
-
       def character_key(event)
         return '' if current_key_is_modifier?(event)
         if special_key?(event)

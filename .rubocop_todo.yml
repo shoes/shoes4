@@ -190,12 +190,6 @@ Style/DoubleNegation:
   Exclude:
     - 'shoes-core/lib/shoes/slot.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/EmptyLines:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/key_listener.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
