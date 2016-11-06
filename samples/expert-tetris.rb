@@ -116,7 +116,7 @@ class Tetris
   end
 
   def drop
-    if !move(:down)
+    unless move(:down)
       finalize_piece
       reward_for_piece
       remove_any_completed_lines

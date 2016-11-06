@@ -41,7 +41,7 @@ class Shoes
     end
 
     def ensure_backend_loaded
-      if !defined?(Shoes.configuration.backend::App)
+      unless defined?(Shoes.configuration.backend::App)
         backend_const = Shoes.load_backend(Shoes.configuration.backend_name)
         backend_const.initialize_backend
       end

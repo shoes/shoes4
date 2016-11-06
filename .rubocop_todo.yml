@@ -303,30 +303,6 @@ Style/MultilineOperationIndentation:
 Style/MutableConstant:
   Enabled: false
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/NegatedIf:
-  Exclude:
-    - 'samples/expert-tankspank.rb'
-    - 'samples/expert-tetris.rb'
-    - 'shoes-core/lib/shoes/internal_app.rb'
-
-# Offense count: 20
-# Cop supports --auto-correct.
-Style/NestedParenthesizedCalls:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/spec/shoes/color_spec.rb'
-    - 'shoes-core/spec/shoes/common/style_normalizer_spec.rb'
-    - 'shoes-core/spec/shoes/point_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl/pattern.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl/rgb.rb'
-    - 'shoes-core/spec/shoes/shared_examples/shared_element_method.rb'
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-    - 'shoes-package/spec/swt_app_spec.rb'
-    - 'shoes-package/spec/swt_jar_spec.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, MinBodyLength, SupportedStyles.

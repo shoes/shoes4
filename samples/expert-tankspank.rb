@@ -132,7 +132,7 @@ class Tank
 
     integrity = @health / 100.0 # the more hurt you are, the slower you go
     @speed = [[@speed + @acceleration, 5.0 * integrity].min, -3.0 * integrity].max
-    @speed *= 0.9 if !@moving
+    @speed *= 0.9 unless @moving
 
     @last_x, @last_y = @x, @y
     @x += @speed * Math.cos(@tank_angle)
@@ -229,7 +229,7 @@ class Opp
     x += @offset_x - @center_x
     y += @offset_y - @center_y
 
-    @tank.update(button, x, y) if !@tank.dead?
+    @tank.update(button, x, y) unless @tank.dead?
     @buildings.each do |b|
       @tank.collide_and_stop if b.intersects? @tank
     end
@@ -376,7 +376,7 @@ Shoes.app width: $width, height: $height do
     Opp.update_scene
 
     @playing = false if Opp.tank.dead?
-    if !@playing
+    unless @playing
       stack do
         banner "Game Over", stroke: white, margin: 10
         caption "learn to drive!", stroke: white, margin: 20
