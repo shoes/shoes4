@@ -9,11 +9,11 @@ $camera_tightness = 0.1
 
 module Collisions
   def contains?(x, y)
-    not (x < west || x > east || y < north || y > south)
+    !(x < west || x > east || y < north || y > south)
   end
 
   def intersects?(other)
-    not (other.east < west || other.west > east ||
+    !(other.east < west || other.west > east ||
       other.south < north || other.north > south)
   end
 end

@@ -320,12 +320,6 @@ Style/NilComparison:
   Exclude:
     - 'shoes-core/spec/shoes/dimensions_spec.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Not:
-  Exclude:
-    - 'samples/expert-tankspank.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/NumericLiterals:
