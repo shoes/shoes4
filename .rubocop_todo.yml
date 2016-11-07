@@ -316,14 +316,6 @@ Style/NilComparison:
 Style/NumericPredicate:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'samples/expert-definr.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl.rb'
-
 # Offense count: 16
 # Cop supports --auto-correct.
 Style/PerlBackrefs:
