@@ -33,7 +33,7 @@ Shoes.app height: 250, width: 198 do
             when '='
               do_calc
               @clear_display = true
-            when '/','*','-','+'
+            when '/', '*', '-', '+'
               do_calc
               @accumulator = @display
               @op = btn

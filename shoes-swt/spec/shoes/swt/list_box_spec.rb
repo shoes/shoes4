@@ -59,7 +59,7 @@ describe Shoes::Swt::ListBox do
   end
 
   it 'converts array to string' do
-    allow(dsl).to receive(:items).and_return [1,2,3]
+    allow(dsl).to receive(:items).and_return [1, 2, 3]
     subject.update_items
     # creation already calls update_items once
     expect(real).to have_received(:items=).with(%w(1 2 3)).twice

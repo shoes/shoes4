@@ -133,7 +133,7 @@ class Tetris
   end
 
   def occupied(piece)
-    piece.each_occupied_block do |x,y|
+    piece.each_occupied_block do |x, y|
       if (x < 0) || (x >= NX) || (y < 0) || (y >= NY) || blocks[x][y]
         return true
       end
@@ -144,7 +144,7 @@ class Tetris
   #----------------------------------------------------------------------------
 
   def finalize_piece
-    current.each_occupied_block { |x,y| blocks[x][y] = current.tetromino }
+    current.each_occupied_block { |x, y| blocks[x][y] = current.tetromino }
   end
 
   def choose_new_piece(piece = nil)
@@ -173,7 +173,7 @@ class Tetris
   end
 
   def new_bag
-    [I,I,I,I,J,J,J,J,L,L,L,L,O,O,O,O,S,S,S,S,T,T,T,T,Z,Z,Z,Z].shuffle
+    [I, I, I, I, J, J, J, J, L, L, L, L, O, O, O, O, S, S, S, S, T, T, T, T, Z, Z, Z, Z].shuffle
   end
 
   def random_piece
@@ -303,7 +303,7 @@ Shoes.app title: 'Tetris', width: WIDTH, height: HEIGHT do
       block(x, y, color)
     end
 
-    game.current.each_occupied_block do |x,y|
+    game.current.each_occupied_block do |x, y|
       block(x, y, game.current.tetromino[:color])
     end
 

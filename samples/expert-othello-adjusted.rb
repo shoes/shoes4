@@ -16,7 +16,7 @@ module Othello
   SPACE        = ' ' * 57
 
   class Game
-    BOARD_SIZE = [8,8]
+    BOARD_SIZE = [8, 8]
 
     attr_accessor :p1, :p2, :board, :board_history
 
@@ -66,7 +66,7 @@ module Othello
       next_turn(false)
     end
 
-    def lay_piece(c = [0,0], check_adjacent_pieces = true)
+    def lay_piece(c = [0, 0], check_adjacent_pieces = true)
       memorize_board
       piece = current_player.piece
       opp_piece = current_player.opp_piece
@@ -76,9 +76,9 @@ module Othello
         pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
         pieces_to_change << check_direction(c, [1, 1], piece, opp_piece) # NE
         pieces_to_change << check_direction(c, [1, 0], piece, opp_piece) # E
-        pieces_to_change << check_direction(c, [1,-1], piece, opp_piece) # SE
-        pieces_to_change << check_direction(c, [0,-1], piece, opp_piece) # S
-        pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
+        pieces_to_change << check_direction(c, [1, -1], piece, opp_piece) # SE
+        pieces_to_change << check_direction(c, [0, -1], piece, opp_piece) # S
+        pieces_to_change << check_direction(c, [-1, -1], piece, opp_piece) # SW
         pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
         pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
         raise "You must move to a spot that will turn your opponent's piece." if pieces_to_change.compact.all?(&:empty?)
@@ -91,15 +91,15 @@ module Othello
     end
 
     def skip_turn?
-      @board.each_with_index { |col,col_index|
-        col.each_with_index { |_cell,row_index|
-          return false if possible_move?([col_index,row_index])
+      @board.each_with_index { |col, col_index|
+        col.each_with_index { |_cell, row_index|
+          return false if possible_move?([col_index, row_index])
         }
       }
       true
     end
 
-    def possible_move?(c = [0,0])
+    def possible_move?(c = [0, 0])
       return nil if board_at(c) != 0
       piece = current_player.piece
       opp_piece = current_player.opp_piece
@@ -107,9 +107,9 @@ module Othello
       pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
       pieces_to_change << check_direction(c, [1, 1], piece, opp_piece) # NE
       pieces_to_change << check_direction(c, [1, 0], piece, opp_piece) # E
-      pieces_to_change << check_direction(c, [1,-1], piece, opp_piece) # SE
-      pieces_to_change << check_direction(c, [0,-1], piece, opp_piece) # S
-      pieces_to_change << check_direction(c, [-1,-1], piece, opp_piece) # SW
+      pieces_to_change << check_direction(c, [1, -1], piece, opp_piece) # SE
+      pieces_to_change << check_direction(c, [0, -1], piece, opp_piece) # S
+      pieces_to_change << check_direction(c, [-1, -1], piece, opp_piece) # SW
       pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
       pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
       return nil if pieces_to_change.compact.all?(&:empty?)
@@ -173,7 +173,7 @@ module Othello
     end
 
     # Is this a valid location on board?
-    def valid_location?(c = [1,1])
+    def valid_location?(c = [1, 1])
       c[0] >= 0 && c[1] >= 0 && c[0] < BOARD_SIZE[0] && c[1] < BOARD_SIZE[1]
     end
 
@@ -198,7 +198,7 @@ module Othello
     class Player
       attr_accessor :pieces, :color, :pieces_on_board
 
-      def initialize(color = :black,pieces = 0)
+      def initialize(color = :black, pieces = 0)
         @pieces = pieces
         @pieces_on_board = 0 # used only in calculating winner
         @color = color
@@ -265,7 +265,7 @@ module Othello
 
             if cell != 0
               strokewidth 0
-              fill(cell == 1 ? rgb(100,100,100) : rgb(155,155,155))
+              fill(cell == 1 ? rgb(100, 100, 100) : rgb(155, 155, 155))
               oval(left+3, top+4, PIECE_WIDTH-10, PIECE_HEIGHT-10)
 
               fill(cell == 1 ? black : white)
@@ -279,15 +279,15 @@ module Othello
     end
   end
 
-  def left_top_corner_of_piece(a,b)
+  def left_top_corner_of_piece(a, b)
     [(a*PIECE_WIDTH+LEFT_OFFSET), (b*PIECE_HEIGHT+TOP_OFFSET)]
   end
 
-  def right_bottom_corner_of_piece(a,b)
-    left_top_corner_of_piece(a,b).map { |coord| coord + PIECE_WIDTH }
+  def right_bottom_corner_of_piece(a, b)
+    left_top_corner_of_piece(a, b).map { |coord| coord + PIECE_WIDTH }
   end
 
-  def find_piece(x,y)
+  def find_piece(x, y)
     GAME.board.each_with_index { |row_array, row|
       row_array.each_with_index { |_col_array, col|
         left, top = left_top_corner_of_piece(col, row).map { |i| i - 5}
@@ -306,7 +306,7 @@ Shoes.app width: 520, height: 600 do
   draw_board
 
   click { |_button, x, y|
-    coords = find_piece(x,y)
+    coords = find_piece(x, y)
     if coords
       begin
         GAME.lay_piece(coords)

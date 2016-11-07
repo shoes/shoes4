@@ -117,7 +117,7 @@ class World
     end
   end
 
-  def cell_neighbours(y,x)
+  def cell_neighbours(y, x)
     result = []
     top_row = y - 1
     left_col = x - 1
@@ -144,21 +144,21 @@ class World
   end
 
   def add_species(*cells)
-    cells.each do |y,x|
+    cells.each do |y, x|
       @board[y][x].toggle_state
     end
   end
 
   def add_glider
-    add_species [4,2], [4,3], [4,4], [3,4], [2,3]
+    add_species [4, 2], [4, 3], [4, 4], [3, 4], [2, 3]
   end
 
   def add_spaceship
-    add_species [12,3], [12,6], [13,7], [14,3], [14,7], [15,4], [15,5], [15,6], [15,7]
+    add_species [12, 3], [12, 6], [13, 7], [14, 3], [14, 7], [15, 4], [15, 5], [15, 6], [15, 7]
   end
 
   def add_diehard
-    add_species [18,12], [12,13], [13,13], [13,14], [17,14], [18,14], [19,14]
+    add_species [18, 12], [12, 13], [13, 13], [13, 14], [17, 14], [18, 14], [19, 14]
   end
 end
 

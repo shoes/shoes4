@@ -22,7 +22,7 @@ end
 
 shared_context 'one slot child' do
   let(:ele_opts) {Hash.new}
-  let(:element) {Shoes::FakeElement.new(nil, {height: 100,width: 50}.merge(ele_opts))}
+  let(:element) {Shoes::FakeElement.new(nil, {height: 100, width: 50}.merge(ele_opts))}
 
   before :each do
     subject.add_child element

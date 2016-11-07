@@ -94,7 +94,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
 
     it "checks boundaries" do
-      expect(subject.in_bounds?(1,1)).to be_truthy
+      expect(subject.in_bounds?(1, 1)).to be_truthy
     end
 
     describe "offsets left" do

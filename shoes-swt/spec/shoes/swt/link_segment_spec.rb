@@ -83,17 +83,17 @@ describe Shoes::Swt::LinkSegment do
 
   def expect_bounded_box(left, top, right, bottom)
     expect_in_bounds([left, top],    [right, top],
-                     [left, bottom], [right,bottom])
+                     [left, bottom], [right, bottom])
   end
 
   def expect_in_bounds(*points)
-    points.each do |(x,y)|
+    points.each do |(x, y)|
       expect(subject.in_bounds?(x, y)).to be_truthy, "with #{x}, #{y}"
     end
   end
 
   def expect_not_in_bounds(*points)
-    points.each do |(x,y)|
+    points.each do |(x, y)|
       expect(subject.in_bounds?(x, y)).to be_falsey, "with #{x}, #{y}"
     end
   end
