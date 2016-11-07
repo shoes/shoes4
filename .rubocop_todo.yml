@@ -328,22 +328,6 @@ Style/PredicateName:
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/good-reminder.rb'
-    - 'samples/simple-tictactoe.rb'
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-    - 'shoes-package/spec/spec_helper.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
-
 # Offense count: 32
 # Cop supports --auto-correct.
 Style/RedundantSelf:

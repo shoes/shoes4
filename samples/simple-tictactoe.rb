@@ -115,9 +115,9 @@ class Board
   # Takes an array and tells if each Tic has been checked by the same player
   def all_checked?(array)
     if array[0].checked
-      return array[0].player == array[1].player && array[1].player == array[2].player
+      array[0].player == array[1].player && array[1].player == array[2].player
     else
-      return false
+      false
     end
   end
 

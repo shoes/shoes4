@@ -72,7 +72,7 @@ class Shoes
           return decoded_format, decoded_audio_input_stream
 
         else
-          return audio_format, audio_input_stream
+          [audio_format, audio_input_stream]
         end
       end
 

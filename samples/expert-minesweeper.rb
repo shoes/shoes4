@@ -156,7 +156,7 @@ class Field
 
   def has_flag?(x, y)
     return false unless cell_exists?(x, y)
-    return self[x, y].flag
+    self[x, y].flag
   end
 
   def bomb?(x, y)

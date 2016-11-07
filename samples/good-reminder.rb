@@ -47,7 +47,7 @@ Shoes.app title: "A Gentle Reminder",
 
     Dir.mkdir(user_data_directory) unless File.exist?(user_data_directory)
 
-    return File.join(user_data_directory, "data.yaml")
+    File.join(user_data_directory, "data.yaml")
   end
 
   def refresh_todo

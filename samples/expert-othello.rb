@@ -287,7 +287,7 @@ module Othello
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
       }
     }
-    return false
+    false
   end
 end
 
