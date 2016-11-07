@@ -202,7 +202,7 @@ class Shoes
     end
 
     def position_element(_element, _current_position)
-      fail 'position_element is a subclass responsibility'
+      raise 'position_element is a subclass responsibility'
     end
 
     def position_in_current_line(element, current_position)

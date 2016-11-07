@@ -357,20 +357,6 @@ Style/Semicolon:
     - 'samples/simple-polygon-line.rb'
     - 'samples/simple-stack-flow-buttons.rb'
 
-# Offense count: 14
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'shoes-core/lib/shoes/color.rb'
-    - 'shoes-core/lib/shoes/color/dsl_helpers.rb'
-    - 'shoes-core/lib/shoes/color/hex_converter.rb'
-    - 'shoes-core/lib/shoes/configuration.rb'
-    - 'shoes-core/lib/shoes/dsl.rb'
-    - 'shoes-core/lib/shoes/image.rb'
-    - 'shoes-core/lib/shoes/slot.rb'
-
 # Offense count: 1
 # Configuration parameters: Methods.
 # Methods: {"reduce"=>["acc", "elem"]}, {"inject"=>["acc", "elem"]}

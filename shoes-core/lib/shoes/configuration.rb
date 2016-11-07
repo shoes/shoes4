@@ -32,7 +32,7 @@ class Shoes
         return if @backend_name == name
 
         unless @backend.nil?
-          fail "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
+          raise "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
         end
         @backend_name ||= name
       end
@@ -48,7 +48,7 @@ class Shoes
         class_name = klazz.name.split("::").last
         # Lookup with false to not consult modules higher in the chain Object
         # because Shoes::Swt.const_defined? 'Range' => true
-        fail ArgumentError, "#{object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name, false)
+        raise ArgumentError, "#{object} does not have a backend class defined for #{backend}" unless backend.const_defined?(class_name, false)
         backend.const_get(class_name, false)
       end
 

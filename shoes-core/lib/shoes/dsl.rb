@@ -364,7 +364,7 @@ Wrong number of arguments. Must be one of:
   - oval(left, top, width, height, [opts])
   - oval(styles)
 EOS
-      fail ArgumentError, message unless OVAL_ALLOWED_ARG_SIZES.include? opts.size
+      raise ArgumentError, message unless OVAL_ALLOWED_ARG_SIZES.include? opts.size
       create Shoes::Oval, left, top, width, height, oval_style, blk
     end
 
@@ -404,7 +404,7 @@ Wrong number of arguments. Must be one of:
   - rect(left, top, width, height, curve, [opts])
   - rect(styles)
 EOS
-      fail ArgumentError, message unless RECT_ALLOWED_ARG_SIZES.include? args.size
+      raise ArgumentError, message unless RECT_ALLOWED_ARG_SIZES.include? args.size
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
@@ -449,7 +449,7 @@ Wrong number of arguments. Must be one of:
   - star(left, top, points, outer, [styles])
   - star(left, top, points, outer, inner, [styles])
 EOS
-        fail ArgumentError, message
+        raise ArgumentError, message
       end
 
       create Shoes::Star, left, top, points, outer, inner, styles, blk
@@ -480,7 +480,7 @@ Wrong number of arguments. Must be one of:
   - shape(left, top, [opts])
   - shape(styles)
 EOS
-      fail ArgumentError, message unless SHAPE_ALLOWED_ARG_SIZES.include? args.length
+      raise ArgumentError, message unless SHAPE_ALLOWED_ARG_SIZES.include? args.length
       create Shoes::Shape, style.merge(opts), blk
     end
 
@@ -623,10 +623,10 @@ EOS
     end
 
     def video(*_args)
-      fail Shoes::NotImplementedError,
-           'Sorry video support has been cut from shoes 4!' \
-           ' Check out github issue #113 for any changes/updates or if you' \
-           ' want to help :)'
+      raise Shoes::NotImplementedError,
+            'Sorry video support has been cut from shoes 4!' \
+            ' Check out github issue #113 for any changes/updates or if you' \
+            ' want to help :)'
     end
   end
 end
