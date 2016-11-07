@@ -29,7 +29,7 @@ class Shoes
         candidates = find_candidates(desired_backend)
 
         if candidates.empty?
-          raise ArgumentError.new("No gems found matching '#{desired_backend}'")
+          raise ArgumentError, "No gems found matching '#{desired_backend}'"
         elsif candidates.one?
           candidate = candidates.first
           @output.puts "Selecting #{name_for_candidate(candidate)} backend to use. This is a one-time operation."
