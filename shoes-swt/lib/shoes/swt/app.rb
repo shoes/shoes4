@@ -207,7 +207,7 @@ class Shoes
 
         @shell = ::Swt::Widgets::Shell.new(::Swt.display, main_window_style)
         @shell.image = @image
-        @shell.text = (@dsl.app_title)
+        @shell.text = @dsl.app_title
         @shell.background_mode = ::Swt::SWT::INHERIT_DEFAULT
         @shell.background = @background.real
       end

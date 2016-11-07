@@ -328,16 +328,6 @@ Style/PredicateName:
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'samples/expert-snake.rb'
-    - 'samples/good-reminder.rb'
-    - 'shoes-core/spec/shoes/span_spec.rb'
-    - 'shoes-package/spec/configuration_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/app.rb'
-
 # Offense count: 13
 # Cop supports --auto-correct.
 # Configuration parameters: AllowMultipleReturnValues.

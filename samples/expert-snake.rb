@@ -43,7 +43,7 @@ Shoes.app title: 'Snake Game v0.1' do
 
   def brick?(s)
     @bricks.each do |b|
-      (@run.remove; alert 'Game Over. ') if (b.left == s.left) && (b.top == s.top)
+      @run.remove; alert 'Game Over. ' if (b.left == s.left) && (b.top == s.top)
     end
   end
 
