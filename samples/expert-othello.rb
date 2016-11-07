@@ -272,7 +272,7 @@ module Othello
   end
 
   def left_top_corner_of_piece(a, b)
-    [(a*PIECE_WIDTH+LEFT_OFFSET), (b*PIECE_HEIGHT+TOP_OFFSET)]
+    [(a * PIECE_WIDTH + LEFT_OFFSET), (b * PIECE_HEIGHT + TOP_OFFSET)]
   end
 
   def right_bottom_corner_of_piece(a, b)
