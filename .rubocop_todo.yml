@@ -316,15 +316,6 @@ Style/NilComparison:
 Style/NumericPredicate:
   Enabled: false
 
-# Offense count: 16
-# Cop supports --auto-correct.
-Style/PerlBackrefs:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-    - 'tasks/gem.rb'
-
 # Offense count: 3
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
 # NamePrefix: is_, has_, have_
