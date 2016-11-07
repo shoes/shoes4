@@ -3,7 +3,11 @@
 # http://vormplus.be/weging/an-introduction-to-processing/
 #
 Shoes.app width: 420, height: 420, resizable: false do
-  stage, wide, sw, basesize, step = 0, 3, 1.0, 600, 60
+  stage = 0
+  wide = 3
+  sw = 1.0
+  basesize = 600
+  step = 60
   stroke white(100)
   nofill
 

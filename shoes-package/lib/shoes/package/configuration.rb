@@ -57,11 +57,14 @@ class Shoes
         app_yaml = Pathname.new('app.yaml')
 
         if pathname.basename == app_yaml
-          file, dir = pathname, pathname.dirname
+          file = pathname
+          dir = pathname.dirname
         elsif pathname.directory?
-          file, dir = pathname.join(app_yaml), pathname
+          file = pathname.join(app_yaml)
+          dir = pathname
         elsif pathname.file? && pathname.parent.children.include?(pathname.parent.join(app_yaml))
-          file, dir = pathname.parent.join(app_yaml), pathname.parent
+          file = pathname.parent.join(app_yaml)
+          dir = pathname.parent
         else
           file, dir = config_for_single_file_app(pathname)
         end

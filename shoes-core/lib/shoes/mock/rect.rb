@@ -5,7 +5,8 @@ class Shoes
       include Shoes::Mock::Clickable
 
       def initialize(dsl, app, _opts = {})
-        @dsl, @app = dsl, app
+        @dsl = dsl
+        @app = app
       end
 
       attr_reader :dsl, :app

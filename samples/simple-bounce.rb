@@ -1,5 +1,7 @@
-xspeed, yspeed = 8.4, 6.6
-xdir, ydir = 1, 1
+xspeed = 8.4
+yspeed = 6.6
+xdir = 1
+ydir = 1
 
 Shoes.app do
   background "#DFA"
@@ -10,7 +12,8 @@ Shoes.app do
     alert "You're soooo quick."
   end
 
-  x, y = self.width / 2, self.height / 2
+  x = self.width / 2
+  y = self.height / 2
   size = [@icon.height, @icon.width]
   animate(30) do
     x += xspeed * xdir

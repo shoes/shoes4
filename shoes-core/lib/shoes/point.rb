@@ -3,7 +3,8 @@ class Shoes
     include Common::Inspect
 
     def initialize(x, y)
-      @x, @y = x, y
+      @x = x
+      @y = y
       @dimensions = 2
     end
 

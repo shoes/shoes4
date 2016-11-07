@@ -129,7 +129,8 @@ module Othello
     end
 
     def calculate_current_winner
-      @p1.pieces_on_board, @p2.pieces_on_board = 0, 0
+      @p1.pieces_on_board = 0
+      @p2.pieces_on_board = 0
       @board.each { |row|
         row.each { |cell|
           if cell == 1

@@ -3,7 +3,8 @@
 # http://www.cairographics.org/samples/curve_to/
 #
 Shoes.app do
-  x, y = 25.6, 128.0
+  x = 25.6
+  y = 128.0
   x1 = 102.4; y1 = 230.4
   x2 = 153.6; y2 = 25.6
   x3 = 230.4; y3 = 128.0

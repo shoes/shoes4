@@ -218,7 +218,9 @@ module Shoes::Manual
     return @docs if @docs
     str = Shoes.read_file(path)
     @search = Shoes::Search.new
-    @sections, @methods, @mindex = {}, {}, {}
+    @sections = {}
+    @methods = {}
+    @mindex = {}
     @docs =
       (str.split(/^= (.+?) =/)[1..-1]/2).map do |k,v|
         sparts = v.split(/^== (.+?) ==/)
@@ -307,7 +309,8 @@ module Shoes::Manual
   end
 
   def add_next_link(docn, optn)
-    opt1, optn = @docs[docn][1], optn + 1
+    opt1 = @docs[docn][1]
+    optn += 1
     if opt1['sections'][optn]
       @doc.para "Next: ",
                 link(opt1['sections'][optn][1]['title']) { open_methods(opt1['sections'][optn][0]) },

@@ -33,21 +33,25 @@ shared_examples_for "shape DSL method" do
     end
 
     it "can accept a left and top" do
-      left, top = 10, 20
+      left = 10
+      top = 20
       shape = dsl.shape left, top
       expect(shape.left).to eq(left)
       expect(shape.top).to eq(top)
     end
 
     it "accepts left and top in styles" do
-      left, top = 10, 20
+      left = 10
+      top = 20
       shape = dsl.shape left: left, top: top
       expect(shape.left).to eq(left)
       expect(shape.top).to eq(top)
     end
 
     it "can accept a left, top, and some styles" do
-      left, top, white = 10, 20, Shoes::COLORS.fetch(:white)
+      left = 10
+      top = 20
+      white = Shoes::COLORS.fetch(:white)
       shape = dsl.shape left, top, stroke: white
       expect(shape.left).to eq(left)
       expect(shape.top).to eq(top)

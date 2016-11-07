@@ -35,10 +35,14 @@ class Field
   def initialize(app, level = :beginner)
     @app = app
     @field = []
-    @w, @h, @bombs = LEVELS[level][0], LEVELS[level][1], LEVELS[level][2]
+    @w = LEVELS[level][0]
+    @h = LEVELS[level][1]
+    @bombs = LEVELS[level][2]
     @h.times { @field << Array.new(@w) { EmptyCell.new } }
     @game_over = false
-    @width, @height, @cell_size = @w * CELL_SIZE, @h * CELL_SIZE, CELL_SIZE
+    @width = @w * CELL_SIZE
+    @height = @h * CELL_SIZE
+    @cell_size = CELL_SIZE
     @offset = [(@app.width - @width.to_i) / 2, (@app.height - @height.to_i) / 2]
     plant_bombs
     @start_time = Time.now
@@ -180,7 +184,8 @@ class Field
   def discover(x, y)
     open(x, y)
     neighbors do |col, row|
-      cx, cy = x+row, y+col
+      cx = x+row
+      cy = y+col
       next unless cell_exists?(cx, cy)
       discover(cx, cy) if can_be_discovered?(cx, cy)
       open(cx, cy)
@@ -246,7 +251,8 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
 
   def new_game(level)
     @field = Field.new self, level
-    $x, $y = @field.offset.first, @field.offset.last
+    $x = @field.offset.first
+    $y = @field.offset.last
     render_field
   end
 
@@ -255,7 +261,8 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
 
   click do |button, x, y|
     next if @field.game_over? || @field.all_found?
-    fx, fy = ((x-@field.offset.first) / @field.cell_size).to_i, ((y-@field.offset.last) / @field.cell_size).to_i
+    fx = ((x-@field.offset.first) / @field.cell_size).to_i
+    fy = ((y-@field.offset.last) / @field.cell_size).to_i
     @field.click!(fx, fy) if button == 1
     @field.reveal!(fx, fy) if button == 2
     @field.flag!(fx, fy) if button == 3

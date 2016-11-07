@@ -59,7 +59,8 @@ IRBalike = MimickIRB.new
 $stdout = StringIO.new
 
 Shoes.app do
-  @str, @cmd = [CURSOR + " "], ""
+  @str = [CURSOR + " "]
+  @cmd = ""
   background "#555"
   @scroll = stack do
     background "#555"

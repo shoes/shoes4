@@ -9,9 +9,11 @@ Shoes.app width: 537, height: 500 do
     deg * Math::PI / 180
   end
 
-  red_circles, blue_circles = [], []
+  red_circles = []
+  blue_circles = []
 
-  mx, my = (500/2).to_i, (537/2).to_i
+  mx = (500/2).to_i
+  my = (537/2).to_i
   animate(36) do
     # clear do
       # Manage color
@@ -36,7 +38,10 @@ Shoes.app width: 537, height: 500 do
       if red_circles.size == 10
         r = red_circles[i]
         r.style fill: red(color)
-        r.left, r.top, r.width, r.height = center_x, center_y, current_size, current_size
+        r.left = center_x
+        r.top = center_y
+        r.width = current_size
+        r.height = current_size
       else
         red_circles << oval(center_x, center_y, current_size, current_size)
       end
@@ -54,7 +59,10 @@ Shoes.app width: 537, height: 500 do
       if blue_circles.size == 20
         b = blue_circles[i]
         b.style fill: blue(color)
-        b.left, b.top, b.width, b.height = center_x, center_y, current_size, current_size
+        b.left = center_x
+        b.top = center_y
+        b.width = current_size
+        b.height = current_size
       else
         blue_circles << oval(center_x, center_y, current_size, current_size)
       end

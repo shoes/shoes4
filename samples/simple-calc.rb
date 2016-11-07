@@ -23,7 +23,8 @@ class Calc
     define_method "press_#{meth}" do
       press_equals if @op
       @op = op
-      @previous, @number = @number, nil
+      @previous = @number
+      @number = nil
     end
   end
 
