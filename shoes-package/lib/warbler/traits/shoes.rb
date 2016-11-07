@@ -11,7 +11,9 @@ module Warbler
 
     # Disable this trait, since we are subclassing it (don't run twice)
     class Furoshiki
-      def self.detect?; false; end
+      def self.detect?
+        false
+      end
     end
 
     class Shoes < Furoshiki

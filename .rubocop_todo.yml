@@ -364,14 +364,6 @@ Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: AllowIfMethodIsEmpty.
-Style/SingleLineMethods:
-  Exclude:
-    - 'samples/expert-tankspank.rb'
-    - 'shoes-package/lib/warbler/traits/shoes.rb'
-
 # Offense count: 13
 # Cop supports --auto-correct.
 Style/SpaceAfterColon:
