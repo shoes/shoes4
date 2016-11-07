@@ -371,13 +371,6 @@ Style/SpaceBeforeFirstArg:
   Exclude:
     - 'samples/class-book-adjusted.rb'
 
-# Offense count: 1236
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/SpaceInsideParens:

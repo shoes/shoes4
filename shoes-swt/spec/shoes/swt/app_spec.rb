@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Shoes::Swt::App do
   let(:opts) { {background: Shoes::COLORS[:salmon], resizable: true} }
-  let(:width) {0}
+  let(:width) { 0 }
   let(:dsl) { dsl_app_with_opts(opts) }
-  let(:app) {double 'app' }
+  let(:app) { double 'app' }
 
   subject { described_class.new dsl }
 
@@ -88,16 +88,16 @@ describe Shoes::Swt::App do
 
   # fully testing the behavior would require stubbing for all of the open logic
   # which at the time is overkill imo
-  it {is_expected.to respond_to :started?}
+  it { is_expected.to respond_to :started? }
 
   describe 'App dimensions' do
-    let(:client_area) {double 'client_area', width: width, height: height}
-    let(:vertical_bar) {double 'scroll bar', visible?: bar_visible}
-    let(:shell) {double('shell', client_area: client_area,
-                                 vertical_bar: vertical_bar)}
-    let(:width) {50}
-    let(:height) {80}
-    let(:bar_visible) {false}
+    let(:client_area) { double 'client_area', width: width, height: height }
+    let(:vertical_bar) { double 'scroll bar', visible?: bar_visible }
+    let(:shell) { double('shell', client_area: client_area,
+                                  vertical_bar: vertical_bar)}
+    let(:width) { 50 }
+    let(:height) { 80 }
+    let(:bar_visible) { false }
 
     before :each do
       allow(subject).to receive(:shell).and_return(shell)
@@ -116,7 +116,7 @@ describe Shoes::Swt::App do
     it_behaves_like 'reports client area dimensions'
 
     context 'with a scroll bar' do
-      let(:bar_visible) {true}
+      let(:bar_visible) { true }
 
       it_behaves_like 'reports client area dimensions'
     end

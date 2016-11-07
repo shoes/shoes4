@@ -28,10 +28,10 @@ describe Shoes::Swt::Button do
     end
 
     describe 'size' do
-      let(:width) {50}
-      let(:height) {20}
-      let(:size) {double 'real size', x: width, y: height}
-      let(:real) {double('button real', size: size, pack: true).as_null_object}
+      let(:width) { 50 }
+      let(:height) { 20 }
+      let(:size) { double 'real size', x: width, y: height }
+      let(:real) { double('button real', size: size, pack: true).as_null_object }
 
       before :each do
         allow(::Swt::Widgets::Button).to receive(:new) { real }

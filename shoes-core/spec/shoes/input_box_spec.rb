@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Shoes::InputBox do
   include_context "dsl app"
-  let(:input_opts) {{left: left, top: top, width: width, height: height}}
+  let(:input_opts) { {left: left, top: top, width: width, height: height} }
   let(:left) { 10 }
   let(:top) { 20 }
   let(:width) { 100 }
@@ -39,7 +39,7 @@ describe Shoes::InputBox do
   end
 
   describe 'non string text' do
-    let(:text) {42}
+    let(:text) { 42 }
 
     it 'is converted to a string (convenience + error in backend)' do
       expect(subject.text).to eq '42'

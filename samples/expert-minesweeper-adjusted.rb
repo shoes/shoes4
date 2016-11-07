@@ -133,11 +133,11 @@ class Field
   end
 
   def bombs_left
-    @bombs - @field.flatten.compact.reject {|e| !e.flag }.size
+    @bombs - @field.flatten.compact.reject { |e| !e.flag }.size
   end
 
   def all_found?
-    @field.flatten.compact.reject {|e| !e.is_a?(OpenCell) }.size + @bombs == @w * @h
+    @field.flatten.compact.reject { |e| !e.is_a?(OpenCell) }.size + @bombs == @w * @h
   end
 
   def reveal!(x, y)

@@ -186,7 +186,7 @@ class Tetris
   def remove_any_completed_lines
     lines = 0
     NY.times do |y|
-      unless NX.times.any? {|x| blocks[x][y].nil? }
+      unless NX.times.any? { |x| blocks[x][y].nil? }
         remove_line(y)
         lines += 1
       end

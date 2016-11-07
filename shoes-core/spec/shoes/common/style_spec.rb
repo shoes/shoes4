@@ -36,7 +36,7 @@ describe Shoes::Common::Style do
     end
   end
 
-  subject {StyleTester.new(app)}
+  subject { StyleTester.new(app) }
 
   its(:style) { should eq(initial_style) }
   let(:initial_style) { {key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue,
@@ -138,7 +138,7 @@ describe Shoes::Common::Style do
   end
 
   describe "style priorities" do
-    subject {StyleTester.new(app, key: 'pumpkin')}
+    subject { StyleTester.new(app, key: 'pumpkin') }
     let(:green) { Shoes::COLORS[:green] }
 
     it 'uses arguments-styles over element-styles' do
@@ -150,7 +150,7 @@ describe Shoes::Common::Style do
     end
 
     describe "with app level styles applied" do
-      let(:app) { Shoes::App.new}
+      let(:app) { Shoes::App.new }
 
       it "should override class level defaults with app level styles provided those app styles are supported by the class" do
         app.style(fill: green)

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Shoes::Common::Rotate do
   let(:test_class) { Class.new { include Shoes::Common::Rotate } }
 
-  subject {test_class.new}
+  subject { test_class.new }
 
   describe '#needs_rotate?' do
     it 'defaults to falsey value' do

@@ -7,7 +7,7 @@ describe Shoes::Swt::Rect do
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:dsl) {::Shoes::Rect.new shoes_app, parent, left, top, width, height}
+  let(:dsl) { ::Shoes::Rect.new shoes_app, parent, left, top, width, height }
 
   subject {
     Shoes::Swt::Rect.new dsl, swt_app

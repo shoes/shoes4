@@ -12,7 +12,7 @@ $LOAD_PATH << File.expand_path('../../../shoes-core/lib', __FILE__)
 require 'pathname'
 require 'rspec/its'
 
-Dir["#{SHOES_PACKAGE_SPEC_ROOT}/support/**/*.rb"].each {|f| require f}
+Dir["#{SHOES_PACKAGE_SPEC_ROOT}/support/**/*.rb"].each { |f| require f }
 
 module PackageHelpers
   # need these values from a context block, so let doesn't work

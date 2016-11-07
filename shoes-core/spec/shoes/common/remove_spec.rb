@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Shoes::Common::Remove do
-  let(:parent) {double 'parent', add_child: true, remove_child: true}
-  let(:gui) {double 'gui', remove: true}
-  let(:test_class) {Class.new {include Shoes::Common::Remove}}
+  let(:parent) { double 'parent', add_child: true, remove_child: true }
+  let(:gui) { double 'gui', remove: true }
+  let(:test_class) { Class.new { include Shoes::Common::Remove } }
 
-  subject {test_class.new}
+  subject { test_class.new }
 
   before :each do
     allow(subject).to receive_messages parent: parent, gui: gui
@@ -27,7 +27,7 @@ describe Shoes::Common::Remove do
     describe 'if the gui does not respond to clear' do
       # need to stub clear and respond_to because we get a non stubbed method
       # otherwise on our spies when verifying...
-      let(:gui) {double 'no clear gui', clear: true, respond_to?: false}
+      let(:gui) { double 'no clear gui', clear: true, respond_to?: false }
 
       it 'does not call clear on the gui' do
         expect(gui).not_to have_received(:clear)

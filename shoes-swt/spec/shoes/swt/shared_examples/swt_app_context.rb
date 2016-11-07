@@ -28,7 +28,7 @@ shared_context "swt app" do
                                   absolute_left: 0, absolute_top: 0,
                                   width: 200, height: 100, fixed_height?: true) }
 
-  let(:parent_dsl) {double("parent dsl", add_child: true, contents: [],
-                                         gui: parent, x_dimension: double.as_null_object,
-                                         y_dimension: double.as_null_object)}
+  let(:parent_dsl) { double("parent dsl", add_child: true, contents: [],
+                                          gui: parent, x_dimension: double.as_null_object,
+                                          y_dimension: double.as_null_object)}
 end

@@ -9,7 +9,7 @@ describe Shoes::Swt::Common::Painter do
   let(:dsl) { double 'dsl', parent: parent, visible?: true, positioned?: true,
                             style: {} }
 
-  let(:event) {double 'paint event', gc: graphics_context}
+  let(:event) { double 'paint event', gc: graphics_context }
 
   let(:graphics_context) { double 'graphics_context', dispose: nil,
                                                       clipping: nil,
@@ -21,7 +21,7 @@ describe Shoes::Swt::Common::Painter do
 
   let(:transform) { double 'transform', disposed?: false }
 
-  subject {Shoes::Swt::Common::Painter.new object}
+  subject { Shoes::Swt::Common::Painter.new object }
 
   before do
     allow(::Swt::Transform).to receive(:new) { transform }

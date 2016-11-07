@@ -66,7 +66,7 @@ describe Shoes::InternalApp do
   end
 
   describe '#inspect' do
-    let(:input_opts) {{title: 'Dupa'}}
+    let(:input_opts) { {title: 'Dupa'} }
 
     it 'shows the title in inspect' do
       expect(subject.inspect).to include 'Dupa'
@@ -103,7 +103,7 @@ describe Shoes::InternalApp do
       }
 
       it 'does not raise an error' do
-        expect {subject}.not_to raise_error
+        expect { subject }.not_to raise_error
       end
 
       context 'when called inside a slot' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::Swt::Font do
-  subject {Shoes::Swt::Font}
+  subject { Shoes::Swt::Font }
 
   describe 'Shoes::FONTS' do
     it 'has the FONTS array initially populared' do

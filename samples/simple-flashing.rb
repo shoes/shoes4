@@ -17,5 +17,5 @@ Shoes.app width: 300, height: 300 do
     end
   end
 
-  button('pause') {a.toggle}
+  button('pause') { a.toggle }
 end

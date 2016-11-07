@@ -65,7 +65,7 @@ describe Shoes::Flow do
       it_behaves_like 'positioning in the same line'
 
       describe 'exact fit' do
-        let(:input_opts) {{width: element.width + element2.width}}
+        let(:input_opts) { {width: element.width + element2.width} }
         it_behaves_like 'positioning in the same line'
       end
     end
@@ -99,7 +99,7 @@ describe Shoes::Flow do
     end
 
     describe 'with margins and two elements not fitting next to each other' do
-      let(:input_opts) {{ width: element.width + 10, margin: 27 }}
+      let(:input_opts) { { width: element.width + 10, margin: 27 } }
       it_behaves_like 'taking care of margin'
     end
   end

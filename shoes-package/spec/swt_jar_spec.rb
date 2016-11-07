@@ -56,7 +56,7 @@ describe Furoshiki::Jar do
   end
 
   describe "with an invalid configuration" do
-    let(:config) { Shoes::Package::Configuration.create}
+    let(:config) { Shoes::Package::Configuration.create }
     subject { Shoes::Package::Jar.new(config) }
 
     it "fails to initialize" do

@@ -14,7 +14,7 @@ describe Shoes::Swt::RectPainter do
   let(:top) { 77 }
   let(:width) { 222 }
   let(:height) { 111 }
-  let(:shape) { Shoes::Swt::Rect.new dsl, app}
+  let(:shape) { Shoes::Swt::Rect.new dsl, app }
   subject { Shoes::Swt::RectPainter.new shape }
 
   it_behaves_like "fill painter"

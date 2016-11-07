@@ -6,10 +6,10 @@ ydir = 1
 
 Shoes.app width: 300, height: 300 do
   a = nil
-  button('toggle') {a.toggle}
-  button('stop') {a.stop}
-  button('start') {a.start}
-  button('remove') {a.remove}
+  button('toggle') { a.toggle }
+  button('stop') { a.stop }
+  button('start') { a.start }
+  button('remove') { a.remove }
   img = image File.join(Shoes::DIR, 'static/shoes-icon.png') do
     alert "You're soooo quick!"
   end

@@ -43,5 +43,5 @@ describe Shoes::Background do
     it_behaves_like "object with negative dimensions"
   end
 
-  it {is_expected.not_to be_takes_up_space}
+  it { is_expected.not_to be_takes_up_space }
 end

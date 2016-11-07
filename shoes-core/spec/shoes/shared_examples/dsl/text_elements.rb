@@ -41,7 +41,7 @@ shared_examples_for "text element DSL methods" do
     end
 
     it 'should handle a splatted array of links' do
-      expect {dsl.span(*[dsl.link('foo'), dsl.link('foo')])}.not_to raise_error
+      expect { dsl.span(*[dsl.link('foo'), dsl.link('foo')]) }.not_to raise_error
     end
 
     it 'should handle a splatted array of links and parse the color' do
@@ -51,7 +51,7 @@ shared_examples_for "text element DSL methods" do
 
     it 'should handle a splatted array of links with a block' do
       link = dsl.link('foo') { "Bar" }
-      expect {dsl.span(*[link, link])}.not_to raise_error
+      expect { dsl.span(*[link, link]) }.not_to raise_error
     end
   end
 

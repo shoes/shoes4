@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Shoes::Dimension do
-  subject {Shoes::Dimension.new parent_dimension}
-  let(:start) {10}
-  let(:extent) {21}
-  let(:parent_element_start) {34}
-  let(:parent_element_end) {83}
-  let(:parent_element_extent) {600}
+  subject { Shoes::Dimension.new parent_dimension }
+  let(:start) { 10 }
+  let(:extent) { 21 }
+  let(:parent_element_start) { 34 }
+  let(:parent_element_end) { 83 }
+  let(:parent_element_extent) { 600 }
   let(:parent_dimension) { double 'parent_dimension',
                                   element_start:  parent_element_start,
                                   element_end:    parent_element_end,
@@ -16,20 +16,20 @@ describe Shoes::Dimension do
 
   describe 'initialization' do
     describe 'without arguments (even no parent)' do
-      subject {Shoes::Dimension.new nil}
+      subject { Shoes::Dimension.new nil }
 
-      its(:start) {should eq nil}
-      its(:end) {should eq nil}
-      its(:extent) {should eq nil}
-      its(:margin_start) {should eq 0}
-      its(:margin_end) {should eq 0}
-      its(:displace_start) {should eq 0}
-      it {is_expected.not_to be_positioned}
-      it {is_expected.not_to be_absolute_position}
+      its(:start) { should eq nil }
+      its(:end) { should eq nil }
+      its(:extent) { should eq nil }
+      its(:margin_start) { should eq 0 }
+      its(:margin_end) { should eq 0 }
+      its(:displace_start) { should eq 0 }
+      it { is_expected.not_to be_positioned }
+      it { is_expected.not_to be_absolute_position }
     end
 
     describe 'with a parent and being positioned itself' do
-      subject {Shoes::Dimension.new parent_dimension}
+      subject { Shoes::Dimension.new parent_dimension }
 
       TESTING_OFFSET = 11
 
@@ -38,12 +38,12 @@ describe Shoes::Dimension do
         subject.extent = 10
       end
 
-      its(:start) {should eq TESTING_OFFSET}
-      its(:end) {should eq parent_element_end - subject.element_end}
+      its(:start) { should eq TESTING_OFFSET }
+      its(:end) { should eq parent_element_end - subject.element_end }
     end
 
     describe 'start as center' do
-      subject {Shoes::Dimension.new parent_dimension, true}
+      subject { Shoes::Dimension.new parent_dimension, true }
 
       it 'takes start as the center' do
         subject.extent = 100
@@ -54,12 +54,12 @@ describe Shoes::Dimension do
   end
 
   describe '#extent' do
-    let(:parent_element_extent) {600}
-    let(:parent_extent) {580}
-    let(:parent) {double 'parent', element_extent: parent_element_extent,
-                                   extent: parent_extent}
+    let(:parent_element_extent) { 600 }
+    let(:parent_extent) { 580 }
+    let(:parent) { double 'parent', element_extent: parent_element_extent,
+                                    extent: parent_extent}
 
-    subject {Shoes::Dimension.new parent}
+    subject { Shoes::Dimension.new parent }
 
     it 'gets and sets' do
       subject.extent = extent
@@ -144,14 +144,14 @@ describe Shoes::Dimension do
   end
 
   describe '#start' do
-    let(:start) {23}
+    let(:start) { 23 }
 
     before :each do
       subject.start = start
     end
 
-    its(:start) {should eq start}
-    it {is_expected.to be_absolute_position}
+    its(:start) { should eq start }
+    it { is_expected.to be_absolute_position }
 
     it 'can set a start relative to parent element_extent' do
       subject.start = 0.3
@@ -167,7 +167,7 @@ describe Shoes::Dimension do
     end
 
     context '#without a parent' do
-      let(:parent_dimension) {nil}
+      let(:parent_dimension) { nil }
 
       it 'just takes the relative value' do
         subject.start = 0.8
@@ -177,19 +177,19 @@ describe Shoes::Dimension do
   end
 
   describe 'with no parent but set dimensions' do
-    subject {Shoes::Dimension.new}
+    subject { Shoes::Dimension.new }
 
     before :each do
       subject.absolute_start = 23
       subject.extent = 45
     end
 
-    its(:end) {should be_nil}
-    its(:start) {should be_nil}
+    its(:end) { should be_nil }
+    its(:start) { should be_nil }
   end
 
   describe '#absolute_start' do
-    let(:absolute_start) {8}
+    let(:absolute_start) { 8 }
 
     before :each do
       subject.absolute_start = absolute_start
@@ -199,7 +199,7 @@ describe Shoes::Dimension do
       expect(subject.absolute_start).to eq absolute_start
     end
 
-    it {is_expected.to be_positioned}
+    it { is_expected.to be_positioned }
   end
 
   describe '#absolute_end' do
@@ -217,19 +217,19 @@ describe Shoes::Dimension do
   end
 
   describe '#margins' do
-    let(:margin_start) {11}
-    let(:margin_end) {17}
+    let(:margin_start) { 11 }
+    let(:margin_end) { 17 }
 
     before :each do
       subject.margin_start = margin_start
       subject.margin_end = margin_end
     end
 
-    its(:margin_start) {should eq margin_start}
-    its(:margin_end) {should eq margin_end}
+    its(:margin_start) { should eq margin_start }
+    its(:margin_end) { should eq margin_end }
 
     context 'absolute_start set' do
-      let(:absolute_start) {7}
+      let(:absolute_start) { 7 }
 
       before :each do
         subject.absolute_start = absolute_start
@@ -244,7 +244,7 @@ describe Shoes::Dimension do
       end
 
       context 'extent set' do
-        let(:extent) {67}
+        let(:extent) { 67 }
 
         before :each do
           subject.extent = extent
@@ -261,55 +261,55 @@ describe Shoes::Dimension do
       end
 
       context 'element_extent set' do
-        let(:element_extent) {77}
+        let(:element_extent) { 77 }
 
         before :each do
           subject.element_extent = element_extent
         end
 
-        its(:element_extent) {should eq element_extent}
-        its(:extent) {should eq element_extent + margin_start + margin_end}
-        its(:element_end) {should eq subject.element_start + element_extent -
+        its(:element_extent) { should eq element_extent }
+        its(:extent) { should eq element_extent + margin_start + margin_end }
+        its(:element_end) { should eq subject.element_start + element_extent -
                                        ONE_PIXEL}
       end
 
       describe 'relative margins' do
-        let(:margin_start) {0.1}
-        let(:margin_end) {0.2}
+        let(:margin_start) { 0.1 }
+        let(:margin_end) { 0.2 }
 
-        its(:margin_start) {should be_within(ONE_PIXEL).of 0.1 *
+        its(:margin_start) { should be_within(ONE_PIXEL).of 0.1 *
                                                           parent_element_extent}
-        its(:margin_end) {should be_within(ONE_PIXEL).of 0.2 *
+        its(:margin_end) { should be_within(ONE_PIXEL).of 0.2 *
                                                          parent_element_extent}
       end
     end
   end
 
   describe '#in_bounds?' do
-    let(:absolute_start) {20}
-    let(:extent) {100}
-    let(:absolute_end) {20 + 100 - ONE_PIXEL} # -1 due to pixel counting adjustment
+    let(:absolute_start) { 20 }
+    let(:extent) { 100 }
+    let(:absolute_end) { 20 + 100 - ONE_PIXEL } # -1 due to pixel counting adjustment
 
     before :each do
       subject.absolute_start = absolute_start
       subject.extent = extent
     end
 
-    its(:absolute_end) {should eq absolute_end}
+    its(:absolute_end) { should eq absolute_end }
 
-    it {is_expected.to be_in_bounds absolute_start}
-    it {is_expected.to be_in_bounds absolute_end}
-    it {is_expected.to be_in_bounds absolute_start + ONE_PIXEL}
-    it {is_expected.to be_in_bounds absolute_end - ONE_PIXEL}
-    it {is_expected.to be_in_bounds 40}
-    it {is_expected.to be_in_bounds 105}
-    it {is_expected.to be_in_bounds 20.021}
-    it {is_expected.not_to be_in_bounds absolute_end + ONE_PIXEL}
-    it {is_expected.not_to be_in_bounds absolute_start - ONE_PIXEL }
-    it {is_expected.not_to be_in_bounds(-5)}
-    it {is_expected.not_to be_in_bounds 0}
-    it {is_expected.not_to be_in_bounds 150}
-    it {is_expected.not_to be_in_bounds 123_178}
+    it { is_expected.to be_in_bounds absolute_start }
+    it { is_expected.to be_in_bounds absolute_end }
+    it { is_expected.to be_in_bounds absolute_start + ONE_PIXEL }
+    it { is_expected.to be_in_bounds absolute_end - ONE_PIXEL }
+    it { is_expected.to be_in_bounds 40 }
+    it { is_expected.to be_in_bounds 105 }
+    it { is_expected.to be_in_bounds 20.021 }
+    it { is_expected.not_to be_in_bounds absolute_end + ONE_PIXEL }
+    it { is_expected.not_to be_in_bounds absolute_start - ONE_PIXEL }
+    it { is_expected.not_to be_in_bounds(-5) }
+    it { is_expected.not_to be_in_bounds 0 }
+    it { is_expected.not_to be_in_bounds 150 }
+    it { is_expected.not_to be_in_bounds 123_178 }
   end
 
   it 'can displace the placement' do
@@ -346,12 +346,12 @@ describe Shoes::Dimension do
   end
 
   describe Shoes::ParentDimension do
-    let(:parent) {Shoes::Dimension.new}
-    let(:parent_start) {7}
-    let(:parent_extent) {27}
-    let(:margin) {5}
+    let(:parent) { Shoes::Dimension.new }
+    let(:parent_start) { 7 }
+    let(:parent_extent) { 27 }
+    let(:margin) { 5 }
 
-    subject {Shoes::ParentDimension.new parent}
+    subject { Shoes::ParentDimension.new parent }
 
     before :each do
       parent.start        = parent_start
@@ -359,19 +359,19 @@ describe Shoes::Dimension do
     end
 
     describe 'it takes some parent values if no values are set' do
-      its(:extent) {should eq parent_extent}
+      its(:extent) { should eq parent_extent }
 
-      its(:margin_start) {should eq 0}
-      its(:margin_end)   {should eq 0}
+      its(:margin_start) { should eq 0 }
+      its(:margin_end)   { should eq 0 }
 
       context 'with parent absolute_start set' do
         before :each do
           parent.absolute_start = 11
         end
 
-        its(:absolute_start) {should eq parent.element_start}
-        its(:element_start)  {should eq parent.element_start}
-        its(:element_end)    {should eq parent.element_end}
+        its(:absolute_start) { should eq parent.element_start }
+        its(:element_start)  { should eq parent.element_start }
+        its(:element_end)    { should eq parent.element_end }
       end
 
       context 'but it takes the parent margins into account' do
@@ -380,7 +380,7 @@ describe Shoes::Dimension do
           parent.margin_end   = margin
         end
 
-        its(:extent) {is_expected.to eq 17}
+        its(:extent) { is_expected.to eq 17 }
       end
     end
 
@@ -391,9 +391,9 @@ describe Shoes::Dimension do
         parent.absolute_start = 17
       end
 
-      its(:start) {should eq start}
-      its(:extent) {should eq extent}
-      its(:absolute_start) {should eq 17}
+      its(:start) { should eq start }
+      its(:extent) { should eq extent }
+      its(:absolute_start) { should eq 17 }
 
       it 'can still handle special values like a negative extent' do
         subject.extent = -10
@@ -420,7 +420,7 @@ describe Shoes::Dimension do
                                       extent:         10,
                                       element_extent: 10 }
 
-      subject {Shoes::ParentDimension.new parent_dimension}
+      subject { Shoes::ParentDimension.new parent_dimension }
 
       it "gets the parent element_extent" do
         expect(subject.extent).to eq(10)

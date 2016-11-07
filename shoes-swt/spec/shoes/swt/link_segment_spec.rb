@@ -11,7 +11,7 @@ describe Shoes::Swt::LinkSegment do
   subject { Shoes::Swt::LinkSegment.new(text_segment, range) }
 
   before(:each) do
-    10.times {|i| stub_line_bounds(i)}
+    10.times { |i| stub_line_bounds(i) }
   end
 
   # ....................

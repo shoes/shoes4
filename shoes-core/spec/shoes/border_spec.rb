@@ -12,7 +12,7 @@ end
 
 describe Shoes::Border do
   include_context "dsl app"
-  let(:parent) { Shoes::FakeElement.new nil, left, top, width, height}
+  let(:parent) { Shoes::FakeElement.new nil, left, top, width, height }
   let(:opts) { {left: left, top: top, width: width, height: height} }
 
   let(:left) { 10 }
@@ -42,5 +42,5 @@ describe Shoes::Border do
     it_behaves_like "object with negative dimensions"
   end
 
-  it {is_expected.not_to be_takes_up_space}
+  it { is_expected.not_to be_takes_up_space }
 end

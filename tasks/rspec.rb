@@ -27,7 +27,7 @@ end
 def spec_opts_from_args(args)
   opts = []
   opts << "-e ::#{args[:module]}" if args[:module]
-  opts += Array(args[:require]).map {|lib| "-r#{lib}"}
+  opts += Array(args[:require]).map { |lib| "-r#{lib}" }
   opts += args[:excludes].map { |tag| "--tag ~#{tag}" } if args[:excludes]
   opts += args[:includes].map { |tag| "--tag #{tag}" } if args[:includes]
   opts.join ' '

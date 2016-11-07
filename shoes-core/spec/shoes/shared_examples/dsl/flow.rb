@@ -1,5 +1,5 @@
 shared_examples_for "flow DSL method" do
-  let(:flow) {dsl.flow}
+  let(:flow) { dsl.flow }
 
   it "creates a Shoes::Flow" do
     expect(flow).to be_an_instance_of(Shoes::Flow)

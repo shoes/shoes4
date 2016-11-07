@@ -41,7 +41,7 @@ describe Shoes::Swt::Background do
     include_context "painter context"
 
     let(:corners) { 0 }
-    let(:shape) { Shoes::Swt::Background.new dsl, swt_app}
+    let(:shape) { Shoes::Swt::Background.new dsl, swt_app }
     subject { Shoes::Swt::Background::Painter.new shape }
 
     it_behaves_like "fill painter"

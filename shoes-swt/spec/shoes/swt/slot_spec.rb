@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Shoes::Swt::Slot do
   include_context "swt app"
-  let(:dsl) {instance_double Shoes::Slot, hidden?: true,
-                                          visible?: false, contents: [content] }
-  let(:content) {double 'content', show: true, hide: true}
+  let(:dsl) { instance_double Shoes::Slot, hidden?: true,
+                                           visible?: false, contents: [content] }
+  let(:content) { double 'content', show: true, hide: true }
 
-  subject {Shoes::Swt::Slot.new dsl, swt_app}
+  subject { Shoes::Swt::Slot.new dsl, swt_app }
 
   describe '#update_visibility' do
     it 'does not set visibility on the parent #904' do

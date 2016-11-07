@@ -3,7 +3,7 @@ SAMPLES_DIR = "samples"
 namespace :samples do
   def samples_from_file(filename)
     samples = File.read("#{SAMPLES_DIR}/#{filename}").lines
-    samples.map {|s| s.sub(/#.*$/, '')}.map(&:strip).select {|s| s != ''}.map {|s| "#{SAMPLES_DIR}/#{s}"}
+    samples.map { |s| s.sub(/#.*$/, '') }.map(&:strip).select { |s| s != '' }.map { |s| "#{SAMPLES_DIR}/#{s}" }
   end
 
   def working_samples
@@ -53,7 +53,7 @@ namespace :samples do
   desc "Create list of non-working samples"
   task :bad_list do |t|
     puts t.comment
-    non_samples.each {|non_sample| puts non_sample}
+    non_samples.each { |non_sample| puts non_sample }
   end
 
   desc "Run all samples listed in samples/filename"

@@ -290,7 +290,7 @@ module Othello
   def find_piece(x, y)
     GAME.board.each_with_index { |row_array, row|
       row_array.each_with_index { |_col_array, col|
-        left, top = left_top_corner_of_piece(col, row).map { |i| i - 5}
+        left, top = left_top_corner_of_piece(col, row).map { |i| i - 5 }
         right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i - 5 }
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
       }

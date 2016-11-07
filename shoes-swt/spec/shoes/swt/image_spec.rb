@@ -7,12 +7,12 @@ describe Shoes::Swt::Image do
   IMAGE_HEIGHT = 1
 
   let(:blk) { double("block") }
-  let(:dsl) { Shoes::Image.new shoes_app, parent_dsl, image, opts}
-  let(:opts) {{left: left, top: top, width: width, height: height}}
+  let(:dsl) { Shoes::Image.new shoes_app, parent_dsl, image, opts }
+  let(:opts) { {left: left, top: top, width: width, height: height} }
   let(:left) { 100 }
   let(:top) { 200 }
   let(:height) { nil }
-  let(:width) {nil}
+  let(:width) { nil }
   let(:image_path) { File.dirname(__FILE__) + '/minimal.png' }
   let(:image) { image_path }
 
@@ -71,14 +71,14 @@ describe Shoes::Swt::Image do
     end
 
     describe 'with a given width' do
-      let(:width) {(IMAGE_WIDTH * 5.8).to_i}
+      let(:width) { (IMAGE_WIDTH * 5.8).to_i }
       it 'scales the height' do
         expect(subject.height).to eq((IMAGE_HEIGHT * 5.8).to_i)
       end
     end
 
     describe 'with a given height' do
-      let(:height) {IMAGE_HEIGHT * 4}
+      let(:height) { IMAGE_HEIGHT * 4 }
 
       it 'scales the width' do
         expect(subject.width).to eq(IMAGE_WIDTH * 4)
@@ -86,8 +86,8 @@ describe Shoes::Swt::Image do
     end
 
     describe 'with a given width and height' do
-      let(:width) {1}
-      let(:height) {2}
+      let(:width) { 1 }
+      let(:height) { 2 }
       it 'sets the given width' do
         expect(subject.width).to eq(1)
       end

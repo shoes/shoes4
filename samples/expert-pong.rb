@@ -20,7 +20,7 @@ Shoes.app width: 400, height: 400, resizable: false do
   # set up the playing board
   nostroke && background(white)
   @ball = oval 0, 0, ball_diameter, fill: "#9B7"
-  @you, @comp = [app.height - 4, 0].map {|y| rect 0, y, paddle_size, 4, curve: 2}
+  @you, @comp = [app.height - 4, 0].map { |y| rect 0, y, paddle_size, 4, curve: 2 }
 
   # animates at 40 frames per second
   @anim = animate 40 do

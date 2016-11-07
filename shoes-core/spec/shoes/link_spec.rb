@@ -106,7 +106,7 @@ describe Shoes::Link do
   end
 
   describe 'visibility' do
-    let(:text_block) {double 'text block', visible?: true, hidden?: false}
+    let(:text_block) { double 'text block', visible?: true, hidden?: false }
 
     describe 'with a containing text block' do
       before :each do
@@ -126,18 +126,18 @@ describe Shoes::Link do
 
     describe 'without a containing text block' do
       it 'does not crash on #visibie?' do
-        expect {subject.visible?}.not_to raise_error
+        expect { subject.visible? }.not_to raise_error
       end
 
       it 'does not crash on #hidden?' do
-        expect {subject.hidden?}.not_to raise_error
+        expect { subject.hidden? }.not_to raise_error
       end
     end
   end
 
   # #979
   describe 'containing text block' do
-    let(:text_block) {double 'text block'}
+    let(:text_block) { double 'text block' }
 
     before :each do
       subject.parent = text_block

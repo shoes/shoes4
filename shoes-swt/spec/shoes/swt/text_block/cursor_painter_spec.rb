@@ -21,7 +21,7 @@ describe Shoes::Swt::TextBlock::CursorPainter do
     end
 
     it "shouldn't do anything without text cursor" do
-      allow(dsl).to receive(:textcursor?) { nil}
+      allow(dsl).to receive(:textcursor?) { nil }
       subject.draw
       expect(dsl).to_not have_received(:textcursor=)
     end

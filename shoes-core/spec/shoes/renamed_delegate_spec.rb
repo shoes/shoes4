@@ -35,8 +35,8 @@ describe RenamedDelegate do
                                 ToDelegate.public_instance_methods(false),
                                 'key' => 'shoes', 'something' => 'awesome'
 
-  let(:delegate) {double('delegate').as_null_object}
-  subject {TestClass.new delegate}
+  let(:delegate) { double('delegate').as_null_object }
+  subject { TestClass.new delegate }
 
   def test_renaming(new_name, old_name)
     subject.public_send new_name

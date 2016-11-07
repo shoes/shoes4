@@ -6,7 +6,7 @@ describe Shoes::Swt::Progress do
   let(:text) { "TEXT" }
   let(:dsl) { double('dsl', app: shoes_app).as_null_object }
   let(:real) { double('real', disposed?: real_disposed).as_null_object }
-  let(:real_disposed) {false}
+  let(:real_disposed) { false }
 
   subject { Shoes::Swt::Progress.new dsl, swt_app }
 
@@ -33,7 +33,7 @@ describe Shoes::Swt::Progress do
   end
 
   context "with disposed real element" do
-    let(:real_disposed) {true}
+    let(:real_disposed) { true }
 
     it "shouldn't set selection" do
       expect(real).not_to receive(:selection=)

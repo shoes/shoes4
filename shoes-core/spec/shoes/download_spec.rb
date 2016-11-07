@@ -5,15 +5,15 @@ describe Shoes::Download do
 
   let(:name) { "http://www.google.com/logos/nasa50th.gif" }
   let(:response_body) { "NASA 50th logo" }
-  let(:response_status) {["200", "OK"]}
-  let(:response_headers) { { "content-length" => "42" }}
+  let(:response_status) { ["200", "OK"] }
+  let(:response_headers) { { "content-length" => "42" } }
   let(:opts) { {save: "nasa50th.gif"} }
 
   subject(:download) { Shoes::Download.new app, parent, name, opts, &input_block }
 
-  let(:percent) {download.percent}
-  let(:length) {download.length}
-  let(:content_length) {download.content_length}
+  let(:percent) { download.percent }
+  let(:length) { download.length }
+  let(:content_length) { download.content_length }
 
   before do
     expect(app.current_slot).to receive(:create_bound_block).at_least(1) { |blk| blk ? blk : nil }
@@ -64,9 +64,9 @@ describe Shoes::Download do
   end
 
   context 'with a progress proc' do
-    let(:progress_proc) {proc {}}
+    let(:progress_proc) { proc {} }
     let(:opts) { {save: "nasa50th.gif", progress: progress_proc} }
-    subject(:download) {Shoes::Download.new app, parent, name, opts}
+    subject(:download) { Shoes::Download.new app, parent, name, opts }
 
     before :each do
       allow(download.gui).to receive :eval_block
@@ -98,8 +98,8 @@ describe Shoes::Download do
   end
 
   describe 'after it is finished' do
-    let(:result) {download}
-    let(:response) {download.response}
+    let(:result) { download }
+    let(:response) { download.response }
 
     before :each do
       allow(download.gui).to receive(:eval_block)
@@ -181,7 +181,7 @@ describe Shoes::Download do
     end
 
     describe 'with custom error blocks' do
-      let(:error_proc) { proc { } }
+      let(:error_proc) { proc {} }
       let(:opts) { {save: "nasa50th.gif", error: error_proc} }
 
       it 'gets called' do

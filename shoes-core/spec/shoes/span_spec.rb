@@ -29,12 +29,12 @@ describe Shoes::Span do
   end
 
   describe 'Looking up styles of the parent text' do
-    let(:white) {Shoes::COLORS[:white]}
-    let(:red) {Shoes::COLORS[:red]}
+    let(:white) { Shoes::COLORS[:white] }
+    let(:red) { Shoes::COLORS[:red] }
     it 'does not try to merge with parent style when there are none' do
       parent = double 'parent'
       span.parent = parent
-      expect {span.style}.to_not raise_error
+      expect { span.style }.to_not raise_error
     end
 
     it 'merges with the styles of the parent text' do
@@ -44,7 +44,7 @@ describe Shoes::Span do
     end
 
     describe 'with own style' do
-      let(:style) {{stroke: red}}
+      let(:style) { {stroke: red} }
       it 'prefers own values over parent text values' do
         parent = double 'parent', style: {stroke: white}
         span.parent = parent
