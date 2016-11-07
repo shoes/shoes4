@@ -339,14 +339,6 @@ Style/RegexpLiteral:
     - 'shoes-core/lib/shoes/ui/picker.rb'
     - 'spec/spec_helper.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/RescueModifier:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/SelfAssignment:

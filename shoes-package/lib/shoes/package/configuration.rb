@@ -123,8 +123,16 @@ class Shoes
       # replace the whole array, so we handle the gems separately. Note that
       # keys may not have been symbolized yet
       def self.merge_gems(base, additional)
-        base_gems = base.fetch(:gems) rescue base['gems']
-        additional_gems = additional.fetch(:gems) rescue additional['gems']
+        base_gems = begin
+                      base.fetch(:gems)
+                    rescue
+                      base['gems']
+                    end
+        additional_gems = begin
+                            additional.fetch(:gems)
+                          rescue
+                            additional['gems']
+                          end
         Array(base_gems).concat(Array(additional_gems)).uniq
       end
     end
