@@ -371,12 +371,6 @@ Style/SpaceBeforeFirstArg:
   Exclude:
     - 'samples/class-book-adjusted.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Tab:
-  Exclude:
-    - 'samples/good-reminder.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowSafeAssignment.
