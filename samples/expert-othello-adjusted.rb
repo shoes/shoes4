@@ -155,7 +155,7 @@ module Othello
       while valid_location?(c_adjacent)
         if board_at(c_adjacent) == opp_piece
           pieces_in_between << c_adjacent.dup
-        elsif board_at(c_adjacent) == piece && pieces_in_between.size > 0
+        elsif board_at(c_adjacent) == piece && !pieces_in_between.empty?
           c_last = c_adjacent
           break
         else

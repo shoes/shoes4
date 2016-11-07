@@ -132,7 +132,7 @@ class Shoes
                         .split(',').map { |x| x.strip.gsub(/["]/, '') }
 
       @style[:font] = font_family.first unless (font_family.size == 1 &&
-        font_family[0] == "") || font_family.size == 0
+        font_family[0] == "") || font_family.empty?
 
       fsize = size_regex.match(type)
       @style[:size] = fsize[1].to_i unless fsize.nil?

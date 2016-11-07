@@ -377,11 +377,3 @@ Style/SpaceBeforeFirstArg:
 Style/VariableName:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/sound.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'shoes-core/lib/shoes/text_block.rb'
