@@ -371,14 +371,6 @@ Style/SpaceBeforeFirstArg:
   Exclude:
     - 'samples/class-book-adjusted.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: final_newline, final_blank_line
-Style/TrailingBlankLines:
-  Exclude:
-    - 'samples/good-image-dl.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 Style/UnneededInterpolation:
