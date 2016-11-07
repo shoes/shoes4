@@ -68,7 +68,7 @@ class Game
   end
 
   def player_win
-    @player =! @player
+    @player =!@player
     "#{player_color} won!"
   end
 end

@@ -364,12 +364,6 @@ Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceAfterNot:
-  Exclude:
-    - 'samples/simple-tictactoe.rb'
-
 # Offense count: 8
 # Cop supports --auto-correct.
 Style/SpaceAroundKeyword:
