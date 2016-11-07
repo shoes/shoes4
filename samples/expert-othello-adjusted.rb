@@ -266,10 +266,10 @@ module Othello
             if cell != 0
               strokewidth 0
               fill(cell == 1 ? rgb(100, 100, 100) : rgb(155, 155, 155))
-              oval(left+3, top+4, PIECE_WIDTH-10, PIECE_HEIGHT-10)
+              oval(left + 3, top + 4, PIECE_WIDTH - 10, PIECE_HEIGHT - 10)
 
               fill(cell == 1 ? black : white)
-              oval(left+5, top+5, PIECE_WIDTH-10, PIECE_HEIGHT-10)
+              oval(left + 5, top + 5, PIECE_WIDTH - 10, PIECE_HEIGHT - 10)
             end
           end
         end
@@ -280,7 +280,7 @@ module Othello
   end
 
   def left_top_corner_of_piece(a, b)
-    [(a*PIECE_WIDTH+LEFT_OFFSET), (b*PIECE_HEIGHT+TOP_OFFSET)]
+    [(a * PIECE_WIDTH + LEFT_OFFSET), (b * PIECE_HEIGHT + TOP_OFFSET)]
   end
 
   def right_bottom_corner_of_piece(a, b)
@@ -291,7 +291,7 @@ module Othello
     GAME.board.each_with_index { |row_array, row|
       row_array.each_with_index { |_col_array, col|
         left, top = left_top_corner_of_piece(col, row).map { |i| i - 5}
-        right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i -5 }
+        right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i - 5 }
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
       }
     }

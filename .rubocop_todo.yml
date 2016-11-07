@@ -364,12 +364,6 @@ Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
-# Offense count: 360
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Style/SpaceAroundOperators:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.

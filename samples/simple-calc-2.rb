@@ -17,7 +17,7 @@ Shoes.app height: 250, width: 198 do
   flow margin: 5 do
     flow height: 240, width: 190, margin: [2, 5, 0, 0] do
       background '#996'..'#333', curve: 5
-      number_field = para strong(@display, ' '*20), stroke: white, margin: 8
+      number_field = para strong(@display, ' ' * 20), stroke: white, margin: 8
       flow width: 218 do
         %w(7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +).each do |btn|
           button btn, width: 46, height: 46 do

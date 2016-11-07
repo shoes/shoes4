@@ -124,21 +124,21 @@ class World
     right_col = x + 1
     bottom_row = y + 1
 
-    result << @board[y-1][x-1] if top_row >= 0 && left_col >= 0
+    result << @board[y - 1][x - 1] if top_row >= 0 && left_col >= 0
 
-    result << @board[y-1][x] if top_row >= 0
+    result << @board[y - 1][x] if top_row >= 0
 
-    result << @board[y-1][x+1] if top_row >= 0 && right_col < @width
+    result << @board[y - 1][x + 1] if top_row >= 0 && right_col < @width
 
-    result << @board[y][x-1] if left_col >= 0
+    result << @board[y][x - 1] if left_col >= 0
 
-    result << @board[y][x+1] if right_col < @width
+    result << @board[y][x + 1] if right_col < @width
 
-    result << @board[y+1][x-1] if bottom_row < @height && left_col >= 0
+    result << @board[y + 1][x - 1] if bottom_row < @height && left_col >= 0
 
-    result << @board[y+1][x] if bottom_row < @height
+    result << @board[y + 1][x] if bottom_row < @height
 
-    result << @board[y+1][x+1] if bottom_row < @height && right_col < @width
+    result << @board[y + 1][x + 1] if bottom_row < @height && right_col < @width
 
     result.compact
   end

@@ -12,8 +12,8 @@ Shoes.app width: 537, height: 500 do
   red_circles = []
   blue_circles = []
 
-  mx = (500/2).to_i
-  my = (537/2).to_i
+  mx = (500 / 2).to_i
+  my = (537 / 2).to_i
   animate(36) do
     # clear do
       # Manage color
@@ -33,8 +33,8 @@ Shoes.app width: 537, height: 500 do
       d = to_radians(i * 60 + degree)
       rx = Math.cos(d) * 100
       ry = Math.sin(d) * 100
-      center_x = -current_size/2 + rx + mx
-      center_y = -current_size/2 + ry + my
+      center_x = -current_size / 2 + rx + mx
+      center_y = -current_size / 2 + ry + my
       if red_circles.size == 10
         r = red_circles[i]
         r.style fill: red(color)
@@ -54,8 +54,8 @@ Shoes.app width: 537, height: 500 do
       d = to_radians(i * 30 - degree)
       rx = Math.cos(d) * 150
       ry = Math.sin(d) * 150
-      center_x = -current_size/2 + rx + mx
-      center_y = -current_size/2 + ry + my
+      center_x = -current_size / 2 + rx + mx
+      center_y = -current_size / 2 + ry + my
       if blue_circles.size == 20
         b = blue_circles[i]
         b.style fill: blue(color)

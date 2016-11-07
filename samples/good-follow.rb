@@ -18,7 +18,7 @@ Shoes.app width: 200, height: 200, resizable: false do
       # draw circles progressively bigger
       trails.each_with_index do |(x, y), i|
         i += 1
-        oval left: x, top: y, radius: (i*0.5), center: true
+        oval left: x, top: y, radius: (i * 0.5), center: true
       end
     end
   end

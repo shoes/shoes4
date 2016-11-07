@@ -143,7 +143,7 @@ class Tank
         @acceleration = on_target * 0.25
       end
 
-      distance = Math.sqrt((@dest_x - @x) ** 2 + (@dest_y - @y) ** 2)
+      distance = Math.sqrt((@dest_x - @x)**2 + (@dest_y - @y)**2)
       @moving = false if distance < 50
     else
       @acceleration = 0.0

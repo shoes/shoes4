@@ -37,18 +37,18 @@ describe Shoes::Swt::LinkSegment do
     stub_start_and_end_locations([0, 0], [5, line_height])
 
     expect_bounded_box(0, 0,           line_width, line_height)
-    expect_bounded_box(0, line_height, 5,          2*line_height)
+    expect_bounded_box(0, line_height, 5,          2 * line_height)
   end
 
   # .....xxxxxxxxxxxxxxx
   # xxxxxxxxxxxxxxxxxxxx
   # xxxxx...............
   it "sets bounds wrapping over three lines" do
-    stub_start_and_end_locations([5, 0], [5, 2*line_height])
+    stub_start_and_end_locations([5, 0], [5, 2 * line_height])
 
     expect_bounded_box(5, 0,             line_width, line_height)
-    expect_bounded_box(0, line_height,   line_width, 2*line_height)
-    expect_bounded_box(0, 2*line_height, 5,          3*line_height)
+    expect_bounded_box(0, line_height,   line_width, 2 * line_height)
+    expect_bounded_box(0, 2 * line_height, 5,          3 * line_height)
   end
 
   # ....................
@@ -56,17 +56,17 @@ describe Shoes::Swt::LinkSegment do
   it "sets bounds with single line beginning further down" do
     stub_start_and_end_locations([5, line_height], [15, line_height])
 
-    expect_bounded_box(5, line_height, 15, 2*line_height)
+    expect_bounded_box(5, line_height, 15, 2 * line_height)
   end
 
   # ....................
   # ...............xxxxx
   # xxxxx...............
   it "sets bounds with two lines beginning further down" do
-    stub_start_and_end_locations([15, line_height], [5, 2*line_height])
+    stub_start_and_end_locations([15, line_height], [5, 2 * line_height])
 
-    expect_bounded_box(15, line_height,   15, 2*line_height)
-    expect_bounded_box(0,  2*line_height, 5,  3*line_height)
+    expect_bounded_box(15, line_height, 15, 2 * line_height)
+    expect_bounded_box(0,  2 * line_height, 5,  3 * line_height)
   end
 
   # ....................
@@ -74,11 +74,11 @@ describe Shoes::Swt::LinkSegment do
   # xxxxxxxxxxxxxxxxxxxx
   # xxxxx...............
   it "sets bounds with three lines beginning further down" do
-    stub_start_and_end_locations([15, line_height], [5, 3*line_height])
+    stub_start_and_end_locations([15, line_height], [5, 3 * line_height])
 
-    expect_bounded_box(15, line_height,   15,         2*line_height)
-    expect_bounded_box(0,  2*line_height, line_width, 3*line_height)
-    expect_bounded_box(0,  3*line_height, 5,          4*line_height)
+    expect_bounded_box(15, line_height, 15, 2 * line_height)
+    expect_bounded_box(0,  2 * line_height, line_width, 3 * line_height)
+    expect_bounded_box(0,  3 * line_height, 5,          4 * line_height)
   end
 
   def expect_bounded_box(left, top, right, bottom)

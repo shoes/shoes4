@@ -8,7 +8,7 @@ describe Shoes::Swt::Check do
                      :app    => shoes_app, :visible? => true,
                      :left   => 42, :top => 66,
                      :element_left => 42, element_top: 66,
-                     :width  => 100, :width= => true,
+                     :width => 100, :width= => true,
                      :element_width => 100, element_height: 200,
                      :height => 200, :height= => true,
                      blk:    block, contents: []) }

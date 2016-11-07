@@ -3,7 +3,7 @@
 FUROSHIKI_SPEC_DIR = Pathname.new(__FILE__).dirname.expand_path.to_s
 ENV['FUROSHIKI_HOME'] = FUROSHIKI_SPEC_DIR
 
-SHOES_PACKAGE_SPEC_ROOT= File.expand_path('..', __FILE__)
+SHOES_PACKAGE_SPEC_ROOT = File.expand_path('..', __FILE__)
 
 $LOAD_PATH << File.expand_path(SHOES_PACKAGE_SPEC_ROOT)
 $LOAD_PATH << File.expand_path('../../lib', __FILE__)

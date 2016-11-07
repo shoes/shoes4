@@ -37,7 +37,7 @@ class Shoes
 
       if left_c_dot_left_right.between?(0, left_right_dot_left_right)
         left_c_dot_left_c = left_c.inner_product(left_c)
-        left_right_dot_left_right * left_c_dot_left_c <= boldness ** 2 * left_right_dot_left_right + left_c_dot_left_right ** 2
+        left_right_dot_left_right * left_c_dot_left_c <= boldness**2 * left_right_dot_left_right + left_c_dot_left_right**2
       else
         false
       end

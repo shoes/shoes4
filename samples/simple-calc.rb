@@ -48,7 +48,7 @@ Shoes.app height: 250, width: 200, resizable: false do
       %w(7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +).each do |btn|
         button btn, width: 46, height: 46 do
           method = case btn
-                   when /[0-9]/  then 'press_'+btn
+                   when /[0-9]/  then 'press_' + btn
                    when 'Clr'    then 'press_clear'
                    when '='      then 'press_equals'
                    when '+'      then 'press_add'

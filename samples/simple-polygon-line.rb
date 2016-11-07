@@ -9,5 +9,5 @@ Shoes.app width: 300, height: 300 do
     box.click {@flag = true; @box = box}
     box.release {@flag = false}
   end
-  motion {|left, top| @box.move(left-10, top-10) if @flag}
+  motion {|left, top| @box.move(left - 10, top - 10) if @flag}
 end

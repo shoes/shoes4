@@ -212,7 +212,7 @@ module Othello
 
   def draw_player_1(_first_turn = false)
     stack margin: 10 do
-      if GAME.current_player==GAME.p1
+      if GAME.current_player == GAME.p1
         background yellow
         para span("Player 1 (#{GAME.current_player.color}) turn", stroke: black, font: "Trebuchet 20px bold"), margin: 4
       else
@@ -226,7 +226,7 @@ module Othello
 
   def draw_player_2(_first_turn = false)
     stack top: 550, left: 0, margin: 10 do
-      if GAME.current_player==GAME.p2
+      if GAME.current_player == GAME.p2
         background yellow
         para span("Player 2's (#{GAME.current_player.color}) turn", stroke: black, font: "Trebuchet 20px bold"), margin: 4
       else
@@ -259,10 +259,10 @@ module Othello
             if cell != 0
               strokewidth 0
               fill(cell == 1 ? rgb(100, 100, 100) : rgb(155, 155, 155))
-              oval(left+3, top+4, PIECE_WIDTH-10, PIECE_HEIGHT-10)
+              oval(left + 3, top + 4, PIECE_WIDTH - 10, PIECE_HEIGHT - 10)
 
               fill(cell == 1 ? black : white)
-              oval(left+5, top+5, PIECE_WIDTH-10, PIECE_HEIGHT-10)
+              oval(left + 5, top + 5, PIECE_WIDTH - 10, PIECE_HEIGHT - 10)
             end
           end
         end
@@ -272,7 +272,7 @@ module Othello
   end
 
   def left_top_corner_of_piece(a, b)
-    [(a*PIECE_WIDTH+LEFT_OFFSET), (b*PIECE_HEIGHT+TOP_OFFSET)]
+    [(a * PIECE_WIDTH + LEFT_OFFSET), (b * PIECE_HEIGHT + TOP_OFFSET)]
   end
 
   def right_bottom_corner_of_piece(a, b)
@@ -283,7 +283,7 @@ module Othello
     GAME.board.each_with_index { |row_array, row|
       row_array.each_with_index { |_col_array, col|
         left, top = left_top_corner_of_piece(col, row).map { |i| i - 5}
-        right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i -5 }
+        right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i - 5 }
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
       }
     }

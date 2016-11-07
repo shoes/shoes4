@@ -48,7 +48,7 @@ describe Shoes::Swt::Shape do
 
     it "delegates #arc_to" do
       expect(element).to receive(:add_arc).with(25, 45, 50, 20, 0.0, -90.0)
-      subject.arc_to 50, 55, 50, 20, 0, Shoes::PI/2
+      subject.arc_to 50, 55, 50, 20, 0, Shoes::PI / 2
     end
   end
 

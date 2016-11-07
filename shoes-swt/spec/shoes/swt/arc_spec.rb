@@ -69,7 +69,7 @@ describe Shoes::Swt::Arc do
         args = [100, 200, width, height, 180.0, -90.0]
         expect(path).to receive(:add_arc).with(*args)
         sw = 10
-        args = [100+sw/2, 200+sw/2, width-sw, height-sw, 180, -90.0]
+        args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, 180, -90.0]
         expect(gc).to receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end
@@ -94,7 +94,7 @@ describe Shoes::Swt::Arc do
         args = [100, 200, width, height, 180, -90.0]
         expect(gc).to receive(:fill_arc).with(*args)
         sw = 10
-        args = [100+sw/2, 200+sw/2, width-sw, height-sw, 180, -90.0]
+        args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, 180, -90.0]
         expect(gc).to receive(:draw_arc).with(*args)
         subject.paint_control(gc)
       end
