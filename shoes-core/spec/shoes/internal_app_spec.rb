@@ -76,7 +76,7 @@ describe Shoes::InternalApp do
   describe '#clear' do
     context 'when called after the initial input block' do
       let(:input_block) {
-        Proc.new do
+        proc do
           para "CONTENT"
           para "JUST FOR TESTING"
         end
@@ -94,7 +94,7 @@ describe Shoes::InternalApp do
 
     context 'when called in the initial input_block' do
       let(:input_block) {
-        Proc.new do
+        proc do
           para 'Hello there'
           clear do
             para 'see you'
@@ -108,7 +108,7 @@ describe Shoes::InternalApp do
 
       context 'when called inside a slot' do
         let(:input_block) {
-          Proc.new do
+          proc do
             button 'I am here'
             stack do
               button 'Hi there'
@@ -126,7 +126,7 @@ describe Shoes::InternalApp do
 
     context 'when called before a button in an initial input block' do
       let(:input_block) {
-        Proc.new do
+        proc do
           clear
           button 'My Button'
         end

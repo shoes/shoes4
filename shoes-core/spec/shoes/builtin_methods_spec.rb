@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::BuiltinMethods do
-  let(:input_blk) { Proc.new {} }
+  let(:input_blk) { proc {} }
   let(:app) { Shoes::App.new({}, &input_blk) }
   let(:logger) { double("logger") }
   let(:dialog) { double('dialog') }

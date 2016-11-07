@@ -63,7 +63,7 @@ describe Shoes::Link do
 
     context "with a block" do
       let(:callable) { double("callable") }
-      subject { Shoes::Link.new(internal_app, texts, {}, Proc.new { callable.call }) }
+      subject { Shoes::Link.new(internal_app, texts, {}, proc { callable.call }) }
 
       it "sets up for the click" do
         expect(callable).to receive(:call)
@@ -82,7 +82,7 @@ describe Shoes::Link do
 
     context "with click option as Proc" do
       let(:callable) { double("callable", call: nil) }
-      subject { Shoes::Link.new(internal_app, texts, click: Proc.new { callable.call }) }
+      subject { Shoes::Link.new(internal_app, texts, click: proc { callable.call }) }
 
       it "calls the block" do
         expect(callable).to receive(:call)

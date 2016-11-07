@@ -328,22 +328,6 @@ Style/PredicateName:
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 28
-# Cop supports --auto-correct.
-Style/Proc:
-  Exclude:
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/builtin_methods_spec.rb'
-    - 'shoes-core/spec/shoes/common/style_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/internal_app_spec.rb'
-    - 'shoes-core/spec/shoes/link_spec.rb'
-    - 'shoes-core/spec/shoes/shape_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl_app_context.rb'
-    - 'shoes-core/spec/shoes/shared_examples/slot.rb'
-    - 'shoes-core/spec/shoes/slot_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/shared_examples/clickable.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

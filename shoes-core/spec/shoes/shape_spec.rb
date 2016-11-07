@@ -6,7 +6,7 @@ describe Shoes::Shape do
   let(:left) { 0 }
   let(:top) { 0 }
   let(:style) { {left: left, top: top} }
-  let(:draw)  { Proc.new { } }
+  let(:draw)  { proc { } }
 
   subject { Shoes::Shape.new app, parent, style, draw }
 
@@ -20,7 +20,7 @@ describe Shoes::Shape do
 
   describe "octagon" do
     let(:draw) {
-      Proc.new {
+      proc {
         xs = [200, 300, 370, 370, 300, 200, 130, 130]
         ys = [100, 100, 170, 270, 340, 340, 270, 170]
         move_to xs.first, ys.first
@@ -67,7 +67,7 @@ describe Shoes::Shape do
 
   describe "curve" do
     let(:draw) {
-      Proc.new {
+      proc {
         move_to 10, 10
         curve_to 20, 30, 100, 200, 50, 50
       }
@@ -85,7 +85,7 @@ describe Shoes::Shape do
 
   describe "arc" do
     let(:draw) {
-      Proc.new {
+      proc {
         arc_to 10, 10, 100, 100, Shoes::PI, Shoes::TWO_PI
       }
     }
@@ -94,7 +94,7 @@ describe Shoes::Shape do
   end
 
   describe "in_bounds?" do
-    let(:draw) { Proc.new { line_to 100, 100 } }
+    let(:draw) { proc { line_to 100, 100 } }
 
     it "is in bounds" do
       expect(subject.in_bounds?(10, 10)).to be true
@@ -107,7 +107,7 @@ describe Shoes::Shape do
 
   describe "accesses app" do
     let(:draw) {
-      Proc.new {
+      proc {
         background Shoes::COLORS[:red]
         stroke Shoes::COLORS[:blue]
         rect 10, 10, 100, 100

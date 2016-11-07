@@ -43,7 +43,7 @@ describe Shoes::Common::Style do
                          margin: [0,0,0,0], margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0 } }
 
   describe 'reading and writing through #style(hash)' do
-    let(:input_proc) { Proc.new {} }
+    let(:input_proc) { proc {} }
     let(:changed_style) { {key: 'changed value'} }
 
     before :each do
@@ -182,8 +182,8 @@ describe Shoes::Common::Style do
   end
 
   describe 'sets hover and leave from styles' do
-    let(:hover_blk) { Proc.new {} }
-    let(:leave_blk) { Proc.new {} }
+    let(:hover_blk) { proc {} }
+    let(:leave_blk) { proc {} }
 
     subject { StyleTester.new(app, hover: hover_blk, leave: leave_blk) }
 
