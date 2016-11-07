@@ -103,7 +103,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 374
+  Max: 382
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -338,13 +338,6 @@ Style/RegexpLiteral:
     - 'samples/original-manual.rb'
     - 'shoes-core/lib/shoes/ui/picker.rb'
     - 'spec/spec_helper.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/SelfAssignment:
-  Exclude:
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-tetris.rb'
 
 # Offense count: 28
 # Cop supports --auto-correct.

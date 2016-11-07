@@ -260,10 +260,10 @@ class Piece
     blocks = tetromino[:blocks][direction]
     until bit.zero?
       yield x+col, y+row if (blocks & bit) == bit
-      col = col + 1
+      col += 1
       if col == 4
         col = 0
-        row = row + 1
+        row += 1
       end
       bit = bit >> 1
     end
