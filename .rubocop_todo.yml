@@ -364,16 +364,6 @@ Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
-# Offense count: 8
-# Cop supports --auto-correct.
-Style/SpaceAroundKeyword:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/simple-polygon-line.rb'
-    - 'shoes-swt/lib/shoes/swt/key_listener.rb'
-
 # Offense count: 360
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.

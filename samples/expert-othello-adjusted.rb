@@ -152,7 +152,7 @@ module Othello
       c_last = nil
       pieces_in_between = []
       # Find the last piece if there is one.
-      while(valid_location?(c_adjacent))
+      while valid_location?(c_adjacent)
         if board_at(c_adjacent) == opp_piece
           pieces_in_between << c_adjacent.dup
         elsif board_at(c_adjacent) == piece && pieces_in_between.size > 0
