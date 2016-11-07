@@ -26,8 +26,8 @@ Shoes.app width: 420, height: 420, resizable: false do
       10.times do |j|
         strokewidth sw * j
         size = (basesize + step * j) / 3
-        top = (self.height - size) / 2
-        left = (self.width - size) / 2
+        top = (height - size) / 2
+        left = (width - size) / 2
         arc top, left,
             size, size,
             rotation * j,

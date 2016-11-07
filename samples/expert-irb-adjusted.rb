@@ -99,7 +99,7 @@ Shoes.app do
     when :alt_c
       self.clipboard = @cmd
     when :alt_v
-      @cmd += self.clipboard
+      @cmd += clipboard
     end
     @console.replace(*(@str + [@cmd]))
     tmp = @scroll.height - app.height

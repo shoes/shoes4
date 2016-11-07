@@ -67,19 +67,19 @@ class Shoes
       end
 
       def apply_style_from_hover_class
-        hover_style = @app.element_styles[self.hover_class]
+        hover_style = @app.element_styles[hover_class]
         return unless hover_style
 
         @pre_hover_style = hover_style.each_with_object({}) do |(key, _), memo|
-          memo[key] = self.style[key]
+          memo[key] = style[key]
           memo
         end
 
-        self.style(hover_style)
+        style(hover_style)
       end
 
       def apply_style_from_pre_hover
-        self.style(@pre_hover_style) if @pre_hover_style
+        style(@pre_hover_style) if @pre_hover_style
         @pre_hover_style = nil
       end
     end

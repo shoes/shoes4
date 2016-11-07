@@ -15,7 +15,7 @@ Shoes.app width: 420, height: 420, resizable: false do
     strokewidth i
     size = 200 + (step * i)
     shape do
-      arc self.width / 2, self.height / 2,
+      arc width / 2, height / 2,
           size, size,
           rotation * i, rotation * i + Shoes::TWO_PI - Shoes::HALF_PI
     end

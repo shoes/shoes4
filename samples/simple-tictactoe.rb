@@ -96,9 +96,9 @@ class Board
           @game.toggle_player
           tic.player = @game.player_symbol
           tic.check
-          if self.check_if_over
+          if check_if_over
             show_screen(game.player_win)
-          elsif self.full?
+          elsif full?
             show_screen("Cat's Game!")
           end
         end
