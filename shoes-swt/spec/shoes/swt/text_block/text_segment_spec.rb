@@ -31,7 +31,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     }
   }
 
-  let(:dsl) { double("dsl", font: "", size: 16, style:{}) }
+  let(:dsl) { double("dsl", font: "", size: 16, style: {}) }
 
   before(:each) do
     allow(::Swt::TextLayout).to receive(:new)            { layout }

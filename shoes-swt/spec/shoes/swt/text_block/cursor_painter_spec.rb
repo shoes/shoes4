@@ -4,7 +4,7 @@ describe Shoes::Swt::TextBlock::CursorPainter do
   include_context "swt app"
 
   let(:dsl) { double("dsl", app: shoes_app, textcursor: textcursor, textcursor?: true) }
-  let(:textcursor) { double("textcursor", left:0, top: 0, height: 10) }
+  let(:textcursor) { double("textcursor", left: 0, top: 0, height: 10) }
   let(:segment_collection) { double('segment collection',
                                     cursor_height: 12,
                                     relative_text_position: 0)}

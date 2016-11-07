@@ -23,7 +23,7 @@ class PhotoFrame < Shoes
             left: 75, top: 25
       para fg(strong(message), fg_color),
            '  ->',
-           link(strong(other), click:"/#{other.downcase}"),
+           link(strong(other), click: "/#{other.downcase}"),
            left: 35, top: 85
     end
   end

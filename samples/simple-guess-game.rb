@@ -11,7 +11,7 @@ class Answer < Shoes::Widget
 end
 
 Shoes.app width: 200, height: 85 do
-  stack width: 0.5, height:1.0 do
+  stack width: 0.5, height: 1.0 do
     background palegreen
     para '1. apple'
     ans = answer '2. tomato'

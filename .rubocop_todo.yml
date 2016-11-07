@@ -364,18 +364,6 @@ Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
-# Offense count: 13
-# Cop supports --auto-correct.
-Style/SpaceAfterColon:
-  Exclude:
-    - 'samples/simple-guess-game.rb'
-    - 'samples/simple-loogink-cy.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/centered_text_segment_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/cursor_painter_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/fitter_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_collection_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_spec.rb'
-
 # Offense count: 166
 # Cop supports --auto-correct.
 Style/SpaceAfterComma:

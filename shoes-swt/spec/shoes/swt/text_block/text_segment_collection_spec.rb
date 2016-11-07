@@ -5,7 +5,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   let(:first_segment) { create_segment("first", "first") }
   let(:second_segment) { create_segment("second", "rest") }
-  let(:dsl) { double("dsl", font: "", size: 16, style:{},
+  let(:dsl) { double("dsl", font: "", size: 16, style: {},
                             text_styles: {(0..-1) => ["whatever"]}) }
 
   let(:gc) { double("gc") }
@@ -42,7 +42,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling" do
-      styles = [[0..1, [double("segment", style:{stroke: :blue})]]]
+      styles = [[0..1, [double("segment", style: {stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -158,7 +158,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling in first segment" do
-      styles = [[0..2, [double("segment", style:{stroke: :blue})]]]
+      styles = [[0..2, [double("segment", style: {stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -167,7 +167,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling in second segment" do
-      styles = [[5..7, [double("segment", style:{stroke: :blue})]]]
+      styles = [[5..7, [double("segment", style: {stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
@@ -176,7 +176,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     end
 
     it "applies segment styling in both segments" do
-      styles = [[2..7, [double("segment", style:{stroke: :blue})]]]
+      styles = [[2..7, [double("segment", style: {stroke: :blue})]]]
       subject.style_segment_ranges(styles)
 
       expected_style = style_with(stroke: :blue, fg: :blue)
