@@ -5,6 +5,6 @@ $LOAD_PATH << lib_directory
 require 'shoes/ui/picker'
 
 # On Windows getting odd paths with trailing double-quote
-bin_dir = ARGV[0].gsub('"', '')
+bin_dir = ARGV[0].delete('"')
 
 Shoes::UI::Picker.new.run(bin_dir)

@@ -157,8 +157,8 @@ class Shoes
         # just one color for now
         background_color = Shoes.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
         ::Shoes::DSL.define_shoes_color(:system_background, background_color.red,
-                                                            background_color.green,
-                                                            background_color.blue)
+                                        background_color.green,
+                                        background_color.blue)
       end
 
       private

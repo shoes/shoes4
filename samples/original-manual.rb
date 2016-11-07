@@ -32,7 +32,7 @@ module Shoes::Manual
     dewikify(str, intro)
   end
 
-  def dewikify_p(ele, str, *args)
+  def dewikify_p(ele, str, *_args)
     str = str.gsub(/\n+\s*/, " ").dump.
       gsub(/`(.+?)`/m, '", code("\1"), "').gsub(/\[\[BR\]\]/i, "\n").
       gsub(/\^(.+?)\^/m, '\1').
@@ -190,10 +190,10 @@ module Shoes::Manual
         stack margin_left: 20 do
           flow do
             para "▸ ", font: case RUBY_PLATFORM
-              when /mingw/  then "MS UI Gothic"
-              when /darwin/ then "AppleGothic, Arial"
-              else "Arial"
-              end
+                             when /mingw/  then "MS UI Gothic"
+                             when /darwin/ then "AppleGothic, Arial"
+                             else "Arial"
+                             end
             para k
           end
           subs.uniq.sort.each do |s|
@@ -257,7 +257,7 @@ module Shoes::Manual
           @results.clear do
             termd = terms.text.downcase
             #found = termd.empty? ? [] : manual_search(termd)
-            found = (termd.empty? or termd[0] == 'z' or termd[0] == 'y') ? [] : manual_search(termd)
+            found = (termd.empty? || (termd[0] == 'z') || (termd[0] == 'y')) ? [] : manual_search(termd)
             para "#{found.length} matches", align: "center", margin_bottom: 0
             found.each do |typ, head|
               flow margin: 4 do
@@ -333,7 +333,7 @@ module Shoes::Manual
         instance_eval(&dewikify_hi(meth_h['description'], terms, true))
       end
       meth_h['methods'].each do |mname, expl|
-        if meth_a.nil? or meth_a == mname
+        if meth_a.nil? || (meth_a == mname)
           sig, val = mname.split("»", 2)
           stack(margin_top: 8, margin_bottom: 8) {
             background "#333".."#666", curve: 3, angle: 90

@@ -100,7 +100,7 @@ class Shoes
 
     def_delegators :gui, *delegated_to_gui
 
-    alias_method :start_as_fullscreen?, :start_as_fullscreen
+    alias start_as_fullscreen? start_as_fullscreen
 
     # Necessary for click/mouse positioning checks
     def hidden?

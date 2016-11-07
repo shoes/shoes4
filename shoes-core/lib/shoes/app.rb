@@ -66,7 +66,7 @@ class Shoes
       @__app__.quit
     end
 
-    alias_method :close, :quit
+    alias close quit
 
     def parent
       @__app__.current_slot.parent
@@ -80,7 +80,7 @@ class Shoes
 
     def_delegators :@__app__, *delegated_to_internal_app
 
-    alias_method :fullscreen?, :fullscreen
+    alias fullscreen? fullscreen
 
     def eval_with_additional_context(context, &blk)
       @__additional_context__ = context

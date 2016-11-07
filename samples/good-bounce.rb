@@ -21,8 +21,8 @@ Shoes.app width: 300, height: 300 do
       x += xspeed * xdir
       y += yspeed * ydir
 
-      xdir *= -1 if x > 300 - size[0] or x < 0
-      ydir *= -1 if y > 300 - size[1] or y < 0
+      xdir *= -1 if x > 300 - size[0] || x < 0
+      ydir *= -1 if y > 300 - size[1] || y < 0
 
       img.move x.to_i, y.to_i
     end

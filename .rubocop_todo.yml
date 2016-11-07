@@ -17,30 +17,11 @@ Lint/AssignmentInCondition:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/slot.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AlignWith, SupportedStyles.
-# SupportedStyles: either, start_of_block, start_of_line
-Lint/BlockAlignment:
-  Exclude:
-    - 'samples/good-reminder.rb'
-
 # Offense count: 2
 Lint/EmptyWhen:
   Exclude:
     - 'samples/expert-irb-adjusted.rb'
     - 'samples/expert-irb.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: AlignWith, SupportedStyles, AutoCorrect.
-# SupportedStyles: keyword, variable, start_of_line
-Lint/EndAlignment:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-calc.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
 
 # Offense count: 14
 Lint/Eval:
@@ -77,32 +58,11 @@ Lint/RescueException:
     - 'samples/expert-funnies.rb'
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/UnifiedInteger:
-  Exclude:
-    - 'shoes-core/lib/shoes/color.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Lint/UnneededSplatExpansion:
   Exclude:
     - 'shoes-core/spec/shoes/shared_examples/dsl/text_elements.rb'
-
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-tankspank.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/lib/shoes/arc.rb'
-    - 'shoes-core/spec/shoes/helpers/fake_absolute_element.rb'
-    - 'shoes-core/spec/shoes/helpers/fake_element.rb'
-    - 'shoes-swt/spec/shoes/swt/spec_helper.rb'
 
 # Offense count: 2
 # Configuration parameters: ContextCreatingMethods.
@@ -154,23 +114,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 15
 
-# Offense count: 10
-# Cop supports --auto-correct.
-Performance/RangeInclude:
-  Exclude:
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-pong.rb'
-    - 'shoes-core/lib/shoes/shape.rb'
-    - 'shoes-swt/lib/shoes/swt/link_segment.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Performance/StringReplacement:
-  Exclude:
-    - 'shoes-core/bin/shoes-picker'
-    - 'tasks/changelog.rb'
-
 # Offense count: 13
 Style/AccessorMethodName:
   Exclude:
@@ -180,63 +123,6 @@ Style/AccessorMethodName:
     - 'shoes-swt/lib/shoes/swt/common/resource.rb'
     - 'shoes-swt/lib/shoes/swt/text_block.rb'
     - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
-
-# Offense count: 15
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'shoes-core/lib/shoes/app.rb'
-    - 'shoes-core/lib/shoes/builtin_methods.rb'
-    - 'shoes-core/lib/shoes/color/dsl_helpers.rb'
-    - 'shoes-core/lib/shoes/common/visibility.rb'
-    - 'shoes-core/lib/shoes/internal_app.rb'
-    - 'shoes-core/lib/shoes/line.rb'
-    - 'shoes-core/lib/shoes/list_box.rb'
-    - 'shoes-swt/lib/shoes/swt/shape.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Style/AlignHash:
-  Exclude:
-    - 'shoes-core/spec/shoes/link_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/common/painter_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/shared_examples/swt_app_context.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/painter_spec.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: with_first_parameter, with_fixed_indentation
-Style/AlignParameters:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/app.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block_spec.rb'
-
-# Offense count: 52
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-pong.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/expert-tankspank.rb'
-    - 'samples/good-bounce.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-bounce.rb'
-    - 'samples/simple-calc.rb'
-    - 'samples/simple-draw.rb'
-    - 'samples/simple-menu.rb'
-    - 'samples/simple-tictactoe.rb'
 
 # Offense count: 6
 Style/AsciiComments:

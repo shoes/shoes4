@@ -103,7 +103,7 @@ class Shoes
         end
 
         def in_bounds?(x, y)
-          (@start_x..@end_x).include?(x) && (@start_y..@end_y).include?(y)
+          (@start_x..@end_x).cover?(x) && (@start_y..@end_y).cover?(y)
         end
       end
     end

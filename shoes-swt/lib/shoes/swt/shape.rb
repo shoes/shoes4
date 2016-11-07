@@ -61,10 +61,10 @@ class Shoes
         native_top
       end
 
-      alias_method :absolute_left, :left
-      alias_method :absolute_top, :top
-      alias_method :element_left, :left
-      alias_method :element_top, :top
+      alias absolute_left left
+      alias absolute_top top
+      alias element_left left
+      alias element_top top
 
       def width
         native_width
@@ -74,8 +74,8 @@ class Shoes
         native_height
       end
 
-      alias_method :element_width, :width
-      alias_method :element_height, :height
+      alias element_width width
+      alias element_height height
 
       def transform
         @transform ||= ::Swt::Transform.new(::Swt.display)

@@ -5,7 +5,7 @@ describe Shoes::Link do
   let(:user_facing_app) { double("user facing app") }
   let(:element_styles) { Hash.new }
   let(:app) { double("app", gui: gui, style: {}, element_styles: element_styles,
-                     warn: true, add_mouse_hover_control: nil) }
+                            warn: true, add_mouse_hover_control: nil) }
   let(:parent) { double("parent") }
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }

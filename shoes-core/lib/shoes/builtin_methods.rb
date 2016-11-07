@@ -24,7 +24,7 @@ class Shoes
       end
     end
 
-    alias_method :confirm?, :confirm
+    alias confirm? confirm
 
     def ask_open_file
       Shoes::Dialog.new.dialog_chooser 'Open File...'

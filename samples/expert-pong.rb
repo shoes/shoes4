@@ -17,17 +17,17 @@ Shoes.app width: 400, height: 400, resizable: false do
   bounce        = 1.2
 
   # set up the playing board
-  nostroke and background white
+  nostroke && background(white)
   @ball = oval 0, 0, ball_diameter, fill: "#9B7"
   @you, @comp = [app.height-4, 0].map {|y| rect 0, y, paddle_size, 4, curve: 2}
 
   # animates at 40 frames per second
   @anim = animate 40 do
     # check for game over
-    if @ball.top + ball_diameter < 0 or @ball.top > app.height
+    if @ball.top + ball_diameter < 0 || @ball.top > app.height
       para strong("GAME OVER", size: 32), "\n",
            @ball.top < 0 ? "You win!" : "Computer wins", top: 140, align: 'center'
-      @ball.hide and @anim.stop
+      @ball.hide && @anim.stop
     end
 
     # move the @you paddle, following the mouse
@@ -42,18 +42,18 @@ Shoes.app width: 400, height: 400, resizable: false do
       end
 
     # if the @you paddle hits the ball
-    if ny + ball_diameter > app.height and vy > 0 and
-        (0..paddle_size).include? nx + (ball_diameter / 2) - @you.left
+    if ny + ball_diameter > app.height && vy > 0 &&
+        (0..paddle_size).cover?(nx + (ball_diameter / 2) - @you.left)
       vx, vy = (nx - @you.left - (paddle_size / 2)) * 0.25, -vy * bounce
       ny = app.height - ball_diameter
     end
 
     # if the @comp paddle hits the ball
-    if ny < 0 and vy < 0 and
-        (0..paddle_size).include? nx + (ball_diameter / 2) - @comp.left
+    if ny < 0 && vy < 0 &&
+        (0..paddle_size).cover?(nx + (ball_diameter / 2) - @comp.left)
       vx, vy = (nx - @comp.left - (paddle_size / 2)) * 0.25, -vy * bounce
       ny = 0
-    elsif nx + ball_diameter > app.width or nx < 0
+    elsif nx + ball_diameter > app.width || nx < 0
       vx = -vx
     end
 

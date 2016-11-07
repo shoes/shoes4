@@ -16,8 +16,8 @@ Shoes.app do
     x += xspeed * xdir
     y += yspeed * ydir
 
-    xdir *= -1 if x > self.width - size[0] or x < 0
-    ydir *= -1 if y > self.height - size[1] or y < 0
+    xdir *= -1 if x > self.width - size[0] || x < 0
+    ydir *= -1 if y > self.height - size[1] || y < 0
 
     @icon.move x.to_i, y.to_i
   end

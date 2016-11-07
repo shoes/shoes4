@@ -68,7 +68,7 @@ class Shoes
         Shoes::Color.new(level, level, level, alpha)
       end
 
-      alias_method :grey, :gray
+      alias grey gray
 
       private
 

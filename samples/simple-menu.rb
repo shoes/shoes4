@@ -25,7 +25,7 @@ class MenuPanel < Shoes::Widget
     if self.width < 170
       a = animate 30 do
         @@boxes.each do |b|
-          b.width -= 5 if b != self and b.width > 140
+          b.width -= 5 if (b != self) && b.width > 140
         end
         self.width += 5
         a.stop if self.width >= 170

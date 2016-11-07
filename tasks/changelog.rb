@@ -15,7 +15,7 @@ class Changelog
     changes = changelog_header(commit_range)
     changes << categorize_commits(categories, commit_range)
     changes << contributors(commit_range) if changes.any?
-    changes.flatten.compact.join("\n\n").gsub("\r",'')
+    changes.flatten.compact.join("\n\n").delete("\r")
   end
 
   private

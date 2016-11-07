@@ -11,7 +11,7 @@ class Shoes
         style[:hidden]
       end
 
-      alias_method :hidden, :hidden?
+      alias hidden hidden?
 
       def visible?
         !hidden?

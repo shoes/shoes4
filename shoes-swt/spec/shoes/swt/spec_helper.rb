@@ -29,7 +29,7 @@ end
 # as we do not create real apps most of the time there are no redraws and we
 # we don't really want that during test execution either way as it adds stuff to
 # methods that might break
-def with_redraws(&blk)
+def with_redraws
   allow(Shoes::Swt::RedrawingAspect).to receive(:new).and_call_original
   aspect = Shoes::Swt::RedrawingAspect.new swt_app, double
   begin

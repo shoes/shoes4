@@ -30,7 +30,7 @@ class Calc
   end
 
   def press_equals
-    @number = @previous.send(@op, @number.to_i) unless (@previous.nil? or @op.nil? or @number.nil?)
+    @number = @previous.send(@op, @number.to_i) unless (@previous.nil? || @op.nil? || @number.nil?)
     @op = nil
   end
 end
@@ -49,14 +49,14 @@ Shoes.app height: 250, width: 200, resizable: false do
       %w(7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +).each do |btn|
         button btn, width: 46, height: 46 do
           method = case btn
-          when /[0-9]/  then 'press_'+btn
-          when 'Clr'    then 'press_clear'
-          when '='      then 'press_equals'
-          when '+'      then 'press_add'
-          when '-'      then 'press_sub'
-          when '*'      then 'press_times'
-          when '/'      then 'press_div'
-          end
+                   when /[0-9]/  then 'press_'+btn
+                   when 'Clr'    then 'press_clear'
+                   when '='      then 'press_equals'
+                   when '+'      then 'press_add'
+                   when '-'      then 'press_sub'
+                   when '*'      then 'press_times'
+                   when '/'      then 'press_div'
+                   end
 
           number.send(method)
           number_field.replace strong(number)

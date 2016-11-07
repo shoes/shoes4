@@ -85,7 +85,7 @@ class Field
 
   def render_bomb(x, y)
     render_cell(x, y)
-    if (game_over? or all_found?) then # draw bomb
+    if (game_over? || all_found?) then # draw bomb
       if self[x, y].exploded then
         render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5))
       end
@@ -141,7 +141,7 @@ class Field
     return unless self[x, y].is_a?(Field::OpenCell)
     if flags_around(x, y) >= self[x, y].number then
       (-1..1).each do |v|
-        (-1..1).each { |h| click!(x+h, y+v) unless (v==0 && h==0) or has_flag?(x+h, y+v) }
+        (-1..1).each { |h| click!(x+h, y+v) unless (v==0 && h==0) || has_flag?(x+h, y+v) }
       end
     end
   end
@@ -149,7 +149,7 @@ class Field
   private
 
   def cell_exists?(x, y)
-    ((0...@w).include? x) && ((0...@h).include? y)
+    ((0...@w).cover? x) && ((0...@h).cover? y)
   end
 
   def has_flag?(x, y)
@@ -168,7 +168,7 @@ class Field
   end
 
   def open(x, y)
-    self[x, y] = OpenCell.new(bombs_around(x, y)) unless (self[x, y].is_a? OpenCell) or has_flag?(x, y)
+    self[x, y] = OpenCell.new(bombs_around(x, y)) unless (self[x, y].is_a? OpenCell) || has_flag?(x, y)
   end
 
   def neighbors
