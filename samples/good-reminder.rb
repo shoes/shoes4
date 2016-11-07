@@ -33,7 +33,7 @@ Shoes.app title: "A Gentle Reminder",
   def data_path
     user_data_directory = if RUBY_PLATFORM =~ /win32/
                             if ENV['USERPROFILE']
-                              if (File.join(File.expand_path(ENV['USERPROFILE']), "Application Data"))
+                              if File.join(File.expand_path(ENV['USERPROFILE']), "Application Data")
                                 File.join File.expand_path(ENV['USERPROFILE']), "Application Data", "GentleReminder"
                               else
                                 File.join File.expand_path(ENV['USERPROFILE']), "GentleReminder"

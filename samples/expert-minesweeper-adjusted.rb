@@ -89,7 +89,7 @@ class Field
 
   def render_bomb(x, y)
     render_cell(x, y)
-    if (game_over? || all_found?) # draw bomb
+    if game_over? || all_found? # draw bomb
       render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
       @app.nostroke
       @app.fill @app.rgb(0, 0, 0, 0.8)

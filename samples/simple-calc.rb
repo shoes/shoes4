@@ -29,7 +29,7 @@ class Calc
   end
 
   def press_equals
-    @number = @previous.send(@op, @number.to_i) unless (@previous.nil? || @op.nil? || @number.nil?)
+    @number = @previous.send(@op, @number.to_i) unless @previous.nil? || @op.nil? || @number.nil?
     @op = nil
   end
 end
