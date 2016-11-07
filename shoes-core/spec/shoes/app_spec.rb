@@ -117,7 +117,7 @@ describe Shoes::App do
     default_styles = Shoes::Common::Style::DEFAULT_STYLES
 
     default_styles.each do |key, value|
-      describe "#{key}" do
+      describe key.to_s do
         it "defaults to #{value}" do
           expect(subject.style[key]).to eq(value)
         end

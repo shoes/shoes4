@@ -371,15 +371,6 @@ Style/SpaceBeforeFirstArg:
   Exclude:
     - 'samples/class-book-adjusted.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/UnneededInterpolation:
-  Exclude:
-    - 'samples/simple-anim-text.rb'
-    - 'samples/simple-timer.rb'
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/style.rb'
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
