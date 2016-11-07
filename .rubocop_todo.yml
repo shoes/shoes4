@@ -320,11 +320,6 @@ Style/NilComparison:
   Exclude:
     - 'shoes-core/spec/shoes/dimensions_spec.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/NumericLiterals:
-  MinDigits: 8
-
 # Offense count: 41
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, EnforcedStyle, SupportedStyles.
