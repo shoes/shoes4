@@ -12,7 +12,7 @@ class Shoes
 
     STYLES = { fill: Shoes::COLORS[:black] }
 
-    def create_dimensions()
+    def create_dimensions
       @dimensions = AbsoluteDimensions.new @style
     end
 

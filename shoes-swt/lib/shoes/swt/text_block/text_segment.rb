@@ -59,7 +59,7 @@ class Shoes
           layout.alignment = case style[:align]
                              when 'center' then ::Swt::SWT::CENTER
                              when 'right' then  ::Swt::SWT::RIGHT
-                             else           ::Swt::SWT::LEFT
+                             else ::Swt::SWT::LEFT
                              end
 
           set_style(TextStyleFactory.apply_styles(default_text_styles, style))

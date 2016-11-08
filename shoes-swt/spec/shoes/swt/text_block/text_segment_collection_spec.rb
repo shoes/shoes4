@@ -154,7 +154,7 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
     it "spans both segments" do
       result = subject.segment_ranges(2..7)
       expect(result).to eql([[first_segment, 2..5],
-                             [second_segment,  0..2]])
+                             [second_segment, 0..2]])
     end
 
     it "applies segment styling in first segment" do

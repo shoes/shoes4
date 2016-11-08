@@ -8,7 +8,7 @@ describe Shoes::UI::Picker do
   let(:output) { StringIO.new }
   let(:input)  { StringIO.new }
 
-  subject  { Shoes::UI::Picker.new(input, output) }
+  subject { Shoes::UI::Picker.new(input, output) }
 
   it "selects single backend generator" do
     allow(Gem).to receive(:find_files) { [swt_backend] }

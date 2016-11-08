@@ -20,7 +20,7 @@ describe Shoes::Border do
   let(:width) { 100 }
   let(:height) { 200 }
 
-  let(:blue)  { Shoes::COLORS[:blue] }
+  let(:blue) { Shoes::COLORS[:blue] }
 
   subject { Shoes::Border.new(app, parent, blue, opts) }
 

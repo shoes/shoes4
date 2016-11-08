@@ -25,7 +25,7 @@ DY     = HEIGHT / NY    # pixel height of a single tetris block
 FPS    = 60             # game animation frame rate (fps)
 
 PACE   = { start: 0.5, step: 0.005, min: 0.1 } # how long before a piece drops by 1 row (seconds)
-SCORE  = { line: 100, multiplier: 2 }             # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
+SCORE  = { line: 100, multiplier: 2 }          # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
 
 #==================================================================================================
 # The 7 Tetromino Types
@@ -58,14 +58,14 @@ Z = { blocks: {up: 0x0C60, right: 0x4C80, down: 0xC600, left: 0x2640}, color: '#
 #==================================================================================================
 
 class Tetris
-  attr :dt,       # time since the current active piece last dropped a row
-       :score,    # the current score
-       :lost,     # bool to indicate when the game is lost
-       :pace,     # current game pace - how long until the current piece drops a single row
-       :blocks,   # 2 dimensional array (NX*NY) represeting the tetris court - either empty block or occupied by a piece
-       :actions,  # queue of user inputs collected by the game loop
-       :bag,      # a collection of random pieces to be used
-       :current   # the current active piece
+  attr_reader :dt,       # time since the current active piece last dropped a row
+              :score,    # the current score
+              :lost,     # bool to indicate when the game is lost
+              :pace,     # current game pace - how long until the current piece drops a single row
+              :blocks,   # 2 dimensional array (NX*NY) represeting the tetris court - either empty block or occupied by a piece
+              :actions,  # queue of user inputs collected by the game loop
+              :bag,      # a collection of random pieces to be used
+              :current   # the current active piece
 
   #----------------------------------------------------------------------------
 
@@ -73,7 +73,7 @@ class Tetris
     @dt      = 0
     @score   = 0
     @pace    = PACE[:start]
-    @blocks  = Array.new(NX) { Array.new(NY) }   # awkward way to initialize an already sized 2 dimensional array
+    @blocks  = Array.new(NX) { Array.new(NY) } # awkward way to initialize an already sized 2 dimensional array
     @actions = []
     @bag     = new_bag
     @current = random_piece
@@ -156,7 +156,7 @@ class Tetris
   end
 
   def reward_lines(lines)
-    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1))   # e.g. 1: 100, 2: 200, 3: 400, 4: 800
+    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1)) # e.g. 1: 100, 2: 200, 3: 400, 4: 800
     @pace  = [pace - lines*PACE[:step], PACE[:min]].max
   end
 
@@ -207,9 +207,7 @@ class Tetris
   def each_occupied_block
     NY.times do |y|
       NX.times do |x|
-        unless blocks[x][y].nil?
-          yield x, y, blocks[x][y][:color]
-        end
+        yield x, y, blocks[x][y][:color] unless blocks[x][y].nil?
       end
     end
   end
@@ -220,16 +218,16 @@ end # class Tetris
 #==================================================================================================
 
 class Piece
-  attr :tetromino,  # the tetromino type
-       :direction,  # the rotation direction (:up, :down, :left, :right)
-       :x, :y       # the (x,y) position on the board
+  attr_reader :tetromino,  # the tetromino type
+              :direction,  # the rotation direction (:up, :down, :left, :right)
+              :x, :y       # the (x,y) position on the board
 
   #----------------------------------------------------------------------------
 
   def initialize(tetromino, x = nil, y = nil, direction = nil)
     @tetromino = tetromino
     @direction = direction || :up
-    @x         = x         || rand(NX - tetromino[:size])   # default to a random horizontal position (that fits)
+    @x         = x         || rand(NX - tetromino[:size]) # default to a random horizontal position (that fits)
     @y         = y         || 0
   end
 
@@ -255,15 +253,13 @@ class Piece
 
   #----------------------------------------------------------------------------
 
-  def each_occupied_block           # a bit complex, for more details see - http://codeincomplete.com/posts/2011/10/10/javascript_tetris/
+  def each_occupied_block # a bit complex, for more details see - http://codeincomplete.com/posts/2011/10/10/javascript_tetris/
     bit = 0b1000000000000000
     row = 0
     col = 0
     blocks = tetromino[:blocks][direction]
     until bit.zero?
-      if (blocks & bit) == bit
-        yield x+col, y+row
-      end
+      yield x+col, y+row if (blocks & bit) == bit
       col = col + 1
       if col == 4
         col = 0

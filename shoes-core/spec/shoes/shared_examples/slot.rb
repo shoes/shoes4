@@ -124,7 +124,7 @@ shared_examples_for 'positioning through :_position' do
 
   it 'is resilient to exceptions during positioning' do
     allow(element).to receive(:contents_alignment).and_raise("O_o")
-    allow(subject).to receive(:puts)  # Quiet, you
+    allow(subject).to receive(:puts) # Quiet, you
     add_child_and_align
   end
 

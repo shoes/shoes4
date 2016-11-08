@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency "shoes-core", Shoes::Swt::VERSION
   s.add_dependency "shoes-package", Shoes::Swt::VERSION
 
-  s.executables   = ['shoes-swt']
+  s.executables = ['shoes-swt']
 end

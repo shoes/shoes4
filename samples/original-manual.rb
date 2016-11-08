@@ -15,32 +15,30 @@ module Shoes::Manual
 
   def self.path
     path = "#{DIR}/static/manual-#{Shoes.language}.txt"
-    unless File.exist? path
-      path = "#{DIR}/static/manual-en.txt"
-    end
+    path = "#{DIR}/static/manual-en.txt" unless File.exist? path
     path
   end
 
   def dewikify_hi(str, terms, intro = false)
     if terms
       code = []
-      str = str.
-        gsub(CODE_RE) { |x| code << x; "CODE#[#{code.length-1}]" }.
-        gsub(/#{Regexp::quote(terms)}/i, '@\0@').
-        gsub(/CODE#\[(\d+)\]/) { code[$1.to_i] }
+      str = str
+        .gsub(CODE_RE) { |x| code << x; "CODE#[#{code.length-1}]" }
+        .gsub(/#{Regexp.quote(terms)}/i, '@\0@')
+        .gsub(/CODE#\[(\d+)\]/) { code[$1.to_i] }
     end
     dewikify(str, intro)
   end
 
   def dewikify_p(ele, str, *_args)
-    str = str.gsub(/\n+\s*/, " ").dump.
-      gsub(/`(.+?)`/m, '", code("\1"), "').gsub(/\[\[BR\]\]/i, "\n").
-      gsub(/\^(.+?)\^/m, '\1').
-      gsub(/@(.+?)@/m, '", strong("\1", :fill => yellow), "').
-      gsub(/'''(.+?)'''/m, '", strong("\1"), "').gsub(/''(.+?)''/m, '", em("\1"), "').
-      gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "').
-      gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "').
-      gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{DIR}/static/\3") }; #{ele}("')
+    str = str.gsub(/\n+\s*/, " ").dump
+      .gsub(/`(.+?)`/m, '", code("\1"), "').gsub(/\[\[BR\]\]/i, "\n")
+      .gsub(/\^(.+?)\^/m, '\1')
+      .gsub(/@(.+?)@/m, '", strong("\1", :fill => yellow), "')
+      .gsub(/'''(.+?)'''/m, '", strong("\1"), "').gsub(/''(.+?)''/m, '", em("\1"), "')
+      .gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "')
+      .gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "')
+      .gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{DIR}/static/\3") }; #{ele}("')
     #debug str if str =~ /The list of special keys/
     a = str.split(', ", ", ')
     if a.size == 1
@@ -70,9 +68,7 @@ module Shoes::Manual
 
   def wiki_tokens(str, intro = false)
     paras = str.split(PARA_RE).reject(&:empty?)
-    if intro
-      yield :intro, paras.shift
-    end
+    yield :intro, paras.shift if intro
     paras.map do |ps|
       if ps =~ CODE_RE
         yield :code, $1
@@ -104,7 +100,8 @@ module Shoes::Manual
   def dewikify(str, intro = false)
     proc do
       wiki_tokens(str, intro) do |sym, text|
-        case sym when :intro
+        case sym
+        when :intro
           dewikify_p :para, text, INTRO_STYLE
         when :code
           dewikify_code(text)

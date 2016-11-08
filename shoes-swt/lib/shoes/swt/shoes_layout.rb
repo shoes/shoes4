@@ -29,7 +29,7 @@ class Shoes
       end
 
       def set_real_size(dsl_app, real_app, maximum_height)
-        size  = real_app.compute_trim 0, 0, dsl_app.width, maximum_height
+        size = real_app.compute_trim 0, 0, dsl_app.width, maximum_height
         real_app.set_size(size.width, size.height)
       end
 

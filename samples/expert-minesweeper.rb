@@ -86,9 +86,7 @@ class Field
   def render_bomb(x, y)
     render_cell(x, y)
     if (game_over? || all_found?) then # draw bomb
-      if self[x, y].exploded then
-        render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5))
-      end
+      render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
       @app.nostroke
       @app.fill @app.rgb(0, 0, 0, 0.8)
       @app.oval(x*cell_size+3, y*cell_size+3, 13)
@@ -119,9 +117,9 @@ class Field
       0.upto @w-1 do |x|
         @app.nostroke
         case self[x, y]
-          when EmptyCell then render_cell(x, y)
-          when Bomb then render_bomb(x, y)
-          when OpenCell then render_number(x, y)
+        when EmptyCell then render_cell(x, y)
+        when Bomb then render_bomb(x, y)
+        when OpenCell then render_number(x, y)
         end
         render_flag(x, y) if has_flag?(x, y) && !(game_over? && bomb?(x, y))
       end
@@ -238,7 +236,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
       end
       stack do @status = para stroke: white end
       @field.paint
-      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white,  font: "11px"
+      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white, font: "11px"
     end
   end
 

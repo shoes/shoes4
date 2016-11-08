@@ -4,9 +4,7 @@ class Shoes
       def initialize(dsl, app, blk)
         @blk = blk
         task = proc do
-          unless app.real.disposed?
-            eval_block
-          end
+          eval_block unless app.real.disposed?
         end
         ::Swt.display.timer_exec(dsl.n, task)
       end

@@ -82,8 +82,8 @@ describe Shoes::App do
       it 'initializes a flow with the right parameters' do
         expect(Shoes::Flow).to receive(:new).with(anything, anything,
                                                   width:  opts[:width],
-                                                  height: opts[:height]).
-                                                  and_call_original
+                                                  height: opts[:height])
+                                                  .and_call_original
         subject
       end
     end

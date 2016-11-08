@@ -8,7 +8,7 @@ describe Shoes::Swt::ClickListener do
   let(:click_block)   { double("click block", call: nil) }
   let(:release_block) { double("release block", call: nil) }
 
-  subject   { Shoes::Swt::ClickListener.new(swt_app) }
+  subject { Shoes::Swt::ClickListener.new(swt_app) }
 
   before do
     allow(swt_app).to receive(:add_listener)

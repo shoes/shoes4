@@ -47,9 +47,7 @@ class Cell
       @world.live_cells.push(self)
     else
       cell_index = @world.live_cells.index(self)
-      if cell_index
-        @world.live_cells.delete_at(cell_index)
-      end
+      @world.live_cells.delete_at(cell_index) if cell_index
     end
   end
 
@@ -60,13 +58,9 @@ class Cell
   def iterate
     live_cells_count = @neighbours.count(&:live?)
     if live?
-      if live_cells_count < 2 || live_cells_count > 3
-        die!
-      end
+      die! if live_cells_count < 2 || live_cells_count > 3
     else
-      if live_cells_count == 3
-        alive!
-      end
+      alive! if live_cells_count == 3
     end
   end
 end
@@ -130,37 +124,21 @@ class World
     right_col = x + 1
     bottom_row = y + 1
 
-    if top_row >= 0 && left_col >= 0
-      result << @board[y-1][x-1]
-    end
+    result << @board[y-1][x-1] if top_row >= 0 && left_col >= 0
 
-    if top_row >= 0
-      result << @board[y-1][x]
-    end
+    result << @board[y-1][x] if top_row >= 0
 
-    if top_row >= 0 && right_col < @width
-      result << @board[y-1][x+1]
-    end
+    result << @board[y-1][x+1] if top_row >= 0 && right_col < @width
 
-    if left_col >= 0
-      result << @board[y][x-1]
-    end
+    result << @board[y][x-1] if left_col >= 0
 
-    if right_col < @width
-      result << @board[y][x+1]
-    end
+    result << @board[y][x+1] if right_col < @width
 
-    if bottom_row < @height && left_col >= 0
-      result << @board[y+1][x-1]
-    end
+    result << @board[y+1][x-1] if bottom_row < @height && left_col >= 0
 
-    if bottom_row < @height
-      result << @board[y+1][x]
-    end
+    result << @board[y+1][x] if bottom_row < @height
 
-    if bottom_row < @height && right_col < @width
-      result << @board[y+1][x+1]
-    end
+    result << @board[y+1][x+1] if bottom_row < @height && right_col < @width
 
     result.compact
   end
@@ -190,9 +168,7 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
   stack(margin: 10) do
     @new_world = World.new(40, 40, self)
     animate(10) do
-      if @running
-        @new_world.tick
-      end
+      @new_world.tick if @running
     end
   end
 
@@ -220,7 +196,7 @@ Shoes.app(title: "The Game of Life", width: 800, height: 620, resizable: false) 
   end
 
   flow(displace_left: 650) do
-    @run_stop_button = button('Run',  displace_top: 0, width: 100) { toggle_run_stop }
+    @run_stop_button = button('Run', displace_top: 0, width: 100) { toggle_run_stop }
   end
 
   stack(displace_left: 650) do

@@ -103,7 +103,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 368
+  Max: 369
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -130,12 +130,6 @@ Style/AsciiComments:
     - 'shoes-core/lib/shoes/common/positioning.rb'
     - 'shoes-package/lib/shoes/package/configuration.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Attr:
-  Exclude:
-    - 'samples/expert-tetris.rb'
-
 # Offense count: 166
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
@@ -151,22 +145,6 @@ Style/BlockDelimiters:
 Style/BlockEndNewline:
   Enabled: false
 
-# Offense count: 24
-# Cop supports --auto-correct.
-# Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep, IndentationWidth.
-# SupportedStyles: case, end
-Style/CaseIndentation:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-calc.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
-
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact
@@ -181,21 +159,6 @@ Style/ClassVars:
   Exclude:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/ClosingParenthesisIndentation:
-  Exclude:
-    - 'samples/good-reminder.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/ColonMethodCall:
-  Exclude:
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/good-reminder.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -218,33 +181,9 @@ Style/ConstantName:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/DefWithParentheses:
-  Exclude:
-    - 'shoes-core/lib/shoes/shape.rb'
-    - 'shoes-swt/lib/shoes/swt/packager.rb'
-
 # Offense count: 247
 Style/Documentation:
   Enabled: false
-
-# Offense count: 38
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: leading, trailing
-Style/DotPosition:
-  Exclude:
-    - 'samples/expert-definr.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-accordion.rb'
-    - 'shoes-core/lib/shoes/slot.rb'
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/list_box_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_spec.rb'
 
 # Offense count: 1
 Style/DoubleNegation:
@@ -276,18 +215,6 @@ Style/EmptyLinesAroundBlockBody:
 Style/EndOfLine:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/check_button.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/EvenOdd:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/star.rb'
-
-# Offense count: 33
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Style/ExtraSpacing:
-  Enabled: false
 
 # Offense count: 99
 # Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts.
@@ -326,32 +253,10 @@ Style/IfInsideElse:
     - 'samples/expert-irb.rb'
     - 'samples/expert-tankspank.rb'
 
-# Offense count: 43
-# Cop supports --auto-correct.
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
-
 # Offense count: 2
 Style/IfWithSemicolon:
   Exclude:
     - 'samples/expert-pong.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-Style/IndentAssignment:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/redrawing_aspect.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: special_inside_parentheses, consistent, align_braces
-Style/IndentHash:
-  Exclude:
-    - 'shoes-core/lib/shoes/internal_app.rb'
-    - 'shoes-core/spec/shoes/text_block_spec.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.

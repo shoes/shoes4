@@ -45,9 +45,7 @@ Shoes.app title: "A Gentle Reminder",
                             File.expand_path(File.join("~", ".gentlereminder"))
                           end
 
-    unless File.exist?(user_data_directory)
-      Dir.mkdir(user_data_directory)
-    end
+    Dir.mkdir(user_data_directory) unless File.exist?(user_data_directory)
 
     return File.join(user_data_directory, "data.yaml")
   end
@@ -58,7 +56,7 @@ Shoes.app title: "A Gentle Reminder",
         [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
           [link('Forget it') { forget_todo item }] + ["\n"]
       }.flatten
-    )
+                     )
   end
 
   def refresh
@@ -76,8 +74,8 @@ Shoes.app title: "A Gentle Reminder",
         end
 
         stack do
-          inscription( *
-            @completed[day].map { |item|
+          inscription(
+            * @completed[day].map { |item|
               [item] + ['  '] + [link('Not Done') { undo_todo day, item }] +
                   (@completed[day].index(item) == @completed[day].length - 1 ? [''] : ["\n"])
             }.flatten
@@ -142,7 +140,7 @@ Shoes.app title: "A Gentle Reminder",
 
   def load
     if File.exist?(data_path)
-      @todo, @completed = YAML::load(File.open(data_path, 'r'))
+      @todo, @completed = YAML.load(File.open(data_path, 'r'))
     else
       @todo = []
       @completed = {}

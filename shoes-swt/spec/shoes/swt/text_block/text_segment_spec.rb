@@ -61,9 +61,9 @@ describe Shoes::Swt::TextBlock::TextSegment do
   context "setting style" do
     it "on full range" do
       subject.set_style(style_hash)
-      expect(layout).to have_received(:set_style).
-                          with(style, 0, layout.text.length - 1).
-                          at_least(1).times
+      expect(layout).to have_received(:set_style)
+                          .with(style, 0, layout.text.length - 1)
+                          .at_least(1).times
     end
 
     it "with a range" do

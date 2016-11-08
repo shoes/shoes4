@@ -87,9 +87,7 @@ class Shoes
       end
 
       def flush
-        if @dsl.top_slot
-          @real.layout
-        end
+        @real.layout if @dsl.top_slot
       end
 
       def scroll_top

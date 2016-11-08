@@ -59,20 +59,20 @@ class Shoes
 
       def decode_input_stream(audio_format, audio_input_stream)
         case audio_format.encoding
-          when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding, Java::JavazoomSpiMpegSampledFile::MpegEncoding
-            decoded_format = AudioFormat.new(AudioFormat::Encoding::PCM_SIGNED,
-                                             audio_format.getSampleRate,
-                                             16,
-                                             audio_format.getChannels,
-                                             audio_format.getChannels * 2,
-                                             audio_format.getSampleRate,
-                                             false)
-            decoded_audio_input_stream = AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
+        when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding, Java::JavazoomSpiMpegSampledFile::MpegEncoding
+          decoded_format = AudioFormat.new(AudioFormat::Encoding::PCM_SIGNED,
+                                           audio_format.getSampleRate,
+                                           16,
+                                           audio_format.getChannels,
+                                           audio_format.getChannels * 2,
+                                           audio_format.getSampleRate,
+                                           false)
+          decoded_audio_input_stream = AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
 
-            return decoded_format, decoded_audio_input_stream
+          return decoded_format, decoded_audio_input_stream
 
-          else
-            return audio_format, audio_input_stream
+        else
+          return audio_format, audio_input_stream
         end
       end
 
@@ -90,9 +90,7 @@ class Shoes
           while bytes_read != -1
 
             bytes_read = decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
-            if bytes_read != -1
-              line.write(sampled_data, 0, bytes_read)
-            end
+            line.write(sampled_data, 0, bytes_read) if bytes_read != -1
           end
           # Stop
           line.drain
