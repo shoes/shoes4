@@ -78,7 +78,7 @@ describe Shoes::Swt::Common::Painter do
       expect_transform_for_rotate
 
       subject.set_rotate graphics_context, 0, 0, 0 do
-        #no-op
+        # no-op
       end
     end
   end

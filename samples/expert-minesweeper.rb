@@ -85,7 +85,7 @@ class Field
 
   def render_bomb(x, y)
     render_cell(x, y)
-    if (game_over? || all_found?) then # draw bomb
+    if (game_over? || all_found?) # draw bomb
       render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
       @app.nostroke
       @app.fill @app.rgb(0, 0, 0, 0.8)
@@ -105,7 +105,7 @@ class Field
 
   def render_number(x, y)
     render_cell(x, y, "#999", false)
-    if self[x, y].number != 0 then
+    if self[x, y].number != 0
       @app.nostroke
       @app.para self[x, y].number.to_s, left: x*cell_size + 3, top: y*cell_size - 2,
                                         font: '13px', stroke: COLORS[self[x, y].number - 1]
@@ -137,7 +137,7 @@ class Field
   def reveal!(x, y)
     return unless cell_exists?(x, y)
     return unless self[x, y].is_a?(Field::OpenCell)
-    if flags_around(x, y) >= self[x, y].number then
+    if flags_around(x, y) >= self[x, y].number
       (-1..1).each do |v|
         (-1..1).each { |h| click!(x+h, y+v) unless (v==0 && h==0) || has_flag?(x+h, y+v) }
       end
@@ -240,7 +240,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
     end
   end
 
-  def new_game level
+  def new_game(level)
     @field = Field.new self, level
     translate(-@old_offset.first, -@old_offset.last) unless @old_offset.nil?
     translate(@field.offset.first, @field.offset.last)

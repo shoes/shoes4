@@ -16,7 +16,7 @@ describe Shoes::Common::Style do
     STYLES = {fill: Shoes::COLORS[:blue]}
 
     def initialize(app, styles = {})
-      @app = app #needed for style init
+      @app = app # needed for style init
       @dimensions = Shoes::Dimensions.new(@app, left: 15)
 
       # Would normally be done by Common::Initialization
@@ -164,7 +164,7 @@ describe Shoes::Common::Style do
       end
     end
 
-    #related priority specs are tested individually in spec/shared_examples/style
+    # related priority specs are tested individually in spec/shared_examples/style
   end
 
   describe 'StyleWith' do

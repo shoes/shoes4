@@ -30,22 +30,22 @@ describe Shoes::Color do
   end
 
   context "with wrong number of arguments" do
-    subject { lambda { Shoes::Color.new(10, 10) } }
+    subject { -> { Shoes::Color.new(10, 10) } }
     it_behaves_like "color with bad arguments"
   end
 
   context "with too many hex chars" do
-    subject { lambda { Shoes::Color.new("a1b2c3d") } }
+    subject { -> { Shoes::Color.new("a1b2c3d") } }
     it_behaves_like "color with bad arguments"
   end
 
   context "with too few hex chars" do
-    subject { lambda { Shoes::Color.new("a1") } }
+    subject { -> { Shoes::Color.new("a1") } }
     it_behaves_like "color with bad arguments"
   end
 
   context "with invalid hex chars" do
-    subject { lambda { Shoes::Color.new("#g01234") } }
+    subject { -> { Shoes::Color.new("#g01234") } }
     it_behaves_like "color with bad arguments"
   end
 

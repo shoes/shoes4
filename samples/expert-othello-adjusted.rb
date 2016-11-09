@@ -250,7 +250,7 @@ module Othello
 
       stack width: width, height: 500 do
         fill rgb(0, 190, 0)
-        #rect left: 0, top: 0, width: 495, height: 495
+        # rect left: 0, top: 0, width: 495, height: 495
 
         GAME.board.each_with_index do |col, col_index|
           col.each_with_index do |cell, row_index|
@@ -312,7 +312,7 @@ Shoes.app width: 520, height: 600 do
         GAME.next_turn
         draw_board
       rescue => e
-        #draw_board
+        # draw_board
         alert(e.message)
       end
     else

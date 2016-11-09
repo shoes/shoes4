@@ -30,7 +30,7 @@ Shoes.app width: 800, height: 600 do
   @feeds = [
     "http://xkcd.com/rss.xml",
     # No longer contains images
-    #"http://feedproxy.google.com/DilbertDailyStrip?format=xml",
+    # "http://feedproxy.google.com/DilbertDailyStrip?format=xml",
     "http://www.smbc-comics.com/rss.php",
     "http://www.daybydaycartoon.com/index.xml",
     "http://www.questionablecontent.net/QCRSS.xml",

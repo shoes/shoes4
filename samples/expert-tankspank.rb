@@ -8,11 +8,11 @@ $width, $height = 700, 500
 $camera_tightness = 0.1
 
 module Collisions
-  def contains? x, y
+  def contains?(x, y)
     not (x < west || x > east || y < north || y > south)
   end
 
-  def intersects? other
+  def intersects?(other)
     not (other.east < west || other.west > east ||
       other.south < north || other.north > south)
   end
@@ -42,7 +42,7 @@ class Building
 end
 
 module Guidance
-  def guidance_system x, y, dest_x, dest_y, angle
+  def guidance_system(x, y, dest_x, dest_y, angle)
     vx, vy = dest_x - x, dest_y - y
     if vx.abs < 0.1 && (vy.abs <= 0.1)
       yield 0, 0
@@ -64,7 +64,7 @@ module Life
     @health == 0
   end
 
-  def hurt damage
+  def hurt(damage)
     @health = [@health - damage, 0].max
   end
 end
@@ -110,7 +110,7 @@ class Tank
                             @y + 30 * Math.sin(@aim_angle), @aim_angle)
   end
 
-  def update _button, mouse_x, mouse_y
+  def update(_button, mouse_x, mouse_y)
     @target_x, @target_y = mouse_x, mouse_y
 
     if @moving
@@ -146,11 +146,11 @@ class Tank
     @moving = false
   end
 
-  def turn direction
+  def turn(direction)
     @tank_angle += [[-0.03, direction].max, 0.03].min
   end
 
-  def aim direction
+  def aim(direction)
     @aim_angle += [[-0.1, direction].max, 0.1].min
   end
 
@@ -158,7 +158,7 @@ class Tank
     $app.stroke $app.blue
     $app.fill $app.blue(0.4)
     Opp.draw_opp_rect @x - 20, @x + 20, @y - 15, @y + 15, 1.05, @tank_angle
-    #Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
+    # Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
     Opp.draw_opp_rect @x - 10, @x + 10, @y - 7, @y + 7, 1.05, @aim_angle
     x, _unused1, y, _unused2 = Opp.project(@x, 0, @y, 0, 1.05)
     $app.line x, y, x + 25 * Math.cos(@aim_angle), y + 25 * Math.sin(@aim_angle)
@@ -178,7 +178,7 @@ end
 class Shell
   attr_reader :x, :y
 
-  def initialize x, y, angle
+  def initialize(x, y, angle)
     @x, @y, @angle = x, y, angle
     @speed = 10.0
   end
@@ -240,10 +240,10 @@ class Opp
         b.contains?(s.x, s.y)
       end
     end
-    #collide shells with tanks -- don't need this until there are enemy tanks
-    #@shells.reject! do |s|
+    # collide shells with tanks -- don't need this until there are enemy tanks
+    # @shells.reject! do |s|
     # @tank.contains?(s.x, s.y)
-    #end
+    # end
 
     $app.clear do
       @offset_x += $camera_tightness * (@tank.x - @offset_x)
@@ -262,12 +262,12 @@ class Opp
     end
   end
 
-  def self.add_shell shell
+  def self.add_shell(shell)
     @shells << shell
     @shells.shift if @shells.size > 10
   end
 
-  def self.project left, right, top, bottom, depth
+  def self.project(left, right, top, bottom, depth)
     [left, right].collect { |x| @center_x + depth * (x - @offset_x) } +
       [top, bottom].collect { |y| @center_y + depth * (y - @offset_y) }
   end
@@ -276,7 +276,7 @@ class Opp
   # 1.0 means your x and y units are pixels on the surface.
   # greater than that brings the box closer.  less pushes it back.  0.0 => infinity.
   # the front will be filled but the rest is wireframe only.
-  def self.draw_opp_box left, right, top, bottom, front, back, occlude = true
+  def self.draw_opp_box(left, right, top, bottom, front, back, occlude = true)
     near_left, near_right, near_top, near_bottom = project(left, right, top, bottom, front)
     far_left, far_right, far_top, far_bottom = project(left, right, top, bottom, back)
 
@@ -306,7 +306,7 @@ class Opp
     $app.rect near_left, near_top, near_right - near_left, near_bottom - near_top
   end
 
-  def self.draw_opp_rect left, right, top, bottom, depth, angle, _with_x = false
+  def self.draw_opp_rect(left, right, top, bottom, depth, angle, _with_x = false)
     pl, pr, pt, pb = project(left, right, top, bottom, depth)
     cos = Math.cos(angle)
     sin = Math.sin(angle)
@@ -322,12 +322,12 @@ class Opp
     $app.line(*(points[3] + points[0]))
   end
 
-  def self.draw_opp_oval left, right, top, bottom, depth
+  def self.draw_opp_oval(left, right, top, bottom, depth)
     pl, pr, pt, pb = project(left, right, top, bottom, depth)
     $app.oval(pl, pt, pr - pl, pb - pt)
   end
 
-  def self.draw_opp_plane x1, y1, x2, y2, front, back, stroke_color
+  def self.draw_opp_plane(x1, y1, x2, y2, front, back, stroke_color)
     near_x1, near_x2, near_y1, near_y2 = project(x1, x2, y1, y2, front)
     far_x1, far_x2, far_y1, far_y2 = project(x1, x2, y1, y2, back)
 

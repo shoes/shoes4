@@ -80,7 +80,7 @@ describe Shoes::BuiltinMethods do
 
   %w(alert confirm).each do |type|
     describe '##{alert}' do
-     let(:message) { double('message') }
+      let(:message) { double('message') }
 
       before do
         allow(Shoes::Dialog).to receive(:new).and_return(dialog)

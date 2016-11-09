@@ -61,7 +61,7 @@ class Changelog
     '* ' + extract_changelog_message(commit)
   end
 
-  def extract_changelog_message commit
+  def extract_changelog_message(commit)
     if commit =~ /Merge pull request/i
       message = commit.sub(/Merge pull request.*#{BODY_START_SEPARATOR}/i, '')
       message.sub(/((\n.*#{BODY_END_SEPARATOR})|#{BODY_END_SEPARATOR})/m, '')

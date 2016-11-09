@@ -6,8 +6,7 @@ Shoes.app do
 
     button "Save" do
       @notes.append do
-          para @add.text, " ",
-               link("delete") { |x| x.parent.remove }
+        para @add.text, " ", link("delete") { |x| x.parent.remove }
       end
       @add.text = ""
     end

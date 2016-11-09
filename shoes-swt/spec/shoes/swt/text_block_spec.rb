@@ -24,7 +24,7 @@ describe Shoes::Swt::TextBlock do
 
   describe "bounds checking" do
     it "delegates to segment" do
-      segment = double()
+      segment = double
       subject.segments = [segment]
       expect(segment).to receive(:in_bounds?)
 

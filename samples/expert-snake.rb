@@ -20,7 +20,7 @@ Shoes.app title: 'Snake Game v0.1' do
     keypress {|k| dir = k if @pos.keys.include? k}
   end
 
-  def go k
+  def go(k)
     x, y = @pos[k]
     @snake.unshift @snake.pop
     n = @snake.length > 1 ? 1 : 0
@@ -33,14 +33,14 @@ Shoes.app title: 'Snake Game v0.1' do
     (@snake << rect(0, 0, 10, 10)) if eat? @snake[0]
   end
 
-  def eat? s
+  def eat?(s)
     @foods.each do |f|
       (f.move @rx[], @ry[]; return true) if (f.left == s.left) && (f.top == s.top)
     end
     return false
   end
 
-  def brick? s
+  def brick?(s)
     @bricks.each do |b|
       (@run.remove; alert 'Game Over. ') if (b.left == s.left) && (b.top == s.top)
     end

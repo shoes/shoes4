@@ -9,9 +9,11 @@ module Shoes::Manual
   IMAGE_STYLE = {margin: 8, margin_left: 100}
   COLON = ": "
 
-  [INTRO_STYLE, SUB_STYLE].each do |h|
-    h[:font] = "MS UI Gothic"
-  end if Shoes.language == 'ja'
+  if Shoes.language == 'ja'
+    [INTRO_STYLE, SUB_STYLE].each do |h|
+      h[:font] = "MS UI Gothic"
+    end
+  end
 
   def self.path
     path = "#{DIR}/static/manual-#{Shoes.language}.txt"
@@ -39,7 +41,7 @@ module Shoes::Manual
       .gsub(/\[\[(\S+?)\]\]/m, '", link("\1".split(".", 2).last) { open_link("\1") }, "')
       .gsub(/\[\[(\S+?) (.+?)\]\]/m, '", link("\2") { open_link("\1") }, "')
       .gsub(IMAGE_RE, '", *args); stack(IMAGE_STYLE.merge({\2})) { image("#{DIR}/static/\3") }; #{ele}("')
-    #debug str if str =~ /The list of special keys/
+    # debug str if str =~ /The list of special keys/
     a = str.split(', ", ", ')
     if a.size == 1
       eval("#{ele}(#{str}, *args)")
@@ -170,7 +172,7 @@ module Shoes::Manual
       else
         k.ancestors[1..-1].each do |sk|
           break if [Object, Kernel].include? sk
-          next unless sk.is_a? Class #don't show mixins
+          next unless sk.is_a? Class # don't show mixins
           (tree[sk.name] ||= []) << c
           c = sk.name
         end
@@ -193,9 +195,11 @@ module Shoes::Manual
                              end
             para k
           end
-          subs.uniq.sort.each do |s|
-            index_p[s, tree[s]]
-          end if subs
+          if subs
+            subs.uniq.sort.each do |s|
+              index_p[s, tree[s]]
+            end
+          end
         end
         shown << k
       end
@@ -203,11 +207,11 @@ module Shoes::Manual
     tree.sort.each(&index_p)
   end
 
-  def run_code str
+  def run_code(str)
     eval(str, TOPLEVEL_BINDING)
   end
 
-  def load_docs path
+  def load_docs(path)
     return @docs if @docs
     str = Shoes.read_file(path)
     @search = Shoes::Search.new
@@ -222,13 +226,15 @@ module Shoes::Manual
           meth_plain = meth[0].gsub(IMAGE_RE, '')
           @search.add_document uri: "T #{k2t}", body: "#{k2}\n#{meth_plain}".downcase
 
-          hsh = {'title' => k2, 'section' => k,
-                 'description' => meth[0],
-                 'methods' => (meth[1..-1]/2).map { |k3,v3|
-              @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
-              @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
-              [k3, v3]
-                 }
+          hsh = {
+            'title' => k2,
+            'section' => k,
+            'description' => meth[0],
+            'methods' => (meth[1..-1]/2).map { |k3,v3|
+                           @search.add_document uri: "M #{k}#{COLON}#{k2t}#{COLON}#{k3}", body: "#{k3}\n#{v3}".downcase
+                           @mindex["#{k2t}.#{k3[/[\w\.]+/]}"] = [k2t, k3]
+                           [k3, v3]
+                         }
           }
           @methods[k2t] = hsh
           [k2t, hsh]
@@ -253,7 +259,7 @@ module Shoes::Manual
         edit_line width: -60 do |terms|
           @results.clear do
             termd = terms.text.downcase
-            #found = termd.empty? ? [] : manual_search(termd)
+            # found = termd.empty? ? [] : manual_search(termd)
             found = (termd.empty? || (termd[0] == 'z') || (termd[0] == 'y')) ? [] : manual_search(termd)
             para "#{found.length} matches", align: "center", margin_bottom: 0
             found.each do |typ, head|
@@ -407,9 +413,11 @@ def Shoes.make_help_page
     style(Shoes::Caption, size: 24)
     background "#ddd".."#fff", angle: 90
 
-    [Shoes::LinkHover, Shoes::Para, Shoes::Tagline, Shoes::Caption].each do |type|
-      style(type, font: "MS UI Gothic")
-    end if Shoes.language == 'ja'
+    if Shoes.language == 'ja'
+      [Shoes::LinkHover, Shoes::Para, Shoes::Tagline, Shoes::Caption].each do |type|
+        style(type, font: "MS UI Gothic")
+      end
+    end
 
     stack do
       background black

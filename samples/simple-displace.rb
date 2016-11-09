@@ -1,6 +1,6 @@
 Shoes.app do
   # Shoes 3 doesn't support button.text
-  position_report = lambda { |button, button_text| @position_report.replace "#{button_text}: (#{button.left}, #{button.top})" }
+  position_report = ->(button, button_text) { @position_report.replace "#{button_text}: (#{button.left}, #{button.top})" }
   flow margin: 12 do
     # Set up three buttons
     button "One", click: proc { |button| position_report.call(button, "One") }
