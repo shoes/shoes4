@@ -97,7 +97,8 @@ namespace :spec do
   Limit the examples to specific :modules : "
   task :core, [:module] do |_t, args|
     argh = args.to_hash
-    files = Dir['shoes-core/spec/shoes/**/*_spec.rb'].join ' '
+    files = (Dir['shoes-core/spec/shoes/**/*_spec.rb'] +
+             Dir['shoes-core/spec/*_spec.rb']).join ' '
     jruby_rspec(files, argh)
   end
 
