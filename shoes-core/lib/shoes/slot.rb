@@ -48,6 +48,11 @@ class Shoes
       eval_block blk
     end
 
+    def remove
+      clear
+      super
+    end
+
     def eval_block(blk, *args)
       old_current_slot = @app.current_slot
       @app.current_slot = self

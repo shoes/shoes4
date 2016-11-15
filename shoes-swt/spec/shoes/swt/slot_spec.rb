@@ -27,4 +27,11 @@ describe Shoes::Swt::Slot do
       expect(content).to have_received(:hide).once
     end
   end
+
+  describe '#remove' do
+    it 'cleans up click listeners' do
+      expect(swt_app.click_listener).to receive(:remove_listeners_for).with(dsl)
+      subject.remove
+    end
+  end
 end

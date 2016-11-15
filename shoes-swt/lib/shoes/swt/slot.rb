@@ -34,7 +34,12 @@ class Shoes
           dsl.contents.each(&:show)
         end
       end
+
+      def remove
+        app.click_listener.remove_listeners_for(dsl)
+      end
     end
+
     class Flow < Slot; end
     class Stack < Slot; end
   end
