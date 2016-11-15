@@ -2,13 +2,14 @@ require 'spec_helper'
 
 describe Shoes::Slot do
   include_context "dsl app"
-  let(:parent) { app }
+  let(:parent) { Shoes::Stack.new(app, app, {}) }
 
   let(:left) { 44 }
   let(:top) { 66 }
   let(:width) { 111 }
   let(:height) { 333 }
   let(:input_opts) { {left: left, top: top, width: width, height: height} }
+
   subject(:slot) { Shoes::Slot.new(app, parent, input_opts) }
 
   before do
@@ -68,6 +69,22 @@ describe Shoes::Slot do
       it 'has one element afterwards' do
         expect(subject.contents.size).to eq 1
       end
+    end
+  end
+
+  describe '#remove' do
+    before :each do
+      Shoes::Para.new app, slot, ['text']
+    end
+
+    it 'removes the child element' do
+      subject.remove
+      expect(subject.contents).to be_empty
+    end
+
+    it 'notifies the gui' do
+      expect(subject.gui).to receive(:remove)
+      subject.remove
     end
   end
 

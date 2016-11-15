@@ -8,6 +8,9 @@ class Shoes
         @dsl, @parent = dsl, parent
       end
 
+      def remove
+      end
+
       attr_reader :dsl
     end
 

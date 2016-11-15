@@ -32,7 +32,7 @@ class Shoes
       # reverse_each is important as otherwise we always miss to delete one
       # element
       @contents.reverse_each do |element|
-        element.is_a?(Shoes::Slot) ? element.clear : element.remove
+        element.remove
       end
       @contents.clear
     end
