@@ -62,7 +62,8 @@ class Shoes
     # @return [Shoes::Shape] This shape
     def line_to(x, y)
       update_bounds_rect(@x, @y, x, y)
-      @x, @y = x, y
+      @x = x
+      @y = y
       @gui.line_to(x, y)
       self
     end
@@ -73,7 +74,8 @@ class Shoes
     # @param [Integer] y The new point's y-value
     # @return [Shoes::Shape] self This shape
     def move_to(x, y)
-      @x, @y = x, y
+      @x = x
+      @y = y
       @gui.move_to(x, y)
       self
     end
@@ -89,7 +91,8 @@ class Shoes
     # @return [Shoes::Shape] This shape
     def curve_to(cx1, cy1, cx2, cy2, x, y)
       update_bounds([@x, cx1, cx2, x], [@y, cy1, cy2, y])
-      @x, @y = x, y
+      @x = x
+      @y = y
       @gui.curve_to(cx1, cy1, cx2, cy2, x, y)
       self
     end
@@ -105,7 +108,8 @@ class Shoes
     # @return [Shoes::Shape] This shape
     def arc_to(x, y, width, height, start_angle, arc_angle)
       update_bounds_rect(x - width / 2, y - height / 2, x + width / 2, y + height / 2)
-      @x, @y = x, y
+      @x = x
+      @y = y
       @gui.arc_to(x, y, width, height, start_angle, arc_angle)
       self
     end

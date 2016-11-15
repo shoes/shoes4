@@ -4,16 +4,17 @@
 # version 3, 13 March 2008
 # this code is free, do what you like with it!
 
-$width, $height = 700, 500
+$width = 700
+$height = 500
 $camera_tightness = 0.1
 
 module Collisions
   def contains?(x, y)
-    not (x < west || x > east || y < north || y > south)
+    !(x < west || x > east || y < north || y > south)
   end
 
   def intersects?(other)
-    not (other.east < west || other.west > east ||
+    !(other.east < west || other.west > east ||
       other.south < north || other.north > south)
   end
 end
@@ -24,8 +25,12 @@ class Building
   attr_reader :west, :east, :north, :south
 
   def initialize(west, east, north, south)
-    @west, @east, @north, @south = west, east, north, south
-    @top, @bottom = 1.1 + rand(3) * 0.15, 1.0
+    @west = west
+    @east = east
+    @north = north
+    @south = south
+    @top = 1.1 + rand(3) * 0.15
+    @bottom = 1.0
 
     color = (1..3).collect { 0.2 + 0.4 * rand }
     color << 0.9
@@ -43,14 +48,16 @@ end
 
 module Guidance
   def guidance_system(x, y, dest_x, dest_y, angle)
-    vx, vy = dest_x - x, dest_y - y
+    vx = dest_x - x
+    vy = dest_y - y
     if vx.abs < 0.1 && (vy.abs <= 0.1)
       yield 0, 0
     else
       length = Math.sqrt(vx * vx + vy * vy)
       vx /= length
       vy /= length
-      ax, ay = Math.cos(angle), Math.sin(angle)
+      ax = Math.cos(angle)
+      ay = Math.sin(angle)
       cos_between = vx * ax + vy * ay
       sin_between = vx * -ay + vy * ax
       yield sin_between, cos_between
@@ -85,23 +92,28 @@ class Tank
   attr_reader :x, :y
 
   def initialize
-    @x, @y = 0, -125
-    @last_x, @last_y = @x, @y
+    @x = 0
+    @y = -125
+    @last_x = @x
+    @last_y = @y
     @tank_angle = 0.0
-    @dest_x, @dest_y = 0, 0
+    @dest_x = 0
+    @dest_y = 0
     @acceleration = 0.0
     @speed = 0.0
     @moving = false
 
     @aim_angle = 0.0
-    @target_x, @target_y = 0, 0
+    @target_x = 0
+    @target_y = 0
     @aimed = false
 
     @health = 100
   end
 
   def set_destination
-    @dest_x, @dest_y = @target_x, @target_y
+    @dest_x = @target_x
+    @dest_y = @target_y
     @moving = true
   end
 
@@ -111,7 +123,8 @@ class Tank
   end
 
   def update(_button, mouse_x, mouse_y)
-    @target_x, @target_y = mouse_x, mouse_y
+    @target_x = mouse_x
+    @target_y = mouse_y
 
     if @moving
       guidance_system @x, @y, @dest_x, @dest_y, @tank_angle do |direction, on_target|
@@ -132,15 +145,17 @@ class Tank
 
     integrity = @health / 100.0 # the more hurt you are, the slower you go
     @speed = [[@speed + @acceleration, 5.0 * integrity].min, -3.0 * integrity].max
-    @speed *= 0.9 if !@moving
+    @speed *= 0.9 unless @moving
 
-    @last_x, @last_y = @x, @y
+    @last_x = @x
+    @last_y = @y
     @x += @speed * Math.cos(@tank_angle)
     @y += @speed * Math.sin(@tank_angle)
   end
 
   def collide_and_stop
-    @x, @y = @last_x, @last_y
+    @x = @last_x
+    @y = @last_y
     hurt @speed.abs * 3 + 5
     @speed = 0
     @moving = false
@@ -179,7 +194,9 @@ class Shell
   attr_reader :x, :y
 
   def initialize(x, y, angle)
-    @x, @y, @angle = x, y, angle
+    @x = x
+    @y = y
+    @angle = angle
     @speed = 10.0
   end
 
@@ -197,7 +214,8 @@ end
 
 class Opp
   def self.new_game
-    @offset_x, @offset_y = 0, 0
+    @offset_x = 0
+    @offset_y = 0
     @buildings = [
       [-1000, -750, -750, -250],
       [-500, 250, -750, -250],
@@ -213,7 +231,8 @@ class Opp
     @shells = []
     @boundary = [-1250, 1500, -1250, 1250]
     @tank = Tank.new
-    @center_x, @center_y = $app.width / 2, $app.height / 2
+    @center_x = $app.width / 2
+    @center_y = $app.height / 2
   end
 
   def self.tank
@@ -229,7 +248,7 @@ class Opp
     x += @offset_x - @center_x
     y += @offset_y - @center_y
 
-    @tank.update(button, x, y) if !@tank.dead?
+    @tank.update(button, x, y) unless @tank.dead?
     @buildings.each do |b|
       @tank.collide_and_stop if b.intersects? @tank
     end
@@ -250,7 +269,8 @@ class Opp
       @offset_y += $camera_tightness * (@tank.y - @offset_y)
 
       $app.background $app.black
-      @center_x, @center_y = $app.width / 2, $app.height / 2
+      @center_x = $app.width / 2
+      @center_y = $app.height / 2
 
       $app.stroke $app.red(0.9)
       $app.nofill
@@ -310,7 +330,8 @@ class Opp
     pl, pr, pt, pb = project(left, right, top, bottom, depth)
     cos = Math.cos(angle)
     sin = Math.sin(angle)
-    cx, cy = (pr + pl) / 2.0, (pb + pt) / 2.0
+    cx = (pr + pl) / 2.0
+    cy = (pb + pt) / 2.0
     points = [[pl, pt], [pr, pt], [pr, pb], [pl, pb]].collect do |x, y|
       [cx + (x - cx) * cos - (y - cy) * sin,
        cy + (x - cx) * sin + (y - cy) * cos]
@@ -376,7 +397,7 @@ Shoes.app width: $width, height: $height do
     Opp.update_scene
 
     @playing = false if Opp.tank.dead?
-    if !@playing
+    unless @playing
       stack do
         banner "Game Over", stroke: white, margin: 10
         caption "learn to drive!", stroke: white, margin: 20

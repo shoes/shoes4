@@ -47,7 +47,8 @@ class Shoes
               Shoes::LOG.clear
             end
           end
-          @log, @hash = stack, nil
+          @log = stack
+          @hash = nil
           update
 
           every(0.2) do

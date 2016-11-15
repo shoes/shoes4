@@ -5,7 +5,8 @@ class Shoes
       include Shoes::Mock::Clickable
 
       def initialize(dsl, parent)
-        @dsl, @parent = dsl, parent
+        @dsl = dsl
+        @parent = parent
       end
 
       def remove

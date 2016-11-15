@@ -4,7 +4,8 @@ class Shoes
     include Comparable
 
     def initialize(color1, color2, alpha = Shoes::Color::OPAQUE)
-      @color1, @color2 = color1, color2
+      @color1 = color1
+      @color2 = color2
       @alpha = alpha
     end
 

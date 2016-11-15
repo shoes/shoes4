@@ -12,7 +12,8 @@ class Shoes
       attr_reader :transform
 
       def initialize(dsl, app)
-        @dsl, @app = dsl, app
+        @dsl = dsl
+        @app = app
         @painter = Painter.new(self)
         @app.add_paint_listener(@painter)
 

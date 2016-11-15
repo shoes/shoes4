@@ -309,7 +309,7 @@ describe Shoes::Dimension do
     it {is_expected.not_to be_in_bounds(-5)}
     it {is_expected.not_to be_in_bounds 0}
     it {is_expected.not_to be_in_bounds 150}
-    it {is_expected.not_to be_in_bounds 123178}
+    it {is_expected.not_to be_in_bounds 123_178}
   end
 
   it 'can displace the placement' do

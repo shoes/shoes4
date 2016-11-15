@@ -18,7 +18,7 @@ describe Furoshiki::Jar do
     end
 
     let(:jar_name) { 'sweet-nebulae.jar' }
-    let(:output_file) { Pathname.new(@output_dir.join jar_name) }
+    let(:output_file) { Pathname.new(@output_dir.join(jar_name)) }
     subject { @subject }
 
     it "creates a .jar" do

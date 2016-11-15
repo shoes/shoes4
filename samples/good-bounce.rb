@@ -1,6 +1,8 @@
 # The Shoes logo/icon bounces on the screen. The logo/icon responds to menu options and if clicked on.
-xspeed, yspeed = 10, 6
-xdir, ydir = 1, 1
+xspeed = 10
+yspeed = 6
+xdir = 1
+ydir = 1
 
 Shoes.app width: 300, height: 300 do
   a = nil
@@ -12,7 +14,8 @@ Shoes.app width: 300, height: 300 do
     alert "You're soooo quick!"
   end
 
-  x, y = 150, 150
+  x = 150
+  y = 150
   size = [128, 128]
   pause = 0
 

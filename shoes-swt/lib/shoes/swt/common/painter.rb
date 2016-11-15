@@ -72,7 +72,9 @@ class Shoes
         end
 
         def set_rotate(graphics_context, angle, left, top)
-          angle, left, top = angle.to_i, left.to_i, top.to_i
+          angle = angle.to_i
+          left = left.to_i
+          top = top.to_i
           if block_given?
             begin
               transform = ::Swt::Transform.new Shoes.display

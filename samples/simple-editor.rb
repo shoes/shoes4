@@ -1,4 +1,5 @@
-str, t = "", nil
+str = ""
+t = nil
 Shoes.app height: 500, width: 450 do
   background rgb(77, 77, 77)
   stack margin: 10 do

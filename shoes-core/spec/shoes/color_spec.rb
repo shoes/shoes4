@@ -241,11 +241,11 @@ describe Shoes::Color do
       # shoes 3 compatibility behavior
       describe 'different colors' do
         it 'takes the total of rgb values to compare, less is less' do
-          expect(create_rgb 100, 200, 0).to be < create_rgb(50, 100, 151)
+          expect(create_rgb(100, 200, 0)).to be < create_rgb(50, 100, 151)
         end
 
         it 'takes the total of rgb values to compare, more is more' do
-          expect(create_rgb 0, 200, 200).to be > create_rgb(150, 150, 99)
+          expect(create_rgb(0, 200, 200)).to be > create_rgb(150, 150, 99)
         end
       end
 

@@ -162,5 +162,4 @@ describe Shoes::Swt::App do
            height:    0,
            app_title: 'double')
   end
-
 end

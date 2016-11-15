@@ -116,7 +116,7 @@ class Tetris
   end
 
   def drop
-    if !move(:down)
+    unless move(:down)
       finalize_piece
       reward_for_piece
       remove_any_completed_lines
@@ -134,7 +134,7 @@ class Tetris
 
   def occupied(piece)
     piece.each_occupied_block do |x,y|
-      if ((x < 0) || (x >= NX) || (y < 0) || (y >= NY) || blocks[x][y])
+      if (x < 0) || (x >= NX) || (y < 0) || (y >= NY) || blocks[x][y]
         return true
       end
     end

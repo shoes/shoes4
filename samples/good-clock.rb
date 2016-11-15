@@ -3,7 +3,9 @@
 # posted to the Shoes mailing list on 04 Dec 2007
 #
 Shoes.app height: 260, width: 250 do
-  @radius, @centerx, @centery = 90, 126, 140
+  @radius = 90
+  @centerx = 126
+  @centery = 140
   animate(8) do
     @time = Time.now
     clear do

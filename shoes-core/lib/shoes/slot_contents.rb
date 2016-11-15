@@ -31,9 +31,7 @@ class Shoes
     def clear
       # reverse_each is important as otherwise we always miss to delete one
       # element
-      @contents.reverse_each do |element|
-        element.remove
-      end
+      @contents.reverse_each(&:remove)
       @contents.clear
     end
 

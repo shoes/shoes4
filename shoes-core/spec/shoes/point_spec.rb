@@ -19,9 +19,9 @@ describe Shoes::Point do
 
   describe "equality" do
     it "requires x and y to be equal" do
-      expect(subject).to eq(Shoes::Point.new 40, 50)
-      expect(subject).not_to eq(Shoes::Point.new 41, 50)
-      expect(subject).not_to eq(Shoes::Point.new 40, 51)
+      expect(subject).to eq(Shoes::Point.new(40, 50))
+      expect(subject).not_to eq(Shoes::Point.new(41, 50))
+      expect(subject).not_to eq(Shoes::Point.new(40, 51))
     end
 
     it "works with other (x,y) objects" do

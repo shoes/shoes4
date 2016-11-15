@@ -12,7 +12,8 @@
 Shoes.app width: 400, height: 400, resizable: false do
   paddle_size   = 75
   ball_diameter = 20
-  vx, vy        = [3, 4]
+  vx = 3
+  vy = 4
   compuspeed    = 10
   bounce        = 1.2
 
@@ -32,7 +33,8 @@ Shoes.app width: 400, height: 400, resizable: false do
 
     # move the @you paddle, following the mouse
     @you.left = mouse[1] - (paddle_size / 2)
-    nx, ny = (@ball.left + vx).to_i, (@ball.top + vy).to_i
+    nx = (@ball.left + vx).to_i
+    ny = (@ball.top + vy).to_i
 
     # move the @comp paddle, speed based on `compuspeed` variable
     @comp.left +=
@@ -44,14 +46,16 @@ Shoes.app width: 400, height: 400, resizable: false do
     # if the @you paddle hits the ball
     if ny + ball_diameter > app.height && vy > 0 &&
         (0..paddle_size).cover?(nx + (ball_diameter / 2) - @you.left)
-      vx, vy = (nx - @you.left - (paddle_size / 2)) * 0.25, -vy * bounce
+      vx = (nx - @you.left - (paddle_size / 2)) * 0.25
+      vy = -vy * bounce
       ny = app.height - ball_diameter
     end
 
     # if the @comp paddle hits the ball
     if ny < 0 && vy < 0 &&
         (0..paddle_size).cover?(nx + (ball_diameter / 2) - @comp.left)
-      vx, vy = (nx - @comp.left - (paddle_size / 2)) * 0.25, -vy * bounce
+      vx = (nx - @comp.left - (paddle_size / 2)) * 0.25
+      vy = -vy * bounce
       ny = 0
     elsif nx + ball_diameter > app.width || nx < 0
       vx = -vx

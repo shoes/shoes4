@@ -23,12 +23,13 @@ class Calc
     define_method "press_#{meth}" do
       press_equals if @op
       @op = op
-      @previous, @number = @number, nil
+      @previous = @number
+      @number = nil
     end
   end
 
   def press_equals
-    @number = @previous.send(@op, @number.to_i) unless (@previous.nil? || @op.nil? || @number.nil?)
+    @number = @previous.send(@op, @number.to_i) unless @previous.nil? || @op.nil? || @number.nil?
     @op = nil
   end
 end

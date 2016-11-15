@@ -18,6 +18,10 @@ Style/CollectionMethods:
   PreferredMethods:
     inject: 'inject'
 
+# We prefer to avoid loop control magic
+Style/Next:
+  Enabled: false
+
 # We don't have a strong opinion on how you use spaces inside braces
 Style/SpaceInsideHashLiteralBraces:
   Enabled: false

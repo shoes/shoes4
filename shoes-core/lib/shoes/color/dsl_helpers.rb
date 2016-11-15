@@ -50,14 +50,17 @@ class Shoes
           arg = args[0]
           case arg
           when Gradient
-            min, max = arg.color1, arg.color2
+            min = arg.color1
+            max = arg.color2
           when Range
-            min, max = arg.first, arg.last
+            min = arg.first
+            max = arg.last
           else
             fail ArgumentError, "Can't make gradient out of #{arg.inspect}"
           end
         when 2
-          min, max = args[0], args[1]
+          min = args[0]
+          max = args[1]
         else
           fail ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
         end
