@@ -27,7 +27,7 @@ module Othello
     def next_turn(check_available_moves = true)
       @current_player = next_player
       if check_available_moves && skip_turn?
-        # FIXME Possible infinite loop if neither player has a good move?
+        # FIXME: Possible infinite loop if neither player has a good move?
         next_turn
         raise "Player #{@current_player.piece} (#{@current_player.color}) has no available moves. Player #{next_player.piece}'s (#{next_player.color}) turn."
       end

@@ -134,15 +134,6 @@ Style/ClassVars:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: Keywords.
-# Keywords: TODO, FIXME, OPTIMIZE, HACK, REVIEW
-Style/CommentAnnotation:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-
 # Offense count: 1
 Style/ConstantName:
   Exclude:
