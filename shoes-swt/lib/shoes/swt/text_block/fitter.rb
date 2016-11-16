@@ -110,7 +110,8 @@ class Shoes
               empty_segment,
               CenteredTextSegment.new(@dsl, @dsl.containing_width),
               "",
-              height)
+              height
+            )
           end
         end
 

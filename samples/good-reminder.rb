@@ -51,12 +51,12 @@ Shoes.app title: "A Gentle Reminder",
   end
 
   def refresh_todo
-    @gui_todo.replace(*
-      @todo.map do |item|
+    @gui_todo.replace(
+      *@todo.map do |item|
         [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
           [link('Forget it') { forget_todo item }] + ["\n"]
       end.flatten
-                     )
+    )
   end
 
   def refresh

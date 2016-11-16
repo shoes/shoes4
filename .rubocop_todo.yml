@@ -217,16 +217,6 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'samples/good-follow.rb'
-    - 'samples/good-reminder.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block/fitter.rb'
-
 # Offense count: 35
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
