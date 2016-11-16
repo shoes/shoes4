@@ -141,10 +141,10 @@ describe Shoes::Swt::App do
     it 'setup_system_colors' do
       default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
       expect(::Shoes::DSL).to receive(:define_shoes_color)
-                              .with(:system_background,
-                                    default_background.red,
-                                    default_background.green,
-                                    default_background.blue)
+        .with(:system_background,
+              default_background.red,
+              default_background.green,
+              default_background.blue)
       subject.class.setup_system_colors
     end
   end

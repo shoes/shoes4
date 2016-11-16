@@ -60,8 +60,8 @@ class Shoes
 
     def self.dsl_method_name(klass)
       klass.to_s[/(^|::)(\w+)$/, 2]
-        .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-        .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+           .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+           .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
     end
   end
 end
