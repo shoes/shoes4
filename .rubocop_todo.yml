@@ -53,12 +53,6 @@ Lint/RescueException:
     - 'samples/expert-funnies.rb'
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Lint/UnneededSplatExpansion:
-  Exclude:
-    - 'shoes-core/spec/shoes/shared_examples/dsl/text_elements.rb'
-
 # Offense count: 2
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
