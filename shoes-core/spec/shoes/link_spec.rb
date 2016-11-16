@@ -4,17 +4,21 @@ describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }
   let(:user_facing_app) { double("user facing app") }
   let(:element_styles) { Hash.new }
-  let(:app) { double("app", gui: gui, style: {}, element_styles: element_styles,
-                            warn: true, add_mouse_hover_control: nil) }
+
+  let(:app) do
+    double("app", gui: gui, style: {}, element_styles: element_styles,
+                  warn: true, add_mouse_hover_control: nil)
+  end
+
   let(:parent) { double("parent") }
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
 
-  subject {
+  subject do
     link = Shoes::Link.new(app, texts, color: :blue)
     link.parent = parent
     link
-  }
+  end
 
   before do
     allow(user_facing_app).to receive(:style) do |clazz, styles|
@@ -45,8 +49,9 @@ describe Shoes::Link do
     end
 
     context "overriding styles" do
-      subject { Shoes::Link.new(app, texts,
-                                underline: false, bg: Shoes::COLORS[:green]) }
+      subject do
+        Shoes::Link.new(app, texts, underline: false, bg: Shoes::COLORS[:green])
+      end
 
       it "should include defaults" do
         expect(subject.style).to include(stroke: Shoes::COLORS[:blue])

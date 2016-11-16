@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Shoes::ListBox do
   include_context "dsl app"
-  let(:input_opts) { { items: items, left: left, top: top, width: width,
-                       height: height } }
+  let(:input_opts) do
+    { items: items, left: left, top: top, width: width, height: height }
+  end
 
   let(:items) { ["Wine", "Vodka", "Water"] }
 

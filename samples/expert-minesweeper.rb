@@ -239,7 +239,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
         button("Intermediate") { new_game :intermediate }
         button("Expert") { new_game :expert }
       end
-      stack do @status = para stroke: white end
+      stack { @status = para stroke: white }
       @field.paint
       para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white, font: "11px"
     end

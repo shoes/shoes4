@@ -9,9 +9,9 @@ describe Shoes::Swt::Oval do
   let(:height) { 400 }
   let(:dsl) { ::Shoes::Oval.new shoes_app, parent, left, top, width, height }
 
-  subject {
+  subject do
     Shoes::Swt::Oval.new(dsl, swt_app)
-  }
+  end
 
   it_behaves_like "paintable"
   it_behaves_like "updating visibility"

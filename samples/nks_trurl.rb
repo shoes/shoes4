@@ -1,5 +1,5 @@
-Shoes.app {
-  button("Trurl?") {
+Shoes.app do
+  button("Trurl?") do
     alert("Klapaucius!")
-  }
-}
+  end
+end

@@ -16,10 +16,10 @@ describe Shoes::Swt::Image do
   let(:image_path) { File.dirname(__FILE__) + '/minimal.png' }
   let(:image) { image_path }
 
-  subject {
+  subject do
     allow(dsl).to receive(:file_path) { image }
     Shoes::Swt::Image.new(dsl, swt_app)
-  }
+  end
 
   it_behaves_like "paintable"
   it_behaves_like "removable"

@@ -75,12 +75,12 @@ describe Shoes::InternalApp do
 
   describe '#clear' do
     context 'when called after the initial input block' do
-      let(:input_block) {
+      let(:input_block) do
         proc do
           para "CONTENT"
           para "JUST FOR TESTING"
         end
-      }
+      end
 
       before :each do
         expect(subject.contents.size).to eq(2)
@@ -93,21 +93,21 @@ describe Shoes::InternalApp do
     end
 
     context 'when called in the initial input_block' do
-      let(:input_block) {
+      let(:input_block) do
         proc do
           para 'Hello there'
           clear do
             para 'see you'
           end
         end
-      }
+      end
 
       it 'does not raise an error' do
         expect { subject }.not_to raise_error
       end
 
       context 'when called inside a slot' do
-        let(:input_block) {
+        let(:input_block) do
           proc do
             button 'I am here'
             stack do
@@ -116,7 +116,7 @@ describe Shoes::InternalApp do
               clear
             end
           end
-        }
+        end
 
         it 'does not delete the slot, or an element outside the slot' do
           expect(subject.contents.size).to eq 2
@@ -125,12 +125,12 @@ describe Shoes::InternalApp do
     end
 
     context 'when called before a button in an initial input block' do
-      let(:input_block) {
+      let(:input_block) do
         proc do
           clear
           button 'My Button'
         end
-      }
+      end
 
       it 'allows a button to be created' do
         expect(subject.contents.size).to eq(1)

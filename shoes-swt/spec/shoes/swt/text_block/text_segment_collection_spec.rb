@@ -5,11 +5,14 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
 
   let(:first_segment) { create_segment("first", "first") }
   let(:second_segment) { create_segment("second", "rest") }
-  let(:dsl) { double("dsl", font: "", size: 16, style: {},
-                            text_styles: {(0..-1) => ["whatever"]}) }
+
+  let(:dsl) do
+    double("dsl", font: "", size: 16, style: {},
+                  text_styles: {(0..-1) => ["whatever"]})
+  end
 
   let(:gc) { double("gc") }
-  let(:default_text_styles) {
+  let(:default_text_styles) do
     {
       fg: :fg,
       bg: :bg,
@@ -21,12 +24,14 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
         styles: [::Swt::SWT::NORMAL]
       }
     }
-  }
+  end
 
   describe "with one segment" do
-    subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
-                                                               [first_segment],
-                                                               default_text_styles) }
+    subject do
+      Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
+                                                       [first_segment],
+                                                       default_text_styles)
+    end
 
     before do
       allow(dsl).to receive(:text) { first_segment.text }
@@ -129,9 +134,11 @@ describe Shoes::Swt::TextBlock::TextSegmentCollection do
   end
 
   describe "with two segments" do
-    subject { Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
-                                                               [first_segment, second_segment],
-                                                               default_text_styles) }
+    subject do
+      Shoes::Swt::TextBlock::TextSegmentCollection.new(dsl,
+                                                       [first_segment, second_segment],
+                                                       default_text_styles)
+    end
 
     before do
       allow(dsl).to receive(:text) { first_segment.text + second_segment.text }

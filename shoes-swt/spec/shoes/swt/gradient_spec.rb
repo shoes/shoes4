@@ -3,9 +3,12 @@ require 'spec_helper'
 describe Shoes::Swt::Gradient do
   let(:color1) { Shoes::Color.create(Shoes::COLORS[:honeydew]) }
   let(:color2) { Shoes::Color.create(Shoes::COLORS[:salmon]) }
-  let(:applied_to) { double("applied to",
-                            element_left: 0, element_top: 0, angle: 0,
-                            element_width: 10, element_height: 10) }
+
+  let(:applied_to) do
+    double("applied to", element_left: 0, element_top: 0, angle: 0,
+                         element_width: 10, element_height: 10)
+  end
+
   let(:dsl) { Shoes::Gradient.new(color1, color2) }
   let(:gc) { double("gc", set_background_pattern: nil) }
 

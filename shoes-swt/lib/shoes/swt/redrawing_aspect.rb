@@ -67,7 +67,9 @@ class Shoes
       end
 
       def add_redraws
-        after_every NEED_TO_UPDATE do update_gui end
+        after_every NEED_TO_UPDATE do
+          update_gui
+        end
         after_every NEED_TO_ASYNC_UPDATE_GUI do
           @display.asyncExec { update_gui }
         end

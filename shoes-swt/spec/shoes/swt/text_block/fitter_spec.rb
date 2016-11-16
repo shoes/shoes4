@@ -1,18 +1,23 @@
 require 'spec_helper'
 
 describe Shoes::Swt::TextBlock::Fitter do
-  let(:dsl) { double('dsl', parent: parent_dsl, text: "Text goes here",
-                            desired_width: 85, centered?:    false,
-                            absolute_left: 25, absolute_top: 75,
-                            element_left:  26, element_top:  76,
-                            margin_left:   1,  margin_top:   1) }
+  let(:dsl) do
+    double('dsl', parent: parent_dsl, text: "Text goes here",
+                  desired_width: 85,  centered?:    false,
+                  absolute_left: 25,  absolute_top: 75,
+                  element_left:  26,  element_top:  76,
+                  margin_left:   1,   margin_top:   1)
+  end
 
-  let(:parent_dsl) { double('parent_dsl', parent: grandparent_dsl,
-                                          absolute_top: 0, absolute_left: 0, absolute_right: 100,
-                                          width: parent_width, height: 200) }
+  let(:parent_dsl) do
+    double('parent_dsl', parent: grandparent_dsl,
+                         absolute_top: 0, absolute_left: 0, absolute_right: 100,
+                         width: parent_width, height: 200)
+  end
 
-  let(:grandparent_dsl) { double('grandparent_dsl', parent: app,
-                                                    width: grandparent_width) }
+  let(:grandparent_dsl) do
+    double('grandparent_dsl', parent: app, width: grandparent_width)
+  end
 
   let(:app) { double('app', width: app_width) }
 
@@ -92,9 +97,11 @@ describe Shoes::Swt::TextBlock::Fitter do
 
   describe "fit it in" do
     let(:bounds) { double('bounds', width: 100, height: 50) }
-    let(:segment) { double('segment',
-                           text: "something something", :text= => nil,
-                           line_count: 1, line_offsets: [], bounds: bounds) }
+
+    let(:segment) do
+      double('segment', text: "something something", :text= => nil,
+                        line_count: 1, line_offsets: [], bounds: bounds)
+    end
 
     before(:each) do
       layout = double('swt_layout', :spacing => 4, :spacing= => nil)

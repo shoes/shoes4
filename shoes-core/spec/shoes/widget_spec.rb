@@ -72,7 +72,7 @@ describe Shoes::Widget do
 
     it 'really smiles' do
       expect_any_instance_of(Smile).to receive(:smile_magic)
-      Shoes.app do visit '/smile' end
+      Shoes.app { visit '/smile' }
     end
   end
 end

@@ -4,10 +4,13 @@ describe Shoes::Swt::Radio do
   include_context "swt app"
 
   let(:text) { "TEXT" }
-  let(:dsl) { double('dsl', :app => shoes_app,
-                            :width= => true, :width => 100,
-                            :height= => true, :height => 200,
-                            :group => nil, :blk => block).as_null_object }
+
+  let(:dsl) do
+    double('dsl', :app => shoes_app, :width= => true, :width => 100,
+                  :height= => true, :height => 200, :group => nil,
+                  :blk => block).as_null_object
+  end
+
   let(:block) { proc {} }
   let(:real) { double('real').as_null_object }
 

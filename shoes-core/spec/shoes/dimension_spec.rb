@@ -7,10 +7,12 @@ describe Shoes::Dimension do
   let(:parent_element_start) { 34 }
   let(:parent_element_end) { 83 }
   let(:parent_element_extent) { 600 }
-  let(:parent_dimension) { double 'parent_dimension',
-                                  element_start:  parent_element_start,
-                                  element_end:    parent_element_end,
-                                  element_extent: parent_element_extent }
+  let(:parent_dimension) do
+    double 'parent_dimension',
+           element_start:  parent_element_start,
+           element_end:    parent_element_end,
+           element_extent: parent_element_extent
+  end
 
   ONE_PIXEL = 1 unless const_defined?(:ONE_PIXEL) && ONE_PIXEL == 1
 
@@ -56,8 +58,8 @@ describe Shoes::Dimension do
   describe '#extent' do
     let(:parent_element_extent) { 600 }
     let(:parent_extent) { 580 }
-    let(:parent) { double 'parent', element_extent: parent_element_extent,
-                                    extent: parent_extent}
+    let(:parent) do double 'parent', element_extent: parent_element_extent,
+                                     extent: parent_extent end
 
     subject { Shoes::Dimension.new parent }
 
@@ -269,18 +271,18 @@ describe Shoes::Dimension do
 
         its(:element_extent) { should eq element_extent }
         its(:extent) { should eq element_extent + margin_start + margin_end }
-        its(:element_end) { should eq subject.element_start + element_extent -
-                                       ONE_PIXEL}
+        its(:element_end) do should eq subject.element_start + element_extent -
+                                       ONE_PIXEL end
       end
 
       describe 'relative margins' do
         let(:margin_start) { 0.1 }
         let(:margin_end) { 0.2 }
 
-        its(:margin_start) { should be_within(ONE_PIXEL).of 0.1 *
-                                                          parent_element_extent}
-        its(:margin_end) { should be_within(ONE_PIXEL).of 0.2 *
-                                                         parent_element_extent}
+        its(:margin_start) do should be_within(ONE_PIXEL).of 0.1 *
+                                                          parent_element_extent end
+        its(:margin_end) do should be_within(ONE_PIXEL).of 0.2 *
+                                                         parent_element_extent end
       end
     end
   end
@@ -412,13 +414,13 @@ describe Shoes::Dimension do
     end
 
     describe 'it obeys parent bounds' do
-      let(:parent_dimension) { double 'parent_dimension',
-                                      element_start:  10,
-                                      element_end:    20,
-                                      absolute_start: 10,
-                                      absolute_end:   20,
-                                      extent:         10,
-                                      element_extent: 10 }
+      let(:parent_dimension) do double 'parent_dimension',
+                                       element_start:  10,
+                                       element_end:    20,
+                                       absolute_start: 10,
+                                       absolute_end:   20,
+                                       extent:         10,
+                                       element_extent: 10 end
 
       subject { Shoes::ParentDimension.new parent_dimension }
 

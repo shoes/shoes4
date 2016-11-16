@@ -8,9 +8,7 @@ describe Shoes::Swt::Line do
   let(:point_a) { Shoes::Point.new(10, 100) }
   let(:point_b) { Shoes::Point.new(300, 10) }
 
-  subject {
-    Shoes::Swt::Line.new(dsl, swt_app)
-  }
+  subject { Shoes::Swt::Line.new(dsl, swt_app) }
 
   context "#initialize" do
     it { is_expected.to be_instance_of(Shoes::Swt::Line) }

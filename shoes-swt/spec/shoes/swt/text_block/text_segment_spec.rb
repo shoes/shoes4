@@ -1,11 +1,14 @@
 require 'spec_helper'
 
 describe Shoes::Swt::TextBlock::TextSegment do
-  let(:layout) { double("layout", text: "the text",
-                                  :alignment= => nil, :justify= => nil, :spacing= => nil,
-                                  :text= => nil, :width= => nil,
-                                  disposed?: false, dispose: nil,
-                                  set_style: nil, bounds: bounds) }
+  let(:layout) do
+    double("layout", text: "the text",
+                     :alignment= => nil, :justify= => nil, :spacing= => nil,
+                     :text= => nil, :width= => nil,
+                     disposed?: false, dispose: nil,
+                     set_style: nil, bounds: bounds)
+  end
+
   let(:bounds) { Java::OrgEclipseSwtGraphics::Rectangle.new(0, 0, 0, 0) }
   let(:element_left) { 0 }
   let(:element_top)  { 0 }
@@ -19,7 +22,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
   let(:font)   { double("font") }
   let(:style)  { double("style") }
 
-  let(:style_hash) {
+  let(:style_hash) do
     {
       bg: double("bg"),
       fg: double("fg"),
@@ -29,7 +32,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
         styles: nil
       }
     }
-  }
+  end
 
   let(:dsl) { double("dsl", font: "", size: 16, style: {}) }
 

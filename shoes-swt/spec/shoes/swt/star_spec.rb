@@ -24,10 +24,14 @@ describe Shoes::Swt::Star do
     include_context "painter context"
 
     let(:corners) { 0 }
-    let(:dsl) { double("dsl object", hidden: false, points: points, outer: outer,
-                                     inner: inner, element_width: outer * 2.0,
-                                     element_height: outer * 2.0, element_left: left,
-                                     element_top: top).as_null_object }
+
+    let(:dsl) do
+      double("dsl object", hidden: false, points: points, outer: outer,
+                           inner: inner, element_width: outer * 2.0,
+                           element_height: outer * 2.0, element_left: left,
+                           element_top: top).as_null_object
+    end
+
     let(:shape) { Shoes::Swt::Star.new dsl, swt_app }
     subject { Shoes::Swt::Star::Painter.new shape }
 

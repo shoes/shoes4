@@ -93,8 +93,9 @@ describe Shoes::Swt::App do
   describe 'App dimensions' do
     let(:client_area) { double 'client_area', width: width, height: height }
     let(:vertical_bar) { double 'scroll bar', visible?: bar_visible }
-    let(:shell) { double('shell', client_area: client_area,
-                                  vertical_bar: vertical_bar)}
+    let(:shell) do
+      double('shell', client_area: client_area, vertical_bar: vertical_bar)
+    end
     let(:width) { 50 }
     let(:height) { 80 }
     let(:bar_visible) { false }

@@ -284,11 +284,12 @@ describe Shoes::Swt::Keypress do
 
   describe '#ignore_event?' do
     let(:character) { 'a' }
-    let(:event) { double 'key event',
-                         widget: widget,
-                         stateMask: 0,
-                         keyCode:  keyCode,
-                         character: character.ord }
+
+    let(:event) do
+      double 'key event', widget: widget, stateMask: 0, keyCode:  keyCode,
+                          character: character.ord
+    end
+
     let(:shell) { Java::OrgEclipseSwtWidgets::Shell.new }
     let(:style) { 0 }
     let(:keyCode) { character.downcase.ord }

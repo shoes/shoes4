@@ -12,13 +12,16 @@ describe Shoes::Swt::Link do
   it_behaves_like "clickable backend"
 
   context "creating link segments" do
-    let(:bounds)       { double("bounds", x: 0, y: 0, height: 0) }
-    let(:inner_layout) { double("inner layout",
-                                get_line_bounds: bounds, line_count: 1) }
-    let(:layout)       { double("layout",
-                                get_location: double("position", x: 0, y: 0),
-                                element_left: 0, element_top: 0,
-                                layout: inner_layout) }
+    let(:bounds) { double("bounds", x: 0, y: 0, height: 0) }
+
+    let(:inner_layout) do
+      double("inner layout", get_line_bounds: bounds, line_count: 1)
+    end
+
+    let(:layout) do
+      double("layout", get_location: double("position", x: 0, y: 0),
+                       element_left: 0, element_top: 0, layout: inner_layout)
+    end
 
     it "clears existing" do
       subject.link_segments << double("segment")
