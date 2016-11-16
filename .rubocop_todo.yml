@@ -125,11 +125,6 @@ Style/AsciiComments:
     - 'shoes-core/lib/shoes/common/positioning.rb'
     - 'shoes-package/lib/shoes/package/configuration.rb'
 
-# Offense count: 84
-# Cop supports --auto-correct.
-Style/BlockEndNewline:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact

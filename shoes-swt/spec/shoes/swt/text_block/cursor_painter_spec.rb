@@ -37,9 +37,11 @@ describe Shoes::Swt::TextBlock::CursorPainter do
     let(:left) { 10 }
     let(:top)  { 20 }
     let(:position) { double(x: 5, y: 5) }
-    let(:first_segment) do double("first segment", text: "first",
-                                                   get_location: position, height: 10,
-                                                   element_left: left, element_top: top) end
+
+    let(:first_segment) do
+      double("first segment", text: "first", get_location: position, height: 10,
+                              element_left: left, element_top: top)
+    end
 
     before(:each) do
       allow(textcursor).to receive(:move)
@@ -47,9 +49,11 @@ describe Shoes::Swt::TextBlock::CursorPainter do
     end
 
     context "with two segments" do
-      let(:second_segment) do double("second segment", text: "second",
-                                                       get_location: position,
-                                                       element_left: left, element_top: top + 100) end
+      let(:second_segment) do
+        double("second segment", text: "second", get_location: position,
+                                 element_left: left, element_top: top + 100)
+      end
+
       before(:each) do
         allow(dsl).to receive(:text).and_return(first_segment.text + second_segment.text)
       end

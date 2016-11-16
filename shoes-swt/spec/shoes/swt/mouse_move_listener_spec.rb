@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe Shoes::Swt::MouseMoveListener do
-  let(:app) do double 'SWT App', dsl: dsl_app, shell: shell,
-                                 clickable_elements: clickable_elements end
+  let(:app) do
+    double 'SWT App', dsl: dsl_app, shell: shell,
+                      clickable_elements: clickable_elements
+  end
+
   let(:clickable_elements) { [] }
   let(:mouse_hover_controls) { [] }
   let(:mouse_motion) { [] }
