@@ -242,13 +242,6 @@ Style/SingleLineBlockParams:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Style/SpaceBeforeFirstArg:
-  Exclude:
-    - 'samples/class-book-adjusted.rb'
-
-# Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
 Style/VariableName:
