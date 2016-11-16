@@ -23,7 +23,7 @@ class Shoes
                                :justify, :kerning, :leading, :rise, :size, :stretch,
                                :strikecolor, :strikethrough, :stroke, :undercolor,
                                :underline, :weight, :wrap],
-      }
+      }.freeze
 
       # Adds styles, or just returns current style if no argument
       def style(new_styles = nil)

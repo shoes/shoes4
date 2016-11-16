@@ -21,10 +21,10 @@ class Shoes
           TextBlock::CursorPainter         => [:move_textcursor],
           Timer                            => [:eval_block],
           ::Shoes::Common::Changeable      => [:call_change_listeners]
-        }
+        }.freeze
 
       # only the main thread may draw
-      NEED_TO_ASYNC_UPDATE_GUI = { ::Shoes::Download => [:eval_block] }
+      NEED_TO_ASYNC_UPDATE_GUI = { ::Shoes::Download => [:eval_block] }.freeze
 
       # These need to trigger a redraw
       SAME_POSITION    = { Common::Visibility      => [:update_visibility],
@@ -34,10 +34,10 @@ class Shoes
                            ::Shoes::Common::Remove => [:remove],
                            ::Shoes::Slot           => [:mouse_hovered,
                                                        :mouse_left],
-                           ::Shoes::TextBlock      => [:replace] }
+                           ::Shoes::TextBlock      => [:replace] }.freeze
 
       CHANGED_POSITION = { ::Shoes::Common::Positioning => [:_position],
-                           ::Shoes::Common::Hover       => [:eval_hover_block] }
+                           ::Shoes::Common::Hover       => [:eval_hover_block] }.freeze
 
       attr_reader :app
 

@@ -4,11 +4,11 @@ class Changelog
     {pattern: 'Changelog: improvement', heading: 'Improvements'},
     {pattern: 'Changelog: bugfix', heading: 'Bug Fixes'},
     {pattern: 'Changelog: breaking', heading: 'Breaking Changes'}
-  ]
+  ].freeze
 
-  COMMIT_SEPARATOR     = '<--COMMIT-->'
-  BODY_START_SEPARATOR = '<--BODY-START-->'
-  BODY_END_SEPARATOR   = '<--BODY-END-->'
+  COMMIT_SEPARATOR     = '<--COMMIT-->'.freeze
+  BODY_START_SEPARATOR = '<--BODY-START-->'.freeze
+  BODY_END_SEPARATOR   = '<--BODY-END-->'.freeze
 
   def generate(categories = CATEGORY_MAPPING)
     commit_range = commits_on_master_since_last_release

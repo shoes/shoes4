@@ -107,7 +107,7 @@ class Shoes
       inspect_details
     end
 
-    DELEGATE_BLACKLIST = [:parent, :app]
+    DELEGATE_BLACKLIST = [:parent, :app].freeze
 
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom

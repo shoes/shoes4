@@ -191,7 +191,7 @@ class Shoes
   module DimensionsDelegations
     extend Forwardable
 
-    UNDELEGATED_METHODS = [:to_s]
+    UNDELEGATED_METHODS = [:to_s].freeze
     CANDIDATE_METHODS = Dimensions.public_instance_methods(false) - UNDELEGATED_METHODS
 
     WRITER_METHODS    = CANDIDATE_METHODS.select { |meth| meth.to_s.end_with?("=") }

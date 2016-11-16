@@ -7,7 +7,7 @@ class Shoes
 
     attr_reader :app, :gui, :blk
     style_with :common_styles, :text_block_styles
-    STYLES = { underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil }
+    STYLES = { underline: true, stroke: ::Shoes::COLORS[:blue], fill: nil }.freeze
 
     def initialize(my_app, texts, styles = {}, blk = nil)
       @app = my_app

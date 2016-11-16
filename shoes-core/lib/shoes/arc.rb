@@ -8,7 +8,7 @@ class Shoes
     include Common::Hover
 
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
-    STYLES = { wedge: false }
+    STYLES = { wedge: false }.freeze
 
     def before_initialize(styles, _left, _top, _width, _height, angle1, angle2)
       styles[:angle1] = angle1

@@ -352,7 +352,7 @@ class Shoes
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
-    OVAL_ALLOWED_ARG_SIZES = [0, 3, 4]
+    OVAL_ALLOWED_ARG_SIZES = [0, 3, 4].freeze
     def oval(*opts, &blk)
       oval_style = pop_style(opts)
       oval_style = style_normalizer.normalize(oval_style)
@@ -391,7 +391,7 @@ EOS
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
-    RECT_ALLOWED_ARG_SIZES = [0, 3, 4, 5]
+    RECT_ALLOWED_ARG_SIZES = [0, 3, 4, 5].freeze
     def rect(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
 
@@ -470,7 +470,7 @@ EOS
     #   Creates a shape at (0, 0)
     #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-    SHAPE_ALLOWED_ARG_SIZES = [0, 2]
+    SHAPE_ALLOWED_ARG_SIZES = [0, 2].freeze
     def shape(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
       opts[:left], opts[:top] = args if args.length == 2
@@ -486,8 +486,8 @@ EOS
     end
 
     # Define app-level setter methods
-    PATTERN_APP_STYLES = [:fill, :stroke]
-    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform, :translate]
+    PATTERN_APP_STYLES = [:fill, :stroke].freeze
+    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform, :translate].freeze
 
     PATTERN_APP_STYLES.each do |style|
       define_method style do |val|
@@ -525,7 +525,7 @@ EOS
       sub: { rise: -10, size_modifier: 0.8 },
       sup: { rise: 10, size_modifier: 0.8 },
       strong: { weight: true },
-    }
+    }.freeze
 
     TEXT_STYLES.keys.each do |method|
       define_method method do |*texts|

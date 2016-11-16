@@ -5,7 +5,7 @@ class Shoes
         "single" => 0,
         "double" => 1,
         "error" => 2,
-      }
+      }.freeze
 
       def initialize
         @colors = []

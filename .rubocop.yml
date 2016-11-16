@@ -18,6 +18,15 @@ Style/CollectionMethods:
   PreferredMethods:
     inject: 'inject'
 
+# To make these actually constants is going to require significant changes to
+# Shoes internals
+Style/MutableConstant:
+  Exclude:
+    - shoes-core/lib/shoes/dsl.rb
+    - shoes-core/lib/shoes/font.rb
+    - shoes-core/lib/shoes/color/dsl.rb
+    - shoes-core/lib/shoes/common/style.rb
+
 # We prefer to avoid loop control magic
 Style/Next:
   Enabled: false

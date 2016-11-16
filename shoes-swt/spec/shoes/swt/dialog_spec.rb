@@ -26,7 +26,7 @@ describe Shoes::Swt::Dialog do
     @dialog = Shoes::Swt::Dialog.new
   end
 
-  TEXT = 'some random text'
+  TEXT = 'some random text'.freeze
 
   describe 'alert' do
     it 'pops up a window containing a short message.' do

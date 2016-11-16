@@ -54,7 +54,7 @@ class MimickIRB < RubyLex
   end
 end
 
-CURSOR = ">>"
+CURSOR = ">>".freeze
 IRBalike = MimickIRB.new
 $stdout = StringIO.new
 
