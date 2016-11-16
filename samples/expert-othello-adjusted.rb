@@ -223,7 +223,14 @@ module Othello
       else
         background white
         border black, strokewidth: 10
-        undo = GAME.board_history.empty? ? nil : link("Undo last move") { GAME.undo!; draw_board }
+        undo = if GAME.board_history.empty?
+                 nil
+               else
+                 link("Undo last move") do
+                   GAME.undo!
+                   draw_board
+                 end
+               end
         para strong("Player 1"), SPACE, undo, margin: [20, 15, 0, 0]
       end
     end
@@ -238,7 +245,14 @@ module Othello
       else
         background white
         border black, strokewidth: 10
-        undo = GAME.board_history.empty? ? nil : link("Undo last move") { GAME.undo!; draw_board }
+        undo = if GAME.board_history.empty?
+                 nil
+               else
+                 link("Undo last move") do
+                   GAME.undo!
+                   draw_board
+                 end
+               end
         para strong("Player 2"), SPACE, undo, margin: [20, 15, 0, 0]
       end
     end

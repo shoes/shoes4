@@ -98,7 +98,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 388
+  Max: 390
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -233,24 +233,6 @@ Style/PredicateName:
     - 'samples/expert-minesweeper-adjusted.rb'
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
-
-# Offense count: 28
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAsExpressionSeparator.
-Style/Semicolon:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/expert-tetris.rb'
-    - 'samples/good-reminder.rb'
-    - 'samples/good-vjot.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-brightness-transitions.rb'
-    - 'samples/simple-curve.rb'
-    - 'samples/simple-polygon-line.rb'
-    - 'samples/simple-stack-flow-buttons.rb'
 
 # Offense count: 1
 # Configuration parameters: Methods.

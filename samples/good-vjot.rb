@@ -38,7 +38,13 @@ Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
 
   def load_list
     note_list = NOTES.map do |note|
-      [link(note.first) { @note = load_note(note); load_list }, "\n"]
+      [
+        link(note.first) do
+          @note = load_note(note)
+          load_list
+        end,
+        "\n"
+      ]
     end.flatten + [link("+ Add a new Note") do
       NOTES << (@note = load_note)
       load_list

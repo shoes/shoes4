@@ -19,7 +19,10 @@ Shoes.app title: "A Gentle Reminder",
     flow margin_top: 10 do
       para "Remember to"
       @add = edit_line(margin_left: 10, width: 180)
-      button("Add", margin_left: 5) { add_todo(@add.text); @add.text = '' }
+      button("Add", margin_left: 5) do
+        add_todo(@add.text)
+        @add.text = ''
+      end
     end
   end
 

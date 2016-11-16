@@ -219,7 +219,12 @@ module Othello
         background white
         para span("Player 1", stroke: black, font: "Trebuchet 10px bold"), margin: 4
 
-        button("Undo last move", top: 0, left: -150) { GAME.undo!; draw_board } unless GAME.board_history.empty?
+        unless GAME.board_history.empty?
+          button("Undo last move", top: 0, left: -150) do
+            GAME.undo!
+            draw_board
+          end
+        end
       end
     end
   end
@@ -233,7 +238,12 @@ module Othello
         background white
         para span("Player 2", stroke: black, font: "Trebuchet 10px bold"), margin: 4
 
-        button("Undo last move", top: 0, left: -150) { GAME.undo!; draw_board } unless GAME.board_history.empty?
+        unless GAME.board_history.empty?
+          button("Undo last move", top: 0, left: -150) do
+            GAME.undo!
+            draw_board
+          end
+        end
       end
     end
   end

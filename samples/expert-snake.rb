@@ -36,14 +36,20 @@ Shoes.app title: 'Snake Game v0.1' do
 
   def eat?(s)
     @foods.each do |f|
-      (f.move @rx[], @ry[]; return true) if (f.left == s.left) && (f.top == s.top)
+      if f.left == s.left && f.top == s.top
+        f.move @rx[], @ry[]
+        return true
+      end
     end
     false
   end
 
   def brick?(s)
     @bricks.each do |b|
-      @run.remove; alert 'Game Over. ' if (b.left == s.left) && (b.top == s.top)
+      if (b.left == s.left) && (b.top == s.top)
+        @run.remove
+        alert 'Game Over. '
+      end
     end
   end
 
@@ -55,7 +61,8 @@ Shoes.app title: 'Snake Game v0.1' do
 
   def create_bricks
     @bricks = []
-    stroke deepskyblue; fill blue
+    stroke deepskyblue
+    fill blue
 
     50.times { @bricks << rect(@rx[], @ry[], 10, 10) }
 
@@ -66,7 +73,8 @@ Shoes.app title: 'Snake Game v0.1' do
 
   def create_initial_snake
     @snake = []
-    stroke white; nofill
+    stroke white
+    nofill
 
     @snake << rect(300, 100, 10, 10)
 
