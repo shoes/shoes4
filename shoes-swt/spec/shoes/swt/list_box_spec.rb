@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Shoes::Swt::ListBox do
   include_context "swt app"
 
-  let(:items)  { ["Pie", "Apple", "Sand"] }
+  let(:items) { ["Pie", "Apple", "Sand"] }
 
   let(:dsl) do
     double('dsl', app: shoes_app, items: items, opts: {}, element_width: 200,

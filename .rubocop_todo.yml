@@ -149,13 +149,6 @@ Style/CommentAnnotation:
     - 'samples/expert-othello-adjusted.rb'
     - 'samples/expert-othello.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/CommentIndentation:
-  Exclude:
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/original-manual-adjusted.rb'
-
 # Offense count: 1
 Style/ConstantName:
   Exclude:

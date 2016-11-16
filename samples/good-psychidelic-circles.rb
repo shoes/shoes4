@@ -16,9 +16,9 @@ Shoes.app width: 537, height: 500 do
   my = (537 / 2).to_i
   animate(36) do
     # clear do
-      # Manage color
+    # Manage color
     nostroke
-      # Update some variables
+    # Update some variables
     degree += 1
     size += 1
     degree = 0 if degree >= 360
@@ -26,7 +26,7 @@ Shoes.app width: 537, height: 500 do
     color = 0.0 if color >= 1.0
     color += 0.05 if degree % 10 == 0
 
-      # Draw inner circle
+    # Draw inner circle
     fill red(color)
     10.times do |i|
       current_size = 100 + size
@@ -47,7 +47,7 @@ Shoes.app width: 537, height: 500 do
       end
     end
 
-      # Draw outer circle
+    # Draw outer circle
     fill blue(color)
     20.times do |i|
       current_size = 50 + size
