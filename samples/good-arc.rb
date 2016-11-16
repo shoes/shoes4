@@ -12,7 +12,7 @@ Shoes.app width: 420, height: 420, resizable: false do
   nofill
 
   animate 40 do |i|
-    stage = rand(1...8) if i % 40 == 0
+    stage = rand(1...8) if (i % 40).zero?
     if wide.abs < 0.1
       wide = if stage == 6
                -0.1

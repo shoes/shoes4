@@ -56,7 +56,7 @@ EOS
     end
 
     def black?
-      @red == 0 && @green == 0 && @blue == 0
+      @red.zero? && @green.zero? && @blue.zero?
     end
 
     def <=>(other)

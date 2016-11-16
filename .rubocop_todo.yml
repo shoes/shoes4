@@ -222,13 +222,6 @@ Style/MethodMissing:
 Style/MutableConstant:
   Enabled: false
 
-# Offense count: 41
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle, SupportedStyles.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
 # NamePrefix: is_, has_, have_

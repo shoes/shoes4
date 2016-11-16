@@ -61,10 +61,10 @@ describe Shoes::Dimensions do
       its(:absolute_right_position?) { should be_falsey }
       its(:absolute_bottom_position?) { should be_falsey }
       its(:margin)      { should == [0, 0, 0, 0] }
-      its(:margin_left) { should == 0 }
-      its(:margin_top) { should == 0 }
-      its(:margin_right) { should == 0 }
-      its(:margin_bottom) { should == 0 }
+      its(:margin_left) { should be_zero }
+      its(:margin_top) { should be_zero }
+      its(:margin_right) { should be_zero }
+      its(:margin_bottom) { should be_zero }
       its(:element_width) { should be_nil }
       its(:element_height) { should be_nil }
       its(:to_s) { should == "(Shoes::Dimensions)" }

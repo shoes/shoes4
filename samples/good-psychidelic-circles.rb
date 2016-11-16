@@ -24,7 +24,7 @@ Shoes.app width: 537, height: 500 do
     degree = 0 if degree >= 360
     size = 0 if size >= 100
     color = 0.0 if color >= 1.0
-    color += 0.05 if degree % 10 == 0
+    color += 0.05 if (degree % 10).zero?
 
     # Draw inner circle
     fill red(color)
