@@ -234,17 +234,6 @@ Style/PredicateName:
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-    - 'spec/spec_helper.rb'
-
 # Offense count: 28
 # Cop supports --auto-correct.
 # Configuration parameters: AllowAsExpressionSeparator.
