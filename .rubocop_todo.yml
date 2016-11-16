@@ -217,18 +217,6 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
 
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: aligned, indented
-Style/MultilineOperationIndentation:
-  Exclude:
-    - 'samples/expert-pong.rb'
-    - 'samples/simple-slide.rb'
-    - 'shoes-core/spec/shoes/dimension_spec.rb'
-    - 'shoes-core/spec/shoes/dimensions_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block.rb'
-
 # Offense count: 86
 # Cop supports --auto-correct.
 Style/MutableConstant:

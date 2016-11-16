@@ -45,7 +45,7 @@ Shoes.app width: 400, height: 400, resizable: false do
 
     # if the @you paddle hits the ball
     if ny + ball_diameter > app.height && vy > 0 &&
-        (0..paddle_size).cover?(nx + (ball_diameter / 2) - @you.left)
+       (0..paddle_size).cover?(nx + (ball_diameter / 2) - @you.left)
       vx = (nx - @you.left - (paddle_size / 2)) * 0.25
       vy = -vy * bounce
       ny = app.height - ball_diameter
@@ -53,7 +53,7 @@ Shoes.app width: 400, height: 400, resizable: false do
 
     # if the @comp paddle hits the ball
     if ny < 0 && vy < 0 &&
-        (0..paddle_size).cover?(nx + (ball_diameter / 2) - @comp.left)
+       (0..paddle_size).cover?(nx + (ball_diameter / 2) - @comp.left)
       vx = (nx - @comp.left - (paddle_size / 2)) * 0.25
       vy = -vy * bounce
       ny = 0

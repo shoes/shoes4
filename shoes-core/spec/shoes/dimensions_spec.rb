@@ -337,12 +337,12 @@ describe Shoes::Dimensions do
 
         it 'returns an element_right' do
           expect(subject.element_right).to eq subject.element_left +
-                                                  element_width - ONE_PIXEL
+                                              element_width - ONE_PIXEL
         end
 
         it 'returns an element_bottom' do
           expect(subject.element_bottom).to eq subject.element_top +
-                                                   element_height - ONE_PIXEL
+                                               element_height - ONE_PIXEL
         end
       end
     end
@@ -402,7 +402,7 @@ describe Shoes::Dimensions do
 
         it 'sets height to element_height plus margins' do
           expect(subject.height).to eq margin_top + element_height +
-                                         margin_bottom
+                                       margin_bottom
         end
 
         it 'sets that value for element_width' do
