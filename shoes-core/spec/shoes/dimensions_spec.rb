@@ -65,8 +65,8 @@ describe Shoes::Dimensions do
       its(:margin_top) { should == 0 }
       its(:margin_right) { should == 0 }
       its(:margin_bottom) { should == 0 }
-      its(:element_width) { should == nil }
-      its(:element_height) { should == nil }
+      its(:element_width) { should be_nil }
+      its(:element_height) { should be_nil }
       its(:to_s) { should == "(Shoes::Dimensions)" }
       its(:inspect) { should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]_,_[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] _x_[)]/) }
     end

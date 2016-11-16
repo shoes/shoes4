@@ -222,12 +222,6 @@ Style/MethodMissing:
 Style/MutableConstant:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/NilComparison:
-  Exclude:
-    - 'shoes-core/spec/shoes/dimensions_spec.rb'
-
 # Offense count: 41
 # Cop supports --auto-correct.
 # Configuration parameters: AutoCorrect, EnforcedStyle, SupportedStyles.
