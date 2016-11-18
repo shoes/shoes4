@@ -22,7 +22,7 @@ class MenuPanel < Shoes::Widget
   end
 
   def expand
-    if self.width < 170
+    if width < 170
       a = animate 30 do
         @@boxes.each do |b|
           b.width -= 5 if (b != self) && b.width > 140

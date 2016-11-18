@@ -8,7 +8,7 @@
 shared_examples "DSL container" do
   let(:dsl) { app }
 
-  %w[
+  %w(
     animate
     arc
     background
@@ -36,7 +36,7 @@ shared_examples "DSL container" do
     strokewidth
     style
     video
-  ].each do |method|
+  ).each do |method|
     include_examples "#{method} DSL method"
   end
 

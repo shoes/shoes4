@@ -64,7 +64,7 @@ describe Shoes::Download do
   end
 
   context 'with a progress proc' do
-    let(:progress_proc) {Proc.new {}}
+    let(:progress_proc) {proc {}}
     let(:opts) { {save: "nasa50th.gif", progress: progress_proc} }
     subject(:download) {Shoes::Download.new app, parent, name, opts}
 
@@ -136,7 +136,7 @@ describe Shoes::Download do
     end
 
     context 'with a finish proc' do
-      let(:finish_proc) { Proc.new {} }
+      let(:finish_proc) { proc {} }
       let(:opts) { {save: "nasa50th.gif", finish: finish_proc} }
       subject(:download) { Shoes::Download.new app, parent, name, opts }
 
@@ -181,7 +181,7 @@ describe Shoes::Download do
     end
 
     describe 'with custom error blocks' do
-      let(:error_proc) { Proc.new { } }
+      let(:error_proc) { proc { } }
       let(:opts) { {save: "nasa50th.gif", error: error_proc} }
 
       it 'gets called' do

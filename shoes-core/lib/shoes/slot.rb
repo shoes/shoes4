@@ -296,7 +296,7 @@ class Shoes
                    .max
 
       if max_bottom
-        max_bottom - self.element_top + NEXT_ELEMENT_OFFSET
+        max_bottom - element_top + NEXT_ELEMENT_OFFSET
       else
         0
       end

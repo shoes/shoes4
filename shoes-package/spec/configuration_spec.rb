@@ -131,7 +131,7 @@ describe Shoes::Package::Configuration do
   end
 
   context "when osx icon is specified, but doesn't exist" do
-    let(:options) { ({icons: {osx: "path/to/non-existent/file"}}) }
+    let(:options) { {icons: {osx: "path/to/non-existent/file"}} }
     subject { Shoes::Package::Configuration.create options }
 
     it "sets osx icon path" do

@@ -57,8 +57,10 @@ task :update_versions do
     version = File.read("./VERSION").chomp
 
     ruby = File.read(file)
-    ruby.gsub!(/^(\s*)VERSION(\s*)= .*?$/, "\\1VERSION = \"#{version}\"")
-    raise "Could not insert VERSION in #{file}" unless $1
+
+    unless ruby.gsub!(/^(\s*)VERSION(\s*)= .*?$/, "\\1VERSION = \"#{version}\"")
+      raise "Could not insert VERSION in #{file}"
+    end
 
     File.open(file, 'w') { |f| f.write ruby }
   end

@@ -85,7 +85,7 @@ class Shoes
 
         def define_reader_methods
           needs_readers = @supported_styles.reject do |style|
-            self.method_defined?(style)
+            method_defined?(style)
           end
 
           needs_readers.map(&:to_sym).each do |style|
@@ -97,7 +97,7 @@ class Shoes
 
         def define_writer_methods
           needs_writers = @supported_styles.reject do |style|
-            self.method_defined?("#{style}=")
+            method_defined?("#{style}=")
           end
 
           needs_writers.map(&:to_sym).each do |style_key|
@@ -155,7 +155,7 @@ class Shoes
 
       def update_dimensions # so that @style hash matches actual values
         STYLE_GROUPS[:dimensions].each do |style|
-          if self.respond_to?(style)
+          if respond_to?(style)
             value = send(style)
             @style[style] = value if value
           end

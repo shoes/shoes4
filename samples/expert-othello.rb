@@ -249,8 +249,8 @@ module Othello
         GAME.board.each_with_index do |col, col_index|
           col.each_with_index do |cell, row_index|
             left, top = left_top_corner_of_piece(col_index, row_index)
-            left = left - LEFT_OFFSET
-            top = top - TOP_OFFSET
+            left -= LEFT_OFFSET
+            top -= TOP_OFFSET
             fill rgb(0, 440, 0, 90)
             strokewidth 1
             stroke rgb(0, 100, 0)
@@ -287,7 +287,7 @@ module Othello
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
       }
     }
-    return false
+    false
   end
 end
 

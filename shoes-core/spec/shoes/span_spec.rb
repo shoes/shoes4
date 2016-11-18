@@ -64,7 +64,7 @@ describe Shoes::Span do
   describe 'code' do
     it 'sets font to Lucida Console' do
       result = app.code 'test'
-      expect(result.style[:font]).to eq(('Lucida Console'))
+      expect(result.style[:font]).to eq('Lucida Console')
     end
   end
 

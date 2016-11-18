@@ -38,12 +38,12 @@ Shoes.app title: 'Snake Game v0.1' do
     @foods.each do |f|
       (f.move @rx[], @ry[]; return true) if (f.left == s.left) && (f.top == s.top)
     end
-    return false
+    false
   end
 
   def brick?(s)
     @bricks.each do |b|
-      (@run.remove; alert 'Game Over. ') if (b.left == s.left) && (b.top == s.top)
+      @run.remove; alert 'Game Over. ' if (b.left == s.left) && (b.top == s.top)
     end
   end
 

@@ -205,7 +205,7 @@ class Shoes
       key = meth.to_s.sub("=", "").to_sym
       define_method(meth) do |value|
         @style[key] = value if @style
-        self.dimensions.send(meth, value)
+        dimensions.send(meth, value)
       end
     end
 

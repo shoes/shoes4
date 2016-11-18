@@ -103,7 +103,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 374
+  Max: 382
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -317,23 +317,6 @@ Style/NumericPredicate:
   Enabled: false
 
 # Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'samples/expert-definr.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl.rb'
-
-# Offense count: 16
-# Cop supports --auto-correct.
-Style/PerlBackrefs:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-    - 'tasks/gem.rb'
-
-# Offense count: 3
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
 # NamePrefix: is_, has_, have_
 # NamePrefixBlacklist: is_, has_, have_
@@ -345,70 +328,6 @@ Style/PredicateName:
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-
-# Offense count: 28
-# Cop supports --auto-correct.
-Style/Proc:
-  Exclude:
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/builtin_methods_spec.rb'
-    - 'shoes-core/spec/shoes/common/style_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/internal_app_spec.rb'
-    - 'shoes-core/spec/shoes/link_spec.rb'
-    - 'shoes-core/spec/shoes/shape_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl_app_context.rb'
-    - 'shoes-core/spec/shoes/shared_examples/slot.rb'
-    - 'shoes-core/spec/shoes/slot_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/shared_examples/clickable.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'samples/expert-snake.rb'
-    - 'samples/good-reminder.rb'
-    - 'shoes-core/spec/shoes/span_spec.rb'
-    - 'shoes-package/spec/configuration_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/app.rb'
-
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/good-reminder.rb'
-    - 'samples/simple-tictactoe.rb'
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-    - 'shoes-package/spec/spec_helper.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
-
-# Offense count: 32
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Enabled: false
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
@@ -419,21 +338,6 @@ Style/RegexpLiteral:
     - 'samples/original-manual.rb'
     - 'shoes-core/lib/shoes/ui/picker.rb'
     - 'spec/spec_helper.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/RescueModifier:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/SelfAssignment:
-  Exclude:
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-tetris.rb'
 
 # Offense count: 28
 # Cop supports --auto-correct.

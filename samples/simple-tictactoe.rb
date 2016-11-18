@@ -96,9 +96,9 @@ class Board
           @game.toggle_player
           tic.player = @game.player_symbol
           tic.check
-          if self.check_if_over
+          if check_if_over
             show_screen(game.player_win)
-          elsif self.full?
+          elsif full?
             show_screen("Cat's Game!")
           end
         end
@@ -115,9 +115,9 @@ class Board
   # Takes an array and tells if each Tic has been checked by the same player
   def all_checked?(array)
     if array[0].checked
-      return array[0].player == array[1].player && array[1].player == array[2].player
+      array[0].player == array[1].player && array[1].player == array[2].player
     else
-      return false
+      false
     end
   end
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::App do
-  let(:input_blk) { Proc.new {} }
+  let(:input_blk) { proc {} }
   let(:opts) { Hash.new }
   subject(:app) { Shoes::App.new(opts, &input_blk) }
 
@@ -20,7 +20,7 @@ describe Shoes::App do
   end
 
   describe "initialize" do
-    let(:input_blk) { Proc.new {} }
+    let(:input_blk) { proc {} }
 
     it "initializes style hash", :qt do
       style = Shoes::App.new.style
@@ -206,7 +206,7 @@ describe Shoes::App do
   end
 
   describe '#append' do
-    let(:input_blk) {Proc.new do append do para 'Hi' end end}
+    let(:input_blk) {proc do append do para 'Hi' end end}
 
     it 'understands append' do
       expect(subject).to respond_to :append
@@ -260,7 +260,7 @@ describe Shoes::App do
 
   describe '#clear' do
     let(:input_blk) do
-      Proc.new do
+      proc do
         para 'Hello'
       end
     end

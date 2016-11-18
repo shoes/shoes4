@@ -38,7 +38,7 @@ module Guard
   #   end
   # end
   def platform_is(platform)
-    yield if self.send "platform_is_#{platform}"
+    yield if send "platform_is_#{platform}"
   end
 
   # Runs specs only if platform does not match
@@ -50,19 +50,19 @@ module Guard
   #   end
   # end
   def platform_is_not(platform)
-    yield unless self.send "platform_is_#{platform}"
+    yield unless send "platform_is_#{platform}"
   end
 
   def platform_is_windows
-    return RbConfig::CONFIG['host_os'] =~ /windows|mswin/i
+    RbConfig::CONFIG['host_os'] =~ /windows|mswin/i
   end
 
   def platform_is_linux
-    return RbConfig::CONFIG['host_os'] =~ /linux/i
+    RbConfig::CONFIG['host_os'] =~ /linux/i
   end
 
   def platform_is_osx
-    return RbConfig::CONFIG['host_os'] =~ /darwin/i
+    RbConfig::CONFIG['host_os'] =~ /darwin/i
   end
 end
 

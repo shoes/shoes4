@@ -12,15 +12,15 @@ Shoes.app do
     alert "You're soooo quick."
   end
 
-  x = self.width / 2
-  y = self.height / 2
+  x = width / 2
+  y = height / 2
   size = [@icon.height, @icon.width]
   animate(30) do
     x += xspeed * xdir
     y += yspeed * ydir
 
-    xdir *= -1 if x > self.width - size[0] || x < 0
-    ydir *= -1 if y > self.height - size[1] || y < 0
+    xdir *= -1 if x > width - size[0] || x < 0
+    ydir *= -1 if y > height - size[1] || y < 0
 
     @icon.move x.to_i, y.to_i
   end

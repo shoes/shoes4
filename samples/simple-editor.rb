@@ -22,7 +22,7 @@ Shoes.app height: 500, width: 450 do
     when :alt_c
       self.clipboard = str
     when :alt_v
-      str += self.clipboard
+      str += clipboard
     end
     t.replace str
   end
