@@ -23,10 +23,6 @@ class Shoes
         @hovered
       end
 
-      def eval_in_parent?
-        false
-      end
-
       def hover_class
         return @hover_class if @hover_class
 
@@ -57,9 +53,7 @@ class Shoes
       end
 
       def target
-        target = self
-        target = parent if eval_in_parent?
-        target
+        self
       end
 
       def eval_hover_block(blk)
