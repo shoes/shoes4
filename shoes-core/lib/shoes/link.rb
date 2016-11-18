@@ -62,6 +62,17 @@ class Shoes
       text_block_guard && @text_block.visible?
     end
 
+    def links
+      [self]
+    end
+
+    def self.find_links(texts)
+      texts.to_a
+        .map { |text| text.links if text.respond_to?(:links) }
+        .flatten
+        .compact
+    end
+
     private
 
     def text_block_guard

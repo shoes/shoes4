@@ -17,6 +17,10 @@ class Shoes
       parent && parent.app
     end
 
+    def links
+      Shoes::Link.find_links(@texts)
+    end
+
     private
 
     def inspect_details

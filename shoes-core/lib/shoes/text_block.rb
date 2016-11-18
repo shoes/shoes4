@@ -89,9 +89,7 @@ class Shoes
     end
 
     def links
-      contents.to_a.select do |element|
-        element.is_a?(Shoes::Link)
-      end
+      Shoes::Link.find_links(contents)
     end
 
     private
