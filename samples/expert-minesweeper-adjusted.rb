@@ -73,17 +73,17 @@ class Field
   def render_cell(x, y, color = "#AAA", stroke = true)
     @app.stroke "#666" if stroke
     @app.fill color
-    @app.rect $x+x*cell_size, $y+y*cell_size, cell_size-1, cell_size-1
+    @app.rect $x + x * cell_size, $y + y * cell_size, cell_size - 1, cell_size - 1
     @app.stroke "#BBB" if stroke
-    @app.line $x+x*cell_size+1, $y+y*cell_size+1, $x+x*cell_size+cell_size-1, $y+y*cell_size
-    @app.line $x+x*cell_size+1, $y+y*cell_size+1, $x+x*cell_size, $y+y*cell_size+cell_size-1
+    @app.line $x + x * cell_size + 1, $y + y * cell_size + 1, $x + x * cell_size + cell_size - 1, $y + y * cell_size
+    @app.line $x + x * cell_size + 1, $y + y * cell_size + 1, $x + x * cell_size, $y + y * cell_size + cell_size - 1
   end
 
   def render_flag(x, y)
     @app.stroke "#000"
-    @app.line($x+x*cell_size+cell_size / 4 + 1, $y+y*cell_size + cell_size / 5, $x+x*cell_size+cell_size / 4 + 1, $y+y*cell_size+cell_size / 5 * 4)
+    @app.line($x + x * cell_size + cell_size / 4 + 1, $y + y * cell_size + cell_size / 5, $x + x * cell_size + cell_size / 4 + 1, $y + y * cell_size + cell_size / 5 * 4)
     @app.fill "#A00"
-    @app.rect($x+x*cell_size+cell_size / 4+2, $y+y*cell_size + cell_size / 5,
+    @app.rect($x + x * cell_size + cell_size / 4 + 2, $y + y * cell_size + cell_size / 5,
               cell_size / 3, cell_size / 4)
   end
 
@@ -93,16 +93,16 @@ class Field
       render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
       @app.nostroke
       @app.fill @app.rgb(0, 0, 0, 0.8)
-      @app.oval($x+x*cell_size+3, $y+y*cell_size+3, 13)
+      @app.oval($x + x * cell_size + 3, $y + y * cell_size + 3, 13)
       @app.fill "#333"
-      @app.oval($x+x*cell_size+5, $y+y*cell_size+5, 7)
+      @app.oval($x + x * cell_size + 5, $y + y * cell_size + 5, 7)
       @app.fill "#AAA"
-      @app.oval($x+x*cell_size+6, $y+y*cell_size+6, 3)
+      @app.oval($x + x * cell_size + 6, $y + y * cell_size + 6, 3)
       @app.fill @app.rgb(0, 0, 0, 0.8)
       @app.stroke "#222"
       @app.strokewidth 2
-      @app.oval($x+x*cell_size + cell_size / 2 + 2, $y+y*cell_size + cell_size / 4 - 2, 2)
-      @app.oval($x+x*cell_size + cell_size / 2 + 4, $y+y*cell_size + cell_size / 4 - 2, 1)
+      @app.oval($x + x * cell_size + cell_size / 2 + 2, $y + y * cell_size + cell_size / 4 - 2, 2)
+      @app.oval($x + x * cell_size + cell_size / 2 + 4, $y + y * cell_size + cell_size / 4 - 2, 1)
       @app.strokewidth 1
     end
   end
@@ -112,15 +112,15 @@ class Field
     if self[x, y].number != 0
       @app.nostroke
       @app.nofill
-      @app.oval($x+x*cell_size + 3, $y+y*cell_size - 2, 10)
-      @app.para self[x, y].number.to_s, left: $x+x*cell_size + 3, top: $y+y*cell_size - 2,
+      @app.oval($x + x * cell_size + 3, $y + y * cell_size - 2, 10)
+      @app.para self[x, y].number.to_s, left: $x + x * cell_size + 3, top: $y + y * cell_size - 2,
                                         size: 13, stroke: COLORS[self[x, y].number - 1]
     end
   end
 
   def paint
-    0.upto @h-1 do |y|
-      0.upto @w-1 do |x|
+    0.upto @h - 1 do |y|
+      0.upto @w - 1 do |x|
         @app.nostroke
         case self[x, y]
         when EmptyCell then render_cell(x, y)
@@ -133,11 +133,11 @@ class Field
   end
 
   def bombs_left
-    @bombs - @field.flatten.compact.reject {|e| !e.flag }.size
+    @bombs - @field.flatten.compact.reject { |e| !e.flag }.size
   end
 
   def all_found?
-    @field.flatten.compact.reject {|e| !e.is_a?(OpenCell) }.size + @bombs == @w*@h
+    @field.flatten.compact.reject { |e| !e.is_a?(OpenCell) }.size + @bombs == @w * @h
   end
 
   def reveal!(x, y)
@@ -145,7 +145,7 @@ class Field
     return unless self[x, y].is_a?(Field::OpenCell)
     if flags_around(x, y) >= self[x, y].number
       (-1..1).each do |v|
-        (-1..1).each { |h| click!(x+h, y+v) unless (v==0 && h==0) || has_flag?(x+h, y+v) }
+        (-1..1).each { |h| click!(x + h, y + v) unless (v == 0 && h == 0) || has_flag?(x + h, y + v) }
       end
     end
   end
@@ -177,15 +177,15 @@ class Field
 
   def neighbors
     (-1..1).each do |col|
-      (-1..1).each { |row| yield row, col unless col==0 && row == 0 }
+      (-1..1).each { |row| yield row, col unless col == 0 && row == 0 }
     end
   end
 
   def discover(x, y)
     open(x, y)
     neighbors do |col, row|
-      cx = x+row
-      cy = y+col
+      cx = x + row
+      cy = y + col
       next unless cell_exists?(cx, cy)
       discover(cx, cy) if can_be_discovered?(cx, cy)
       open(cx, cy)
@@ -200,11 +200,11 @@ class Field
   end
 
   def bombs_around(x, y)
-    count_neighbors { |v, h| bomb?(x+h, y+v) }
+    count_neighbors { |v, h| bomb?(x + h, y + v) }
   end
 
   def flags_around(x, y)
-    count_neighbors { |v, h| has_flag?(x+h, y+v) }
+    count_neighbors { |v, h| has_flag?(x + h, y + v) }
   end
 
   def die!(x, y)
@@ -261,8 +261,8 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
 
   click do |button, x, y|
     next if @field.game_over? || @field.all_found?
-    fx = ((x-@field.offset.first) / @field.cell_size).to_i
-    fy = ((y-@field.offset.last) / @field.cell_size).to_i
+    fx = ((x - @field.offset.first) / @field.cell_size).to_i
+    fy = ((y - @field.offset.last) / @field.cell_size).to_i
     @field.click!(fx, fy) if button == 1
     @field.reveal!(fx, fy) if button == 2
     @field.flag!(fx, fy) if button == 3

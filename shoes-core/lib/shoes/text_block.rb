@@ -111,7 +111,7 @@ class Shoes
                     start_point..end_point
                   end
 
-          styles[range]    ||= []
+          styles[range] ||= []
           styles[range] << text
           gather_text_styles(text, text.texts, styles, start_point)
         end

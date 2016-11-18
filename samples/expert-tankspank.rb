@@ -84,10 +84,21 @@ class Tank
 
   @@collide_size = 15
 
-  def west; @x - @@collide_size; end
-  def east; @x + @@collide_size; end
-  def north; @y - @@collide_size; end
-  def south; @y + @@collide_size; end
+  def west
+    @x - @@collide_size
+  end
+
+  def east
+    @x + @@collide_size
+  end
+
+  def north
+    @y - @@collide_size
+  end
+
+  def south
+    @y + @@collide_size
+  end
 
   attr_reader :x, :y
 
@@ -132,7 +143,7 @@ class Tank
         @acceleration = on_target * 0.25
       end
 
-      distance = Math.sqrt((@dest_x - @x) ** 2 + (@dest_y - @y) ** 2)
+      distance = Math.sqrt((@dest_x - @x)**2 + (@dest_y - @y)**2)
       @moving = false if distance < 50
     else
       @acceleration = 0.0

@@ -54,7 +54,7 @@ class Changelog
     commits = `#{log_command}`
     raise "Bad \`git log\` command. Using <#{log_command}>" unless $CHILD_STATUS.success?
 
-    commits.split(COMMIT_SEPARATOR + "\n").map {|commit| uniform_change_log(commit)}
+    commits.split(COMMIT_SEPARATOR + "\n").map { |commit| uniform_change_log(commit) }
   end
 
   def uniform_change_log(commit)
@@ -71,7 +71,7 @@ class Changelog
   end
 
   def misc_changes(commit_range, categorized_commits)
-    misc_change_commits = commits_matching('Changelog', commit_range).reject {|commit| categorized_commits.include? commit }
+    misc_change_commits = commits_matching('Changelog', commit_range).reject { |commit| categorized_commits.include? commit }
     changes_under_heading('Miscellaneous', misc_change_commits)
   end
 
@@ -85,7 +85,7 @@ class Changelog
   def contributors(commit_range)
     contributors = `git shortlog --numbered --summary #{commit_range}`.split("\n")
     heading = heading("Contributors", contributors.length)
-    names = contributors.map {|line| line.sub(/^.*\t/, '')}.join(", ")
+    names = contributors.map { |line| line.sub(/^.*\t/, '') }.join(", ")
     heading << names
   end
 

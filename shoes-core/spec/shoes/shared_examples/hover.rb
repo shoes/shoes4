@@ -6,12 +6,12 @@ shared_examples "object with hover" do
 
   it "registers hover" do
     expect(subject).to receive(:add_mouse_hover_control)
-    subject.hover { }
+    subject.hover {}
   end
 
   it "registers with leave" do
     expect(subject).to receive(:add_mouse_hover_control)
-    subject.leave { }
+    subject.leave {}
   end
 
   it "marks itself as hovered" do

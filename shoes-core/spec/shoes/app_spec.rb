@@ -206,7 +206,7 @@ describe Shoes::App do
   end
 
   describe '#append' do
-    let(:input_blk) {proc do append do para 'Hi' end end}
+    let(:input_blk) { proc do append do para 'Hi' end end }
 
     it 'understands append' do
       expect(subject).to respond_to :append
@@ -264,7 +264,7 @@ describe Shoes::App do
         para 'Hello'
       end
     end
-    let(:internal_app) {subject.instance_variable_get(:@__app__)}
+    let(:internal_app) { subject.instance_variable_get(:@__app__) }
 
     it 'has initial contents' do
       expect(subject.contents).to_not be_empty
@@ -352,7 +352,7 @@ describe Shoes::App do
       Shoes::App.subscribe_to_dsl_methods(self)
     end
 
-    let(:subscribed_instance) {TestSubscribeClass.new subject}
+    let(:subscribed_instance) { TestSubscribeClass.new subject }
 
     AUTO_SUBSCRIBED_CLASSES = [Shoes::App, Shoes::URL, Shoes::Widget]
     SUBSCRIBED_CLASSES      = AUTO_SUBSCRIBED_CLASSES + [TestSubscribeClass]
@@ -389,22 +389,22 @@ describe Shoes::App do
     end
 
     describe 'DELEGATE_METHODS' do
-      subject {Shoes::App::DELEGATE_METHODS}
+      subject { Shoes::App::DELEGATE_METHODS }
 
       describe 'does not include general ruby object methods' do
-        it {is_expected.not_to include :new, :initialize}
+        it { is_expected.not_to include :new, :initialize }
       end
 
       describe 'it has access to Shoes app and DSL methods' do
-        it {is_expected.to include :para, :rect, :stack, :flow, :image, :location}
+        it { is_expected.to include :para, :rect, :stack, :flow, :image, :location }
       end
 
       describe 'it does not have access to private methods' do
-        it {is_expected.not_to include :pop_style, :style_normalizer, :create}
+        it { is_expected.not_to include :pop_style, :style_normalizer, :create }
       end
 
       describe 'there are blacklisted methods that wreck havoc' do
-        it {is_expected.not_to include :parent, :app}
+        it { is_expected.not_to include :parent, :app }
       end
     end
   end

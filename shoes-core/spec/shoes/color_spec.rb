@@ -212,8 +212,8 @@ describe Shoes::Color do
 
     describe "comparable" do
       let(:color1) { Shoes::Color.new(255, 69, 0) }
-      let(:red) {Shoes::Color.new 255, 0, 0}
-      let(:green) {Shoes::Color.new 0, 255, 0}
+      let(:red) { Shoes::Color.new 255, 0, 0 }
+      let(:green) { Shoes::Color.new 0, 255, 0 }
 
       it "is equal when values are equal" do
         color2 = Shoes::Color.new(255, 69, 0)
@@ -397,7 +397,7 @@ describe Shoes::Color::DSLHelpers do
     include Shoes::Color::DSLHelpers
   end
 
-  subject {ColorDSLHelperTest.new}
+  subject { ColorDSLHelperTest.new }
 
   describe '#pattern' do
     it 'creates an image pattern when fed a string for which a file exists' do
@@ -408,7 +408,7 @@ describe Shoes::Color::DSLHelpers do
     end
 
     it 'raises an argument error for bad input like a single number' do
-      expect {subject.pattern(1)}.to raise_error(ArgumentError)
+      expect { subject.pattern(1) }.to raise_error(ArgumentError)
     end
 
     it 'creates a gradient given 2 arguments' do
@@ -419,11 +419,11 @@ describe Shoes::Color::DSLHelpers do
 
   describe '#gradient' do
     it 'raises an argument error for no arguments supplied' do
-      expect {subject.gradient}.to raise_error ArgumentError
+      expect { subject.gradient }.to raise_error ArgumentError
     end
 
     it 'raises an argument error for too many (> 2) args supplied' do
-      expect {subject.gradient 1, 2, 3}.to raise_error ArgumentError
+      expect { subject.gradient 1, 2, 3 }.to raise_error ArgumentError
     end
   end
 end

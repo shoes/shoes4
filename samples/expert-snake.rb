@@ -2,8 +2,8 @@ Shoes.app title: 'Snake Game v0.1' do
   def game_start
     @score = para 'Score:', stroke: white
     @pos = {up: [0, -10], down: [0, 10], left: [-10, 0], right: [10, 0]}
-    @rx = proc {20 + 10*rand(56)}
-    @ry = proc {40 + 10*rand(44)}
+    @rx = proc { 20 + 10 * rand(56) }
+    @ry = proc { 40 + 10 * rand(44) }
 
     create_food
 
@@ -12,13 +12,13 @@ Shoes.app title: 'Snake Game v0.1' do
     create_initial_snake
 
     dir = :left
-    @run  = animate 5 do
+    @run = animate 5 do
       check_food
       go dir
       @score.text = "Score: #{@snake.length * 10}"
       brick? @snake[0]
     end
-    keypress {|k| dir = k if @pos.keys.include? k}
+    keypress { |k| dir = k if @pos.keys.include? k }
   end
 
   def go(k)
@@ -50,18 +50,18 @@ Shoes.app title: 'Snake Game v0.1' do
   def create_food
     @foods = []
     stroke lime
-    50.times {@foods << rect(@rx[], @ry[], 10, 10)}
+    50.times { @foods << rect(@rx[], @ry[], 10, 10) }
   end
 
   def create_bricks
     @bricks = []
     stroke deepskyblue; fill blue
 
-    50.times {@bricks << rect(@rx[], @ry[], 10, 10)}
+    50.times { @bricks << rect(@rx[], @ry[], 10, 10) }
 
-    20.step(570, 10) {|n| @bricks << rect(n, 40, 10, 10) << rect(n, 470, 10, 10)}
+    20.step(570, 10) { |n| @bricks << rect(n, 40, 10, 10) << rect(n, 470, 10, 10) }
 
-    40.step(470, 10) {|n| @bricks << rect(10, n, 10, 10) << rect(570, n, 10, 10)}
+    40.step(470, 10) { |n| @bricks << rect(10, n, 10, 10) << rect(570, n, 10, 10) }
   end
 
   def create_initial_snake

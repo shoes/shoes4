@@ -28,7 +28,7 @@ describe Shoes::Swt::TextBlock do
       subject.segments = [segment]
       expect(segment).to receive(:in_bounds?)
 
-      subject.in_bounds?(1,1)
+      subject.in_bounds?(1, 1)
     end
   end
 

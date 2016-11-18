@@ -4,7 +4,7 @@ describe Shoes::Swt::Shape do
   include_context "swt app"
 
   let(:dsl) { instance_double("Shoes::Shape", hidden: false,
-                                              needs_rotate?: false,style: {}).as_null_object }
+                                              needs_rotate?: false, style: {}).as_null_object }
   subject { Shoes::Swt::Shape.new dsl, swt_app }
 
   shared_examples_for "Swt::Shape" do
@@ -48,7 +48,7 @@ describe Shoes::Swt::Shape do
 
     it "delegates #arc_to" do
       expect(element).to receive(:add_arc).with(25, 45, 50, 20, 0.0, -90.0)
-      subject.arc_to 50, 55, 50, 20, 0, Shoes::PI/2
+      subject.arc_to 50, 55, 50, 20, 0, Shoes::PI / 2
     end
   end
 

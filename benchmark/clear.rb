@@ -43,9 +43,9 @@ Shoes.app do
       end
       stack do
         30.times do
-          rect 400, 596, 75, 30,fill: green
-          rect 500, 696, 75, 30,fill: red
-          rect 600, 796, 75, 30,fill: blue
+          rect 400, 596, 75, 30, fill: green
+          rect 500, 696, 75, 30, fill: red
+          rect 600, 796, 75, 30, fill: blue
         end
       end
     end

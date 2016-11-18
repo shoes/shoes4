@@ -2,7 +2,7 @@ shared_examples_for "Slot" do
   it "should be able to append" do
     expect(subject.contents).to be_empty
     our_subject = subject
-    app.execute_block proc { our_subject.append {para "foo"} }
+    app.execute_block proc { our_subject.append { para "foo" } }
     expect(subject.contents.size).to eq(1)
   end
 
@@ -21,8 +21,8 @@ shared_examples_for "Slot" do
 end
 
 shared_context 'one slot child' do
-  let(:ele_opts) {Hash.new}
-  let(:element) {Shoes::FakeElement.new(nil, {height: 100,width: 50}.merge(ele_opts))}
+  let(:ele_opts) { Hash.new }
+  let(:element) { Shoes::FakeElement.new(nil, {height: 100, width: 50}.merge(ele_opts)) }
 
   before :each do
     subject.add_child element
@@ -31,7 +31,7 @@ end
 
 shared_context 'two slot children' do
   include_context 'one slot child'
-  let(:element2) {Shoes::FakeElement.new nil, height: 200, width: 70}
+  let(:element2) { Shoes::FakeElement.new nil, height: 200, width: 70 }
 
   before :each do
     subject.add_child element2
@@ -39,7 +39,7 @@ shared_context 'two slot children' do
 end
 
 shared_context 'hidden child' do
-  let(:hidden_element) {Shoes::FakeElement.new nil, height: 200, width: 70}
+  let(:hidden_element) { Shoes::FakeElement.new nil, height: 200, width: 70 }
 
   before :each do
     subject.add_child hidden_element
@@ -50,7 +50,7 @@ end
 
 shared_context 'three slot children' do
   include_context 'two slot children'
-  let(:element3) {Shoes::FakeElement.new(nil, height: 50, width: 20)}
+  let(:element3) { Shoes::FakeElement.new(nil, height: 50, width: 20) }
 
   before :each do
     subject.add_child element3
@@ -64,33 +64,33 @@ shared_context 'contents_alignment' do
 end
 
 shared_context 'element one with top and left' do
-  let(:ele_top) {22}
-  let(:ele_left) {47}
-  let(:ele_opts) {{left: ele_left, top: ele_top}}
+  let(:ele_top) { 22 }
+  let(:ele_left) { 47 }
+  let(:ele_opts) { {left: ele_left, top: ele_top} }
 end
 
 shared_context 'slot with set height and width' do
-  let(:input_opts) {{width: 250, height: 300}}
+  let(:input_opts) { {width: 250, height: 300} }
 end
 
 shared_context 'slot with a top margin' do
-  let(:margin_top) {70}
-  let(:input_opts) {{margin_top: margin_top}}
+  let(:margin_top) { 70 }
+  let(:input_opts) { {margin_top: margin_top} }
 end
 
 shared_context 'slot with a left margin' do
-  let(:margin_left) {30}
-  let(:input_opts) {{margin_left: margin_left}}
+  let(:margin_left) { 30 }
+  let(:input_opts) { {margin_left: margin_left} }
 end
 
 shared_context 'element one with bottom and right' do
-  let(:ele_bottom) {24}
-  let(:ele_right) {49}
-  let(:ele_opts) {{right: ele_right, bottom: ele_bottom}}
+  let(:ele_bottom) { 24 }
+  let(:ele_right) { 49 }
+  let(:ele_opts) { {right: ele_right, bottom: ele_bottom} }
 end
 
 shared_examples_for 'positioning through :_position' do
-  let(:element) {Shoes::FakeElement.new nil, height: 100, width: 50}
+  let(:element) { Shoes::FakeElement.new nil, height: 100, width: 50 }
 
   def add_child_and_align
     subject.add_child element
@@ -256,7 +256,7 @@ shared_examples_for 'growing although relatively positioned elements' do
   include_context 'contents_alignment'
 
   describe 'positioned at the very beginning' do
-    let(:ele_opts) {{top: 0}}
+    let(:ele_opts) { {top: 0} }
 
     it 'grows the slot height' do
       expect(subject.height).to eq element.height
@@ -264,7 +264,7 @@ shared_examples_for 'growing although relatively positioned elements' do
   end
 
   describe 'positioned with a good offset' do
-    let(:ele_opts) {{top: 70}}
+    let(:ele_opts) { {top: 70} }
 
     it 'grows the height even further' do
       expect(subject.height).to eq element.height + 70

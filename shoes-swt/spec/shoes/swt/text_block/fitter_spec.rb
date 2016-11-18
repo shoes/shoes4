@@ -60,14 +60,14 @@ describe Shoes::Swt::TextBlock::Fitter do
       end
 
       it "bumps out until it fits" do
-        when_positioned_at(x:1010, y: 5, next_line_start: 5)
+        when_positioned_at(x: 1010, y: 5, next_line_start: 5)
         allow(dsl).to receive(:desired_width).with(app_width) { 990 }
 
         expect(subject.available_space).to eq([990, :unbounded])
       end
 
       it "just gives up if it still won't fit" do
-        when_positioned_at(x:1010, y: 5, next_line_start: 5)
+        when_positioned_at(x: 1010, y: 5, next_line_start: 5)
         expect(subject.available_space).to eq([0, 0])
       end
     end
@@ -76,14 +76,14 @@ describe Shoes::Swt::TextBlock::Fitter do
   describe "finding what didn't fit" do
     it "splits when one line past requested height" do
       segment = double('segment', line_offsets: [0, 5, 10], text: "Text Split")
-      allow(segment).to receive(:get_line_bounds) { double('line_bounds', height: 25)}
+      allow(segment).to receive(:get_line_bounds) { double('line_bounds', height: 25) }
 
       expect(subject.split_text(segment, 24)).to eq(["Text ", "Split"])
     end
 
     it "should be able to split text when too small" do
       segment = double('segment', line_offsets: [0, 10], text: "Text Split")
-      allow(segment).to receive(:get_line_bounds).with(0) { double('line_bounds', height: 21)}
+      allow(segment).to receive(:get_line_bounds).with(0) { double('line_bounds', height: 21) }
       allow(segment).to receive(:get_line_bounds).with(1) { raise "Boom" }
 
       expect(subject.split_text(segment, 33)).to eq(["Text Split", ""])
@@ -91,10 +91,10 @@ describe Shoes::Swt::TextBlock::Fitter do
   end
 
   describe "fit it in" do
-    let(:bounds) { double('bounds', width: 100, height: 50)}
+    let(:bounds) { double('bounds', width: 100, height: 50) }
     let(:segment) { double('segment',
                            text: "something something", :text= => nil,
-                           line_count: 1, line_offsets:[], bounds: bounds) }
+                           line_count: 1, line_offsets: [], bounds: bounds) }
 
     before(:each) do
       layout = double('swt_layout', :spacing => 4, :spacing= => nil)

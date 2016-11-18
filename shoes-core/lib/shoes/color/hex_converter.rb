@@ -2,7 +2,7 @@ class Shoes
   class Color
     class HexConverter
       def initialize(hex)
-        @hex = validate(hex) || fail(ArgumentError, "Bad hex color: #{hex}")
+        @hex = validate(hex) || raise(ArgumentError, "Bad hex color: #{hex}")
         @red, @green, @blue = hex_to_rgb(pad_if_necessary(@hex))
       end
 

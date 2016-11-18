@@ -24,7 +24,7 @@ describe Shoes::Swt::Flow do
   describe "#initialize" do
     before do
       allow(parent).to receive(:real) { parent_real }
-      allow(parent_real).to receive(:get_layout) {double(top_slot: true)}
+      allow(parent_real).to receive(:get_layout) { double(top_slot: true) }
     end
 
     it "sets readers" do

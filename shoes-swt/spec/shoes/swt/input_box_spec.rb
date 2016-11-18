@@ -9,9 +9,9 @@ describe Shoes::Swt::InputBox do
                             call_change_listeners: true).as_null_object }
   let(:real) { double('real', disposed?: false, text: text,
                               add_modify_listener: true).as_null_object }
-  let(:styles) {::Swt::SWT::SINGLE | ::Swt::SWT::BORDER}
-  let(:secret) {false}
-  let(:text) {'Some text...'}
+  let(:styles) { ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER }
+  let(:secret) { false }
+  let(:text) { 'Some text...' }
 
   subject { Shoes::Swt::InputBox.new dsl, swt_app, styles }
 
@@ -25,8 +25,8 @@ describe Shoes::Swt::InputBox do
   it_behaves_like "updating visibility"
 
   describe "#initialize" do
-    let(:event) {double 'Event', source: source}
-    let(:source) {double 'Source'}
+    let(:event) { double 'Event', source: source }
+    let(:source) { double 'Source' }
     it "sets text on real element" do
       subject.text = "some text"
       expect(real).to have_received(:text=).with("some text")
@@ -57,9 +57,9 @@ describe Shoes::Swt::InputBox do
         end
 
         describe 'with the same text' do
-          let(:event) {double 'Bad Event', source: source}
-          let(:source) {double 'Our source', text: text}
-          let(:text) {'Double call'}
+          let(:event) { double 'Bad Event', source: source }
+          let(:source) { double 'Our source', text: text }
+          let(:text) { 'Double call' }
 
           it 'does not call the change listeners' do
             subject.text = text
@@ -90,7 +90,7 @@ describe Shoes::Swt::InputBox do
   end
 
   describe Shoes::Swt::EditLine do
-    subject {Shoes::Swt::EditLine.new dsl, swt_app}
+    subject { Shoes::Swt::EditLine.new dsl, swt_app }
     describe ":secret option" do
       context "when NOT set" do
         it "does NOT set PASSWORD style" do

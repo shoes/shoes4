@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.'
   s.license     = 'MIT'
 
-  s.files         = ["LICENSE", "README.md"]
+  s.files = ["LICENSE", "README.md"]
 
   s.add_dependency "shoes-core", version
   s.add_dependency "shoes-swt",  version

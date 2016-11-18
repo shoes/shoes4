@@ -357,20 +357,6 @@ Style/Semicolon:
     - 'samples/simple-polygon-line.rb'
     - 'samples/simple-stack-flow-buttons.rb'
 
-# Offense count: 14
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'shoes-core/lib/shoes/color.rb'
-    - 'shoes-core/lib/shoes/color/dsl_helpers.rb'
-    - 'shoes-core/lib/shoes/color/hex_converter.rb'
-    - 'shoes-core/lib/shoes/configuration.rb'
-    - 'shoes-core/lib/shoes/dsl.rb'
-    - 'shoes-core/lib/shoes/image.rb'
-    - 'shoes-core/lib/shoes/slot.rb'
-
 # Offense count: 1
 # Configuration parameters: Methods.
 # Methods: {"reduce"=>["acc", "elem"]}, {"inject"=>["acc", "elem"]}
@@ -378,78 +364,12 @@ Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: AllowIfMethodIsEmpty.
-Style/SingleLineMethods:
-  Exclude:
-    - 'samples/expert-tankspank.rb'
-    - 'shoes-package/lib/warbler/traits/shoes.rb'
-
-# Offense count: 13
-# Cop supports --auto-correct.
-Style/SpaceAfterColon:
-  Exclude:
-    - 'samples/simple-guess-game.rb'
-    - 'samples/simple-loogink-cy.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/centered_text_segment_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/cursor_painter_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/fitter_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_collection_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_spec.rb'
-
-# Offense count: 166
-# Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/SpaceAfterNot:
-  Exclude:
-    - 'samples/simple-tictactoe.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-Style/SpaceAroundKeyword:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/simple-polygon-line.rb'
-    - 'shoes-swt/lib/shoes/swt/key_listener.rb'
-
-# Offense count: 360
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Style/SpaceAroundOperators:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
 Style/SpaceBeforeFirstArg:
   Exclude:
     - 'samples/class-book-adjusted.rb'
-
-# Offense count: 1236
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Exclude:
-    - 'samples/good-reminder.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Tab:
-  Exclude:
-    - 'samples/good-reminder.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.

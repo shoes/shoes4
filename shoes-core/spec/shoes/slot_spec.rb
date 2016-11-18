@@ -63,7 +63,7 @@ describe Shoes::Slot do
 
     describe 'with a block' do
       before :each do
-        subject.clear {add_text_block}
+        subject.clear { add_text_block }
       end
 
       it 'has one element afterwards' do
@@ -89,7 +89,7 @@ describe Shoes::Slot do
   end
 
   describe '#remove_child' do
-    let(:element) {Shoes::FakeElement.new subject}
+    let(:element) { Shoes::FakeElement.new subject }
 
     before :each do
       subject.add_child element
@@ -101,7 +101,7 @@ describe Shoes::Slot do
     end
 
     describe '2 elements' do
-      let(:element2) {Shoes::FakeElement.new subject}
+      let(:element2) { Shoes::FakeElement.new subject }
 
       before :each do
         subject.add_child element2

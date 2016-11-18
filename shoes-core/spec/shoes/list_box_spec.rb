@@ -5,7 +5,7 @@ describe Shoes::ListBox do
   let(:input_opts) { { items: items, left: left, top: top, width: width,
                        height: height } }
 
-  let(:items) {["Wine", "Vodka", "Water"]}
+  let(:items) { ["Wine", "Vodka", "Water"] }
 
   let(:left) { 10 }
   let(:top) { 20 }
@@ -49,7 +49,7 @@ describe Shoes::ListBox do
 
     it "updates the gui when self-modifying array methods like map! are called" do
       expect(list_box.gui).to receive(:update_items)
-      list_box.items.map! {"replaced!"}
+      list_box.items.map! { "replaced!" }
     end
   end
 

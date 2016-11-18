@@ -13,10 +13,10 @@ Shoes.app title: 'potacho', width: 175, height: 160 do
     @imgs[58].hide
     a = animate 12 do |i|
       @imgs[i].show
-      @imgs[i-1].hide if i > 0
+      @imgs[i - 1].hide if i > 0
       a.remove if i > 57
     end
   end
 
-  button('  start  ') {potacho}.move 10, 130
+  button('  start  ') { potacho }.move 10, 130
 end

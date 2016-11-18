@@ -31,7 +31,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     }
   }
 
-  let(:dsl) { double("dsl", font: "", size: 16, style:{}) }
+  let(:dsl) { double("dsl", font: "", size: 16, style: {}) }
 
   before(:each) do
     allow(::Swt::TextLayout).to receive(:new)            { layout }
@@ -94,7 +94,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
 
     it "checks boundaries" do
-      expect(subject.in_bounds?(1,1)).to be_truthy
+      expect(subject.in_bounds?(1, 1)).to be_truthy
     end
 
     describe "offsets left" do

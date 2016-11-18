@@ -275,7 +275,7 @@ describe Shoes::TextBlock do
   #   end
   #
   context "with nested text fragments" do
-    let(:helper) {Sample17Helper.new(app)}
+    let(:helper) { Sample17Helper.new(app) }
     let!(:para) { helper.create_para }
 
     it "has full text of fragments" do

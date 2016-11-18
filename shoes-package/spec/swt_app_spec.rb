@@ -88,7 +88,7 @@ describe Shoes::Package::JarApp do
 
     it "removes any extraneous jars" do
       jar_dir_contents = @output_file.join("Contents/Java").children
-      expect(jar_dir_contents.reject {|f| f == jar }).to be_empty
+      expect(jar_dir_contents.reject { |f| f == jar }).to be_empty
     end
 
     describe "Info.plist" do

@@ -14,7 +14,7 @@ class Shoes
           when Shoes::ImagePattern
             arg
           else
-            fail ArgumentError, "Bad pattern: #{arg.inspect}"
+            raise ArgumentError, "Bad pattern: #{arg.inspect}"
           end
         else
           gradient(*args)
@@ -56,13 +56,13 @@ class Shoes
             min = arg.first
             max = arg.last
           else
-            fail ArgumentError, "Can't make gradient out of #{arg.inspect}"
+            raise ArgumentError, "Can't make gradient out of #{arg.inspect}"
           end
         when 2
           min = args[0]
           max = args[1]
         else
-          fail ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
+          raise ArgumentError, "Wrong number of arguments (#{args.length} for 1 or 2)"
         end
         Shoes::Gradient.new(color(min), color(max))
       end

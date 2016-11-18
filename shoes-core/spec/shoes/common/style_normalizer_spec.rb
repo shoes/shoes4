@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::Common::StyleNormalizer do
-  subject {Shoes::Common::StyleNormalizer.new}
+  subject { Shoes::Common::StyleNormalizer.new }
 
   it 'does not modify a simple hash' do
     input = {left: 100, width: 233}

@@ -133,7 +133,7 @@ class Tetris
   end
 
   def occupied(piece)
-    piece.each_occupied_block do |x,y|
+    piece.each_occupied_block do |x, y|
       if (x < 0) || (x >= NX) || (y < 0) || (y >= NY) || blocks[x][y]
         return true
       end
@@ -144,7 +144,7 @@ class Tetris
   #----------------------------------------------------------------------------
 
   def finalize_piece
-    current.each_occupied_block { |x,y| blocks[x][y] = current.tetromino }
+    current.each_occupied_block { |x, y| blocks[x][y] = current.tetromino }
   end
 
   def choose_new_piece(piece = nil)
@@ -156,8 +156,8 @@ class Tetris
   end
 
   def reward_lines(lines)
-    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines-1)) # e.g. 1: 100, 2: 200, 3: 400, 4: 800
-    @pace  = [pace - lines*PACE[:step], PACE[:min]].max
+    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines - 1)) # e.g. 1: 100, 2: 200, 3: 400, 4: 800
+    @pace  = [pace - lines * PACE[:step], PACE[:min]].max
   end
 
   def clear_pending_actions
@@ -173,7 +173,7 @@ class Tetris
   end
 
   def new_bag
-    [I,I,I,I,J,J,J,J,L,L,L,L,O,O,O,O,S,S,S,S,T,T,T,T,Z,Z,Z,Z].shuffle
+    [I, I, I, I, J, J, J, J, L, L, L, L, O, O, O, O, S, S, S, S, T, T, T, T, Z, Z, Z, Z].shuffle
   end
 
   def random_piece
@@ -186,7 +186,7 @@ class Tetris
   def remove_any_completed_lines
     lines = 0
     NY.times do |y|
-      unless NX.times.any? {|x| blocks[x][y].nil? }
+      unless NX.times.any? { |x| blocks[x][y].nil? }
         remove_line(y)
         lines += 1
       end
@@ -197,7 +197,7 @@ class Tetris
   def remove_line(n)
     n.downto(0) do |y|
       NX.times do |x|
-        blocks[x][y] = y.zero? ? nil : blocks[x][y-1]
+        blocks[x][y] = y.zero? ? nil : blocks[x][y - 1]
       end
     end
   end
@@ -259,7 +259,7 @@ class Piece
     col = 0
     blocks = tetromino[:blocks][direction]
     until bit.zero?
-      yield x+col, y+row if (blocks & bit) == bit
+      yield x + col, y + row if (blocks & bit) == bit
       col += 1
       if col == 4
         col = 0
@@ -289,7 +289,7 @@ Shoes.app title: 'Tetris', width: WIDTH, height: HEIGHT do
 
   def block(x, y, color)
     fill color
-    rect(x*DX, y*DY, DX, DY)
+    rect(x * DX, y * DY, DX, DY)
   end
 
   last = Time.now
@@ -303,7 +303,7 @@ Shoes.app title: 'Tetris', width: WIDTH, height: HEIGHT do
       block(x, y, color)
     end
 
-    game.current.each_occupied_block do |x,y|
+    game.current.each_occupied_block do |x, y|
       block(x, y, game.current.tetromino[:color])
     end
 

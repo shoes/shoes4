@@ -24,7 +24,7 @@ Must be one of:
   - #{self.class}.new(red, green, blue)
   - #{self.class}.new(red, green, blue, alpha)
 EOS
-        fail ArgumentError, message
+        raise ArgumentError, message
       end
       alpha ||= OPAQUE
       @red = normalize_rgb(red)

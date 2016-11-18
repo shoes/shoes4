@@ -7,7 +7,7 @@ describe Shoes::Swt::Link do
 
   subject { Shoes::Swt::Link.new(dsl, swt_app) }
 
-  its(:dsl) {is_expected.to eq dsl}
+  its(:dsl) { is_expected.to eq dsl }
 
   it_behaves_like "clickable backend"
 

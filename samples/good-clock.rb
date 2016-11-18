@@ -18,9 +18,9 @@ Shoes.app height: 260, width: 250 do
              @time.strftime(".%S"), align: "center", stroke: "#666",
                                     margin: 4
       end
-      clock_hand @time.sec + (@time.usec * 0.000001),2,30,red
-      clock_hand @time.min + (@time.sec / 60.0),5
-      clock_hand @time.hour + (@time.min / 60.0),8,6
+      clock_hand @time.sec + (@time.usec * 0.000001), 2, 30, red
+      clock_hand @time.min + (@time.sec / 60.0), 5
+      clock_hand @time.hour + (@time.min / 60.0), 8, 6
     end
   end
   def draw_background

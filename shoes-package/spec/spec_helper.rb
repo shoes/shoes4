@@ -3,7 +3,7 @@
 FUROSHIKI_SPEC_DIR = Pathname.new(__FILE__).dirname.expand_path.to_s
 ENV['FUROSHIKI_HOME'] = FUROSHIKI_SPEC_DIR
 
-SHOES_PACKAGE_SPEC_ROOT= File.expand_path('..', __FILE__)
+SHOES_PACKAGE_SPEC_ROOT = File.expand_path('..', __FILE__)
 
 $LOAD_PATH << File.expand_path(SHOES_PACKAGE_SPEC_ROOT)
 $LOAD_PATH << File.expand_path('../../lib', __FILE__)
@@ -12,7 +12,7 @@ $LOAD_PATH << File.expand_path('../../../shoes-core/lib', __FILE__)
 require 'pathname'
 require 'rspec/its'
 
-Dir["#{SHOES_PACKAGE_SPEC_ROOT}/support/**/*.rb"].each {|f| require f}
+Dir["#{SHOES_PACKAGE_SPEC_ROOT}/support/**/*.rb"].each { |f| require f }
 
 module PackageHelpers
   # need these values from a context block, so let doesn't work

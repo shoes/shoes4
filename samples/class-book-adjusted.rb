@@ -14,10 +14,10 @@ class Book < Shoes
     toc = []
     INCIDENTS.each_with_index do |(title, _story), i|
       toc.push "(#{i + 1}) ",
-               link(title) {visit "/incidents/#{i}"},
+               link(title) { visit "/incidents/#{i}" },
                " / "
     end
-    toc[0...-1] << "\n"*5
+    toc[0...-1] << "\n" * 5
   end
 
   def incident(num)
@@ -33,7 +33,7 @@ class Book < Shoes
         para(*table_of_contents, size: 8)
       end
 
-      stack width: width-180, margin: [20, 0, 10, 0] do
+      stack width: width - 180, margin: [20, 0, 10, 0] do
         INCIDENTS[num][1].split(/\n\n+/).each do |p|
           para p
         end

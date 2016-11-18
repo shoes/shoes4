@@ -7,7 +7,7 @@ describe Shoes::Swt::Oval do
   let(:top) { 200 }
   let(:width) { 300 }
   let(:height) { 400 }
-  let(:dsl) {::Shoes::Oval.new shoes_app, parent, left, top, width, height}
+  let(:dsl) { ::Shoes::Oval.new shoes_app, parent, left, top, width, height }
 
   subject {
     Shoes::Swt::Oval.new(dsl, swt_app)
@@ -43,7 +43,7 @@ describe Shoes::Swt::Oval do
     end
 
     specify "draws oval" do
-      expect(gc).to receive(:draw_oval).with(left+sw/2, top+sw/2, width-sw, height-sw)
+      expect(gc).to receive(:draw_oval).with(left + sw / 2, top + sw / 2, width - sw, height - sw)
       subject.paint_control(event)
     end
   end

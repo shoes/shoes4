@@ -68,7 +68,7 @@ class Game
   end
 
   def player_win
-    @player =! @player
+    @player = !@player
     "#{player_color} won!"
   end
 end
@@ -204,14 +204,14 @@ Shoes.app width: SIZE::WIDTH, height: SIZE::HEIGHT, title: 'Tic Tac Toe' do
   board.set_tic_actions
 
   # End Screen
-  black_screen = rect 0,0,SIZE::WIDTH,SIZE::WIDTH, fill: app.rgb(0,0,0,0.5)
+  black_screen = rect 0, 0, SIZE::WIDTH, SIZE::WIDTH, fill: app.rgb(0, 0, 0, 0.5)
   flow align: 'center' do
     # Positioned oddly because 'align: "center"' appears not to work on buttons
-    @quit_button = button 'Quit', top: 174, left: (SIZE::WIDTH/2 - 34) do
+    @quit_button = button 'Quit', top: 174, left: (SIZE::WIDTH / 2 - 34) do
       exit
     end
     # Positioned oddly because 'align: "center"' appears not to work on buttons
-    @restart_button = button 'Restart', top: 140, align: 'center', left: (SIZE::WIDTH/2 - 43) do
+    @restart_button = button 'Restart', top: 140, align: 'center', left: (SIZE::WIDTH / 2 - 43) do
       board.restart
     end
   end

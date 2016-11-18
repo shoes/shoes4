@@ -21,7 +21,7 @@ describe Shoes::Swt::Line do
   it_behaves_like "updating visibility"
   it_behaves_like "clickable backend"
 
-  it {is_expected.to respond_to :remove}
+  it { is_expected.to respond_to :remove }
 
   describe "painter" do
     include_context "painter context"
