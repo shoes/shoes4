@@ -7,6 +7,7 @@ class Shoes
     include Common::Style
     include Common::Clickable
     include Common::Hover
+    include Common::LinkFinder
     include TextBlockDimensionsDelegations
 
     attr_reader :text, :contents, :text_styles
@@ -89,7 +90,7 @@ class Shoes
     end
 
     def links
-      Shoes::Link.find_links(contents)
+      find_links(contents)
     end
 
     private

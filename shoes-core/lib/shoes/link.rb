@@ -66,13 +66,6 @@ class Shoes
       [self]
     end
 
-    def self.find_links(texts)
-      texts.to_a
-           .select { |text| text.respond_to?(:links) }
-           .map(&:links)
-           .flatten
-    end
-
     private
 
     def text_block_guard
