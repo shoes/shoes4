@@ -68,9 +68,9 @@ class Shoes
 
     def self.find_links(texts)
       texts.to_a
-           .map { |text| text.links if text.respond_to?(:links) }
+           .select { |text| text.respond_to?(:links) }
+           .map(&:links)
            .flatten
-           .compact
     end
 
     private
