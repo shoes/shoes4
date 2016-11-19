@@ -24,7 +24,7 @@ describe Shoes::Link do
     end
 
     allow(subject).to receive(:eval_hover_block) do |_|
-      raise "Heck if hover evaluated on link itself. " +
+      raise "Heck if hover evaluated on link itself. " \
             "Needs to eval on TextBlock so redrawing can get dimensions."
     end
 
