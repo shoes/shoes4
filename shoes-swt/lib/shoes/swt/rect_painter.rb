@@ -24,15 +24,15 @@ class Shoes
       end
 
       def inset_fill?
-        rounded? && has_strokewidth?
+        rounded? && strokewidth?
       end
 
       def rounded?
-        @obj.corners || 0 > 0
+        (@obj.corners || 0) > 0
       end
 
-      def has_strokewidth?
-        @obj.dsl.style[:strokewidth] || 0 > 0
+      def strokewidth?
+        (@obj.dsl.style[:strokewidth] || 0) > 0
       end
     end
   end

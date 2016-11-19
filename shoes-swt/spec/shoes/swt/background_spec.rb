@@ -51,7 +51,7 @@ describe Shoes::Swt::Background do
       let(:corners) { 0 }
 
       it "fills rect" do
-        expect(gc).to receive(:fill_round_rectangle).with(left + 1, top + 1, width - 2, height - 2, corners * 2, corners * 2)
+        expect(gc).to receive(:fill_round_rectangle).with(left, top, width, height, corners * 2, corners * 2)
         subject.paint_control(event)
       end
     end
