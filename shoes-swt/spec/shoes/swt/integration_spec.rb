@@ -13,7 +13,7 @@ describe Shoes::App do
     app = nil
     begin
       expect do
-        app = Shoes.app do para 'me no fail' end
+        app = Shoes.app { para 'me no fail' }
         app.quit
       end.not_to raise_error
     ensure

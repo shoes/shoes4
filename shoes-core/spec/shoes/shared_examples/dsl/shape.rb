@@ -1,13 +1,13 @@
 shared_examples_for "shape DSL method" do
-  let(:shape) {
-    dsl.shape {
+  let(:shape) do
+    dsl.shape do
       move_to 400, 300
       line_to 400, 200
       line_to 100, 100
       line_to 400, 300
       curve_to 100, 100, 20, 200, 120, 240
-    }
-  }
+    end
+  end
 
   it "creates a Shoes::Shape" do
     expect(shape).to be_an_instance_of(Shoes::Shape)

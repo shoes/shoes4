@@ -2,8 +2,10 @@ require 'spec_helper'
 
 describe Shoes::Button do
   include_context "dsl app"
-  let(:input_opts) { {left: left, top: top, width: width,
-                      height: height, margin: margin, state: "disabled"} }
+
+  let(:input_opts) do
+    { left: left, top: top, width: width, height: height, margin: margin, state: "disabled" }
+  end
 
   let(:left)   { 13 }
   let(:top)    { 44 }

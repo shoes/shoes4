@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Shoes::Swt::Common::Remove do
-  let(:clazz) {
+  let(:clazz) do
     Class.new do
       include Shoes::Swt::Common::Remove
 
@@ -13,7 +13,7 @@ describe Shoes::Swt::Common::Remove do
         @real = real
       end
     end
-  }
+  end
 
   let(:app)  { double("app", click_listener: click_listener) }
   let(:dsl)  { double("dsl") }

@@ -91,11 +91,11 @@ module Othello
     end
 
     def skip_turn?
-      @board.each_with_index { |col, col_index|
-        col.each_with_index { |_cell, row_index|
+      @board.each_with_index do |col, col_index|
+        col.each_with_index do |_cell, row_index|
           return false if possible_move?([col_index, row_index])
-        }
-      }
+        end
+      end
       true
     end
 
@@ -135,15 +135,15 @@ module Othello
     def calculate_current_winner
       @p1.pieces_on_board = 0
       @p2.pieces_on_board = 0
-      @board.each { |row|
-        row.each { |cell|
+      @board.each do |row|
+        row.each do |cell|
           if cell == 1
             @p1.pieces_on_board += 1
           else
             @p2.pieces_on_board += 1
           end
-        }
-      }
+        end
+      end
       @p1.pieces_on_board > @p2.pieces_on_board ? @p1 : @p2
     end
 
@@ -155,7 +155,7 @@ module Othello
       while valid_location?(c_adjacent)
         if board_at(c_adjacent) == opp_piece
           pieces_in_between << c_adjacent.dup
-        elsif board_at(c_adjacent) == piece && pieces_in_between.size > 0
+        elsif board_at(c_adjacent) == piece && !pieces_in_between.empty?
           c_last = c_adjacent
           break
         else
@@ -288,13 +288,13 @@ module Othello
   end
 
   def find_piece(x, y)
-    GAME.board.each_with_index { |row_array, row|
-      row_array.each_with_index { |_col_array, col|
+    GAME.board.each_with_index do |row_array, row|
+      row_array.each_with_index do |_col_array, col|
         left, top = left_top_corner_of_piece(col, row).map { |i| i - 5 }
         right, bottom = right_bottom_corner_of_piece(col, row).map { |i| i - 5 }
         return [col, row] if x >= left && x <= right && y >= top && y <= bottom
-      }
-    }
+      end
+    end
     false
   end
 end
@@ -305,7 +305,7 @@ Shoes.app width: 520, height: 600 do
 
   draw_board
 
-  click { |_button, x, y|
+  click do |_button, x, y|
     coords = find_piece(x, y)
     if coords
       begin
@@ -319,5 +319,5 @@ Shoes.app width: 520, height: 600 do
     else
       alert("Not a piece.")
     end
-  }
+  end
 end

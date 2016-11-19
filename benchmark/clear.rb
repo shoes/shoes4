@@ -9,7 +9,7 @@ Shoes.app do
   def fill_up_app_with_senseless_stuff
     stack do
       create_paras 4
-      flow do create_paras 2 end
+      flow { create_paras 2 }
       oval 0, 0, 20, 20, fill: forestgreen, stroke: nil
       rect 0, 0, 75, 4, curve: 3
       rect 0, 396, 75, 4, curve: 3
@@ -37,7 +37,9 @@ Shoes.app do
         24.times do
           flow do
             create_paras 12
-            button 'Hello I am a button!' do alert 'hi you all' end
+            button 'Hello I am a button!' do
+              alert 'hi you all'
+            end
           end
         end
       end

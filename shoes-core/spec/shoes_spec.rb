@@ -21,7 +21,7 @@ describe Shoes, 'setup' do
     end
 
     it 'puts a warning message to $stderr' do
-      Shoes.setup do end
+      Shoes.setup {}
     end
 
     it 'warns for individual gems' do

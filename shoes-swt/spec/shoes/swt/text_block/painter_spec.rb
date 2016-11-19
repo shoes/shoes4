@@ -9,9 +9,12 @@ describe Shoes::Swt::TextBlock::Painter do
   let(:segment_collection) { double("segment collection", empty?: false) }
 
   let(:event) { double("event", gc: graphics_context).as_null_object }
-  let(:graphics_context) { double("graphics context", set_antialias: nil,
-                                                      set_line_cap: nil, set_transform: nil,
-                                                      clipping: nil, set_clipping: nil) }
+
+  let(:graphics_context) do
+    double("graphics context", set_antialias: nil, set_line_cap: nil,
+                               set_transform: nil, clipping: nil,
+                               set_clipping: nil)
+  end
 
   subject { Shoes::Swt::TextBlock::Painter.new(dsl) }
 

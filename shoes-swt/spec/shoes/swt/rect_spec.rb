@@ -9,9 +9,7 @@ describe Shoes::Swt::Rect do
   let(:height) { 111 }
   let(:dsl) { ::Shoes::Rect.new shoes_app, parent, left, top, width, height }
 
-  subject {
-    Shoes::Swt::Rect.new dsl, swt_app
-  }
+  subject { Shoes::Swt::Rect.new dsl, swt_app }
 
   it_behaves_like "paintable"
   it_behaves_like "updating visibility"

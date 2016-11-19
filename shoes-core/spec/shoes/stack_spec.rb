@@ -17,13 +17,13 @@ describe Shoes::Stack do
 
       def check_self_inside_stack
         inside_stack = nil
-        @app.stack do inside_stack = self end
+        @app.stack { inside_stack = self }
         inside_stack
       end
     end
 
     it 'does not change the context' do
-      app = Shoes.app do; end
+      app = Shoes.app { ; }
       context_object = ContextObject.new app
       inside_stack = context_object.check_self_inside_stack
       expect(inside_stack).to be context_object

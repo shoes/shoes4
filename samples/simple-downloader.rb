@@ -15,8 +15,9 @@ Shoes.app do
               p = progress width: 1.0, height: 14
               dl = download @url.text, save: File.basename(@url.text),
                                        progress: proc { |d|
-                  status.text = "Transferred #{d.transferred} of #{d.length} bytes (#{d.percent}%)"
-                  p.fraction = d.percent * 0.01 },
+                                         status.text = "Transferred #{d.transferred} of #{d.length} bytes (#{d.percent}%)"
+                                         p.fraction = d.percent * 0.01
+                                       },
                                        finish: proc { status.text = "Download completed" }
             end
           end

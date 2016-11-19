@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Shoes::Swt::Animation do
   include_context 'swt app'
-  let(:dsl) { double('dsl', stopped?: false, removed?: false,
-                            framerate: 10, current_frame: nil,
-                            increment_frame: nil, blk: block) }
+  let(:dsl) do
+    double('dsl', stopped?: false, removed?: false, framerate: 10,
+                  current_frame: nil, increment_frame: nil, blk: block)
+  end
   let(:block) { double 'block', call: nil }
   let(:display) { ::Swt.display }
   subject { Shoes::Swt::Animation.new dsl, swt_app }

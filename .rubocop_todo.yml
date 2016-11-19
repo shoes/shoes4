@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/AmbiguousRegexpLiteral:
-  Exclude:
-    - 'shoes-package/spec/configuration_spec.rb'
-
-# Offense count: 1
 # Configuration parameters: AllowSafeAssignment.
 Lint/AssignmentInCondition:
   Exclude:
@@ -78,7 +73,7 @@ Metrics/AbcSize:
 # Offense count: 227
 # Configuration parameters: CountComments.
 Metrics/BlockLength:
-  Max: 619
+  Max: 648
 
 # Offense count: 16
 # Configuration parameters: CountComments.
@@ -103,7 +98,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 382
+  Max: 388
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -130,21 +125,6 @@ Style/AsciiComments:
     - 'shoes-core/lib/shoes/common/positioning.rb'
     - 'shoes-package/lib/shoes/package/configuration.rb'
 
-# Offense count: 166
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Enabled: false
-
-# Offense count: 84
-# Cop supports --auto-correct.
-Style/BlockEndNewline:
-  Enabled: false
-
 # Offense count: 3
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact
@@ -168,13 +148,6 @@ Style/CommentAnnotation:
   Exclude:
     - 'samples/expert-othello-adjusted.rb'
     - 'samples/expert-othello.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/CommentIndentation:
-  Exclude:
-    - 'samples/good-psychidelic-circles.rb'
-    - 'samples/original-manual-adjusted.rb'
 
 # Offense count: 1
 Style/ConstantName:
@@ -243,20 +216,6 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/app.rb'
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
-
-# Offense count: 81
-# Cop supports --auto-correct.
-Style/MultilineBlockLayout:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineHashBraceLayout:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.
@@ -371,45 +330,9 @@ Style/SpaceBeforeFirstArg:
   Exclude:
     - 'samples/class-book-adjusted.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowSafeAssignment.
-# SupportedStyles: require_parentheses, require_no_parentheses
-Style/TernaryParentheses:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-swt/lib/shoes/swt/gradient.rb'
-    - 'shoes-swt/lib/shoes/swt/star.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: final_newline, final_blank_line
-Style/TrailingBlankLines:
-  Exclude:
-    - 'samples/good-image-dl.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
-Style/UnneededInterpolation:
-  Exclude:
-    - 'samples/simple-anim-text.rb'
-    - 'samples/simple-timer.rb'
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/style.rb'
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
 Style/VariableName:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/sound.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'shoes-core/lib/shoes/text_block.rb'

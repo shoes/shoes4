@@ -3,12 +3,17 @@ require 'spec_helper'
 describe Shoes::Swt::InputBox do
   include_context "swt app"
 
-  let(:dsl) { double('dsl', app: shoes_app, visible?: true, element_width: 80,
-                            element_height: 22, initial_text: 'Jay',
-                            secret?: secret,
-                            call_change_listeners: true).as_null_object }
-  let(:real) { double('real', disposed?: false, text: text,
-                              add_modify_listener: true).as_null_object }
+  let(:dsl) do
+    double('dsl', app: shoes_app, visible?: true, element_width: 80,
+                  element_height: 22, initial_text: 'Jay',
+                  secret?: secret, call_change_listeners: true).as_null_object
+  end
+
+  let(:real) do
+    double('real', disposed?: false, text: text, add_modify_listener: true)
+      .as_null_object
+  end
+
   let(:styles) { ::Swt::SWT::SINGLE | ::Swt::SWT::BORDER }
   let(:secret) { false }
   let(:text) { 'Some text...' }

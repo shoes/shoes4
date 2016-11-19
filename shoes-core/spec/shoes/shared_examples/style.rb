@@ -70,7 +70,7 @@ shared_examples_for "object with style" do
 
     it 'has a style getter for all styles' do
       subject.supported_styles.each do |style|
-        expect(subject).to respond_to("#{style}".to_sym)
+        expect(subject).to respond_to(style.to_s.to_sym)
       end
     end
   end

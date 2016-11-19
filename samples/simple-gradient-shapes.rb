@@ -4,12 +4,12 @@ Shoes.app do
   eles << oval(0, 0, 600, angle: 90)
   eles << rect(50, 50, 350, 350, curve: 10)
   eles << star(100, 100, 30, 200, 180)
-  eles << shape(200, 150, width: 300, height: 300, rotate: [45, 300, 300]) {
+  eles << shape(200, 150, width: 300, height: 300, rotate: [45, 300, 300]) do
     move_to 200, 200
     line_to 200, 100
     curve_to 100, 100, 20, 200, 50, 150
     line_to 20, 100
-  }
+  end
   eles << line(100, 100, 480, 480)
 
   button 'change colors' do

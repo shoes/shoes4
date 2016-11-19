@@ -117,7 +117,7 @@ describe Shoes::App do
     default_styles = Shoes::Common::Style::DEFAULT_STYLES
 
     default_styles.each do |key, value|
-      describe "#{key}" do
+      describe key.to_s do
         it "defaults to #{value}" do
           expect(subject.style[key]).to eq(value)
         end
@@ -200,13 +200,13 @@ describe Shoes::App do
   describe 'Execution context' do
     it 'starts with self as the execution context' do
       my_self = nil
-      app = Shoes.app do my_self = self end
+      app = Shoes.app { my_self = self }
       expect(my_self).to eq app
     end
   end
 
   describe '#append' do
-    let(:input_blk) { proc do append do para 'Hi' end end }
+    let(:input_blk) { proc { append { para 'Hi' } } }
 
     it 'understands append' do
       expect(subject).to respond_to :append

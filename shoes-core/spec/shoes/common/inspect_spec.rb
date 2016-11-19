@@ -1,14 +1,14 @@
 require "spec_helper"
 
 describe "Shoes::Common::Inspect" do
-  let(:test_class) {
-    Class.new {
+  let(:test_class) do
+    Class.new do
       include Shoes::Common::Inspect
       def self.name
         "Shoes::InspectableObject"
       end
-    }
-  }
+    end
+  end
 
   describe "when included" do
     include InspectHelpers

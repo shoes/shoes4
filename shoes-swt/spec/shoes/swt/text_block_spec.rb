@@ -6,10 +6,12 @@ describe Shoes::Swt::TextBlock do
   let(:height) { 100 }
   let(:width)  { 200 }
   let(:margin) { 10 }
-  let(:dsl) { double("dsl", app: shoes_app, text: "text",
-                            margin_left: 0, margin_right: 0,
-                            margin_top: 0, margin_bottom: 0,
-                            pass_coordinates?: nil).as_null_object }
+
+  let(:dsl) do
+    double("dsl", app: shoes_app, text: "text", margin_left: 0, margin_right: 0,
+                  margin_top: 0, margin_bottom: 0, pass_coordinates?: nil)
+      .as_null_object
+  end
 
   subject { Shoes::Swt::TextBlock.new(dsl, swt_app) }
 

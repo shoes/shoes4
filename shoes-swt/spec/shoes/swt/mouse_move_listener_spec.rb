@@ -1,14 +1,21 @@
 require 'spec_helper'
 
 describe Shoes::Swt::MouseMoveListener do
-  let(:app) { double 'SWT App', dsl: dsl_app, shell: shell,
-                                clickable_elements: clickable_elements}
+  let(:app) do
+    double 'SWT App', dsl: dsl_app, shell: shell,
+                      clickable_elements: clickable_elements
+  end
+
   let(:clickable_elements) { [] }
   let(:mouse_hover_controls) { [] }
   let(:mouse_motion) { [] }
   let(:shell) { double 'Shell', setCursor: nil }
-  let(:dsl_app) { double('DSL App', mouse_hover_controls: mouse_hover_controls,
-                                    mouse_motion: mouse_motion).as_null_object}
+
+  let(:dsl_app) do
+    double('DSL App', mouse_hover_controls: mouse_hover_controls,
+                      mouse_motion: mouse_motion).as_null_object
+  end
+
   let(:x) { 10 }
   let(:y) { 42 }
   let(:block) { double 'Block', call: nil }
@@ -53,8 +60,11 @@ describe Shoes::Swt::MouseMoveListener do
   end
 
   describe 'hover control' do
-    let(:element) { double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
-                                      visible?: true, mouse_left: nil, mouse_hovered: nil}
+    let(:element) do
+      double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
+                        visible?: true, mouse_left: nil, mouse_hovered: nil
+    end
+
     let(:mouse_hover_controls) { [element] }
 
     shared_examples_for 'does not do anything' do
@@ -99,8 +109,11 @@ describe Shoes::Swt::MouseMoveListener do
     describe 'in bounds, not hovered but hidden' do
       let(:in_bounds?) { true }
       let(:hovered?)   { false }
-      let(:element) { double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
-                                        visible?: false, mouse_left: nil, mouse_hovered: nil}
+
+      let(:element) do
+        double 'element', in_bounds?: in_bounds?, hovered?: hovered?,
+                          visible?: false, mouse_left: nil, mouse_hovered: nil
+      end
 
       it_behaves_like 'does not do anything'
     end
@@ -109,8 +122,11 @@ describe Shoes::Swt::MouseMoveListener do
       let(:in_bounds?) { false }
       let(:hovered?) { true }
 
-      let(:element2) { double 'element 2', in_bounds?: true, hovered?: false,
-                                           visible?: true, mouse_left: nil, mouse_hovered: nil}
+      let(:element2) do
+        double 'element 2', in_bounds?: true, hovered?: false, visible?: true,
+                            mouse_left: nil, mouse_hovered: nil
+      end
+
       let(:mouse_hover_controls) { [element, element2] }
 
       it 'calls leave for element 1 before calling hover for element 2' do

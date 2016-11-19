@@ -138,12 +138,12 @@ describe Shoes::Slot do
     end
 
     describe "with children" do
-      let(:child) {
+      let(:child) do
         child_element = Shoes::FakeElement.new(subject, height: 100)
         child_element.absolute_top = 0
         child_element.gui = double('child gui').as_null_object
         child_element
-      }
+      end
 
       before do
         subject.add_child(child)

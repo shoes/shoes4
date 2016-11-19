@@ -3,8 +3,11 @@ require 'spec_helper'
 describe Shoes::Swt::Shape do
   include_context "swt app"
 
-  let(:dsl) { instance_double("Shoes::Shape", hidden: false,
-                                              needs_rotate?: false, style: {}).as_null_object }
+  let(:dsl) do
+    instance_double("Shoes::Shape", hidden: false, needs_rotate?: false,
+                                    style: {}).as_null_object
+  end
+
   subject { Shoes::Swt::Shape.new dsl, swt_app }
 
   shared_examples_for "Swt::Shape" do

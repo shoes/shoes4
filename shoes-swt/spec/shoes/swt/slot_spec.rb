@@ -2,8 +2,12 @@ require 'spec_helper'
 
 describe Shoes::Swt::Slot do
   include_context "swt app"
-  let(:dsl) { instance_double Shoes::Slot, hidden?: true,
-                                           visible?: false, contents: [content] }
+
+  let(:dsl) do
+    instance_double Shoes::Slot, hidden?: true, visible?: false,
+                                 contents: [content]
+  end
+
   let(:content) { double 'content', show: true, hide: true }
 
   subject { Shoes::Swt::Slot.new dsl, swt_app }

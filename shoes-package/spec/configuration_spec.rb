@@ -180,7 +180,7 @@ describe Shoes::Package::Configuration do
       it "blows up" do
         expect do
           Shoes::Package::Configuration.load('some/bogus/path')
-        end.to raise_error /No such file or directory/
+        end.to raise_error(/No such file or directory/)
       end
     end
 

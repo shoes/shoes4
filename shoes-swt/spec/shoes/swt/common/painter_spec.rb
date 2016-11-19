@@ -1,23 +1,31 @@
 require 'spec_helper'
 
 describe Shoes::Swt::Common::Painter do
-  let(:object) { double 'object', dsl: dsl, transform: transform,
-                                  apply_fill: nil, apply_stroke: nil }
+  let(:object) do
+    double 'object', dsl: dsl, transform: transform, apply_fill: nil,
+                     apply_stroke: nil
+  end
 
-  let(:parent) { double 'parent', absolute_left: 0, absolute_top: 0,
-                                  width: 200, height: 100, fixed_height?: true }
-  let(:dsl) { double 'dsl', parent: parent, visible?: true, positioned?: true,
-                            style: {} }
+  let(:parent) do
+    double 'parent', absolute_left: 0, absolute_top: 0, width: 200, height: 100,
+                     fixed_height?: true
+  end
+
+  let(:dsl) do
+    double 'dsl', parent: parent, visible?: true, positioned?: true, style: {}
+  end
 
   let(:event) { double 'paint event', gc: graphics_context }
 
-  let(:graphics_context) { double 'graphics_context', dispose: nil,
-                                                      clipping: nil,
-                                                      set_clipping: nil,
-                                                      set_antialias: nil,
-                                                      set_line_cap: nil,
-                                                      set_transform: nil,
-                                                      setTransform: nil }
+  let(:graphics_context) do
+    double 'graphics_context', dispose: nil,
+                               clipping: nil,
+                               set_clipping: nil,
+                               set_antialias: nil,
+                               set_line_cap: nil,
+                               set_transform: nil,
+                               setTransform: nil
+  end
 
   let(:transform) { double 'transform', disposed?: false }
 

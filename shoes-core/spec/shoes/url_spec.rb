@@ -44,21 +44,21 @@ describe 'Shoes.url' do
 
   it 'should receive path when visitting path' do
     expect_any_instance_of(klazz).to receive(:path)
-    Shoes.app do visit '/path' end
+    Shoes.app { visit '/path' }
   end
 
   it 'handles the arguments given in the regexes' do
     expect_any_instance_of(klazz).to receive(:number).with('7')
-    Shoes.app do visit '/number/7' end
+    Shoes.app { visit '/number/7' }
   end
 
   it 'can call methods defined in the URL class when visitting a URL' do
     expect_any_instance_of(klazz).to receive(:some_method)
-    Shoes.app do visit '/foo' end
+    Shoes.app { visit '/foo' }
   end
 
   it 'has a location method that returns the current URL' do
-    Shoes.app do visit('/visit_me') end
+    Shoes.app { visit('/visit_me') }
   end
 
   it 'instances report class as klazz (regression, do not ask...)' do

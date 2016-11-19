@@ -19,8 +19,8 @@ describe Shoes::Shape do
   it_behaves_like "clickable object"
 
   describe "octagon" do
-    let(:draw) {
-      proc {
+    let(:draw) do
+      proc do
         xs = [200, 300, 370, 370, 300, 200, 130, 130]
         ys = [100, 100, 170, 270, 340, 340, 270, 170]
         move_to xs.first, ys.first
@@ -28,8 +28,8 @@ describe Shoes::Shape do
           line_to(x, y)
         end
         line_to xs.first, ys.first
-      }
-    }
+      end
+    end
 
     its(:left) { should eq(0) }
     its(:top) { should eq(0) }
@@ -66,12 +66,12 @@ describe Shoes::Shape do
   end
 
   describe "curve" do
-    let(:draw) {
-      proc {
+    let(:draw) do
+      proc do
         move_to 10, 10
         curve_to 20, 30, 100, 200, 50, 50
-      }
-    }
+      end
+    end
 
     its(:left_bound)   { should eq(10) }
     its(:top_bound)    { should eq(10) }
@@ -84,11 +84,11 @@ describe Shoes::Shape do
   end
 
   describe "arc" do
-    let(:draw) {
-      proc {
+    let(:draw) do
+      proc do
         arc_to 10, 10, 100, 100, Shoes::PI, Shoes::TWO_PI
-      }
-    }
+      end
+    end
 
     it_behaves_like "movable object"
   end
@@ -106,13 +106,13 @@ describe Shoes::Shape do
   end
 
   describe "accesses app" do
-    let(:draw) {
-      proc {
+    let(:draw) do
+      proc do
         background Shoes::COLORS[:red]
         stroke Shoes::COLORS[:blue]
         rect 10, 10, 100, 100
-      }
-    }
+      end
+    end
 
     it_behaves_like "movable object"
   end

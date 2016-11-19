@@ -21,8 +21,14 @@ describe Shoes::Dimensions do
     let(:margin_top) { 5 }
     let(:margin_right) { 7 }
     let(:margin_bottom) { 11 }
-    let(:opts) { {margin_left: margin_left, margin_top: margin_top,
-                  margin_right: margin_right, margin_bottom: margin_bottom } }
+    let(:opts) do
+      {
+        margin_left: margin_left,
+        margin_top: margin_top,
+        margin_right: margin_right,
+        margin_bottom: margin_bottom
+      }
+    end
   end
 
   shared_context 'element dimensions set' do
@@ -121,11 +127,11 @@ describe Shoes::Dimensions do
       end
 
       describe 'a parent with margins' do
-        let(:parent) { Shoes::AbsoluteDimensions.new parent_left,
-                                                     parent_top,
-                                                     parent_width,
-                                                     parent_height,
-                                                     margin: 20}
+        let(:parent) do
+          Shoes::AbsoluteDimensions.new parent_left, parent_top, parent_width,
+                                        parent_height, margin: 20
+        end
+
         subject { Shoes::Dimensions.new parent, left, top, 1.0, 1.0 }
 
         it 'uses the element_width to calculate its own relative width' do
@@ -160,7 +166,10 @@ describe Shoes::Dimensions do
       end
 
       describe 'with padded strings' do
-        subject { Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n" }
+        subject do
+          Shoes::Dimensions.new parent, left, top, "  50 %  ", "\t- 50 %\n"
+        end
+
         its(:width) { should be_within(ONE_PIXEL).of 0.5 * parent.width }
         its(:height) { should be_within(ONE_PIXEL).of 0.5 * parent.height }
       end
@@ -186,7 +195,9 @@ describe Shoes::Dimensions do
       end
 
       describe 'white space with px is also ok' do
-        subject { Shoes::Dimensions.new parent, "10 px", "20   px", "30px", "55  px" }
+        subject do
+          Shoes::Dimensions.new parent, "10 px", "20   px", "30px", "55  px"
+        end
 
         its(:left) { should eq 10 }
         its(:top) { should eq 20 }
@@ -195,7 +206,9 @@ describe Shoes::Dimensions do
       end
 
       describe 'with invalid integer strings' do
-        subject { Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob" }
+        subject do
+          Shoes::Dimensions.new parent, "p100px", "Hell0", "hell0", "glob"
+        end
 
         its(:left) { should be_nil }
         its(:top) { should be_nil }
@@ -206,7 +219,10 @@ describe Shoes::Dimensions do
       describe 'with negative values' do
         let(:parent_width) { 200 }
         let(:parent_height) { 300 }
-        subject { Shoes::Dimensions.new parent, "- 100", "-20px", "- 50px", "- 80" }
+
+        subject do
+          Shoes::Dimensions.new parent, "- 100", "-20px", "- 50px", "- 80"
+        end
 
         its(:left) { should eq(-100) }
         its(:top) { should eq(-20) }
@@ -233,10 +249,10 @@ describe Shoes::Dimensions do
     end
 
     describe 'with a hash' do
-      subject { Shoes::Dimensions.new parent, left:   left,
-                                              top:    top,
-                                              width:  width,
-                                              height: height }
+      subject do
+        Shoes::Dimensions.new parent, left: left, top: top, width: width,
+                                      height: height
+      end
 
       its(:left) { should eq left }
       its(:top) { should eq top }
@@ -247,9 +263,9 @@ describe Shoes::Dimensions do
       its(:absolute_y_position?) { should be_truthy }
 
       context 'missing width' do
-        subject { Shoes::Dimensions.new parent, left:   left,
-                                                top:    top,
-                                                height: height }
+        subject do
+          Shoes::Dimensions.new parent, left: left, top: top, height: height
+        end
 
         its(:width) { should eq nil }
       end
@@ -385,7 +401,8 @@ describe Shoes::Dimensions do
         end
 
         it 'sets height to element_height plus margins' do
-          expect(subject.height).to eq margin_top + element_height + margin_bottom
+          expect(subject.height).to eq margin_top + element_height +
+                                         margin_bottom
         end
 
         it 'sets that value for element_width' do
@@ -422,11 +439,10 @@ describe Shoes::Dimensions do
     end
 
     describe 'hash' do
-      subject { Shoes::Dimensions.new parent, left:   100,
-                                              top:    50,
-                                              width:  40,
-                                              height: 20,
-                                              center: true }
+      subject do
+        Shoes::Dimensions.new parent, left: 100, top: 50, width: 40, height: 20,
+                                      center: true
+      end
 
       its(:left) { should eq 80 }
       its(:top) { should eq 40 }
@@ -456,8 +472,12 @@ describe Shoes::Dimensions do
 
       it { is_expected.to be_in_bounds 30, 40 }
       it { is_expected.to be_in_bounds left, top }
-      it { is_expected.to be_in_bounds left + width - ONE_PIXEL,
-                                       top + height - ONE_PIXEL}
+
+      it do
+        is_expected.to be_in_bounds left + width - ONE_PIXEL,
+                                    top + height - ONE_PIXEL
+      end
+
       it { is_expected.not_to be_in_bounds left + width, top + height }
       it { is_expected.not_to be_in_bounds 30, top + height }
       it { is_expected.not_to be_in_bounds left + width, 40 }
@@ -483,9 +503,12 @@ describe Shoes::Dimensions do
       it { is_expected.not_to be_in_bounds 149, 75 }
       it { is_expected.to be_in_bounds 200, absolute_top }
       it { is_expected.to be_in_bounds absolute_left, absolute_top }
-      it { is_expected.to be_in_bounds absolute_left + width - ONE_PIXEL,
-                                       absolute_top + height - ONE_PIXEL
-      }
+
+      it do
+        is_expected.to be_in_bounds absolute_left + width - ONE_PIXEL,
+                                    absolute_top + height - ONE_PIXEL
+      end
+
       it { is_expected.not_to be_in_bounds 80, 400 }
     end
   end
@@ -501,12 +524,12 @@ describe Shoes::Dimensions do
     end
 
     describe 'changing left' do
-      before :each do subject.left = left end
+      before { subject.left = left }
       it_behaves_like 'absolute_x_position'
     end
 
     describe 'chaning right' do
-      before :each do subject.right = right end
+      before { subject.right = right }
       it_behaves_like 'absolute_x_position'
     end
 
@@ -517,12 +540,12 @@ describe Shoes::Dimensions do
     end
 
     describe 'changing top' do
-      before :each do subject.top = top end
+      before { subject.top = top }
       it_behaves_like 'absolute_y_position'
     end
 
     describe 'changing bottom' do
-      before :each do subject.bottom = bottom end
+      before { subject.bottom = bottom }
       it_behaves_like 'absolute_y_position'
     end
   end
@@ -530,8 +553,10 @@ describe Shoes::Dimensions do
   describe 'margins' do
     describe 'creation with single margin value' do
       let(:margin) { 13 }
-      subject { Shoes::Dimensions.new parent, width: width, height: height,
-                                              margin: margin}
+      subject do
+        Shoes::Dimensions.new parent, width: width, height: height,
+                                      margin: margin
+      end
 
       its(:margin)      { should == [margin, margin, margin, margin] }
       its(:margin_left) { should == margin }
@@ -566,7 +591,9 @@ describe Shoes::Dimensions do
       let(:margin_bottom) { 17 }
 
       shared_examples_for 'all distinct margins' do
-        its(:margin) { should == [margin_left, margin_top, margin_right, margin_bottom] }
+        its(:margin) do
+          should == [margin_left, margin_top, margin_right, margin_bottom]
+        end
         its(:margin_left) { should == margin_left }
         its(:margin_top) { should == margin_top }
         its(:margin_right) { should == margin_right }
@@ -578,21 +605,26 @@ describe Shoes::Dimensions do
       end
 
       describe 'setting margins separetely through hash' do
-        subject { Shoes::Dimensions.new parent, width: width,
-                                                height: height,
-                                                margin_left: margin_left,
-                                                margin_top: margin_top,
-                                                margin_right: margin_right,
-                                                margin_bottom: margin_bottom}
+        subject do
+          Shoes::Dimensions.new parent, width: width,
+                                        height: height,
+                                        margin_left: margin_left,
+                                        margin_top: margin_top,
+                                        margin_right: margin_right,
+                                        margin_bottom: margin_bottom
+        end
+
         it_behaves_like 'all distinct margins'
       end
 
       describe 'setting margins through margin array' do
-        subject { Shoes::Dimensions.new parent,
-                                        width: width,
+        subject do
+          Shoes::Dimensions.new parent, width: width,
                                         height: height,
                                         margin: [margin_left, margin_top,
-                                                 margin_right, margin_bottom]}
+                                                 margin_right, margin_bottom]
+        end
+
         it_behaves_like 'all distinct margins'
       end
     end
@@ -654,13 +686,20 @@ describe Shoes::Dimensions do
   it { is_expected.to be_takes_up_space }
 
   describe 'left/top/right/bottom not set so get them relative to parent' do
-    let(:parent) { double 'parent', x_dimension: x_dimension,
-                                    y_dimension: y_dimension}
+    let(:parent) do
+      double 'parent', x_dimension: x_dimension, y_dimension: y_dimension
+    end
 
-    let(:x_dimension) { double 'parent x dimension', element_start: parent_left,
-                                                     element_end: parent_right}
-    let(:y_dimension) { double 'parent y dimension', element_start: parent_top,
-                                                     element_end: parent_bottom}
+    let(:x_dimension) do
+      double 'parent x dimension', element_start: parent_left,
+                                   element_end: parent_right
+    end
+
+    let(:y_dimension) do
+      double 'parent y dimension', element_start: parent_top,
+                                   element_end: parent_bottom
+    end
+
     let(:parent_right) { parent_left + 20 }
     let(:parent_bottom) { parent_top + 30 }
 
@@ -713,9 +752,11 @@ describe Shoes::Dimensions do
 
   describe Shoes::ParentDimensions do
     describe 'takes some parent values if not specified' do
-      let(:parent) { Shoes::Dimensions.new nil, parent_left, parent_top,
-                                           parent_width, parent_height,
-                                           margin: 20}
+      let(:parent) do
+        Shoes::Dimensions.new nil, parent_left, parent_top, parent_width,
+                              parent_height, margin: 20
+      end
+
       subject { Shoes::ParentDimensions.new parent }
 
       its(:left)   { should eq nil }

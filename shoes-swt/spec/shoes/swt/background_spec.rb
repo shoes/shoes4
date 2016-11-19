@@ -9,15 +9,15 @@ describe Shoes::Swt::Background do
   let(:height) { 111 }
   let(:corners) { 0 }
   let(:fill) { Shoes::COLORS[:salmon] }
-  let(:dsl) { double("dsl object", app: shoes_app,
-                                   element_left: left, element_top: top,
-                                   element_width: width, element_height: height,
-                                   strokewidth: 1, curve: corners, fill: fill,
-                                   hidden: false).as_null_object}
+  let(:dsl) do
+    double("dsl object", app: shoes_app,
+                         element_left: left, element_top: top,
+                         element_width: width, element_height: height,
+                         strokewidth: 1, curve: corners, fill: fill,
+                         hidden: false).as_null_object
+  end
 
-  subject {
-    Shoes::Swt::Background.new dsl, swt_app
-  }
+  subject { Shoes::Swt::Background.new dsl, swt_app }
 
   context "#initialize" do
     it { is_expected.to be_an_instance_of(Shoes::Swt::Background) }

@@ -3,15 +3,19 @@ require 'spec_helper'
 describe Shoes::Swt::ListBox do
   include_context "swt app"
 
-  let(:items)  { ["Pie", "Apple", "Sand"] }
-  let(:dsl)    { double('dsl', app: shoes_app,
-                               items: items, opts: {},
-                               element_width: 200, element_height: 20).as_null_object }
-  let(:block)  { ->() {} }
-  let(:real)   { double('real', text: "",
-                                :items= => true, :text= => true,
-                                set_size: true, add_selection_listener: true,
-                                disposed?: false) }
+  let(:items) { ["Pie", "Apple", "Sand"] }
+
+  let(:dsl) do
+    double('dsl', app: shoes_app, items: items, opts: {}, element_width: 200,
+                  element_height: 20).as_null_object
+  end
+
+  let(:block) { ->() {} }
+
+  let(:real) do
+    double('real', text: "", :items= => true, :text= => true, set_size: true,
+                   add_selection_listener: true, disposed?: false)
+  end
 
   subject { Shoes::Swt::ListBox.new dsl, swt_app, &block }
 
