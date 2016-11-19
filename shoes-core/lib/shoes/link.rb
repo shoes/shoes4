@@ -18,9 +18,9 @@ class Shoes
       super texts, @style
     end
 
-    # Force hovering evaluation up in parent where we have actual dimensions
-    def eval_in_parent?
-      true
+    # Hover must use containing text block since we're missing dimensions
+    def target
+      text_block
     end
 
     # Doesn't use Common::Clickable because of URL flavor option clicks

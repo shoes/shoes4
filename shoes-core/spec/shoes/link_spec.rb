@@ -13,10 +13,12 @@ describe Shoes::Link do
   let(:parent) { double("parent") }
   let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
+  let(:text_block) { double 'text block', visible?: true, hidden?: false }
 
   subject do
     link = Shoes::Link.new(app, texts, color: :blue)
     link.parent = parent
+    link.text_block = text_block
     link
   end
 
@@ -25,7 +27,12 @@ describe Shoes::Link do
       element_styles[clazz] = styles
     end
 
-    allow(parent).to receive(:eval_hover_block) do |blk|
+    allow(subject).to receive(:eval_hover_block) do |_|
+      raise "Heck if hover evaluated on link itself. " \
+            "Needs to eval on TextBlock so redrawing can get dimensions."
+    end
+
+    allow(text_block).to receive(:eval_hover_block) do |blk|
       blk.call(subject) if blk
     end
   end
@@ -111,13 +118,7 @@ describe Shoes::Link do
   end
 
   describe 'visibility' do
-    let(:text_block) { double 'text block', visible?: true, hidden?: false }
-
     describe 'with a containing text block' do
-      before :each do
-        subject.text_block = text_block
-      end
-
       it 'forwards #visible? calls' do
         subject.visible?
         expect(text_block).to have_received :visible?
@@ -142,8 +143,6 @@ describe Shoes::Link do
 
   # #979
   describe 'containing text block' do
-    let(:text_block) { double 'text block' }
-
     before :each do
       subject.parent = text_block
     end
