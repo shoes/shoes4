@@ -305,4 +305,10 @@ describe Shoes::TextBlock do
       expect(helper.ins.text_block).to eq para
     end
   end
+
+  describe "links" do
+    it "finds em" do
+      expect(text_block.links).to eq([text_link])
+    end
+  end
 end

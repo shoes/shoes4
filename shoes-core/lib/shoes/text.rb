@@ -1,6 +1,7 @@
 class Shoes
   class Text
     include Common::Inspect
+    include Common::LinkFinder
 
     attr_reader :to_s, :texts, :color
     attr_accessor :parent, :text_block
@@ -15,6 +16,10 @@ class Shoes
 
     def app
       parent && parent.app
+    end
+
+    def links
+      find_links(@texts)
     end
 
     private
