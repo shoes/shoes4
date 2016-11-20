@@ -41,13 +41,6 @@ Lint/NestedMethodDefinition:
     - 'shoes-core/lib/shoes/dialog.rb'
     - 'shoes-core/lib/shoes/logger.rb'
 
-# Offense count: 2
-# Configuration parameters: ContextCreatingMethods.
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
-
 # Offense count: 111
 Metrics/AbcSize:
   Max: 81
