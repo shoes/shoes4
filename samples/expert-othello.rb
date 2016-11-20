@@ -12,7 +12,7 @@ module Othello
   LEFT_OFFSET  = 12
 
   class Game
-    BOARD_SIZE = [8, 8]
+    BOARD_SIZE = [8, 8].freeze
 
     attr_accessor :p1, :p2, :board, :board_history
 

@@ -2,7 +2,7 @@ class Shoes
   FONT_DIR = DIR + "/fonts/"
 
   module Font
-    FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
+    FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}".freeze
     @loaded_fonts = {}
 
     class << self

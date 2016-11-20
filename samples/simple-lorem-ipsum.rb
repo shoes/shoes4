@@ -1,4 +1,4 @@
-TEXT = <<EOS
+TEXT = <<EOS.freeze
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, \
 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
@@ -8,7 +8,7 @@ reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 culpa qui officia deserunt mollit anim id est laborum.
 EOS
 
-NL = "\n\n"
+NL = "\n\n".freeze
 
 Shoes.app do
   lines = TEXT.split("\n")

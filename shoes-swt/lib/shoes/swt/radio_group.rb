@@ -7,7 +7,7 @@ class Shoes
       extend Forwardable
       include Enumerable
 
-      DEFAULT_RADIO_GROUP = "Default Radio Group"
+      DEFAULT_RADIO_GROUP = "Default Radio Group".freeze
 
       @group_lookup = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
 

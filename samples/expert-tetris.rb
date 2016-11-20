@@ -24,8 +24,8 @@ DX     = WIDTH / NX     # pixel width  of a single tetris block
 DY     = HEIGHT / NY    # pixel height of a single tetris block
 FPS    = 60             # game animation frame rate (fps)
 
-PACE   = { start: 0.5, step: 0.005, min: 0.1 } # how long before a piece drops by 1 row (seconds)
-SCORE  = { line: 100, multiplier: 2 }          # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
+PACE   = { start: 0.5, step: 0.005, min: 0.1 }.freeze # how long before a piece drops by 1 row (seconds)
+SCORE  = { line: 100, multiplier: 2 }.freeze          # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
 
 #==================================================================================================
 # The 7 Tetromino Types
@@ -45,13 +45,13 @@ SCORE  = { line: 100, multiplier: 2 }          # score per line removed (100) an
 #  (see http://codeincomplete.com/posts/2011/10/10/javascript_tetris/)
 #
 
-I = { blocks: {up: 0x0F00, right: 0x2222, down: 0x00F0, left: 0x4444}, color: '#00FFFF', size: 4 }
-J = { blocks: {up: 0x44C0, right: 0x8E00, down: 0x6440, left: 0x0E20}, color: '#0000FF', size: 3 }
-L = { blocks: {up: 0x4460, right: 0x0E80, down: 0xC440, left: 0x2E00}, color: '#FF8000', size: 3 }
-O = { blocks: {up: 0xCC00, right: 0xCC00, down: 0xCC00, left: 0xCC00}, color: '#FFFF00', size: 2 }
-S = { blocks: {up: 0x06C0, right: 0x8C40, down: 0x6C00, left: 0x4620}, color: '#00FF00', size: 3 }
-T = { blocks: {up: 0x0E40, right: 0x4C40, down: 0x4E00, left: 0x4640}, color: '#8040FF', size: 3 }
-Z = { blocks: {up: 0x0C60, right: 0x4C80, down: 0xC600, left: 0x2640}, color: '#FF0000', size: 3 }
+I = { blocks: {up: 0x0F00, right: 0x2222, down: 0x00F0, left: 0x4444}, color: '#00FFFF', size: 4 }.freeze
+J = { blocks: {up: 0x44C0, right: 0x8E00, down: 0x6440, left: 0x0E20}, color: '#0000FF', size: 3 }.freeze
+L = { blocks: {up: 0x4460, right: 0x0E80, down: 0xC440, left: 0x2E00}, color: '#FF8000', size: 3 }.freeze
+O = { blocks: {up: 0xCC00, right: 0xCC00, down: 0xCC00, left: 0xCC00}, color: '#FFFF00', size: 2 }.freeze
+S = { blocks: {up: 0x06C0, right: 0x8C40, down: 0x6C00, left: 0x4620}, color: '#00FF00', size: 3 }.freeze
+T = { blocks: {up: 0x0E40, right: 0x4C40, down: 0x4E00, left: 0x4640}, color: '#8040FF', size: 3 }.freeze
+Z = { blocks: {up: 0x0C60, right: 0x4C80, down: 0xC600, left: 0x2640}, color: '#FF0000', size: 3 }.freeze
 
 #==================================================================================================
 # The Game Runner

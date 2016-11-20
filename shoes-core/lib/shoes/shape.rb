@@ -10,7 +10,7 @@ class Shoes
 
     style_with :art_styles, :center, :common_styles, :dimensions
 
-    STYLES = { fill: Shoes::COLORS[:black] }
+    STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions
       @dimensions = AbsoluteDimensions.new @style

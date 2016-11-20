@@ -11,6 +11,6 @@ require_relative 'tasks/rspec'
 require_relative 'tasks/sample'
 require_relative 'tasks/yard'
 
-PACKAGE_DIR = 'pkg'
+PACKAGE_DIR = 'pkg'.freeze
 
 CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage', "spec/test_app/#{PACKAGE_DIR}"]

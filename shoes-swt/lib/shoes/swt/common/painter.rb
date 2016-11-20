@@ -9,7 +9,7 @@ class Shoes
           curve:   ::Swt::SWT::CAP_ROUND,
           rect:    ::Swt::SWT::CAP_FLAT,
           project: ::Swt::SWT::CAP_SQUARE
-        }
+        }.freeze
 
         def initialize(obj)
           @obj = obj

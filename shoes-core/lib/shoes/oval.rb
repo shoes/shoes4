@@ -8,7 +8,7 @@ class Shoes
     include Common::Hover
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
-    STYLES = { fill: Shoes::COLORS[:black] }
+    STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(left, top, width, height)
       left   ||= @style[:left]

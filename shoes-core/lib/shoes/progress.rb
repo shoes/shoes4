@@ -4,7 +4,7 @@ class Shoes
     include Common::Style
 
     style_with :common_styles, :dimensions, :fraction
-    STYLES = { fraction: 0.0 }
+    STYLES = { fraction: 0.0 }.freeze
 
     def after_initialize(*_)
       @gui.fraction = @style[:fraction]

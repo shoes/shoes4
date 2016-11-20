@@ -31,7 +31,7 @@ class Shoes
     include Common::State
 
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text
-    STYLES = { width: 200, height: 20, items: [""] }
+    STYLES = { width: 200, height: 20, items: [""] }.freeze
 
     def handle_block(blk)
       change(&blk) if blk

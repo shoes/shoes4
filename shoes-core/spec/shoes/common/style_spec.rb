@@ -13,7 +13,7 @@ describe Shoes::Common::Style do
     attr_reader :app, :dimensions
     style_with :key, :left, :click, :strokewidth, :fill
 
-    STYLES = {fill: Shoes::COLORS[:blue]}
+    STYLES = { fill: Shoes::COLORS[:blue] }.freeze
 
     def initialize(app, styles = {})
       @app = app # needed for style init

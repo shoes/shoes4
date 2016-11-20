@@ -38,12 +38,12 @@ class Shoes
 
   class EditBox < InputBox
     style_with :change, :common_styles, :dimensions, :text, :state
-    STYLES = { width: 200, height: 108, text: '' }
+    STYLES = { width: 200, height: 108, text: '' }.freeze
   end
 
   class EditLine < InputBox
     style_with :change, :common_styles, :dimensions, :text, :secret, :state
-    STYLES = { width: 200, height: 28, text: '' }
+    STYLES = { width: 200, height: 28, text: '' }.freeze
 
     def secret?
       secret

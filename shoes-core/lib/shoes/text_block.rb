@@ -1,6 +1,6 @@
 class Shoes
   CENTER = "center".freeze
-  DEFAULT_TEXTBLOCK_FONT = "Arial"
+  DEFAULT_TEXTBLOCK_FONT = "Arial".freeze
 
   class TextBlock
     include Common::UIElement
@@ -14,7 +14,7 @@ class Shoes
     attr_accessor :cursor, :textcursor
 
     style_with :common_styles, :dimensions, :text_block_styles
-    STYLES = { font: DEFAULT_TEXTBLOCK_FONT } # used in TextBlock specs only
+    STYLES = { font: DEFAULT_TEXTBLOCK_FONT }.freeze # used in TextBlock specs only
 
     def create_dimensions(*_)
       @dimensions = TextBlockDimensions.new @parent, @style

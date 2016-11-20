@@ -1,4 +1,4 @@
-NOTES = [['Welcome to the vJot Clone', <<-'END']]
+NOTES = [['Welcome to the vJot Clone', <<-'END']].freeze
 This sample app is a notetaker, a clone of PJ Hyett's vjot.com.
 
 Creating

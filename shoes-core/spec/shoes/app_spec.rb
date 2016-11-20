@@ -354,7 +354,7 @@ describe Shoes::App do
 
     let(:subscribed_instance) { TestSubscribeClass.new subject }
 
-    AUTO_SUBSCRIBED_CLASSES = [Shoes::App, Shoes::URL, Shoes::Widget]
+    AUTO_SUBSCRIBED_CLASSES = [Shoes::App, Shoes::URL, Shoes::Widget].freeze
     SUBSCRIBED_CLASSES      = AUTO_SUBSCRIBED_CLASSES + [TestSubscribeClass]
 
     describe '.subscribe_to_dsl_methods' do
