@@ -146,11 +146,6 @@ Style/IfInsideElse:
     - 'samples/expert-irb.rb'
     - 'samples/expert-tankspank.rb'
 
-# Offense count: 2
-Style/IfWithSemicolon:
-  Exclude:
-    - 'samples/expert-pong.rb'
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:
