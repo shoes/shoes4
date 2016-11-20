@@ -2,11 +2,11 @@
 # pulling in the right spec helpers from the subdirectories
 
 dirs = ARGV.map do |path|
-  path.gsub(/^\.\//, '')
+  path.gsub(%r{^\.\/}, '')
 end
 
 dirs.select! do |path|
-  path.match(/^shoes-.*\//)
+  path.match(%r{^shoes-.*\/})
 end
 
 dirs.map! do |path|

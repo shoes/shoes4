@@ -27,7 +27,7 @@ module Othello
     def next_turn(check_available_moves = true)
       @current_player = next_player
       if check_available_moves && skip_turn?
-        # FIXME Possible infinite loop if neither player has a good move?
+        # FIXME: Possible infinite loop if neither player has a good move?
         next_turn
         raise "Player #{@current_player.piece} (#{@current_player.color}) has no available moves. Player #{next_player.piece}'s (#{next_player.color}) turn."
       end
@@ -66,7 +66,7 @@ module Othello
       memorize_board
       piece = current_player.piece
       opp_piece = current_player.opp_piece
-      raise "Spot already taken." if board_at(c) != 0
+      raise "Spot already taken." if board_at(c).nonzero?
       if check_adjacent_pieces
         pieces_to_change = []
         pieces_to_change << check_direction(c, [0, 1], piece, opp_piece) # N
@@ -83,7 +83,7 @@ module Othello
       current_player.pieces -= 1
       @board[c[0]][c[1]] = piece
       current_winner = calculate_current_winner
-      raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!" if @p1.pieces + @p2.pieces == 0
+      raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!" if @p1.pieces + @p2.pieces.zero?
     end
 
     def skip_turn?
@@ -96,7 +96,7 @@ module Othello
     end
 
     def possible_move?(c = [0, 0])
-      return nil if board_at(c) != 0
+      return nil if board_at(c).nonzero?
       piece = current_player.piece
       opp_piece = current_player.opp_piece
       pieces_to_change = []
@@ -219,7 +219,12 @@ module Othello
         background white
         para span("Player 1", stroke: black, font: "Trebuchet 10px bold"), margin: 4
 
-        button("Undo last move", top: 0, left: -150) { GAME.undo!; draw_board } unless GAME.board_history.empty?
+        unless GAME.board_history.empty?
+          button("Undo last move", top: 0, left: -150) do
+            GAME.undo!
+            draw_board
+          end
+        end
       end
     end
   end
@@ -233,7 +238,12 @@ module Othello
         background white
         para span("Player 2", stroke: black, font: "Trebuchet 10px bold"), margin: 4
 
-        button("Undo last move", top: 0, left: -150) { GAME.undo!; draw_board } unless GAME.board_history.empty?
+        unless GAME.board_history.empty?
+          button("Undo last move", top: 0, left: -150) do
+            GAME.undo!
+            draw_board
+          end
+        end
       end
     end
   end
@@ -256,7 +266,7 @@ module Othello
             stroke rgb(0, 100, 0)
             rect left: left, top: top, width: PIECE_WIDTH, height: PIECE_HEIGHT
 
-            if cell != 0
+            if cell.nonzero?
               strokewidth 0
               fill(cell == 1 ? rgb(100, 100, 100) : rgb(155, 155, 155))
               oval(left + 3, top + 4, PIECE_WIDTH - 10, PIECE_HEIGHT - 10)

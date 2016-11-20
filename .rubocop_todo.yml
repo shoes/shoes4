@@ -53,12 +53,6 @@ Lint/RescueException:
     - 'samples/expert-funnies.rb'
     - 'shoes-swt/lib/shoes/swt/sound.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Lint/UnneededSplatExpansion:
-  Exclude:
-    - 'shoes-core/spec/shoes/shared_examples/dsl/text_elements.rb'
-
 # Offense count: 2
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
@@ -98,7 +92,7 @@ Metrics/MethodLength:
 # Offense count: 4
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
-  Max: 388
+  Max: 390
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
@@ -139,15 +133,6 @@ Style/ClassVars:
   Exclude:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: Keywords.
-# Keywords: TODO, FIXME, OPTIMIZE, HACK, REVIEW
-Style/CommentAnnotation:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
 
 # Offense count: 1
 Style/ConstantName:
@@ -217,62 +202,9 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'samples/good-follow.rb'
-    - 'samples/good-reminder.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block/fitter.rb'
-
-# Offense count: 35
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Style/MultilineMethodCallIndentation:
-  Exclude:
-    - 'samples/expert-definr.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-accordion.rb'
-    - 'shoes-core/lib/shoes/widget.rb'
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/list_box_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/spec/shoes/swt/app_spec.rb'
-    - 'shoes-swt/spec/shoes/swt/text_block/text_segment_spec.rb'
-
-# Offense count: 18
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
-# SupportedStyles: aligned, indented
-Style/MultilineOperationIndentation:
-  Exclude:
-    - 'samples/expert-pong.rb'
-    - 'samples/simple-slide.rb'
-    - 'shoes-core/spec/shoes/dimension_spec.rb'
-    - 'shoes-core/spec/shoes/dimensions_spec.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block.rb'
-
 # Offense count: 86
 # Cop supports --auto-correct.
 Style/MutableConstant:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/NilComparison:
-  Exclude:
-    - 'shoes-core/spec/shoes/dimensions_spec.rb'
-
-# Offense count: 41
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle, SupportedStyles.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
   Enabled: false
 
 # Offense count: 3
@@ -287,48 +219,12 @@ Style/PredicateName:
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/lib/shoes/ui/picker.rb'
-    - 'spec/spec_helper.rb'
-
-# Offense count: 28
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAsExpressionSeparator.
-Style/Semicolon:
-  Exclude:
-    - 'samples/expert-othello-adjusted.rb'
-    - 'samples/expert-othello.rb'
-    - 'samples/expert-snake.rb'
-    - 'samples/expert-tetris.rb'
-    - 'samples/good-reminder.rb'
-    - 'samples/good-vjot.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-brightness-transitions.rb'
-    - 'samples/simple-curve.rb'
-    - 'samples/simple-polygon-line.rb'
-    - 'samples/simple-stack-flow-buttons.rb'
-
 # Offense count: 1
 # Configuration parameters: Methods.
 # Methods: {"reduce"=>["acc", "elem"]}, {"inject"=>["acc", "elem"]}
 Style/SingleLineBlockParams:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Style/SpaceBeforeFirstArg:
-  Exclude:
-    - 'samples/class-book-adjusted.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.

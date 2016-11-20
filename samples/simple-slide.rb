@@ -17,7 +17,7 @@ Shoes.app do
     slide_anim do |i|
       slot.height = 150 - (i * 3)
       slot.contents[0].top = -i * 3
-      if slot.height == 0
+      if slot.height.zero?
         stop_anim
         slot.hide
       end

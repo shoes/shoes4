@@ -61,12 +61,12 @@ describe Shoes::Dimensions do
       its(:absolute_right_position?) { should be_falsey }
       its(:absolute_bottom_position?) { should be_falsey }
       its(:margin)      { should == [0, 0, 0, 0] }
-      its(:margin_left) { should == 0 }
-      its(:margin_top) { should == 0 }
-      its(:margin_right) { should == 0 }
-      its(:margin_bottom) { should == 0 }
-      its(:element_width) { should == nil }
-      its(:element_height) { should == nil }
+      its(:margin_left) { should be_zero }
+      its(:margin_top) { should be_zero }
+      its(:margin_right) { should be_zero }
+      its(:margin_bottom) { should be_zero }
+      its(:element_width) { should be_nil }
+      its(:element_height) { should be_nil }
       its(:to_s) { should == "(Shoes::Dimensions)" }
       its(:inspect) { should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]_,_[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] _x_[)]/) }
     end
@@ -337,12 +337,12 @@ describe Shoes::Dimensions do
 
         it 'returns an element_right' do
           expect(subject.element_right).to eq subject.element_left +
-                                                  element_width - ONE_PIXEL
+                                              element_width - ONE_PIXEL
         end
 
         it 'returns an element_bottom' do
           expect(subject.element_bottom).to eq subject.element_top +
-                                                   element_height - ONE_PIXEL
+                                               element_height - ONE_PIXEL
         end
       end
     end
@@ -402,7 +402,7 @@ describe Shoes::Dimensions do
 
         it 'sets height to element_height plus margins' do
           expect(subject.height).to eq margin_top + element_height +
-                                         margin_bottom
+                                       margin_bottom
         end
 
         it 'sets that value for element_width' do

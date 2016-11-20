@@ -35,23 +35,26 @@ shared_examples_for "text element DSL methods" do
   end
 
   describe 'span' do
+    let(:link_array) { [dsl.link('foo'), dsl.link('foo')] }
+
     it 'should parse the color' do
       span = dsl.span 'Hello', stroke: '#ccc'
       expect(span.style[:stroke]).to eq Shoes::Color.new 204, 204, 204
     end
 
     it 'should handle a splatted array of links' do
-      expect { dsl.span(*[dsl.link('foo'), dsl.link('foo')]) }.not_to raise_error
+      expect { dsl.span(*link_array) }.not_to raise_error
     end
 
     it 'should handle a splatted array of links and parse the color' do
-      span = dsl.span(*[dsl.link('foo'), dsl.link('foo')], stroke: '#ccc')
+      span = dsl.span(*link_array, stroke: '#ccc')
       expect(span.style[:stroke]).to eq Shoes::Color.new 204, 204, 204
     end
 
     it 'should handle a splatted array of links with a block' do
       link = dsl.link('foo') { "Bar" }
-      expect { dsl.span(*[link, link]) }.not_to raise_error
+      array = [link, link]
+      expect { dsl.span(*array) }.not_to raise_error
     end
   end
 

@@ -77,8 +77,8 @@ describe Shoes::Download do
     context 'with content length' do
       it 'calls the progress proc from start, download and finish' do
         expect(download.gui).to have_received(:eval_block)
-                                  .with(progress_proc, download)
-                                  .exactly(3).times
+          .with(progress_proc, download)
+          .exactly(3).times
       end
     end
 

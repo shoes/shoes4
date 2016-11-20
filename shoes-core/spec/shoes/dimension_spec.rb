@@ -132,13 +132,13 @@ describe Shoes::Dimension do
       it 'handles negative percent values' do
         subject.extent = '-10%'
         expect(subject.extent).to be_within(ONE_PIXEL).of 0.9 *
-                                                           parent_element_extent
+                                                          parent_element_extent
       end
 
       it 'handles percent values with floats' do
         subject.extent = '20.5%'
         expect(subject.extent).to be_within(ONE_PIXEL).of 0.205 *
-                                                           parent_element_extent
+                                                          parent_element_extent
       end
 
       it 'returns nil for invalid strings' do
@@ -261,7 +261,7 @@ describe Shoes::Dimension do
 
         it 'does influence element_end' do
           expect(subject.element_end).to eq absolute_start + extent -
-                                              margin_end - ONE_PIXEL
+                                            margin_end - ONE_PIXEL
         end
       end
 

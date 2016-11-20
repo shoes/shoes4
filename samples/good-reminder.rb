@@ -19,7 +19,10 @@ Shoes.app title: "A Gentle Reminder",
     flow margin_top: 10 do
       para "Remember to"
       @add = edit_line(margin_left: 10, width: 180)
-      button("Add", margin_left: 5) { add_todo(@add.text); @add.text = '' }
+      button("Add", margin_left: 5) do
+        add_todo(@add.text)
+        @add.text = ''
+      end
     end
   end
 
@@ -51,12 +54,12 @@ Shoes.app title: "A Gentle Reminder",
   end
 
   def refresh_todo
-    @gui_todo.replace(*
-      @todo.map do |item|
+    @gui_todo.replace(
+      *@todo.map do |item|
         [item, '  '] + [link('Done') { complete_todo item }] + ['  '] +
           [link('Forget it') { forget_todo item }] + ["\n"]
       end.flatten
-                     )
+    )
   end
 
   def refresh

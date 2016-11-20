@@ -95,7 +95,7 @@ class Shoes
         end
 
         def fit_as_empty_first_layout(height)
-          return [] if height == :unbounded || height == 0
+          return [] if height == :unbounded || height.zero?
 
           height += ::Shoes::Slot::NEXT_ELEMENT_OFFSET
           generate_two_layouts(empty_segment, "", @dsl.text, height)
@@ -110,7 +110,8 @@ class Shoes
               empty_segment,
               CenteredTextSegment.new(@dsl, @dsl.containing_width),
               "",
-              height)
+              height
+            )
           end
         end
 

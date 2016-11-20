@@ -68,7 +68,7 @@ end
 module Life
   attr_reader :health
   def dead?
-    @health == 0
+    @health.zero?
   end
 
   def hurt(damage)

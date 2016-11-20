@@ -20,7 +20,7 @@ class Shoes
     end
 
     def needs_rotate?
-      rotate != 0
+      rotate && rotate.nonzero?
     end
   end
 end

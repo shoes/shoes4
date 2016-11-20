@@ -74,7 +74,7 @@ class Shoes
       end
 
       def name_for_candidate(candidate)
-        match = /.*lib\/shoes\/(.*)\/generate-backend.rb/.match(candidate)[1]
+        match = %r{.*lib\/shoes\/(.*)\/generate-backend.rb}.match(candidate)[1]
         "shoes-#{match.tr('/', '-')}"
       end
 

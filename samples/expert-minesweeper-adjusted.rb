@@ -58,7 +58,7 @@ class Field
     return if has_flag?(x, y)
     return die!(x, y) if bomb?(x, y)
     open(x, y)
-    discover(x, y) if bombs_around(x, y) == 0
+    discover(x, y) if bombs_around(x, y).zero?
   end
 
   def flag!(x, y)
@@ -109,7 +109,7 @@ class Field
 
   def render_number(x, y)
     render_cell(x, y, "#999", false)
-    if self[x, y].number != 0
+    if self[x, y].number.nonzero?
       @app.nostroke
       @app.nofill
       @app.oval($x + x * cell_size + 3, $y + y * cell_size - 2, 10)
@@ -145,7 +145,7 @@ class Field
     return unless self[x, y].is_a?(Field::OpenCell)
     if flags_around(x, y) >= self[x, y].number
       (-1..1).each do |v|
-        (-1..1).each { |h| click!(x + h, y + v) unless (v == 0 && h == 0) || has_flag?(x + h, y + v) }
+        (-1..1).each { |h| click!(x + h, y + v) unless (v.zero? && h.zero?) || has_flag?(x + h, y + v) }
       end
     end
   end
@@ -168,7 +168,7 @@ class Field
   def can_be_discovered?(x, y)
     return false unless cell_exists?(x, y)
     return false if self[x, y].flag
-    cell_exists?(x, y) && (self[x, y].is_a? EmptyCell) && !bomb?(x, y) && (bombs_around(x, y) == 0)
+    cell_exists?(x, y) && (self[x, y].is_a? EmptyCell) && !bomb?(x, y) && bombs_around(x, y).zero?
   end
 
   def open(x, y)
@@ -177,7 +177,7 @@ class Field
 
   def neighbors
     (-1..1).each do |col|
-      (-1..1).each { |row| yield row, col unless col == 0 && row == 0 }
+      (-1..1).each { |row| yield row, col unless col.zero? && row.zero? }
     end
   end
 

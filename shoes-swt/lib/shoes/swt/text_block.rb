@@ -99,10 +99,10 @@ class Shoes
         width_to_offset = @dsl.element_width || last_segment.last_line_width
 
         @dsl.absolute_right  = starting_left + width_to_offset +
-          margin_right - NEXT_ELEMENT_OFFSET
+                               margin_right - NEXT_ELEMENT_OFFSET
 
         @dsl.absolute_bottom = starting_top + last_segment.height +
-          margin_top + margin_bottom - NEXT_ELEMENT_OFFSET
+                               margin_top + margin_bottom - NEXT_ELEMENT_OFFSET
       end
 
       def bump_absolutes_to_next_line
