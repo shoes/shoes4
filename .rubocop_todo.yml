@@ -94,15 +94,6 @@ Style/AccessorMethodName:
     - 'shoes-swt/lib/shoes/swt/text_block.rb'
     - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
 
-# Offense count: 3
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/spec/shoes/framework_learning_spec.rb'
-
 # Offense count: 2
 Style/ClassVars:
   Exclude:
