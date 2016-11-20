@@ -100,11 +100,6 @@ Style/ClassVars:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
 
-# Offense count: 1
-Style/ConstantName:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
-
 # Offense count: 247
 Style/Documentation:
   Enabled: false

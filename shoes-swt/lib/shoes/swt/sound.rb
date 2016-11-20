@@ -17,7 +17,7 @@ class Shoes
       import javax.sound.sampled
       import java.io.IOException
 
-      BufferSize = 4096
+      BUFFER_SIZE = 4096
 
       def initialize(dsl, _app)
         @dsl = dsl
@@ -79,7 +79,7 @@ class Shoes
       def rawplay(decoded_audio_format, decoded_audio_input_stream)
         # throws IOException, LineUnavailableException
 
-        sampled_data = Java::byte[BufferSize].new
+        sampled_data = Java::byte[BUFFER_SIZE].new
 
         line = getLine(decoded_audio_format)
         unless line.nil?
