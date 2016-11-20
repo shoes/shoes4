@@ -22,11 +22,12 @@ class Shoes
       # can pass four kinds of paths to the loader. Given the following
       # file structure:
       #
-      #   ├── a
-      #   │   ├── app.yaml
-      #   │   └── shoes-app-a.rb
-      #   └── b
-      #   └── shoes-app-b.rb
+      # |-- a
+      # |   |-- app.yaml
+      # |   |-- shoes-app-a.rb
+      # |
+      # |-- b
+      # |-- shoes-app-b.rb
       #
       # To package an app that has an `app.yaml`, like `shoes-app-a.rb`,
       # you can call the loader with any of:
