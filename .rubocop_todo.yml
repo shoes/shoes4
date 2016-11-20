@@ -12,12 +12,6 @@ Lint/AssignmentInCondition:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/slot.rb'
 
-# Offense count: 2
-Lint/EmptyWhen:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-
 # Offense count: 14
 Lint/Eval:
   Exclude:

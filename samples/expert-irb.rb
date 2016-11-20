@@ -44,10 +44,7 @@ class MimickIRB < RubyLex
     $stdout.rewind
     [output, obj]
   rescue Object => e
-    case e
-    when Empty, Continue
-    else @line = ""
-    end
+    @line = "" unless e.is_a?(Empty) || e.is_a?(Continue)
     raise e
   ensure
     set_input(StringIO.new)
