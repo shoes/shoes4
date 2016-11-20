@@ -1,7 +1,9 @@
 install:
+  - cd ..
   - appveyor DownloadFile https://s3.amazonaws.com/jruby.org/downloads/9.1.6.0/jruby-bin-9.1.6.0.zip
   - 7z x jruby-bin-9.1.6.0.zip -y
-  - SET PATH=C:\projects\shoes4\jruby-9.1.6.0\bin;%PATH%
+  - SET PATH=C:\projects\jruby-9.1.6.0\bin;%PATH%
+  - cd shoes4
   - gem install bundler
   - bundle
 
