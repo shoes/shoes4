@@ -42,12 +42,6 @@ Lint/NestedMethodDefinition:
     - 'shoes-core/lib/shoes/logger.rb'
 
 # Offense count: 2
-Lint/RescueException:
-  Exclude:
-    - 'samples/expert-funnies.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
-
-# Offense count: 2
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
   Exclude:

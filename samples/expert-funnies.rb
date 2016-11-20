@@ -2,7 +2,7 @@
 # Hpricot for Shoes 3 compatibility
 begin
   require 'nokogiri'
-rescue Exception
+rescue LoadError
   require 'hpricot'
 end
 

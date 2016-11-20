@@ -51,7 +51,7 @@ class Shoes
           #  jioex.stacktrace
           rescue LineUnavailableException => luex
             puts luex.inspect, luex.backtrace
-          rescue Exception => e
+          rescue => e
             puts e.inspect, e.backtrace
           end
         end
