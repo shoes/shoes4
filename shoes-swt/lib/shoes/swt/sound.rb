@@ -100,11 +100,11 @@ class Shoes
         end
       end
 
-      def getLine(audioFormat)
+      def getLine(audio_format)
         # throws LineUnavailableException
-        info = DataLine::Info.new(SourceDataLine.java_class, audioFormat)
+        info = DataLine::Info.new(SourceDataLine.java_class, audio_format)
         res = AudioSystem.getLine(info)
-        res.open(audioFormat)
+        res.open(audio_format)
         res
       end
     end
