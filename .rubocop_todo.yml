@@ -109,11 +109,6 @@ Style/DoubleNegation:
   Exclude:
     - 'shoes-core/lib/shoes/slot.rb'
 
-# Offense count: 1
-Style/EndOfLine:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/check_button.rb'
-
 # Offense count: 99
 # Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts.
 Style/FileName:
