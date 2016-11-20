@@ -171,13 +171,6 @@ Style/PredicateName:
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
 # Offense count: 1
-# Configuration parameters: Methods.
-# Methods: {"reduce"=>["acc", "elem"]}, {"inject"=>["acc", "elem"]}
-Style/SingleLineBlockParams:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
-
-# Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: snake_case, camelCase
 Style/VariableName:
