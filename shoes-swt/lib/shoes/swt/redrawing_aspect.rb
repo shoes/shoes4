@@ -88,8 +88,9 @@ class Shoes
       end
 
       def redraw_element(element, include_children = true)
-        redraw_area element.element_left, element.element_top,
-                    element.element_width, element.element_height,
+        redraw_target = element.gui&.redraw_target || element
+        redraw_area redraw_target.element_left, redraw_target.element_top,
+                    redraw_target.element_width, redraw_target.element_height,
                     include_children
       end
 

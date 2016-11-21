@@ -7,6 +7,7 @@ describe Shoes::Swt::Check do
 
   let(:dsl) do
     double('dsl', app: shoes_app,
+                  gui: real,
                   visible?: true,
                   left: 42,
                   top: 66,
