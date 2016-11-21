@@ -2,10 +2,6 @@ class Shoes
   module Swt
     class RectPainter < Common::Painter
       def fill(gc)
-        # If drawing a stroke around the shape, inset the fill so the draw
-        # isn't inside bounds of fill because of integer division remainders.
-        inset = inset_fill? ? 1 : 0
-
         gc.fill_round_rectangle(@obj.element_left + inset,
                                 @obj.element_top + inset,
                                 @obj.element_width - inset * 2,
@@ -21,6 +17,12 @@ class Shoes
                                 @obj.element_width - stroke_width,
                                 @obj.element_height - stroke_width,
                                 @obj.corners * 2, @obj.corners * 2)
+      end
+
+      def inset
+        # If drawing a stroke around the shape, inset the fill so the draw
+        # isn't inside bounds of fill because of integer division remainders.
+        inset_fill? ? 1 : 0
       end
 
       def inset_fill?
