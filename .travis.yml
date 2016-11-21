@@ -27,6 +27,8 @@ notifications:
       - jason@jasonrclark.net
     on_success: change # [always|never|change] # default: change
     on_failure: change # [always|never|change] # default: always
+before_install:
+  - gem install bundler
 before_script:
   - "export DISPLAY=:99.0"
   - "export SWT_GTK3=0"
