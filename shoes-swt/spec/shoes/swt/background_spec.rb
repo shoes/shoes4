@@ -13,7 +13,8 @@ describe Shoes::Swt::Background do
     double("dsl object", app: shoes_app,
                          element_left: left, element_top: top,
                          element_width: width, element_height: height,
-                         strokewidth: 1, curve: corners, fill: fill,
+                         style: { strokewidth: 1 }, strokewidth: 1,
+                         curve: corners, fill: fill,
                          hidden: false).as_null_object
   end
 
@@ -59,7 +60,7 @@ describe Shoes::Swt::Background do
       let(:corners) { 13 }
 
       it "fills rect" do
-        expect(gc).to receive(:fill_round_rectangle).with(left, top, width, height, corners * 2, corners * 2)
+        expect(gc).to receive(:fill_round_rectangle).with(left + 1, top + 1, width - 2, height - 2, corners * 2, corners * 2)
         subject.paint_control(event)
       end
     end

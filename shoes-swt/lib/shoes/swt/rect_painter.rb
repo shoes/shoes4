@@ -1,13 +1,13 @@
 class Shoes
   module Swt
     class RectPainter < Common::Painter
-      def fill(graphics_context)
-        graphics_context.fill_round_rectangle(@obj.element_left,
-                                              @obj.element_top,
-                                              @obj.element_width,
-                                              @obj.element_height,
-                                              @obj.corners * 2,
-                                              @obj.corners * 2)
+      def fill(gc)
+        gc.fill_round_rectangle(@obj.element_left + inset,
+                                @obj.element_top + inset,
+                                @obj.element_width - inset * 2,
+                                @obj.element_height - inset * 2,
+                                @obj.corners * 2,
+                                @obj.corners * 2)
       end
 
       def draw(gc)
@@ -17,6 +17,24 @@ class Shoes
                                 @obj.element_width - stroke_width,
                                 @obj.element_height - stroke_width,
                                 @obj.corners * 2, @obj.corners * 2)
+      end
+
+      def inset
+        # If drawing a stroke around the shape, inset the fill so the draw
+        # isn't inside bounds of fill because of integer division remainders.
+        inset_fill? ? 1 : 0
+      end
+
+      def inset_fill?
+        rounded? && strokewidth?
+      end
+
+      def rounded?
+        (@obj.corners || 0) > 0
+      end
+
+      def strokewidth?
+        (@obj.dsl.style[:strokewidth] || 0) > 0
       end
     end
   end
