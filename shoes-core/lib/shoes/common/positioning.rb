@@ -17,7 +17,7 @@ class Shoes
         gui.update_position if gui && gui.respond_to?(:update_position)
       end
 
-      # displace(left: a number, top: a number) » self
+      # displace(left: a number, top: a number) >> self
       # Displacing an element moves it.  But without changing the layout around it.
       def displace(left, top)
         self.displace_left = left

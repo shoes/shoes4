@@ -85,8 +85,6 @@ class Shoes
         color
       end
 
-      private
-
       def style_present?(style)
         !style.nil? && !(style == 'none')
       end

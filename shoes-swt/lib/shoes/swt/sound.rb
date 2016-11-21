@@ -17,7 +17,7 @@ class Shoes
       import javax.sound.sampled
       import java.io.IOException
 
-      BufferSize = 4096
+      BUFFER_SIZE = 4096
 
       def initialize(dsl, _app)
         @dsl = dsl
@@ -51,7 +51,7 @@ class Shoes
           #  jioex.stacktrace
           rescue LineUnavailableException => luex
             puts luex.inspect, luex.backtrace
-          rescue Exception => e
+          rescue => e
             puts e.inspect, e.backtrace
           end
         end
@@ -79,7 +79,7 @@ class Shoes
       def rawplay(decoded_audio_format, decoded_audio_input_stream)
         # throws IOException, LineUnavailableException
 
-        sampled_data = Java::byte[BufferSize].new
+        sampled_data = Java::byte[BUFFER_SIZE].new
 
         line = getLine(decoded_audio_format)
         unless line.nil?
@@ -100,11 +100,11 @@ class Shoes
         end
       end
 
-      def getLine(audioFormat)
+      def getLine(audio_format)
         # throws LineUnavailableException
-        info = DataLine::Info.new(SourceDataLine.java_class, audioFormat)
+        info = DataLine::Info.new(SourceDataLine.java_class, audio_format)
         res = AudioSystem.getLine(info)
-        res.open(audioFormat)
+        res.open(audio_format)
         res
       end
     end

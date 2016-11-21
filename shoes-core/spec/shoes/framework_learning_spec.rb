@@ -18,8 +18,10 @@ module TextPlugin
   end
 end
 
-class Learning::App
-  include TextPlugin::App
+module Learning
+  class App
+    include TextPlugin::App
+  end
 end
 
 describe "A Shoes Framework" do

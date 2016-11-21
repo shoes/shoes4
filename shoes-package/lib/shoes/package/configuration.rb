@@ -22,11 +22,12 @@ class Shoes
       # can pass four kinds of paths to the loader. Given the following
       # file structure:
       #
-      #   ├── a
-      #   │   ├── app.yaml
-      #   │   └── shoes-app-a.rb
-      #   └── b
-      #   └── shoes-app-b.rb
+      # |-- a
+      # |   |-- app.yaml
+      # |   |-- shoes-app-a.rb
+      # |
+      # |-- b
+      # |-- shoes-app-b.rb
       #
       # To package an app that has an `app.yaml`, like `shoes-app-a.rb`,
       # you can call the loader with any of:
@@ -104,8 +105,6 @@ class Shoes
         symbolized_config[:gems] = merge_gems(defaults, symbolized_config)
         Furoshiki::Configuration.new defaults.merge(symbolized_config)
       end
-
-      private
 
       # If it exists, load default options. If not, let the filesystem raise an
       # error.

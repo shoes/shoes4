@@ -12,12 +12,6 @@ Lint/AssignmentInCondition:
   Exclude:
     - 'shoes-swt/lib/shoes/swt/slot.rb'
 
-# Offense count: 2
-Lint/EmptyWhen:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-
 # Offense count: 14
 Lint/Eval:
   Exclude:
@@ -46,19 +40,6 @@ Lint/NestedMethodDefinition:
   Exclude:
     - 'shoes-core/lib/shoes/dialog.rb'
     - 'shoes-core/lib/shoes/logger.rb'
-
-# Offense count: 2
-Lint/RescueException:
-  Exclude:
-    - 'samples/expert-funnies.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
-
-# Offense count: 2
-# Configuration parameters: ContextCreatingMethods.
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
 
 # Offense count: 111
 Metrics/AbcSize:
@@ -113,31 +94,11 @@ Style/AccessorMethodName:
     - 'shoes-swt/lib/shoes/swt/text_block.rb'
     - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
 
-# Offense count: 6
-Style/AsciiComments:
-  Exclude:
-    - 'shoes-core/lib/shoes/common/positioning.rb'
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-
-# Offense count: 3
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'shoes-core/spec/shoes/framework_learning_spec.rb'
-
 # Offense count: 2
 Style/ClassVars:
   Exclude:
     - 'samples/expert-tankspank.rb'
     - 'samples/simple-menu.rb'
-
-# Offense count: 1
-Style/ConstantName:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
 
 # Offense count: 247
 Style/Documentation:
@@ -147,11 +108,6 @@ Style/Documentation:
 Style/DoubleNegation:
   Exclude:
     - 'shoes-core/lib/shoes/slot.rb'
-
-# Offense count: 1
-Style/EndOfLine:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/check_button.rb'
 
 # Offense count: 99
 # Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts.
@@ -190,11 +146,6 @@ Style/IfInsideElse:
     - 'samples/expert-irb.rb'
     - 'samples/expert-tankspank.rb'
 
-# Offense count: 2
-Style/IfWithSemicolon:
-  Exclude:
-    - 'samples/expert-pong.rb'
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:
@@ -213,17 +164,3 @@ Style/PredicateName:
     - 'samples/expert-minesweeper-adjusted.rb'
     - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
-
-# Offense count: 1
-# Configuration parameters: Methods.
-# Methods: {"reduce"=>["acc", "elem"]}, {"inject"=>["acc", "elem"]}
-Style/SingleLineBlockParams:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/text_block/text_font_factory.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: snake_case, camelCase
-Style/VariableName:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
