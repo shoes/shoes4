@@ -88,15 +88,23 @@ class Shoes
       end
 
       def redraw_element(element, include_children = true)
-        redraw_target = element.gui&.redraw_target || element
-        redraw_area redraw_target.element_left, redraw_target.element_top,
-                    redraw_target.element_width, redraw_target.element_height,
+        target = redraw_target(element)
+        redraw_area target.element_left, target.element_top,
+                    target.element_width, target.element_height,
                     include_children
       end
 
       def redraw_area(left, top, width, height, include_children = true)
         unless app.disposed?
           app.redraw left, top, width, height, include_children
+        end
+      end
+
+      def redraw_target(element)
+        if element.gui
+          element.gui.redraw_target
+        else
+          element
         end
       end
 
