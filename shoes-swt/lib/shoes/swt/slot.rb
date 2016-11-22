@@ -28,7 +28,9 @@ class Shoes
         # Only alter contents on a visibility change
         return if @last_hidden_state == dsl.hidden?
 
-        if @last_hidden_state = dsl.hidden?
+        @last_hidden_state = dsl.hidden?
+
+        if @last_hidden_state
           dsl.contents.each(&:hide)
         else
           dsl.contents.each(&:show)
