@@ -104,11 +104,6 @@ Style/ClassVars:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 1
-Style/DoubleNegation:
-  Exclude:
-    - 'shoes-core/lib/shoes/slot.rb'
-
 # Offense count: 99
 # Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts.
 Style/FileName:
