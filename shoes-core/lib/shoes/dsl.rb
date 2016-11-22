@@ -101,6 +101,7 @@ require 'shoes/input_box'
 # please keep this list tidy and alphabetically sorted
 require 'shoes/animation'
 require 'shoes/arc'
+require 'shoes/arrow'
 require 'shoes/background'
 require 'shoes/border'
 require 'shoes/button'
@@ -302,6 +303,17 @@ class Shoes
     # similar controls as Shoes::Video (#video)
     def sound(soundfile, opts = {}, &blk)
       Shoes::Sound.new @__app__, soundfile, opts, &blk
+    end
+
+    # Creates an arrow centered at (left, top)
+    #
+    # @param [Integer] left the x-coordinate of the element center
+    # @param [Integer] top the y-coordinate of the element center
+    # @param [Integer] width width of the arrow
+    # @param [Hash] opts Arrow style options
+    # @option opts [Integer] rotate (false)
+    def arrow(left, top, width, styles = {}, &blk)
+      create Shoes::Arrow, left, top, width, styles, blk
     end
 
     # Creates an arc at (left, top)
