@@ -35,6 +35,10 @@ class Shoes
         end
       end
 
+      def redraw_target
+        @dsl
+      end
+
       def remove
         app.click_listener.remove_listeners_for(dsl)
       end

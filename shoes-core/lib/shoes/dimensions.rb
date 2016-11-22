@@ -219,5 +219,9 @@ class Shoes
     extend Forwardable
 
     def_delegators :dsl, *DimensionsDelegations::CANDIDATE_METHODS
+
+    def redraw_target
+      @dsl
+    end
   end
 end

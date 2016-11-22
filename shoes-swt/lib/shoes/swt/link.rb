@@ -13,6 +13,10 @@ class Shoes
         @dsl = dsl
       end
 
+      def redraw_target
+        @dsl.text_block
+      end
+
       def remove
         @link_segments.clear
         app.click_listener.remove_listeners_for(self)

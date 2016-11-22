@@ -31,6 +31,10 @@ class Shoes
       attr_reader :element, :transform
       attr_reader :painter
 
+      def redraw_target
+        @dsl
+      end
+
       def line_to(x, y)
         @element.line_to(x, y)
       end
