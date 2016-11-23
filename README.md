@@ -227,7 +227,7 @@ If you want to keep up to date with what's going on with Shoes, you can find us 
 
 Want to get in touch with the shoes community? That's great! You can get in touch here:
 
-* You can join the mailing list at http://lists.mvmanila.com/listinfo.cgi/shoes-mvmanila.com. ([Archives of the old mailing list are also hanging around.]((http://librelist.com/browser/shoes/)))
+* You can join the mailing list at http://lists.mvmanila.com/listinfo.cgi/shoes-mvmanila.com. ([Archives of the old mailing list are also hanging around.](http://librelist.com/browser/shoes/))
 * We also have an irc channel #shoes on freenode - a lot of people are idling there so it might take some time to react
 
 However we try to keep most discussions about the development in this repository/its issues so everyone can see them and look them up.
