@@ -13,7 +13,7 @@ describe Shoes::Swt::ListBox do
   let(:block) { ->() {} }
 
   let(:real) do
-    double('real', text: "", :items= => true, :text= => true, set_size: true,
+    double('real', text: "", :set_items => true, :text= => true, set_size: true,
                    add_selection_listener: true, disposed?: false)
   end
 
@@ -33,7 +33,7 @@ describe Shoes::Swt::ListBox do
     allow(dsl).to receive(:items).and_return ["hello"]
     subject.update_items
     # creation already calls update_items once
-    expect(real).to have_received(:items=).with(["hello"]).twice
+    expect(real).to have_received(:set_items).with("hello").twice
   end
 
   it "should set real text if initialized with choose option" do
@@ -59,14 +59,14 @@ describe Shoes::Swt::ListBox do
 
   it 'sets the items on real upon initialization' do
     subject
-    expect(real).to have_received(:items=).with(items)
+    expect(real).to have_received(:set_items).with(*items)
   end
 
   it 'converts array to string' do
     allow(dsl).to receive(:items).and_return [1, 2, 3]
     subject.update_items
     # creation already calls update_items once
-    expect(real).to have_received(:items=).with(%w(1 2 3)).twice
+    expect(real).to have_received(:set_items).with("1", "2", "3").twice
   end
 
   describe "when the backend notifies us that the selection has changed" do
