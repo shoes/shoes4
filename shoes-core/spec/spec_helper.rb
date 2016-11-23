@@ -2,7 +2,14 @@ SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, "../lib")
 
-require_relative '../../spec/code_coverage'
+# loaded again when executing DSL specs with the SWT backend, therefore
+# we souldn't start the test coverage again or override the command as it'd
+# mess up merging
+unless defined?(SimpleCov)
+  require_relative '../../spec/code_coverage'
+  SimpleCov.command_name 'spec:shoes'
+end
+
 require 'rspec'
 require 'rspec/its'
 require 'pry'
