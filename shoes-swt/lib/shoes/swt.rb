@@ -69,6 +69,7 @@ class Shoes
       require 'shoes/swt/common/update_position'
 
       require 'shoes/swt/input_box'
+      require 'shoes/swt/arrow_painter.rb'
       require 'shoes/swt/rect_painter.rb'
       require 'shoes/swt/swt_button'
       require 'shoes/swt/check_button'
@@ -78,6 +79,7 @@ class Shoes
       require 'shoes/swt/app'
       require 'shoes/swt/animation'
       require 'shoes/swt/arc'
+      require 'shoes/swt/arrow'
       require 'shoes/swt/background'
       require 'shoes/swt/border'
       require 'shoes/swt/button'
