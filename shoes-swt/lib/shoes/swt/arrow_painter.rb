@@ -11,18 +11,41 @@ class Shoes
 
       def path
         @path ||= begin
-          path = ::Swt::Path.new(::Swt.display)
+          #
+          #                                  body_right
+          #
+          #  head_top        body_left       |\
+          #                                  | \
+          #  body_top        |---------------|  \  head_right
+          #                  |                   \
+          #  body_middle     |           (l,t)    |
+          #                  |                   /
+          #  body_bottom     |---------------|  /
+          #                                  | /
+          #  head_bottom                     |/
+          #
 
-          path.move_to(@obj.left - @obj.width / 2, @obj.top)
-          path.line_to(@obj.left - @obj.width / 2, @obj.top - @obj.width * 0.20)
-          path.line_to(@obj.left + @obj.width * 0.10, @obj.top - @obj.width * 0.20)
-          path.line_to(@obj.left + @obj.width * 0.10, @obj.top - @obj.width * 0.20 - @obj.width * 0.20)
-          path.line_to(@obj.left + @obj.width * 0.50, @obj.top)
-          path.line_to(@obj.left + @obj.width * 0.10, @obj.top + @obj.width * 0.20 + @obj.width * 0.20)
-          path.line_to(@obj.left + @obj.width * 0.10, @obj.top + @obj.width * 0.20)
-          path.line_to(@obj.left - @obj.width / 2, @obj.top + @obj.width * 0.20)
-          path.line_to(@obj.left - @obj.width / 2, @obj.top - @obj.width * 0.20)
-          path.line_to(@obj.left - @obj.width / 2, @obj.top)
+          body_left   = @obj.left - @obj.width * 0.5
+          body_right  = @obj.left + @obj.width * 0.1
+          body_top    = @obj.top - @obj.width * 0.2
+          body_bottom = @obj.top + @obj.width * 0.2
+
+          middle = @obj.top
+
+          head_right  = @obj.left + @obj.width * 0.5
+          head_top    = @obj.top - @obj.width * 0.4
+          head_bottom = @obj.top + @obj.width * 0.4
+
+          path = ::Swt::Path.new(::Swt.display)
+          path.move_to(body_left, middle)
+          path.line_to(body_left, body_top)
+          path.line_to(body_right, body_top)
+          path.line_to(body_right, head_top)
+          path.line_to(head_right, middle)
+          path.line_to(body_right, head_bottom)
+          path.line_to(body_right, body_bottom)
+          path.line_to(body_left, body_bottom)
+          path.line_to(body_left, middle)
 
           path
         end

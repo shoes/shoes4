@@ -15,9 +15,6 @@ class Shoes
       top    ||= @style[:top] || 0
       width  ||= @style[:width] || 0
 
-      # Height is benignly ignored in old Shoes, so we do the same
-      height ||= width
-
       @dimensions = AbsoluteDimensions.new left, top, width, width, @style
     end
 
