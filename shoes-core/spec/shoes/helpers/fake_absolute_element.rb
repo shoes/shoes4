@@ -1,9 +1,10 @@
 class Shoes
   class FakeAbsoluteElement
+    include Common::Attachable
     include Common::Inspect
-    include Common::Visibility
     include Common::Positioning
     include Common::Remove
+    include Common::Visibility
 
     include Shoes::DimensionsDelegations
 

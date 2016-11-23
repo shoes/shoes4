@@ -1,6 +1,7 @@
 class Shoes
   module Common
     module UIElement
+      include Common::Attachable
       include Common::Initialization
       include Common::Inspect
       include Common::Visibility

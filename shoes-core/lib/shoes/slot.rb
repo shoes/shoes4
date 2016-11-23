@@ -183,15 +183,19 @@ class Shoes
 
     def positioning(element, current_position)
       if element.needs_positioning?
-        position_element element, current_position
-        element.contents_alignment(current_position) if element.respond_to? :contents_alignment
+        if element.attached_to
+          align_position = position_attached_element element
+        else
+          position_element element, current_position
+          align_position = current_position
+        end
+
+        if element.respond_to?(:contents_alignment)
+          element.contents_alignment(align_position)
+        end
       end
 
-      if element.takes_up_space?
-        update_current_position(current_position, element)
-      else
-        current_position
-      end
+      update_current_position(current_position, element)
     rescue => e
       puts "SWALLOWED POSITIONING EXCEPTION ON #{element} - go take care of it: " + e.to_s
       puts e.backtrace.join("\n\t")
@@ -203,6 +207,15 @@ class Shoes
 
     def position_element(_element, _current_position)
       raise 'position_element is a subclass responsibility'
+    end
+
+    def position_attached_element(element)
+      attached_left = element.attached_to.element_left + element.style[:left].to_i
+      attached_top  = element.attached_to.element_top + element.style[:top].to_i
+
+      position_element_at element, attached_left, attached_top
+
+      CurrentPosition.new attached_left, attached_top, attached_top
     end
 
     def position_in_current_line(element, current_position)
@@ -226,14 +239,23 @@ class Shoes
       element.absolute_left == x && element.absolute_top == y
     end
 
+    def should_update_current_position?(element)
+      !element.attached_to &&
+        !element.absolutely_positioned? &&
+        element.takes_up_space?
+    end
+
     def update_current_position(current_position, element)
-      return current_position if element.absolutely_positioned?
+      return current_position unless should_update_current_position?(element)
+
       current_position.x = element.absolute_right + NEXT_ELEMENT_OFFSET
       current_position.y = element.absolute_top
       next_element_line_start = next_line_start_from element
+
       if current_position.next_line_start < next_element_line_start
         current_position.next_line_start = next_element_line_start
       end
+
       element.adjust_current_position current_position
       current_position
     end

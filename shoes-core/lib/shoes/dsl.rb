@@ -74,6 +74,7 @@ require 'shoes/text_block_dimensions'
 
 require 'shoes/color'
 
+require 'shoes/common/attachable'
 require 'shoes/common/background_element'
 require 'shoes/common/changeable'
 require 'shoes/common/clickable'

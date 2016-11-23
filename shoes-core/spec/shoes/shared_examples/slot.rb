@@ -128,6 +128,17 @@ shared_examples_for 'positioning through :_position' do
     add_child_and_align
   end
 
+  describe 'attached' do
+    let(:attached_to) { double('attached slot', element_left: 101, element_top: 101) }
+    let(:element) { Shoes::FakeElement.new nil }
+
+    it "gets positioned where it's attached" do
+      element.style[:attach] = attached_to
+      expect(element).to receive(:_position).with(101, 101).at_least(1)
+      add_child_and_align
+    end
+  end
+
   describe 'absolute dimensions' do
     let(:element) { Shoes::FakeAbsoluteElement.new }
 
