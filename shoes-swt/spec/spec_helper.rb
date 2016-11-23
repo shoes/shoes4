@@ -4,8 +4,10 @@ $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../lib')
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/spec')
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/lib')
 
-require 'shoes/swt/spec_helper'
 require_relative '../../spec/code_coverage'
+SimpleCov.command_name 'spec:swt'
+
+require 'shoes/swt/spec_helper'
 require 'rspec'
 require 'rspec/its'
 require 'pry'
