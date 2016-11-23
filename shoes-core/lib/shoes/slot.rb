@@ -18,7 +18,7 @@ class Shoes
     def create_dimensions(*args)
       super(*args)
 
-      @fixed_height = height || false
+      @fixed_height = !height.nil?
       @scroll_top   = 0
       set_default_dimension_values
       @pass_coordinates = true
@@ -158,7 +158,7 @@ class Shoes
     end
 
     def fixed_height?
-      !!@fixed_height
+      @fixed_height
     end
 
     def variable_height?
