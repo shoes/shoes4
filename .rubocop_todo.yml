@@ -107,11 +107,6 @@ Style/DoubleNegation:
   Exclude:
     - 'shoes-core/lib/shoes/slot.rb'
 
-# Offense count: 99
-# Configuration parameters: ExpectMatchingDefinition, Regex, IgnoreExecutableScripts.
-Style/FileName:
-  Enabled: false
-
 # Offense count: 5
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: format, sprintf, percent
