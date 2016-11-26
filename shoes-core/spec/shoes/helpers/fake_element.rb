@@ -1,9 +1,10 @@
 class Shoes
   class FakeElement < Dimensions
+    include Common::Attachable
     include Common::Inspect
-    include Common::Visibility
     include Common::Positioning
     include Common::Remove
+    include Common::Visibility
 
     def add_child(_element)
       true
