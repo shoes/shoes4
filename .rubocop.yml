@@ -3,7 +3,7 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   Exclude:
     - testing/**/*.rb
-    - vendor/**/*.rb
+    - vendor/**/*.*
 
 # Don't require new lines between one-liner methods
 Style/EmptyLineBetweenDefs:
