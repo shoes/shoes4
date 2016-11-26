@@ -30,8 +30,8 @@ class Shoes
 
     def handle_block(blk)
       @current_position = Position.new element_left,
-                                              element_top,
-                                              element_top
+                                       element_top,
+                                       element_top
       @blk = blk
       eval_block blk
     end
@@ -171,8 +171,8 @@ class Shoes
 
     def position_contents
       @current_position = Position.new element_left,
-                                              element_top,
-                                              element_top
+                                       element_top,
+                                       element_top
 
       contents.each do |element|
         next if element.hidden?
