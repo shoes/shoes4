@@ -89,7 +89,7 @@ expert-funnies.rb
 expert-game-of-life-adjusted.rb
 # expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
-# expert-othello-adjusted.rb
+expert-othello.rb
 expert-pong.rb
 expert-snake.rb
 expert-tankspank.rb

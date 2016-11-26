@@ -60,6 +60,8 @@ module Othello
       next_turn(false)
       lay_piece([4, 4], false)
       next_turn(false)
+
+      @board_history.clear
     end
 
     def lay_piece(c = [0, 0], check_adjacent_pieces = true)
@@ -83,7 +85,9 @@ module Othello
       current_player.pieces -= 1
       @board[c[0]][c[1]] = piece
       current_winner = calculate_current_winner
-      raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!" if @p1.pieces + @p2.pieces.zero?
+      if (@p1.pieces + @p2.pieces).zero?
+        raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!"
+      end
     end
 
     def skip_turn?
@@ -211,39 +215,25 @@ module Othello
   end
 
   def draw_player_1(_first_turn = false)
-    stack margin: 10 do
+    stack height: 50, margin: 10 do
       if GAME.current_player == GAME.p1
         background yellow
         para span("Player 1 (#{GAME.current_player.color}) turn", stroke: black, font: "Trebuchet 20px bold"), margin: 4
       else
         background white
         para span("Player 1", stroke: black, font: "Trebuchet 10px bold"), margin: 4
-
-        unless GAME.board_history.empty?
-          button("Undo last move", top: 0, left: -150) do
-            GAME.undo!
-            draw_board
-          end
-        end
       end
     end
   end
 
   def draw_player_2(_first_turn = false)
-    stack top: 550, left: 0, margin: 10 do
+    stack top: 550, left: 0, height: 50, margin: 10 do
       if GAME.current_player == GAME.p2
         background yellow
         para span("Player 2's (#{GAME.current_player.color}) turn", stroke: black, font: "Trebuchet 20px bold"), margin: 4
       else
         background white
         para span("Player 2", stroke: black, font: "Trebuchet 10px bold"), margin: 4
-
-        unless GAME.board_history.empty?
-          button("Undo last move", top: 0, left: -150) do
-            GAME.undo!
-            draw_board
-          end
-        end
       end
     end
   end
@@ -278,6 +268,13 @@ module Othello
         end
       end
       draw_player_2
+
+      unless GAME.board_history.empty?
+        button("Undo last move", top: 10, right: 10) do
+          GAME.undo!
+          draw_board
+        end
+      end
     end
   end
 
