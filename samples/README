@@ -86,7 +86,7 @@ good-vjot.rb
 
 expert-definr.rb
 expert-funnies.rb
-expert-game-of-life-adjusted.rb
+expert-game-of-life.rb
 # expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
 # expert-othello-adjusted.rb
