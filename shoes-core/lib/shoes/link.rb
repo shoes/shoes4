@@ -18,11 +18,6 @@ class Shoes
       super texts, @style
     end
 
-    # Hover must use containing text block since we're missing dimensions
-    def target
-      text_block
-    end
-
     # Doesn't use Common::Clickable because of URL flavor option clicks
     def setup_click(blk)
       if blk.nil?
