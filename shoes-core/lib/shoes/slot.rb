@@ -183,16 +183,13 @@ class Shoes
 
     def positioning(element, current_position)
       if element.needs_positioning?
-        if element.attached_to
-          align_position = position_attached_element element
-        else
-          position_element element, current_position
-          align_position = current_position
-        end
+        align_position = if element.attached_to
+                           position_attached_element(element)
+                         else
+                           position_slotted_element(element, current_position)
+                         end
 
-        if element.respond_to?(:contents_alignment)
-          element.contents_alignment(align_position)
-        end
+        element.contents_alignment(align_position) if element.respond_to?(:contents_alignment)
       end
 
       update_current_position(current_position, element)
@@ -216,6 +213,11 @@ class Shoes
       position_element_at element, attached_left, attached_top
 
       CurrentPosition.new attached_left, attached_top, attached_top
+    end
+
+    def position_slotted_element(element, current_position)
+      position_element element, current_position
+      current_position
     end
 
     def position_in_current_line(element, current_position)
