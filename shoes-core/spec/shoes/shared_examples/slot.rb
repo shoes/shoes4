@@ -129,7 +129,7 @@ shared_examples_for 'positioning through :_position' do
   end
 
   describe 'attached' do
-    let(:attached_to) { double('attached slot', element_left: 101, element_top: 101) }
+    let(:attached_to) { double('attached slot', absolute_left: 101, absolute_top: 101) }
     let(:element) { Shoes::FakeElement.new nil }
 
     it "gets positioned where it's attached" do

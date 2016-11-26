@@ -207,8 +207,8 @@ class Shoes
     end
 
     def position_attached_element(element)
-      attached_left = element.attached_to.element_left + element.style[:left].to_i
-      attached_top  = element.attached_to.element_top + element.style[:top].to_i
+      attached_left = element.attached_to.absolute_left + element.style[:left].to_i
+      attached_top  = element.attached_to.absolute_top + element.style[:top].to_i
 
       position_element_at element, attached_left, attached_top
 
