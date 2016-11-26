@@ -313,7 +313,6 @@ Shoes.app width: 520, height: 600 do
         GAME.next_turn
         draw_board
       rescue => e
-        draw_board
         alert(e.message)
       end
     else
