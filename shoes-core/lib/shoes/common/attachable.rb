@@ -2,7 +2,9 @@ class Shoes
   module Common
     module Attachable
       def attached_to
-        style[:attach]
+        target = style[:attach]
+        target = @app.top_slot if target == Shoes::Window
+        target
       end
     end
   end

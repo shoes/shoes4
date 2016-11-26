@@ -130,6 +130,7 @@ require 'shoes/star'
 require 'shoes/sound'
 require 'shoes/text_block'
 require 'shoes/timer'
+require 'shoes/window'
 
 class Shoes
   # Methods for creating and manipulating Shoes elements
