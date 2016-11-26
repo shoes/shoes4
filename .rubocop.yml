@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  Exclude:
+    - testing/**/*.rb
+
 # Don't require new lines between one-liner methods
 Style/EmptyLineBetweenDefs:
   AllowAdjacentOneLineDefs: true
