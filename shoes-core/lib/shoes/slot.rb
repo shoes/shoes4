@@ -29,7 +29,7 @@ class Shoes
     end
 
     def handle_block(blk)
-      @current_position = CurrentPosition.new element_left,
+      @current_position = Position.new element_left,
                                               element_top,
                                               element_top
       @blk = blk
@@ -167,10 +167,10 @@ class Shoes
 
     protected
 
-    CurrentPosition = Struct.new(:x, :y, :next_line_start)
+    Position = Struct.new(:x, :y, :next_line_start)
 
     def position_contents
-      @current_position = CurrentPosition.new element_left,
+      @current_position = Position.new element_left,
                                               element_top,
                                               element_top
 
@@ -212,7 +212,7 @@ class Shoes
 
       position_element_at element, attached_left, attached_top
 
-      CurrentPosition.new attached_left, attached_top, attached_top
+      Position.new attached_left, attached_top, attached_top
     end
 
     def position_slotted_element(element, current_position)

@@ -46,7 +46,7 @@ describe Shoes::Swt::TextBlock do
     let(:segment) { create_segment }
     let(:second_segment) { create_segment }
 
-    let(:current_position) { Shoes::Slot::CurrentPosition.new(0, 0) }
+    let(:current_position) { Shoes::Slot::Position.new(0, 0) }
 
     before(:each) do
       allow(::Shoes::Swt::TextBlock::Fitter).to receive(:new) { fitter }
