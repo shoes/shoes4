@@ -36,7 +36,7 @@ class Shoes
         @hovered = true
 
         apply_style_from_hover_class
-        target.eval_hover_block(@hover_blk)
+        eval_hover_block(@hover_blk)
       end
 
       def mouse_left
@@ -45,15 +45,11 @@ class Shoes
         @hovered = false
 
         apply_style_from_pre_hover
-        target.eval_hover_block(@leave_blk)
+        eval_hover_block(@leave_blk)
       end
 
       def add_mouse_hover_control
         app.add_mouse_hover_control(self)
-      end
-
-      def target
-        self
       end
 
       def eval_hover_block(blk)

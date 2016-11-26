@@ -27,12 +27,7 @@ describe Shoes::Link do
       element_styles[clazz] = styles
     end
 
-    allow(subject).to receive(:eval_hover_block) do |_|
-      raise "Heck if hover evaluated on link itself. " \
-            "Needs to eval on TextBlock so redrawing can get dimensions."
-    end
-
-    allow(text_block).to receive(:eval_hover_block) do |blk|
+    allow(subject).to receive(:eval_hover_block) do |blk|
       blk.call(subject) if blk
     end
   end
