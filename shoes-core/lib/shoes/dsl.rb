@@ -89,6 +89,7 @@ require 'shoes/common/state'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
 require 'shoes/common/style_normalizer'
+require 'shoes/common/translate'
 require 'shoes/common/visibility'
 
 require 'shoes/common/ui_element'
@@ -501,7 +502,7 @@ EOS
 
     # Define app-level setter methods
     PATTERN_APP_STYLES = [:fill, :stroke].freeze
-    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform, :translate].freeze
+    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform].freeze
 
     PATTERN_APP_STYLES.each do |style|
       define_method style do |val|
@@ -513,6 +514,10 @@ EOS
       define_method style do |val|
         @__app__.style[style] = val
       end
+    end
+
+    def translate(left, top)
+      @__app__.style[:translate] = [left, top]
     end
 
     def nostroke
