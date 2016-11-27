@@ -71,6 +71,7 @@ class Shoes
       require 'shoes/swt/input_box'
       require 'shoes/swt/arc_painter.rb'
       require 'shoes/swt/arrow_painter.rb'
+      require 'shoes/swt/line_painter.rb'
       require 'shoes/swt/rect_painter.rb'
       require 'shoes/swt/swt_button'
       require 'shoes/swt/check_button'
