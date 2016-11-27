@@ -111,7 +111,7 @@ class Field
     render_cell(x, y, "#999", false)
     if self[x, y].number.nonzero?
       @app.nostroke
-      @app.para self[x, y].number.to_s, left: x * cell_size + 3, top: y * cell_size - 2,
+      @app.para self[x, y].number.to_s, left: x * cell_size + 3, top: y * cell_size,
                                         font: '13px', stroke: COLORS[self[x, y].number - 1]
     end
   end
@@ -241,7 +241,7 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
       end
       stack { @status = para stroke: white }
       @field.paint
-      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 420, left: 0, stroke: white, font: "11px"
+      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 270, left: -100, stroke: white, font: "11px"
     end
   end
 
