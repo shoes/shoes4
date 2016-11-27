@@ -69,6 +69,7 @@ class Shoes
       require 'shoes/swt/common/update_position'
 
       require 'shoes/swt/input_box'
+      require 'shoes/swt/arc_painter.rb'
       require 'shoes/swt/arrow_painter.rb'
       require 'shoes/swt/rect_painter.rb'
       require 'shoes/swt/swt_button'
