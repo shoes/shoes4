@@ -103,10 +103,15 @@ class Shoes
           if fill_background && @dsl.style[:fill]
             background_color = @color_factory.create(@dsl.style[:fill])
             background_color.apply_as_fill(graphics_context)
-            graphics_context.fill_rectangle(element_left, element_top, width, height)
+            graphics_context.fill_rectangle(@dsl.translate_left + element_left,
+                                            @dsl.translate_top + element_top,
+                                            width,
+                                            height)
           end
 
-          layout.draw(graphics_context, element_left, element_top)
+          layout.draw(graphics_context,
+                      @dsl.translate_left + element_left,
+                      @dsl.translate_top + element_top)
         end
 
         # x,y in app coordinates, so translate for layout's element-local values

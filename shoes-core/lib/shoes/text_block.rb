@@ -4,16 +4,17 @@ class Shoes
 
   class TextBlock
     include Common::UIElement
-    include Common::Style
     include Common::Clickable
     include Common::Hover
     include Common::LinkFinder
+    include Common::Style
+    include Common::Translate
     include TextBlockDimensionsDelegations
 
     attr_reader :text, :contents, :text_styles
     attr_accessor :cursor, :textcursor
 
-    style_with :common_styles, :dimensions, :text_block_styles
+    style_with :common_styles, :dimensions, :text_block_styles, :translate
     STYLES = { font: DEFAULT_TEXTBLOCK_FONT }.freeze # used in TextBlock specs only
 
     def create_dimensions(*_)
