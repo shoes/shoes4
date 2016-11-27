@@ -25,16 +25,16 @@ class Shoes
           #  head_bottom                     |/
           #
 
-          body_left   = @obj.left - @obj.width * 0.5
-          body_right  = @obj.left + @obj.width * 0.1
-          body_top    = @obj.top - @obj.width * 0.2
-          body_bottom = @obj.top + @obj.width * 0.2
+          body_left   = @obj.dsl.translate_left + @obj.left - @obj.width * 0.5
+          body_right  = @obj.dsl.translate_left + @obj.left + @obj.width * 0.1
+          body_top    = @obj.dsl.translate_top + @obj.top - @obj.width * 0.2
+          body_bottom = @obj.dsl.translate_top + @obj.top + @obj.width * 0.2
 
-          middle = @obj.top
+          middle = @obj.dsl.translate_top + @obj.top
 
-          head_right  = @obj.left + @obj.width * 0.5
-          head_top    = @obj.top - @obj.width * 0.4
-          head_bottom = @obj.top + @obj.width * 0.4
+          head_right  = @obj.dsl.translate_left + @obj.left + @obj.width * 0.5
+          head_top    = @obj.dsl.translate_top + @obj.top - @obj.width * 0.4
+          head_bottom = @obj.dsl.translate_top + @obj.top + @obj.width * 0.4
 
           path = ::Swt::Path.new(::Swt.display)
           path.move_to(body_left, middle)

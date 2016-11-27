@@ -8,8 +8,10 @@ describe Shoes::Swt::ArrowPainter do
   let(:container) { double('container', disposed?: false) }
 
   let(:dsl) do
-    double("dsl object", hidden: false, rotate: 0, left: left,
-                         top: top, width: width, height: height,
+    double("dsl object", hidden: false, rotate: 0,
+                         translate_left: 0, translate_top: 0,
+                         left: left, top: top,
+                         width: width, height: height,
                          style: {}, strokewidth: 1).as_null_object
   end
 
