@@ -2,7 +2,7 @@ class Shoes
   module Common
     module Translate
       def translate_left
-        left, = translate
+        left, _ = translate
         left || 0
       end
 
