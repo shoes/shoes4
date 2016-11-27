@@ -86,8 +86,8 @@ good-vjot.rb
 
 expert-definr.rb
 expert-funnies.rb
-expert-game-of-life-adjusted.rb
-expert-irb.rb
+expert-game-of-life.rb
+expert-irb-adjusted.rb
 expert-minesweeper-adjusted.rb
 # expert-othello-adjusted.rb
 expert-pong.rb
@@ -108,5 +108,5 @@ nks_self.rb
 nks_text_sizes.rb
 nks_trurl.rb
 
-class-book-adjusted.rb
+class-book.rb
 
