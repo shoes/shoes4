@@ -125,16 +125,6 @@ class Shoes
         bounds_index_for_width = 2
         native_bounds_measurement(@element, bounds_index_for_width)
       end
-
-      class ShapePainter < Common::Painter
-        def fill(gc)
-          gc.fill_path(@obj.element)
-        end
-
-        def draw(gc)
-          gc.draw_path(@obj.element)
-        end
-      end
     end
   end
 end
