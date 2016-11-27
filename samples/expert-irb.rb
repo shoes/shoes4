@@ -66,7 +66,7 @@ Shoes.app do
     @scroll =
       stack width: 1.0, height: -50, scroll: true do
         background "#555"
-        @console = para @str, font: "Monospace 12px", stroke: "#dfa"
+        @console = para(*@str, font: "Monospace 12px", stroke: "#dfa")
         @console.cursor = -1
       end
   end
