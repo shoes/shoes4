@@ -12,5 +12,5 @@ build: off
 shallow_clone: true
 
 test_script:
-  - rubocop
+  - rubocop -D
   - rake spec:shoes

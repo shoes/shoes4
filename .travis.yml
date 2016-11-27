@@ -1,6 +1,6 @@
 language: ruby
 script:
-  - bundle exec rubocop
+  - bundle exec rubocop -D
   - bundle exec rake spec:all
 rvm:
   - jruby-head
