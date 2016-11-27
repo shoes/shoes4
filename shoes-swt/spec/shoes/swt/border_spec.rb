@@ -11,6 +11,7 @@ describe Shoes::Swt::Border do
   let(:dsl) do
     double("dsl object", element_width: width, element_height: height,
                          element_left: left, element_top: top, parent: parent,
+                         translate_left: 0, translate_top: 0,
                          strokewidth: 1, curve: corners, hidden: false).as_null_object
   end
 

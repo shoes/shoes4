@@ -13,6 +13,7 @@ describe Shoes::Swt::Background do
     double("dsl object", app: shoes_app,
                          element_left: left, element_top: top,
                          element_width: width, element_height: height,
+                         translate_left: 0, translate_top: 0,
                          style: { strokewidth: 1 }, strokewidth: 1,
                          curve: corners, fill: fill,
                          hidden: false).as_null_object

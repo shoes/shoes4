@@ -2,8 +2,8 @@ class Shoes
   module Swt
     class RectPainter < Common::Painter
       def fill(gc)
-        gc.fill_round_rectangle(@obj.element_left + inset,
-                                @obj.element_top + inset,
+        gc.fill_round_rectangle(@obj.dsl.translate_left + @obj.element_left + inset,
+                                @obj.dsl.translate_top + @obj.element_top + inset,
                                 @obj.element_width - inset * 2,
                                 @obj.element_height - inset * 2,
                                 @obj.corners * 2,
@@ -12,8 +12,8 @@ class Shoes
 
       def draw(gc)
         stroke_width = gc.get_line_width
-        gc.draw_round_rectangle(@obj.element_left + stroke_width / 2,
-                                @obj.element_top + stroke_width / 2,
+        gc.draw_round_rectangle(@obj.dsl.translate_left + @obj.element_left + stroke_width / 2,
+                                @obj.dsl.translate_top + @obj.element_top + stroke_width / 2,
                                 @obj.element_width - stroke_width,
                                 @obj.element_height - stroke_width,
                                 @obj.corners * 2, @obj.corners * 2)
