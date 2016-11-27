@@ -18,7 +18,7 @@ class Shoes
         @dsl = dsl
         @app = app
         @element = ::Swt::Path.new(::Swt.display)
-        @painter = Painter.new(self)
+        @painter = ShapePainter.new(self)
         @app.add_paint_listener @painter
       end
 
@@ -54,7 +54,8 @@ class Shoes
       end
 
       def update_position
-        transform.translate(dsl.element_left, dsl.element_top)
+        transform.translate(dsl.translate_left + (dsl.element_left || 0),
+                            dsl.translate_top + (dsl.element_top || 0))
       end
 
       def left
@@ -123,16 +124,6 @@ class Shoes
       def native_width
         bounds_index_for_width = 2
         native_bounds_measurement(@element, bounds_index_for_width)
-      end
-
-      class Painter < Common::Painter
-        def fill(gc)
-          gc.fill_path(@obj.element)
-        end
-
-        def draw(gc)
-          gc.draw_path(@obj.element)
-        end
       end
     end
   end
