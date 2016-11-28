@@ -66,6 +66,7 @@ class Shoes
       require 'shoes/swt/common/visibility'
       require 'shoes/swt/common/selection_listener'
       require 'shoes/swt/common/stroke'
+      require 'shoes/swt/common/translate'
       require 'shoes/swt/common/update_position'
 
       require 'shoes/swt/input_box'

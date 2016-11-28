@@ -1,9 +1,10 @@
 class Shoes
   module Swt
     class TextBlock
-      include Common::Remove
-      include Common::Visibility
       include Common::Clickable
+      include Common::Remove
+      include Common::Translate
+      include Common::Visibility
       include ::Shoes::BackendDimensionsDelegations
 
       DEFAULT_SPACING = 4

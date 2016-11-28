@@ -8,6 +8,7 @@ class Shoes
       include Common::PainterUpdatesPosition
       include Common::Visibility
       include Common::Remove
+      include Common::Translate
       include ::Shoes::BackendDimensionsDelegations
 
       def_delegators :dsl, :angle

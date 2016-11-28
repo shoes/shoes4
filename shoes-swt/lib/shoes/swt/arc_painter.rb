@@ -3,15 +3,15 @@ class Shoes
     class ArcPainter < Common::Painter
       def fill(graphics_context)
         if @obj.wedge?
-          graphics_context.fill_arc(@obj.dsl.translate_left + @obj.element_left,
-                                    @obj.dsl.translate_top + @obj.element_top,
+          graphics_context.fill_arc(@obj.translate_left + @obj.element_left,
+                                    @obj.translate_top + @obj.element_top,
                                     @obj.element_width,
                                     @obj.element_height,
                                     @obj.angle1, @obj.angle2 * -1)
         else
           path = ::Swt::Path.new(::Swt.display)
-          path.add_arc(@obj.dsl.translate_left + @obj.element_left,
-                       @obj.dsl.translate_top + @obj.element_top,
+          path.add_arc(@obj.translate_left + @obj.element_left,
+                       @obj.translate_top + @obj.element_top,
                        @obj.element_width,
                        @obj.element_height,
                        @obj.angle1, @obj.angle2 * -1)
@@ -22,8 +22,8 @@ class Shoes
       def draw(graphics_context)
         sw = graphics_context.get_line_width
         if @obj.element_left && @obj.element_top && @obj.element_width && @obj.element_height
-          graphics_context.draw_arc(@obj.dsl.translate_left + @obj.element_left + sw / 2,
-                                    @obj.dsl.translate_top + @obj.element_top + sw / 2,
+          graphics_context.draw_arc(@obj.translate_left + @obj.element_left + sw / 2,
+                                    @obj.translate_top + @obj.element_top + sw / 2,
                                     @obj.element_width - sw,
                                     @obj.element_height - sw,
                                     @obj.angle1, @obj.angle2 * -1)
