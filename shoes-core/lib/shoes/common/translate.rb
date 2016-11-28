@@ -2,17 +2,22 @@ class Shoes
   module Common
     module Translate
       def translate_left
-        left, _ = translate
-        left || 0
+        @translate_left ||= begin
+                              left, _ = translate
+                              left || 0
+                            end
       end
 
       def translate_top
-        _, top = translate
-        top || 0
+        @translate_top ||= begin
+                             _, top = translate
+                             top || 0
+                           end
       end
 
-      def translate
-        style[:translate]
+      def clear_translate
+        @translate_left = nil
+        @translate_top = nil
       end
     end
   end
