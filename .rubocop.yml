@@ -4,6 +4,7 @@ AllCops:
   Exclude:
     - testing/**/*.rb
     - vendor/**/*
+    - samples/expert_minesweeper_adjusted.rb  # This file is going away soon, so just ignore it for now
 
 # IRB sample is a rare example where we need to use eval
 Lint/Eval:
