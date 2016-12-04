@@ -82,22 +82,22 @@ class Tank
   include Life
   # ^ sounds like insurance
 
-  @@collide_size = 15
+  COLLIDE_SIZE = 15
 
   def west
-    @x - @@collide_size
+    @x - COLLIDE_SIZE
   end
 
   def east
-    @x + @@collide_size
+    @x + COLLIDE_SIZE
   end
 
   def north
-    @y - @@collide_size
+    @y - COLLIDE_SIZE
   end
 
   def south
-    @y + @@collide_size
+    @y + COLLIDE_SIZE
   end
 
   attr_reader :x, :y
