@@ -4,9 +4,9 @@
 # version 3, 13 March 2008
 # this code is free, do what you like with it!
 
-$width = 700
-$height = 500
-$camera_tightness = 0.1
+WIDTH = 700
+HEIGHT = 500
+CAMERA_TIGHTNESS = 0.1
 
 module Collisions
   def contains?(x, y)
@@ -34,14 +34,14 @@ class Building
 
     color = (1..3).collect { 0.2 + 0.4 * rand }
     color << 0.9
-    @stroke = $app.rgb(*color)
+    @stroke = Opp.app.rgb(*color)
     color[-1] = 0.3
-    @fill = $app.rgb(*color)
+    @fill = Opp.app.rgb(*color)
   end
 
   def draw
-    $app.stroke @stroke
-    $app.fill @fill
+    Opp.app.stroke @stroke
+    Opp.app.fill @fill
     Opp.draw_opp_box(@west, @east, @north, @south, @top, @bottom)
   end
 end
@@ -181,21 +181,21 @@ class Tank
   end
 
   def draw
-    $app.stroke $app.blue
-    $app.fill $app.blue(0.4)
+    Opp.app.stroke Opp.app.blue
+    Opp.app.fill Opp.app.blue(0.4)
     Opp.draw_opp_rect @x - 20, @x + 20, @y - 15, @y + 15, 1.05, @tank_angle
     # Opp.draw_opp_box @x - 20, @x + 20, @y - 20, @y + 20, 1.03, 1.0
     Opp.draw_opp_rect @x - 10, @x + 10, @y - 7, @y + 7, 1.05, @aim_angle
     x, _unused1, y, _unused2 = Opp.project(@x, 0, @y, 0, 1.05)
-    $app.line x, y, x + 25 * Math.cos(@aim_angle), y + 25 * Math.sin(@aim_angle)
+    Opp.app.line x, y, x + 25 * Math.cos(@aim_angle), y + 25 * Math.sin(@aim_angle)
 
-    $app.stroke $app.red
-    $app.fill $app.red(@aimed ? 0.4 : 0.1)
+    Opp.app.stroke Opp.app.red
+    Opp.app.fill Opp.app.red(@aimed ? 0.4 : 0.1)
     Opp.draw_opp_oval @target_x - 10, @target_x + 10, @target_y - 10, @target_y + 10, 1.00
 
     if @moving
-      $app.stroke $app.green
-      $app.fill $app.green(0.2)
+      Opp.app.stroke Opp.app.green
+      Opp.app.fill Opp.app.green(0.2)
       Opp.draw_opp_oval @dest_x - 20, @dest_x + 20, @dest_y - 20, @dest_y + 20, 1.00
     end
   end
@@ -217,13 +217,21 @@ class Shell
   end
 
   def draw
-    $app.stroke $app.red
-    $app.fill $app.red(0.1)
+    Opp.app.stroke Opp.app.red
+    Opp.app.fill Opp.app.red(0.1)
     Opp.draw_opp_box @x - 2, @x + 2, @y - 2, @y + 2, 1.05, 1.04
   end
 end
 
 class Opp
+  def self.app
+    @app
+  end
+
+  def self.app=(app)
+    @app = app
+  end
+
   def self.new_game
     @offset_x = 0
     @offset_y = 0
@@ -242,8 +250,8 @@ class Opp
     @shells = []
     @boundary = [-1250, 1500, -1250, 1250]
     @tank = Tank.new
-    @center_x = $app.width / 2
-    @center_y = $app.height / 2
+    @center_x = Opp.app.width / 2
+    @center_y = Opp.app.height / 2
   end
 
   def self.tank
@@ -251,7 +259,7 @@ class Opp
   end
 
   def self.read_input
-    @input = $app.mouse
+    @input = Opp.app.mouse
   end
 
   def self.update_scene
@@ -275,16 +283,16 @@ class Opp
     # @tank.contains?(s.x, s.y)
     # end
 
-    $app.clear do
-      @offset_x += $camera_tightness * (@tank.x - @offset_x)
-      @offset_y += $camera_tightness * (@tank.y - @offset_y)
+    Opp.app.clear do
+      @offset_x += CAMERA_TIGHTNESS * (@tank.x - @offset_x)
+      @offset_y += CAMERA_TIGHTNESS * (@tank.y - @offset_y)
 
-      $app.background $app.black
-      @center_x = $app.width / 2
-      @center_y = $app.height / 2
+      Opp.app.background Opp.app.black
+      @center_x = Opp.app.width / 2
+      @center_y = Opp.app.height / 2
 
-      $app.stroke $app.red(0.9)
-      $app.nofill
+      Opp.app.stroke Opp.app.red(0.9)
+      Opp.app.nofill
       draw_opp_box(*(@boundary + [1.1, 1.0, false]))
 
       @tank.draw
@@ -322,19 +330,19 @@ class Opp
     end
 
     # draw lines for the back edges
-    $app.line far_left, far_top, far_right, far_top if draw_top
-    $app.line far_left, far_bottom, far_right, far_bottom if draw_bottom
-    $app.line far_left, far_top, far_left, far_bottom if draw_left
-    $app.line far_right, far_top, far_right, far_bottom if draw_right
+    Opp.app.line far_left, far_top, far_right, far_top if draw_top
+    Opp.app.line far_left, far_bottom, far_right, far_bottom if draw_bottom
+    Opp.app.line far_left, far_top, far_left, far_bottom if draw_left
+    Opp.app.line far_right, far_top, far_right, far_bottom if draw_right
 
     # draw lines to connect the front and back
-    $app.line near_left, near_top, far_left, far_top if draw_left || draw_top
-    $app.line near_right, near_top, far_right, far_top if draw_right || draw_top
-    $app.line near_left, near_bottom, far_left, far_bottom if draw_left || draw_bottom
-    $app.line near_right, near_bottom, far_right, far_bottom if draw_right || draw_bottom
+    Opp.app.line near_left, near_top, far_left, far_top if draw_left || draw_top
+    Opp.app.line near_right, near_top, far_right, far_top if draw_right || draw_top
+    Opp.app.line near_left, near_bottom, far_left, far_bottom if draw_left || draw_bottom
+    Opp.app.line near_right, near_bottom, far_right, far_bottom if draw_right || draw_bottom
 
     # draw the front, filled
-    $app.rect near_left, near_top, near_right - near_left, near_bottom - near_top
+    Opp.app.rect near_left, near_top, near_right - near_left, near_bottom - near_top
   end
 
   def self.draw_opp_rect(left, right, top, bottom, depth, angle, _with_x = false)
@@ -348,32 +356,32 @@ class Opp
        cy + (x - cx) * sin + (y - cy) * cos]
     end
 
-    $app.line(*(points[0] + points[1]))
-    $app.line(*(points[1] + points[2]))
-    $app.line(*(points[2] + points[3]))
-    $app.line(*(points[3] + points[0]))
+    Opp.app.line(*(points[0] + points[1]))
+    Opp.app.line(*(points[1] + points[2]))
+    Opp.app.line(*(points[2] + points[3]))
+    Opp.app.line(*(points[3] + points[0]))
   end
 
   def self.draw_opp_oval(left, right, top, bottom, depth)
     pl, pr, pt, pb = project(left, right, top, bottom, depth)
-    $app.oval(pl, pt, pr - pl, pb - pt)
+    Opp.app.oval(pl, pt, pr - pl, pb - pt)
   end
 
   def self.draw_opp_plane(x1, y1, x2, y2, front, back, stroke_color)
     near_x1, near_x2, near_y1, near_y2 = project(x1, x2, y1, y2, front)
     far_x1, far_x2, far_y1, far_y2 = project(x1, x2, y1, y2, back)
 
-    $app.stroke stroke_color
+    Opp.app.stroke stroke_color
 
-    $app.line far_x1, far_y1, far_x2, far_y2
-    $app.line far_x1, far_y1, near_x1, near_y1
-    $app.line far_x2, far_y2, near_x2, near_y2
-    $app.line near_x1, near_y1, near_x2, near_y2
+    Opp.app.line far_x1, far_y1, far_x2, far_y2
+    Opp.app.line far_x1, far_y1, near_x1, near_y1
+    Opp.app.line far_x2, far_y2, near_x2, near_y2
+    Opp.app.line near_x1, near_y1, near_x2, near_y2
   end
 end
 
-Shoes.app width: $width, height: $height do
-  $app = self
+Shoes.app width: WIDTH, height: HEIGHT do
+  Opp.app = self
 
   Opp.new_game
   @playing = true
