@@ -80,6 +80,7 @@ Shoes.app do
                  "#{CURSOR} "]
         @cmd = ""
       rescue MimickIRB::Empty
+        @cmd = ""
       rescue MimickIRB::Continue
         @str += ["#{@cmd}\n.. "]
         @cmd = ""
