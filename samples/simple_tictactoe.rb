@@ -124,7 +124,7 @@ class Board
   # In this case, the screen is the
   # end screen, including the transparent
   # black panel and its buttons.
-  def set_screen(screen)
+  def screen=(screen)
     @screen = screen
   end
 
@@ -218,6 +218,6 @@ Shoes.app width: SIZE::WIDTH, height: SIZE::HEIGHT, title: 'Tic Tac Toe' do
   alert_title = title "Cat's Game!", stroke: white, top: 90, align: 'center', size: 34
   exit_screen = [alert_title, black_screen, @quit_button, @restart_button]
 
-  board.set_screen(exit_screen) # Passes pre-made gui on for later use
+  board.screen = exit_screen # Passes pre-made gui on for later use
   board.clear_screen # Clears it to begin with
 end
