@@ -19,7 +19,7 @@ describe Shoes::Swt::TextBlock do
   it_behaves_like "updating visibility"
   it_behaves_like "clickable backend"
 
-  # reported nil, caused trouble in simple-downloader.rb
+  # reported nil, caused trouble in simple_downloader.rb
   it 'initially responds with empty segments' do
     expect(subject.segments).to be_empty
   end

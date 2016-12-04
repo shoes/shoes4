@@ -9,7 +9,7 @@ describe Shoes::CLI do
 
   it 'does not raise an error for a normal packaging command #624' do
     expect do
-      subject.run ['-p', 'swt:app', 'samples/simple-sound.rb']
+      subject.run ['-p', 'swt:app', 'samples/simple_sound.rb']
     end.not_to raise_error
   end
 end
