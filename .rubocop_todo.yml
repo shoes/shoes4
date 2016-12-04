@@ -6,21 +6,9 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 14
-Lint/Eval:
-  Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-    - 'samples/original-manual-adjusted.rb'
-    - 'samples/original-manual.rb'
-    - 'samples/simple-color-selector.rb'
-    - 'samples/simple-loogink-cy.rb'
-
 # Offense count: 3
 Lint/HandleExceptions:
   Exclude:
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
     - 'shoes-core/lib/shoes/packager.rb'
 
 # Offense count: 4
@@ -85,18 +73,11 @@ Metrics/PerceivedComplexity:
 # Offense count: 13
 Style/AccessorMethodName:
   Exclude:
-    - 'samples/simple-tictactoe.rb'
     - 'shoes-core/lib/shoes/common/style.rb'
     - 'shoes-core/lib/shoes/internal_app.rb'
     - 'shoes-swt/lib/shoes/swt/common/resource.rb'
     - 'shoes-swt/lib/shoes/swt/text_block.rb'
     - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
-
-# Offense count: 2
-Style/ClassVars:
-  Exclude:
-    - 'samples/expert-tankspank.rb'
-    - 'samples/simple-menu.rb'
 
 # Offense count: 247
 Style/Documentation:
@@ -107,32 +88,13 @@ Style/Documentation:
 # SupportedStyles: format, sprintf, percent
 Style/FormatString:
   Exclude:
-    - 'samples/good-potato-chopping.rb'
-    - 'samples/simple-buttons.rb'
-    - 'samples/simple-progress-bar.rb'
     - 'shoes-core/lib/shoes/common/inspect.rb'
     - 'shoes-core/lib/shoes/logger/ruby.rb'
-
-# Offense count: 91
-# Configuration parameters: AllowedVariables.
-Style/GlobalVars:
-  Exclude:
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-tankspank.rb'
 
 # Offense count: 34
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Enabled: false
-
-# Offense count: 5
-Style/IfInsideElse:
-  Exclude:
-    - 'samples/expert-game-of-life-adjusted.rb'
-    - 'samples/expert-game-of-life.rb'
-    - 'samples/expert-irb-adjusted.rb'
-    - 'samples/expert-irb.rb'
-    - 'samples/expert-tankspank.rb'
 
 # Offense count: 3
 Style/MethodMissing:
@@ -149,6 +111,4 @@ Style/MethodMissing:
 Style/PredicateName:
   Exclude:
     - 'spec/**/*'
-    - 'samples/expert-minesweeper-adjusted.rb'
-    - 'samples/expert-minesweeper.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
