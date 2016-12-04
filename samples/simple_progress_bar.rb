@@ -9,6 +9,6 @@ Shoes.app height: 200 do
   animate do |i|
     j = i % 100 + 1
     pg.fraction = j / 100.0
-    @p.text = "%2d%" % (pg.fraction * 100)
+    @p.text = format("%2d%", (pg.fraction * 100))
   end
 end
