@@ -393,11 +393,9 @@ Shoes.app width: WIDTH, height: HEIGHT do
       elsif (key == "2") || (key == "x") || (key == " ")
         Opp.tank.fire
       end
-    else
-      if key == "n"
-        Opp.new_game
-        @playing = true
-      end
+    elsif key == "n"
+      Opp.new_game
+      @playing = true
     end
   end
 
