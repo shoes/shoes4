@@ -1,6 +1,6 @@
 Shoes.app do
   lb = list_box items: Shoes::COLORS.keys.map(&:to_s), choose: 'red' do |s|
-    @o.style fill: eval(s.text)
+    @o.style fill: send(s.text)
     @p.text = s.text
   end.move(300, 0)
   @p = para

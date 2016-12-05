@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'shoes/ui/picker'
 
 describe Shoes::UI::Picker do
-  let(:swt_backend)  { "/gems/lib/shoes/swt/generate-backend.rb" }
-  let(:faux_backend) { "/gems/lib/shoes/faux/generate-backend.rb" }
+  let(:swt_backend)  { "/gems/lib/shoes/swt/generate_backend.rb" }
+  let(:faux_backend) { "/gems/lib/shoes/faux/generate_backend.rb" }
 
   let(:output) { StringIO.new }
   let(:input)  { StringIO.new }

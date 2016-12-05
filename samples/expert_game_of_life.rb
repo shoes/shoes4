@@ -57,10 +57,10 @@ class Cell
 
   def iterate
     live_cells_count = @neighbours.count(&:live?)
-    if live?
-      die! if live_cells_count < 2 || live_cells_count > 3
-    else
-      alive! if live_cells_count == 3
+    if live? && live_cells_count < 2 || live_cells_count > 3
+      die!
+    elsif live_cells_count == 3
+      alive!
     end
   end
 end

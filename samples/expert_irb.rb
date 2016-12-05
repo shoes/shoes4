@@ -27,8 +27,8 @@ class MimickIRB < RubyLex
         @line << l << "\n"
         raise Continue if @ltype || @continue || @indent > 0
       end
-    else
-      raise Empty if @line == ''
+    elsif @line == ''
+      raise Empty
     end
     obj = eval @line, TOPLEVEL_BINDING, "(irb)", @line_no unless @line.empty?
     @line_no += @line.scan(/\n/).length
@@ -80,6 +80,7 @@ Shoes.app do
                  "#{CURSOR} "]
         @cmd = ""
       rescue MimickIRB::Empty
+        @cmd = ""
       rescue MimickIRB::Continue
         @str += ["#{@cmd}\n.. "]
         @cmd = ""

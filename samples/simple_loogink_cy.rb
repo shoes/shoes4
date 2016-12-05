@@ -4,7 +4,7 @@ class PhotoFrame < Shoes
   url '/loogink', :loogink
 
   def index
-    eval(['loogink', 'cy'].sample)
+    send(['loogink', 'cy'].sample)
   end
 
   def loogink

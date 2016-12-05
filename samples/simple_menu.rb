@@ -1,6 +1,4 @@
 class MenuPanel < Shoes::Widget
-  @@boxes = []
-
   # Handling width against internal stack until widget widths are fixed
   # https://github.com/shoes/shoes4/issues/641
   def width
@@ -11,11 +9,19 @@ class MenuPanel < Shoes::Widget
     @stack.width = value
   end
 
+  def self.boxes
+    @boxes ||= []
+  end
+
+  def boxes
+    self.class.boxes
+  end
+
   def initialize(color, args)
-    @@boxes << self
+    boxes << self
     @stack = stack(args) do
       background color
-      para link("Box #{@@boxes.length}", fg: white, fill: nil, click: "/"),
+      para link("Box #{boxes.length}", fg: white, fill: nil, click: "/"),
            margin: 18, align: "center", size: 20
       hover { expand }
     end
@@ -24,7 +30,7 @@ class MenuPanel < Shoes::Widget
   def expand
     if width < 170
       a = animate 30 do
-        @@boxes.each do |b|
+        boxes.each do |b|
           b.width -= 5 if (b != self) && b.width > 140
         end
         self.width += 5

@@ -20,7 +20,7 @@ class Shoes
         return unless File.exist?("Gemfile")
 
         # Only need bundler/setup to get our paths right--we don't need to
-        # actually require the gems, since we find the generate-backend.rb's
+        # actually require the gems, since we find the generate_backend.rb's
         # and just require them directly.
         require 'bundler/setup'
       end
@@ -42,7 +42,7 @@ class Shoes
       end
 
       def find_candidates(desired_backend)
-        search_string = "shoes/**/#{desired_backend}/generate-backend.rb"
+        search_string = "shoes/**/#{desired_backend}/generate_backend.rb"
         search_string.gsub!("//", "/")
         Gem.find_files(search_string)
       end
@@ -74,7 +74,7 @@ class Shoes
       end
 
       def name_for_candidate(candidate)
-        match = %r{.*lib\/shoes\/(.*)\/generate-backend.rb}.match(candidate)[1]
+        match = %r{.*lib\/shoes\/(.*)\/generate_backend.rb}.match(candidate)[1]
         "shoes-#{match.tr('/', '-')}"
       end
 

@@ -3,7 +3,7 @@ Shoes.app title: 'potacho', width: 175, height: 160 do
 
   @imgs = []
   1.upto 59 do |i|
-    @imgs << image(File.expand_path(File.join(__FILE__, "../potato_chopping/1258_s#{'%03d' % i}.gif"))).hide
+    @imgs << image(File.expand_path(File.join(__FILE__, "../potato_chopping/1258_s#{format('%03d', i)}.gif"))).hide
     @imgs.last.move(10, 10)
   end
 
