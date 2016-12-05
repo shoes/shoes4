@@ -1,11 +1,12 @@
 class Shoes
   class Oval
     include Common::UIElement
+    include Common::Clickable
     include Common::Fill
+    include Common::Hover
     include Common::Stroke
     include Common::Style
-    include Common::Clickable
-    include Common::Hover
+    include Common::Translate
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
     STYLES = { fill: Shoes::COLORS[:black] }.freeze

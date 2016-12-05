@@ -67,6 +67,7 @@ simple_slide.rb
 simple_sound.rb
 simple_stack_flow_buttons.rb
 simple_stripes.rb
+simple_translate.rb
 simple_text_movement.rb
 simple_timer.rb
 simple_tictactoe.rb
@@ -88,7 +89,7 @@ expert_definr.rb
 expert_funnies.rb
 expert_game_of_life.rb
 expert_irb.rb
-expert_minesweeper_adjusted.rb
+expert_minesweeper.rb
 expert_othello.rb
 expert_pong.rb
 expert_snake.rb

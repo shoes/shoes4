@@ -1,11 +1,12 @@
 class Shoes
   class Arrow
     include Common::UIElement
-    include Common::Fill
-    include Common::Stroke
     include Common::Clickable
+    include Common::Fill
     include Common::Hover
+    include Common::Stroke
     include Common::Style
+    include Common::Translate
 
     style_with :angle, :art_styles, :curve, :common_styles, :dimensions
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze

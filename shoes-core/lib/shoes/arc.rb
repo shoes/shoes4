@@ -1,11 +1,12 @@
 class Shoes
   class Arc
     include Common::UIElement
+    include Common::Clickable
+    include Common::Hover
     include Common::Fill
     include Common::Stroke
     include Common::Style
-    include Common::Clickable
-    include Common::Hover
+    include Common::Translate
 
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false }.freeze

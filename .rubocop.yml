@@ -56,6 +56,11 @@ Style/StringLiterals:
 Style/TrailingCommaInLiteral:
   Enabled: false
 
+# We dislike the 'variable, = []' style and prefer you put the _
+# see discussion https://github.com/shoes/shoes4/pull/1310#discussion_r89694266
+Style/TrailingUnderscoreVariable:
+  Enabled: false
+
 # We have several places where, because of instance scoping in apps,
 # we don't want to use attr_reader. (Also misattributes on predicate
 # methods)

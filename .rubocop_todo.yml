@@ -32,6 +32,8 @@ Lint/NestedMethodDefinition:
 # Offense count: 75
 Metrics/AbcSize:
   Max: 83
+  Exclude:
+    - 'shoes-swt/lib/shoes/swt.rb'
 
 # Offense count: 219
 # Configuration parameters: CountComments.
@@ -57,11 +59,15 @@ Metrics/LineLength:
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 80
+  Exclude:
+    - 'shoes-swt/lib/shoes/swt.rb'
 
 # Offense count: 2
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
   Max: 264
+  Exclude:
+    - 'shoes-core/lib/shoes/dsl.rb'
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.

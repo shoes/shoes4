@@ -4,8 +4,9 @@ describe Shoes::Swt::Shape do
   include_context "swt app"
 
   let(:dsl) do
-    instance_double("Shoes::Shape", hidden: false, needs_rotate?: false,
-                                    style: {}).as_null_object
+    double("Shoes::Shape", hidden: false, needs_rotate?: false,
+                           translate_left: 0, translate_top: 0,
+                           style: {}).as_null_object
   end
 
   subject { Shoes::Swt::Shape.new dsl, swt_app }
@@ -67,27 +68,6 @@ describe Shoes::Swt::Shape do
       allow(dsl).to receive(:element_top) { 30 }
       expect(transform).to receive(:translate).with(20, 30)
       subject.update_position
-    end
-  end
-
-  describe "painter" do
-    include_context "painter context"
-
-    let(:shape) { Shoes::Swt::Shape.new(dsl, swt_app) }
-    subject { Shoes::Swt::Shape::Painter.new(shape) }
-
-    it_behaves_like "stroke painter"
-    it_behaves_like "fill painter"
-    it_behaves_like "movable painter"
-
-    it "fills path" do
-      expect(gc).to receive(:fill_path)
-      subject.paint_control(event)
-    end
-
-    it "draws path" do
-      expect(gc).to receive(:draw_path)
-      subject.paint_control(event)
     end
   end
 end

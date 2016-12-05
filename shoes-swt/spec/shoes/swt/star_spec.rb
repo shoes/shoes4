@@ -19,33 +19,4 @@ describe Shoes::Swt::Star do
   it_behaves_like "paintable"
   it_behaves_like "updating visibility"
   it_behaves_like 'clickable backend'
-
-  describe "painter" do
-    include_context "painter context"
-
-    let(:corners) { 0 }
-
-    let(:dsl) do
-      double("dsl object", hidden: false, points: points, outer: outer,
-                           inner: inner, element_width: outer * 2.0,
-                           element_height: outer * 2.0, element_left: left,
-                           element_top: top).as_null_object
-    end
-
-    let(:shape) { Shoes::Swt::Star.new dsl, swt_app }
-    subject { Shoes::Swt::Star::Painter.new shape }
-
-    it_behaves_like "fill painter"
-    it_behaves_like "stroke painter"
-
-    it "fills star" do
-      expect(gc).to receive(:fillPolygon)
-      subject.paint_control(event)
-    end
-
-    it "draws star" do
-      expect(gc).to receive(:drawPolygon)
-      subject.paint_control(event)
-    end
-  end
 end

@@ -8,10 +8,11 @@ describe Shoes::Swt::RectPainter do
   let(:container) { double('container', disposed?: false) }
 
   let(:dsl) do
-    double("dsl object", hidden: false, rotate: 0, element_left: left,
-                         element_top: top, element_width: width,
-                         element_height: height, curve: corners,
-                         style: {}, strokewidth: 1).as_null_object
+    double("dsl object", hidden: false, rotate: 0,
+                         translate_left: 0, translate_top: 0,
+                         element_left: left, element_top: top,
+                         element_width: width, element_height: height,
+                         curve: corners, style: {}, strokewidth: 1).as_null_object
   end
 
   let(:left) { 55 }

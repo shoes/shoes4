@@ -5,7 +5,7 @@ describe Shoes::Shape do
 
   let(:left) { 0 }
   let(:top) { 0 }
-  let(:style) { {left: left, top: top} }
+  let(:style) { {translate_left: 0, translate_top: 0, left: left, top: top} }
   let(:draw)  { proc {} }
 
   subject { Shoes::Shape.new app, parent, style, draw }

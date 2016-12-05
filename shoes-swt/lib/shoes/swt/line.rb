@@ -5,6 +5,7 @@ class Shoes
       include Common::Stroke
       include Common::Visibility
       include Common::Remove
+      include Common::Translate
       include Common::PainterUpdatesPosition
       include ::Shoes::BackendDimensionsDelegations
 
@@ -14,7 +15,8 @@ class Shoes
       def initialize(dsl, app)
         @dsl = dsl
         @app = app
-        @painter = Painter.new(self)
+
+        @painter = LinePainter.new(self)
         @app.add_paint_listener(@painter)
 
         @transform = nil # Not necessary for this shape
@@ -22,17 +24,6 @@ class Shoes
 
       def angle
         @dsl.angle
-      end
-
-      class Painter < Common::Painter
-        def draw(gc)
-          gc.draw_line(@obj.element_left, @obj.element_top,
-                       @obj.element_right + 1, @obj.element_bottom + 1)
-        end
-
-        # Don't do fill setup
-        def fill_setup(_gc)
-        end
       end
     end
   end

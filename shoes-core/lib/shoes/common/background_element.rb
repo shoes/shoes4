@@ -13,6 +13,14 @@ class Shoes
       def takes_up_space?
         false
       end
+
+      def translate_left
+        0
+      end
+
+      def translate_top
+        0
+      end
     end
   end
 end
