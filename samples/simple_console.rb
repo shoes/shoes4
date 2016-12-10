@@ -3,7 +3,7 @@ Shoes.app do
 
   flow do
     %w(info debug warn error).each do |type|
-      button "#{type}" do
+      button type.to_s do
         public_send type, "This is a #{type} message"
       end
     end
