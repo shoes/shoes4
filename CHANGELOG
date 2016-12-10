@@ -1,14 +1,12 @@
 v4.0.0.pre7 (192 commits)
 -------------------------------
 
-Improvements (5)
+Improvements (3)
 ----------------
 
 * Implement translate method on application [1280e92]
 * Implement arrow art element [b9cd00b]
 * Allow attaching elements via style [9896ef2]
-* Remove adjusted versions of samples [9e1ea56, 762a395, a2a9a88, ff0adff]
-* Numerous Rubocop rules now in force! Now Ruby 2.3 flavored!
 
 Bug Fixes (7)
 -------------
