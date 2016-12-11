@@ -1,3 +1,31 @@
+v4.0.0.pre7 (192 commits)
+-------------------------------
+
+Improvements (3)
+----------------
+
+* Implement translate method on application [1280e92]
+* Implement arrow art element [b9cd00b]
+* Allow attaching elements via style [9896ef2]
+
+Bug Fixes (7)
+-------------
+
+* Fix symlink installation problem on Windows [53a28db]
+* Fix manual "to html" link [shoes/shoes-manual#1]
+* Redraw after displace [5f6a7db]
+* Correctly redraw links with nested styles without crashing [e9d8bb7]
+* Fix crash when hovering over nested links [2030af2]
+* Fix overlapping fill on rounded rectangles [ab8bcc4]
+* Cleanup links properly after visit calls [41a4ad9, d47cb34]
+
+Contributors (3)
+----------------
+
+Jared Moody, Jason R. Clark, Tobias Pfeiffer
+
+
+
 v4.0.0.pre6 (33 commits)
 ------------------------------
 
