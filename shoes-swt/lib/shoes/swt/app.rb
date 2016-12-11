@@ -1,7 +1,7 @@
 class Shoes
   module Swt
     shoes_icon = ::Shoes::ICON
-    if shoes_icon.include? '.jar!'
+    if shoes_icon.include? 'uri:classloader'
       ICON = File.join(Dir.tmpdir, 'shoes-icon.png').freeze
       open ICON, 'wb' do |fw|
         open shoes_icon, 'rb' do |fr|
