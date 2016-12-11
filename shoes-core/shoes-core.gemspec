@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
 
   # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
   s.executables   = ['shoes-picker', 'shoes-stub']
-  s.extensions    = ['ext/install/Rakefile']
+  # s.extensions    = ['ext/install/Rakefile']
 end
