@@ -1,3 +1,4 @@
+require 'bundler'
 require 'pathname'
 require 'yaml'
 require 'furoshiki/configuration'
