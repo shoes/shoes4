@@ -123,9 +123,14 @@ shared_examples_for 'positioning through :_position' do
   end
 
   it 'is resilient to exceptions during positioning' do
-    allow(element).to receive(:contents_alignment).and_raise("O_o")
-    allow(subject).to receive(:puts) # Quiet, you
-    add_child_and_align
+    begin
+      ENV['SHOES_ENV'] = nil
+      allow(element).to receive(:contents_alignment).and_raise("O_o")
+      allow(subject).to receive(:puts) # Quiet, you
+      add_child_and_align
+    ensure
+      ENV['SHOES_ENV'] = 'test'
+    end
   end
 
   describe 'attached' do
