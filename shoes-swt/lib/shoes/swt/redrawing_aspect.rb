@@ -101,6 +101,9 @@ class Shoes
       end
 
       def redraw_target(element)
+        # During DSL initialization element.gui is nil, so if a SWT backend
+        # object causes a redraw in its initailize (like Shoes::Swt::Image),
+        # we won't have gui set yet. Annoying, but fine.
         if element.gui
           element.gui.redraw_target
         else
