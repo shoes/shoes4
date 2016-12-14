@@ -1,3 +1,5 @@
+ENV['SHOES_ENV'] = 'test'
+
 SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../lib')

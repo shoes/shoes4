@@ -22,6 +22,8 @@ class Shoes
             paint_object graphics_context
           end
         rescue => e
+          raise e if ENV['SHOES_ENV'] == 'test'
+
           # Really important to rescue here. Failures that escape this method
           # cause odd-ball hangs with no backtraces. See #559 for an example.
           #

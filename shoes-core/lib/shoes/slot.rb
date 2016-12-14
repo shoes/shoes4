@@ -194,6 +194,8 @@ class Shoes
 
       update_current_position(current_position, element)
     rescue => e
+      raise e if ENV['SHOES_ENV'] == 'test'
+
       puts "SWALLOWED POSITIONING EXCEPTION ON #{element} - go take care of it: " + e.to_s
       puts e.backtrace.join("\n\t")
       puts 'Unfortunately we have to swallow it or risk SWT hanging.'
