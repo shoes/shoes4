@@ -149,6 +149,17 @@ describe Shoes::Swt::App do
     end
   end
 
+  describe "when it's closed, it's closed" do
+    it "doesn't allow a second window" do
+      allow(Shoes::Swt::App).to receive(:main_app_closed?).and_return(true)
+
+      expect(Shoes.logger).to receive(:error)
+      expect_any_instance_of(Shoes::Swt::App).to receive(:exit).with(1)
+
+      Shoes::Swt::App.new(dsl)
+    end
+  end
+
   def app_with_opts(opts)
     dsl_app_double = dsl_app_with_opts(opts)
 

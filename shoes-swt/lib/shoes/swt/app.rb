@@ -22,6 +22,21 @@ class Shoes
       attr_reader :dsl, :real, :shell, :click_listener
 
       def initialize(dsl)
+        if self.class.main_app_closed?
+          Shoes.logger.error <<-EOS
+Sorry! You can't start another Shoes.app at after the main one has already
+finished like that! If you need multiple windows, try it more like this:
+
+    Shoes.app do
+      para "first!"
+      Shoes.app do
+        para "second!"
+      end
+    end
+EOS
+          exit 1
+        end
+
         @dsl = dsl
         ::Swt::Widgets::Display.app_name = @dsl.app_title
         @background = Color.new(@dsl.opts[:background] ||
@@ -159,6 +174,16 @@ class Shoes
                                         background_color.blue)
       end
 
+      # Because SWT shutdown is hard to reverse, we only let you do it once
+      # and warn you if you try to run again afterward.
+      def self.main_app_closed?
+        @main_app_closed
+      end
+
+      def self.mark_main_app_closed
+        @main_app_closed = true
+      end
+
       private
 
       def initialize_scroll_bar
@@ -189,6 +214,7 @@ class Shoes
       def main_window_on_close
         lambda do |_event|
           ::Swt.display.dispose
+          ::Shoes::Swt::App.mark_main_app_closed
           Dir[File.join(Dir.tmpdir, "__shoes4_*.png")].each { |f| File.delete f }
         end
       end
