@@ -47,6 +47,7 @@ class Shoes
       return if @initialized
       @initialized = true
 
+      ::Swt::Widgets::Display.app_name = "Shoes"
       ::Swt::Widgets::Display.new.getFontList(nil, true).each { |f| ::Shoes::FONTS << f.getName }
       ::Shoes::FONTS.uniq!
 
