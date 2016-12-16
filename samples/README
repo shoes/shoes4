@@ -67,6 +67,7 @@ simple_slide.rb
 simple_sound.rb
 simple_stack_flow_buttons.rb
 simple_stripes.rb
+simple_system_background.rb
 simple_translate.rb
 simple_text_movement.rb
 simple_timer.rb
