@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version     = Shoes::Swt::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Team Shoes"]
-  s.email       = ["shoes@librelist.com"]
+  s.email       = ["shoes@lists.mvmanila.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = 'A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby.'
   s.description = 'A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.'
