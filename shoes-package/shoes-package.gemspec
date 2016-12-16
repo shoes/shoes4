@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'Application packaging for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.'
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
+  s.files         = Dir["LICENSE", "README.md", "lib/**/*"]
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
