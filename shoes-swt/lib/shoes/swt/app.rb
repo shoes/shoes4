@@ -23,7 +23,12 @@ class Shoes
 
       def initialize(dsl)
         @dsl = dsl
+
         ::Swt::Widgets::Display.app_name = @dsl.app_title
+
+        ::Shoes::Swt::App.setup_system_colors
+        ::Shoes::Swt::Font.setup_fonts
+
         @background = Color.new(@dsl.opts[:background] ||
                                ::Shoes::COLORS.fetch(:system_background))
         @started = false
@@ -32,6 +37,7 @@ class Shoes
         ::Shoes::Swt.register self
         attach_event_listeners
         initialize_scroll_bar
+
         @redrawing_aspect = RedrawingAspect.new self, Shoes.display
       end
 
@@ -152,9 +158,13 @@ class Shoes
       end
 
       def self.setup_system_colors
+        # Skip it if we've already loaded the color!
+        return if ::Shoes::COLORS[:system_background]
+
         # just one color for now
         background_color = Shoes.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
-        ::Shoes::DSL.define_shoes_color(:system_background, background_color.red,
+        ::Shoes::DSL.define_shoes_color(:system_background,
+                                        background_color.red,
                                         background_color.green,
                                         background_color.blue)
       end

@@ -47,10 +47,6 @@ class Shoes
       return if @initialized
       @initialized = true
 
-      ::Swt::Widgets::Display.app_name = "Shoes"
-      ::Swt::Widgets::Display.new.getFontList(nil, true).each { |f| ::Shoes::FONTS << f.getName }
-      ::Shoes::FONTS.uniq!
-
       ::Shoes.configuration.backend = :swt
 
       require 'shoes/swt/disposed_protection'
@@ -130,7 +126,6 @@ class Shoes
       # redrawing aspect needs to know all the classes
       require 'shoes/swt/redrawing_aspect'
 
-      ::Shoes::Swt::App.setup_system_colors
       @initialized = true
     rescue Java::OrgEclipseSwt::SWTException => e
       if e.message == "Invalid thread access"

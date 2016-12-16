@@ -26,10 +26,6 @@ class Shoes
         name
       end
 
-      def initial_fonts
-        Shoes.backend::Font.initial_fonts
-      end
-
       private
 
       def font_name(path)
