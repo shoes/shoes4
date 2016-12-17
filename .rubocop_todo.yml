@@ -55,8 +55,12 @@ Metrics/LineLength:
 
 # Offense count: 75
 # Configuration parameters: CountComments.
+#
+# Excludes long central SWT require file since they're long and that's fine!
 Metrics/MethodLength:
   Max: 86
+  Exclude:
+    - shoes-swt/lib/shoes/swt.rb
 
 # Offense count: 2
 # Configuration parameters: CountComments.

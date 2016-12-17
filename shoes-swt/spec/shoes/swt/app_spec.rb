@@ -124,6 +124,12 @@ describe Shoes::Swt::App do
   end
 
   describe 'App Background color' do
+    # Make sure we're set to reload
+    before do
+      ::Shoes::COLORS.delete(:system_background)
+      ::Swt.display
+    end
+
     it 'has the given background when specified' do
       color = Shoes::COLORS[:salmon]
       colored = app_with_opts background: color
@@ -135,7 +141,10 @@ describe Shoes::Swt::App do
       default_background = ::Swt.display.getSystemColor(::Swt::SWT::COLOR_WIDGET_BACKGROUND)
       app = Shoes::Swt::App.new(Shoes::InternalApp.new(Shoes::App.new, {}))
       background = app.shell.background
-      expect(background).to eq default_background
+
+      expect(background.red).to eq default_background.red
+      expect(background.green).to eq default_background.green
+      expect(background.blue).to eq default_background.blue
     end
 
     it 'setup_system_colors' do
@@ -145,7 +154,7 @@ describe Shoes::Swt::App do
               default_background.red,
               default_background.green,
               default_background.blue)
-      subject.class.setup_system_colors
+      described_class.setup_system_colors
     end
   end
 

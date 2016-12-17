@@ -8,9 +8,13 @@ class Shoes
           end
         end
 
-        def initial_fonts
-          load_shoes_fonts # system fonts are loaded automatically by SWT
-          ::Swt.display.get_font_list(nil, true).map(&:name)
+        def setup_fonts
+          # If we've already loaded fonts previously, bail
+          return if ::Shoes::FONTS.any?
+
+          load_shoes_fonts
+          load_system_fonts
+          ::Shoes::FONTS.uniq!
         end
 
         private
@@ -24,9 +28,13 @@ class Shoes
             add_font font_path
           end
         end
+
+        def load_system_fonts
+          ::Swt.display.get_font_list(nil, true).each do |font|
+            ::Shoes::FONTS << font
+          end
+        end
       end
     end
   end
-
-  ::Shoes::Font.initial_fonts.each { |font| Shoes::FONTS << font }
 end
