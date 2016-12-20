@@ -22,6 +22,7 @@ describe Shoes::Slot do
 
   it_behaves_like "object with dimensions"
   it_behaves_like "object with hover"
+  it_behaves_like "clickable object"
 
   it_behaves_like "object with style" do
     let(:subject_without_style) { Shoes::Slot.new(app, parent) }

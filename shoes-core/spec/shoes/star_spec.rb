@@ -30,6 +30,7 @@ describe Shoes::Star do
   it_behaves_like "movable object"
   it_behaves_like 'object with parent'
   it_behaves_like "object with hover"
+  it_behaves_like "clickable object"
 
   describe "in_bounds?" do
     before do
