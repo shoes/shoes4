@@ -1,9 +1,13 @@
 class Shoes
   class Button
     include Common::UIElement
-    include Common::Style
     include Common::Clickable
+    include Common::Style
     include Common::State
+
+    # We don't actually support release from buttons, but want to use the
+    # shared infrastructure for clicking. So just get rid of release post def.
+    undef release
 
     style_with :click, :common_styles, :dimensions, :state, :text
 
