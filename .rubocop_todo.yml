@@ -66,6 +66,8 @@ Metrics/MethodLength:
 # Configuration parameters: CountComments.
 Metrics/ModuleLength:
   Max: 267
+  Exclude:
+    - shoes-core/lib/shoes/dsl.rb
 
 # Offense count: 13
 # Configuration parameters: CountKeywordArgs.
