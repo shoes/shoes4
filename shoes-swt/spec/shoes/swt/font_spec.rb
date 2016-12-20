@@ -3,7 +3,15 @@ require 'spec_helper'
 describe Shoes::Swt::Font do
   subject { Shoes::Swt::Font }
 
+  before do
+    Shoes::FONTS.clear
+  end
+
   describe 'Shoes::FONTS' do
+    before do
+      Shoes::Swt::Font.setup_fonts
+    end
+
     it 'has the FONTS array initially populared' do
       expect(Shoes::FONTS).not_to be_empty
     end
