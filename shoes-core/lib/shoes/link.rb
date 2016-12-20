@@ -14,12 +14,12 @@ class Shoes
       style_init styles
       @gui = Shoes.backend_for self
 
-      setup_click blk
+      register_click blk
       super texts, @style
     end
 
     # Doesn't use Common::Clickable because of URL flavor option clicks
-    def setup_click(blk)
+    def register_click(blk)
       if blk.nil?
         blk = if @style[:click].respond_to? :call
                 @style[:click]
@@ -35,6 +35,12 @@ class Shoes
     def click(&blk)
       @gui.click blk if blk
       @blk = blk
+      self
+    end
+
+    def release(&blk)
+      @gui.release blk if blk
+      self
     end
 
     def pass_coordinates?
