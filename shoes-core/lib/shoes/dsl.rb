@@ -308,15 +308,37 @@ class Shoes
       Shoes::Sound.new @__app__, soundfile, opts, &blk
     end
 
-    # Creates an arrow centered at (left, top)
+    # Creates an arrow
     #
-    # @param [Integer] left the x-coordinate of the element center
-    # @param [Integer] top the y-coordinate of the element center
-    # @param [Integer] width width of the arrow
-    # @param [Hash] opts Arrow style options
-    # @option opts [Integer] rotate (false)
-    def arrow(left, top, width, styles = {}, &blk)
-      create Shoes::Arrow, left, top, width, styles, blk
+    # @overload arrow(left, top, width, opts)
+    #   Creates an arrow centered at (left, top)
+    #   @param [Integer] left the x-coordinate of the element center
+    #   @param [Integer] top the y-coordinate of the element center
+    #   @param [Integer] width the width of the arrow
+    #   @param [Hash] opts Arrow style options
+    #   @option opts [Integer] rotate (false)
+    # @overload arrow(opts)
+    #   Creates an arrow using values from the opts Hash.
+    #   @param [Hash] opts
+    #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
+    #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+    #   @option styles [Integer] width (0) the width
+    #   @option styles [Integer] rotate (false)
+    def arrow(*args, &blk)
+      opts = style_normalizer.normalize pop_style(args)
+
+      left, top, width, *leftovers = args
+
+      message = <<EOS
+Too many arguments. Must be one of:
+  - arrow(left, top, width, [opts])
+  - arrow(left, top, [opts])
+  - arrow(left, [opts])
+  - arrow([opts])
+EOS
+      raise ArgumentError, message if leftovers.any?
+
+      create Shoes::Arrow, left, top, width, opts, blk
     end
 
     # Creates an arc at (left, top)
