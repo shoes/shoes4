@@ -1,96 +1,65 @@
-shared_examples_for "arrow dimensions" do
-  it "makes a Shoes::Arrow" do
-    expect(arrow).to be_an_instance_of(Shoes::Arrow)
-  end
-
-  it "sets proper dimensions" do
-    expect(arrow.left).to eq(left)
-    expect(arrow.top).to eq(top)
-    expect(arrow.width).to eq(width)
-  end
-end
-
 shared_examples_for "arrow DSL method" do
-  let(:left)   { 40 }
-  let(:top)    { 30 }
-  let(:width)  { 12 }
-
-  context "no arguments" do
-    subject(:arrow) { dsl.arrow }
-
-    let(:left)  { 0 }
-    let(:top)   { 0 }
-    let(:width) { 0 }
-
-    include_examples "arrow dimensions"
+  it "takes no arguments" do
+    arrow = dsl.arrow
+    expect(arrow).to have_attributes(left: 0,
+                                     top: 0,
+                                     width: 0)
   end
 
-  context "from 1 argument" do
-    subject(:arrow) { dsl.arrow left }
-
-    let(:top)   { 0 }
-    let(:width) { 0 }
-
-    include_examples "arrow dimensions"
+  it "takes 1 argument" do
+    arrow = dsl.arrow 40
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 0,
+                                     width: 0)
   end
 
-  context "from 1 argument with options" do
-    subject(:arrow) { dsl.arrow left, top: top }
-
-    let(:width) { 0 }
-
-    include_examples "arrow dimensions"
+  it "takes 1 argument with options" do
+    arrow = dsl.arrow 40, top: 50
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 50,
+                                     width: 0)
   end
 
-  context "from 2 argument" do
-    subject(:arrow) { dsl.arrow left, top }
-
-    let(:width) { 0 }
-
-    include_examples "arrow dimensions"
+  it "takes 2 arguments" do
+    arrow = dsl.arrow 40, 50
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 50,
+                                     width: 0)
   end
 
-  context "from 2 argument with options" do
-    subject(:arrow) { dsl.arrow left, top, width: width }
-
-    include_examples "arrow dimensions"
+  it "takes 2 arguments with options" do
+    arrow = dsl.arrow 40, 50, width: 100
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 50,
+                                     width: 100)
   end
 
-  context "from 3 arguments" do
-    subject(:arrow) { dsl.arrow left, top, width }
-
-    include_examples "arrow dimensions"
+  it "takes 3 arguments" do
+    arrow = dsl.arrow 40, 50, 100
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 50,
+                                     width: 100)
   end
 
-  context "from 3 arguments with options" do
-    subject(:arrow) { dsl.arrow left, top, width, left: -1, top: -2, width: -3 }
-
-    include_examples "arrow dimensions"
+  it "takes 3 arguments with options" do
+    arrow = dsl.arrow 40, 50, 100, left: -1, top: -2, width: -3
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 50,
+                                     width: 100)
   end
 
-  context "from style hash" do
-    subject(:arrow) { dsl.arrow left: left, top: top, width: width }
-
-    include_examples "arrow dimensions"
+  it "takes styles hash" do
+    arrow = dsl.arrow left: 40, top: 50, width: 100
+    expect(arrow).to have_attributes(left: 40,
+                                     top: 50,
+                                     width: 100)
   end
 
-  context "too many arguments" do
-    subject(:arrow) { dsl.arrow left, top, width, oops }
-
-    let(:oops) { 42 }
-
-    it "won't accept that" do
-      expect { subject }.to raise_error(ArgumentError)
-    end
+  it "doesn't like too many arguments" do
+    expect { dsl.arrow 40, 50, 100, 666 }.to raise_error(ArgumentError)
   end
 
-  context "too many arguments and options too!" do
-    subject(:arrow) { dsl.arrow left, top, width, oops, left: -1 }
-
-    let(:oops) { 42 }
-
-    it "won't accept that" do
-      expect { subject }.to raise_error(ArgumentError)
-    end
+  it "doesn't like too many arguments and options too!" do
+    expect { dsl.arrow 40, 50, 100, 666, left: -1 }.to raise_error(ArgumentError)
   end
 end
