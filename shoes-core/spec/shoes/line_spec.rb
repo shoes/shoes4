@@ -18,6 +18,7 @@ describe Shoes::Line do
     it_behaves_like "object with dimensions"
     it_behaves_like "object with parent"
     it_behaves_like "object with hover"
+    it_behaves_like "clickable object"
   end
 
   describe "line with point a at leftmost, topmost" do

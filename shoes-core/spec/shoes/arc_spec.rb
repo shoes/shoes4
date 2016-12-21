@@ -18,6 +18,7 @@ describe Shoes::Arc do
       let(:subject_without_style) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
       let(:subject_with_style) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, arg_styles) }
     end
+    it_behaves_like "clickable object"
     it_behaves_like "object with dimensions"
     it_behaves_like "left, top as center", :start_angle, :end_angle
     it_behaves_like "object with parent"

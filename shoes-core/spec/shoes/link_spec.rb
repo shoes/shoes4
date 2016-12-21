@@ -33,6 +33,7 @@ describe Shoes::Link do
   end
 
   it_behaves_like "object with hover"
+  it_behaves_like "clickable object"
 
   context "initialize" do
     it "should set up text" do

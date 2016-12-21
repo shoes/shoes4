@@ -5,10 +5,12 @@ class Shoes
 
       def click(&blk)
         @gui.click blk
+        self
       end
 
       def release(&blk)
         @gui.release blk
+        self
       end
 
       def register_click(blk = nil)

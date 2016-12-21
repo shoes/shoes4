@@ -5,6 +5,8 @@ describe Shoes::InternalApp do
 
   subject { app }
 
+  it_behaves_like "clickable object"
+
   describe "#initialize" do
     context "with defaults" do
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }

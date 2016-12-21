@@ -52,4 +52,10 @@ describe Shoes::Button do
     subject { Shoes::Button.new(app, parent, "text", negative_opts, input_block) }
     it_behaves_like "object with negative dimensions"
   end
+
+  describe "no release" do
+    it "doesn't allow releasing despite allowing clicks" do
+      expect(subject).not_to respond_to(:release)
+    end
+  end
 end

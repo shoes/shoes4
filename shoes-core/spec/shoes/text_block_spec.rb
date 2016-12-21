@@ -14,6 +14,7 @@ describe Shoes::TextBlock do
   end
 
   it_behaves_like "object with hover"
+  it_behaves_like "clickable object"
 
   describe "initialize" do
     it "creates gui object" do
