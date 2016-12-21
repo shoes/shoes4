@@ -314,7 +314,7 @@ class Shoes
     #   Creates an arrow centered at (left, top)
     #   @param [Integer] left the x-coordinate of the element center
     #   @param [Integer] top the y-coordinate of the element center
-    #   @param [Integer] width width of the arrow
+    #   @param [Integer] width the width of the arrow
     #   @param [Hash] opts Arrow style options
     #   @option opts [Integer] rotate (false)
     # @overload arrow(opts)
