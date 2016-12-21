@@ -55,7 +55,7 @@ describe Shoes::Button do
 
   describe "no release" do
     it "doesn't allow releasing despite allowing clicks" do
-      expect { subject.release {} }.to raise_error(NoMethodError)
+      expect(subject).not_to respond_to(:release)
     end
   end
 end
