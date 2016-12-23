@@ -69,6 +69,8 @@ describe Shoes::Download do
     subject(:download) { Shoes::Download.new app, parent, name, opts }
 
     before :each do
+      # Don't let GUI actually block while we're testing
+      allow(download.gui).to receive(:busy?).and_return(false)
       allow(download.gui).to receive :eval_block
       download.start
       download.join_thread
@@ -159,7 +161,7 @@ describe Shoes::Download do
 
     it 'reports empty values for the response' do
       error = StandardError.new("Nope")
-      allow(download).to receive(:open).and_raise(error)
+      allow(download).to receive(:download_started).and_raise(error)
 
       download.start
       download.join_thread
