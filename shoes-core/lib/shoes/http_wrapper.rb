@@ -49,9 +49,7 @@ class Shoes
     def ensure_can_redirect(_response, redirects_left)
       # TODO: Detect and reject scheme changes except http -> https
 
-      if redirects_left <= 0
-        raise "Exhausted trying to redirect... See ya'"
-      end
+      raise "Exhausted trying to redirect... See ya'" if redirects_left <= 0
     end
   end
 end

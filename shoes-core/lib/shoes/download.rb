@@ -115,7 +115,6 @@ class Shoes
       eval_block(@progress_blk, self)
     end
 
-
     def should_mark_progress?(size)
       !content_length.nil? &&
         (size - transferred) > (content_length / UPDATE_STEPS) &&
@@ -149,7 +148,7 @@ class Shoes
         @content_length = read_content_length(response)
 
         @response.status = [response.code, response.message]
-        response.each_header do |(key, value)|
+        response.each_header do |key|
           @response.headers[key] = response[key]
         end
 
