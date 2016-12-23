@@ -14,6 +14,7 @@ class Shoes
           Animation                        => [:eval_block],
           Button                           => [:eval_block],
           ClickListener                    => [:eval_block],
+          Download                         => [:actually_run_block],
           ::Shoes::InternalApp             => [:execute_block],
           Keypress                         => [:eval_block],
           Keyrelease                       => [:eval_block],
@@ -22,9 +23,6 @@ class Shoes
           Timer                            => [:eval_block],
           ::Shoes::Common::Changeable      => [:call_change_listeners]
         }.freeze
-
-      # only the main thread may draw
-      NEED_TO_ASYNC_UPDATE_GUI = { ::Shoes::Download => [:eval_block] }.freeze
 
       # These need to trigger a redraw
       SAME_POSITION    = { Common::Visibility      => [:update_visibility],
@@ -60,7 +58,6 @@ class Shoes
 
       def affected_classes
         classes = NEED_TO_UPDATE.keys +
-                  NEED_TO_ASYNC_UPDATE_GUI.keys +
                   SAME_POSITION.keys +
                   CHANGED_POSITION.keys
         classes.uniq
@@ -69,9 +66,6 @@ class Shoes
       def add_redraws
         after_every NEED_TO_UPDATE do
           update_gui
-        end
-        after_every NEED_TO_ASYNC_UPDATE_GUI do
-          @display.asyncExec { update_gui }
         end
         after_every SAME_POSITION do |*_args, element|
           element = element.dsl if element.respond_to? :dsl
