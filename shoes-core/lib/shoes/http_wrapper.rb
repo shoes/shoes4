@@ -17,7 +17,7 @@ require 'net/http'
 class Shoes
   class HttpWrapper
     def execute(url, meth, body, headers = {}, redirects_left = 5, &blk)
-      uri = URI(url)
+      uri = URI.parse(url)
       Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
         request = build_request(uri, meth, body, headers)
 
@@ -25,8 +25,8 @@ class Shoes
           case response
           when Net::HTTPRedirection
             ensure_can_redirect(response, redirects_left)
-            next_location = URI(response["Location"])
-            execute(next_location, "GET", nil, headers, redirects_left - 1, &blk)
+            next_url = response["Location"]
+            execute(next_url, "GET", nil, headers, redirects_left - 1, &blk)
           when Net::HTTPSuccess
             response.read_body do |chunk|
               yield response, chunk
