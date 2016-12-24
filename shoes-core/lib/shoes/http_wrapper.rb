@@ -16,7 +16,7 @@ require 'net/http'
 #
 class Shoes
   class HttpWrapper
-    def execute(url, meth, body, headers = {}, redirects_left = 5, &blk)
+    def self.read_chunks(url, meth, body, headers = {}, redirects_left = 5, &blk)
       uri = URI.parse(url)
       Net::HTTP.start(uri.host, uri.port, use_ssl: is_ssl?(uri)) do |http|
         request = build_request(uri, meth, body, headers)
@@ -26,7 +26,7 @@ class Shoes
           when Net::HTTPRedirection
             ensure_can_redirect(response, redirects_left)
             next_url = response["Location"]
-            execute(next_url, "GET", nil, headers, redirects_left - 1, &blk)
+            read_chunks(next_url, "GET", nil, headers, redirects_left - 1, &blk)
           when Net::HTTPSuccess
             response.read_body do |chunk|
               yield response, chunk
@@ -40,11 +40,11 @@ class Shoes
 
     private
 
-    def is_ssl?(uri)
+    def self.is_ssl?(uri)
       uri.scheme == "https"
     end
 
-    def build_request(uri, meth, body, headers)
+    def self.build_request(uri, meth, body, headers)
       klass = Net::HTTP.const_get(meth.downcase.capitalize)
       klass.new(uri).tap do |request|
         request.body = body
@@ -54,7 +54,7 @@ class Shoes
       end
     end
 
-    def ensure_can_redirect(_response, redirects_left)
+    def self.ensure_can_redirect(_response, redirects_left)
       # TODO: Detect and reject scheme changes except http -> https
 
       raise "Exhausted trying to redirect... See ya'" if redirects_left <= 0
