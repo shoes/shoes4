@@ -38,6 +38,8 @@ class Shoes
       end
     end
 
+    private
+
     def is_ssl?(uri)
       uri.scheme == "https"
     end
