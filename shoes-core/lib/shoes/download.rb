@@ -78,7 +78,7 @@ class Shoes
       @thread = Thread.new do
         begin
           Shoes::HttpWrapper.read_chunks(@url, @method, @body, @headers,
-                                         download_started_proc) do |response, chunk|
+                                         download_started_proc) do |chunk|
             @response.body += chunk
             try_progress(@response.body.length)
           end
