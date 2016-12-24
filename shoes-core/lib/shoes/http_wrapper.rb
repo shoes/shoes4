@@ -23,23 +23,35 @@ class Shoes
 
         http.request(request) do |response|
           case response
-          when Net::HTTPRedirection
-            ensure_can_redirect(response, redirects_left)
-            next_url = response["Location"]
-            read_chunks(next_url, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
           when Net::HTTPSuccess
-            started_proc.call(response) if started_proc
-            response.read_body do |chunk|
-              yield response, chunk
-            end
+            handle_success(response, started_proc, &blk)
+          when Net::HTTPRedirection
+            handle_redirect(response, headers, started_proc, redirects_left, &blk)
           else
-            raise "#{response.code} #{response.message}"
+            handle_error(response)
           end
         end
       end
     end
 
     private
+
+    def self.handle_redirect(response, headers, started_proc, redirects_left, &blk)
+      ensure_can_redirect(response, redirects_left)
+      next_url = response["Location"]
+      read_chunks(next_url, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
+    end
+
+    def self.handle_success(response, started_proc)
+      started_proc.call(response) if started_proc
+      response.read_body do |chunk|
+        yield response, chunk
+      end
+    end
+
+    def self.handle_error(response)
+      raise "#{response.code} #{response.message}"
+    end
 
     def self.is_ssl?(uri)
       uri.scheme == "https"
