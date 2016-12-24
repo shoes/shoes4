@@ -18,7 +18,7 @@ class Shoes
   class HttpWrapper
     def execute(url, meth, body, headers = {}, redirects_left = 5, &blk)
       uri = URI.parse(url)
-      Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
+      Net::HTTP.start(uri.host, uri.port, use_ssl: is_ssl?(uri)) do |http|
         request = build_request(uri, meth, body, headers)
 
         http.request(request) do |response|
@@ -36,6 +36,10 @@ class Shoes
           end
         end
       end
+    end
+
+    def is_ssl?(uri)
+      uri.scheme == "https"
     end
 
     def build_request(uri, meth, body, headers)
