@@ -77,9 +77,8 @@ class Shoes
     def start_download
       @thread = Thread.new do
         begin
-          Shoes::HttpWrapper.read_chunks(@url, @method, @body, @headers) do |response, chunk|
-            download_started(response)
-
+          Shoes::HttpWrapper.read_chunks(@url, @method, @body, @headers,
+                                         download_started_proc) do |response, chunk|
             @response.body += chunk
             try_progress(@response.body.length)
           end
@@ -141,18 +140,22 @@ class Shoes
       open(file_path, 'wb') { |fw| fw.print @response.body }
     end
 
-    def download_started(response)
-      unless @started
-        @started = true
-        @content_length = read_content_length(response)
-
-        @response.status = [response.code, response.message]
-        response.each_header do |key|
-          @response.headers[key] = response[key]
-        end
-
-        mark_progress
+    def download_started_proc
+      lambda do |response|
+        download_started(response)
       end
+    end
+
+    def download_started(response)
+      @started = true
+      @content_length = read_content_length(response)
+
+      @response.status = [response.code, response.message]
+      response.each_header do |key|
+        @response.headers[key] = response[key]
+      end
+
+      mark_progress
     end
 
     def read_content_length(response)

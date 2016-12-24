@@ -16,7 +16,7 @@ require 'net/http'
 #
 class Shoes
   class HttpWrapper
-    def self.read_chunks(url, meth, body, headers = {}, redirects_left = 5, &blk)
+    def self.read_chunks(url, meth, body, headers = {}, started_proc = nil, redirects_left = 5, &blk)
       uri = URI.parse(url)
       Net::HTTP.start(uri.host, uri.port, use_ssl: is_ssl?(uri)) do |http|
         request = build_request(uri, meth, body, headers)
@@ -26,8 +26,9 @@ class Shoes
           when Net::HTTPRedirection
             ensure_can_redirect(response, redirects_left)
             next_url = response["Location"]
-            read_chunks(next_url, "GET", nil, headers, redirects_left - 1, &blk)
+            read_chunks(next_url, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
           when Net::HTTPSuccess
+            started_proc.call(response) if started_proc
             response.read_body do |chunk|
               yield response, chunk
             end
