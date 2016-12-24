@@ -47,9 +47,24 @@ class Shoes
     end
 
     def self.handle_redirect(response, headers, started_proc, redirects_left, &blk)
-      ensure_can_redirect(response, redirects_left)
-      next_url = response["Location"]
-      read_chunks(next_url, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
+      raise "Exhausted trying to redirect... See ya'" if redirects_left <= 0
+
+      next_uri = URI.parse(response["Location"])
+
+      if schemes_mismatch?(response.uri, next_uri) &&
+          !allowed_scheme_change?(response.uri, next_uri)
+        raise "Disallowed redirection from '#{response.uri.scheme}' to '#{next_uri.scheme}'"
+      end
+
+      read_chunks(next_uri.to_s, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
+    end
+
+    def self.schemes_mismatch?(original_uri, new_uri)
+      original_uri.scheme != new_uri.scheme
+    end
+
+    def self.allowed_scheme_change?(original_uri, new_uri)
+      original_uri.scheme == "http" && new_uri.scheme == "https"
     end
 
     def self.handle_success(response, started_proc)
@@ -65,12 +80,6 @@ class Shoes
 
     def self.is_ssl?(uri)
       uri.scheme == "https"
-    end
-
-    def self.ensure_can_redirect(_response, redirects_left)
-      # TODO: Detect and reject scheme changes except http -> https
-
-      raise "Exhausted trying to redirect... See ya'" if redirects_left <= 0
     end
   end
 end
