@@ -36,6 +36,16 @@ class Shoes
 
     private
 
+    def self.build_request(uri, meth, body, headers)
+      klass = Net::HTTP.const_get(meth.downcase.capitalize)
+      klass.new(uri).tap do |request|
+        request.body = body
+        headers.each do |(key, value)|
+          request[key] = value
+        end
+      end
+    end
+
     def self.handle_redirect(response, headers, started_proc, redirects_left, &blk)
       ensure_can_redirect(response, redirects_left)
       next_url = response["Location"]
@@ -55,16 +65,6 @@ class Shoes
 
     def self.is_ssl?(uri)
       uri.scheme == "https"
-    end
-
-    def self.build_request(uri, meth, body, headers)
-      klass = Net::HTTP.const_get(meth.downcase.capitalize)
-      klass.new(uri).tap do |request|
-        request.body = body
-        headers.each do |(key, value)|
-          request[key] = value
-        end
-      end
     end
 
     def self.ensure_can_redirect(_response, redirects_left)
