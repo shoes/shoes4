@@ -77,8 +77,8 @@ class Shoes
     def start_download
       @thread = Thread.new do
         begin
-          Shoes::HttpWrapper.read_chunks(@url, @method, @body, @headers,
-                                         download_started_proc) do |chunk|
+          request = Shoes::HttpWrapper.new(download_started_proc)
+          request.read_chunks(@url, @method, @body, @headers) do |chunk|
             @response.body += chunk
             try_progress(@response.body.length)
           end
