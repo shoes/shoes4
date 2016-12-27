@@ -15,7 +15,7 @@ require 'net/http'
 # JRuby.
 #
 class Shoes
-  class HttpWrapper
+  class HttpRequest
     def initialize(started_proc = nil, redirects_left = 5)
       @started_proc = started_proc
       @redirects_left = redirects_left
