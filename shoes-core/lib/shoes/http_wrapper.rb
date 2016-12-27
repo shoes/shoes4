@@ -18,7 +18,7 @@ class Shoes
   class HttpWrapper
     class << self
       def read_chunks(url, meth, body, headers = {}, started_proc = nil, redirects_left = 5, &blk)
-        uri = URI.parse(url)
+        uri = URI(url)
         Net::HTTP.start(uri.host, uri.port, use_ssl: needs_ssl?(uri)) do |http|
           request = build_request(uri, meth, body, headers)
 
@@ -50,14 +50,14 @@ class Shoes
       def handle_redirect(response, headers, started_proc, redirects_left, &blk)
         raise "Exhausted trying to redirect... See ya'" if redirects_left <= 0
 
-        next_uri = URI.parse(response["Location"])
+        next_uri = URI(response["Location"])
 
         if schemes_mismatch?(response.uri, next_uri) &&
            !allowed_scheme_change?(response.uri, next_uri)
           raise "Disallowed redirection from '#{response.uri.scheme}' to '#{next_uri.scheme}'"
         end
 
-        read_chunks(next_uri.to_s, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
+        read_chunks(next_uri, "GET", nil, headers, started_proc, redirects_left - 1, &blk)
       end
 
       def schemes_mismatch?(original_uri, new_uri)
