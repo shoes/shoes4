@@ -69,7 +69,7 @@ require 'shoes/common/inspect'
 require 'shoes/dimension'
 require 'shoes/dimensions'
 require 'shoes/file_not_found_error'
-require 'shoes/http_wrapper'
+require 'shoes/http_request'
 require 'shoes/not_implemented_error'
 require 'shoes/text_block_dimensions'
 
