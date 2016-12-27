@@ -57,7 +57,7 @@ class Shoes
       next_uri = URI(response["Location"])
 
       if schemes_mismatch?(response.uri, next_uri) &&
-          !allowed_scheme_change?(response.uri, next_uri)
+         !allowed_scheme_change?(response.uri, next_uri)
         raise "Disallowed redirection from '#{response.uri.scheme}' to '#{next_uri.scheme}'"
       end
 
