@@ -12,11 +12,9 @@ Gem::Specification.new do |s|
   s.description = "Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. This is the DSL for writing your app. You'll need a backend to run it."
   s.license     = 'MIT'
 
-  s.files         = Dir["LICENSE", "README.md", "ext/install/**/*", "fonts/**/*", "lib/**/*", "static/**/*"]
+  s.files         = Dir["LICENSE", "README.md", "fonts/**/*", "lib/**/*", "static/**/*"]
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
-  s.executables   = ['shoes-picker', 'shoes-stub']
-  s.extensions    = ['ext/install/Rakefile']
+  s.executables   = ['shoes-picker']
 end
