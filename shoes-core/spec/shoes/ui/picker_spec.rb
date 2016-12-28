@@ -69,11 +69,10 @@ describe Shoes::UI::Picker do
     it "loads a compatible class from generator" do
       # Don't bother with mock backend
       if generate_backend_file
-        expect { Shoes::SelectedBackend }.to raise_error(NameError)
-
-        load generate_backend_file
+        require generate_backend_file
 
         expect(Shoes::SelectedBackend).to respond_to(:generate)
+        expect(Shoes::SelectedBackend).to respond_to(:validate)
       end
     end
 

@@ -53,9 +53,13 @@ esac
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 BACKEND_FILE="$SCRIPTPATH/shoes-backend"
-if [ ! -e "$BACKEND_FILE" ]
-then
+if [ ! -e "$BACKEND_FILE" ]; then
   $SCRIPTPATH/shoes-picker $SCRIPTPATH
+
+  STATUS=$?
+  if [[ $STATUS != 0 ]]; then
+    exit $STATUS
+  fi
 fi
 
 BACKEND_COMMAND=$(cat $BACKEND_FILE)
