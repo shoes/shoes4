@@ -5,7 +5,7 @@ require 'shoes/swt/generate_backend'
 
 describe "generate_backend" do
   after do
-    set_ruby_engine("jruby")
+    reset_ruby_engine("jruby")
   end
 
   it "validates we're on JRuby" do
@@ -15,7 +15,7 @@ describe "generate_backend" do
   end
 
   it "throws a fit if we're not on JRuby" do
-    set_ruby_engine("ruby")
+    reset_ruby_engine("ruby")
 
     expect(Shoes::SelectedBackend).to receive(:puts)
     expect(Shoes::SelectedBackend).to receive(:exit).with(1)
@@ -23,7 +23,7 @@ describe "generate_backend" do
     Shoes::SelectedBackend.validate
   end
 
-  def set_ruby_engine(engine)
+  def reset_ruby_engine(engine)
     Object.instance_eval do
       remove_const(:RUBY_ENGINE)
       const_set(:RUBY_ENGINE, engine)
