@@ -1,7 +1,17 @@
+#
+# This class is used for interactively (if necessary) picking the Shoes
+# backend that the user will run their Shoes app with.
+#
+# This interacts with backend gems via the following contract:
+#
+#   * Backend provides file "shoes/#{backend_name}/generate_backend.rb"
+#   * Requiring that file defines a module Shoes::SelectedBackend
+#   * Shoes::SelectedBackend should implement the following class methods:
+#     * generate(path) - passed bin path, generates shell command to start
+#                        Shoes on given backend
+#
 class Shoes
   module UI
-    # This class is used for interactively (if necessary) picking the Shoes
-    # backend that the user will run their Shoes app with.
     class Picker
       def initialize(input = STDIN, output = STDOUT)
         @input  = input
@@ -82,9 +92,8 @@ class Shoes
         require generator_file
 
         File.open(File.expand_path(File.join(bin_dir, "shoes-backend")), "w") do |file|
-          # Contract with backends is to define generate_backend method that we
-          # can call. Bit ugly, open to better options for that interchange.
-          file.write(generate_backend(ENV["SHOES_PICKER_BIN_DIR"] || bin_dir))
+          dest_dir = ENV["SHOES_PICKER_BIN_DIR"] || bin_dir
+          file.write(Shoes::SelectedBackend.generate(dest_dir))
         end
       end
     end

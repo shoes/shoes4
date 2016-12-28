@@ -1,7 +1,13 @@
 require 'rbconfig'
 
-def generate_backend(path)
-  options = "-J-XstartOnFirstThread" if RbConfig::CONFIG["host_os"] =~ /darwin/
+class Shoes
+  module SelectedBackend
+    class << self
+      def generate(path)
+        options = "-J-XstartOnFirstThread" if RbConfig::CONFIG["host_os"] =~ /darwin/
 
-  "jruby #{options} #{path}/shoes-swt"
+        "jruby #{options} #{path}/shoes-swt"
+      end
+    end
+  end
 end
