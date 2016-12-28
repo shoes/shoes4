@@ -17,7 +17,12 @@ class Shoes
     def initialize(app, _parent, url, opts = {}, &blk)
       @app = app
       @url = url
+
       @opts = opts
+      @body    = opts[:body]
+      @headers = opts[:headers] || {}
+      @method  = opts[:method] || "GET"
+
       initialize_blocks(app, blk)
 
       @gui = Shoes.backend_for(self)
@@ -70,20 +75,16 @@ class Shoes
     private
 
     def start_download
-      require 'open-uri'
       @thread = Thread.new do
         begin
-          uri_opts = {}
-          uri_opts[:content_length_proc] = content_length_proc
-          uri_opts[:progress_proc] = progress_proc if @progress_blk
-
-          open @url, uri_opts do |download_data|
-            @response.body = download_data.read
-            @response.status = download_data.status
-            @response.headers = download_data.meta
-            save_to_file(@opts[:save]) if @opts[:save]
-            finish_download download_data
+          request = Shoes::HttpRequest.new(download_started_proc)
+          request.read_chunks(@url, @method, @body, @headers) do |chunk|
+            @response.body += chunk
+            try_progress(@response.body.length)
           end
+
+          save_to_file(@opts[:save]) if @opts[:save]
+          finish_download
         rescue SocketError => e
           Shoes.logger.error e
         rescue => e
@@ -100,26 +101,25 @@ class Shoes
       end
     end
 
-    def content_length_proc
-      lambda do |content_length|
-        download_started(content_length)
-        eval_block(@progress_blk, self)
+    def try_progress(size)
+      if should_mark_progress?(size)
+        @transferred = size
+        mark_progress
       end
     end
 
-    def progress_proc
-      lambda do |size|
-        if !content_length.nil? &&
-           (size - transferred) > (content_length / UPDATE_STEPS) &&
-           !@gui.busy?
-          @gui.busy = true
-          eval_block(@progress_blk, self)
-          @transferred = size
-        end
-      end
+    def mark_progress
+      @gui.busy = true
+      eval_block(@progress_blk, self)
     end
 
-    def finish_download(_download_data)
+    def should_mark_progress?(size)
+      !content_length.nil? &&
+        (size - transferred) > (content_length / UPDATE_STEPS) &&
+        !@gui.busy?
+    end
+
+    def finish_download
       @finished = true
 
       # In case backend didn't catch the 100%
@@ -140,9 +140,27 @@ class Shoes
       open(file_path, 'wb') { |fw| fw.print @response.body }
     end
 
-    def download_started(content_length)
-      @content_length = content_length
-      @started        = true
+    def download_started_proc
+      lambda do |response|
+        download_started(response)
+      end
+    end
+
+    def download_started(response)
+      @started = true
+      @content_length = read_content_length(response)
+
+      @response.status = [response.code, response.message]
+      response.each_header do |key|
+        @response.headers[key] = response[key]
+      end
+
+      mark_progress
+    end
+
+    def read_content_length(response)
+      len = response["Content-Length"]
+      len.nil? ? nil : len.to_i
     end
   end
 end

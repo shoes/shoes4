@@ -10,9 +10,14 @@ class Shoes
       # executes on the main UI thread. Without it we get thread access errors.
       def eval_block(blk, result)
         ::Swt.display.asyncExec do
-          blk.call result
-          @busy = false
+          actually_run_block(blk, result)
         end
+      end
+
+      # Why a separate method? So RedrawingAspect can target it!
+      def actually_run_block(blk, result)
+        blk.call result
+        @busy = false
       end
 
       def busy?
