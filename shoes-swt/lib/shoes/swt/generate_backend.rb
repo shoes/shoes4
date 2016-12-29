@@ -15,7 +15,8 @@ You are running the following Ruby instead:
   #{RUBY_DESCRIPTION}
 
 Please download JRuby from http://jruby.org (or your favorite Ruby version
-manager), reinstall the `shoes` gem on that Ruby, and try again.
+manager), then check our https://github.com/shoes/shoes4#installing-shoes-4 to
+get Shoes installed.
 
 Sorry for the inconvenience!
 *******************************************************************************
