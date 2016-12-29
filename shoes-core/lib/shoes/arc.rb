@@ -1,6 +1,6 @@
 class Shoes
   class Arc
-    include Common::UIElement
+    include Common::ArtElement
     include Common::Clickable
     include Common::Hover
     include Common::Fill

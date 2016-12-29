@@ -7,8 +7,12 @@ class Shoes
       include Common::Visibility
       include Common::Positioning
       include Common::Remove
-      include Common::Rotate
       include DimensionsDelegations
+
+      # Nobody rotates by default, but we need to let you check
+      def needs_rotate?
+        false
+      end
 
       # Expected to be overridden by pulling in Common::Fill or Common::Stroke
       # if element needs to actually notify GUI classes of colors changes.

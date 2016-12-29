@@ -1,13 +1,21 @@
 require 'spec_helper'
 
 describe Shoes::Common::Rotate do
-  let(:test_class) { Class.new { include Shoes::Common::Rotate } }
-
   subject { test_class.new }
 
   describe '#needs_rotate?' do
-    it 'defaults to falsey value' do
-      expect(subject.needs_rotate?).to be_falsey
+    let(:test_class) do
+      Class.new do
+        include Shoes::Common::Rotate
+
+        def rotate
+          45
+        end
+      end
+    end
+
+    it 'defaults to truthy value' do
+      expect(subject.needs_rotate?).to be_truthy
     end
   end
 end
