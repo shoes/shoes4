@@ -1,6 +1,6 @@
 class Shoes
   class Shape
-    include Common::UIElement
+    include Common::ArtElement
     include Common::Clickable
     include Common::Fill
     include Common::Stroke
@@ -38,6 +38,16 @@ class Shoes
 
     def height
       @app.height
+    end
+
+    def element_width
+      return super unless @right_bound && @left_bound
+      @right_bound - @left_bound
+    end
+
+    def element_height
+      return super unless @bottom_bound && @top_bound
+      @bottom_bound - @top_bound
     end
 
     def fixed_height?
