@@ -80,9 +80,9 @@ class Shoes
           if block_given?
             begin
               transform = ::Swt::Transform.new Shoes.display
-              reset_rotate transform, graphics_context, angle, left, top
-              yield
               reset_rotate transform, graphics_context, -angle, left, top
+              yield
+              reset_rotate transform, graphics_context, angle, left, top
             ensure
               transform.dispose unless transform.nil? || transform.disposed?
             end
