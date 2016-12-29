@@ -67,7 +67,7 @@ describe Shoes::Swt::Common::Painter do
       allow(dsl).to receive(:element_top)    { 0 }
       allow(dsl).to receive(:element_height) { 0 }
 
-      expect_transform_for_rotate
+      expect_transform_for_rotate(dsl.rotate)
 
       subject.paint_control event
     end
@@ -83,17 +83,20 @@ describe Shoes::Swt::Common::Painter do
 
   context "set_rotate" do
     it "disposes of transform" do
-      expect_transform_for_rotate
+      rotate_by = 10
+      expect_transform_for_rotate(rotate_by)
 
-      subject.set_rotate graphics_context, 0, 0, 0 do
+      subject.set_rotate graphics_context, rotate_by, 0, 0 do
         # no-op
       end
     end
   end
 
-  def expect_transform_for_rotate
+  def expect_transform_for_rotate(rotate_by)
     expect(transform).to receive(:dispose)
     expect(transform).to receive(:translate).at_least(:once)
-    expect(transform).to receive(:rotate).at_least(:once)
+
+    expect(transform).to receive(:rotate).with(-rotate_by).ordered
+    expect(transform).to receive(:rotate).with(rotate_by).ordered
   end
 end
