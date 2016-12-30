@@ -9,8 +9,12 @@ if not exist !bin_dir!\shoes-backend (
   call !bin_dir!\shoes-picker !bin_dir!
 )
 
-set shoes_bin_dir=!bin_dir!
-set /p command=<!bin_dir!/shoes-backend
+REM If we didn't get a backend generated, we presume that shoes-picker already
+REM told us why things failed, so just skip the rest.
+if exist !bin_dir!\shoes-backend (
+  set shoes_bin_dir=!bin_dir!
+  set /p command=<!bin_dir!/shoes-backend
 
-call !command! %*
+  call !command! %*
+)
 endlocal
