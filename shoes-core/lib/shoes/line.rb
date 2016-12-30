@@ -6,7 +6,6 @@ class Shoes
     include Common::Hover
     include Common::Stroke
     include Common::Style
-    include Common::Translate
 
     attr_reader :point_a, :point_b
 

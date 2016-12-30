@@ -5,7 +5,6 @@ class Shoes
     include Common::Fill
     include Common::Stroke
     include Common::Style
-    include Common::Translate
 
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false }.freeze

@@ -5,7 +5,6 @@ class Shoes
     include Common::Hover
     include Common::Stroke
     include Common::Style
-    include Common::Translate
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
     STYLES = { fill: Shoes::COLORS[:black] }.freeze

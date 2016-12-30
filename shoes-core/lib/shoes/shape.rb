@@ -4,7 +4,6 @@ class Shoes
     include Common::Fill
     include Common::Stroke
     include Common::Style
-    include Common::Translate
 
     attr_reader :blk, :x, :y, :left_bound, :top_bound, :right_bound, :bottom_bound
 
