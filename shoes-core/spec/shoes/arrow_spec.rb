@@ -21,7 +21,6 @@ describe Shoes::Arrow do
     let(:subject_without_style) { Shoes::Arrow.new(app, parent, left, top, width) }
     let(:subject_with_style) { Shoes::Arrow.new(app, parent, left, top, width, arg_styles) }
   end
-  it_behaves_like "clickable object"
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
   it_behaves_like 'object with parent'

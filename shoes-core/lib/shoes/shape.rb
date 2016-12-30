@@ -1,7 +1,6 @@
 class Shoes
   class Shape
     include Common::ArtElement
-    include Common::Clickable
     include Common::Fill
     include Common::Stroke
     include Common::Style

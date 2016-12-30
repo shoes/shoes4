@@ -3,7 +3,6 @@ class Shoes
     include Common::ArtElement
     include Common::Fill
     include Common::Stroke
-    include Common::Clickable
     include Common::Hover
     include Common::Style
     include Common::Translate

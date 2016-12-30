@@ -16,7 +16,6 @@ describe Shoes::Shape do
   end
 
   it_behaves_like "movable object"
-  it_behaves_like "clickable object"
   it_behaves_like "an art element"
 
   describe "octagon" do

@@ -1,7 +1,6 @@
 class Shoes
   class Arc
     include Common::ArtElement
-    include Common::Clickable
     include Common::Hover
     include Common::Fill
     include Common::Stroke
