@@ -24,6 +24,5 @@ describe Shoes::Arrow do
   it_behaves_like "object with dimensions"
   it_behaves_like "movable object"
   it_behaves_like 'object with parent'
-  it_behaves_like "object with hover"
   it_behaves_like "an art element"
 end

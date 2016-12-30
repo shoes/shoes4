@@ -21,7 +21,6 @@ describe Shoes::Arc do
     it_behaves_like "object with dimensions"
     it_behaves_like "left, top as center", :start_angle, :end_angle
     it_behaves_like "object with parent"
-    it_behaves_like "object with hover"
     it_behaves_like "an art element"
 
     # it_styles_with :art_styles, :center, :dimensions, :radius

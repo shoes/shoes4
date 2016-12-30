@@ -3,7 +3,6 @@ require 'matrix'
 class Shoes
   class Line
     include Common::ArtElement
-    include Common::Hover
     include Common::Stroke
     include Common::Style
 

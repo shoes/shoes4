@@ -2,7 +2,6 @@ class Shoes
   class Arrow
     include Common::ArtElement
     include Common::Fill
-    include Common::Hover
     include Common::Stroke
     include Common::Style
 
