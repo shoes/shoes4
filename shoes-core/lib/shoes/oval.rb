@@ -1,7 +1,6 @@
 class Shoes
   class Oval
     include Common::ArtElement
-    include Common::Style
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
     STYLES = { fill: Shoes::COLORS[:black] }.freeze

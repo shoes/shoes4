@@ -150,7 +150,6 @@ class Shoes
   #     #element_styles: a hash of {Class => styles}, where styles is
   #                      a hash of default styles for elements of Class,
   module DSL
-    include Common::Style
     include Color::DSLHelpers
 
     # Set default style for elements of a particular class, or for all

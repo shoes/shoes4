@@ -9,6 +9,11 @@ class Shoes
       include Common::Remove
       include DimensionsDelegations
 
+      # Modules that muck with class methods need to be included like this
+      def self.included(base)
+        base.include Common::Style
+      end
+
       # Nobody rotates by default, but we need to let you check
       def needs_rotate?
         false

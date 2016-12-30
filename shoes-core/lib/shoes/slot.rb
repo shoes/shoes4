@@ -3,7 +3,6 @@ class Shoes
     include Common::UIElement
     include Common::Clickable
     include Common::Hover
-    include Common::Style
 
     # We need that offset because otherwise element overlap e.g. occupy
     # the same pixel - this way they start right next to each other

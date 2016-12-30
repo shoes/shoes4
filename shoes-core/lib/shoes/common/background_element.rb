@@ -3,6 +3,11 @@ class Shoes
     module BackgroundElement
       include Common::UIElement
 
+      # Modules that muck with class methods need to be included like this
+      def self.included(base)
+        base.include Common::Style
+      end
+
       def create_dimensions(*_)
         @dimensions = ParentDimensions.new @parent, @style
       end

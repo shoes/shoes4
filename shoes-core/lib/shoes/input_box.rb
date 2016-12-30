@@ -1,7 +1,6 @@
 class Shoes
   class InputBox
     include Common::UIElement
-    include Common::Style
     include Common::Changeable
     include Common::State
 

@@ -1,7 +1,6 @@
 class Shoes
   class Arrow
     include Common::ArtElement
-    include Common::Style
 
     style_with :angle, :art_styles, :curve, :common_styles, :dimensions
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze

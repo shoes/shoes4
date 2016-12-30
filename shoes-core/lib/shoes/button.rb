@@ -2,7 +2,6 @@ class Shoes
   class Button
     include Common::UIElement
     include Common::Clickable
-    include Common::Style
     include Common::State
 
     # We don't actually support release from buttons, but want to use the
