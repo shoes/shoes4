@@ -2,7 +2,6 @@ class Shoes
   class Arrow
     include Common::ArtElement
     include Common::Fill
-    include Common::Stroke
     include Common::Style
 
     style_with :angle, :art_styles, :curve, :common_styles, :dimensions

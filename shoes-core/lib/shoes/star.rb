@@ -2,7 +2,6 @@ class Shoes
   class Star
     include Common::ArtElement
     include Common::Fill
-    include Common::Stroke
     include Common::Style
 
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points

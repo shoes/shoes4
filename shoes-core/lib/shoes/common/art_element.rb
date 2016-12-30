@@ -4,6 +4,7 @@ class Shoes
       include Common::UIElement
       include Common::Clickable
       include Common::Rotate
+      include Common::Stroke
       include Common::Translate
 
       def self.included(base)

@@ -2,7 +2,6 @@ class Shoes
   class Arc
     include Common::ArtElement
     include Common::Fill
-    include Common::Stroke
     include Common::Style
 
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
