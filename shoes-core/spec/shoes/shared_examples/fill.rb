@@ -1,4 +1,4 @@
-shared_examples_for "object with fill" do
+shared_examples_for "object with fill" do |default_color = :black|
   let(:color) { Shoes::COLORS.fetch :honeydew }
 
   specify "returns a color" do
@@ -13,7 +13,7 @@ shared_examples_for "object with fill" do
   end
 
   # Be sure the subject does *not* have the stroke set previously
-  specify "defaults to black" do
-    expect(subject.fill).to eq(Shoes::COLORS.fetch(:black))
+  specify "defaults to #{default_color}" do
+    expect(subject.fill).to eq(Shoes::COLORS.fetch(default_color))
   end
 end

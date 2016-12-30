@@ -76,7 +76,6 @@ require 'shoes/text_block_dimensions'
 require 'shoes/color'
 
 require 'shoes/common/attachable'
-require 'shoes/common/background_element'
 require 'shoes/common/changeable'
 require 'shoes/common/clickable'
 require 'shoes/common/fill'
@@ -95,6 +94,7 @@ require 'shoes/common/visibility'
 
 require 'shoes/common/ui_element'
 require 'shoes/common/art_element'
+require 'shoes/common/background_element'
 
 require 'shoes/builtin_methods'
 require 'shoes/check_button'

@@ -1,4 +1,4 @@
-shared_examples_for "object with stroke" do
+shared_examples_for "object with stroke" do |default_color = :black|
   let(:color) { Shoes::COLORS.fetch :tomato }
   let(:color2) { Shoes::COLORS.fetch :forestgreen }
   let(:gradient) { Shoes::Gradient.new(color, color2) }
@@ -26,8 +26,8 @@ shared_examples_for "object with stroke" do
   end
 
   # Be sure the subject does *not* have the stroke set previously
-  it "defaults to black" do
-    expect(subject.stroke).to eq(Shoes::COLORS.fetch(:black))
+  it "defaults to #{default_color}" do
+    expect(subject.stroke).to eq(Shoes::COLORS.fetch(default_color))
   end
 
   describe "strokewidth" do

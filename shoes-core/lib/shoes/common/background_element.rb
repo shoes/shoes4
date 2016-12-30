@@ -1,6 +1,8 @@
 class Shoes
   module Common
     module BackgroundElement
+      include Common::UIElement
+
       def create_dimensions(*_)
         @dimensions = ParentDimensions.new @parent, @style
       end

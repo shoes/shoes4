@@ -25,6 +25,8 @@ describe Shoes::Background do
     expect(background.gui).not_to be_nil
   end
 
+  it_behaves_like "object with fill", :blue
+
   it_behaves_like "object with style" do
     subject(:background) { Shoes::Background.new(app, parent, Shoes::COLORS[:black]) }
     let(:subject_without_style) { Shoes::Background.new(app, parent, blue) }
