@@ -57,7 +57,7 @@ if [ ! -e "$BACKEND_FILE" ]; then
   $SCRIPTPATH/shoes-picker $SCRIPTPATH
 
   STATUS=$?
-  if [[ $STATUS != 0 ]]; then
+  if [ $STATUS != 0 ]; then
     exit $STATUS
   fi
 fi
