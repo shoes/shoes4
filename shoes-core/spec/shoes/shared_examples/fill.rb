@@ -1,4 +1,3 @@
-
 shared_examples_for "object with fill" do
   let(:color) { Shoes::COLORS.fetch :honeydew }
 

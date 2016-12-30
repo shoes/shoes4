@@ -1,7 +1,6 @@
 class Shoes
   class Oval
     include Common::ArtElement
-    include Common::Fill
     include Common::Style
 
     style_with :art_styles, :center, :common_styles, :dimensions, :radius

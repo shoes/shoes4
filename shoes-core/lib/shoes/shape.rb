@@ -1,7 +1,6 @@
 class Shoes
   class Shape
     include Common::ArtElement
-    include Common::Fill
     include Common::Style
 
     attr_reader :blk, :x, :y, :left_bound, :top_bound, :right_bound, :bottom_bound
