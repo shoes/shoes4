@@ -17,12 +17,8 @@ describe Shoes::Arrow do
     end
   end
 
-  it_behaves_like "object with style" do
+  it_behaves_like "an art element" do
     let(:subject_without_style) { Shoes::Arrow.new(app, parent, left, top, width) }
     let(:subject_with_style) { Shoes::Arrow.new(app, parent, left, top, width, arg_styles) }
   end
-  it_behaves_like "object with dimensions"
-  it_behaves_like "movable object"
-  it_behaves_like 'object with parent'
-  it_behaves_like "an art element"
 end

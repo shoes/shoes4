@@ -14,16 +14,11 @@ describe Shoes::Arc do
   context "basic" do
     subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
 
-    it_behaves_like "object with style" do
+    it_behaves_like "an art element" do
       let(:subject_without_style) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
       let(:subject_with_style) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, arg_styles) }
     end
-    it_behaves_like "object with dimensions"
     it_behaves_like "left, top as center", :start_angle, :end_angle
-    it_behaves_like "object with parent"
-    it_behaves_like "an art element"
-
-    # it_styles_with :art_styles, :center, :dimensions, :radius
 
     it "is a Shoes::Arc" do
       expect(arc.class).to be(Shoes::Arc)

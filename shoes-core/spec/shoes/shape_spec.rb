@@ -5,18 +5,17 @@ describe Shoes::Shape do
 
   let(:left) { 0 }
   let(:top) { 0 }
+  let(:width) { 600 }
+  let(:height) { 500 }
   let(:style) { {translate_left: 0, translate_top: 0, left: left, top: top} }
   let(:draw)  { proc {} }
 
   subject { Shoes::Shape.new app, parent, style, draw }
 
-  it_behaves_like "object with style" do
+  it_behaves_like "an art element" do
     let(:subject_without_style) { Shoes::Shape.new(app, parent) }
     let(:subject_with_style) { Shoes::Shape.new(app, parent, arg_styles) }
   end
-
-  it_behaves_like "movable object"
-  it_behaves_like "an art element"
 
   describe "octagon" do
     let(:draw) do
