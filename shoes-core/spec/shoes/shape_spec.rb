@@ -17,6 +17,7 @@ describe Shoes::Shape do
 
   it_behaves_like "movable object"
   it_behaves_like "clickable object"
+  it_behaves_like "object with rotate"
 
   describe "octagon" do
     let(:draw) do

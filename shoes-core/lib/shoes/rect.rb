@@ -1,6 +1,6 @@
 class Shoes
   class Rect
-    include Common::UIElement
+    include Common::ArtElement
     include Common::Fill
     include Common::Stroke
     include Common::Clickable
@@ -18,10 +18,6 @@ class Shoes
       height ||= @style[:height] || width
 
       @dimensions = AbsoluteDimensions.new left, top, width, height, @style
-    end
-
-    def needs_rotate?
-      rotate && rotate.nonzero?
     end
   end
 end

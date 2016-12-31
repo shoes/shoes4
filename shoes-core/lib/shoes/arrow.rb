@@ -1,6 +1,6 @@
 class Shoes
   class Arrow
-    include Common::UIElement
+    include Common::ArtElement
     include Common::Clickable
     include Common::Fill
     include Common::Hover
@@ -17,10 +17,6 @@ class Shoes
       width  ||= @style[:width] || 0
 
       @dimensions = AbsoluteDimensions.new left, top, width, width, @style
-    end
-
-    def needs_rotate?
-      rotate && rotate.nonzero?
     end
 
     def width=(*_)

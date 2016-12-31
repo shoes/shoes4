@@ -94,6 +94,7 @@ require 'shoes/common/translate'
 require 'shoes/common/visibility'
 
 require 'shoes/common/ui_element'
+require 'shoes/common/art_element'
 
 require 'shoes/builtin_methods'
 require 'shoes/check_button'
