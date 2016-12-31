@@ -1,15 +1,5 @@
 require 'spec_helper'
 
-shared_examples_for "basic star" do
-  it "retains app" do
-    expect(subject.app).to eq(app)
-  end
-
-  it "creates gui object" do
-    expect(subject.gui).not_to be_nil
-  end
-end
-
 describe Shoes::Star do
   include_context "dsl app"
 
@@ -20,18 +10,18 @@ describe Shoes::Star do
 
   subject { Shoes::Star.new(app, parent, left, top, 5, 50, 30) }
 
-  it_behaves_like "basic star"
-  it_behaves_like "object with style" do
+  it "retains app" do
+    expect(subject.app).to eq(app)
+  end
+
+  it "creates gui object" do
+    expect(subject.gui).not_to be_nil
+  end
+
+  it_behaves_like "an art element" do
     let(:subject_without_style) { Shoes::Star.new(app, parent, left, top, 5, 50, 30) }
     let(:subject_with_style) { Shoes::Star.new(app, parent, left, top, 5, 50, 30, arg_styles) }
   end
-
-  it_behaves_like "object with dimensions"
-  it_behaves_like "movable object"
-  it_behaves_like 'object with parent'
-  it_behaves_like "object with hover"
-  it_behaves_like "object with rotate"
-  it_behaves_like "clickable object"
 
   describe "in_bounds?" do
     before do

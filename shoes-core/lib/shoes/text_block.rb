@@ -7,7 +7,6 @@ class Shoes
     include Common::Clickable
     include Common::Hover
     include Common::LinkFinder
-    include Common::Style
     include Common::Translate
     include TextBlockDimensionsDelegations
 

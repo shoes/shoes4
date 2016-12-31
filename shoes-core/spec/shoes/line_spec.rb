@@ -10,16 +10,11 @@ describe Shoes::Line do
     let(:height) { 407 }
 
     subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), input_opts) }
-    it_behaves_like "movable object"
-    it_behaves_like "object with style" do
+
+    it_behaves_like "an art element" do
       let(:subject_without_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430)) }
       let(:subject_with_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), arg_styles) }
     end
-    it_behaves_like "object with dimensions"
-    it_behaves_like "object with parent"
-    it_behaves_like "object with hover"
-    it_behaves_like "object with rotate"
-    it_behaves_like "clickable object"
   end
 
   describe "line with point a at leftmost, topmost" do

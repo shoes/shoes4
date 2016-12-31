@@ -7,8 +7,8 @@ class Shoes
   # and providing the bulk of the functionality, leaving the App a relatively
   # blank slate for users to bend to their will.
   class InternalApp
-    include Common::Style
     include Common::Clickable
+    include Common::Style
     include DimensionsDelegations
 
     extend Forwardable

@@ -1,15 +1,5 @@
 require 'spec_helper'
 
-shared_examples_for "basic rect" do
-  it "retains app" do
-    expect(rect.app).to eq(app)
-  end
-
-  it "creates gui object" do
-    expect(rect.gui).not_to be_nil
-  end
-end
-
 describe Shoes::Rect do
   include_context "dsl app"
 
@@ -27,16 +17,17 @@ describe Shoes::Rect do
     end
   end
 
-  it_behaves_like "basic rect"
-  it_behaves_like "object with style" do
+  it "retains app" do
+    expect(rect.app).to eq(app)
+  end
+
+  it "creates gui object" do
+    expect(rect.gui).not_to be_nil
+  end
+
+  it_behaves_like "an art element" do
     let(:subject_without_style) { Shoes::Rect.new(app, parent, left, top, width, height) }
     let(:subject_with_style) { Shoes::Rect.new(app, parent, left, top, width, height, arg_styles) }
   end
-  it_behaves_like "object with dimensions"
-  it_behaves_like "movable object"
   it_behaves_like "left, top as center"
-  it_behaves_like 'object with parent'
-  it_behaves_like "object with hover"
-  it_behaves_like "object with rotate"
-  it_behaves_like "clickable object"
 end

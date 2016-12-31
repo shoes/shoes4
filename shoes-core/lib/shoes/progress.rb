@@ -1,7 +1,6 @@
 class Shoes
   class Progress
     include Common::UIElement
-    include Common::Style
 
     style_with :common_styles, :dimensions, :fraction
     STYLES = { fraction: 0.0 }.freeze

@@ -1,12 +1,6 @@
 class Shoes
   class Star
     include Common::ArtElement
-    include Common::Clickable
-    include Common::Fill
-    include Common::Hover
-    include Common::Stroke
-    include Common::Style
-    include Common::Translate
 
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze

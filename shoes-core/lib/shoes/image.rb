@@ -1,7 +1,6 @@
 class Shoes
   class Image
     include Common::UIElement
-    include Common::Style
     include Common::Clickable
     include Common::Hover
 
