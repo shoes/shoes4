@@ -12,11 +12,13 @@ Gem::Specification.new do |s|
   s.description = 'Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.'
   s.license     = 'MIT'
 
-  s.files = ["LICENSE", "README.md"]
+  s.files = Dir["LICENSE", "README.md", "lib/**/*", "ext/install/**/*"]
 
   s.add_dependency "shoes-core", version
   s.add_dependency "shoes-swt",  version
   s.add_dependency "shoes-manual", "~> 4.0.0", ">= 4.0.0"
 
-  # shoes executables are actually installed from shoes-core
+  # Curious why we don't install shoes? See ext/Rakefile for the nitty-gritty.
+  s.executables   = ['shoes-stub']
+  s.extensions    = ['ext/install/Rakefile']
 end

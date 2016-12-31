@@ -1,7 +1,19 @@
+#
+# This class is used for interactively (if necessary) picking the Shoes
+# backend that the user will run their Shoes app with.
+#
+# This interacts with backend gems via the following contract:
+#
+#   * Backend provides file "shoes/#{backend_name}/generate_backend.rb"
+#   * Requiring that file defines a module Shoes::SelectedBackend
+#   * Shoes::SelectedBackend should implement the following class methods:
+#     * generate(path) - passed bin path, generates shell command to start
+#                        Shoes on given backend
+#     * validate() - checks whether this backend is valid to run (i.e. right
+#                    ruby platform) and exits if not.
+#
 class Shoes
   module UI
-    # This class is used for interactively (if necessary) picking the Shoes
-    # backend that the user will run their Shoes app with.
     class Picker
       def initialize(input = STDIN, output = STDOUT)
         @input  = input
@@ -10,8 +22,11 @@ class Shoes
 
       def run(bin_dir, desired_backend = nil)
         bundle
-        generator_file = select_generator(desired_backend)
-        write_backend(generator_file, bin_dir)
+
+        require_generator(desired_backend)
+        validate_generator
+
+        write_backend(bin_dir)
       end
 
       # Only bundle if we find a local Gemfile.  This allows us to work properly
@@ -78,13 +93,19 @@ class Shoes
         "shoes-#{match.tr('/', '-')}"
       end
 
-      def write_backend(generator_file, bin_dir)
+      def require_generator(desired_backend)
+        generator_file = select_generator(desired_backend)
         require generator_file
+      end
 
+      def validate_generator
+        Shoes::SelectedBackend.validate
+      end
+
+      def write_backend(bin_dir)
         File.open(File.expand_path(File.join(bin_dir, "shoes-backend")), "w") do |file|
-          # Contract with backends is to define generate_backend method that we
-          # can call. Bit ugly, open to better options for that interchange.
-          file.write(generate_backend(ENV["SHOES_PICKER_BIN_DIR"] || bin_dir))
+          dest_dir = ENV["SHOES_PICKER_BIN_DIR"] || bin_dir
+          file.write(Shoes::SelectedBackend.generate(dest_dir))
         end
       end
     end

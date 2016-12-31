@@ -6,4 +6,4 @@ cd ./bin
 export SHOES_PICKER_BIN_DIR=`pwd -P`
 
 cd ..
-shoes-core/bin/shoes-stub $@
+bin/shoes-stub $@
