@@ -21,19 +21,12 @@ describe Shoes::Common::UIElement do
   end
 
   describe "#needs_rotate?" do
-    before do
-      # Add faux rotate accessor to prove it really doesn't support rotation
-      class << subject
-        attr_accessor :rotate
-      end
-    end
-
     it "doesn't rotate by default" do
       expect(subject.needs_rotate?).to be_falsey
     end
 
     it "still won't rotate even with a value" do
-      subject.rotate = 25
+      allow(subject).to receive(:rotate).and_return(25)
       expect(subject.needs_rotate?).to be_falsey
     end
   end
