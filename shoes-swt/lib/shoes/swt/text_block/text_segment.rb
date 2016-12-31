@@ -84,8 +84,17 @@ class Shoes
           }
         end
 
+        # Why not just use layout.bounds?  Recent versions of SWT have shown
+        # platform dependent behavior about whether spacing is included in
+        # bounds, leading to unpredictable placement.  Doing it more directly
+        # per-line in this fashion insulates us from the regression. #1295
         def height
-          layout.bounds.height - layout.spacing
+          line_count = layout.line_count
+          h = (line_count - 1) * layout.spacing
+          line_count.times do |i|
+            h += layout.get_line_bounds(i).height
+          end
+          h
         end
 
         def last_line_height
