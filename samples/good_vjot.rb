@@ -16,7 +16,8 @@ There is no save button, the jot is saved as you edit.
 END
 
 Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
-  @note = NOTES.first
+  @notes = NOTES.dup
+  @note = @notes.first
   background "#C7EAFB"
   stack width: 400, margin: 20 do
     background "#eee", curve: 12
@@ -37,7 +38,7 @@ Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
   end
 
   def load_list
-    note_list = NOTES.map do |note|
+    note_list = @notes.map do |note|
       [
         link(note.first) do
           @note = load_note(note)
@@ -46,7 +47,7 @@ Shoes.app title: "vJot", width: 420, height: 560, resizable: false do
         "\n"
       ]
     end.flatten + [link("+ Add a new Note") do
-      NOTES << (@note = load_note)
+      @notes << (@note = load_note)
       load_list
     end]
     @list.replace(*note_list)
