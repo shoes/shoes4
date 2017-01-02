@@ -135,4 +135,34 @@ describe Shoes::Swt::TextBlock::TextSegment do
       expect(style_factory).to have_received(:dispose)
     end
   end
+
+  describe "height" do
+    let(:line_height)  { 17 }
+    let(:line_spacing) { 4 }
+    let(:line_bounds)  { ::Swt::Rectangle.new(-1, -1, -1, line_height) }
+
+    before do
+      allow(layout).to receive(:spacing).and_return(line_spacing)
+      allow(layout).to receive(:get_line_bounds).and_return(line_bounds)
+    end
+
+    it "has a single line" do
+      with_line_count(1)
+      expect(subject.height).to eq(17)
+    end
+
+    it "has two lines" do
+      with_line_count(2)
+      expect(subject.height).to eq(38)
+    end
+
+    it "has three lines" do
+      with_line_count(3)
+      expect(subject.height).to eq(59)
+    end
+
+    def with_line_count(count)
+      allow(layout).to receive(:line_count).and_return(count)
+    end
+  end
 end
