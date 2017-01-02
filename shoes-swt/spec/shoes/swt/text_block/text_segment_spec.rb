@@ -47,7 +47,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     segment.position_at(element_left, element_top)
   end
 
-  context "disposal" do
+  describe "disposal" do
     it "disposes of underlying layout" do
       allow(layout).to receive(:disposed?) { false }
       expect(layout).to receive(:dispose)
@@ -61,7 +61,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
   end
 
-  context "setting style" do
+  describe "setting style" do
     it "on full range" do
       subject.set_style(style_hash)
       expect(layout).to have_received(:set_style)
@@ -91,7 +91,7 @@ describe Shoes::Swt::TextBlock::TextSegment do
     end
   end
 
-  context "bounds checking" do
+  describe "bounds checking" do
     before(:each) do
       set_bounds(0, 0, segment_width, segment_height)
     end
