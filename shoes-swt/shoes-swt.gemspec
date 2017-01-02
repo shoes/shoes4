@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency "swt", "~>4.4.0"
+  s.add_dependency "swt", "~>4.6.1"
   s.add_dependency "after_do", "~>0.4.0"
   s.add_dependency "shoes-core", Shoes::Swt::VERSION
   s.add_dependency "shoes-package", Shoes::Swt::VERSION
