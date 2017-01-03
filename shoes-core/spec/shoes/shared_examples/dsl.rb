@@ -29,7 +29,6 @@ shared_examples "DSL container" do
     oval
     pattern
     progress
-    rect
     rgb
     shape
     star
