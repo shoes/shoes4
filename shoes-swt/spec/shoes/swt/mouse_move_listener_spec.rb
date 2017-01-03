@@ -11,6 +11,16 @@ describe Shoes::Swt::MouseMoveListener do
   let(:mouse_motion) { [] }
   let(:shell) { double 'Shell', setCursor: nil }
 
+  let(:display) do
+    double('display').tap do |disp|
+      allow(disp).to receive(:getSystemCursor).with(Swt::SWT::CURSOR_HAND).and_return(hand_cursor)
+      allow(disp).to receive(:getSystemCursor).with(Swt::SWT::CURSOR_ARROW).and_return(arrow_cursor)
+    end
+  end
+
+  let(:hand_cursor) { double 'hand cursor' }
+  let(:arrow_cursor) { double 'arrow cursor' }
+
   let(:dsl_app) do
     double('DSL App', mouse_hover_controls: mouse_hover_controls,
                       mouse_motion: mouse_motion).as_null_object
@@ -22,7 +32,9 @@ describe Shoes::Swt::MouseMoveListener do
   let(:mouse_event) { double 'mouse event', x: x, y: y }
 
   subject { Shoes::Swt::MouseMoveListener.new(app) }
+
   before :each do
+    allow(::Shoes::Swt::Shoes).to receive(:display).and_return(display)
     subject.mouse_move(mouse_event)
   end
 
@@ -41,9 +53,6 @@ describe Shoes::Swt::MouseMoveListener do
   end
 
   describe 'shape control' do
-    let(:hand_cursor) { Shoes::Swt::Shoes.display.getSystemCursor(::Swt::SWT::CURSOR_HAND) }
-    let(:arrow_cursor) { Shoes::Swt::Shoes.display.getSystemCursor(::Swt::SWT::CURSOR_ARROW) }
-
     context 'over a clickable element' do
       let(:clickable_elements) { [double('element', visible?: true, in_bounds?: true)] }
       it 'should set the curser hand' do
