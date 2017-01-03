@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class Harness
   include Shoes::Swt::DisposedProtection
 
