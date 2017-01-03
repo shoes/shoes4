@@ -429,21 +429,24 @@ EOS
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
-    RECT_ALLOWED_ARG_SIZES = [0, 3, 4, 5].freeze
     def rect(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
 
-      left, top, width, height, curve = args
+      left, top, width, height, curve, *leftovers = args
       opts[:curve] = curve if curve
 
       message = <<EOS
 Wrong number of arguments. Must be one of:
-  - rect(left, top, side, [opts])
-  - rect(left, top, width, height, [opts])
   - rect(left, top, width, height, curve, [opts])
+  - rect(left, top, width, height, [opts])
+  - rect(left, top, side, [opts])
+  - rect(left, top, [opts])
+  - rect(left, [opts])
   - rect(styles)
 EOS
-      raise ArgumentError, message unless RECT_ALLOWED_ARG_SIZES.include? args.size
+
+      raise ArgumentError, message if leftovers.any?
+
       create Shoes::Rect, left, top, width, height, style.merge(opts), blk
     end
 
