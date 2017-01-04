@@ -11,7 +11,6 @@ shared_examples "DSL container" do
   %w(
     animate
     arc
-    arrow
     background
     button
     border
