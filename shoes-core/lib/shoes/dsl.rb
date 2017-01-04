@@ -390,21 +390,22 @@ EOS
     #   @option styles [Integer] height (0) the height
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
     #   @option styles [Boolean] center (false) is (left, top) the center of the oval
-    OVAL_ALLOWED_ARG_SIZES = [0, 3, 4].freeze
-    def oval(*opts, &blk)
-      oval_style = pop_style(opts)
-      oval_style = style_normalizer.normalize(oval_style)
+    def oval(*args, &blk)
+      opts = style_normalizer.normalize pop_style(args)
 
-      left, top, width, height = opts
+      left, top, width, height, *leftovers = args
 
       message = <<EOS
 Wrong number of arguments. Must be one of:
-  - oval(left, top, diameter, [opts])
   - oval(left, top, width, height, [opts])
+  - oval(left, top, diameter, [opts])
+  - oval(left, top, [opts])
+  - oval(left, [opts])
   - oval(styles)
 EOS
-      raise ArgumentError, message unless OVAL_ALLOWED_ARG_SIZES.include? opts.size
-      create Shoes::Oval, left, top, width, height, oval_style, blk
+      raise ArgumentError, message if leftovers.any?
+
+      create Shoes::Oval, left, top, width, height, opts, blk
     end
 
     # Creates a rectangle

@@ -26,7 +26,6 @@ shared_examples "DSL container" do
     line
     nofill
     nostroke
-    oval
     pattern
     progress
     rgb

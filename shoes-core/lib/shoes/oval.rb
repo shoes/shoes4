@@ -6,8 +6,8 @@ class Shoes
     STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(left, top, width, height)
-      left   ||= @style[:left]
-      top    ||= @style[:top]
+      left   ||= @style[:left] || 0
+      top    ||= @style[:top] || 0
       width  ||= @style[:diameter] || @style[:width] || (@style[:radius] || 0) * 2
       height ||= @style[:height] || width
 
