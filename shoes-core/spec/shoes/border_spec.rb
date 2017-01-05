@@ -42,4 +42,11 @@ describe Shoes::Border do
   end
 
   it { is_expected.not_to be_takes_up_space }
+
+  describe "dsl" do
+    it "sets color" do
+      border = dsl.border("#ffffff")
+      expect(border.stroke).to eq(Shoes::COLORS[:white])
+    end
+  end
 end
