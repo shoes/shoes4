@@ -12,7 +12,6 @@ shared_examples "DSL container" do
     animate
     arc
     button
-    border
     cap
     check
     edit_box
