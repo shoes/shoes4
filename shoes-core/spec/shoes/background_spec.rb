@@ -40,10 +40,29 @@ describe Shoes::Background do
     it_behaves_like "object with relative dimensions"
   end
 
-  context "negative dimensions" do
+  describe "negative dimensions" do
     subject { Shoes::Background.new(app, parent, blue, negative_opts) }
     it_behaves_like "object with negative dimensions"
   end
 
   it { is_expected.not_to be_takes_up_space }
+
+  describe "dsl" do
+    it "sets color with a valid hex string" do
+      background = dsl.background("#fff")
+      expect(background.fill).to eq(Shoes::COLORS[:white])
+    end
+
+    it "raises an argument error with an invalid hex string" do
+      expect { dsl.background('#ffq') }.to raise_error('Bad hex color: #ffq')
+    end
+
+    it 'ignores the background with no valid image' do
+      expect { dsl.background('fake-shoes.jpg') }.not_to raise_error
+    end
+
+    it 'creates a Shoes::Background with a valid image' do
+      expect(dsl.background('static/shoes-icon.png')).to be_an_instance_of(Shoes::Background)
+    end
+  end
 end
