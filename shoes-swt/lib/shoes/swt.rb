@@ -1,5 +1,6 @@
 require 'java'
-require 'swt'
+require 'swt/minimal'
+require 'swt/core'
 require 'after_do'
 require 'shoes'
 
