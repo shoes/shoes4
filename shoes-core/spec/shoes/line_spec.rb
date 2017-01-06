@@ -9,16 +9,16 @@ describe Shoes::Line do
     let(:width) { 280 }
     let(:height) { 407 }
 
-    subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), input_opts) }
+    subject { Shoes::Line.new(app, parent, left, top, 300, 430, input_opts) }
 
     it_behaves_like "an art element" do
-      let(:subject_without_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430)) }
-      let(:subject_with_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), arg_styles) }
+      let(:subject_without_style) { Shoes::Line.new(app, parent, left, top, 300, 430) }
+      let(:subject_with_style) { Shoes::Line.new(app, parent, left, top, 300, 430, arg_styles) }
     end
   end
 
   describe "line with point a at leftmost, topmost" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 15), Shoes::Point.new(100, 60), input_opts) }
+    subject { Shoes::Line.new(app, app, 10, 15, 100, 60, input_opts) }
     its(:left)   { should eq(10) }
     its(:top)    { should eq(15) }
     its(:right)  { should eq(100) }
@@ -28,7 +28,7 @@ describe Shoes::Line do
   end
 
   describe "specified right-to-left, top-to-bottom" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 60), Shoes::Point.new(10, 15), input_opts) }
+    subject { Shoes::Line.new(app, app, 100, 60, 10, 15, input_opts) }
     its(:left)   { should eq(100) }
     its(:top)    { should eq(60) }
     its(:right)  { should eq(10) }
@@ -38,7 +38,7 @@ describe Shoes::Line do
   end
 
   describe "setting dimensions" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 100), Shoes::Point.new(200, 200), input_opts) }
+    subject { Shoes::Line.new(app, app, 100, 100, 200, 200, input_opts) }
 
     it "moves point a with left and top" do
       subject.left -= 100
@@ -84,7 +84,7 @@ describe Shoes::Line do
   end
 
   describe "#in_bounds?" do
-    subject(:line) { Shoes::Line.new(app, app, Shoes::Point.new(100, 100), Shoes::Point.new(50, 50), input_opts) }
+    subject(:line) { Shoes::Line.new(app, app, 100, 100, 50, 50, input_opts) }
 
     it "returns true if a point is in the end of the line" do
       expect(subject.in_bounds?(100, 100)).to be true
@@ -103,7 +103,7 @@ describe Shoes::Line do
     end
 
     it "takes into account :strokewidth style" do
-      line = Shoes::Line.new(app, app, Shoes::Point.new(50, 50), Shoes::Point.new(70, 50), input_opts)
+      line = Shoes::Line.new(app, app, 50, 50, 70, 50, input_opts)
       line.style(strokewidth: 20)
       expect(line.in_bounds?(50, 52)).to be true
       expect(line.in_bounds?(50, 48)).to be true

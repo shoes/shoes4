@@ -3,9 +3,7 @@ require 'spec_helper'
 describe Shoes::Swt::Line do
   include_context "swt app"
 
-  let(:dsl) { Shoes::Line.new shoes_app, parent, point_a, point_b }
-  let(:point_a) { Shoes::Point.new(10, 100) }
-  let(:point_b) { Shoes::Point.new(300, 10) }
+  let(:dsl) { Shoes::Line.new shoes_app, parent, 10, 100, 300, 10 }
 
   subject { Shoes::Swt::Line.new(dsl, swt_app) }
 

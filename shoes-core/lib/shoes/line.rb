@@ -9,14 +9,33 @@ class Shoes
     style_with :angle, :art_styles, :dimensions, :x2, :y2
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 
-    def create_dimensions(point_a, point_b)
-      @point_a = point_a
-      @point_b = point_b
+    def create_dimensions(x1, y1, x2, y2)
+      x1, y1, x2, y2 = default_coordinates(x1, y1, x2, y2)
+
+      @point_a = Shoes::Point.new(x1, y1)
+      @point_b = Shoes::Point.new(x2, y2)
 
       enclosing_box_of_line
 
-      style[:x2] = point_b.x
-      style[:y2] = point_b.y
+      style[:x2] = @point_b.x
+      style[:y2] = @point_b.y
+    end
+
+    def default_coordinates(x1, y1, x2, y2)
+      x1 ||= @style[:left] || 0
+      y1 ||= @style[:top]  || 0
+
+      x2 ||= @style[:right]
+      if x2
+        # With 3 arguments, draws horizontal line, so fallback to y1
+        y2 ||= @style[:bottom] || y1
+      else
+        # If didn't get needed arguments, set start to end which draws nothing
+        x2 = x1
+        y2 = y1
+      end
+
+      [x1, y1, x2, y2]
     end
 
     # Check out http://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment

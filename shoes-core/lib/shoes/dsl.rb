@@ -369,19 +369,6 @@ EOS
 
       x1, y1, x2, y2, *leftovers = args
 
-      x1 ||= opts[:left] || 0
-      y1 ||= opts[:top]  || 0
-
-      x2 ||= opts[:right]
-      if x2
-        # With 3 arguments, draws horizontal line, so fallback to y1
-        y2 ||= opts[:bottom] || y1
-      else
-        # If didn't get needed arguments, set start to end which draws nothing
-        x2 = x1
-        y2 = y1
-      end
-
       message = <<EOS
 Too many arguments. Must be one of:
   - line(x1, y1, x2, y2, [opts])
@@ -392,7 +379,7 @@ Too many arguments. Must be one of:
 EOS
       raise ArgumentError, message if leftovers.any?
 
-      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), opts, blk
+      create Shoes::Line, x1, y1, x2, y2, opts, blk
     end
 
     # Creates an oval at (left, top)
