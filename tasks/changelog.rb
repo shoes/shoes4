@@ -21,7 +21,10 @@ class Changelog
   private
 
   def changelog_header(commit_range)
-    heading = "SINCE #{last_release} (#{commit_count(commit_range)} commits)\n"
+    date = Time.now.strftime("%b %-d, %Y")
+    count = commit_count(commit_range)
+
+    heading = "SINCE #{last_release} (#{count} commits) (#{date})\n"
     heading += "-" * (heading.length - 1)
 
     [heading]
