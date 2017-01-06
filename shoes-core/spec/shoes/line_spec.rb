@@ -114,4 +114,102 @@ describe Shoes::Line do
       expect(line.in_bounds?(70, 50)).to be true
     end
   end
+
+  describe "dsl" do
+    it "takes no arguments" do
+      line = dsl.line
+      expect(line).to have_attributes(left: 0,
+                                      top: 0,
+                                      right: 0,
+                                      bottom: 0)
+    end
+
+    it "takes 1 argument" do
+      line = dsl.line 10
+      expect(line).to have_attributes(left: 10,
+                                      top: 0,
+                                      right: 10,
+                                      bottom: 0)
+    end
+
+    it "takes 1 argument with hash" do
+      line = dsl.line 10, top: 20, right: 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 2 arguments" do
+      line = dsl.line 10, 20
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 10,
+                                      bottom: 20)
+    end
+
+    it "takes 2 arguments with hash" do
+      line = dsl.line 10, 20, right: 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 2 arguments with hash side" do
+      line = dsl.line 10, 20, right: 30
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 20)
+    end
+
+    it "takes 3 arguments" do
+      line = dsl.line 10, 20, 30
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 20)
+    end
+
+    it "takes 3 arguments with hash" do
+      line = dsl.line 10, 20, 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 4 arguments" do
+      line = dsl.line 10, 20, 30, 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 4 arguments with hash" do
+      line = dsl.line 10, 20, 30, 40, left: -1, top: -2, right: -3, bottom: -4
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes styles hash" do
+      line = dsl.line left: 10, top: 20, right: 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "doesn't like too many arguments" do
+      expect { dsl.line 10, 20, 30, 40, 666 }.to raise_error(ArgumentError)
+    end
+
+    it "doesn't like too many arguments and options too!" do
+      expect { dsl.line 10, 20, 30, 40, 666, left: -1 }.to raise_error(ArgumentError)
+    end
+  end
 end
