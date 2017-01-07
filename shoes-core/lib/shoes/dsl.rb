@@ -364,8 +364,22 @@ EOS
     # @param [Integer] x2 The x-value of point B
     # @param [Integer] y2 The y-value of point B
     # @param [Hash] opts Style options
-    def line(x1, y1, x2, y2, styles = {}, &blk)
-      create Shoes::Line, Shoes::Point.new(x1, y1), Shoes::Point.new(x2, y2), styles, blk
+    def line(*args, &blk)
+      opts = style_normalizer.normalize pop_style(args)
+
+      x1, y1, x2, y2, *leftovers = args
+
+      message = <<EOS
+Too many arguments. Must be one of:
+  - line(x1, y1, x2, y2, [opts])
+  - line(x1, y1, x2, [opts])
+  - line(x1, y1, [opts])
+  - line(x1, [opts])
+  - line([opts])
+EOS
+      raise ArgumentError, message if leftovers.any?
+
+      create Shoes::Line, x1, y1, x2, y2, opts, blk
     end
 
     # Creates an oval at (left, top)

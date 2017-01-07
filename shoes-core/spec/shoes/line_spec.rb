@@ -9,16 +9,16 @@ describe Shoes::Line do
     let(:width) { 280 }
     let(:height) { 407 }
 
-    subject { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), input_opts) }
+    subject { Shoes::Line.new(app, parent, left, top, 300, 430, input_opts) }
 
     it_behaves_like "an art element" do
-      let(:subject_without_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430)) }
-      let(:subject_with_style) { Shoes::Line.new(app, parent, Shoes::Point.new(left, top), Shoes::Point.new(300, 430), arg_styles) }
+      let(:subject_without_style) { Shoes::Line.new(app, parent, left, top, 300, 430) }
+      let(:subject_with_style) { Shoes::Line.new(app, parent, left, top, 300, 430, arg_styles) }
     end
   end
 
   describe "line with point a at leftmost, topmost" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(10, 15), Shoes::Point.new(100, 60), input_opts) }
+    subject { Shoes::Line.new(app, app, 10, 15, 100, 60, input_opts) }
     its(:left)   { should eq(10) }
     its(:top)    { should eq(15) }
     its(:right)  { should eq(100) }
@@ -28,7 +28,7 @@ describe Shoes::Line do
   end
 
   describe "specified right-to-left, top-to-bottom" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 60), Shoes::Point.new(10, 15), input_opts) }
+    subject { Shoes::Line.new(app, app, 100, 60, 10, 15, input_opts) }
     its(:left)   { should eq(100) }
     its(:top)    { should eq(60) }
     its(:right)  { should eq(10) }
@@ -38,7 +38,7 @@ describe Shoes::Line do
   end
 
   describe "setting dimensions" do
-    subject { Shoes::Line.new(app, app, Shoes::Point.new(100, 100), Shoes::Point.new(200, 200), input_opts) }
+    subject { Shoes::Line.new(app, app, 100, 100, 200, 200, input_opts) }
 
     it "moves point a with left and top" do
       subject.left -= 100
@@ -84,7 +84,7 @@ describe Shoes::Line do
   end
 
   describe "#in_bounds?" do
-    subject(:line) { Shoes::Line.new(app, app, Shoes::Point.new(100, 100), Shoes::Point.new(50, 50), input_opts) }
+    subject(:line) { Shoes::Line.new(app, app, 100, 100, 50, 50, input_opts) }
 
     it "returns true if a point is in the end of the line" do
       expect(subject.in_bounds?(100, 100)).to be true
@@ -103,7 +103,7 @@ describe Shoes::Line do
     end
 
     it "takes into account :strokewidth style" do
-      line = Shoes::Line.new(app, app, Shoes::Point.new(50, 50), Shoes::Point.new(70, 50), input_opts)
+      line = Shoes::Line.new(app, app, 50, 50, 70, 50, input_opts)
       line.style(strokewidth: 20)
       expect(line.in_bounds?(50, 52)).to be true
       expect(line.in_bounds?(50, 48)).to be true
@@ -112,6 +112,104 @@ describe Shoes::Line do
       expect(line.in_bounds?(49, 50)).to be false
       expect(line.in_bounds?(50, 61)).to be false
       expect(line.in_bounds?(70, 50)).to be true
+    end
+  end
+
+  describe "dsl" do
+    it "takes no arguments" do
+      line = dsl.line
+      expect(line).to have_attributes(left: 0,
+                                      top: 0,
+                                      right: 0,
+                                      bottom: 0)
+    end
+
+    it "takes 1 argument" do
+      line = dsl.line 10
+      expect(line).to have_attributes(left: 10,
+                                      top: 0,
+                                      right: 10,
+                                      bottom: 0)
+    end
+
+    it "takes 1 argument with hash" do
+      line = dsl.line 10, top: 20, right: 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 2 arguments" do
+      line = dsl.line 10, 20
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 10,
+                                      bottom: 20)
+    end
+
+    it "takes 2 arguments with hash" do
+      line = dsl.line 10, 20, right: 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 2 arguments with hash side" do
+      line = dsl.line 10, 20, right: 30
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 20)
+    end
+
+    it "takes 3 arguments" do
+      line = dsl.line 10, 20, 30
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 20)
+    end
+
+    it "takes 3 arguments with hash" do
+      line = dsl.line 10, 20, 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 4 arguments" do
+      line = dsl.line 10, 20, 30, 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes 4 arguments with hash" do
+      line = dsl.line 10, 20, 30, 40, left: -1, top: -2, right: -3, bottom: -4
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "takes styles hash" do
+      line = dsl.line left: 10, top: 20, right: 30, bottom: 40
+      expect(line).to have_attributes(left: 10,
+                                      top: 20,
+                                      right: 30,
+                                      bottom: 40)
+    end
+
+    it "doesn't like too many arguments" do
+      expect { dsl.line 10, 20, 30, 40, 666 }.to raise_error(ArgumentError)
+    end
+
+    it "doesn't like too many arguments and options too!" do
+      expect { dsl.line 10, 20, 30, 40, 666, left: -1 }.to raise_error(ArgumentError)
     end
   end
 end
