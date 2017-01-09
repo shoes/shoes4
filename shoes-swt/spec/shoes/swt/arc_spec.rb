@@ -16,8 +16,6 @@ describe Shoes::Swt::Arc do
                          wedge?: false, pass_coordinates?: nil,
                          hidden: false).as_null_object
   end
-  let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
-  let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
 
   subject { Shoes::Swt::Arc.new(dsl, swt_app) }
 
