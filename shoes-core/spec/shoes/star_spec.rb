@@ -38,4 +38,132 @@ describe Shoes::Star do
       expect(subject.in_bounds?(200, 200)).to eq(false)
     end
   end
+
+  describe "dsl" do
+    it "takes no arguments" do
+      star = dsl.star
+      expect(star).to have_attributes(left: 0,
+                                      top: 0,
+                                      points: 10,
+                                      outer: 100.0,
+                                      inner: 50.0)
+    end
+
+    it "takes 1 argument" do
+      star = dsl.star 10
+      expect(star).to have_attributes(left: 10,
+                                      top: 0,
+                                      points: 10,
+                                      outer: 100.0,
+                                      inner: 50.0)
+    end
+
+    it "takes 1 argument with hash" do
+      star = dsl.star 10, top: 20, points: 6, outer: 40
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 40,
+                                      inner: 50.0)
+    end
+
+    it "takes 2 arguments" do
+      star = dsl.star 10, 20
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 10,
+                                      outer: 100.0,
+                                      inner: 50.0)
+    end
+
+    it "takes 2 arguments with hash" do
+      star = dsl.star 10, 20, points: 6, outer: 40
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 40,
+                                      inner: 50.0)
+    end
+
+    it "takes 2 arguments with hash side" do
+      star = dsl.star 10, 20, points: 6
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 100.0,
+                                      inner: 50.0)
+    end
+
+    it "takes 3 arguments" do
+      star = dsl.star 10, 20, 6
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 100.0,
+                                      inner: 50.0)
+    end
+
+    it "takes 3 arguments with hash" do
+      star = dsl.star 10, 20, 6, outer: 30
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 30,
+                                      inner: 50.0)
+    end
+
+    it "takes 4 arguments" do
+      star = dsl.star 10, 20, 6, 30
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 30,
+                                      inner: 50.0)
+    end
+
+    it "takes 4 arguments with hash" do
+      star = dsl.star 10, 20, 6, 30, left: -1, top: -2, points: -3, outer: -4
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 30,
+                                      inner: 50.0)
+    end
+
+    it "takes 5 arguments" do
+      star = dsl.star 10, 20, 6, 30, 40
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 30,
+                                      inner: 40)
+    end
+
+    it "takes 5 arguments with hash" do
+      star = dsl.star 10, 20, 6, 30, 40,
+                      left: -1, top: -2, points: -3, outer: -4, inner: -5
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 30,
+                                      inner: 40)
+    end
+
+    it "takes styles hash" do
+      star = dsl.star left: 10, top: 20, points: 6, outer: 30, inner: 40
+      expect(star).to have_attributes(left: 10,
+                                      top: 20,
+                                      points: 6,
+                                      outer: 30,
+                                      inner: 40)
+    end
+
+    it "doesn't like too many arguments" do
+      expect { dsl.star 10, 20, 6, 30, 40, 666 }.to raise_error(ArgumentError)
+    end
+
+    it "doesn't like too many arguments and options too!" do
+      expect { dsl.star 10, 20, 6, 30, 40, 666, left: -1 }.to raise_error(ArgumentError)
+    end
+  end
 end

@@ -26,7 +26,6 @@ shared_examples "DSL container" do
     progress
     rgb
     shape
-    star
     stroke
     strokewidth
     style
