@@ -493,21 +493,21 @@ EOS
     #   @param [Integer] outer outer radius of star
     #   @param [Integer] inner inner radius of star
     #   @param [Hash] styles optional, additional styling for the element
-    def star(left, top, *args, &blk)
+    def star(*args, &blk)
       styles = style_normalizer.normalize pop_style(args)
 
-      points, outer, inner, extras = args
+      left, top, points, outer, inner, *leftovers = args
 
-      if extras
-        message = <<EOS
+      message = <<EOS
 Wrong number of arguments. Must be one of:
+  - star([styles])
+  - star(left, [styles])
   - star(left, top, [styles])
   - star(left, top, points, [styles])
   - star(left, top, points, outer, [styles])
   - star(left, top, points, outer, inner, [styles])
 EOS
-        raise ArgumentError, message
-      end
+      raise ArgumentError, message if leftovers.any?
 
       create Shoes::Star, left, top, points, outer, inner, styles, blk
     end

@@ -5,11 +5,14 @@ class Shoes
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 
+    # Don't use param defaults as DSL explicit passes nil for missing params
     def create_dimensions(left, top, points, outer, inner)
-      # Don't use param defaults as DSL explicit passes nil for missing params
-      points ||= 10
-      outer  ||= 100.0
-      inner  ||= 50.0
+      left ||= @style[:left] || 0
+      top  ||= @style[:top] || 0
+
+      points ||= @style[:points] || 10
+      outer  ||= @style[:outer] || 100.0
+      inner  ||= @style[:inner] || 50.0
 
       # Careful not to turn Fixnum to Float, lest Dimensions make you relative!
       width = outer * 2
