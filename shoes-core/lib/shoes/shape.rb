@@ -8,8 +8,11 @@ class Shoes
 
     STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
-    def create_dimensions
-      @dimensions = AbsoluteDimensions.new @style
+    def create_dimensions(left, top)
+      left ||= @style[:left] || 0
+      top  ||= @style[:top] || 0
+
+      @dimensions = AbsoluteDimensions.new left, top
     end
 
     def handle_block(blk)

@@ -526,19 +526,21 @@ EOS
     #   Creates a shape at (0, 0)
     #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
     #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-    SHAPE_ALLOWED_ARG_SIZES = [0, 2].freeze
     def shape(*args, &blk)
       opts = style_normalizer.normalize pop_style(args)
-      opts[:left], opts[:top] = args if args.length == 2
+
+      left, top, *leftovers = args
 
       message = <<EOS
 Wrong number of arguments. Must be one of:
-  - shape()
   - shape(left, top, [opts])
-  - shape(styles)
+  - shape(left, [opts])
+  - shape([opts])
 EOS
-      raise ArgumentError, message unless SHAPE_ALLOWED_ARG_SIZES.include? args.length
-      create Shoes::Shape, style.merge(opts), blk
+
+      raise ArgumentError, message if leftovers.any?
+
+      create Shoes::Shape, left, top, opts, blk
     end
 
     # Define app-level setter methods
