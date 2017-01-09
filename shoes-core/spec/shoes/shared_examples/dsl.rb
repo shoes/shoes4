@@ -10,7 +10,6 @@ shared_examples "DSL container" do
 
   %w(
     animate
-    arc
     button
     cap
     check

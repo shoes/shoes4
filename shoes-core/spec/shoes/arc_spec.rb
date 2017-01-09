@@ -11,7 +11,7 @@ describe Shoes::Arc do
   let(:start_angle) { 0 }
   let(:end_angle)   { Shoes::TWO_PI }
 
-  context "basic" do
+  describe "basic" do
     subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
 
     it_behaves_like "an art element" do
@@ -29,19 +29,182 @@ describe Shoes::Arc do
     its(:wedge)  { should eq(false) }
   end
 
-  context "relative dimensions" do
+  describe "relative dimensions" do
     subject(:arc) { Shoes::Arc.new(app, parent, left, top, relative_width, relative_height, start_angle, end_angle) }
     it_behaves_like "object with relative dimensions"
   end
 
-  context "negative dimensions" do
+  describe "negative dimensions" do
     subject(:arc) { Shoes::Arc.new(app, parent, left, top, -width, -height, 0, Shoes::TWO_PI) }
     it_behaves_like "object with negative dimensions"
   end
 
-  context "with wedge: true" do
+  describe "with wedge: true" do
     subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, wedge: true) }
 
     its(:wedge) { should eq(true) }
+  end
+
+  describe "dsl" do
+    it "takes no arguments" do
+      arc = dsl.arc
+      expect(arc).to have_attributes(left: 0,
+                                     top: 0,
+                                     width: 0,
+                                     height: 0,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 1 argument" do
+      arc = dsl.arc 10
+      expect(arc).to have_attributes(left: 10,
+                                     top: 0,
+                                     width: 0,
+                                     height: 0,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 1 argument with hash" do
+      arc = dsl.arc 10, top: 20, width: 30, height: 40
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 2 arguments" do
+      arc = dsl.arc 10, 20
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 0,
+                                     height: 0,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 2 arguments with hash" do
+      arc = dsl.arc 10, 20, width: 30, height: 40
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 2 arguments with hash side" do
+      arc = dsl.arc 10, 20, width: 30
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 0,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 3 arguments" do
+      arc = dsl.arc 10, 20, 30
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 0,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 3 arguments with hash" do
+      arc = dsl.arc 10, 20, 30, height: 40
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 4 arguments" do
+      arc = dsl.arc 10, 20, 30, 40
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 4 arguments with hash" do
+      arc = dsl.arc 10, 20, 30, 40, left: -1, top: -2, width: -3, height: -4
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: 0,
+                                     angle2: 0)
+    end
+
+    it "takes 5 arguments" do
+      arc = dsl.arc 10, 20, 30, 40, Shoes::PI
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: Shoes::PI,
+                                     angle2: 0)
+    end
+
+    it "takes 5 arguments with hash" do
+      arc = dsl.arc 10, 20, 30, 40, Shoes::PI,
+                    left: -1, top: -2, width: -3, height: -4, angle1: -5, angle2: 6
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: Shoes::PI,
+                                     angle2: 6)
+    end
+
+    it "takes 6 arguments" do
+      arc = dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: Shoes::PI,
+                                     angle2: Shoes::TWO_PI)
+    end
+
+    it "takes 6 arguments with hash" do
+      arc = dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI,
+                    left: -1, top: -2, width: -3, height: -4, angle1: -5, angle2: -6
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: Shoes::PI,
+                                     angle2: Shoes::TWO_PI)
+    end
+
+    it "takes styles hash" do
+      arc = dsl.arc left: 10, top: 20, width: 30, height: 40,
+                    angle1: Shoes::PI, angle2: Shoes::TWO_PI
+      expect(arc).to have_attributes(left: 10,
+                                     top: 20,
+                                     width: 30,
+                                     height: 40,
+                                     angle1: Shoes::PI,
+                                     angle2: Shoes::TWO_PI)
+    end
+
+    it "doesn't like too many arguments" do
+      expect { dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI, 666 }.to raise_error(ArgumentError)
+    end
+
+    it "doesn't like too many arguments and options too!" do
+      expect { dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI, 666, left: -1 }.to raise_error(ArgumentError)
+    end
   end
 end
