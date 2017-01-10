@@ -10,11 +10,11 @@ describe Shoes::Shape do
   let(:style) { {translate_left: 0, translate_top: 0, left: left, top: top} }
   let(:draw)  { proc {} }
 
-  subject { Shoes::Shape.new app, parent, style, draw }
+  subject { Shoes::Shape.new app, parent, left, top, style, draw }
 
   it_behaves_like "an art element" do
-    let(:subject_without_style) { Shoes::Shape.new(app, parent) }
-    let(:subject_with_style) { Shoes::Shape.new(app, parent, arg_styles) }
+    let(:subject_without_style) { Shoes::Shape.new(app, parent, left, top) }
+    let(:subject_with_style) { Shoes::Shape.new(app, parent, left, top, arg_styles) }
   end
 
   describe "octagon" do
@@ -45,8 +45,8 @@ describe Shoes::Shape do
       let(:left) { nil }
       let(:top) { nil }
 
-      its(:left) { should eq(nil) }
-      its(:top) { should eq(nil) }
+      its(:left) { should eq(0) }
+      its(:top) { should eq(0) }
     end
 
     describe "when created with left and top values" do
@@ -114,5 +114,45 @@ describe Shoes::Shape do
     end
 
     it_behaves_like "movable object"
+  end
+
+  describe "dsl" do
+    it "takes no arguments" do
+      shape = dsl.shape
+      expect(shape).to have_attributes(left: 0, top: 0)
+    end
+
+    it "takes 1 argument" do
+      shape = dsl.shape 10
+      expect(shape).to have_attributes(left: 10, top: 0)
+    end
+
+    it "takes 1 argument with hash" do
+      shape = dsl.shape 10, top: 20
+      expect(shape).to have_attributes(left: 10, top: 20)
+    end
+
+    it "takes 2 arguments" do
+      shape = dsl.shape 10, 20
+      expect(shape).to have_attributes(left: 10, top: 20)
+    end
+
+    it "takes 2 arguments with hash" do
+      shape = dsl.shape 10, 20, top: 30
+      expect(shape).to have_attributes(left: 10, top: 20)
+    end
+
+    it "takes styles hash" do
+      shape = dsl.shape left: 10, top: 20
+      expect(shape).to have_attributes(left: 10, top: 20)
+    end
+
+    it "doesn't like too many arguments" do
+      expect { dsl.shape 10, 20, 666 }.to raise_error(ArgumentError)
+    end
+
+    it "doesn't like too many arguments and options too!" do
+      expect { dsl.shape 10, 20, 666, left: -1 }.to raise_error(ArgumentError)
+    end
   end
 end

@@ -25,7 +25,6 @@ shared_examples "DSL container" do
     pattern
     progress
     rgb
-    shape
     stroke
     strokewidth
     style
