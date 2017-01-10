@@ -142,6 +142,11 @@ describe Shoes::Shape do
       expect(shape).to have_attributes(left: 10, top: 20)
     end
 
+    it "takes styles hash" do
+      shape = dsl.shape left: 10, top: 20
+      expect(shape).to have_attributes(left: 10, top: 20)
+    end
+
     it "doesn't like too many arguments" do
       expect { dsl.shape 10, 20, 666 }.to raise_error(ArgumentError)
     end
