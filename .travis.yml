@@ -4,7 +4,7 @@ script:
   - bundle exec rake spec:all
 rvm:
   - jruby-head
-  - jruby-9.1.6.0
+  - jruby-9.1.7.0
 jdk:
   - openjdk7
   - oraclejdk8
