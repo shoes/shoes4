@@ -71,7 +71,7 @@ class Shoes
           file, dir = config_for_single_file_app(pathname)
         end
 
-        config = YAML.load(file.read)
+        config = YAML.safe_load(file.read, [Symbol])
         config[:working_dir] = dir
         config[:gems] = merge_gems(base_config, config)
         create(config)

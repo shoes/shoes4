@@ -143,7 +143,7 @@ Shoes.app title: "A Gentle Reminder",
 
   def load
     if File.exist?(data_path)
-      @todo, @completed = YAML.load(File.open(data_path, 'r'))
+      @todo, @completed = YAML.safe_load(File.open(data_path, 'r'), [Date])
     else
       @todo = []
       @completed = {}
