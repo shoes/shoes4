@@ -12,7 +12,7 @@ simple_altered_para.rb
 simple_anim_shapes.rb
 simple_animate.rb
 simple_anim_text.rb
-# simple_arc.rb  Pending on #423
+simple_arc.rb
 simple_attach.rb
 simple_borderless.rb
 simple_border_image.rb

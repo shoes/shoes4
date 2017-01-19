@@ -48,10 +48,12 @@ describe Shoes::Swt::ArcPainter do
     specify "translates DSL values for Swt" do
       path = double('path')
       allow(::Swt::Path).to receive(:new) { path }
-      args = [100, 200, width, height, 180.0, -90.0]
+      args = [left, top, width, height, -180.0, -270.0]
       expect(path).to receive(:add_arc).with(*args)
+
       sw = 10
-      args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, 180, -90.0]
+      args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, -180, -270.0]
+      expect(gc).to receive(:fill_path).with(path)
       expect(gc).to receive(:draw_arc).with(*args)
       subject.paint_control(gc)
     end
@@ -73,12 +75,141 @@ describe Shoes::Swt::ArcPainter do
     end
 
     specify "translates DSL values for Swt" do
-      args = [100, 200, width, height, 180, -90.0]
+      args = [left, top, width, height, -180, -270.0]
       expect(gc).to receive(:fill_arc).with(*args)
+
       sw = 10
-      args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, 180, -90.0]
+      args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, -180, -270.0]
       expect(gc).to receive(:draw_arc).with(*args)
       subject.paint_control(gc)
     end
+  end
+
+  describe "half-way around" do
+    #
+    #   ---------
+    #  /         \
+    # |           |
+    # |...........|
+    # |...........|
+    #  \........./
+    #   ---------
+    #
+
+    let(:angle1) { 0 }
+    let(:angle2) { Shoes::PI }
+    it { is_expected.to have_attributes(start_angle: 0, sweep: -180) }
+  end
+
+  describe "quarter turn" do
+    #
+    #   ---------
+    #  /         \
+    # |           |
+    # |......     |
+    # |......     |
+    #  \.....    /
+    #   ---------
+    #
+
+    let(:angle1) { Shoes::HALF_PI }
+    let(:angle2) { Shoes::PI }
+    it { is_expected.to have_attributes(start_angle: -90, sweep: -90) }
+  end
+
+  describe "three-quarters turn" do
+    #
+    #   ---------
+    #  /.........\
+    # |...........|
+    # |...........|
+    # |......     |
+    #  \.....    /
+    #   ---------
+    #
+
+    let(:angle1) { Shoes::HALF_PI }
+    let(:angle2) { Shoes::TWO_PI }
+    it { is_expected.to have_attributes(start_angle: -90, sweep: -270) }
+  end
+
+  describe "half up to start" do
+    #
+    #   ---------
+    #  /.........\
+    # |...........|
+    # |...........|
+    # |           |
+    #  \         /
+    #   ---------
+    #
+
+    let(:angle1) { Shoes::PI }
+    let(:angle2) { 0 }
+    it { is_expected.to have_attributes(start_angle: -180, sweep: -180) }
+  end
+
+  describe "half over the start" do
+    #
+    #   ---------
+    #  /     ....\
+    # |      .....|
+    # |      .....|
+    # |      .....|
+    #  \     ..../
+    #   ---------
+    #
+
+    let(:angle1) { Shoes::PI + Shoes::HALF_PI }
+    let(:angle2) { Shoes::HALF_PI }
+    it { is_expected.to have_attributes(start_angle: -270, sweep: -180) }
+  end
+
+  describe "start to start" do
+    #
+    #   ---------
+    #  /         \
+    # |           |
+    # |           |
+    # |           |
+    #  \         /
+    #   ---------
+    #
+
+    let(:angle1) { 0 }
+    let(:angle2) { 0 }
+    it { is_expected.to have_attributes(start_angle: 0, sweep: 0) }
+  end
+
+  describe "start to end" do
+    #
+    #   ---------
+    #  /.........\
+    # |...........|
+    # |...........|
+    # |...........|
+    #  \........./
+    #   ---------
+    #
+
+    let(:angle1) { 0 }
+    let(:angle2) { Shoes::TWO_PI }
+    it { is_expected.to have_attributes(start_angle: 0, sweep: -360) }
+  end
+
+  describe "start to end" do
+    #
+    #   ---------
+    #  /.........\
+    # |...........|
+    # |...........|
+    # |...........|
+    #  \........./
+    #   ---------
+    #
+
+    let(:angle1) { 0 }
+    let(:angle2) { 3 * Shoes::PI }
+    it { is_expected.to have_attributes(start_angle: 0, sweep: -540) }
   end
 end
