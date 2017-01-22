@@ -27,7 +27,9 @@ notifications:
     on_success: change # [always|never|change] # default: change
     on_failure: change # [always|never|change] # default: always
 before_install:
-  - gem install bundler
+  # Pinning to Bundler 1.13.7 until Rubygems with https://github.com/rubygems/rubygems/pull/1819
+  - gem uninstall -i /home/travis/.rvm/gems/jruby-9.1.7.0@global bundler
+  - gem install bundler -v "1.13.7"
 before_script:
   - "export DISPLAY=:99.0"
   - "export SWT_GTK3=0"
