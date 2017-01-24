@@ -1,6 +1,9 @@
 class Shoes
   module Swt
     class ArcPainter < Common::Painter
+
+      FULL_CIRCLE_DEGREES = 360
+
       def fill(graphics_context)
         if @obj.wedge?
           graphics_context.fill_arc(@obj.translate_left + @obj.element_left,
@@ -52,7 +55,7 @@ class Shoes
         if @obj.angle1 <= @obj.angle2
           @obj.angle1 - @obj.angle2
         else
-          @obj.angle1 - @obj.angle2 - 360
+          @obj.angle1 - @obj.angle2 - FULL_CIRCLE_DEGREES
         end
       end
     end
