@@ -10,13 +10,12 @@ Improvements (7)
 * Apply rotate consistently to all art elements [07cbfba]
 * Better native app appearance on Mac OS X [7af177c][429c363]
 * Warn on second Shoes.app invocation [fb8f44c]
-* Update to latest SWT version 4.6.1 [7ba14db]
+* Allow chaining click and release methods [33c6695]
 
 Bug Fixes (5)
 -------------
 
 * Make rotate direction compatible with Shoes 3 [2781622]
-* Allow chaining click and release methods [33c6695]
 * Fix installation from source when missing git command [d12616a]
 * Properly detect when running from packaged app [f08c5c1]
 * Executable related changes to make packaging happy [d446963]
