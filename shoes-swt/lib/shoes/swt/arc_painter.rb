@@ -1,7 +1,6 @@
 class Shoes
   module Swt
     class ArcPainter < Common::Painter
-
       FULL_CIRCLE_DEGREES = 360
 
       def fill(graphics_context)
