@@ -20,12 +20,12 @@ class Shoes
       end
 
       def draw(graphics_context)
-        sw = graphics_context.get_line_width
+        line_width = graphics_context.get_line_width
         if @obj.element_left && @obj.element_top && @obj.element_width && @obj.element_height
-          graphics_context.draw_arc(@obj.translate_left + @obj.element_left + sw / 2,
-                                    @obj.translate_top + @obj.element_top + sw / 2,
-                                    @obj.element_width - sw,
-                                    @obj.element_height - sw,
+          graphics_context.draw_arc(@obj.translate_left + @obj.element_left + line_width / 2,
+                                    @obj.translate_top + @obj.element_top + line_width / 2,
+                                    @obj.element_width - line_width,
+                                    @obj.element_height - line_width,
                                     start_angle, sweep)
         end
       end

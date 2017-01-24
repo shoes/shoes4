@@ -51,8 +51,10 @@ describe Shoes::Swt::ArcPainter do
       args = [left, top, width, height, -180.0, -270.0]
       expect(path).to receive(:add_arc).with(*args)
 
-      sw = 10
-      args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, -180, -270.0]
+      line_width = 10
+      args = [100 + line_width / 2, 200 + line_width / 2,
+              width - line_width, height - line_width,
+              -180, -270.0]
       expect(gc).to receive(:fill_path).with(path)
       expect(gc).to receive(:draw_arc).with(*args)
       subject.paint_control(gc)
@@ -78,8 +80,10 @@ describe Shoes::Swt::ArcPainter do
       args = [left, top, width, height, -180, -270.0]
       expect(gc).to receive(:fill_arc).with(*args)
 
-      sw = 10
-      args = [100 + sw / 2, 200 + sw / 2, width - sw, height - sw, -180, -270.0]
+      line_width = 10
+      args = [100 + line_width / 2, 200 + line_width / 2,
+              width - line_width, height - line_width,
+              -180, -270.0]
       expect(gc).to receive(:draw_arc).with(*args)
       subject.paint_control(gc)
     end
