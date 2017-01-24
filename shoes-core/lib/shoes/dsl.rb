@@ -353,8 +353,24 @@ EOS
     # @param [Hash] opts Arc style options
     # @option opts [Boolean] wedge (false)
     # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
-    def arc(left, top, width, height, angle1, angle2, styles = {}, &blk)
-      create Shoes::Arc, left, top, width, height, angle1, angle2, styles, blk
+    def arc(*args, &blk)
+      opts = style_normalizer.normalize pop_style(args)
+
+      left, top, width, height, angle1, angle2, *leftovers = args
+
+      message = <<EOS
+Too many arguments. Must be one of:
+  - arc(left, top, width, height, angle1, angle2, [opts])
+  - arc(left, top, width, height, angle1, [opts])
+  - arc(left, top, width, height, [opts])
+  - arc(left, top, width, [opts])
+  - arc(left, top, [opts])
+  - arc(left, [opts])
+  - arc([opts])
+EOS
+      raise ArgumentError, message if leftovers.any?
+
+      create Shoes::Arc, left, top, width, height, angle1, angle2, opts, blk
     end
 
     # Draws a line from point A (x1,y1) to point B (x2,y2)

@@ -17,7 +17,8 @@ Shoes.app width: 420, height: 420, resizable: false do
     shape do
       arc width / 2, height / 2,
           size, size,
-          rotation * i, rotation * i + Shoes::TWO_PI - Shoes::HALF_PI
+          rotation * i, rotation * i + Shoes::TWO_PI - Shoes::HALF_PI,
+          center: true
     end
   end
 end

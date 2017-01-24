@@ -4,7 +4,7 @@ install:
   - 7z x jruby-bin-9.1.6.0.zip -y
   - SET PATH=C:\projects\jruby-9.1.6.0\bin;%PATH%
   - cd shoes4
-  - gem install bundler
+  - gem install bundler -v "1.13.7"
   - bundle
 
 build: off
