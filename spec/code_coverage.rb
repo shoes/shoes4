@@ -1,4 +1,7 @@
 require 'simplecov'
-SimpleCov.start do
-  add_filter '/spec/'
+
+unless ENV["SHOES_SKIP_COVERAGE"]
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
 end
