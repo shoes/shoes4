@@ -90,6 +90,13 @@ describe Shoes::Swt::ArcPainter do
   end
 
   describe "half-way around" do
+    # In this and the following specs, a diagram is given that shows what part
+    # of the arc is included based on the start/end angles. The dotted section
+    # is the sweep through which the arc will be filled, empty sections are
+    # not included.
+    #
+    # Note, how the arc will actually draw depends on the wedge? setting, but
+    # these diagrams demonstrate how the start/end angles relate.
     #
     #   ---------
     #  /         \
