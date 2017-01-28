@@ -1,3 +1,32 @@
+v4.0.0.pre8 (99 commits) (Jan 28, 2017)
+---------------------------------------------
+
+Improvements (7)
+-----------------
+
+* Update to latest SWT version 4.6.1 [9b239e6]
+* New download supporting all options from Shoes 3 [5f51959]
+* Make art element parameters compatible with Shoes 3 [4f0d57f]
+* Apply rotate consistently to all art elements [07cbfba]
+* Better native app appearance on Mac OS X [7af177c][429c363]
+* Warn on second Shoes.app invocation [fb8f44c]
+* Allow chaining click and release methods [33c6695]
+
+Bug Fixes (5)
+-------------
+
+* Make rotate direction compatible with Shoes 3 [2781622]
+* Fix installation from source when missing git command [d12616a]
+* Properly detect when running from packaged app [f08c5c1]
+* Executable related changes to make packaging happy [d446963]
+
+Contributors (2)
+----------------
+
+Jason R. Clark, Tobias Pfeiffer
+
+
+
 v4.0.0.pre7 (192 commits) (Dec 10, 2016)
 -------------------------------
 
