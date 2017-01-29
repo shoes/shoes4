@@ -20,6 +20,7 @@ describe Shoes::Swt::Common::Painter do
   let(:graphics_context) do
     double 'graphics_context', dispose: nil,
                                clipping: nil,
+                               set_alpha: nil,
                                set_clipping: nil,
                                set_antialias: nil,
                                set_line_cap: nil,

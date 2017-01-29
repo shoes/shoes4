@@ -2,6 +2,8 @@ class Shoes
   module Swt
     module Common
       module Resource
+        OPAQUE = 255
+
         def reset_graphics_context(graphics_context)
           dispose_previous_contexts
           set_defaults_on_context(graphics_context)
@@ -15,6 +17,7 @@ class Shoes
         end
 
         def set_defaults_on_context(graphics_context)
+          graphics_context.set_alpha OPAQUE
           graphics_context.set_antialias(::Swt::SWT::ON)
           graphics_context.set_line_cap(::Swt::SWT::CAP_FLAT)
           graphics_context.set_transform(nil)
