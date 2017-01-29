@@ -24,8 +24,7 @@ describe Shoes::Swt::Common::Painter do
                                set_clipping: nil,
                                set_antialias: nil,
                                set_line_cap: nil,
-                               set_transform: nil,
-                               setTransform: nil
+                               set_transform: nil
   end
 
   let(:transform) { double 'transform', disposed?: false }
