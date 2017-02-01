@@ -13,7 +13,7 @@ describe Shoes::Swt::TextBlock::Painter do
   let(:graphics_context) do
     double("graphics context", set_antialias: nil, set_line_cap: nil,
                                set_transform: nil, clipping: nil,
-                               set_clipping: nil)
+                               set_clipping: nil, set_alpha: nil)
   end
 
   subject { Shoes::Swt::TextBlock::Painter.new(dsl) }

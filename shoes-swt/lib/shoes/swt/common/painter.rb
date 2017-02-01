@@ -98,7 +98,7 @@ class Shoes
           transform.translate left, top
           transform.rotate angle
           transform.translate(-left, -top)
-          graphics_context.setTransform transform
+          graphics_context.set_transform transform
         end
       end
     end
