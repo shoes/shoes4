@@ -127,7 +127,7 @@ class Shoes
         set_coloring(new_styles)
         set_hovers(new_styles)
         set_translate(new_styles)
-        click(&new_styles[:click]) if new_styles.key?(:click)
+        set_click(new_styles)
         @style.merge! normalized_style
       end
 
@@ -156,6 +156,10 @@ class Shoes
 
       def set_translate(new_styles)
         clear_translate if new_styles.include?(:translate)
+      end
+
+      def set_click(new_styles)
+        click(&new_styles[:click]) if new_styles.key?(:click)
       end
 
       def update_dimensions # so that @style hash matches actual values
