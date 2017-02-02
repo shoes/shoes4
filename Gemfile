@@ -20,12 +20,13 @@ group :development do
   gem "rspec-its", "~>1.2.0"
   gem "rake"
 
+  gem "rubocop", "0.47.1"
+
   gem "yard"
   gem "kramdown"
   gem 'simplecov'
   gem "codeclimate-test-reporter", "~> 1.0"
   gem 'webmock'
   gem 'hometown'
-  gem 'rubocop'
   gem 'benchmark-ips'
 end
