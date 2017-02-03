@@ -58,8 +58,7 @@ class Shoes
       #
       # Override if DSL element uses that block for something else (i.e. slot)
       def handle_block(blk)
-        return unless blk
-        register_click blk
+        register_click blk if respond_to?(:register_click)
       end
 
       # Final method called in initialize. Intended for any final setup after
