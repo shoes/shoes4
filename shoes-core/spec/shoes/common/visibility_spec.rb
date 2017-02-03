@@ -29,7 +29,7 @@ describe Shoes::Common::Visibility do
     expect(subject.gui).to have_received(:update_visibility)
   end
 
-  it "shows" do
+  it "toggles" do
     subject.show
     expect(subject.style[:hidden]).to eq(false)
 
