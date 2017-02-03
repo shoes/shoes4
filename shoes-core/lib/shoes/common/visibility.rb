@@ -3,8 +3,7 @@ class Shoes
     module Visibility
       # Hides the element, so that it can't be seen. See also #show and #toggle.
       def hide
-        style[:hidden] = true
-        update_visibility
+        style(hidden: true)
       end
 
       def hidden?
@@ -19,15 +18,13 @@ class Shoes
 
       # Reveals the element, if it is hidden. See also #hide and #toggle.
       def show
-        style[:hidden] = false
-        update_visibility
+        style(hidden: false)
       end
 
       # Hides an element if it is shown. Or shows the element, if it is hidden.
       # See also #hide and #show.
       def toggle
-        style[:hidden] = !style[:hidden]
-        update_visibility
+        style(hidden: !style[:hidden])
       end
 
       private

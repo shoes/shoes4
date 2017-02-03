@@ -15,8 +15,9 @@ class Shoes
 
     # Fake this out instead of using Common::Style to avoid things like touching
     # app level styles, etc. that we don't need for testing purposes
-    def style
+    def style(styles = {})
       @style ||= {}
+      @style.merge!(styles)
       @style
     end
 
