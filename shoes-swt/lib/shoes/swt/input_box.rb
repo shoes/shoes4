@@ -20,6 +20,10 @@ class Shoes
         @real.add_modify_listener do |event|
           @dsl.call_change_listeners unless nothing_changed?(event)
         end
+
+        @real.add_verify_listener do |event|
+          event.doit = false if @readonly
+        end
       end
 
       def text
@@ -33,6 +37,10 @@ class Shoes
 
       def enabled(value)
         @real.enabled = value
+      end
+
+      def readonly=(value)
+        @readonly = value
       end
 
       def highlight_text(start_index, final_index)

@@ -58,7 +58,7 @@ describe Shoes::InputBox do
 
   describe Shoes::EditLine do
     describe "secret" do
-      subject { Shoes::EditLine.new(app, parent, text, secret: true, state: 'disabled') }
+      subject { Shoes::EditLine.new(app, parent, text, secret: true) }
 
       it "gets initialized" do
         expect(subject.secret).to eq(true)
@@ -74,6 +74,26 @@ describe Shoes::InputBox do
       it_behaves_like "object with style" do
         let(:subject_without_style) { Shoes::EditLine.new(app, parent, text) }
         let(:subject_with_style) { Shoes::EditLine.new(app, parent, text, arg_styles) }
+      end
+    end
+
+    describe "readonly" do
+      subject { Shoes::EditLine.new(app, parent, text, state: "readonly") }
+
+      it "gets initialized" do
+        expect(subject.readonly?).to eq(true)
+      end
+
+      it "respects setting" do
+        expect(subject.gui).to receive(:readonly=).with(false)
+        subject.state = ""
+        expect(subject.readonly?).to eq(false)
+      end
+
+      it "respects style setting" do
+        expect(subject.gui).to receive(:readonly=).with(false)
+        subject.style(state: "")
+        expect(subject.readonly?).to eq(false)
       end
     end
   end

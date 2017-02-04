@@ -122,13 +122,15 @@ class Shoes
 
       def update_style(new_styles)
         normalized_style = StyleNormalizer.new.normalize(new_styles)
+        @style.merge! normalized_style
+
         set_dimensions(new_styles)
         set_visibility(new_styles)
         set_coloring(new_styles)
         set_hovers(new_styles)
         set_translate(new_styles)
         set_click(new_styles)
-        @style.merge! normalized_style
+        set_state(new_styles)
       end
 
       # if dimension is set via style, pass info on to the dimensions setter
@@ -140,7 +142,6 @@ class Shoes
 
       def set_visibility(new_styles)
         return unless new_styles.include?(:hidden)
-        @style[:hidden] = new_styles[:hidden]
         update_visibility
       end
 
@@ -160,6 +161,10 @@ class Shoes
 
       def set_click(new_styles)
         click(&new_styles[:click]) if new_styles.key?(:click)
+      end
+
+      def set_state(new_styles)
+        update_from_state if new_styles.include?(:state)
       end
 
       def update_dimensions # so that @style hash matches actual values
