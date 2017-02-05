@@ -9,6 +9,7 @@ class Shoes
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :real, :dsl, :app
+      attr_writer :readonly
 
       def initialize(dsl, app, text_options)
         @dsl = dsl
@@ -37,10 +38,6 @@ class Shoes
 
       def enabled(value)
         @real.enabled = value
-      end
-
-      def readonly=(value)
-        @readonly = value
       end
 
       def highlight_text(start_index, final_index)
