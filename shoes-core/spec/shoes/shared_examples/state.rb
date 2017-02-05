@@ -13,7 +13,7 @@ shared_examples_for "object with state" do
   end
 
   it "should disable" do
-    subject.state = ""
+    subject.state = nil
     expect(subject.gui).to receive(:enabled).with(false)
     subject.state = "disabled"
     expect(subject.state).to eq("disabled")
