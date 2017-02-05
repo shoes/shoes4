@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Range
   def rand
     Random.new.rand self

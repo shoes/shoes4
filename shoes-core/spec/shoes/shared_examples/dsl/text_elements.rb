@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "text element DSL methods" do
   it "should set banner font size to 48" do
     text_block = dsl.banner("hello!")

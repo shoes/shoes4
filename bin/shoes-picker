@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # This is NOT the shipped bin/shoes-picker--that's found under the shoes-core gem.
 # It is present only to support running from source in the shoes repo.

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 NOTES = [['Welcome to the vJot Clone', <<-'END']].freeze
 This sample app is a notetaker, a clone of PJ Hyett's vjot.com.
 

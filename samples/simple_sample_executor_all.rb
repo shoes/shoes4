@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app title: 'Samples Executor', width: 540, height: 640 do
   BUTTON_HEIGHT = 20
 

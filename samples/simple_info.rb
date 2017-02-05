@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   stack do
     # para DIR              # Not support. https://github.com/shoes/shoes4/issues/105

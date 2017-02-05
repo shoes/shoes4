@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "object with style" do
   def uses_app_default?(key)
     if defined? self.class::STYLES

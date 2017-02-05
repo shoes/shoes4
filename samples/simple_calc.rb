@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Calc
   def initialize
     @number   = 0

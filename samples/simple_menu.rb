@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MenuPanel < Shoes::Widget
   # Handling width against internal stack until widget widths are fixed
   # https://github.com/shoes/shoes4/issues/641

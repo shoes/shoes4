@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'bundler'
 require 'pathname'
 require 'yaml'
@@ -17,7 +18,7 @@ class Shoes
     module Configuration
       extend ::Furoshiki::Util
 
-      JAR_APP_TEMPLATE_URL = 'https://s3.amazonaws.com/net.wasnotrice.shoes/wrappers/shoes-app-template-0.0.2.zip'.freeze
+      JAR_APP_TEMPLATE_URL = 'https://s3.amazonaws.com/net.wasnotrice.shoes/wrappers/shoes-app-template-0.0.2.zip'
 
       # Convenience method for loading config from a file. Note that you
       # can pass four kinds of paths to the loader. Given the following

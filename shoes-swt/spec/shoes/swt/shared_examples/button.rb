@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples "buttons" do
   it "calls set_focus when focus is called" do
     expect(real).to receive(:set_focus)

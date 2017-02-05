@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Dictionary < Shoes
   url '/',      :index
   url '/(\w+)', :word

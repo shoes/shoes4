@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Add new method bg and fg to sample17
 
 Shoes.app width: 240, height: 95 do

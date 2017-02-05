@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 class Shoes
   FONT_DIR = DIR + "/fonts/"
 
   module Font
-    FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}".freeze
+    FONT_TYPES = "{ttf,ttc,otf,fnt,fon,bdf,pcf,snf,mmm,pfb,pfm}"
     @loaded_fonts = {}
 
     class << self

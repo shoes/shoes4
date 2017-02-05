@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app title: 'potacho', width: 175, height: 160 do
   background tan
 

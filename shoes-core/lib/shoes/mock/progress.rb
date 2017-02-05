@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   module Mock
     class Progress

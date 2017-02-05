@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   @o = oval top: 0, left: 0,
             radius: 40

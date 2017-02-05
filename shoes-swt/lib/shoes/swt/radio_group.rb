@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   module Swt
     # In Swt radio groups are managed by composites which occupy space
@@ -7,7 +8,7 @@ class Shoes
       extend Forwardable
       include Enumerable
 
-      DEFAULT_RADIO_GROUP = "Default Radio Group".freeze
+      DEFAULT_RADIO_GROUP = "Default Radio Group"
 
       @group_lookup = Hash.new { |h, k| h[k] = RadioGroup.new(k) }
 

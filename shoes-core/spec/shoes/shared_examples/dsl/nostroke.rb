@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "nostroke DSL method" do
   it "sets nil" do
     dsl.nostroke

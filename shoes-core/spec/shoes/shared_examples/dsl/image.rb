@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "image DSL method" do
   let(:path)  { Shoes::DIR + '/static/shoes-icon.png' }
   let(:opts)  { {} }

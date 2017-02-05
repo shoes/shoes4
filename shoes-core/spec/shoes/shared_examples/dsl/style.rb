@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "style DSL method" do
   describe "setting new defaults for text block" do
     let(:stroke) { Shoes::COLORS[:chartreuse] }

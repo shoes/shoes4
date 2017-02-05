@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   module Common
     # Changeable elements are elements that receive `change' events.

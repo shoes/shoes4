@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "object with fill" do |default_color = :black|
   let(:color) { Shoes::COLORS.fetch :honeydew }
 

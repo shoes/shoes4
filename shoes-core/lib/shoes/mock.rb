@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'shoes/mock/common_methods'
 require 'shoes/mock/clickable'
 

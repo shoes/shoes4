@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This file uses the after_do gem, which you probably haven't heard of (yet)
 # It basically works like Class.after :method do ... end
 # So for every instance of Class, after method is executed the block you

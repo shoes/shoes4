@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   # We take over a bunch of the absolute_* measurements since the jagged
   # shape of a flowed TextBlock doesn't follow the usual rules for dimensions

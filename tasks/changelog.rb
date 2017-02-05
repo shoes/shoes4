@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Changelog
   CATEGORY_MAPPING = [
     {pattern: 'Changelog: feature', heading: 'New features'},
@@ -6,9 +7,9 @@ class Changelog
     {pattern: 'Changelog: breaking', heading: 'Breaking Changes'}
   ].freeze
 
-  COMMIT_SEPARATOR     = '<--COMMIT-->'.freeze
-  BODY_START_SEPARATOR = '<--BODY-START-->'.freeze
-  BODY_END_SEPARATOR   = '<--BODY-END-->'.freeze
+  COMMIT_SEPARATOR     = '<--COMMIT-->'
+  BODY_START_SEPARATOR = '<--BODY-START-->'
+  BODY_END_SEPARATOR   = '<--BODY-END-->'
 
   def generate(categories = CATEGORY_MAPPING)
     commit_range = commits_on_master_since_last_release

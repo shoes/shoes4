@@ -106,13 +106,6 @@ Style/FormatString:
     - 'shoes-core/lib/shoes/common/inspect.rb'
     - 'shoes-core/lib/shoes/logger/ruby.rb'
 
-# Offense count: 503
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: when_needed, always
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 28
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:

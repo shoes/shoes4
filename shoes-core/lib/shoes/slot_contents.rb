@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   class SlotContents < SimpleDelegator
     include Common::Inspect

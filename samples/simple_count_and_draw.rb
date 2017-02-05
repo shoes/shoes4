@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   button 'go' do
     p = para 0, left: 0, top: 30

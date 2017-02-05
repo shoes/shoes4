@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 trails = [[0, 0]] * 60
 Shoes.app width: 200, height: 200, resizable: false do
   nostroke

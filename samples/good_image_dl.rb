@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 300, height: 200 do
   background lime..blue
 

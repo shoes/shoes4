@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app title: "Dictionary, powered by Definr", width: 370, height: 320 do
   stack do
     background red, height: 60

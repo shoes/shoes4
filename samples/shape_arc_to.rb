@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   shape do
     move_to(90, 55)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 main_object = self
@@ -26,7 +27,7 @@ describe Shoes::Swt::Dialog do
     @dialog = Shoes::Swt::Dialog.new
   end
 
-  TEXT = 'some random text'.freeze
+  TEXT = 'some random text'
 
   describe 'alert' do
     it 'pops up a window containing a short message.' do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "object with state" do
   let(:input_opts) { {state: "disabled"} }
 

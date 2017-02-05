@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   flow margin: 12 do
     # Set up three buttons

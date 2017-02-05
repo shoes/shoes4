@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Dimensions is a central class that most Shoes classes use to represent their
 # dimensions, e.g. where they are and how much space they are taking up there.
 # All the different position types might be confusing. So here is a little list:

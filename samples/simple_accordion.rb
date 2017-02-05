@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Accordion
   def open_page(stack)
     active = app.slot.contents.map { |x| x.contents[1] }

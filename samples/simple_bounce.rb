@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 xspeed = 8.4
 yspeed = 6.6
 xdir = 1

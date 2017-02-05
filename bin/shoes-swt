@@ -1,4 +1,5 @@
 #!/usr/bin/env jruby
+# frozen_string_literal: true
 
 # This is NOT the shipped bin/shoes-swt--that's found under the shoes-swt gem.
 # It is present only to support running from source in the shoes repo.

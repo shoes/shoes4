@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 408, height: 346, resizable: false do
   background "#eee"
   stack margin: 4 do

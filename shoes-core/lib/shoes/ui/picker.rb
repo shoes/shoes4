@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # This class is used for interactively (if necessary) picking the Shoes
 # backend that the user will run their Shoes app with.

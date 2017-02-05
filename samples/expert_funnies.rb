@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # This example tries Nokogiri (used in Shoes 4), but falls back to
 # Hpricot for Shoes 3 compatibility
 begin
