@@ -34,6 +34,15 @@ class Shoes
     def caret_to(index)
       @gui.caret_to(index)
     end
+
+    def readonly?
+      state.to_s == "readonly"
+    end
+
+    def update_from_state
+      super
+      @gui.readonly = readonly?
+    end
   end
 
   class EditBox < InputBox

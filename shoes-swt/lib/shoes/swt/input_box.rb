@@ -10,6 +10,7 @@ class Shoes
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :real, :dsl, :app
+      attr_writer :readonly
 
       def initialize(dsl, app, text_options)
         @dsl = dsl
@@ -20,6 +21,10 @@ class Shoes
         @real.set_text dsl.style[:text]
         @real.add_modify_listener do |event|
           @dsl.call_change_listeners unless nothing_changed?(event)
+        end
+
+        @real.add_verify_listener do |event|
+          event.doit = false if @readonly
         end
       end
 

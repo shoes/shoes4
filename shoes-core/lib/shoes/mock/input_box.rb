@@ -8,6 +8,9 @@ class Shoes
       def enabled(_value)
       end
 
+      def readonly=(_value)
+      end
+
       def highlight_text(_start_index, _finish_index)
       end
 

@@ -6,25 +6,18 @@ class Shoes
 
       def after_initialize(*_)
         super
-        update_enabled
+        update_from_state
       end
 
       def state=(value)
         style(state: value)
-        update_enabled
       end
-
-      def state_options(opts)
-        self.state = opts[:state]
-      end
-
-      private
 
       def enabled?
         !(state.to_s == DISABLED_STATE)
       end
 
-      def update_enabled
+      def update_from_state
         @gui.enabled(enabled?)
       end
     end
