@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   # This is the representation of the app that is used internally by Shoes
   # objects. It is *NOT* the app object that a user interacts with in a

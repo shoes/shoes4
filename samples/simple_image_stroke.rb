@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   red_box = File.expand_path(File.join(__FILE__, '../red-box.png'))
 

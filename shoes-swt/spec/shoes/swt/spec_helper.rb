@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "shoes/swt"
 require "spec_helper"
 

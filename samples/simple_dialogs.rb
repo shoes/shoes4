@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 300, height: 150, margin: 10 do
   def answer(v)
     @answer.replace v.inspect

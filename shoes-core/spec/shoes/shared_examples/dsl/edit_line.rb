@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "edit_line DSL method" do
   context "edit_line" do
     include_examples "editable element"

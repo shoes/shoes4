@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   background rgb(0, 0, 0)
   fill rgb(255, 255, 255)

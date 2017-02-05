@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   stack margin: 20, width: 250 do
     subtitle "Shoes Notebook"

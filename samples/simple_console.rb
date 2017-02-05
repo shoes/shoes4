@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   para "Hit Alt + / to open the shoes console and see different message!"
 

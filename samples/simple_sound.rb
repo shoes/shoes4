@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   boing     = sound("./samples/sounds/61847__simon-rue__boink-v3.wav")
   fog_horn  = sound("./samples/sounds/145622__andybrannan__train-fog-horn-long-wyomming.aiff")

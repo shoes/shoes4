@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 # also for stuff that is hard/brittle to test in isolation

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Othello
 # by tieg
 # 1/13/08

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Tankspank
 # kevin conner
 # connerk@gmail.com

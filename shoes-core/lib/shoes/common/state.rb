@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 class Shoes
   module Common
     module State
-      DISABLED_STATE = "disabled".freeze
+      DISABLED_STATE = "disabled"
 
       def after_initialize(*_)
         super

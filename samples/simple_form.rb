@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 320, height: 420 do
   static_dir = File.expand_path(File.join(__FILE__, ".."))
   background File.join(static_dir, "menu-gray.png")

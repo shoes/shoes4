@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'java'
 require 'swt/minimal'
 require 'swt/core'

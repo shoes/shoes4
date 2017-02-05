@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 class Shoes
-  CENTER = "center".freeze
-  DEFAULT_TEXTBLOCK_FONT = "Arial".freeze
+  CENTER = "center"
+  DEFAULT_TEXTBLOCK_FONT = "Arial"
 
   class TextBlock
     include Common::UIElement

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "object with dimensions" do
   it "should initialize" do
     expect(subject.left).to eq(left)

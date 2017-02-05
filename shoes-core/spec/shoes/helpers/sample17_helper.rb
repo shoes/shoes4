@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Emulates samples/sample17.rb
 #
 #   Shoes.app width: 240, height: 95 do

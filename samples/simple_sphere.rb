@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 500, height: 500, resizable: false do
   image 400, 470, top: 30, left: 50 do
     nostroke

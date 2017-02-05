@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'irb/ruby-lex'
 require 'stringio'
 
@@ -51,7 +52,7 @@ class MimickIRB < RubyLex
   end
 end
 
-CURSOR = ">>".freeze
+CURSOR = ">>"
 IRBalike = MimickIRB.new
 $stdout = StringIO.new
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # This class is used for interactively (if necessary) picking the Shoes
 # backend that the user will run their Shoes app with.
@@ -58,7 +59,7 @@ class Shoes
 
       def find_candidates(desired_backend)
         search_string = "shoes/**/#{desired_backend}/generate_backend.rb"
-        search_string.gsub!("//", "/")
+        search_string = search_string.gsub("//", "/")
         Gem.find_files(search_string)
       end
 

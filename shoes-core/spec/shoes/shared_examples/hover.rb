@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples "object with hover" do
   let(:teal) { Shoes::COLORS[:teal] }
   let(:gold) { Shoes::COLORS[:gold] }

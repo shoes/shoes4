@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rake'
 require 'rake/clean'
 
@@ -11,6 +12,6 @@ require_relative 'tasks/rspec'
 require_relative 'tasks/sample'
 require_relative 'tasks/yard'
 
-PACKAGE_DIR = 'pkg'.freeze
+PACKAGE_DIR = 'pkg'
 
 CLEAN.include FileList[PACKAGE_DIR, 'doc', 'coverage', "spec/test_app/#{PACKAGE_DIR}"]

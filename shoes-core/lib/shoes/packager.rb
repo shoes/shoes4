@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   class Packager
     attr_reader :packages, :backend

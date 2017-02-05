@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Answer < Shoes::Widget
   attr_reader :mark
   def initialize(word)

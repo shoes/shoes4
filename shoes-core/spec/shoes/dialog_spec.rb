@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'spec_helper'
 # NOTE: This spec is sadly circumventing the integration specs since we couldn't
 # figure out how to get rid of the alert - it stopped the running tests

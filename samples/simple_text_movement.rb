@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 400, height: 300 do
   el = edit_line text: 'Hello Shoes 4' do |s|
     @msg.text = s.text

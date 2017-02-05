@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   strokewidth 3
   eles = []

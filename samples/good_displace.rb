@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Layout
   def initialize(app, art, elements)
     @app = app

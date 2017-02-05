@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 Shoes.app width: 400, height: 400 do
   cap [:rect, :curve, :project][rand 3]
   background yellow

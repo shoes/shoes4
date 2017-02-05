@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Smiling face by Coraline Clark (age 5), 2013
 #

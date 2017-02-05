@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   stack do
     background blue

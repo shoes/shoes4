@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Shoes Clock by Thomas Bell
 # posted to the Shoes mailing list on 04 Dec 2007

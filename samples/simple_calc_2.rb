@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app height: 250, width: 198 do
   def clear
     @accumulator = 0

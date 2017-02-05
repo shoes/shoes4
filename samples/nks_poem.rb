@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app width: 280, height: 350 do
   flow width: 280, margin: 10 do
     stack width: "100%" do

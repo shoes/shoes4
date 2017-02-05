@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # mimicking the mootools demo for Fx.Slide
 # http://demos.mootools.net/Fx.Slide

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'pathname'
 
 # Packaging caches files in $HOME/.furoshiki/cache by default.

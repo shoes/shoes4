@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Shoes.app do
   s = stack do
     title 'come on press some keys'

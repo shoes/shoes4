@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'shoes/manual'
 
 Shoes::Manual.run 'English'

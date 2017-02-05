@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 shared_examples_for "stroke DSL method" do
   let(:color) { Shoes::COLORS.fetch :tomato }
 
