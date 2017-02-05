@@ -60,9 +60,7 @@ task :update_versions do
     original = File.read(file)
     converted = original.gsub(/^(\s*)VERSION(\s*)= .*?$/, "\\1VERSION = \"#{version}\"")
 
-    if original == converted
-      raise "Could not insert VERSION in #{file}"
-    end
+    raise "Could not insert VERSION in #{file}" if original == converted
 
     File.open(file, 'w') { |f| f.write converted }
   end
