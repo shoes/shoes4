@@ -3,8 +3,7 @@ class Shoes
   CENTER = "center"
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
-  class TextBlock
-    include Common::UIElement
+  class TextBlock < Common::UIElement
     include Common::Clickable
     include Common::Hover
     include Common::LinkFinder

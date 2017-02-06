@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class InputBox
-    include Common::UIElement
+  class InputBox < Common::UIElement
     include Common::Changeable
     include Common::State
 

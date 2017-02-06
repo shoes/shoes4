@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Arc
-    include Common::ArtElement
-
+  class Arc < Common::ArtElement
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false, fill: Shoes::COLORS[:black] }.freeze
 

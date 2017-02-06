@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class CheckButton
-    include Common::UIElement
+  class CheckButton < Common::UIElement
     include Common::Clickable
     include Common::State
 

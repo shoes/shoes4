@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Background
-    include Common::BackgroundElement
+  class Background < Common::BackgroundElement
     include Common::Fill
 
     style_with :angle, :common_styles, :curve, :dimensions, :fill

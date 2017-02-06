@@ -2,9 +2,7 @@
 require 'matrix'
 
 class Shoes
-  class Line
-    include Common::ArtElement
-
+  class Line < Common::ArtElement
     attr_reader :point_a, :point_b
 
     style_with :angle, :art_styles, :dimensions, :x2, :y2

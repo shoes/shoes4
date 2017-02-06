@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 class Shoes
   module Common
-    module ArtElement
-      include Common::UIElement
+    class ArtElement < UIElement
       include Common::Clickable
       include Common::Fill
       include Common::Rotate
       include Common::Stroke
       include Common::Translate
 
-      # Modules that muck with class methods need to be included like this
-      #
-      # We also can't rely on Common::UIElement providing these, as it gets
-      # ArtElement, not the destination class to add things to!
-      def self.included(base)
-        base.include Common::Hover
-        base.include Common::Style
+      def self.inherited(child)
+        # Hover's inclusion generates a styling class per child class.
+        # We need to include it at inheritance time to get that behavior.
+        child.include Common::Hover
       end
     end
   end
