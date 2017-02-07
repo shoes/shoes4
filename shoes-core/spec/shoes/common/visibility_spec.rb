@@ -38,6 +38,12 @@ describe Shoes::Common::Visibility do
     expect(subject.style[:hidden]).to eq(true)
   end
 
+  it "chains" do
+    expect(subject.hide).to eq(subject)
+    expect(subject.show).to eq(subject)
+    expect(subject.toggle).to eq(subject)
+  end
+
   it "is hidden?" do
     subject.hide
     expect(subject).to be_hidden
