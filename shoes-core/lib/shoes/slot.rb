@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Slot
-    include Common::UIElement
+  class Slot < Common::UIElement
     include Common::Clickable
     include Common::Hover
 

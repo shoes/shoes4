@@ -7,9 +7,7 @@ describe Shoes::Common::UIElement do
   subject { test_class.new }
 
   let(:test_class) do
-    Class.new do
-      include Shoes::Common::UIElement
-
+    Class.new(Shoes::Common::UIElement) do
       # Override UIElement's Initialization include for simpler testing
       def initialize
       end

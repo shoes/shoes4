@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Button
-    include Common::UIElement
+  class Button < Common::UIElement
     include Common::Clickable
     include Common::State
 

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Border
-    include Common::BackgroundElement
+  class Border < Common::BackgroundElement
     include Common::Stroke
 
     style_with :angle, :common_styles, :curve, :dimensions, :stroke, :strokewidth

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Progress
-    include Common::UIElement
-
+  class Progress < Common::UIElement
     style_with :common_styles, :dimensions, :fraction
     STYLES = { fraction: 0.0 }.freeze
 

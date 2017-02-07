@@ -25,8 +25,7 @@ class Shoes
     end
   end
 
-  class ListBox
-    include Common::UIElement
+  class ListBox < Common::UIElement
     include Common::Changeable
     include Common::State
 

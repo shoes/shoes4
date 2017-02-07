@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 class Shoes
-  class Shape
-    include Common::ArtElement
-
+  class Shape < Common::ArtElement
     attr_reader :blk, :x, :y, :left_bound, :top_bound, :right_bound, :bottom_bound
 
     style_with :art_styles, :center, :common_styles, :dimensions
-
     STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(left, top)

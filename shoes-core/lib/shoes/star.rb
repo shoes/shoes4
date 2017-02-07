@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Star
-    include Common::ArtElement
-
+  class Star < Common::ArtElement
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 

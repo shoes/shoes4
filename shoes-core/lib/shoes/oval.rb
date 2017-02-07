@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class Shoes
-  class Oval
-    include Common::ArtElement
-
+  class Oval < Common::ArtElement
     style_with :art_styles, :center, :common_styles, :dimensions, :radius
     STYLES = { fill: Shoes::COLORS[:black] }.freeze
 

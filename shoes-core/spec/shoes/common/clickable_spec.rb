@@ -4,8 +4,7 @@ require 'spec_helper'
 describe Shoes::Common::Clickable do
   include_context "dsl app"
 
-  class ClickTester
-    include Shoes::Common::UIElement
+  class ClickTester < Shoes::Common::UIElement
     include Shoes::Common::Clickable
 
     style_with :click
