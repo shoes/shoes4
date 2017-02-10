@@ -19,7 +19,6 @@ shared_examples "DSL container" do
     fill
     flow
     gradient
-    image
     nofill
     nostroke
     pattern

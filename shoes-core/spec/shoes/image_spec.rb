@@ -4,14 +4,14 @@ require 'spec_helper'
 describe Shoes::Image do
   include_context "dsl app"
 
+  let(:filename) { File.expand_path "../../../static/shoes-icon.png", __FILE__ }
+  let(:updated_filename) { File.expand_path "../../../static/shoes-icon-brown.png", __FILE__ }
+
   describe "basic" do
     let(:left) { 10 }
     let(:top) { 20 }
     let(:width) { 100 }
     let(:height) { 200 }
-
-    let(:filename) { File.expand_path "../../../static/shoes-icon.png", __FILE__ }
-    let(:updated_filename) { File.expand_path "../../../static/shoes-icon-brown.png", __FILE__ }
 
     subject(:image) { Shoes::Image.new(app, parent, filename, left: left, top: top, width: width, height: height) }
 
@@ -66,6 +66,31 @@ describe Shoes::Image do
     describe 'accepts web URL' do
       let(:filename) { "http://is.gd/GVAGF7" }
       its(:file_path) { should eq("http://is.gd/GVAGF7") }
+    end
+  end
+
+  describe "dsl" do
+    let(:opts)  { {} }
+    let(:image) { dsl.image filename, opts }
+
+    it 'raises if called with block' do
+      expect { dsl.image filename, opts, &->() {} }.to raise_error(Shoes::NotImplementedError)
+    end
+
+    it 'should set the path' do
+      expect(image.file_path).to eq(filename)
+    end
+
+    context 'with :top and :left style attributes' do
+      let(:opts) { {left: 55, top: 66} }
+
+      it 'should set the left' do
+        expect(image.left).to eq(55)
+      end
+
+      it 'should set the top' do
+        expect(image.top).to eq(66)
+      end
     end
   end
 end
