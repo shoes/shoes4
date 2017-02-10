@@ -8,7 +8,7 @@ describe Shoes::Common::UIElement do
 
   let(:test_class) do
     Class.new(Shoes::Common::UIElement) do
-      # Override UIElement's Initialization include for simpler testing
+      # Override UIElement's initialize for simpler testing
       def initialize
       end
     end

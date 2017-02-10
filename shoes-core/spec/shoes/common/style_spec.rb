@@ -20,7 +20,7 @@ describe Shoes::Common::Style do
       @app = app # needed for style init
       @dimensions = Shoes::Dimensions.new(@app, left: 15)
 
-      # Would normally be done by Common::Initialization
+      # Would normally be done by UIElement#initialize
       style_init(styles, key: 'value')
       update_dimensions
     end
