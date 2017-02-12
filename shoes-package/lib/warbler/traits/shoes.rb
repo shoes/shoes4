@@ -29,13 +29,35 @@ module Warbler
         [Traits::Jar, Traits::NoGemspec].include? trait
       end
 
+      INIT_CONTENTS = <<~EOS
+        require 'shoes'
+        require 'shoes/swt'
+
+        Shoes::Swt.initialize_backend
+      EOS
+
       def after_configure
-        config.init_contents << StringIO.new("require 'shoes'\nrequire 'shoes/swt'\nShoes::Swt.initialize_backend\n")
+        config.init_contents << StringIO.new(INIT_CONTENTS)
       end
 
       def update_archive(jar)
         super
         add_main_rb(jar, apply_pathmaps(config, default_executable, :application))
+      end
+
+      def add_main_rb(jar, bin_path, _params = nil)
+        main = <<~EOS
+          begin
+            load '#{bin_path}'
+          rescue Java::OrgEclipseSwt::SWTException => e
+            if e.message == "Invalid thread access"
+              puts ""
+              puts "Ooops, you'll need to pass -XstartOnFirstThread when you start your jar!"
+            end
+          end
+        EOS
+
+        jar.files['META-INF/main.rb'] = StringIO.new(main)
       end
 
       # Uses the `@config.run` if it exists. Otherwise, looks in the
