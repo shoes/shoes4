@@ -62,6 +62,11 @@ class Shoes
       self.class.new(options, &block)
     end
 
+    # Remember startup block for execution later
+    def start(&blk)
+      @__app__.start_block = blk
+    end
+
     def quit
       Shoes.unregister self
       @__app__.quit
