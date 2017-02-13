@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   module DSL
     module Text
@@ -44,7 +45,6 @@ class Shoes
         opts = normalize_style_for_element(Shoes::Span, texts)
         Shoes::Span.new texts, opts
       end
-
     end
   end
 end
