@@ -129,7 +129,8 @@ EOS
       def clipboard=(str)
         ::Swt::Clipboard.new(Shoes.display).setContents(
           [str].to_java,
-          [::Swt::TextTransfer.getInstance].to_java(::Swt::TextTransfer)
+          [::Swt::TextTransfer.getInstance].to_java(::Swt::TextTransfer),
+          ::Swt::DND::DND::CLIPBOARD
         )
       end
 
