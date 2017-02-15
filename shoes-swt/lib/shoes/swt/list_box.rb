@@ -28,7 +28,11 @@ class Shoes
       end
 
       def update_items
+        # Keep original selection to restore after resetting the list
+        text = @real.text
+
         @real.set_items(*@dsl.items.to_a.map(&:to_s))
+        @real.text = text
       end
 
       def text
