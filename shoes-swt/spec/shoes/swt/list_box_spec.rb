@@ -37,6 +37,13 @@ describe Shoes::Swt::ListBox do
     expect(real).to have_received(:set_items).with("hello").twice
   end
 
+  it "resets text after updating" do
+    allow(dsl).to receive(:items).and_return ["hello"]
+    allow(real).to receive(:text).and_return "", "hello"
+    subject.update_items
+    expect(real).to have_received(:text=).with("hello")
+  end
+
   it "should set real text if initialized with choose option" do
     allow(dsl).to receive(:style) { { choose: "Apple" } }
     subject
