@@ -35,7 +35,9 @@ class Shoes
 
       self.current_slot = create_top_slot
       execution_blk = create_execution_block(blk)
+
       eval_block execution_blk
+      eval_block start_block if start_block
 
       setup_global_keypresses
       register_console_keypress
@@ -52,7 +54,8 @@ class Shoes
                 :mouse_motion, :owner, :element_styles, :resize_callbacks
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
-                  :width, :height, :start_as_fullscreen, :location
+                  :width, :height, :start_as_fullscreen, :location,
+                  :start_block
 
     def_delegators :@app, :eval_with_additional_context
 

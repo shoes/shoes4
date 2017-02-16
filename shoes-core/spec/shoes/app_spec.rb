@@ -103,6 +103,38 @@ describe Shoes::App do
     end
   end
 
+  describe "start block" do
+    describe "basic" do
+      let(:input_blk) do
+        proc do
+          app.style(value: "")
+          start { app.style[:value] += "2" }
+          app.style[:value] += "1"
+        end
+      end
+
+      it "after main block" do
+        expect(app.style[:value]).to eq("12")
+      end
+    end
+
+    describe "only one" do
+      let(:input_blk) do
+        proc do
+          app.style(value: "")
+          start { app.style[:value] += "2" }
+          start { app.style[:value] += "3" }
+          app.style[:value] += "1"
+        end
+      end
+
+      # Behavior here based on Shoes 3 compat
+      it "only sees last start block" do
+        expect(app.style[:value]).to eq("13")
+      end
+    end
+  end
+
   describe "style with defaults" do
     let(:default_styles) { Shoes::Common::Style::DEFAULT_STYLES }
 
