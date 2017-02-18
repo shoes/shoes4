@@ -200,7 +200,7 @@ Shoes 4 is developed in a TDD style using RSpec. You should be writing and runni
 
 The simplest way to do this is with rake tasks.
 
-    $ rake spec
+    $ bundle exec rake
 
 (Try `rake --tasks` for a full list)
 

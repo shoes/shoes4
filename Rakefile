@@ -9,6 +9,7 @@ require_relative 'tasks/console'
 require_relative 'tasks/gem'
 require_relative 'tasks/guard'
 require_relative 'tasks/rspec'
+require_relative 'tasks/rubocop'
 require_relative 'tasks/sample'
 require_relative 'tasks/yard'
 
