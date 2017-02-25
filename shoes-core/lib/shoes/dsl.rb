@@ -78,6 +78,7 @@ require 'shoes/color'
 
 require 'shoes/dsl/art'
 require 'shoes/dsl/element'
+require 'shoes/dsl/element_style'
 require 'shoes/dsl/interaction'
 require 'shoes/dsl/media'
 require 'shoes/dsl/text'
@@ -160,6 +161,7 @@ class Shoes
 
     include DSL::Art
     include DSL::Element
+    include DSL::ElementStyle
     include DSL::Interaction
     include DSL::Media
     include DSL::Text
