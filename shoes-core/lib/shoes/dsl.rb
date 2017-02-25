@@ -166,10 +166,14 @@ class Shoes
     include DSL::Media
     include DSL::Text
 
+    private
+
     def create(element, *args, &blk)
       element.new(@__app__, @__app__.current_slot, *args, &blk)
     end
-    
+
+    public
+
     # Creates an animation that runs the given block of code.
     #
     # @overload animate &blk
