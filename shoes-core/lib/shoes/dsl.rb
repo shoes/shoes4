@@ -76,10 +76,11 @@ require 'shoes/text_block_dimensions'
 
 require 'shoes/color'
 
-require 'shoes/dsl/text'
-require 'shoes/dsl/interaction'
 require 'shoes/dsl/art'
 require 'shoes/dsl/element'
+require 'shoes/dsl/interaction'
+require 'shoes/dsl/media'
+require 'shoes/dsl/text'
 
 require 'shoes/common/attachable'
 require 'shoes/common/changeable'
@@ -156,10 +157,12 @@ class Shoes
   #                      a hash of default styles for elements of Class,
   module DSL
     include Color::DSLHelpers
-    include DSL::Text
-    include DSL::Interaction
+
     include DSL::Art
     include DSL::Element
+    include DSL::Interaction
+    include DSL::Media
+    include DSL::Text
     # Set default style for elements of a particular class, or for all
     # elements, or return the current defaults for all elements
     #
@@ -258,11 +261,6 @@ class Shoes
       Timer.new @__app__, n, &blk
     end
 
-    # similar controls as Shoes::Video (#video)
-    def sound(soundfile, opts = {}, &blk)
-      Shoes::Sound.new @__app__, soundfile, opts, &blk
-    end
-
     # Define app-level setter methods
     PATTERN_APP_STYLES = [:fill, :stroke].freeze
     OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform].freeze
@@ -289,13 +287,6 @@ class Shoes
 
     def nofill
       @__app__.style[:fill] = nil
-    end
-
-    def video(*_args)
-      raise Shoes::NotImplementedError,
-            'Sorry video support has been cut from shoes 4!' \
-            ' Check out github issue #113 for any changes/updates or if you' \
-            ' want to help :)'
     end
   end
 end
