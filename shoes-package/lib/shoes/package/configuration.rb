@@ -79,6 +79,7 @@ class Shoes
         config = YAML.safe_load(file.read, [Symbol])
         config[:working_dir] = dir
         config[:gems] = merge_gems(base_config, config)
+        config[:gems] << "shoes-swt"
         create(config)
       end
 
