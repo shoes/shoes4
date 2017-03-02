@@ -18,6 +18,7 @@ class Shoes
 
       def run(path)
         begin
+          require 'shoes/package'
           require 'shoes/package/configuration'
           master_config = ::Shoes::Package::Configuration.load(path)
         rescue Errno::ENOENT => e
@@ -27,7 +28,7 @@ class Shoes
         @dsl.packages.each do |backend, wrapper|
           puts "Packaging #{backend}:#{wrapper}..."
           config = create_config(master_config, backend)
-          packager = create_packager(config, wrapper)
+          packager = ::Shoes::Package.create_packager(config, wrapper)
           packager.package
         end
       end
@@ -70,17 +71,6 @@ class Shoes
         config.gems << "shoes-#{backend}"
         config.gems.uniq!
         config
-      end
-
-      def create_packager(config, wrapper)
-        case wrapper
-        when 'jar'
-          ::Furoshiki::Jar.new(config)
-        when 'app'
-          ::Furoshiki::JarApp.new(config)
-        else
-          abort "shoes: Don't know how to make #{backend}:#{wrapper} packages"
-        end
       end
     end
   end

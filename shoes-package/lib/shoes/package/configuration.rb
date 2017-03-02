@@ -18,6 +18,10 @@ class Shoes
     module Configuration
       extend ::Furoshiki::Util
 
+      def backend
+        "swt"
+      end
+
       JAR_APP_TEMPLATE_URL = 'https://s3.amazonaws.com/net.wasnotrice.shoes/wrappers/shoes-app-template-0.0.2.zip'
 
       # Convenience method for loading config from a file. Note that you
