@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require_relative 'spec_helper'
 require 'shoes/package/configuration'
-require 'furoshiki/jar'
+require 'furoshiki'
 
 describe Furoshiki::Jar do
   include_context 'config'
