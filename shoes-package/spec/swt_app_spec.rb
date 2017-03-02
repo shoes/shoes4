@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 require_relative 'spec_helper'
 require 'shoes/package/configuration'
-require 'shoes/package/jar_app'
+require 'furoshiki/jar_app'
 
-include PackageHelpers
-
-describe Shoes::Package::JarApp do
+describe Furoshiki::JarApp do
   include_context 'config'
   include_context 'package'
 
   let(:config) { Shoes::Package::Configuration.load @config_filename }
-  subject { Shoes::Package::JarApp.new config }
+  subject { Furoshiki::JarApp.new config }
 
   let(:launcher) { @output_file.join('Contents/MacOS/JavaAppLauncher') }
   let(:icon)  { @output_file.join('Contents/Resources/boots.icns') }
@@ -52,7 +50,7 @@ describe Shoes::Package::JarApp do
       app_name = 'Sugar Clouds.app'
       @output_file = @output_dir.join app_name
       config   = Shoes::Package::Configuration.load @config_filename
-      @subject = Shoes::Package::JarApp.new config
+      @subject = Furoshiki::JarApp.new config
       @subject.package
     end
 
@@ -122,7 +120,7 @@ describe Shoes::Package::JarApp do
 
   describe "with an invalid configuration" do
     let(:config) { Shoes::Package::Configuration.create }
-    subject { Shoes::Package::JarApp.new config }
+    subject { Furoshiki::JarApp.new config }
 
     it "fails to initialize" do
       expect { subject }.to raise_error(Furoshiki::ConfigurationError)

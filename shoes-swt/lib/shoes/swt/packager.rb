@@ -19,8 +19,6 @@ class Shoes
       def run(path)
         begin
           require 'shoes/package/configuration'
-          require 'shoes/package/jar'
-          require 'shoes/package/jar_app'
           master_config = ::Shoes::Package::Configuration.load(path)
         rescue Errno::ENOENT => e
           abort "shoes: #{e.message}"

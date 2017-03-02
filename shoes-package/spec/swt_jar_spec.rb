@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 require_relative 'spec_helper'
 require 'shoes/package/configuration'
-require 'shoes/package/jar'
-
-include PackageHelpers
+require 'furoshiki/jar'
 
 describe Furoshiki::Jar do
   include_context 'config'
@@ -14,7 +12,7 @@ describe Furoshiki::Jar do
       @output_dir.rmtree if @output_dir.exist?
       @output_dir.mkpath
       config = Shoes::Package::Configuration.load(@config_filename)
-      @subject = Shoes::Package::Jar.new(config)
+      @subject = Furoshiki::Jar.new(config)
       @jar_path = @subject.package
     end
 
@@ -42,11 +40,6 @@ describe Furoshiki::Jar do
         expect(shoes_core.length).to equal(1)
       end
 
-      it "includes shoes-swt" do
-        shoes_swt = jar.glob "gems/shoes-swt*"
-        expect(shoes_swt.length).to equal(1)
-      end
-
       it "excludes directories recursively" do
         expect(jar.entries).not_to include("dir_to_ignore/file_to_ignore")
       end
@@ -58,7 +51,7 @@ describe Furoshiki::Jar do
 
   describe "with an invalid configuration" do
     let(:config) { Shoes::Package::Configuration.create }
-    subject { Shoes::Package::Jar.new(config) }
+    subject { Furoshiki::Jar.new(config) }
 
     it "fails to initialize" do
       expect { subject }.to raise_error(Furoshiki::ConfigurationError)
