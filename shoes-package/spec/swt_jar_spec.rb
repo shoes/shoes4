@@ -40,6 +40,11 @@ describe Furoshiki::Jar do
         expect(shoes_core.length).to equal(1)
       end
 
+      it "includes shoes-swt" do
+        shoes_swt = jar.glob "gems/shoes-swt*"
+        expect(shoes_swt.length).to equal(1)
+      end
+
       it "excludes directories recursively" do
         expect(jar.entries).not_to include("dir_to_ignore/file_to_ignore")
       end
