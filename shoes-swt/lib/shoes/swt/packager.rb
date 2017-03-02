@@ -2,8 +2,11 @@
 class Shoes
   module Swt
     class Packager
+      attr_accessor :gems
+
       def initialize(dsl)
-        @dsl = dsl
+        @dsl  = dsl
+        @gems = []
       end
 
       def create_package(program_name, package)
@@ -65,7 +68,9 @@ class Shoes
       # packaging for more than one backend
       def create_config(master_config, backend)
         config = master_config.clone
+        config.gems.concat(@gems)
         config.gems << "shoes-#{backend}"
+        config.gems.uniq!
         config
       end
 
