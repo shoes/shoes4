@@ -21,6 +21,7 @@ class Shoes
           require 'shoes/package'
           require 'shoes/package/configuration'
           config = ::Shoes::Package::Configuration.load(path)
+          config.gems.concat(@gems)
         rescue Errno::ENOENT => e
           abort "shoes: #{e.message}"
         end
