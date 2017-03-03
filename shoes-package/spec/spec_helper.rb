@@ -16,17 +16,6 @@ require 'rspec/its'
 
 Dir["#{SHOES_PACKAGE_SPEC_ROOT}/support/**/*.rb"].each { |f| require f }
 
-module PackageHelpers
-  # need these values from a context block, so let doesn't work
-  def spec_dir
-    Pathname.new(__FILE__).join('..').cleanpath
-  end
-
-  def input_dir
-    spec_dir.join 'support', 'zip'
-  end
-end
-
 # Guards for running or not running specs. Specs in the guarded block only
 # run if the guard conditions are met.
 #
