@@ -78,7 +78,7 @@ require 'shoes/color'
 
 require 'shoes/dsl/art'
 require 'shoes/dsl/element'
-require 'shoes/dsl/element_style'
+require 'shoes/dsl/style'
 require 'shoes/dsl/interaction'
 require 'shoes/dsl/media'
 require 'shoes/dsl/text'
@@ -161,7 +161,7 @@ class Shoes
 
     include DSL::Art
     include DSL::Element
-    include DSL::ElementStyle
+    include DSL::Style
     include DSL::Interaction
     include DSL::Media
     include DSL::Text
@@ -217,34 +217,6 @@ class Shoes
     def timer(n = 1, &blk)
       n *= 1000
       Timer.new @__app__, n, &blk
-    end
-
-    # Define app-level setter methods
-    PATTERN_APP_STYLES = [:fill, :stroke].freeze
-    OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform].freeze
-
-    PATTERN_APP_STYLES.each do |style|
-      define_method style do |val|
-        @__app__.style[style] = pattern(val)
-      end
-    end
-
-    OTHER_APP_STYLES.each do |style|
-      define_method style do |val|
-        @__app__.style[style] = val
-      end
-    end
-
-    def translate(left, top)
-      @__app__.style[:translate] = [left, top]
-    end
-
-    def nostroke
-      @__app__.style[:stroke] = nil
-    end
-
-    def nofill
-      @__app__.style[:fill] = nil
     end
   end
 end

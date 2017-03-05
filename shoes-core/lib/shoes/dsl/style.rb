@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Shoes
   module DSL
-    module ElementStyle
+    module Style
       # Set default style for elements of a particular class, or for all
       # elements, or return the current defaults for all elements
       #
@@ -27,6 +27,34 @@ class Shoes
         else
           @__app__.style(klass_or_styles)
         end
+      end
+
+      # Define app-level setter methods
+      PATTERN_APP_STYLES = [:fill, :stroke].freeze
+      OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform].freeze
+
+      PATTERN_APP_STYLES.each do |style|
+        define_method style do |val|
+          @__app__.style[style] = pattern(val)
+        end
+      end
+
+      OTHER_APP_STYLES.each do |style|
+        define_method style do |val|
+          @__app__.style[style] = val
+        end
+      end
+
+      def translate(left, top)
+        @__app__.style[:translate] = [left, top]
+      end
+
+      def nostroke
+        @__app__.style[:stroke] = nil
+      end
+
+      def nofill
+        @__app__.style[:fill] = nil
       end
 
       private
