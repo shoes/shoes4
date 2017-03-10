@@ -27,7 +27,6 @@ Lint/IneffectiveAccessModifier:
 Lint/NestedMethodDefinition:
   Exclude:
     - 'shoes-core/lib/shoes/dialog.rb'
-    - 'shoes-core/lib/shoes/logger.rb'
 
 # Offense count: 77
 Metrics/AbcSize:
@@ -104,7 +103,6 @@ Style/EmptyMethod:
 Style/FormatString:
   Exclude:
     - 'shoes-core/lib/shoes/common/inspect.rb'
-    - 'shoes-core/lib/shoes/logger/ruby.rb'
 
 # Offense count: 28
 # Configuration parameters: MinBodyLength.
