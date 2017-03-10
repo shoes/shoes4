@@ -2,35 +2,33 @@
 require 'spec_helper'
 
 describe Shoes::Logger do
-  let(:awesome_logger) { Class.new }
-  after { Shoes::Logger.unregister(:awesome_logger) }
-
-  describe ".register" do
-    it "allows new loggers to be registered" do
-      Shoes::Logger.register(:awesome_logger, awesome_logger)
-    end
-  end
-
-  describe ".get" do
-    before { Shoes::Logger.register(:awesome_logger, awesome_logger) }
-
-    it "retrieves a registered logger" do
-      expect(Shoes::Logger.get(:awesome_logger)).to equal(awesome_logger)
-    end
-  end
-
   describe "default logger" do
-    let(:logger) { Shoes.logger }
+    subject(:logger) { Shoes::Logger.new }
 
-    it "is a ruby logger" do
-      expect(logger).to be_an_instance_of(Shoes::Logger::Ruby)
+    let(:logger1) { double('logger 1') }
+    let(:logger2) { double('logger 2') }
+
+    before do
+      logger << logger1
+      logger << logger2
+    end
+
+    it "dispatches to all loggers" do
+      expect(logger1).to receive(:debug).with("DE-BUGS")
+      expect(logger2).to receive(:debug).with("DE-BUGS")
+      logger.debug("DE-BUGS")
+    end
+
+    it "chains appending" do
+      result = logger << double('another')
+      expect(result).to eq(logger)
     end
   end
 end
 
-describe Shoes::Logger::Ruby do
+describe Shoes::Logger::StandardLogger do
   let(:logdevice) { StringIO.new }
-  subject(:logger) { Shoes::Logger::Ruby.new logdevice }
+  subject(:logger) { Shoes::Logger::StandardLogger.new logdevice }
 
   it "logs messages with format 'LEVEL: Message'" do
     logger.info "Message"
@@ -39,7 +37,7 @@ describe Shoes::Logger::Ruby do
 
   it "defaults to STDERR" do
     allow(STDERR).to receive(:write)
-    logger = Shoes::Logger::Ruby.new
+    logger = Shoes::Logger::StandardLogger.new
     logger.error "Message"
     expect(STDERR).to have_received(:write)
   end

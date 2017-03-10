@@ -2,11 +2,6 @@
 class Shoes
   class Configuration
     class << self
-      def reset
-        @logger = nil
-        @logger_instance = nil
-      end
-
       def backend
         @backend ||= Shoes.load_backend(backend_name)
       end
@@ -71,19 +66,6 @@ class Shoes
       def backend_factory(shoes_object)
         klass = backend_class(shoes_object)
         klass.respond_to?(:create) ? klass.method(:create) : klass.method(:new)
-      end
-
-      def logger=(value)
-        @logger = value
-        @logger_instance = nil
-      end
-
-      def logger
-        @logger ||= :ruby
-      end
-
-      def logger_instance
-        @logger_instance ||= Shoes::Logger.get(logger).new
       end
     end
   end

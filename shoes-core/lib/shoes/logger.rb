@@ -1,66 +1,47 @@
 # frozen_string_literal: true
+require 'logger'
+
 class Shoes
-  module Logger
-    class << self
-      def register(name, obj)
-        @loggers ||= {}
-        @loggers[name] = obj
-      end
+  class Logger
+    def initialize
+      @loggers = []
+    end
 
-      def unregister(name)
-        @loggers.delete(name)
-      end
+    def <<(logger)
+      @loggers << logger
+      self
+    end
 
-      def get(name)
-        @loggers && @loggers[name]
+    def debug(message)
+      forward(:debug, message)
+    end
+
+    def info(message)
+      forward(:info, message)
+    end
+
+    def warn(message)
+      forward(:warn, message)
+    end
+
+    def error(message)
+      forward(:error, message)
+    end
+
+    def forward(meth, message)
+      @loggers.each do |logger|
+        logger.public_send(meth, message)
       end
     end
 
-    def self.setup
-      Shoes.app do
-        def update
-          return unless @hash == Shoes::LOG.hash
-          @hash = Shoes::LOG.hash
-          @log.clear do
-            Shoes::LOG.each_with_index do |(typ, msg), index|
-              stack do
-                background "#f1f5e1" if index.even?
-                background rgb(220, 220, 220) if index.odd?
-                para typ, stroke: blue
-                flow do
-                  stack margin: 4 do
-                    s = msg.to_s
-                    para s, margin: 4, margin_top: 0
-                  end
-                end
-              end
-            end
-          end
+    class StandardLogger < SimpleDelegator
+      def initialize(device = STDERR)
+        logger = ::Logger.new(device)
+        logger.formatter = proc do |severity, _datetime, _progname, message|
+          "#{severity}: #{message}\n"
         end
-
-        stack do
-          flow do
-            background black
-            stack do
-              tagline "Shoes Console", stroke: white
-            end
-            button "Clear", margin: 6, width: 80, height: 40, right: 10 do
-              Shoes::LOG.clear
-            end
-          end
-          @log = stack
-          @hash = nil
-          update
-
-          every(0.2) do
-            update
-          end
-        end
+        super(logger)
       end
     end
   end
-end
-
-Dir[File.join(File.dirname(__FILE__), "logger", "*.rb")].each do |logger|
-  require logger
 end

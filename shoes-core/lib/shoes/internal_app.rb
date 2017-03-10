@@ -213,7 +213,7 @@ class Shoes
 
     def register_console_keypress
       self.class.add_global_keypress(:"alt_/") do
-        Logger.setup
+        Shoes.console.show
       end
     end
 

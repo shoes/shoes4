@@ -2,18 +2,6 @@
 require 'spec_helper'
 
 describe Shoes::Configuration do
-  after { Shoes.configuration.reset }
-
-  describe "#logger" do
-    describe ":ruby" do
-      before { Shoes.configuration.logger = :ruby }
-
-      it "uses the Ruby logger" do
-        expect(Shoes.logger.instance_of?(Shoes::Logger::Ruby)).to eq(true)
-      end
-    end
-  end
-
   describe "backend" do
     include_context "dsl app"
 
