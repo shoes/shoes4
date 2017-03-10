@@ -34,7 +34,7 @@ class Shoes
     rescue Bundler::GemfileNotFound
       # Ok to be quiet since we didn't even have a Gemfile
     rescue => e
-      puts "Looking up gems for packaging failed:\n#{e.message}"
+      Shoes.logger.error "Looking up gems for packaging failed:\n#{e.message}"
     end
 
     def help(program_name)

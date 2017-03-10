@@ -13,12 +13,12 @@ describe Shoes, 'setup' do
   end
 
   describe 'outputting on standard error' do
-    def expect_stderr_puts(regex)
-      expect($stderr).to receive(:puts).with(regex)
+    def expect_logger_warn(regex)
+      expect(Shoes.logger).to receive(:warn).with(regex)
     end
 
     before :each do
-      expect_stderr_puts(/WARN.+deprecated/)
+      expect_logger_warn(/deprecated/)
     end
 
     it 'puts a warning message to $stderr' do
@@ -26,14 +26,14 @@ describe Shoes, 'setup' do
     end
 
     it 'warns for individual gems' do
-      expect_stderr_puts(/WARN.+foo.+gem install foo/)
+      expect_logger_warn(/foo.+gem install foo/)
       Shoes.setup do
         gem 'foo'
       end
     end
 
     it 'even reports the version number' do
-      expect_stderr_puts(/gem install foo --version \"~>2.10.0\"/)
+      expect_logger_warn(/gem install foo --version \"~>2.10.0\"/)
       Shoes.setup do
         gem 'foo ~>2.10.0'
       end
