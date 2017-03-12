@@ -47,7 +47,7 @@ class Changelog
   def heading(title, count, underline_char = '-')
     title_with_count = "#{title} (#{count})"
     underline = underline_char * title_with_count.length
-    "#{title_with_count}\n#{underline}\n\n"
+    "#{title_with_count}\n#{underline}\n\n".dup
   end
 
   def commits_matching(pattern, commit_range)
