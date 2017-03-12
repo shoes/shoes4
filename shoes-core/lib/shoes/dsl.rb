@@ -26,8 +26,8 @@ class Shoes
     def logger
       return @logger if @logger
 
-      @logger ||= Shoes::Logger.new
-      @logger << Shoes::Logger::StandardLogger.new
+      @logger ||= Shoes::LoggerCollection.new
+      @logger << Shoes::StandardLogger.new
       @logger << console
     end
   end
@@ -77,8 +77,10 @@ require 'shoes/common/background_element'
 
 require 'shoes/builtin_methods'
 require 'shoes/check_button'
+require 'shoes/logger_collection'
 require 'shoes/text'
 require 'shoes/span'
+require 'shoes/standard_logger'
 require 'shoes/input_box'
 
 # please keep this list tidy and alphabetically sorted
@@ -101,7 +103,6 @@ require 'shoes/key_event'
 require 'shoes/line'
 require 'shoes/link'
 require 'shoes/list_box'
-require 'shoes/logger'
 require 'shoes/oval'
 require 'shoes/point'
 require 'shoes/progress'
