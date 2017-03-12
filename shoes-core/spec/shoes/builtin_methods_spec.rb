@@ -8,35 +8,26 @@ describe Shoes::BuiltinMethods do
   let(:dialog) { double('dialog') }
 
   before :each do
-    Shoes::LOG.clear
     allow(Shoes).to receive(:logger) { logger }
   end
 
   describe 'Shoes.p' do
     it 'adds a debug to the log with an inspected object' do
+      expect(Shoes.logger).to receive(:debug).with('message'.inspect)
       Shoes.p 'message'
-      expect(Shoes::LOG).to include ['debug', 'message'.inspect]
     end
 
     it 'also handles object the way they should be handled' do
+      expect(Shoes.logger).to receive(:debug).with('[]')
       Shoes.p []
-      expect(Shoes::LOG).to include ['debug', '[]']
     end
   end
 
   %w(info debug warn error).each do |level|
     describe "##{level}" do
-      before :each do
-        allow(logger).to receive(level)
+      it 'sends to logger' do
+        expect(Shoes.logger).to receive(level).with('test')
         app.public_send(level, "test")
-      end
-
-      it 'sets Shoes::LOG' do
-        expect(Shoes::LOG).to eq([[level, 'test']])
-      end
-
-      it 'sends message to logger' do
-        expect(logger).to have_received(level)
       end
     end
   end

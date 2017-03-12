@@ -90,8 +90,16 @@ EOS
         shell.client_area.height
       end
 
+      def open?
+        !disposed?
+      end
+
       def disposed?
         @shell.disposed? || @real.disposed?
+      end
+
+      def focus
+        @shell.force_active
       end
 
       def redraw(left = nil, top = nil, width = nil, height = nil, all = true)

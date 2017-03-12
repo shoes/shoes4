@@ -99,7 +99,7 @@ class Shoes
 
     delegated_to_gui = %w(
       fullscreen= fullscreen quit scroll_top= scroll_top
-      clipboard clipboard= gutter
+      clipboard clipboard= gutter focus open?
     )
 
     def_delegators :gui, *delegated_to_gui
@@ -213,7 +213,7 @@ class Shoes
 
     def register_console_keypress
       self.class.add_global_keypress(:"alt_/") do
-        Logger.setup
+        Shoes.console.show
       end
     end
 

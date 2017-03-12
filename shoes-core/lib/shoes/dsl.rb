@@ -12,7 +12,6 @@ class Shoes
   TWO_PI              = 2 * PI
   HALF_PI             = 0.5 * PI
   DIR                 = Pathname.new(__FILE__).parent.parent.parent.to_s
-  LOG                 = []
   LEFT_MOUSE_BUTTON   = 1
   MIDDLE_MOUSE_BUTTON = 2
   RIGHT_MOUSE_BUTTON  = 3
@@ -20,8 +19,16 @@ class Shoes
   extend Common::Registration
 
   class << self
+    def console
+      @console ||= Shoes::Console.new
+    end
+
     def logger
-      Shoes.configuration.logger_instance
+      return @logger if @logger
+
+      @logger ||= Shoes::LoggerCollection.new
+      @logger << Shoes::StandardLogger.new
+      @logger << console
     end
   end
 end
@@ -70,8 +77,10 @@ require 'shoes/common/background_element'
 
 require 'shoes/builtin_methods'
 require 'shoes/check_button'
+require 'shoes/logger_collection'
 require 'shoes/text'
 require 'shoes/span'
+require 'shoes/standard_logger'
 require 'shoes/input_box'
 
 # please keep this list tidy and alphabetically sorted
@@ -82,6 +91,7 @@ require 'shoes/background'
 require 'shoes/border'
 require 'shoes/button'
 require 'shoes/configuration'
+require 'shoes/console'
 require 'shoes/color'
 require 'shoes/dialog'
 require 'shoes/download'
@@ -93,7 +103,6 @@ require 'shoes/key_event'
 require 'shoes/line'
 require 'shoes/link'
 require 'shoes/list_box'
-require 'shoes/logger'
 require 'shoes/oval'
 require 'shoes/point'
 require 'shoes/progress'

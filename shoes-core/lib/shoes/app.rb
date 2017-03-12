@@ -81,7 +81,7 @@ class Shoes
     delegated_to_internal_app = %w(
       width height owner started? location left top absolute_left
       absolute_top click release clear fullscreen fullscreen=
-      contents wait_until_closed gui
+      contents wait_until_closed focus open? gui
     )
 
     def_delegators :@__app__, *delegated_to_internal_app

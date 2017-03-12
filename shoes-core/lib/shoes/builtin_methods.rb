@@ -4,7 +4,7 @@
 # However they can also be used from the normal Shoes.app block.
 class Shoes
   def self.p(message)
-    Shoes::LOG << ['debug', message.inspect]
+    Shoes.logger.debug(message.inspect)
   end
 
   module BuiltinMethods
@@ -20,7 +20,6 @@ class Shoes
 
     %w(info debug warn error).each do |log_level|
       define_method(log_level) do |message = ''|
-        Shoes::LOG << [log_level, message]
         Shoes.logger.public_send(log_level, message)
       end
     end
