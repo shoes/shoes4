@@ -55,7 +55,7 @@ class Shoes
     def eval_block(blk, *args)
       old_current_slot = @app.current_slot
       @app.current_slot = self
-      blk.call(*args) if blk
+      safely_evaluate(*args, &blk)
       @app.current_slot = old_current_slot
     end
 

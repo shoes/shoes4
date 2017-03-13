@@ -8,6 +8,7 @@ class Shoes
       include Common::Positioning
       include Common::Remove
       include DimensionsDelegations
+      include Common::SafelyEvaluate
       include Common::Style
 
       attr_reader :app, :parent, :dimensions, :gui

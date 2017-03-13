@@ -7,10 +7,41 @@ shared_examples_for "Slot" do
     expect(subject.contents.size).to eq(1)
   end
 
-  it 'has a height of 0 as it is empty although it has a top' do
+  it "has a height of 0 as it is empty although it has a top" do
     subject.absolute_top = 100
     subject.contents_alignment
     expect(subject.height).to eq 0
+  end
+
+  describe "exception handling in block" do
+    before do
+      allow(Shoes.logger).to receive(:error) # Shhhhhhh
+      @prior_fail_fast = Shoes.configuration.fail_fast
+    end
+
+    after do
+      Shoes.configuration.fail_fast = @prior_fail_fast
+    end
+
+    def append
+      subject.append do
+        raise "heck"
+      end
+    end
+
+    it "doesn't raise during block evaluation by default" do
+      append
+    end
+
+    it "doesn't raise during block evaluation if marked not failing fast" do
+      Shoes.configuration.fail_fast = false
+      append
+    end
+
+    it "raises during block evaluation if failing fast" do
+      Shoes.configuration.fail_fast = true
+      expect { append }.to raise_error(RuntimeError)
+    end
   end
 
   it_behaves_like 'prepending'
