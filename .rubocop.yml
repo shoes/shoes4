@@ -33,7 +33,6 @@ Style/CollectionMethods:
 # Shoes internals
 Style/MutableConstant:
   Exclude:
-    - shoes-core/lib/shoes/dsl.rb
     - shoes-core/lib/shoes/font.rb
     - shoes-core/lib/shoes/color/dsl.rb
     - shoes-core/lib/shoes/common/style.rb
@@ -70,9 +69,3 @@ Style/TrivialAccessors:
 # We don't care if you use %w or literal string arrays
 Style/WordArray:
   Enabled: false
-
-# app.rb contains variables triggering a false positive for this cop such as @___app__
-# This can be removed when rubocop fixes this bug: https://github.com/bbatsov/rubocop/issues/3699
-Style/VariableNumber:
-  Exclude:
-    - shoes-core/lib/shoes/app.rb
