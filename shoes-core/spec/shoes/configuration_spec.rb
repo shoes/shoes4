@@ -2,9 +2,35 @@
 require 'spec_helper'
 
 describe Shoes::Configuration do
-  describe "backend" do
-    include_context "dsl app"
+  include_context "dsl app"
 
+  describe "fail fast" do
+    before do
+      ENV["SHOES_FAIL_FAST"] = nil
+      @prior_fail_fast = Shoes.configuration.fail_fast
+    end
+
+    after do
+      ENV["SHOES_FAIL_FAST"] = nil
+      Shoes.configuration.fail_fast = @prior_fail_fast
+    end
+
+    it "defaults to false" do
+      expect(Shoes.configuration.fail_fast).to be_falsey
+    end
+
+    it "can be set by ENV" do
+      ENV["SHOES_FAIL_FAST"] = "yup"
+      expect(Shoes.configuration.fail_fast).to be_truthy
+    end
+
+    it "can be set directly" do
+      Shoes.configuration.fail_fast = true
+      expect(Shoes.configuration.fail_fast).to be_truthy
+    end
+  end
+
+  describe "backend" do
     let(:dsl_object) { Shoes::Shape.new app, parent, 0, 0 }
 
     describe "#backend_for" do
