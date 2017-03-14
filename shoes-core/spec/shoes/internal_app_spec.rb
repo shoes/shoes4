@@ -148,4 +148,21 @@ describe Shoes::InternalApp do
       end
     end
   end
+
+  describe "resize callbacks" do
+    before do
+      subject.add_resize_callback ->() { raise "heck" }
+    end
+
+    it "swallows errors" do
+      expect(Shoes.logger).to receive(:error).with("heck")
+      subject.trigger_resize_callbacks
+    end
+
+    it "fails fast" do
+      Shoes.configuration.fail_fast = true
+      expect(Shoes.logger).to receive(:error).with("heck")
+      expect { subject.trigger_resize_callbacks }.to raise_error(RuntimeError)
+    end
+  end
 end
