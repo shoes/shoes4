@@ -16,11 +16,6 @@ shared_examples_for "Slot" do
   describe "exception handling in block" do
     before do
       allow(Shoes.logger).to receive(:error) # Shhhhhhh
-      @prior_fail_fast = Shoes.configuration.fail_fast
-    end
-
-    after do
-      Shoes.configuration.fail_fast = @prior_fail_fast
     end
 
     def append
