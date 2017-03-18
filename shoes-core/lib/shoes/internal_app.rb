@@ -10,6 +10,7 @@ class Shoes
   class InternalApp
     include Common::Clickable
     include Common::Style
+    include Common::SafelyEvaluate
     include DimensionsDelegations
 
     extend Forwardable
@@ -138,6 +139,14 @@ class Shoes
 
     def add_resize_callback(blk)
       @resize_callbacks << blk
+    end
+
+    def trigger_resize_callbacks
+      @resize_callbacks.each do |callback|
+        safely_evaluate do
+          callback.call
+        end
+      end
     end
 
     def inspect_details

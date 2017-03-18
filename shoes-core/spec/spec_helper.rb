@@ -28,3 +28,13 @@ WebMock.disable_net_connect!(allow: "codeclimate.com")
 
 shared_examples = File.expand_path('../shoes/shared_examples/**/*.rb', __FILE__)
 Dir[shared_examples].each { |f| require f }
+
+RSpec.configure do |config|
+  config.before(:each) do
+    @prior_fail_fast = Shoes.configuration.fail_fast
+  end
+
+  config.after(:each) do
+    Shoes.configuration.fail_fast = @prior_fail_fast
+  end
+end

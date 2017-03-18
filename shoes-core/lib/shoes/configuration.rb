@@ -2,6 +2,12 @@
 class Shoes
   class Configuration
     class << self
+      attr_writer :fail_fast
+
+      def fail_fast
+        @fail_fast ||= ENV["SHOES_FAIL_FAST"]
+      end
+
       def backend
         @backend ||= Shoes.load_backend(backend_name)
       end

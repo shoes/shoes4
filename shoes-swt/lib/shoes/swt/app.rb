@@ -338,7 +338,7 @@ EOS
         height = shell.client_area.height
         @app.real.setSize width, height
         @app.real.layout
-        @app.dsl.resize_callbacks.each(&:call)
+        @app.dsl.trigger_resize_callbacks
       end
 
       def controlMoved(_e)

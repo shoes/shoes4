@@ -44,6 +44,10 @@ Usage: #{opts.program_name} [-h] [-p package] file
           exit
         end
 
+        opts.on('-f', '--fail-fast', 'Crash on exceptions in Shoes code') do
+          Shoes.configuration.fail_fast = true
+        end
+
         opts.separator @packager.help(opts.program_name)
       end
 
