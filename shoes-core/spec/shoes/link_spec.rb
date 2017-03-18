@@ -27,10 +27,6 @@ describe Shoes::Link do
     allow(user_facing_app).to receive(:style) do |clazz, styles|
       element_styles[clazz] = styles
     end
-
-    allow(subject).to receive(:eval_hover_block) do |blk|
-      blk.call(subject) if blk
-    end
   end
 
   it_behaves_like "object with hover"

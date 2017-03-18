@@ -50,6 +50,45 @@ describe Shoes::Common::Hover do
       expect(subject.leave_count).to eq(1)
     end
   end
+
+  describe "failure" do
+    before do
+      subject.hover { raise "hover" }
+      subject.leave { raise "leave" }
+    end
+
+    describe "by default" do
+      it "carries on with hover" do
+        expect(Shoes.logger).to receive(:error).with("hover")
+        subject.mouse_hovered
+      end
+
+      it "carries on with hover" do
+        expect(Shoes.logger).to receive(:error).with("hover")
+        expect(Shoes.logger).to receive(:error).with("leave")
+        subject.mouse_hovered
+        subject.mouse_left
+      end
+    end
+
+    describe "when failing fast" do
+      before do
+        Shoes.configuration.fail_fast = true
+      end
+
+      it "carries on with hover" do
+        expect(Shoes.logger).to receive(:error).with("hover")
+        expect { subject.mouse_hovered }.to raise_error(RuntimeError)
+      end
+
+      it "carries on with hover" do
+        expect(Shoes.logger).to receive(:error).with("hover")
+        expect(Shoes.logger).to receive(:error).with("leave")
+        expect { subject.mouse_hovered }.to raise_error(RuntimeError)
+        expect { subject.mouse_left }.to raise_error(RuntimeError)
+      end
+    end
+  end
 end
 
 class HoverTest

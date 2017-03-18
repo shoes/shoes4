@@ -3,6 +3,7 @@ class Shoes
   class Link < Span
     include Common::Fill
     include Common::Hover
+    include Common::SafelyEvaluate
     include Common::Stroke
     include Common::Style
 

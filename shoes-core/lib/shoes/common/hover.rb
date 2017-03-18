@@ -54,7 +54,7 @@ class Shoes
       end
 
       def eval_hover_block(blk)
-        blk.call(self) if blk
+        safely_evaluate(self, &blk) if blk
       end
 
       def apply_style_from_hover_class
