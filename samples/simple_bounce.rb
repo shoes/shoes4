@@ -9,9 +9,8 @@ Shoes.app do
   border black, strokewidth: 6
 
   nostroke
-  @icon = image "#{Shoes::DIR}/static/shoes-icon.png", left: 100, top: 100 do
-    alert "You're soooo quick."
-  end
+  @icon = image "#{Shoes::DIR}/static/shoes-icon.png",
+                left: 100, top: 100, click: ->() { alert "You're soooo quick." }
 
   x = width / 2
   y = height / 2

@@ -11,9 +11,8 @@ Shoes.app width: 300, height: 300 do
   button('stop') { a.stop }
   button('start') { a.start }
   button('remove') { a.remove }
-  img = image File.join(Shoes::DIR, 'static/shoes-icon.png') do
-    alert "You're soooo quick!"
-  end
+  img = image File.join(Shoes::DIR, 'static/shoes-icon.png'),
+              click: ->() { alert "You're soooo quick!" }
 
   x = 150
   y = 150
