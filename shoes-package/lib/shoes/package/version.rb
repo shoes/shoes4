@@ -2,6 +2,6 @@
 
 class Shoes
   module Package
-    VERSION = "4.0.0.pre8"
+    VERSION = "4.0.0.pre9"
   end
 end

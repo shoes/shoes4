@@ -1,3 +1,32 @@
+v4.0.0.pre9 (61 commits) (Mar 19, 2017)
+---------------------------------------------
+
+Improvements (5)
+-----------------
+
+* Shoes Console (Alt+/) properly gathers logged messages [67a9864]
+* Include gems from Gemfile during packaging [c50c457]
+* Warn directly when running jar on OS X without -XstartOnFirstThread [2d27bdf]
+* Support start block method in app [736702e]
+* Support readonly state on appropriate elements [bda1639]
+
+Bug Fixes (6)
+-------------
+
+* Reset alpha to avoid transparency leaks on later elements [92935e3]
+* Combo default sizes increased to look right on all platforms [4e3be1f]
+* Get clipboard working again on OSX [86a584b]
+* Keep combo selection through list changes [168c0cf]
+* Ensure visibility methods chain properly [f69ab49]
+* Allow setting click through styles [d694275]
+
+Contributors (3)
+----------------
+
+Jason R. Clark, Tobias Pfeiffer, Ishaan Malhi
+
+
+
 v4.0.0.pre8 (99 commits) (Jan 28, 2017)
 ---------------------------------------------
 
