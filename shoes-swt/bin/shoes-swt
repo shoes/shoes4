@@ -9,4 +9,4 @@ if File.exist?("Gemfile")
 end
 
 require 'shoes/ui/cli'
-Shoes::CLI.new("swt").run ARGV
+Shoes::UI::CLI.new("swt").run ARGV

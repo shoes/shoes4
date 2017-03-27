@@ -13,12 +13,18 @@ class Shoes
       @packages = []
     end
 
-    def create_package(program_name, package)
-      @packages << @backend.create_package(program_name, package)
+    def parse!(args)
+      options = OptionParser.new do |opts|
+        opts.on('-p', '--package PACKAGE_TYPE', 'Package as BACKEND:PACKAGE') do |package|
+          create_package("shoes", package)
+        end
+      end
+
+      options.parse!(args)
     end
 
-    def should_package?
-      @packages.any?
+    def create_package(program_name, package)
+      @packages << @backend.create_package(program_name, package)
     end
 
     def run(path)
