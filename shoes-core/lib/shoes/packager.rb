@@ -13,13 +13,15 @@ class Shoes
       @packages = []
     end
 
-    def parse!(args)
-      options = OptionParser.new do |opts|
+    def options
+      OptionParser.new do |opts|
         opts.on('-p', '--package PACKAGE_TYPE', 'Package as BACKEND:PACKAGE') do |package|
           create_package("shoes", package)
         end
       end
+    end
 
+    def parse!(args)
       options.parse!(args)
     end
 

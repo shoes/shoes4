@@ -4,6 +4,9 @@ require 'spec_helper'
 describe Shoes::UI::CLI do
   subject(:cli) { Shoes::UI::CLI.new(:mock) }
 
+  ALL_COMMAND_CLASSES = [Shoes::UI::CLI::DefaultCommand] +
+                        Shoes::UI::CLI::SUPPORTED_COMMANDS.map(&:last)
+
   it "recognizes help subcommand" do
     command = cli.create_command("help")
     expect(command).to be_an_instance_of(Shoes::UI::CLI::HelpCommand)
@@ -38,5 +41,13 @@ describe Shoes::UI::CLI do
     command = cli.create_command("my_app.rb")
     expect(command).to be_an_instance_of(Shoes::UI::CLI::DefaultCommand)
     expect(command.args).to eq(["my_app.rb"])
+  end
+
+  describe "help" do
+    ALL_COMMAND_CLASSES.each do |command_class|
+      it "supports help for #{command_class}" do
+        expect(command_class.help).to_not be_empty
+      end
+    end
   end
 end

@@ -8,7 +8,15 @@ class Shoes
           load args.first
         end
 
+        def self.help
+          help_from_options("shoes [options] file", options)
+        end
+
         def options
+          self.class.options
+        end
+
+        def self.options
           OptionParser.new do |opts|
             # Keep around command dashed options
             opts.on('-v', '--version', 'Shoes version') do

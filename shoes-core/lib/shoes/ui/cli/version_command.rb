@@ -6,6 +6,13 @@ class Shoes
         def run
           puts "Shoes #{Shoes::Core::VERSION}"
         end
+
+        def self.help
+          <<-EOS
+shoes version
+    Prints the current Shoes version
+EOS
+        end
       end
     end
   end

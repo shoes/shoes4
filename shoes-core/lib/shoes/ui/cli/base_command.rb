@@ -8,6 +8,15 @@ class Shoes
         def initialize(args)
           @args = args
         end
+
+        def self.help
+          nil
+        end
+
+        def self.help_from_options(command, options)
+          lines = ["#{command}\n"] + options.summarize
+          lines.join("")
+        end
       end
     end
   end

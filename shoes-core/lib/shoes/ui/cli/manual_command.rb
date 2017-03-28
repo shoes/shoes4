@@ -7,6 +7,13 @@ class Shoes
           require 'shoes/manual'
           Shoes::Manual.run "English"
         end
+
+        def self.help
+          <<-EOS
+shoes manual
+    Run the interactive Shoes manual
+EOS
+        end
       end
     end
   end

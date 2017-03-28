@@ -10,6 +10,15 @@ class Shoes
           path = args[1]
           @packager.run(path)
         end
+
+        def self.help
+          help_from_options("shoes package [options] file",
+                            Shoes::Packager.new.options) + <<-EOS
+
+    Packages may be built either from a single .rb file, or a .yaml file with
+    more options defined.
+EOS
+        end
       end
     end
   end
