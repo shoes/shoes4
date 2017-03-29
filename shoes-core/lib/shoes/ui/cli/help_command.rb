@@ -4,6 +4,8 @@ class Shoes
     class CLI
       class HelpCommand < BaseCommand
         def run
+          warn_on_unexpected_parameters
+
           puts "Shoes is the best little GUI toolkit for Ruby."
           puts
 
@@ -17,6 +19,13 @@ class Shoes
               puts
             end
           end
+        end
+
+        def warn_on_unexpected_parameters
+          return unless args.size > 1
+
+          unexpected = args[1..-1].join(" ")
+          Shoes.logger.warn("Unexpected extra parameters '#{unexpected}'")
         end
 
         def self.help
