@@ -4,16 +4,23 @@ class Shoes
     class CLI
       class DefaultCommand < BaseCommand
         def run
-          options.parse!(args)
-          load args.first
+          if parse!(args)
+            path = args.shift
+            Shoes.logger.warn("Unexpected extra parameters '#{args.join(' ')}'") if args.any?
+
+            load path
+          end
         end
 
-        def self.help
-          help_from_options("shoes [options] file", options)
-        end
+        def parse!(args)
+          self.class.options.parse!(args)
+          true
+        rescue OptionParser::InvalidOption => e
+          puts "Whoops! #{e.message}"
+          puts
+          puts self.class.help
 
-        def options
-          self.class.options
+          false
         end
 
         def self.options
@@ -34,6 +41,10 @@ class Shoes
               Shoes.configuration.fail_fast = true
             end
           end
+        end
+
+        def self.help
+          help_from_options("shoes [options] file", options)
         end
       end
     end
