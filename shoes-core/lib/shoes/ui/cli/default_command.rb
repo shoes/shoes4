@@ -5,10 +5,8 @@ class Shoes
       class DefaultCommand < BaseCommand
         def run
           if parse!(args)
-            path = args.shift
-            Shoes.logger.warn("Unexpected extra parameters '#{args.join(' ')}'") if args.any?
-
-            load path
+            warn_on_unexpected_parameters
+            load args.first
           end
         end
 
