@@ -9,10 +9,10 @@ class Shoes
           @args = args
         end
 
-        def warn_on_unexpected_parameters
-          return unless args.size > 1
+        def warn_on_unexpected_parameters(expected_size = 1)
+          return unless args.size > expected_size
 
-          unexpected = args[1..-1].join(" ")
+          unexpected = args[expected_size..-1].join(" ")
           Shoes.logger.warn("Unexpected extra parameters '#{unexpected}'")
         end
 

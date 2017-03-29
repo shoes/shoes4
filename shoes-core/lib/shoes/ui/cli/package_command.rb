@@ -7,6 +7,8 @@ class Shoes
           @packager = Shoes::Packager.new
           @packager.parse!(args)
 
+          warn_on_unexpected_parameters(2)
+
           path = args[1]
           @packager.run(path)
         end
