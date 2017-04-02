@@ -7,13 +7,19 @@ class Shoes
       def initialize(dsl)
         @dsl  = dsl
         @gems = []
+        @packages = []
       end
 
-      def create_package(program_name, package)
-        unless package =~ /^(swt):(app|jar)$/
-          abort("#{program_name}: Can't package as '#{package}'. See '#{program_name} --help'")
+      def options
+        OptionParser.new do |opts|
+          opts.on('--jar', 'Package as executable JAR file') do
+            @packages << :jar
+          end
+
+          opts.on('--mac', 'Package as OS X application') do
+            @packages << :mac
+          end
         end
-        package.split(':')
       end
 
       def run(path)
@@ -26,39 +32,11 @@ class Shoes
           abort "shoes: #{e.message}"
         end
 
-        @dsl.packages.each do |backend, wrapper|
-          puts "Packaging #{backend}:#{wrapper}..."
-          packager = ::Shoes::Package.create_packager(config, wrapper)
+        @packages.each do |package_type|
+          puts "Packaging #{package_type}..."
+          packager = ::Shoes::Package.create_packager(config, package_type)
           packager.package
         end
-      end
-
-      def help(program_name)
-        <<-EOS
-
-    Package types:
-#{package_types}
-    Examples:
-#{examples(program_name)}
-        EOS
-      end
-
-      def package_types
-        <<-EOS
-    swt:app     A standalone OS X executable with the Swt backend
-    swt:jar     An executable JAR with the Swt backend
-        EOS
-      end
-
-      def examples(program_name)
-        <<-EOS
-    To run a Shoes app:
-      #{program_name} path/to/shoes-app.rb
-
-    Two ways to package a Shoes app as an APP and a JAR, using the Swt backend:
-      #{program_name} -p swt:app -p swt:jar path/to/app.yaml
-      #{program_name} -p swt:app -p swt:jar path/to/shoes-app.rb
-          EOS
       end
     end
   end

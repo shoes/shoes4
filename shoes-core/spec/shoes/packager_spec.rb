@@ -4,11 +4,6 @@ require 'spec_helper'
 describe Shoes::Packager do
   subject { Shoes::Packager.new }
 
-  it "creates packages" do
-    expect(subject.backend).to receive(:create_package).and_call_original
-    subject.create_package("program", "swt:app")
-  end
-
   if defined?(::Bundler)
     it "detects Bundler and includes gems" do
       expect(subject.backend.gems).to_not be_empty
@@ -27,10 +22,5 @@ describe Shoes::Packager do
   it "delegates run" do
     expect(subject.backend).to receive(:run)
     subject.run("path/to/shoes/app.rb")
-  end
-
-  it "delegates help" do
-    expect(subject.backend).to receive(:help)
-    subject.help("program")
   end
 end
