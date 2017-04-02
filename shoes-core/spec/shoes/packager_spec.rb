@@ -28,9 +28,4 @@ describe Shoes::Packager do
     expect(subject.backend).to receive(:run)
     subject.run("path/to/shoes/app.rb")
   end
-
-  it "delegates help" do
-    expect(subject.backend).to receive(:help)
-    subject.help("program")
-  end
 end

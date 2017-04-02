@@ -44,10 +44,5 @@ class Shoes
     rescue => e
       Shoes.logger.error "Looking up gems for packaging failed:\n#{e.message}"
     end
-
-    def help(program_name)
-      return "" if @backend.nil?
-      @backend.help(program_name)
-    end
   end
 end
