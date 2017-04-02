@@ -24,11 +24,6 @@ describe Shoes::Packager do
     puts "Skipping part of shoes-core/spec/shoes/packager_spec.rb because missing Bundler"
   end
 
-  it "knows to run packaging if it created one" do
-    subject.create_package("program", "swt:app")
-    expect(subject.should_package?).to eq(true)
-  end
-
   it "delegates run" do
     expect(subject.backend).to receive(:run)
     subject.run("path/to/shoes/app.rb")

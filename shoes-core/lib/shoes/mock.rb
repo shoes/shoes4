@@ -1,4 +1,12 @@
 # frozen_string_literal: true
+
+class Shoes
+  module Mock
+    def self.initialize_backend(*_)
+    end
+  end
+end
+
 require 'shoes/mock/common_methods'
 require 'shoes/mock/clickable'
 
