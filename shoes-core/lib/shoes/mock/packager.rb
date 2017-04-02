@@ -4,12 +4,14 @@ class Shoes
     class Packager
       attr_accessor :gems
 
-      def initialize(_dsl)
-        @packages = []
+      def initialize(*_)
       end
 
-      def create_package(_, package)
-        @packages << package
+      def options
+        OptionParser.new
+      end
+
+      def create_package(*_)
       end
     end
   end

@@ -7,6 +7,15 @@ class Shoes
       def initialize(dsl)
         @dsl  = dsl
         @gems = []
+        @packages = []
+      end
+
+      def options
+        OptionParser.new do |opts|
+          opts.on('-p', '--package PACKAGE_TYPE', 'Package as BACKEND:PACKAGE') do |package|
+            @packages << create_package("shoes", package)
+          end
+        end
       end
 
       def create_package(program_name, package)
@@ -26,7 +35,7 @@ class Shoes
           abort "shoes: #{e.message}"
         end
 
-        @dsl.packages.each do |backend, wrapper|
+        @packages.each do |backend, wrapper|
           puts "Packaging #{backend}:#{wrapper}..."
           packager = ::Shoes::Package.create_packager(config, wrapper)
           packager.package

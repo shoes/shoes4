@@ -1,32 +1,21 @@
 # frozen_string_literal: true
 class Shoes
   class Packager
-    attr_reader :packages, :backend
+    attr_reader :backend
 
     def initialize
-      begin
-        @backend = Shoes.backend_for(self)
-        configure_gems
-      rescue ArgumentError
-        # Packaging unsupported by this backend
-      end
-      @packages = []
+      @backend = Shoes.backend_for(self)
+      configure_gems
+    rescue ArgumentError
+      # Packaging unsupported by this backend
     end
 
     def options
-      OptionParser.new do |opts|
-        opts.on('-p', '--package PACKAGE_TYPE', 'Package as BACKEND:PACKAGE') do |package|
-          create_package("shoes", package)
-        end
-      end
+      @backend.options
     end
 
     def parse!(args)
       options.parse!(args)
-    end
-
-    def create_package(program_name, package)
-      @packages << @backend.create_package(program_name, package)
     end
 
     def run(path)
