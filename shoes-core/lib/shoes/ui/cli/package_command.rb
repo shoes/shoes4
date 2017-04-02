@@ -11,6 +11,12 @@ class Shoes
 
           path = args[1]
           @packager.run(path)
+        rescue OptionParser::InvalidOption => e
+          puts "Whoops! #{e.message}"
+          puts
+          puts self.class.help
+
+          false
         end
 
         def self.help
