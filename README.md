@@ -148,13 +148,13 @@ That's Warbler talking. Actually, we sneak the Shoes gem in anyway, but don't te
 
 Okay, now for real. The simplest thing is to put your script in a directory by itself and then:
 
-    $ bin/shoes package -p swt:app path/to/directory-of/your-shoes-app.rb
+    $ bin/shoes package --mac path/to/directory-of/your-shoes-app.rb
 
 This will produce a Mac app, which you can then find at `path/to/directory-of/pkg/your-shoes-app.app`.
 
 You can also package a shoes app up as a jar through:
 
-    $ bin/shoes package -p swt:jar path/to/directory-of/your-shoes-app.rb
+    $ bin/shoes package --jar path/to/directory-of/your-shoes-app.rb
 
 You can find the jar in the same directory as above, i.e. path/to/directory-of/pkg/your-shoes-app.jar
 
@@ -164,9 +164,9 @@ If you want more control (like you want to name your app something besides "Shoe
 
 When you have an `app.yaml` file right next to your script, you have three options:
 
-    $ bin/shoes package -p swt:app path/to/directory-of/your-shoes-app.rb
-    $ bin/shoes package -p swt:app path/to/directory-of/app.yaml
-    $ bin/shoes package -p swt:app path/to/directory-of
+    $ bin/shoes package --mac path/to/directory-of/your-shoes-app.rb
+    $ bin/shoes package --mac path/to/directory-of/app.yaml
+    $ bin/shoes package --mac path/to/directory-of
 
 The packager will find your instructions using any of those commands. Again, you'll find your app in the `pkg` directory inside your project's directory. Find out more at `bin/shoes --help`.
 

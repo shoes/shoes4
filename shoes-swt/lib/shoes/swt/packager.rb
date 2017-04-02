@@ -12,17 +12,14 @@ class Shoes
 
       def options
         OptionParser.new do |opts|
-          opts.on('-p', '--package PACKAGE_TYPE', 'Package as BACKEND:PACKAGE') do |package|
-            @packages << create_package("shoes", package)
+          opts.on('--jar', 'Package as executable JAR file') do
+            @packages << :jar
+          end
+
+          opts.on('--mac', 'Package as OS X application') do
+            @packages << :mac
           end
         end
-      end
-
-      def create_package(program_name, package)
-        unless package =~ /^(swt):(app|jar)$/
-          abort("#{program_name}: Can't package as '#{package}'. See '#{program_name} --help'")
-        end
-        package.split(':')
       end
 
       def run(path)
@@ -35,9 +32,9 @@ class Shoes
           abort "shoes: #{e.message}"
         end
 
-        @packages.each do |backend, wrapper|
-          puts "Packaging #{backend}:#{wrapper}..."
-          packager = ::Shoes::Package.create_packager(config, wrapper)
+        @packages.each do |package_type|
+          puts "Packaging #{package_type}..."
+          packager = ::Shoes::Package.create_packager(config, package_type)
           packager.package
         end
       end
