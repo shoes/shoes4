@@ -19,6 +19,10 @@ class Shoes
           opts.on('--mac', 'Package as OS X application') do
             @packages << :mac
           end
+
+          opts.on('--windows', 'Package as Windows application') do
+            @packages << :windows
+          end
         end
       end
 
