@@ -33,11 +33,13 @@ class Shoes
       def apply_as_fill(gc, dsl)
         pattern = create_pattern(dsl)
         gc.set_background_pattern pattern
+        true
       end
 
       def apply_as_stroke(gc, dsl)
         pattern = create_pattern(dsl)
         gc.set_foreground_pattern pattern
+        true
       end
 
       private
