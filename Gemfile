@@ -8,6 +8,7 @@ gem 'shoes-package', path: 'shoes-package'
 
 gem 'shoes-manual'
 gem 'shoes-highlighter'
+gem 'furoshiki', git: 'https://github.com/shoes/furoshiki'
 
 group :development do
   gem "guard"
