@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'fileutils'
+
 class Shoes
   module Swt
     class Image
@@ -16,6 +18,7 @@ class Shoes
       def initialize(dsl, app)
         @dsl = dsl
         @app = app
+        @cleanup_files = []
         update_image
         add_paint_listener
       end
@@ -56,6 +59,8 @@ class Shoes
         @full_height       = @real.getImageData.height
         dsl.element_width  ||= default_width
         dsl.element_height ||= default_height
+
+        cleanup_temporary_files
       end
 
       def default_width
@@ -93,7 +98,7 @@ class Shoes
         data = if raw_image_data?(name_or_data)
                  load_raw_image_data(name_or_data)
                else
-                 name_or_data
+                 load_file_image_data(name_or_data)
                end
         create_image(data)
       end
@@ -112,12 +117,31 @@ class Shoes
         data
       end
 
+      # Why copy the file to a temporary location just to pass a different name
+      # to load? Because SWT doesn't like us when we're packaged!
+      #
+      # Apparently the warbler-style path names we end up with for relative
+      # image paths don't cross nicely to SWT, so we need to resolve the paths
+      # in Ruby-land before handing it over.
+      def load_file_image_data(name)
+        tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}_#{File.basename(name)}")
+        FileUtils.cp(name, tmpname)
+        @cleanup_files << tmpname
+        tmpname
+      end
+
       def add_paint_listener
         @painter = lambda do |event|
           graphics_context = event.gc
           graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.element_left, dsl.element_top, dsl.element_width, dsl.element_height unless @dsl.hidden
         end
         app.add_paint_listener(@painter)
+      end
+
+      def cleanup_temporary_files
+        @cleanup_files.each do |file|
+          FileUtils.rm(file)
+        end
       end
     end
   end
