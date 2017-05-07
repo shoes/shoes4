@@ -60,6 +60,7 @@ simple_polygon_line.rb
 simple_position_as_we_go.rb
 simple_progress_bar.rb
 simple_random_bubbles.rb
+simple_require.rb
 simple_sample_executor.rb
 simple_sesame_street_shoes.rb
 simple_shoes_intro.rb
