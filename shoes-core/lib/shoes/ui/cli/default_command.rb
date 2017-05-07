@@ -6,7 +6,12 @@ class Shoes
         def run
           if parse!(args)
             warn_on_unexpected_parameters
-            load args.first
+
+            path = args.first
+            if path
+              $LOAD_PATH.unshift(File.dirname(path))
+              load path
+            end
           end
         end
 
