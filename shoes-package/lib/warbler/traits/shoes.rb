@@ -33,6 +33,9 @@ module Warbler
         require 'shoes'
         require 'shoes/swt'
 
+        app_dir = File.join(__FILE__, "..", "..", "shoes-app")
+        $LOAD_PATH.unshift(app_dir)
+
         Shoes::Swt.initialize_backend
       EOS
 
