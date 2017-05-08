@@ -18,11 +18,27 @@ module Othello
     attr_accessor :p1, :p2, :board, :board_history
 
     def initialize
-      @board_history = []
-      @p1            = Player.new(:black, pieces_per_player)
-      @p2            = Player.new(:white, pieces_per_player)
-      @board         = new_board
-      lay_initial_pieces
+      if File.exists?("board.dump")
+        @p1            = Marshal.load(File.read("p1.dump"))
+        @p2            = Marshal.load(File.read("p2.dump"))
+        @current_player = Marshal.load(File.read("current_player.dump")).color == :black ? @p1 : @p2
+        @board         = Marshal.load(File.read("board.dump"))
+        @board_history = Marshal.load(File.read("board_history.dump"))
+      else
+        @p1            = Player.new(:black, pieces_per_player)
+        @p2            = Player.new(:white, pieces_per_player)
+        @board         = new_board
+        @board_history = []
+        lay_initial_pieces
+      end
+    end
+
+    def save
+      File.open("p1.dump", "w") { |f| f.write(Marshal.dump(@p1)) }
+      File.open("p2.dump", "w") { |f| f.write(Marshal.dump(@p2)) }
+      File.open("current_player.dump", "w") { |f| f.write(Marshal.dump(@current_player)) }
+      File.open("board.dump", "w") { |f| f.write(Marshal.dump(@board)) }
+      File.open("board_history.dump", "w") { |f| f.write(Marshal.dump(@board_history)) }
     end
 
     def next_turn(check_available_moves = true)
@@ -311,6 +327,7 @@ Shoes.app width: 520, height: 600 do
     if coords
       begin
         GAME.lay_piece(coords)
+        GAME.save
         GAME.next_turn
         draw_board
       rescue => e
