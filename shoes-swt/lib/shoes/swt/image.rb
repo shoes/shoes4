@@ -140,7 +140,11 @@ class Shoes
 
       def cleanup_temporary_files
         @cleanup_files.each do |file|
-          FileUtils.rm(file)
+          begin
+            FileUtils.rm(file)
+          rescue => e
+            Shoes.logger.debug("Error during image temp file cleanup.\n#{e.class}: #{e.message}")
+          end
         end
       end
     end
