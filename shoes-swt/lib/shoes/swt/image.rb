@@ -146,6 +146,7 @@ class Shoes
             Shoes.logger.debug("Error during image temp file cleanup.\n#{e.class}: #{e.message}")
           end
         end
+        @cleanup_files.clear
       end
     end
   end
