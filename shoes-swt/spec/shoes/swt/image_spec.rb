@@ -19,7 +19,7 @@ describe Shoes::Swt::Image do
 
   subject do
     allow(dsl).to receive(:file_path) { image }
-    Shoes::Swt::Image.new(dsl, swt_app)
+    dsl.gui
   end
 
   it_behaves_like "paintable"
@@ -96,6 +96,20 @@ describe Shoes::Swt::Image do
       it 'sets the given height' do
         expect(subject.height).to eq(2)
       end
+    end
+  end
+
+  describe 'temporary file cleanup' do
+    it 'happens after creation' do
+      expect(FileUtils).to receive(:rm)
+      subject
+    end
+
+    it 'suffers errors gladly' do
+      expect(Shoes.logger).to receive(:debug)
+      expect(FileUtils).to receive(:rm).and_raise("Heck")
+
+      subject
     end
   end
 end
