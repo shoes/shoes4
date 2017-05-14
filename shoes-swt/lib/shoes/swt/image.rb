@@ -50,7 +50,7 @@ class Shoes
 
       def display_temporary_download_image
         temporary_download_image = File.join(DIR, 'static/downloading.png')
-        create_image(temporary_download_image)
+        create_image(load_file_image_data(temporary_download_image))
       end
 
       def create_image(data)
