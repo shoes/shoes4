@@ -2,6 +2,7 @@
 class Shoes
   class Configuration
     class << self
+      attr_accessor :app_dir
       attr_writer :fail_fast
 
       def fail_fast
