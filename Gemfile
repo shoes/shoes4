@@ -6,9 +6,13 @@ gem 'shoes-core',   path: 'shoes-core'
 gem 'shoes-swt',    path: 'shoes-swt'
 gem 'shoes-package', path: 'shoes-package'
 
+gem 'furoshiki', git: 'https://github.com/shoes/furoshiki'
+
+# For local testing, clone to ../furoshiki and use this line instead
+# gem 'furoshiki', path: '../furoshiki'
+
 gem 'shoes-manual'
 gem 'shoes-highlighter'
-gem 'furoshiki', git: 'https://github.com/shoes/furoshiki'
 
 group :development do
   gem "guard"
