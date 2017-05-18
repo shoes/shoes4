@@ -10,7 +10,7 @@ class Shoes
         # image paths don't cross nicely to SWT, so we need to resolve the paths
         # in Ruby-land before handing it over.
         def load_file_image_data(name)
-          tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}_#{File.basename(name)}")
+          tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_i}_#{File.basename(name)}")
           FileUtils.cp(name, tmpname)
 
           @cleanup_files ||= []
