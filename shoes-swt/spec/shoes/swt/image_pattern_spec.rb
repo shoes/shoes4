@@ -14,6 +14,9 @@ describe Shoes::Swt::ImagePattern do
   before do
     allow(::Swt::Image).to receive(:new)   { swt_image }
     allow(::Swt::Pattern).to receive(:new) { swt_pattern }
+
+    allow(::FileUtils).to receive(:cp)
+    allow(::FileUtils).to receive(:rm)
   end
 
   describe "#dispose" do

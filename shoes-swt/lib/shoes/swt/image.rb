@@ -11,6 +11,7 @@ class Shoes
       include Common::PainterUpdatesPosition
       include Common::Visibility
       include Common::Remove
+      include Common::ImageHandling
       include ::Shoes::BackendDimensionsDelegations
 
       attr_reader :app, :real, :dsl, :painter
@@ -18,7 +19,6 @@ class Shoes
       def initialize(dsl, app)
         @dsl = dsl
         @app = app
-        @cleanup_files = []
         update_image
         add_paint_listener
       end
@@ -117,36 +117,12 @@ class Shoes
         data
       end
 
-      # Why copy the file to a temporary location just to pass a different name
-      # to load? Because SWT doesn't like us when we're packaged!
-      #
-      # Apparently the warbler-style path names we end up with for relative
-      # image paths don't cross nicely to SWT, so we need to resolve the paths
-      # in Ruby-land before handing it over.
-      def load_file_image_data(name)
-        tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_f}_#{File.basename(name)}")
-        FileUtils.cp(name, tmpname)
-        @cleanup_files << tmpname
-        tmpname
-      end
-
       def add_paint_listener
         @painter = lambda do |event|
           graphics_context = event.gc
           graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.element_left, dsl.element_top, dsl.element_width, dsl.element_height unless @dsl.hidden
         end
         app.add_paint_listener(@painter)
-      end
-
-      def cleanup_temporary_files
-        @cleanup_files.each do |file|
-          begin
-            FileUtils.rm(file)
-          rescue => e
-            Shoes.logger.debug("Error during image temp file cleanup.\n#{e.class}: #{e.message}")
-          end
-        end
-        @cleanup_files.clear
       end
     end
   end
