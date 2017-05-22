@@ -39,6 +39,5 @@ class Shoes
       return path_or_data if url?(path_or_data)
       absolute_file_path(path_or_data)
     end
-
   end
 end

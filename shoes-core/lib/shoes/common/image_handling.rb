@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shoes
   module Common
     module ImageHandling
@@ -10,8 +11,8 @@ class Shoes
       end
 
       def search_for(path, *locations)
-        found = locations.map  { |dir| File.join(dir, path) }
-          .find { |candidate| File.exist?(candidate) }
+        found = locations.map { |dir| File.join(dir, path) }
+                         .find { |candidate| File.exist?(candidate) }
 
         unless found
           raise FileNotFoundError, "#{path} not found. Searched #{locations.join(',')}"
