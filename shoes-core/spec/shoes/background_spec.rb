@@ -58,12 +58,13 @@ describe Shoes::Background do
       expect { dsl.background('#ffq') }.to raise_error('Bad hex color: #ffq')
     end
 
-    it 'ignores the background with no valid image' do
+    it 'ignores the background with no valid image but logs' do
+      expect(Shoes.logger).to receive(:error)
       expect { dsl.background('fake-shoes.jpg') }.not_to raise_error
     end
 
     it 'creates a Shoes::Background with a valid image' do
-      expect(dsl.background('static/shoes-icon.png')).to be_an_instance_of(Shoes::Background)
+      expect(dsl.background('shoes-icon.png')).to be_an_instance_of(Shoes::Background)
     end
   end
 end
