@@ -23,6 +23,10 @@ class Shoes
           opts.on('--windows', 'Package as Windows application') do
             @packages << :windows
           end
+
+          opts.on('--linux', 'Package as Linux application') do
+            @packages << :linux
+          end
         end
       end
 
