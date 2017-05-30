@@ -45,6 +45,7 @@ class Shoes
     #
     # @see Dimension#initialize
     def initialize(opts = {}, &blk)
+      ensure_app_dir_set
       @__app__ = Shoes::InternalApp.new(self, opts, &blk)
       @__app__.setup_gui
       Shoes.register self
@@ -104,6 +105,15 @@ class Shoes
     end
 
     private
+
+    # If we didn't arrive by any of our executables (shoes or packaging)
+    # treat the starting directory in our call tree as the app directory.
+    def ensure_app_dir_set
+      return if Shoes.configuration.app_dir
+
+      path, *_ = caller.last.split(":")
+      Shoes.configuration.app_dir = File.dirname(path)
+    end
 
     def inspect_details
       " \"#{@__app__.app_title}\""

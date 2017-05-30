@@ -2,6 +2,8 @@
 class Shoes
   class Color
     module DSLHelpers
+      include Common::ImageHandling
+
       def pattern(*args)
         if args.length == 1
           arg = args.first
@@ -81,7 +83,11 @@ class Shoes
       end
 
       def image_pattern(path)
+        path = absolute_file_path(path)
         Shoes::ImagePattern.new path if File.exist?(path)
+      rescue FileNotFoundError => e
+        Shoes.logger.error(e.message)
+        return nil
       end
     end
   end

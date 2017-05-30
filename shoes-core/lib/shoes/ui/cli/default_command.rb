@@ -10,6 +10,7 @@ class Shoes
             path = args.first
             if path
               $LOAD_PATH.unshift(File.dirname(path))
+              Shoes.configuration.app_dir = File.dirname(path)
               load path
             end
           end

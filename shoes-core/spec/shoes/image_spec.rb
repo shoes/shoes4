@@ -46,21 +46,34 @@ describe Shoes::Image do
   describe 'file source' do
     subject { Shoes::Image.new(app, parent, filename, input_opts) }
 
-    context 'invalid path' do
-      let(:filename) { 'something_crazy' }
-      it 'should raise an error' do
+    let(:app_dir) { "shoes-core/spec/shoes" }
+    before { Shoes.configuration.app_dir = app_dir }
+
+    describe 'invalid path' do
+      let(:filename) { 'does_not_exist' }
+      it 'raises an error' do
         expect { subject }.to raise_error Shoes::FileNotFoundError
       end
     end
 
-    context 'absolute path' do
+    describe 'absolute path' do
       let(:filename) { File.expand_path "../../../static/shoes-icon.png", __FILE__ }
       its(:file_path) { should eq filename }
     end
 
-    context 'relative path' do
+    describe 'relative to app directory' do
+      let(:filename) { 'images/shoe.jpg' }
+      its(:file_path) { should eq "#{app_dir}/#{filename}" }
+    end
+
+    describe 'relative to Dir.pwd' do
       let(:filename) { 'shoes-core/static/shoes-icon.png' }
       its(:file_path) { should eq "#{Dir.pwd}/#{filename}" }
+    end
+
+    describe 'relative to shoes-core/static' do
+      let(:filename) { 'shoes-icon.png' }
+      its(:file_path) { should eq File.expand_path("shoes-core/static/#{filename}") }
     end
 
     describe 'accepts web URL' do

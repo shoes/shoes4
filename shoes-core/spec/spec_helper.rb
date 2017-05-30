@@ -32,9 +32,11 @@ Dir[shared_examples].each { |f| require f }
 RSpec.configure do |config|
   config.before(:each) do
     @prior_fail_fast = Shoes.configuration.fail_fast
+    @prior_app_dir = Shoes.configuration.app_dir
   end
 
   config.after(:each) do
     Shoes.configuration.fail_fast = @prior_fail_fast
+    Shoes.configuration.app_dir = @prior_app_dir
   end
 end

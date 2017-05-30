@@ -3,6 +3,7 @@ class Shoes
   class Image < Common::UIElement
     include Common::Clickable
     include Common::Hover
+    include Common::ImageHandling
 
     BINARY_ENCODING = Encoding.find('binary')
 
@@ -37,12 +38,6 @@ class Shoes
       return path_or_data if raw_image_data?(path_or_data)
       return path_or_data if url?(path_or_data)
       absolute_file_path(path_or_data)
-    end
-
-    def absolute_file_path(path)
-      path = File.join(Dir.pwd, path) unless Pathname(path).absolute?
-      raise FileNotFoundError, "#{path} not found." unless File.exist?(path)
-      path
     end
   end
 end
