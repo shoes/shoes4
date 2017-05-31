@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+puts "STARTED"
+puts "Child process #{$$} started"
+
+sample = ARGV[0]
+parent = ARGV[1].to_i
+ready  = ARGV[2] == "true"
+
+require 'bundler/setup'
+require 'shoes'
+
+# Signal we expect from parent when we're set to go
+Signal.trap("HUP") do
+  ready = true
+end
+
+# Let parent know we're ready
+Process.kill("HUP", parent)
+
+# Wait until we're signaled
+until ready
+end
+
+puts "Running #{sample} in #{$$}"
+load sample

@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require 'open3'
+require 'thread'
+
+$signals = Queue.new
+
+Signal.trap("HUP") do
+  $signals << true
+end
+
+puts "Parent process #{$$}"
+
+def start(sample, ready = false)
+  return nil unless sample
+
+  Process.spawn("bin/run-sample #{sample} #{$$}")
+end
+
+def run(pid)
+  # Make sure child has signaled back before we tell it to proceed...
+  $signals.pop
+  Process.kill("HUP", pid)
+  Process.wait(pid)
+end
+
+samples = ARGV.dup
+
+current_child = start(samples.shift)
+next_child    = start(samples.shift)
+run(current_child)
+
+until next_child.nil?
+  current_child = next_child
+  next_child = start(samples.shift)
+  run(current_child)
+end
