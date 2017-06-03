@@ -1,6 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# Because of JRuby startup time, it can be a drag running all 100+ samples.
+# This helper alleviates some of the pain.
+#
+# The basic idea is to just have two processes running at all times--one
+# current, the other in a pending state waiting to be signaled to start up.
+# While you're using the current sample, the next process is getting through
+# the JRuby load-time... winning!
+#
 require 'thread'
 
 class SampleRunner
