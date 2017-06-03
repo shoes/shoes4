@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Because of JRuby startup time, it can be a drag running all 100+ samples.
+# This helper alleviates some of the pain.
+#
+# The basic idea is to just have two processes running at all times--one
+# current, the other in a pending state waiting to be signaled to start up.
+# While you're using the current sample, the next process is getting through
+# the JRuby load-time... winning!
+#
+require 'thread'
+
+class SampleRunner
+  def initialize(samples)
+    @samples = samples
+    @run_count = 0
+    @total_count = samples.count
+
+    @ready_signals = Queue.new
+    Signal.trap("HUP") do
+      @ready_signals << true
+    end
+  end
+
+  def start_child_process(sample)
+    return nil unless sample
+
+    @run_count += 1
+    Process.spawn("bin/run-sample #{sample} #{Process.pid} #{@run_count} #{@total_count}")
+  end
+
+  def run_process(pid)
+    # When we're done, you'll get a nil pid so bail
+    return unless pid
+
+    wait_for_child_to_signal_readiness
+
+    signal_child_to_proceed(pid)
+    wait_for_child_to_finish(pid)
+  end
+
+  def run
+    current_child = next_child = start_first_process
+
+    while current_child
+      current_child = next_child
+      next_child    = start_child_process(@samples.shift)
+      run_process(current_child)
+    end
+  end
+
+  # Because #1 and #2 start together, we must ensure we actually got #1's
+  # signal before starting #2. Wait on signal and restore it before going on.
+  def start_first_process
+    start_child_process(@samples.shift).tap do
+      @ready_signals.pop
+      @ready_signals << true
+    end
+  end
+
+  def wait_for_child_to_signal_readiness
+    @ready_signals.pop
+  end
+
+  def signal_child_to_proceed(pid)
+    Process.kill("HUP", pid)
+  end
+
+  def wait_for_child_to_finish(pid)
+    Process.wait(pid)
+  end
+end
+
+runner = SampleRunner.new(ARGV.dup)
+runner.run

@@ -22,14 +22,17 @@ namespace :samples do
 
   def run_sample(sample_name, index, total)
     puts "Running #{sample_name} (#{index + 1} of #{total})...quit to run next sample"
-    shoes_executable = ENV["SHOES_USE_INSTALLED"] ? "shoes" : "bin/shoes"
-    system "#{shoes_executable} #{sample_name}"
+    system "shoes #{sample_name}"
   end
 
   def run_samples(samples, start_with = 0)
-    samples.each_with_index do |sample, index|
-      next unless index >= start_with
-      run_sample(sample, index, samples.size)
+    if ENV["SHOES_USE_INSTALLED"]
+      samples.each_with_index do |sample, index|
+        next unless index >= start_with
+        run_sample(sample, index, samples.size)
+      end
+    else
+      system "bin/run-samples #{samples[start_with..-1].join(' ')}"
     end
   end
 
