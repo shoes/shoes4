@@ -24,9 +24,12 @@ simple_buttons.rb
 simple_button_animate.rb
 simple_calc.rb
 simple_calc_2.rb
+simple_clipboard.rb
 simple_color_selector.rb
 simple_color_transitions.rb
 simple_concentric_circles.rb
+simple_console.rb
+simple_control_sizes.rb
 simple_count_and_draw.rb
 simple_curve.rb
 simple_dialogs.rb
@@ -61,6 +64,7 @@ simple_position_as_we_go.rb
 simple_progress_bar.rb
 simple_random_bubbles.rb
 simple_require.rb
+simple_sample_executor_all.rb
 simple_sample_executor.rb
 simple_sesame_street_shoes.rb
 simple_shoes_intro.rb
