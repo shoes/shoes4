@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+#
+# Broken until https://github.com/shoes/shoes4/issues/527
+#
 Shoes.app do
   background black
 

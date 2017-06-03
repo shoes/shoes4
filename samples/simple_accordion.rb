@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+#
+# Broken until https://github.com/shoes/shoes4/issues/1440
+#
 module Accordion
   def open_page(stack)
     active = app.slot.contents.map { |x| x.contents[1] }
