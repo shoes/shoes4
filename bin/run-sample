@@ -1,14 +1,20 @@
 #!/usr/bin/env ruby
-
-puts "STARTED"
-puts "Child process #{$$} started"
+# frozen_string_literal: true
 
 sample = ARGV[0]
 parent = ARGV[1].to_i
-ready  = ARGV[2] == "true"
+index  = ARGV[2].to_i
+total  = ARGV[3].to_i
+ready  = false
 
 require 'bundler/setup'
 require 'shoes'
+
+# A few samples tamper with things so we need to force backend loading early
+$LOAD_PATH.unshift(File.dirname(sample))
+
+require 'shoes/swt'
+Shoes::Swt.initialize_backend
 
 # Signal we expect from parent when we're set to go
 Signal.trap("HUP") do
@@ -19,8 +25,7 @@ end
 Process.kill("HUP", parent)
 
 # Wait until we're signaled
-until ready
-end
+sleep 0.2 until ready
 
-puts "Running #{sample} in #{$$}"
+puts "Running #{sample} (#{index} of #{total})...quit to run next sample"
 load sample
