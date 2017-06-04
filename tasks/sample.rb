@@ -20,17 +20,20 @@ namespace :samples do
     result
   end
 
-  def run_sample(sample_name, index, total)
-    puts "Running #{sample_name} (#{index + 1} of #{total})...quit to run next sample"
-    system "shoes #{sample_name}"
+  def run_samples_by_executable(samples, start_with, executable)
+    samples.each_with_index do |sample, index|
+      next unless index >= start_with
+
+      puts "Running #{sample} (#{index + 1} of #{samples.size})...quit to run next sample"
+      system "#{executable} #{sample}"
+    end
   end
 
   def run_samples(samples, start_with = 0)
     if ENV["SHOES_USE_INSTALLED"]
-      samples.each_with_index do |sample, index|
-        next unless index >= start_with
-        run_sample(sample, index, samples.size)
-      end
+      run_samples_by_executable(samples, start_with, "shoes")
+    elsif RbConfig::CONFIG['host_os'] =~ /windows|mswin/i
+      run_samples_by_executable(samples, start_with, "bin/shoes")
     else
       system "bin/run-samples #{samples[start_with..-1].join(' ')}"
     end
