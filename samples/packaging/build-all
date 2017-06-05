@@ -1,0 +1,7 @@
+#! /usr/bin/env sh
+
+find . -name pkg -exec rm -rf {} \;
+
+shoes package --jar --linux --mac --windows basic/package_me.rb
+shoes package --jar --linux --mac --windows star_wars
+shoes package --jar --linux --mac --windows imagine/imagine.rb

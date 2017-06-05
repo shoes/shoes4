@@ -1,0 +1,5 @@
+name: Star Wars
+shortname: star_wars
+ignore:
+  - 'pkg'
+run: app.rb
