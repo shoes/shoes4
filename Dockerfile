@@ -46,7 +46,6 @@ ADD ./docker/common/xfce/ $HOME/
 
 
 ### configure startup
-# RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./docker/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
