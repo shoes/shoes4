@@ -23,6 +23,10 @@ class Shoes
         self.fullscreen = true if @dsl.start_as_fullscreen?
       end
 
+      def open?
+        true
+      end
+
       def quit
       end
 
