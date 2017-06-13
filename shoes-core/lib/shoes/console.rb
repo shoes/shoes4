@@ -1,3 +1,4 @@
+require 'pry'
 # frozen_string_literal: true
 class Shoes
   class Console
@@ -20,16 +21,32 @@ class Shoes
     def create_app
       # Capture messages for access inside our app block
       messages = @messages
+      formatted_messages = method(:formatted_messages)
 
       @app = Shoes.app do
         @messages = messages
         @message_stacks = []
+        @formatted_messages = formatted_messages
 
         stack do
           flow do
             background black
             stack do
               tagline "Shoes Console", stroke: white
+            end
+
+            button "Copy", margin: 6, width: 80, height: 40, right: 170 do
+              self.clipboard = @formatted_messages.call if @messages.length > 0
+            end
+
+            button "Save", margin: 6, width: 80, height: 40, right: 90 do
+              filename = ask_save_file
+
+              if filename
+                File.open(filename, "w") do |f|
+                  f.write(@formatted_messages.call)
+                end
+              end
             end
 
             button "Clear", margin: 6, width: 80, height: 40, right: 10 do
@@ -85,6 +102,12 @@ class Shoes
             end
           end
         end
+      end
+    end
+
+    def formatted_messages
+      @messages.inject("") do |memo, (type, message)|
+        memo << "#{type.to_s.capitalize}\n #{message}\n\n"
       end
     end
   end
