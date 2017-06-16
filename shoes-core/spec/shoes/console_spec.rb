@@ -54,7 +54,7 @@ describe Shoes::Console do
 
   describe '#create app' do
     let(:console_app) do
-      console.instance_variable_set(:@messages, sample_message_array)
+      console.instance_variable_set(:@messages, sample_message_array.dup)
       console.create_app
       console.instance_variable_get(:@app).instance_variable_get(:@__app__)
     end
@@ -154,18 +154,18 @@ describe Shoes::Console do
   describe '#add_message' do
     before(:each) do
       allow(console).to receive(:add_message_stack) { |type, message, index| {type: type, message: message, index: index} }
-      console.instance_variable_set(:@messages, sample_message_array)
+      console.instance_variable_set(:@messages, sample_message_array.dup)
    end
 
     it 'must add input to @messages and call #add_message_stack' do
       expect(console.add_message(:error, 'test error message')).to eq(type: :error, message: 'test error message', index: 3)
-      expect(console.instance_variable_get(:@messages)).to eq(sample_message_array + [:error, 'test error message'])
+      expect(console.instance_variable_get(:@messages)).to eq(sample_message_array << [:error, 'test error message'])
     end
   end
 
   describe '#formatted_messages' do
     it 'must create string of messages formatted as they appear in console' do
-      console.instance_variable_set(:@messages, sample_message_array)
+      console.instance_variable_set(:@messages, sample_message_array.dup)
 
       expect(console.formatted_messages).to eq(formatted_message_output)
     end
