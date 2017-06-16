@@ -1,4 +1,3 @@
-require 'pry'
 # frozen_string_literal: true
 class Shoes
   class Console
@@ -107,7 +106,7 @@ class Shoes
 
     def formatted_messages
       @messages.inject("") do |memo, (type, message)|
-        memo << "#{type.to_s.capitalize}\n #{message}\n\n"
+         "#{memo}#{type.to_s.capitalize}\n #{message}\n\n"
       end
     end
   end
