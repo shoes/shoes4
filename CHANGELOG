@@ -1,7 +1,7 @@
 v4.0.0.pre10 (40 commits) (Jun 3, 2017)
 --------------------------------------------
 
-Improvements (_)
+Improvements (4)
 ----------------
 
 * Support packaging Linux app [d22b561]
@@ -9,7 +9,7 @@ Improvements (_)
 * Move to subcommands instead of CLI flags [370cc1b]
 * Faster sample running through `rake samples` [51c6762]
 
-Bug Fixes (_)
+Bug Fixes (3)
 -------------
 
 * Fix image loading for packaged apps [dd77724]
