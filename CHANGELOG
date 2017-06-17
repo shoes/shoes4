@@ -1,3 +1,28 @@
+v4.0.0.pre10 (40 commits) (Jun 3, 2017)
+--------------------------------------------
+
+Improvements (4)
+----------------
+
+* Support packaging Linux app [d22b561]
+* Support packaging Windows apps [d22b561]
+* Move to subcommands instead of CLI flags [370cc1b]
+* Faster sample running through `rake samples` [51c6762]
+
+Bug Fixes (3)
+-------------
+
+* Fix image loading for packaged apps [dd77724]
+* Include script dir in image search paths [1d124b3]
+* Include script dir in $LOAD_PATH [d21125b]
+
+Contributors (5)
+----------------
+
+Jason R. Clark, Tobias Pfeiffer, Michael Dimmitt, Olle Jonsson, William Hatcher
+
+
+
 v4.0.0.pre9 (61 commits) (Mar 19, 2017)
 ---------------------------------------------
 
