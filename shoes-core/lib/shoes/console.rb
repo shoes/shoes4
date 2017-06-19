@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 class Shoes
   class Console
+    attr_reader :messages, :message_stacks
+
     def initialize
       @messages = []
+      @message_stacks = []
     end
 
     def show
@@ -18,14 +21,11 @@ class Shoes
     end
 
     def create_app
-      # Capture messages for access inside our app block
-      messages = @messages
-      formatted_messages = method(:formatted_messages)
+      # Capture ourself for access inside our app block
+      console = self
 
       @app = Shoes.app do
-        @messages = messages
-        @message_stacks = []
-        @formatted_messages = formatted_messages
+        @console = console
 
         stack do
           flow do
@@ -35,24 +35,15 @@ class Shoes
             end
 
             button "Copy", margin: 6, width: 80, height: 40, right: 170 do
-              self.clipboard = @formatted_messages.call if @messages.length > 0
+              @console.copy
             end
 
             button "Save", margin: 6, width: 80, height: 40, right: 90 do
-              filename = ask_save_file
-
-              if filename
-                File.open(filename, "w") do |f|
-                  f.write(@formatted_messages.call)
-                end
-              end
+              @console.save
             end
 
             button "Clear", margin: 6, width: 80, height: 40, right: 10 do
-              @messages.clear
-
-              @message_stacks.each(&:remove)
-              @message_stacks.clear
+              @console.clear
             end
           end
         end
@@ -89,7 +80,7 @@ class Shoes
 
       @app.instance_exec do
         append do
-          @message_stacks << stack do
+          @console.message_stacks << stack do
             background "#f1f5e1" if index.even?
             background rgb(220, 220, 220) if index.odd?
             para type, stroke: blue
@@ -108,6 +99,27 @@ class Shoes
       @messages.inject("") do |memo, (type, message)|
          "#{memo}#{type.to_s.capitalize}\n #{message}\n\n"
       end
+    end
+
+    def copy
+      @app.clipboard = formatted_messages if messages.any?
+    end
+
+    def save
+      filename = @app.ask_save_file
+
+      if filename
+        File.open(filename, "w") do |f|
+          f.write(formatted_messages)
+        end
+      end
+    end
+
+    def clear
+      messages.clear
+
+      message_stacks.each(&:remove)
+      message_stacks.clear
     end
   end
 end
