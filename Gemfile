@@ -22,7 +22,7 @@ group :development do
   gem "pry"
   gem "pry-nav"
 
-  gem "rspec", "~>3.5.0"
+  gem "rspec", "~>3.6.0"
   gem "rspec-its", "~>1.2.0"
   gem "rake"
 
