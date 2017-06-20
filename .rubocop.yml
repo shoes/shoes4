@@ -14,6 +14,10 @@ Layout/EmptyLineBetweenDefs:
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 
+# Doesn't work properly against Windows which lacks the execute permission bit
+Lint/ScriptPermission:
+  Enabled: false
+
 # IRB sample is a rare example where we need to use eval
 Security/Eval:
   Exclude:
