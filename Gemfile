@@ -22,11 +22,11 @@ group :development do
   gem "pry"
   gem "pry-nav"
 
-  gem "rspec", "~>3.5.0"
+  gem "rspec", "~>3.6.0"
   gem "rspec-its", "~>1.2.0"
   gem "rake"
 
-  gem "rubocop", "0.47.1"
+  gem "rubocop", "0.49.1"
 
   gem "yard"
   gem "kramdown"
