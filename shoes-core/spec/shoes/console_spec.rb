@@ -53,13 +53,13 @@ describe Shoes::Console do
   end
 
   describe '#create app' do
-    let(:console_app) do
+    let!(:console_app) do
       console.instance_variable_set(:@messages, sample_message_array.dup)
       console.create_app
       console.instance_variable_get(:@app).instance_variable_get(:@__app__)
     end
 
-    let(:console_app_nested_contents) { console_app.contents.first.contents.first.contents }
+    let!(:console_app_nested_contents) { console_app.contents.first.contents.first.contents }
 
     context 'the contents ordering' do
       it 'must start with a background object' do
@@ -77,7 +77,7 @@ describe Shoes::Console do
 
     describe 'copy button' do
       context 'when @messages present' do
-        it 'must set self.clipboard to @formatted_messages and return it' do
+        it 'must set self.clipboard to @formatted_messages and return it', no_swt: true do
           returned = call_button_mock_block(console_app_nested_contents[2])
 
           expect(returned).to eq(formatted_message_output)
@@ -85,22 +85,18 @@ describe Shoes::Console do
       end
 
       context 'when @messages empty' do
-        it 'must return nil' do
-          console_app.app.instance_exec do
-            append do
-              @messages = []
-            end
-          end
+        it 'must return nil', no_swt: true do
+          console.instance_variable_set(:@messages, [])
+          console.instance_variable_set(:@message_stacks, [])
 
           returned = call_button_mock_block(console_app_nested_contents[2])
-
           expect(returned).to eq(nil)
         end
       end
     end
 
     describe 'save button' do
-      it 'must create file with contents of @formatted_messages and return character count' do
+      it 'must create file with contents of @formatted_messages and return character count', no_swt: true do
         returned_character_count = call_button_mock_block(console_app_nested_contents[3])
 
         expect(returned_character_count).to eq(formatted_message_output.length)
@@ -110,11 +106,11 @@ describe Shoes::Console do
     end
 
     describe 'clear button' do
-      it 'must clear @messages and @message_stacks' do
+      it 'must clear @messages and @message_stacks', no_swt: true do
         call_button_mock_block(console_app_nested_contents[4])
 
-        expect(console.instance_variable_get(:@app).instance_variable_get(:@messages)).to eq([])
-        expect(console.instance_variable_get(:@app).instance_variable_get(:@message_stacks)).to eq([])
+        expect(console.instance_variable_get(:@messages)).to eq([])
+        expect(console.instance_variable_get(:@message_stacks)).to eq([])
       end
     end
   end
@@ -170,4 +166,50 @@ describe Shoes::Console do
       expect(console.formatted_messages).to eq(formatted_message_output)
     end
   end
+
+
+    describe '#copy' do
+      context 'when @messages present' do
+        it 'must set self.clipboard to @formatted_messages and return it' do
+          console.instance_variable_set(:@messages, sample_message_array.dup)
+          console.create_app
+
+          expect(console.copy).to eq(formatted_message_output)
+        end
+      end
+
+      context 'when @messages empty' do
+        it 'must return nil' do
+          console.instance_variable_set(:@messages, [])
+          console.create_app
+
+          expect(console.copy).to eq(nil)
+        end
+      end
+    end
+
+    describe '#save', no_swt: true do
+      it 'must create file with contents of @formatted_messages and return character count' do
+        console.instance_variable_set(:@messages, sample_message_array.dup)
+        console.create_app
+
+        returned_character_count = console.save
+
+        expect(returned_character_count).to eq(formatted_message_output.length)
+        expect(File.open(mock_dialog, 'r').read).to eq(formatted_message_output)
+        File.delete(mock_dialog)
+      end
+    end
+
+    describe '#clear' do
+      it 'must clear @messages and @message_stacks' do
+        console.instance_variable_set(:@messages, sample_message_array.dup)
+        console.create_app
+
+        console.clear
+
+        expect(console.instance_variable_get(:@messages)).to eq([])
+        expect(console.instance_variable_get(:@message_stacks)).to eq([])
+      end
+    end
 end
