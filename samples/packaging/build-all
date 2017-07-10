@@ -1,0 +1,11 @@
+#! /usr/bin/env sh
+
+find . -name pkg -exec rm -rf {} \;
+
+shoes package --jar --linux --mac --windows basic/package_me.rb
+shoes package --jar --linux --mac --windows star_wars
+shoes package --jar --linux --mac --windows imagine/imagine.rb
+
+# https://github.com/shoes/shoes4/issues/1452
+cd ./actively_supported
+shoes package --jar --linux --mac --windows actively_supported.rb
