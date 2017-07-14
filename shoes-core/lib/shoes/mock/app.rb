@@ -27,6 +27,10 @@ class Shoes
         true
       end
 
+      def focus
+        true
+      end
+
       def quit
       end
 

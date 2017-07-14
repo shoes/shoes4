@@ -8,109 +8,42 @@ describe Shoes::Console do
     button_content.gui.instance_variable_get(:@mock_clickable_block).call
   end
 
-  let(:console) { Shoes.console }
+  let(:console) { Shoes::Console.new }
 
   let(:sample_message_array) { [[:debug, 'debug message'], [:warn, 'warn message'], [:error, 'error message']] }
-  let(:formatted_message_output){ "Debug\n debug message\n\nWarn\n warn message\n\nError\n error message\n\n" }
+  let(:formatted_message_output) { "Debug\n debug message\n\nWarn\n warn message\n\nError\n error message\n\n" }
 
   let(:mock_dialog) { Shoes::Mock::Dialog.new.dialog_chooser }
 
-  before(:each) do
-    # Depending on spec order, these can be leftover and contaminate other specs
-    console.instance_variable_set(:@app, nil)
-    console.instance_variable_set(:@messages, [])
-  end
-
   describe '#initialize' do
     it 'must reset @messages as []' do
-      console.instance_variable_set(:@messages, ['placeholder'])
+      console.messages << 'placeholder'
       console.send(:initialize)
-      expect(console.instance_variable_get(:@messages)).to eq([])
+      expect(console.messages).to eq([])
     end
   end
 
   describe '#show' do
+    let(:app) { Shoes.app }
+
     before(:each) do
       allow(console).to receive(:create_app) { :create_app_called }
-      console.instance_variable_set(:@app, OpenStruct.new(focus: :app_focus_called))
+      console.instance_variable_set(:@app, app)
     end
 
-    context 'when #showing? is true' do
-      before(:each) { allow(console).to receive(:showing?) { true } }
-
+    context 'when app.open? is true' do
       it 'must call @app.focus' do
-        expect(console.show).to eq(:app_focus_called)
+        allow(app).to receive(:open?) { true }
+        expect(app).to receive(:focus)
+        console.show
       end
     end
 
     context 'when #showing? is false' do
-      before(:each) { allow(console).to receive(:showing?) { false } }
-
-      it 'must call @app.focus' do
-        expect(console.show).to eq(:create_app_called)
-      end
-    end
-  end
-
-  describe '#create app' do
-    let!(:console_app) do
-      console.instance_variable_set(:@messages, sample_message_array.dup)
-      console.create_app
-      console.instance_variable_get(:@app).instance_variable_get(:@__app__)
-    end
-
-    let!(:console_app_nested_contents) { console_app.contents.first.contents.first.contents }
-
-    context 'the contents ordering' do
-      it 'must start with a background object' do
-        expect(console_app_nested_contents.first.class).to eq(Shoes::Background)
-      end
-
-      it 'must have the second item be a stack' do
-        expect(console_app_nested_contents[1].class).to eq(Shoes::Stack)
-      end
-
-      it 'must have the last three be button objects' do
-        expect(console_app_nested_contents[2..4].map(&:class)).to eq([Shoes::Button, Shoes::Button, Shoes::Button])
-      end
-    end
-
-    describe 'copy button' do
-      context 'when @messages present' do
-        it 'must set self.clipboard to @formatted_messages and return it', no_swt: true do
-          returned = call_button_mock_block(console_app_nested_contents[2])
-
-          expect(returned).to eq(formatted_message_output)
-        end
-      end
-
-      context 'when @messages empty' do
-        it 'must return nil', no_swt: true do
-          console.instance_variable_set(:@messages, [])
-          console.instance_variable_set(:@message_stacks, [])
-
-          returned = call_button_mock_block(console_app_nested_contents[2])
-          expect(returned).to eq(nil)
-        end
-      end
-    end
-
-    describe 'save button' do
-      it 'must create file with contents of @formatted_messages and return character count', no_swt: true do
-        returned_character_count = call_button_mock_block(console_app_nested_contents[3])
-
-        expect(returned_character_count).to eq(formatted_message_output.length)
-        expect(File.open(mock_dialog, 'r').read).to eq(formatted_message_output)
-        File.delete(mock_dialog)
-      end
-    end
-
-    describe 'clear button' do
-      it 'must clear @messages and @message_stacks', no_swt: true do
-        call_button_mock_block(console_app_nested_contents[4])
-
-        expect(console.instance_variable_get(:@messages)).to eq([])
-        expect(console.instance_variable_get(:@message_stacks)).to eq([])
+      it 'must call #create_app' do
+        allow(app).to receive(:open?) { false }
+        expect(console).to receive(:create_app)
+        console.show
       end
     end
   end
@@ -151,7 +84,7 @@ describe Shoes::Console do
     before(:each) do
       allow(console).to receive(:add_message_stack) { |type, message, index| {type: type, message: message, index: index} }
       console.instance_variable_set(:@messages, sample_message_array.dup)
-   end
+    end
 
     it 'must add input to @messages and call #add_message_stack' do
       expect(console.add_message(:error, 'test error message')).to eq(type: :error, message: 'test error message', index: 3)
@@ -167,49 +100,48 @@ describe Shoes::Console do
     end
   end
 
-
-    describe '#copy' do
-      context 'when @messages present' do
-        it 'must set self.clipboard to @formatted_messages and return it' do
-          console.instance_variable_set(:@messages, sample_message_array.dup)
-          console.create_app
-
-          expect(console.copy).to eq(formatted_message_output)
-        end
-      end
-
-      context 'when @messages empty' do
-        it 'must return nil' do
-          console.instance_variable_set(:@messages, [])
-          console.create_app
-
-          expect(console.copy).to eq(nil)
-        end
-      end
-    end
-
-    describe '#save', no_swt: true do
-      it 'must create file with contents of @formatted_messages and return character count' do
+  describe '#copy' do
+    context 'when @messages present' do
+      it 'must set self.clipboard to @formatted_messages and return it' do
         console.instance_variable_set(:@messages, sample_message_array.dup)
         console.create_app
 
-        returned_character_count = console.save
-
-        expect(returned_character_count).to eq(formatted_message_output.length)
-        expect(File.open(mock_dialog, 'r').read).to eq(formatted_message_output)
-        File.delete(mock_dialog)
+        expect(console.copy).to eq(formatted_message_output)
       end
     end
 
-    describe '#clear' do
-      it 'must clear @messages and @message_stacks' do
-        console.instance_variable_set(:@messages, sample_message_array.dup)
+    context 'when @messages empty' do
+      it 'must return nil' do
+        console.instance_variable_set(:@messages, [])
         console.create_app
 
-        console.clear
-
-        expect(console.instance_variable_get(:@messages)).to eq([])
-        expect(console.instance_variable_get(:@message_stacks)).to eq([])
+        expect(console.copy).to eq(nil)
       end
     end
+  end
+
+  describe '#save', no_swt: true do
+    it 'must create file with contents of @formatted_messages and return character count' do
+      console.instance_variable_set(:@messages, sample_message_array.dup)
+      console.create_app
+
+      returned_character_count = console.save
+
+      expect(returned_character_count).to eq(formatted_message_output.length)
+      expect(File.open(mock_dialog, 'r').read).to eq(formatted_message_output)
+      File.delete(mock_dialog)
+    end
+  end
+
+  describe '#clear' do
+    it 'must clear @messages and @message_stacks' do
+      console.instance_variable_set(:@messages, sample_message_array.dup)
+      console.create_app
+
+      console.clear
+
+      expect(console.instance_variable_get(:@messages)).to eq([])
+      expect(console.instance_variable_get(:@message_stacks)).to eq([])
+    end
+  end
 end
