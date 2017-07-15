@@ -52,7 +52,12 @@ class Shoes
         end
       end
 
+      def dispose
+        clear_path
+      end
+
       def clear_path
+        @path.dispose unless @path.nil? || @path.disposed?
         @path = nil
       end
     end

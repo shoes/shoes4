@@ -35,4 +35,9 @@ describe Shoes::Swt::ArrowPainter do
     expect(gc).to receive(:fill_path).with(subject.path)
     subject.paint_control(event)
   end
+
+  it "disposes when clearing path" do
+    expect(subject.path).to receive(:dispose)
+    subject.clear_path
+  end
 end
