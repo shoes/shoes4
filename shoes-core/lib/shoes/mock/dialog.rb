@@ -7,7 +7,7 @@ class Shoes
       end
 
       def dialog_chooser(*_args)
-        'test_file_delete_after'
+        "#{Dir.tmpdir}/test_file_delete_after"
       end
 
       def confirm(_msg = '')
