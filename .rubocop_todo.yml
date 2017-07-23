@@ -247,9 +247,3 @@ Style/SafeNavigation:
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/YodaCondition:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/gradient.rb'
