@@ -88,23 +88,23 @@ class Shoes
       end
 
       def alt?(event)
-        is_this_modifier_key?(event, ::Swt::SWT::ALT)
+        this_modifier_key?(event, ::Swt::SWT::ALT)
       end
 
       def control?(event)
-        is_this_modifier_key?(event, ::Swt::SWT::CTRL)
+        this_modifier_key?(event, ::Swt::SWT::CTRL)
       end
 
       def shift?(event)
-        is_this_modifier_key?(event, ::Swt::SWT::SHIFT)
+        this_modifier_key?(event, ::Swt::SWT::SHIFT)
       end
 
       def super?(event)
-        is_this_modifier_key?(event, ::Swt::SWT::COMMAND)
+        this_modifier_key?(event, ::Swt::SWT::COMMAND)
       end
 
       # NOTE: state_mask and key_code error for me so the java version is used
-      def is_this_modifier_key?(event, key)
+      def this_modifier_key?(event, key)
         (event.stateMask & key) == key
       end
 
