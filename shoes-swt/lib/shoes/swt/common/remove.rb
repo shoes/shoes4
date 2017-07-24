@@ -12,7 +12,7 @@ class Shoes
         end
 
         def dispose_held_resources
-          @color_factory.dispose unless @color_factory.nil?
+          @color_factory&.dispose
         end
 
         # Classes should override to dispose of any Swt resources they create

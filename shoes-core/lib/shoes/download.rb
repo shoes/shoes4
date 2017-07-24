@@ -56,7 +56,7 @@ class Shoes
 
     # needed for the specs (jay multi threading and specs)
     def join_thread
-      @thread.join unless @thread.nil?
+      @thread&.join
     end
 
     def percent
@@ -65,7 +65,7 @@ class Shoes
     end
 
     def abort
-      @thread.exit if @thread
+      @thread&.exit
     end
 
     # shoes 3 compatibility

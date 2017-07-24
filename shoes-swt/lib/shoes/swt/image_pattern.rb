@@ -10,8 +10,8 @@ class Shoes
       end
 
       def dispose
-        @image.dispose if @image
-        @pattern.dispose if @pattern
+        @image&.dispose
+        @pattern&.dispose
       end
 
       # Since colors are bound up (at least in specs) with image patterns,

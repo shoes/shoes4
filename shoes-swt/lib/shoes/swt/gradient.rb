@@ -10,8 +10,8 @@ class Shoes
       end
 
       def dispose
-        @color1.dispose if @color1
-        @color2.dispose if @color2
+        @color1&.dispose
+        @color2&.dispose
 
         @patterns.each do |pattern|
           pattern.dispose unless pattern.disposed?

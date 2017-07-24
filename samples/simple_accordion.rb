@@ -9,7 +9,7 @@ module Accordion
     return if active == stack
     a = animate 60 do
       stack.height += 20
-      active.height = 240 - stack.height if active
+      active&.height = 240 - stack.height
       a.stop if stack.height == 240
     end
   end

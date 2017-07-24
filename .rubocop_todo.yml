@@ -227,19 +227,6 @@ Style/PredicateName:
     - 'spec/**/*'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'samples/simple_accordion.rb'
-    - 'shoes-core/lib/shoes/common/remove.rb'
-    - 'shoes-core/lib/shoes/download.rb'
-    - 'shoes-swt/lib/shoes/swt/common/remove.rb'
-    - 'shoes-swt/lib/shoes/swt/common/resource.rb'
-    - 'shoes-swt/lib/shoes/swt/common/stroke.rb'
-    - 'shoes-swt/lib/shoes/swt/gradient.rb'
-    - 'shoes-swt/lib/shoes/swt/image_pattern.rb'
 
 # Offense count: 17
 # Cop supports --auto-correct.
