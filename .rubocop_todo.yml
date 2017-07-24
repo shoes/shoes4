@@ -191,13 +191,6 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
 
-# # Offense count: 29
-# # Cop supports --auto-correct.
-# # Configuration parameters: AutoCorrect, EnforcedStyle, SupportedStyles.
-# # SupportedStyles: predicate, comparison
-# Style/NumericPredicate:
-#   Enabled: false
-
 # Offense count: 18
 # Cop supports --auto-correct.
 # Configuration parameters: PreferredDelimiters.
