@@ -42,7 +42,7 @@ class Leia < SimpleDelegator
     return if @animate_leia
 
     @animate_leia = animate do
-      if (@leia_saber1.height > 150 && value > 0) || (@leia_saber1.height < 1 && value < 0)
+      if (@leia_saber1.height > 150 && value.positive?) || (@leia_saber1.height < 1 && value.negative?)
         @animate_leia.stop
         @animate_leia = nil
       else

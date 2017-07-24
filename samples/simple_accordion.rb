@@ -5,7 +5,7 @@
 module Accordion
   def open_page(stack)
     active = app.slot.contents.map { |x| x.contents[1] }
-                .detect { |x| x.height > 0 }
+                .detect { |x| x.height.positive? }
     return if active == stack
     a = animate 60 do
       stack.height += 20
