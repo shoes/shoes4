@@ -136,17 +136,6 @@ Style/AccessorMethodName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/EmptyLiteral:
-  Exclude:
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/link_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl_app_context.rb'
-    - 'shoes-core/spec/shoes/shared_examples/slot.rb'
-    - 'shoes-core/spec/shoes/text_block_spec.rb'
-
 # Offense count: 89
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

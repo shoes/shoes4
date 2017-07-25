@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Shoes::App do
   let(:input_blk) { proc {} }
-  let(:opts) { Hash.new }
+  let(:opts) { {} }
   subject(:app) { Shoes::App.new(opts, &input_blk) }
 
   after do
@@ -32,7 +32,7 @@ describe Shoes::App do
     end
 
     context "defaults" do
-      let(:opts) { Hash.new }
+      let(:opts) { {} }
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
 
       it "sets width", :qt do

@@ -86,7 +86,7 @@ describe Shoes::Download do
     end
 
     context 'without content length' do
-      let(:response_headers) { Hash.new }
+      let(:response_headers) { {} }
 
       it 'does not call on progress, but called from content length and finish' do
         expect(download.gui).to have_received(:eval_block)
