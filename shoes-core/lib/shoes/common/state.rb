@@ -14,7 +14,7 @@ class Shoes
       end
 
       def enabled?
-        !(state.to_s == DISABLED_STATE)
+        state.to_s != DISABLED_STATE
       end
 
       def update_from_state

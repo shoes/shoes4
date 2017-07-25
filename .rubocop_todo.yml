@@ -165,17 +165,6 @@ Style/FormatStringToken:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'samples/expert_minesweeper.rb'
-    - 'shoes-core/lib/shoes/common/state.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
-    - 'tasks/sample.rb'
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:
