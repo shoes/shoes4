@@ -155,14 +155,6 @@ Style/EmptyMethod:
   Enabled: false
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: format, sprintf, percent
-Style/FormatString:
-  Exclude:
-    - 'shoes-core/lib/shoes/common/inspect.rb'
-
-# Offense count: 1
 # Configuration parameters: SupportedStyles.
 # SupportedStyles: annotated, template
 Style/FormatStringToken:

@@ -26,7 +26,7 @@ class Shoes
       end
 
       def hexy_object_id
-        sprintf('0x%08x', object_id * 2)
+        format('0x%08x', object_id * 2)
       end
     end
   end
