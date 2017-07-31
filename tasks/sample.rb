@@ -4,7 +4,7 @@ SAMPLES_DIR = "samples"
 namespace :samples do
   def samples_from_file(filename)
     samples = File.read("#{SAMPLES_DIR}/#{filename}").lines
-    samples.map { |s| s.sub(/#.*$/, '') }.map(&:strip).select { |s| s != '' }.map { |s| "#{SAMPLES_DIR}/#{s}" }
+    samples.map { |s| s.sub(/#.*$/, '') }.map(&:strip).reject { |s| s == '' }.map { |s| "#{SAMPLES_DIR}/#{s}" }
   end
 
   def working_samples

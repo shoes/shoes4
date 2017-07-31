@@ -89,7 +89,7 @@ class Shoes
     end
 
     def bump_parent_current_position(height_delta)
-      return unless height_delta > 0
+      return unless height_delta.positive?
       return unless parent.respond_to?(:bump_current_position)
 
       parent.bump_current_position(self, height_delta)

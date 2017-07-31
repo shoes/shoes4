@@ -31,11 +31,11 @@ class Shoes
       end
 
       def rounded?
-        (@obj.corners || 0) > 0
+        (@obj.corners || 0).positive?
       end
 
       def strokewidth?
-        (@obj.dsl.style[:strokewidth] || 0) > 0
+        (@obj.dsl.style[:strokewidth] || 0).positive?
       end
     end
   end

@@ -28,7 +28,7 @@ Shoes.app title: 'Snake Game v0.1' do
     n = @snake.length > 1 ? 1 : 0
     @snake[0].move @snake[n].left + x, @snake[n].top + y
     @snake[0].style stroke: red
-    @snake[1].style stroke: white if n > 0
+    @snake[1].style stroke: white if n.positive?
   end
 
   def check_food

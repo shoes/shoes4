@@ -79,7 +79,7 @@ class Shoes
 
         until candidate
           entered_index = @input.readline.to_i
-          if entered_index > 0
+          if entered_index.positive?
             candidate = candidates[entered_index - 1]
             break if candidate
           end

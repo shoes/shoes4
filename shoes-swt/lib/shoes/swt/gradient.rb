@@ -10,8 +10,8 @@ class Shoes
       end
 
       def dispose
-        @color1.dispose if @color1
-        @color2.dispose if @color2
+        @color1&.dispose
+        @color2&.dispose
 
         @patterns.each do |pattern|
           pattern.dispose unless pattern.disposed?
@@ -62,7 +62,7 @@ class Shoes
 
       def determine_args_based_on_angle(angle, left, top, width, height)
         x, y = calculate_x_and_y(angle, height, width)
-        if 0 <= angle && angle < Math::PI * 0.5
+        if angle >= 0 && angle < Math::PI * 0.5
           args = [left + width + x, top + height - y, left + width - x, top + height + y]
         elsif Math::PI * 0.5 <= angle && angle < Math::PI
           args = [left + width + y, top + height + x, left + width - y, top + height - x]

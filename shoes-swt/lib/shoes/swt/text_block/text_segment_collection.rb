@@ -88,7 +88,7 @@ class Shoes
         end
 
         def segment_at_text_position(index)
-          return @segments.last if index < 0
+          return @segments.last if index.negative?
           segment_ranges(index..index).first.first
         end
 
@@ -149,7 +149,7 @@ class Shoes
         end
 
         def at_end?(index)
-          index < 0 || index > @dsl.text.length
+          index.negative? || index > @dsl.text.length
         end
 
         def relative_end_position

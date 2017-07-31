@@ -40,7 +40,7 @@ class Yoda < SimpleDelegator
   def move_ears(value)
     return if @animate_ears
     @animate_ears = animate do
-      if (@ears.first.top > 220 && value > 0) || (@ears.first.top <= 150 && value < 0)
+      if (@ears.first.top > 220 && value.positive?) || (@ears.first.top <= 150 && value.negative?)
         @animate_ears.stop
         @animate_ears = nil
       else

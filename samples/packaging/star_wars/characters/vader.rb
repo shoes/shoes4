@@ -34,7 +34,7 @@ class Vader < SimpleDelegator
     return if @animate_saber
 
     @animate_saber = animate do
-      if (@saber1.left <= 30 && value < 0) || (@saber1.left > 180 && value > 0)
+      if (@saber1.left <= 30 && value.negative?) || (@saber1.left > 180 && value.positive?)
         @animate_saber.stop
         @animate_saber = nil
       else

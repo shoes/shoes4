@@ -20,7 +20,7 @@ class Shoes
         #
         # @return [Integer] The alpha value of this object's stroke color (0-255)
         def stroke_alpha
-          dsl.stroke.alpha if dsl.stroke
+          dsl&.stroke&.alpha
         end
 
         # This object's strokewidth

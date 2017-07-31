@@ -135,7 +135,7 @@ class Tetris
 
   def occupied(piece)
     piece.each_occupied_block do |x, y|
-      if (x < 0) || (x >= NX) || (y < 0) || (y >= NY) || blocks[x][y]
+      if x.negative? || (x >= NX) || y.negative? || (y >= NY) || blocks[x][y]
         return true
       end
     end

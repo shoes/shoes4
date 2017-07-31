@@ -151,7 +151,7 @@ class Shoes
             # Try to find a parent container we fit in.
             # If that doesn't work, just bail with [0,0] so we don't crash.
             width = width_from_ancestor if width <= 0
-            return [0, 0] if width < 0
+            return [0, 0] if width.negative?
           end
 
           [width, height]
@@ -162,7 +162,7 @@ class Shoes
         def width_from_ancestor
           width = -1
           current_ancestor = @dsl.parent
-          until width > 0 || current_ancestor.nil?
+          until width.positive? || current_ancestor.nil?
             width = @dsl.desired_width(current_ancestor.width)
 
             break unless current_ancestor.respond_to?(:parent)

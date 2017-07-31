@@ -87,7 +87,7 @@ class Shoes
       end
 
       def style_present?(style)
-        !style.nil? && !(style == 'none')
+        !style.nil? && (style != 'none')
       end
     end
   end

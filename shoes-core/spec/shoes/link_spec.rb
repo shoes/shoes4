@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Shoes::Link do
   let(:gui) { double("gui").as_null_object }
   let(:user_facing_app) { double("user facing app") }
-  let(:element_styles) { Hash.new }
+  let(:element_styles) { {} }
 
   let(:app) do
     double("app", gui: gui, style: {}, element_styles: element_styles,

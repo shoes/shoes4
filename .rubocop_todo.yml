@@ -136,31 +136,12 @@ Style/AccessorMethodName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/EmptyLiteral:
-  Exclude:
-    - 'shoes-core/spec/shoes/app_spec.rb'
-    - 'shoes-core/spec/shoes/download_spec.rb'
-    - 'shoes-core/spec/shoes/link_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/dsl_app_context.rb'
-    - 'shoes-core/spec/shoes/shared_examples/slot.rb'
-    - 'shoes-core/spec/shoes/text_block_spec.rb'
-
 # Offense count: 89
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: compact, expanded
 Style/EmptyMethod:
   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: format, sprintf, percent
-Style/FormatString:
-  Exclude:
-    - 'shoes-core/lib/shoes/common/inspect.rb'
 
 # Offense count: 1
 # Configuration parameters: SupportedStyles.
@@ -173,30 +154,12 @@ Style/FormatStringToken:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'samples/expert_minesweeper.rb'
-    - 'shoes-core/lib/shoes/common/state.rb'
-    - 'shoes-swt/lib/shoes/swt/click_listener.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block/text_style_factory.rb'
-    - 'tasks/sample.rb'
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:
     - 'shoes-core/lib/shoes/app.rb'
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
-
-# Offense count: 29
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, EnforcedStyle, SupportedStyles.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Enabled: false
 
 # Offense count: 18
 # Cop supports --auto-correct.
@@ -217,39 +180,9 @@ Style/PercentLiteralDelimiters:
     - 'shoes-core/spec/shoes/shared_examples/dsl/style.rb'
     - 'shoes-swt/lib/shoes/swt/key_listener.rb'
 
-# Offense count: 1
-# Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
-# NamePrefix: is_, has_, have_
-# NamePrefixBlacklist: is_, has_, have_
-# NameWhitelist: is_a?
-Style/PredicateName:
-  Exclude:
-    - 'spec/**/*'
-    - 'shoes-swt/lib/shoes/swt/key_listener.rb'
-
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'samples/simple_accordion.rb'
-    - 'shoes-core/lib/shoes/common/remove.rb'
-    - 'shoes-core/lib/shoes/download.rb'
-    - 'shoes-swt/lib/shoes/swt/common/remove.rb'
-    - 'shoes-swt/lib/shoes/swt/common/resource.rb'
-    - 'shoes-swt/lib/shoes/swt/common/stroke.rb'
-    - 'shoes-swt/lib/shoes/swt/gradient.rb'
-    - 'shoes-swt/lib/shoes/swt/image_pattern.rb'
-
 # Offense count: 17
 # Cop supports --auto-correct.
 # Configuration parameters: MinSize, SupportedStyles.
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/YodaCondition:
-  Exclude:
-    - 'shoes-swt/lib/shoes/swt/gradient.rb'

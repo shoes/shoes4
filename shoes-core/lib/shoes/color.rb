@@ -89,7 +89,7 @@ EOS
     def normalize_rgb(value)
       rgb = value.is_a?(Integer) ? value : (255 * value).round
       return 255 if rgb > 255
-      return 0 if rgb < 0
+      return 0 if rgb.negative?
       rgb
     end
 

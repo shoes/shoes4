@@ -182,7 +182,7 @@ class Shoes
     end
 
     def negative?(result)
-      result && result < 0
+      result && result.negative?
     end
 
     def calculate_negative(result)
@@ -233,7 +233,7 @@ class Shoes
     end
 
     def adjust_start_for_center(value)
-      value - extent / 2 if extent && extent > 0
+      value - extent / 2 if extent && extent.positive?
     end
   end
 
