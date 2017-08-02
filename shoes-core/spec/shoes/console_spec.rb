@@ -121,6 +121,15 @@ describe Shoes::Console do
   end
 
   describe '#save', no_swt: true do
+    after do
+      begin
+        File.delete(mock_dialog)
+      rescue Errno::EACCES
+        # AppVeyor doesn't allow deletions on all paths, so if it fails
+        # Let it go, let it go, can't hold it back anymore!
+      end
+    end
+
     it 'must create file with contents of @formatted_messages and return character count' do
       console.instance_variable_set(:@messages, sample_message_array.dup)
       console.create_app
@@ -129,7 +138,6 @@ describe Shoes::Console do
 
       expect(returned_character_count).to eq(formatted_message_output.length)
       expect(File.open(mock_dialog, 'r').read).to eq(formatted_message_output)
-      File.delete(mock_dialog)
     end
   end
 
