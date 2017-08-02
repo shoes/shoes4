@@ -8,7 +8,7 @@ $LOAD_PATH << lib_directory
 # and packaging apps that have their own Gemfiles, even if we run `shoes` from
 # another location.
 candidates = (ARGV + ["."]).map do |candidate|
-  File.join(File.dirname(candidate), "Gemfile")
+  File.expand_path(File.join(File.dirname(candidate), "Gemfile"))
 end
 
 gemfile = candidates.uniq.find do |candidate|
@@ -16,12 +16,12 @@ gemfile = candidates.uniq.find do |candidate|
 end
 
 if gemfile
-  if defined?(Bundler) && gemfile != Bundler.default_gemfile
+  if defined?(Bundler) && gemfile != Bundler.default_gemfile.to_s
     puts <<~EOS
-Shoes wants to load the Gemfile from '#{gemfile}'
-But you've already loaded Gemfile at '#{Bundler.default_gemfile}'
+      Shoes wants to load the Gemfile from '#{gemfile}'
+      But you've already loaded Gemfile at '#{Bundler.default_gemfile}'
 
-Instead of `bundle exec shoes`, try just `shoes` instead. We'll load Bundler for you.
+      Instead of `bundle exec shoes`, try just `shoes` instead. We'll load Bundler for you.
 
     EOS
   end
