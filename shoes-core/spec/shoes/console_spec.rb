@@ -127,6 +127,7 @@ describe Shoes::Console do
       rescue Errno::EACCES
         # AppVeyor doesn't allow deletions on all paths, so if it fails
         # Let it go, let it go, can't hold it back anymore!
+        Shoes.logger.debug("Couldn't delete file #{mock_dialog}")
       end
     end
 
