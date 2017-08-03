@@ -6,6 +6,10 @@ class Shoes
         nil
       end
 
+      def dialog_chooser(*_args)
+        "#{Dir.tmpdir}/test_file_delete_after"
+      end
+
       def confirm(_msg = '')
         true
       end
