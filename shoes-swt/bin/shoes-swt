@@ -3,7 +3,31 @@
 lib_directory = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH << lib_directory
 
-if File.exist?("Gemfile")
+# We want the Gemfile alongside the Shoes code that we're executing, not
+# necessarily the Gemfile in our current directory. This helps in both running
+# and packaging apps that have their own Gemfiles, even if we run `shoes` from
+# another location.
+candidates = (ARGV + ["."]).map do |candidate|
+  File.expand_path(File.join(File.dirname(candidate), "Gemfile"))
+end
+
+gemfile = candidates.uniq.find do |candidate|
+  File.exist?(candidate)
+end
+
+if gemfile
+  if defined?(Bundler) && gemfile != Bundler.default_gemfile.to_s
+    puts <<~EOS
+      Shoes wants to load the Gemfile from '#{gemfile}'
+      But you've already loaded Gemfile at '#{Bundler.default_gemfile}'
+
+      Instead of `bundle exec shoes`, try just `shoes` instead. We'll load Bundler for you.
+
+    EOS
+  end
+
+  # Thanks Bundler for the ENV vars! <3
+  ENV["BUNDLE_GEMFILE"] = gemfile
   require "bundler/setup"
   Bundler.require
 end
