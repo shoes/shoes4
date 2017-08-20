@@ -33,7 +33,7 @@ Shoes.app width: 800, height: 600 do
     "http://www.smbc-comics.com/rss.php",
     "http://www.daybydaycartoon.com/feed/",
     "http://www.questionablecontent.net/QCRSS.xml",
-    "http://indexed.blogspot.com/feeds/posts/default?alt=rss"
+    "http://thisisindexed.com/feed/",
   ]
 
   stack margin: 10 do
