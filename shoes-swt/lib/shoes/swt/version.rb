@@ -2,6 +2,6 @@
 
 class Shoes
   module Swt
-    VERSION = "4.0.0.pre10"
+    VERSION = "4.0.0.pre11"
   end
 end

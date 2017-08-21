@@ -26,7 +26,7 @@ Shoes.app width: 400, height: 400, resizable: false do
   # animates at 40 frames per second
   @anim = animate 40 do
     # check for game over
-    if @ball.top + ball_diameter.negative? || @ball.top > app.height
+    if (@ball.top + ball_diameter).negative? || @ball.top > app.height
       para strong("GAME OVER", size: 32), "\n",
            @ball.top.negative? ? "You win!" : "Computer wins", top: 140, align: 'center'
       @ball.hide && @anim.stop

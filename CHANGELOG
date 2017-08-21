@@ -1,3 +1,27 @@
+v4.0.0.pre11 (30 commits) (Aug 20, 2017)
+----------------------------------------------
+
+Improvements (3)
+----------------
+
+* Copy and save button for console [6c6142d]
+* Packaging outputs archives instead of loose files [0cf010f]
+* Warn if no format passed to package commad [3914018]
+
+Bug Fixes (3)
+-------------
+
+* Apps packaged on Windows for Mac/Linux can't execute [6c9008b2]
+* Properly use Gemfile from shoes app directory, not just current dir [1d13828]
+* Properly dispose of ArrowPainter [8ed4455]
+
+Contributors (3)
+----------------
+
+Eric Stensland, Jason R. Clark, Tobias Pfeiffer
+
+
+
 v4.0.0.pre10 (40 commits) (Jun 3, 2017)
 --------------------------------------------
 
