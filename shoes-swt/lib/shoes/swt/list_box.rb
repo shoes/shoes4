@@ -2,6 +2,7 @@
 class Shoes
   module Swt
     class ListBox
+      include Common::Focus
       include Common::Remove
       include Common::Visibility
       include Common::UpdatePosition

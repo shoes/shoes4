@@ -3,6 +3,7 @@ class Shoes
   module Swt
     # Class is used by edit_box and edit_line
     class InputBox
+      include Common::Focus
       include Common::Remove
       include Common::PainterUpdatesPosition
       include Common::Visibility
