@@ -26,6 +26,7 @@ describe Shoes::Swt::InputBox do
     allow(::Swt::Widgets::Text).to receive(:text=) { real }
   end
 
+  it_behaves_like "focusable"
   it_behaves_like "movable element"
   it_behaves_like "removable native element"
   it_behaves_like "updating visibility"

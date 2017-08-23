@@ -2,6 +2,7 @@
 class Shoes
   class CheckButton < Common::UIElement
     include Common::Clickable
+    include Common::Focus
     include Common::State
 
     def checked?
@@ -11,10 +12,6 @@ class Shoes
     def checked=(value)
       style(checked: value)
       @gui.checked = value
-    end
-
-    def focus
-      @gui.focus
     end
   end
 

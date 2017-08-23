@@ -24,6 +24,7 @@ describe Shoes::Swt::ListBox do
     allow(::Swt::Widgets::Combo).to receive(:new) { real }
   end
 
+  it_behaves_like "focusable"
   it_behaves_like "updating visibility"
 
   it "should return nil when nothing is highlighted" do

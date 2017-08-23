@@ -2,6 +2,7 @@
 class Shoes
   module Swt
     class SwtButton
+      include Common::Focus
       include Common::Remove
       include Common::Visibility
       include Common::UpdatePosition
@@ -23,10 +24,6 @@ class Shoes
 
       def eval_block(blk)
         blk.call @dsl
-      end
-
-      def focus
-        @real.set_focus
       end
 
       def click(blk)

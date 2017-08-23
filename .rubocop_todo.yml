@@ -82,7 +82,7 @@ Lint/NestedMethodDefinition:
 
 # Offense count: 78
 Metrics/AbcSize:
-  Max: 83
+  Max: 84
 
 # Offense count: 230
 # Configuration parameters: CountComments, ExcludedMethods.
@@ -107,7 +107,7 @@ Metrics/LineLength:
 # Offense count: 86
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 84
+  Max: 85
 
 # Offense count: 3
 # Configuration parameters: CountComments.

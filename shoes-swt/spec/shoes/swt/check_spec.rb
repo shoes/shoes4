@@ -33,7 +33,7 @@ describe Shoes::Swt::Check do
     allow(::Swt::Widgets::Button).to receive(:new) { real }
   end
 
-  it_behaves_like "buttons"
+  it_behaves_like "focusable"
   it_behaves_like "movable element"
   it_behaves_like "selectable"
   it_behaves_like "updating visibility"

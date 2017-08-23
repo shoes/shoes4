@@ -2,6 +2,7 @@
 class Shoes
   class InputBox < Common::UIElement
     include Common::Changeable
+    include Common::Focus
     include Common::State
 
     def before_initialize(styles, text)
@@ -11,10 +12,6 @@ class Shoes
     def handle_block(blk)
       change(&blk) if blk
       update_visibility
-    end
-
-    def focus
-      @gui.focus
     end
 
     def text

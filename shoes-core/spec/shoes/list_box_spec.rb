@@ -24,6 +24,8 @@ describe Shoes::ListBox do
   it_behaves_like "object with state"
   it_behaves_like "object with dimensions"
 
+  it { is_expected.to respond_to :focus }
+
   describe "relative dimensions from parent" do
     subject { Shoes::ListBox.new(app, parent, relative_opts, input_block) }
     it_behaves_like "object with relative dimensions"

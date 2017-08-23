@@ -27,6 +27,7 @@ class Shoes
 
   class ListBox < Common::UIElement
     include Common::Changeable
+    include Common::Focus
     include Common::State
 
     style_with :change, :choose, :common_styles, :dimensions, :items, :state, :text

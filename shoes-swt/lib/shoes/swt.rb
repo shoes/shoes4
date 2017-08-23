@@ -59,6 +59,7 @@ class Shoes
       require 'shoes/swt/common/clickable'
       require 'shoes/swt/common/container'
       require 'shoes/swt/common/fill'
+      require 'shoes/swt/common/focus'
       require 'shoes/swt/common/image_handling'
       require 'shoes/swt/common/resource'
       require 'shoes/swt/common/painter'
