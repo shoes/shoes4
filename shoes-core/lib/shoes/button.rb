@@ -2,6 +2,7 @@
 class Shoes
   class Button < Common::UIElement
     include Common::Clickable
+    include Common::Focus
     include Common::State
 
     # We don't actually support release from buttons, but want to use the
@@ -12,10 +13,6 @@ class Shoes
 
     def before_initialize(styles, text)
       styles[:text] = text || 'Button'
-    end
-
-    def focus
-      @gui.focus
     end
 
     def text=(value)
