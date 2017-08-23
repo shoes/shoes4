@@ -3,6 +3,14 @@
 # This script is symlinked to be present as both bin/shoes and bin/shoes-stub
 # See ext/install/Rakefile for the full explanation of why we do that.
 
+
+# What's this noise? For folks who don't have proper paths set up (i.e. not
+# using a version manager), they might try to run `jruby -S shoes ...` but then
+# Ruby tries to execute this file. This line gives a Ruby syntax error which
+# shows our message here, pointing them how to fix things, while still being a
+# no-op when run via shell.
+: Oops... Try shoes-swt instead of shoes.
+
 # Don't try to cd on an empty $NEXT_DIR (link in same directory)
 mac_move_to_link_dir () {
   # Skip if already in link directory
