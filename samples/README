@@ -7,6 +7,7 @@
 # Curious to know more? See https://github.com/shoes/shoes4/wiki/Samples-Guide
 # for more information about writing samples!
 
+simple_accordion.rb
 simple_alert.rb
 simple_altered_para.rb
 simple_anim_shapes.rb
