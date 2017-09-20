@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+#
+# https://github.com/shoes/shoes4/issues/1309
+#
 Shoes.app width: 500, height: 500, resizable: false do
   image 400, 470, top: 30, left: 50 do
     nostroke
