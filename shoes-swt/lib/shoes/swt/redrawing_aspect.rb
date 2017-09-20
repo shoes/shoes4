@@ -35,8 +35,9 @@ class Shoes
                                                        :mouse_left],
                            ::Shoes::TextBlock      => [:replace] }.freeze
 
-      CHANGED_POSITION = { ::Shoes::Common::Positioning => [:_position, :displace],
-                           ::Shoes::Common::Hover       => [:eval_hover_block] }.freeze
+      CHANGED_POSITION = { ::Shoes::DimensionsDelegations => [:adjust_current_position],
+                           ::Shoes::Common::Positioning   => [:_position, :displace],
+                           ::Shoes::Common::Hover         => [:eval_hover_block] }.freeze
 
       attr_reader :app
 
