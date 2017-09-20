@@ -251,6 +251,14 @@ EOS
 
         create Shoes::Shape, left, top, opts, blk
       end
+
+      def mask(*_)
+        raise Shoes::NotImplementedError,
+              <<~EOS
+                Sorry mask is not supported currently in Shoes 4!
+                Check out github issue #527 for any changes/updates or if you want to help :)
+              EOS
+      end
     end
   end
 end
