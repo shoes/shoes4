@@ -27,7 +27,7 @@ class Shoes
     end
 
     def end
-      @end || report_relative_to_parent_end
+      @end || report_relative_to_parent_end || element_end
     end
 
     def extent
