@@ -190,7 +190,7 @@ describe Shoes::Dimension do
       subject.extent = 45
     end
 
-    its(:end) { should be_nil }
+    its(:end) { should eq(67) }
     its(:start) { should be_nil }
   end
 
