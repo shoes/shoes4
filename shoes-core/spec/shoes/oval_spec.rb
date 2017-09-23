@@ -108,6 +108,26 @@ describe Shoes::Oval do
                                       height: 40)
     end
 
+    it "favors width over radius" do
+      oval = dsl.oval 10, 20, width: 30, radius: 40
+      expect(oval.width).to eq(30)
+    end
+
+    it "favors width over diameter" do
+      oval = dsl.oval 10, 20, width: 30, diameter: 40
+      expect(oval.width).to eq(30)
+    end
+
+    it "supports radius" do
+      oval = dsl.oval 10, 20, radius: 40
+      expect(oval.width).to eq(80)
+    end
+
+    it "supports diameter" do
+      oval = dsl.oval 10, 20, diameter: 40
+      expect(oval.width).to eq(40)
+    end
+
     it "doesn't like too many arguments" do
       expect { dsl.oval 10, 20, 30, 40, 666 }.to raise_error(ArgumentError)
     end
