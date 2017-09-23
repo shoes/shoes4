@@ -21,40 +21,38 @@ class Shoes
   #     say_hello 'Shoes'
   #   end
   #
-  class Widget
-    include Common::Inspect
-
+  class Widget < Shoes::Flow
     Shoes::App.subscribe_to_dsl_methods self
 
-    attr_accessor :parent
-    attr_writer :app
+    attr_accessor :original_args
 
-    class << self
-      attr_accessor :app
+    def handle_block(*_)
+      old_current_slot = @app.current_slot
+      @app.current_slot = self
+      initialize(*original_args)
+      @app.current_slot = old_current_slot
     end
 
-    # lookup a bit more complicated as during initialize we do
-    # not have @app yet...
-    def app
-      @app || self.class.app
+    def shoes_base_class
+      Shoes::Widget
     end
 
     def self.inherited(klass, &_blk)
       dsl_method = dsl_method_name(klass)
-      Shoes::App.new_dsl_method(dsl_method) do |*args, &blk|
-        # we set app 2 times because widgets execute most of their code
-        # straight in initialize. I dunno if there is a good way of setting
-        # an @app instance variable before initialize is executed. We could
-        # hand it over in #initialize but that would break the interface
-        # and people would have to set it themselves or make sure to call
-        # super so for not it's like this.
-        # Setting the ref on the instance is important as we might have
-        # instances of the same widget in different Shoes::Apps so each one
-        # needs to save the reference to the one it was started with
-        klass.app              = self
-        widget_instance        = klass.new(*args, &blk)
-        widget_instance.app    = self
-        widget_instance.parent = @__app__.current_slot
+      Shoes::App.new_dsl_method(dsl_method) do |*args|
+        # If last arg is a Hash, pass that to the underlying Flow
+        container_args = args.last.is_a?(Hash) ? args.last : {}
+
+        # What's this business? Because of the old contract about how widgets
+        # define initialize, we actually have TWO initializes we need to call--
+        # the base UIElement one and the user-defined one which doesn't super.
+        #
+        # Instead of using new, we take over for that by calling allocate
+        # ourselves, then invoking the base-initialize equivalent, which in
+        # turn (via handle_block above) will do the widget class's initialize.
+        widget_instance = klass.allocate
+        widget_instance.original_args = args
+        widget_instance.actual_initialize(@__app__, @__app__.current_slot, container_args)
         widget_instance
       end
     end

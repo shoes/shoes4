@@ -123,16 +123,19 @@ class Shoes
       inspect_details
     end
 
-    DELEGATE_BLACKLIST = [:parent, :app].freeze
-
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
-                         Shoes::DSL.public_instance_methods) - DELEGATE_BLACKLIST).freeze
+                         Shoes::DSL.public_instance_methods)).freeze
 
     def self.subscribe_to_dsl_methods(klazz)
+      # Delegate anything in the app/dsl public list that DOESN'T have a method
+      # already defined on the class in question
+      methods_to_delegate = DELEGATE_METHODS - klazz.public_instance_methods
+
       klazz.extend Forwardable unless klazz.is_a? Forwardable
-      klazz.def_delegators :app, *DELEGATE_METHODS
+      klazz.def_delegators :app, *methods_to_delegate
+
       @method_subscribers ||= []
       @method_subscribers << klazz
     end

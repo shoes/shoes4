@@ -435,10 +435,6 @@ describe Shoes::App do
       describe 'it does not have access to private methods' do
         it { is_expected.not_to include :pop_style, :style_normalizer, :create }
       end
-
-      describe 'there are blacklisted methods that wreck havoc' do
-        it { is_expected.not_to include :parent, :app }
-      end
     end
   end
 end
