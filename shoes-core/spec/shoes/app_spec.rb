@@ -229,6 +229,11 @@ describe Shoes::App do
         subject.quit
       end
 
+      it "#exit is same as #quit for us" do
+        expect(gui).to receive :quit
+        subject.exit
+      end
+
       it '#close only tells our GUI to quit' do
         expect(gui).to receive :quit
         subject.close

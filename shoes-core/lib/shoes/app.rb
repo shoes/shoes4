@@ -72,6 +72,8 @@ class Shoes
       Shoes.apps.each(&:close)
     end
 
+    alias exit quit
+
     def close
       Shoes.unregister self
       @__app__.quit
