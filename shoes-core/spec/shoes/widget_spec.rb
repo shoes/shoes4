@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 class Smile < Shoes::Widget
-  def initialize(caption)
+  def initialize_widget(caption)
     smile_magic caption
   end
 
@@ -12,7 +12,7 @@ class Smile < Shoes::Widget
 end
 
 class Face < Shoes::Widget
-  def initialize
+  def initialize_widget
     para  "Hair"
     smile "Toothsome"
   end

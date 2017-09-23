@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 class Answer < Shoes::Widget
   attr_reader :mark
-  def initialize(word)
+
+  def initialize_widget(word)
     mark = nil
     flow do
       flow(width: 70, height: 20) { para word }

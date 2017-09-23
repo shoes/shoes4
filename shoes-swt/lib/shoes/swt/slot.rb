@@ -49,5 +49,6 @@ class Shoes
 
     class Flow < Slot; end
     class Stack < Slot; end
+    class Widget < Slot; end
   end
 end
