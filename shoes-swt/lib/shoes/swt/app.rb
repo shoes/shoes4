@@ -68,7 +68,7 @@ EOS
         @started = true
         self.fullscreen = true if dsl.start_as_fullscreen?
         flush
-        ::Swt.event_loop { ::Shoes::Swt.main_app.disposed? } if main_app?
+        ::Swt.event_loop { ::Shoes::Swt.apps.all?(&:disposed?) } if main_app?
       end
 
       def quit
@@ -231,12 +231,20 @@ EOS
         @shell.setSize(new_width, new_height)
       end
 
-      def main_window_on_close
+      def on_close
         lambda do |_event|
-          ::Swt.display.dispose
-          ::Shoes::Swt::App.mark_main_app_closed
-          Dir[File.join(Dir.tmpdir, "__shoes4_*.png")].each { |f| File.delete f }
+          # Only do final cleanup if this is the last open window around
+          if finished?
+            ::Swt.display.dispose
+            ::Shoes::Swt::App.mark_main_app_closed
+            Dir[File.join(Dir.tmpdir, "__shoes4_*.png")].each { |f| File.delete f }
+          end
         end
+      end
+
+      def finished?
+        # When closing we're done if we're the last undisposed window around
+        ::Shoes::Swt.apps.reject(&:disposed?) == [self]
       end
 
       def main_window_style
@@ -282,7 +290,7 @@ EOS
 
       def attach_shell_event_listeners
         @shell.addControlListener ShellControlListener.new(self)
-        @shell.addListener(::Swt::SWT::Close, main_window_on_close) if main_app?
+        @shell.addListener(::Swt::SWT::Close, on_close)
         @shell.addListener(::Swt::SWT::Close, unregister_app)
       end
 

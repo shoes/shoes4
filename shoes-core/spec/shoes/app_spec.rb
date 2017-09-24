@@ -212,13 +212,35 @@ describe Shoes::App do
     end
 
     describe "quitting" do
-      it "#quit tells the GUI to quit" do
+      let(:another_app) { double('another', close: nil) }
+
+      before do
+        Shoes.register(another_app)
+      end
+
+      it "#quit tells the GUI and other apps to close, shuts down gui" do
+        expect(another_app).to receive :close
+        expect(subject).to receive :close
+        subject.quit
+      end
+
+      it "#quit passes along to GUI to quit" do
         expect(gui).to receive :quit
         subject.quit
       end
 
-      it '#close tells the GUI to quit' do
+      it "#exit is same as #quit for us" do
         expect(gui).to receive :quit
+        subject.exit
+      end
+
+      it '#close only tells our GUI to quit' do
+        expect(gui).to receive :quit
+        subject.close
+      end
+
+      it '#close does not stop other app windows' do
+        expect(another_app).to_not receive :quit
         subject.close
       end
     end

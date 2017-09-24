@@ -69,11 +69,15 @@ class Shoes
     end
 
     def quit
+      Shoes.apps.each(&:close)
+    end
+
+    alias exit quit
+
+    def close
       Shoes.unregister self
       @__app__.quit
     end
-
-    alias close quit
 
     def parent
       @__app__.current_slot.parent
