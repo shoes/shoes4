@@ -40,6 +40,9 @@ class Shoes
     end
 
     def self.inherited(klass, &_blk)
+      # Ensure Hover styling class exists, but Widget gets hover behavior from parents
+      Shoes::Common::Hover.create_hover_class(klass)
+
       dsl_method = dsl_method_name(klass)
       Shoes::App.new_dsl_method(dsl_method) do |*args, &blk|
         # we set app 2 times because widgets execute most of their code
