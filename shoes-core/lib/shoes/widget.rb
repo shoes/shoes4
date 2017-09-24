@@ -38,6 +38,9 @@ class Shoes
     end
 
     def self.inherited(klass, &_blk)
+      # Ensure Hover styling class exists, but Widget gets hover behavior from parents
+      Shoes::Common::Hover.create_hover_class(klass)
+
       dsl_method = dsl_method_name(klass)
       Shoes::App.new_dsl_method(dsl_method) do |*args|
         # If last arg is a Hash, pass that to the underlying Flow

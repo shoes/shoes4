@@ -5,6 +5,10 @@ class Shoes
       attr_reader :hover_blk, :leave_blk
 
       def self.included(base)
+        create_hover_class(base)
+      end
+
+      def self.create_hover_class(base)
         clazz = Class.new {}
         name = base.name.split("::").last
         Shoes.const_set("#{name}Hover", clazz)
