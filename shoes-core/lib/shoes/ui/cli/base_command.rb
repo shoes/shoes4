@@ -16,6 +16,17 @@ class Shoes
           Shoes.logger.warn("Unexpected extra parameters '#{unexpected}'")
         end
 
+        def parse!(args)
+          self.class.options.parse!(args)
+          true
+        rescue OptionParser::InvalidOption => e
+          puts "Whoops! #{e.message}"
+          puts
+          puts self.class.help
+
+          false
+        end
+
         def self.help
           nil
         end
