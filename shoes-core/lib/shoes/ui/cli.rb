@@ -7,6 +7,7 @@ require 'shoes/ui/cli/default_command'
 require 'shoes/ui/cli/help_command'
 require 'shoes/ui/cli/manual_command'
 require 'shoes/ui/cli/package_command'
+require 'shoes/ui/cli/samples_command'
 require 'shoes/ui/cli/select_backend_command'
 require 'shoes/ui/cli/version_command'
 
@@ -17,6 +18,7 @@ class Shoes
         help:           HelpCommand,
         manual:         ManualCommand,
         package:        PackageCommand,
+        samples:        SamplesCommand,
         select_backend: SelectBackendCommand,
         version:        VersionCommand,
       }.freeze
