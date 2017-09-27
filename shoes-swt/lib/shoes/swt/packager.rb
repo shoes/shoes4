@@ -32,7 +32,7 @@ class Shoes
 
       def run(path)
         if @packages.empty?
-          puts "You must select at least one packaging format.\n\n#{::Shoes::UI::CLI::PackageCommand.help}"
+          puts "You must select at least one packaging format.\n\n#{::Shoes::UI::CLI::PackageCommand.new.help}"
           return
         end
 

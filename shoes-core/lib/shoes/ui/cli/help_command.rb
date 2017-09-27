@@ -13,7 +13,7 @@ class Shoes
           command_classes.concat(SUPPORTED_COMMANDS.map(&:last))
 
           command_classes.each do |command_class|
-            text = command_class.help.to_s
+            text = command_class.new([]).help.to_s
             unless text.empty?
               puts text
               puts
@@ -21,7 +21,7 @@ class Shoes
           end
         end
 
-        def self.help
+        def help
           <<-EOS
 shoes help
     Displays this help text

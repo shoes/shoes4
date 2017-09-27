@@ -2,12 +2,11 @@
 require 'spec_helper'
 
 describe Shoes::UI::CLI::SamplesCommand do
-  subject(:command) { Shoes::UI::CLI::SamplesCommand.new([]) }
+  subject(:command) { Shoes::UI::CLI::SamplesCommand.new }
 
   let(:source_path) { "~/path/to/the/samples" }
 
   before do
-    Shoes::UI::CLI::SamplesCommand.destination_dir = nil
     allow(Shoes::Samples).to receive(:path).and_return(source_path)
     allow(command).to receive(:puts)
   end
@@ -23,8 +22,8 @@ describe Shoes::UI::CLI::SamplesCommand do
     command.run
   end
 
-  it "fails and warns if directory already exists" do
-    allow(File).to receive(:exists?).and_return(true)
+  it "fails and warns if directory already exist" do
+    allow(File).to receive(:exist?).and_return(true)
     expect(FileUtils).to_not receive(:cp_r).with(source_path, File.join(Dir.pwd, "shoes_samples"))
     command.run
   end

@@ -31,7 +31,7 @@ class Shoes
 
       def run(args)
         if args.empty?
-          Shoes::UI::CLI::HelpCommand.new([]).run
+          Shoes::UI::CLI::HelpCommand.new.run
           exit(1)
         end
 
@@ -41,7 +41,7 @@ class Shoes
 
       def create_command(*args)
         command_class = SUPPORTED_COMMANDS[args.first.to_sym] || DefaultCommand
-        command_class.new(args.dup)
+        command_class.new(*args.dup)
       end
     end
   end

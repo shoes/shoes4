@@ -8,7 +8,7 @@ class Shoes
           Shoes::Manual.run "English"
         end
 
-        def self.help
+        def help
           <<-EOS
 shoes manual
     Run the interactive Shoes manual

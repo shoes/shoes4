@@ -9,7 +9,7 @@ class Shoes
           Shoes::UI::Picker.new.run(ENV["SHOES_BIN_DIR"], backend)
         end
 
-        def self.help
+        def help
           <<-EOS
 shoes select_backend [backend]
     Select a Shoes backend to use. A backend can be specified, or Shoes will
