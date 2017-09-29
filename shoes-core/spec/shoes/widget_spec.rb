@@ -18,6 +18,12 @@ class Face < Shoes::Widget
   end
 end
 
+class InvalidWidget < Shoes::Widget
+  def initialize
+    # This form is no longer supported...
+  end
+end
+
 describe Shoes::Widget do
   let(:app) { Shoes::App.new }
 
@@ -74,6 +80,21 @@ describe Shoes::Widget do
     it 'really smiles' do
       expect_any_instance_of(Smile).to receive(:smile_magic)
       Shoes.app { visit '/smile' }
+    end
+  end
+
+  describe 'initialization' do
+    it 'warns about invalid old-school initialize' do
+      Shoes.configuration.fail_fast = true
+
+      expect(Shoes.logger).to receive(:warn).with(/initialize.*initialize_widget/m)
+      expect(Shoes.logger).to receive(:error)
+
+      expect do
+        Shoes.app do
+          invalid_widget
+        end
+      end.to raise_error(ArgumentError)
     end
   end
 end

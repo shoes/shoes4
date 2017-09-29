@@ -51,8 +51,9 @@ class Shoes
 
       dsl_method = dsl_method_name(klass)
       Shoes::App.new_dsl_method(dsl_method) do |*args|
-        # ***TODO: Validate that our Widget class abides by initialize_widget
-        # and not initialize contract, and warn if not!***
+        # Old-school widgets that try to use initialize instead of
+        # initialize_widget will get a warning before they likely fail on new.
+        klass.warn_about_initialize
 
         # If last arg is a Hash, pass that to the underlying Flow
         container_args = args.last.is_a?(Hash) ? args.last : {}
@@ -74,6 +75,17 @@ class Shoes
       klass.to_s[/(^|::)(\w+)$/, 2]
            .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
            .gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+    end
+
+    def self.warn_about_initialize
+      if instance_method(:initialize).owner != Shoes::Widget
+        Shoes.logger.warn <<~EOS
+          You've defined an `initialize` method on class '#{self}'. This is no longer supported.
+                Your widget likely won't display, and you'll potentially receive argument errors.
+
+                Instead, define `initialize_widget` and we'll call it from your generated widget method.
+        EOS
+      end
     end
   end
 end
