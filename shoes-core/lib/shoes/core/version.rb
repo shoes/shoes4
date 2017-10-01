@@ -2,6 +2,6 @@
 
 class Shoes
   module Core
-    VERSION = "4.0.0.pre11"
+    VERSION = "4.0.0.pre12"
   end
 end
