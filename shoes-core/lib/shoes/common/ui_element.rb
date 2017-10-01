@@ -14,16 +14,6 @@ class Shoes
       attr_reader :app, :parent, :dimensions, :gui
 
       def initialize(app, parent, *args)
-        actual_initialize(app, parent, *args)
-      end
-
-      # Why is this separate? With Widgets, we need to invoke this base
-      # initialize, but ALSO a user-define initialize that historically didn't
-      # require calling super!
-      #
-      # Extracted like this, we can call actual_initialize to get base work
-      # done, and then initialize on the class ourselves to get the widget set.
-      def actual_initialize(app, parent, *args)
         blk    = args.pop if args.last.is_a?(Proc) || args.last.nil?
         styles = args.last.is_a?(Hash) ? args.pop : {}
 
