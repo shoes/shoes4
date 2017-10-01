@@ -12,7 +12,7 @@ Shoes.app do
     boing.play
   end
 
-  @two = button "Fog Horn AIFF (2.427s)" do
+  @two = button "Fog Horn AIFF (18.667s)" do
     puts "Fog Horn clicked"
     fog_horn.play
   end
