@@ -31,12 +31,12 @@ class Shoes
           flow margin_top: 10 do
             button "OK", margin_left: 150 do
               @result = @e.text
-              quit
+              close
             end
 
             button "Cancel" do
               @result = nil
-              quit
+              close
             end
           end
         end
