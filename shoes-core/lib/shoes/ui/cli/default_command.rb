@@ -16,18 +16,7 @@ class Shoes
           end
         end
 
-        def parse!(args)
-          self.class.options.parse!(args)
-          true
-        rescue OptionParser::InvalidOption => e
-          puts "Whoops! #{e.message}"
-          puts
-          puts self.class.help
-
-          false
-        end
-
-        def self.options
+        def options
           OptionParser.new do |opts|
             # Keep around command dashed options
             opts.on('-v', '--version', 'Shoes version') do
@@ -47,7 +36,7 @@ class Shoes
           end
         end
 
-        def self.help
+        def help
           help_from_options("shoes [options] file", options)
         end
       end

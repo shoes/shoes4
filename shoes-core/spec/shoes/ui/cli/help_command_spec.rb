@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Shoes::UI::CLI::HelpCommand do
-  subject(:command) { Shoes::UI::CLI::HelpCommand.new([]) }
+  subject(:command) { Shoes::UI::CLI::HelpCommand.new }
 
   before do
     allow(command).to receive(:puts)

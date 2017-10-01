@@ -7,6 +7,7 @@ require 'shoes/ui/cli/default_command'
 require 'shoes/ui/cli/help_command'
 require 'shoes/ui/cli/manual_command'
 require 'shoes/ui/cli/package_command'
+require 'shoes/ui/cli/samples_command'
 require 'shoes/ui/cli/select_backend_command'
 require 'shoes/ui/cli/version_command'
 
@@ -17,6 +18,7 @@ class Shoes
         help:           HelpCommand,
         manual:         ManualCommand,
         package:        PackageCommand,
+        samples:        SamplesCommand,
         select_backend: SelectBackendCommand,
         version:        VersionCommand,
       }.freeze
@@ -29,7 +31,7 @@ class Shoes
 
       def run(args)
         if args.empty?
-          Shoes::UI::CLI::HelpCommand.new([]).run
+          Shoes::UI::CLI::HelpCommand.new.run
           exit(1)
         end
 
@@ -39,7 +41,7 @@ class Shoes
 
       def create_command(*args)
         command_class = SUPPORTED_COMMANDS[args.first.to_sym] || DefaultCommand
-        command_class.new(args.dup)
+        command_class.new(*args.dup)
       end
     end
   end

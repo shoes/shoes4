@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Shoes::UI::CLI::DefaultCommand do
-  subject(:command) { Shoes::UI::CLI::DefaultCommand.new([]) }
+  subject(:command) { Shoes::UI::CLI::DefaultCommand.new }
 
   let(:stubbed_command) { double('stubbed command', run: nil) }
 
@@ -48,7 +48,7 @@ describe Shoes::UI::CLI::DefaultCommand do
   it "passes version through" do
     allow(Shoes::UI::CLI::VersionCommand).to receive(:new).and_return(stubbed_command)
     expect(stubbed_command).to receive(:run)
-    expect(command.class).to receive(:exit)
+    expect(command).to receive(:exit)
 
     command.args << "-v"
     command.run
@@ -57,7 +57,7 @@ describe Shoes::UI::CLI::DefaultCommand do
   it "passes help through" do
     allow(Shoes::UI::CLI::HelpCommand).to receive(:new).and_return(stubbed_command)
     expect(stubbed_command).to receive(:run)
-    expect(command.class).to receive(:exit)
+    expect(command).to receive(:exit)
 
     command.args << "-h"
     command.run

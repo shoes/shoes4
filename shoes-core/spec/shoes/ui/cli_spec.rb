@@ -46,7 +46,7 @@ describe Shoes::UI::CLI do
   describe "help" do
     ALL_COMMAND_CLASSES.each do |command_class|
       it "supports help for #{command_class}" do
-        expect(command_class.help).to_not be_empty
+        expect(command_class.new([]).help).to_not be_empty
       end
     end
   end

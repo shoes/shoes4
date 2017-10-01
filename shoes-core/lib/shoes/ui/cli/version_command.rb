@@ -7,7 +7,7 @@ class Shoes
           puts "Shoes #{Shoes::Core::VERSION}"
         end
 
-        def self.help
+        def help
           <<-EOS
 shoes version
     Prints the current Shoes version

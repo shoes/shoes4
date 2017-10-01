@@ -14,12 +14,12 @@ class Shoes
         rescue OptionParser::InvalidOption => e
           puts "Whoops! #{e.message}"
           puts
-          puts self.class.help
+          puts help
 
           false
         end
 
-        def self.help
+        def help
           help_from_options("shoes package [options] file",
                             Shoes::Packager.new.options) + <<-EOS
 

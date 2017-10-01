@@ -5,7 +5,7 @@ class Shoes
       class BaseCommand
         attr_reader :args
 
-        def initialize(args)
+        def initialize(*args)
           @args = args
         end
 
@@ -16,11 +16,22 @@ class Shoes
           Shoes.logger.warn("Unexpected extra parameters '#{unexpected}'")
         end
 
-        def self.help
+        def parse!(args)
+          options.parse!(args)
+          true
+        rescue OptionParser::InvalidOption => e
+          puts "Whoops! #{e.message}"
+          puts
+          puts help
+
+          false
+        end
+
+        def help
           nil
         end
 
-        def self.help_from_options(command, options)
+        def help_from_options(command, options)
           lines = ["#{command}\n"] + options.summarize
           lines.join("")
         end

@@ -54,5 +54,7 @@ shoes-core/bin/shoes-backend
 # ignore built gem so you don't commit it accidentally
 *.gem
 
+# samples and packaging stuff
 samples/packaging/pkg/*
 .furoshiki
+shoes_samples

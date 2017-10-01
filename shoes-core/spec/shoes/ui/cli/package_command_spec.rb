@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Shoes::UI::CLI::PackageCommand do
-  subject(:command) { Shoes::UI::CLI::PackageCommand.new([]) }
+  subject(:command) { Shoes::UI::CLI::PackageCommand.new }
 
   let(:packager) { double("packager", parse!: nil, options: options, run: nil) }
   let(:options)  { double("options", summarize: ["summary"]) }

@@ -13,7 +13,14 @@ Gem::Specification.new do |s|
   s.description = 'Shoes is the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple. Shoes runs on JRuby only for now.'
   s.license     = 'MIT'
 
-  s.files = Dir["LICENSE", "README.md", "lib/**/*", "ext/install/**/*"]
+  s.files = Dir[
+    "LICENSE", "README.md",
+    "lib/**/*",
+    "ext/install/**/*",
+    "samples/*",
+    "samples/lib/*",
+    "samples/potato_chopping/*",
+  ]
 
   s.add_dependency "shoes-core", version
   s.add_dependency "shoes-swt",  version
