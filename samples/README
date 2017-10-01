@@ -70,7 +70,6 @@ simple_sample_executor.rb
 simple_sesame_street_shoes.rb
 simple_shoes_intro.rb
 simple_slide.rb
-simple_sound.rb
 simple_stack_flow_buttons.rb
 simple_stripes.rb
 simple_system_background.rb
@@ -119,3 +118,5 @@ nks_trurl.rb
 
 class_book.rb
 
+# Don't get packaged up with basic samples, but test in dev
+sounds/simple_sound.rb

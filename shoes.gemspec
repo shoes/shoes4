@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
     "samples/*",
     "samples/lib/*",
     "samples/potato_chopping/*",
-    "samples/sounds/*",
   ]
 
   s.add_dependency "shoes-core", version

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Shoes.app do
-  path = File.expand_path(File.join(__FILE__, "..", "sounds"))
+  path = File.expand_path(File.join(__FILE__, ".."))
   boing     = sound("#{path}/61847__simon-rue__boink-v3.wav")
   fog_horn  = sound("#{path}/145622__andybrannan__train-fog-horn-long-wyomming.aiff")
   explosion = sound("#{path}/102719__sarge4267__explosion.mp3")
