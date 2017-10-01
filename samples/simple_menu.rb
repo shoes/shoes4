@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 class MenuPanel < Shoes::Widget
-  # Handling width against internal stack until widget widths are fixed
-  # https://github.com/shoes/shoes4/issues/641
-  def width
-    @stack.width
-  end
-
-  def width=(value)
-    @stack.width = value
-  end
-
   def self.boxes
     @boxes ||= []
   end
@@ -18,14 +8,12 @@ class MenuPanel < Shoes::Widget
     self.class.boxes
   end
 
-  def initialize(color, args)
+  def initialize_widget(color, _args)
     boxes << self
-    @stack = stack(args) do
-      background color
-      para link("Box #{boxes.length}", fg: white, fill: nil, click: "/"),
-           margin: 18, align: "center", size: 20
-      hover { expand }
-    end
+    background color
+    para link("Box #{boxes.length}", fg: white, fill: nil, click: "/"),
+         margin: 18, align: "center", size: 20
+    hover { expand }
   end
 
   def expand
