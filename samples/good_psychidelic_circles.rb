@@ -21,10 +21,15 @@ Shoes.app width: 537, height: 500 do
     nostroke
     # Update some variables
     degree += 1
-    size += 1
     degree = 0 if degree >= 360
-    size = 0 if size >= 100
-    color = 0.0 if color >= 1.0
+
+    size += 1
+    if size >= 100
+      size = 0
+      # Synchronize opacity change with size change because floating points
+      color = 0.0 if color >= 0.75
+    end
+
     color += 0.05 if (degree % 10).zero?
 
     # Draw inner circle
