@@ -9,7 +9,7 @@ describe Shoes::UI::CLI::HelpCommand do
   end
 
   it "includes all subcommands" do
-    Shoes::UI::CLI::SUPPORTED_COMMANDS.keys.each do |key|
+    Shoes::UI::CLI::SUPPORTED_COMMANDS.each_key do |key|
       expect(command).to receive(:puts).with(/shoes.*#{key}/)
     end
 
