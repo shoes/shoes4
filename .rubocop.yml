@@ -39,6 +39,11 @@ Naming/MethodName:
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
+# Perf tricks with frozen strings are silly in a rarely run Rake task
+Performance/UnfreezeString:
+  Exclude:
+    - 'tasks/changelog.rb'
+
 # We don't care if we do kind_of? or is_a?
 Style/ClassCheck:
   Enabled: false
