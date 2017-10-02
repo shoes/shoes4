@@ -45,8 +45,6 @@ class Shoes
 
       @extent_relative = relative?(@extent)
       @extent_negative = negative?(@extent)
-
-      @extent
     end
 
     def absolute_end
@@ -138,7 +136,6 @@ class Shoes
       @margin_start = parse_int_value(value)
 
       @combined_margins = margin_start + margin_end
-      @margin_start
     end
 
     def margin_end=(value)
@@ -146,7 +143,6 @@ class Shoes
       @margin_end = parse_int_value(value)
 
       @combined_margins = margin_start + margin_end
-      @margin_end
     end
 
     def displace_start=(value)
