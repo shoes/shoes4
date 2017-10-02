@@ -5,7 +5,7 @@ class Shoes
     # button, so a lot of these methods are
     # borrowed from button.rb
     class Radio < CheckButton
-      attr_accessor :group
+      attr_reader :group
 
       # Create a radio button
       #

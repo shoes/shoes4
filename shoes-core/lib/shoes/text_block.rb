@@ -11,7 +11,8 @@ class Shoes
     include TextBlockDimensionsDelegations
 
     attr_reader :text, :contents, :text_styles
-    attr_accessor :cursor, :textcursor
+    attr_writer :textcursor
+    attr_accessor :cursor
 
     style_with :common_styles, :dimensions, :text_block_styles, :translate
     STYLES = { font: DEFAULT_TEXTBLOCK_FONT }.freeze # used in TextBlock specs only

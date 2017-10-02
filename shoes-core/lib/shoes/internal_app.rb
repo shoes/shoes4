@@ -53,10 +53,12 @@ class Shoes
 
     attr_reader :gui, :top_slot, :app, :dimensions,
                 :mouse_motion, :owner, :element_styles, :resize_callbacks
+
+    attr_writer :width, :height
+
     attr_accessor :elements, :current_slot, :opts, :blk, :mouse_button,
                   :mouse_pos, :mouse_hover_controls, :resizable, :app_title,
-                  :width, :height, :start_as_fullscreen, :location,
-                  :start_block
+                  :start_as_fullscreen, :location, :start_block
 
     def_delegators :@app, :eval_with_additional_context
 

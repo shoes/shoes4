@@ -28,9 +28,7 @@ class Shoes
         @element.dispose   unless @element.nil? || @element.disposed?
       end
 
-      attr_reader :dsl, :app
-      attr_reader :element, :transform
-      attr_reader :painter
+      attr_reader :dsl, :app, :element, :painter
 
       def redraw_target
         @dsl
