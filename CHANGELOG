@@ -1,3 +1,22 @@
+v4.0.0.pre12 (31 commits) (Oct 1, 2017)
+---------------------------------------------
+
+Improvements (5)
+----------------
+
+* Include samples with shoes gem [00387f3]
+* Fix widgets to behave like slots, per Shoes 3 [53fe75c]
+* Enable focus on elements that need it [f77885d]
+* Get samples/simple_accordion.rb working again [83af4fe]
+* Emit a meaningful error if JRuby executes shoes bash script [38f9cb7]
+
+Contributors (3)
+----------------
+
+Jason R. Clark, Tobias Pfeiffer, Olle Jonsson
+
+
+
 v4.0.0.pre11 (30 commits) (Aug 20, 2017)
 ----------------------------------------------
 
