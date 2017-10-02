@@ -493,8 +493,12 @@ describe "App registry" do
     let(:app_1) { double("app 1") }
     let(:app_2) { double("app 2") }
 
-    before :each do
+    before do
       [app_1, app_2].each { |a| Shoes.register(a) }
+    end
+
+    after do
+      Shoes.unregister_all
     end
 
     its(:length) { should eq(2) }
