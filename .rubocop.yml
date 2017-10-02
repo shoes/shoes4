@@ -25,7 +25,7 @@ Security/Eval:
 
 # We sometimes need Java method names for interoperability
 # Like java calling our methods like `controlResized`
-Style/MethodName:
+Naming/MethodName:
   Enabled: false
 
 # We don't care if we do kind_of? or is_a?

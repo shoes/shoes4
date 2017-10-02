@@ -124,7 +124,7 @@ Metrics/PerceivedComplexity:
   Max: 15
 
 # Offense count: 15
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Exclude:
     - 'shoes-core/lib/shoes/common/style.rb'
     - 'shoes-core/lib/shoes/internal_app.rb'
