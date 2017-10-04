@@ -71,7 +71,7 @@ describe Shoes::BuiltinMethods do
   end
 
   %w(alert confirm).each do |type|
-    describe '##{alert}' do
+    describe type do
       let(:message) { double('message') }
 
       before do

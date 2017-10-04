@@ -74,7 +74,7 @@ shared_examples_for "text element DSL methods" do
 
   describe 'para' do
     context "with nested text fragments with parameters" do
-      Shoes::DSL::TEXT_STYLES.keys.each do |style|
+      Shoes::DSL::TEXT_STYLES.each_key do |style|
         it "handles opts properly for #{style}" do
           para = dsl.para(dsl.send(style, style, stroke: '#ccc'))
           expect(para.text).to eq(style.to_s)

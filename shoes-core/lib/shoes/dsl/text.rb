@@ -20,7 +20,7 @@ class Shoes
         strong: { weight: true },
       }.freeze
 
-      TEXT_STYLES.keys.each do |method|
+      TEXT_STYLES.each_key do |method|
         define_method method do |*texts|
           styles = style_normalizer.normalize(pop_style(texts))
           styles = TEXT_STYLES[method].merge(styles)
