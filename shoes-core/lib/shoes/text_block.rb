@@ -3,6 +3,11 @@ class Shoes
   CENTER = "center"
   DEFAULT_TEXTBLOCK_FONT = "Arial"
 
+  FONT_ALIASES = {
+    "Monospace" => "Fira Mono",
+    "Sans Serif" => "Lucida console",
+  }.freeze
+
   class TextBlock < Common::UIElement
     include Common::Clickable
     include Common::Hover
@@ -132,6 +137,9 @@ class Shoes
 
       @style[:font] = font_family.first unless (font_family.size == 1 &&
         font_family[0] == "") || font_family.empty?
+
+      aliased_font = FONT_ALIASES[@style[:font]]
+      @style[:font] = aliased_font if aliased_font
 
       fsize = size_regex.match(type)
       @style[:size] = fsize[1].to_i unless fsize.nil?
