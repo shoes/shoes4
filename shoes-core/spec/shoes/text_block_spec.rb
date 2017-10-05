@@ -99,8 +99,20 @@ describe Shoes::TextBlock do
     end
 
     it "updates font from options hash" do
+      text_block.replace "Later Gator", font: 'Arial 18px'
+      expect(text_block.font).to eq('Arial')
+      expect(text_block.size).to eq(18)
+    end
+
+    it "maps 'Monospace' to a known font" do
       text_block.replace "Later Gator", font: 'Monospace 18px'
-      expect(text_block.font).to eq('Monospace')
+      expect(text_block.font).to eq('Fira Mono')
+      expect(text_block.size).to eq(18)
+    end
+
+    it "maps 'Sans Serif' to a known font" do
+      text_block.replace "Later Gator", font: 'Sans Serif 18px'
+      expect(text_block.font).to eq('Lucida console')
       expect(text_block.size).to eq(18)
     end
   end

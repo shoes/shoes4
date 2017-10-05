@@ -7,6 +7,10 @@ Shoes.app height: 200 do
       para 'Arial (default)', left: 400, top: 20
     end
     flow do
+      title 'Good Question', font: 'Fira Mono'
+      para 'Fira Mono', left: 400, top: 20
+    end
+    flow do
       title 'Cool Question', font: 'Coolvetica'
       para 'Coolvetica', left: 400, top: 20
     end
