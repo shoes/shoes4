@@ -6,6 +6,10 @@ class Shoes
         def focus
           @real.set_focus
         end
+
+        def focused?
+          @real.has_focus
+        end
       end
     end
   end
