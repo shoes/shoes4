@@ -9,6 +9,10 @@ class Shoes
       def focused?
         @gui.focused?
       end
+
+      alias focussed? focused?
+      alias focussed focused?
+      alias focused focused?
     end
   end
 end

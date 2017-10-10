@@ -10,6 +10,10 @@ class Shoes
         def focused?
           @real.has_focus
         end
+
+        alias focussed? focused?
+        alias focussed focused?
+        alias focused focused?
       end
     end
   end
