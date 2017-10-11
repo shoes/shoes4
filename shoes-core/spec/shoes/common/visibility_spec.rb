@@ -7,16 +7,19 @@ describe Shoes::Common::Visibility do
     include Shoes::Common::Style
 
     attr_reader :gui
+    attr_accessor :parent
 
-    def initialize(gui)
+    def initialize(gui, parent)
       @style = {}
       @gui = gui
+      @parent = parent
     end
   end
 
-  subject { VisibilityTester.new(gui) }
+  subject { VisibilityTester.new(gui, parent) }
 
-  let(:gui) { double("gui", update_visibility: nil) }
+  let(:gui)    { double("gui", update_visibility: nil) }
+  let(:parent) { double("parent", hidden?: false) }
 
   it "hides" do
     subject.hide
@@ -51,6 +54,22 @@ describe Shoes::Common::Visibility do
 
   it "is visible?" do
     subject.show
+    expect(subject).to be_visible
+  end
+
+  it "hides when parent hides" do
+    allow(parent).to receive(:hidden?).and_return(true)
+    expect(subject).to be_hidden
+  end
+
+  it "doesn't change local hidden state because of parent" do
+    allow(parent).to receive(:hidden?).and_return(true)
+    expect(subject.style[:hidden]).to be_falsey
+  end
+
+  it "allows parent to be missing" do
+    allow(parent).to receive(:hidden?).and_return(true)
+    subject.parent = nil
     expect(subject).to be_visible
   end
 end

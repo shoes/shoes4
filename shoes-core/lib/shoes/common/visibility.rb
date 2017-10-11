@@ -8,8 +8,10 @@ class Shoes
         self
       end
 
+      # Root method for determining whether we're visible or not, taking into
+      # account our parent chain's visibility.
       def hidden?
-        style[:hidden]
+        @parent&.hidden? || style[:hidden]
       end
 
       alias hidden hidden?
@@ -33,6 +35,11 @@ class Shoes
 
       private
 
+      # Backend elements are expected to respond to update_visibility, and use
+      # the hidden? or visible? accessors to assess their proper display state.
+      #
+      # These take into account parent visibility, versus styling which applies
+      # only to the element itself.
       def update_visibility
         gui.update_visibility
         self
