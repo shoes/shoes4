@@ -82,19 +82,19 @@ class Shoes
     alias y2= bottom=
 
     def redraw_left
-      [@point_a.x, @point_b.x].min - 0.5 * strokewidth
+      [@point_a.x, @point_b.x].min - 0.5 * style[:strokewidth].to_i
     end
 
     def redraw_top
-      [@point_a.y, @point_b.y].min - 0.5 * strokewidth
+      [@point_a.y, @point_b.y].min - 0.5 * style[:strokewidth].to_i
     end
 
     def redraw_width
-      (@point_a.x - @point_b.x).abs + strokewidth
+      (@point_a.x - @point_b.x).abs + style[:strokewidth].to_i
     end
 
     def redraw_height
-      (@point_a.y - @point_b.y).abs + strokewidth
+      (@point_a.y - @point_b.y).abs + style[:strokewidth].to_i
     end
 
     def move(x, y, x2 = nil, y2 = nil)
