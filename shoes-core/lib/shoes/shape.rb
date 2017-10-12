@@ -3,8 +3,8 @@ class Shoes
   class Shape < Common::ArtElement
     attr_reader :blk, :x, :y, :left_bound, :top_bound, :right_bound, :bottom_bound
 
-    style_with :art_styles, :center, :common_styles, :dimensions
-    STYLES = { fill: Shoes::COLORS[:black] }.freeze
+    style_with :angle, :art_styles, :center, :common_styles, :dimensions
+    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(left, top)
       left ||= @style[:left] || 0

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class Shoes
   class Oval < Common::ArtElement
-    style_with :art_styles, :center, :common_styles, :dimensions
-    STYLES = { fill: Shoes::COLORS[:black] }.freeze
+    style_with :angle, :art_styles, :center, :common_styles, :dimensions
+    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(left, top, width, height)
       left   ||= @style[:left] || 0
