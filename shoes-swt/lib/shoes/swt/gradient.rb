@@ -1,4 +1,16 @@
 # frozen_string_literal: true
+#
+# Gradients are a little confusing, but don't let all the math below scare you.
+# Here's the (relatively) simple explanation of what's going on.
+#
+# ::SWT::Pattern, the underlying class we use, defines a gradient by a starting
+# and ending point. We account the angle into it by changing these points.
+#
+# To look right, the start/end points must be outside our shape! If not, then
+# we get a hard line where the color resets without fading, which looks bad.
+# Given that, we must keep those points outside our bounds of the element,
+# which are reported via the redraw_left, redraw_top, etc. methods.
+#
 class Shoes
   module Swt
     class Gradient
