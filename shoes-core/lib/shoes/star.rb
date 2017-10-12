@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Shoes
   class Star < Common::ArtElement
-    style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points
+    style_with :angle, :art_styles, :center, :common_styles, :dimensions, :inner, :outer, :points
     STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
 
     # Don't use param defaults as DSL explicit passes nil for missing params
@@ -34,6 +34,16 @@ class Shoes
       dy = height / 2.0
       element_left - dx <= x && x <= element_right - dx &&
         element_top - dy <= y && y <= element_bottom - dy
+    end
+
+    def redraw_left
+      return 0 unless element_left
+      center ? element_left - width * 0.5 : super
+    end
+
+    def redraw_top
+      return 0 unless element_top
+      center ? element_top - width * 0.5 : super
     end
   end
 end
