@@ -50,6 +50,14 @@ class Shoes
       false
     end
 
+    def redraw_left
+      @left_bound
+    end
+
+    def redraw_top
+      @top_bound
+    end
+
     # Moves the shape
     #
     # @param [Integer] left The new left value
