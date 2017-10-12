@@ -16,5 +16,32 @@ class Shoes
       super
       gui.update_position
     end
+
+    # Our locations are nonstandard, so let redrawing and gradient know
+    def redraw_left
+      return 0 unless element_left
+      element_left - width * 0.5
+    end
+
+    def redraw_top
+      return 0 unless element_top
+      element_top - width * 0.4
+    end
+
+    def redraw_height
+      width * 0.8
+    end
+
+    def gradient_left
+      redraw_left
+    end
+
+    def gradient_top
+      redraw_top
+    end
+
+    def gradient_height
+      redraw_height
+    end
   end
 end

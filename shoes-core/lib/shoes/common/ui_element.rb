@@ -88,6 +88,25 @@ class Shoes
 
       def update_stroke
       end
+
+      # Some element types (arrows, shapes) don't necessarily track their
+      # element locations in the standard way. Let them inform redrawing about
+      # the actual bounds to redraw within by overriding these methods
+      def redraw_left
+        element_left
+      end
+
+      def redraw_top
+        element_top
+      end
+
+      def redraw_width
+        element_width
+      end
+
+      def redraw_height
+        element_height
+      end
     end
   end
 end

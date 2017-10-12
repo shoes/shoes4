@@ -85,8 +85,8 @@ class Shoes
 
       def redraw_element(element, include_children = true)
         target = redraw_target(element)
-        redraw_area target.element_left, target.element_top,
-                    target.element_width, target.element_height,
+        redraw_area target.redraw_left, target.redraw_top,
+                    target.redraw_width, target.redraw_height,
                     include_children
       end
 
@@ -98,7 +98,7 @@ class Shoes
 
       def redraw_target(element)
         # During DSL initialization element.gui is nil, so if a SWT backend
-        # object causes a redraw in its initailize (like Shoes::Swt::Image),
+        # object causes a redraw in its initialize (like Shoes::Swt::Image),
         # we won't have gui set yet. Annoying, but fine.
         if element.gui
           element.gui.redraw_target
