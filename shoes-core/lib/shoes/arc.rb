@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 class Shoes
   class Arc < Common::ArtElement
-    style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
-    STYLES = { wedge: false, fill: Shoes::COLORS[:black] }.freeze
+    # angle is the gradient angle used across all art elements
+    # angle1/2 are the angles of the arc itself!
+    style_with :angle, :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
+    STYLES = { angle: 0, wedge: false, fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(left, top, width, height, angle1, angle2)
       @style[:angle1] = angle1 || @style[:angle1] || 0
