@@ -144,9 +144,7 @@ class Shoes
       scroll_height - height
     end
 
-    attr_reader :scroll_top
-
-    attr_writer :scroll_top
+    attr_accessor :scroll_top
 
     def app
       @app.app # return the Shoes::App not the internal app
@@ -325,6 +323,21 @@ class Shoes
       else
         0
       end
+    end
+
+    def update_visibility
+      # Only alter contents on a visibility change
+      if @last_hidden_state != hidden?
+        @last_hidden_state = hidden?
+
+        # Let the common visibility implementation update the backend
+        super
+
+        # Pass it along to all our children that they should update
+        contents.each(&:update_visibility)
+      end
+
+      self
     end
   end
 

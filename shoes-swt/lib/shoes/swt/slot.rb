@@ -20,22 +20,9 @@ class Shoes
       def update_position
       end
 
-      # This is more like a temporary work around until slots have a real
-      # backend representations that can just hide their contents all together
-      # I decided to put this logic in the backend since the hiding is a backend
-      # responsibility, although this is more DSL code
-      # #904 #905
       def update_visibility
-        # Only alter contents on a visibility change
-        return if @last_hidden_state == dsl.hidden?
-
-        @last_hidden_state = dsl.hidden?
-
-        if @last_hidden_state
-          dsl.contents.each(&:hide)
-        else
-          dsl.contents.each(&:show)
-        end
+        # No-op since we aren't a real backend, but need to prevent the
+        # shared visibility behavior of tweaking @real's visibility
       end
 
       def redraw_target

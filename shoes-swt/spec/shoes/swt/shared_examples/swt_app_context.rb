@@ -29,13 +29,14 @@ shared_context "swt app" do
   let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0, style: {}, element_styles: {}) }
 
   let(:parent) do
-    double('parent', app: swt_app, add_child: true, real: true,
+    double('parent', app: swt_app, add_child: true, real: true, hidden?: false,
                      absolute_left: 0, absolute_top: 0,
                      width: 200, height: 100, fixed_height?: true)
   end
 
   let(:parent_dsl) do
     double("parent dsl", add_child: true, contents: [], gui: parent,
+                         hidden?: false,
                          x_dimension: double.as_null_object,
                          y_dimension: double.as_null_object)
   end

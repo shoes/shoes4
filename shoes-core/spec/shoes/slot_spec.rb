@@ -175,4 +175,23 @@ describe Shoes::Slot do
       subject.send(:compute_content_height)
     end
   end
+
+  describe '#update_visibility' do
+    let(:child_element) { Shoes::Para.new app, subject, ['text'] }
+
+    it 'does not update visibility on gui unless visible state changd' do
+      expect(subject.gui).not_to receive(:update_visibility)
+      subject.send(:update_visibility)
+    end
+
+    it 'updates visibility on gui when changed' do
+      expect(subject.gui).to receive(:update_visibility)
+      subject.toggle
+    end
+
+    it 'updates visibility on children' do
+      expect(child_element).to receive(:update_visibility)
+      subject.toggle
+    end
+  end
 end
