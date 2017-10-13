@@ -20,16 +20,20 @@ class Shoes
     # Our locations are nonstandard, so let redrawing and gradient know
     def redraw_left
       return 0 unless element_left
-      element_left - width * 0.5
+      element_left - width * 0.5 - style[:strokewidth].to_i
     end
 
     def redraw_top
       return 0 unless element_top
-      element_top - width * 0.4
+      element_top - width * 0.4 - style[:strokewidth].to_i
+    end
+
+    def redraw_width
+      width + style[:strokewidth].to_i * 2
     end
 
     def redraw_height
-      width * 0.8
+      width + style[:strokewidth].to_i * 2
     end
 
     def gradient_left

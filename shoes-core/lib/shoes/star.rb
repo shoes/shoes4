@@ -38,12 +38,28 @@ class Shoes
 
     def redraw_left
       return 0 unless element_left
-      center ? element_left - width * 0.5 : super
+      if center
+        element_left - width * 0.5 - style[:strokewidth].to_i
+      else
+        super
+      end
     end
 
     def redraw_top
       return 0 unless element_top
-      center ? element_top - width * 0.5 : super
+      if center
+        element_top - width * 0.5 - style[:strokewidth].to_i
+      else
+        super
+      end
+    end
+
+    def redraw_width
+      element_width + style[:strokewidth].to_i * 2
+    end
+
+    def redraw_height
+      element_height + style[:strokewidth].to_i * 2
     end
   end
 end
