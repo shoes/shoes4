@@ -23,9 +23,9 @@ class Shoes
         end
 
         def help
-          <<-EOS
-shoes help
-    Displays this help text
+          <<~EOS
+            shoes help
+                Displays this help text
 EOS
         end
       end

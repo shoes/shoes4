@@ -10,9 +10,9 @@ class Shoes
         end
 
         def help
-          <<-EOS
-shoes manual
-    Run the interactive Shoes manual
+          <<~EOS
+            shoes manual
+                Run the interactive Shoes manual
 EOS
         end
       end

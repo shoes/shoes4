@@ -7,21 +7,21 @@ class Shoes
     class << self
       def validate
         if RUBY_ENGINE != "jruby"
-          puts <<-EOS
+          puts <<~EOS
 
-*******************************************************************************
-The shoes-swt backend requires a 9.X version of JRuby.
+            *******************************************************************************
+            The shoes-swt backend requires a 9.X version of JRuby.
 
-You are running the following Ruby instead:
+            You are running the following Ruby instead:
 
-  #{RUBY_DESCRIPTION}
+              #{RUBY_DESCRIPTION}
 
-Please download JRuby from http://jruby.org (or your favorite Ruby version
-manager), then check our https://github.com/shoes/shoes4#installing-shoes-4 to
-get Shoes installed.
+            Please download JRuby from http://jruby.org (or your favorite Ruby version
+            manager), then check our https://github.com/shoes/shoes4#installing-shoes-4 to
+            get Shoes installed.
 
-Sorry for the inconvenience!
-*******************************************************************************
+            Sorry for the inconvenience!
+            *******************************************************************************
 
 EOS
           exit 1

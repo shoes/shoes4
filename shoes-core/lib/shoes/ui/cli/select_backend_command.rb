@@ -11,10 +11,10 @@ class Shoes
         end
 
         def help
-          <<-EOS
-shoes select_backend [backend]
-    Select a Shoes backend to use. A backend can be specified, or Shoes will
-    attempt to auto-detect available backends to select from.
+          <<~EOS
+            shoes select_backend [backend]
+                Select a Shoes backend to use. A backend can be specified, or Shoes will
+                attempt to auto-detect available backends to select from.
 EOS
         end
       end

@@ -9,9 +9,9 @@ class Shoes
         end
 
         def help
-          <<-EOS
-shoes version
-    Prints the current Shoes version
+          <<~EOS
+            shoes version
+                Prints the current Shoes version
 EOS
         end
       end
