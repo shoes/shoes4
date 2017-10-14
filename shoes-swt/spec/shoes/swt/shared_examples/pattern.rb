@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "an swt pattern" do
   it { is_expected.to respond_to(:apply_as_stroke) }
   it { is_expected.to respond_to(:apply_as_fill) }

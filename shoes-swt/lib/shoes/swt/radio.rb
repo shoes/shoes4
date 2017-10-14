@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     # In Swt a radio button is actually just a

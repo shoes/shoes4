@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Shared examples for Shoes::App and Shoes::Slot (flow and stack).
 # If DSL methods can be called with multiple number of arguments,
 # and if they set certain defaults, then that what needs to be tested

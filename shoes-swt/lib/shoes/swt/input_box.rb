@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     # Class is used by edit_box and edit_line

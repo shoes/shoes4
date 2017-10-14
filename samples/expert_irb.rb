@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'irb/ruby-lex'
 require 'stringio'
 

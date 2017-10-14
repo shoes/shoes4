@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Image < Common::UIElement
     include Common::Clickable

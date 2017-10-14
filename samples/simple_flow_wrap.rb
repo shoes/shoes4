@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app width: 200 do
   flow margin: 12, fill: red do
     background red

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     shoes_icon = ::Shoes::ICON

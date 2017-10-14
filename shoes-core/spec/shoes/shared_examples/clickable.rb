@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "clickable object" do
   it { is_expected.to respond_to :click }
   it { is_expected.to respond_to :release }

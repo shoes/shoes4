@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   # Create all of the built-in Shoes colors
   COLORS = {}

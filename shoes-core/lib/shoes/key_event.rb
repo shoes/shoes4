@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class KeyEvent
     def initialize(app, &blk)

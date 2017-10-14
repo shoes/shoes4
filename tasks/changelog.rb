@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Changelog
   CATEGORY_MAPPING = [
     {pattern: 'Changelog: feature', heading: 'New features'},

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "movable object" do
   it "moves" do
     subject.instance_variable_set(:@app, app)

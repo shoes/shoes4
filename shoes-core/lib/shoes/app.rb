@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   ICON = File.join(DIR, 'static/shoes-icon.png').freeze
 

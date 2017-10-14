@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app title: 'Shoes 4 Logo Icon!', width: 310, height: 420 do
   stack do
     path = File.join(Shoes::DIR, 'static/shoes-icon.png')

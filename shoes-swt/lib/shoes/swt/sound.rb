@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # JavaZOOM Sound-API Projects
 #  - Shared lib
 require 'shoes/swt/support/tritonus_share.jar'

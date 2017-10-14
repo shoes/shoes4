@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "editable element" do
   subject { super.public_send(dsl_method, *args) }
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app width: 700, height: 600 do
   title "Shoes is a ", link("tiny") { alert "Cool!" }, " graphics toolkit. "
 

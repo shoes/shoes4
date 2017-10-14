@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "object with translate" do
   it "doesn't translate" do
     expect(subject.translate_left).to eq(0)

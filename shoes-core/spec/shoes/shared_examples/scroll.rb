@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "scrollable slot" do
   its(:scroll) { should be_truthy }
   it "initializes scroll_top to 0" do

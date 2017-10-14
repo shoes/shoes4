@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "shoes/swt"
 
 Shoes.load_backend("swt").initialize_backend
