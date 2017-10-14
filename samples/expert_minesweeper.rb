@@ -7,7 +7,7 @@ LEVELS = { beginner: [9, 9, 10], intermediate: [16, 16, 40], expert: [30, 16, 99
 
 class Field
   CELL_SIZE = 20
-  COLORS = %w(#00A #0A0 #A00 #004 #040 #400 #000).freeze
+  COLORS = %w[#00A #0A0 #A00 #004 #040 #400 #000].freeze
 
   class Cell
     attr_accessor :flag

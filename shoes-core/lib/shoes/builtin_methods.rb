@@ -19,7 +19,7 @@ class Shoes
       Shoes::Dialog.new.confirm(message)
     end
 
-    %w(info debug warn error).each do |log_level|
+    %w[info debug warn error].each do |log_level|
       define_method(log_level) do |message = ''|
         Shoes.logger.public_send(log_level, message)
       end
