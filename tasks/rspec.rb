@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'jruby'
 JRuby.runtime.instance_config.runRubyInProcess = false
 

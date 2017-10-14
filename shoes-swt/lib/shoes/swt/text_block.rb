@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     class TextBlock
@@ -27,8 +28,7 @@ class Shoes
       end
 
       # has a painter, nothing to do
-      def update_position
-      end
+      def update_position; end
 
       def in_bounds?(x, y)
         segments.any? do |segment|

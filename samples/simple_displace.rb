@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   # Shoes 3 doesn't support button.text
   position_report = ->(button, button_text) { @position_report.replace "#{button_text}: (#{button.left}, #{button.top})" }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Shoes::Common::UIElement do
@@ -9,8 +10,7 @@ describe Shoes::Common::UIElement do
   let(:test_class) do
     Class.new(Shoes::Common::UIElement) do
       # Override UIElement's initialize for simpler testing
-      def initialize
-      end
+      def initialize; end
     end
   end
 

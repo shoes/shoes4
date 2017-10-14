@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "movable element" do |left, top|
   before :each do
     allow(dsl).to receive_messages element_left: left, element_top: top

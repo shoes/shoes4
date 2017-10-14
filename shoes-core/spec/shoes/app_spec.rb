@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Shoes::App do
@@ -84,7 +85,7 @@ describe Shoes::App do
         expect(Shoes::Flow).to receive(:new).with(anything, anything,
                                                   width:  opts[:width],
                                                   height: opts[:height])
-          .and_call_original
+                                            .and_call_original
         subject
       end
     end

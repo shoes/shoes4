@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This is a helper to let `rspec test-file` run directly from the root dir by
 # pulling in the right spec helpers from the subdirectories
 

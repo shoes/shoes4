@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "checkable" do
   it { is_expected.to respond_to :checked= }
   it { is_expected.to respond_to :checked? }

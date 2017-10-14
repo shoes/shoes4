@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Shoes::Common::Style do
@@ -33,8 +34,7 @@ describe Shoes::Common::Style do
       @click
     end
 
-    def update_visibility
-    end
+    def update_visibility; end
   end
 
   subject { StyleTester.new(app) }

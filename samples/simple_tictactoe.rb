@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Size module
 # Change these constants to change the size of the board.
 module SIZE

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Progress < Common::UIElement
     style_with :common_styles, :dimensions, :fraction

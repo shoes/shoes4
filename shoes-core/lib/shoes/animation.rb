@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Animation
     include Common::Inspect

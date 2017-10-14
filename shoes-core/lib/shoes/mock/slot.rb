@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Mock
     class Slot
@@ -10,8 +11,7 @@ class Shoes
         @parent = parent
       end
 
-      def remove
-      end
+      def remove; end
 
       attr_reader :dsl
     end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class FakeAbsoluteElement
     include Common::Attachable
@@ -17,8 +18,7 @@ class Shoes
       true
     end
 
-    def adjust_current_position(*_)
-    end
+    def adjust_current_position(*_); end
 
     # Fake this out instead of using Common::Style to avoid things like touching
     # app level styles, etc. that we don't need for testing purposes

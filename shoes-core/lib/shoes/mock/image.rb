@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Mock
     class Image
@@ -13,8 +14,7 @@ class Shoes
         @dsl.width ||= 22
       end
 
-      def update_image
-      end
+      def update_image; end
     end
   end
 end

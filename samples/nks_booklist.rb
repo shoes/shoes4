@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BookList < Shoes
   url '/',      :index
   url '/twain', :twain

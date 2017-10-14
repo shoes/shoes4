@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Simple Game of Life with Shoes
 # by fuksito
 # vitaliy@yanchuk.me

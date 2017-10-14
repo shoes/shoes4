@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "updating visibility" do
   it "triggers redrawing on the app" do
     with_redraws do

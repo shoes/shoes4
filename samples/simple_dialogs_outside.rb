@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # testing dialog options inside and outside of Shoes.app.
 # Quite annoying, I know.
 

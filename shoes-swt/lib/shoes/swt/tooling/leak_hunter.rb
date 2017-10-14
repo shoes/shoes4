@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'swt'
 require 'shoes/swt'
 # Interested what hometown is and what it does?

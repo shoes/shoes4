@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Mock
     class TextBlock
@@ -12,8 +13,7 @@ class Shoes
 
       def redraw(*_opts); end
 
-      def replace(*_opts)
-      end
+      def replace(*_opts); end
 
       def remove; end
 

@@ -1,25 +1,20 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RenamedDelegate do
   class ToDelegate
-    def method_key
-    end
+    def method_key; end
 
-    def abcd
-    end
+    def abcd; end
 
-    def key
-    end
+    def key; end
 
-    def bla_key
-    end
+    def bla_key; end
 
-    def method_something
-    end
+    def method_something; end
 
-    def key_something
-    end
+    def key_something; end
   end
 
   class TestClass

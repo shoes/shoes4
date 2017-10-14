@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app width: 200, height: 200 do
   background black
   fill white

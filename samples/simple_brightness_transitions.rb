@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app width: 300, height: 300 do
   10.times do |i|
     # light to dark

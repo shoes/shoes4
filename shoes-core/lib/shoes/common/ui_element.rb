@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Common
     class UIElement
@@ -40,8 +41,7 @@ class Shoes
       #
       # It is intended for performing any additions to the styles hash before
       # that gets sent on to style_init.
-      def before_initialize(_styles, *_)
-      end
+      def before_initialize(_styles, *_); end
 
       # Set the dimensions for the element. Defaults to using the Dimensions
       # class, but is expected to be overridden in other types (art elements,
@@ -73,8 +73,7 @@ class Shoes
 
       # Final method called in initialize. Intended for any final setup after
       # the rest of the object has been set up fully.
-      def after_initialize(*_)
-      end
+      def after_initialize(*_); end
 
       # Nobody rotates by default, but we need to let you check
       def needs_rotate?
@@ -83,11 +82,9 @@ class Shoes
 
       # Expected to be overridden by pulling in Common::Fill or Common::Stroke
       # if element needs to actually notify GUI classes of colors changes.
-      def update_fill
-      end
+      def update_fill; end
 
-      def update_stroke
-      end
+      def update_stroke; end
     end
   end
 end

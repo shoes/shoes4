@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "object with stroke" do |default_color = :black|
   let(:color) { Shoes::COLORS.fetch :tomato }
   let(:color2) { Shoes::COLORS.fetch :forestgreen }

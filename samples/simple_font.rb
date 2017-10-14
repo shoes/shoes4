@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app height: 200 do
   font File.join(Shoes::DIR, 'fonts/Coolvetica.ttf')
   stack do

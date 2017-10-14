@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Mock
     class Button
@@ -16,8 +17,7 @@ class Shoes
         dsl.height = 0 unless dsl.height
       end
 
-      def enabled(_value)
-      end
+      def enabled(_value); end
     end
   end
 end

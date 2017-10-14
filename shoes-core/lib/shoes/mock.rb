@@ -2,8 +2,7 @@
 
 class Shoes
   module Mock
-    def self.initialize_backend(*_)
-    end
+    def self.initialize_backend(*_); end
   end
 end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app title: 'Snake Game v0.1' do
   def game_start
     @score = para 'Score:', stroke: white

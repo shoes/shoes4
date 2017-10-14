@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "flow DSL method" do
   let(:flow) { dsl.flow }
 

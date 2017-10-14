@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Mock
     class Progress
@@ -10,8 +11,7 @@ class Shoes
         @dsl.width ||= 140
       end
 
-      def fraction=(_fraction)
-      end
+      def fraction=(_fraction); end
     end
   end
 end
