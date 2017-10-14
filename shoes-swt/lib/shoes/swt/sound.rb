@@ -44,7 +44,6 @@ class Shoes
             # Play now.
             rawplay(decoded_audio_format, decoded_audio_input_stream)
             audio_input_stream.close
-
           rescue UnsupportedAudioFileException => uafex
             puts uafex.inspect, uafex.backtrace
           rescue IOException => ioex
