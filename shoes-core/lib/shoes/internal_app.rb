@@ -229,10 +229,8 @@ class Shoes
       end
     end
 
-    def update_fill
-    end
+    def update_fill; end
 
-    def update_stroke
-    end
+    def update_stroke; end
   end
 end

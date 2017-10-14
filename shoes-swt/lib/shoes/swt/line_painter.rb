@@ -11,8 +11,7 @@ class Shoes
       end
 
       # Don't do fill setup
-      def fill_setup(_gc)
-      end
+      def fill_setup(_gc); end
     end
   end
 end

@@ -5,8 +5,7 @@ class Shoes
     class Background
       include Shoes::Mock::CommonMethods
 
-      def background=(*_opts)
-      end
+      def background=(*_opts); end
     end
   end
 end

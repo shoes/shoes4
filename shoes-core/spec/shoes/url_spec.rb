@@ -13,14 +13,11 @@ describe 'Shoes.url' do
       url '/foo', :foo
       url '/visit_me', :visit_me
 
-      def index
-      end
+      def index; end
 
-      def path
-      end
+      def path; end
 
-      def number(i)
-      end
+      def number(i); end
 
       def foo
         some_method
@@ -30,8 +27,7 @@ describe 'Shoes.url' do
         expect(location).to eq '/visit_me'
       end
 
-      def some_method
-      end
+      def some_method; end
     end
   end
 

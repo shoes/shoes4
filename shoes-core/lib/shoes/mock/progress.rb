@@ -11,8 +11,7 @@ class Shoes
         @dsl.width ||= 140
       end
 
-      def fraction=(_fraction)
-      end
+      def fraction=(_fraction); end
     end
   end
 end

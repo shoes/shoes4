@@ -11,8 +11,7 @@ class Shoes
         @parent = parent
       end
 
-      def remove
-      end
+      def remove; end
 
       attr_reader :dsl
     end

@@ -63,8 +63,7 @@ class Shoes
         end
 
         # Implement in subclass
-        def fill(_graphics_context)
-        end
+        def fill(_graphics_context); end
 
         # Override in subclass and return something falsy if not using draw
         def draw_setup(graphics_context)
@@ -72,8 +71,7 @@ class Shoes
         end
 
         # Implement in subclass
-        def draw(_graphics_context)
-        end
+        def draw(_graphics_context); end
 
         def set_rotate(graphics_context, angle, left, top)
           angle = angle.to_i

@@ -16,17 +16,13 @@ class Shoes
         false
       end
 
-      def checked=(*_opts)
-      end
+      def checked=(*_opts); end
 
-      def focus
-      end
+      def focus; end
 
-      def enabled(_value)
-      end
+      def enabled(_value); end
 
-      def group=(_value)
-      end
+      def group=(_value); end
     end
   end
 end

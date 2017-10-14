@@ -350,8 +350,7 @@ EOS
         @app.dsl.trigger_resize_callbacks
       end
 
-      def controlMoved(_e)
-      end
+      def controlMoved(_e); end
     end
 
     class MouseListener

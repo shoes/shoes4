@@ -18,8 +18,7 @@ class Shoes
       end
 
       # needed by Layouter code, but slots are no physical elements so they
-      def update_position
-      end
+      def update_position; end
 
       def update_visibility
         # No-op since we aren't a real backend, but need to prevent the

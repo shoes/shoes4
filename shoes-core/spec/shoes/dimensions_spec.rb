@@ -811,8 +811,7 @@ describe Shoes::DimensionsDelegations do
 
     class DummyClass
       include Shoes::DimensionsDelegations
-      def dimensions
-      end
+      def dimensions; end
     end
 
     subject do
@@ -847,8 +846,7 @@ describe Shoes::DimensionsDelegations do
 
     class AnotherDummyClass
       include Shoes::BackendDimensionsDelegations
-      def dsl
-      end
+      def dsl; end
     end
 
     subject do

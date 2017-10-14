@@ -13,8 +13,7 @@ class Shoes
 
       def redraw(*_opts); end
 
-      def replace(*_opts)
-      end
+      def replace(*_opts); end
 
       def remove; end
 

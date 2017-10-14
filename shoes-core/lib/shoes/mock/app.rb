@@ -32,34 +32,27 @@ class Shoes
         true
       end
 
-      def quit
-      end
+      def quit; end
 
       def started?
         @started
       end
 
-      def flush
-      end
+      def flush; end
 
-      def clipboard
-      end
+      def clipboard; end
 
-      def clipboard=(_text)
-      end
+      def clipboard=(_text); end
 
       def gutter
         16
       end
 
-      def wait_until_closed
-      end
+      def wait_until_closed; end
 
-      def click(_blk)
-      end
+      def click(_blk); end
 
-      def release(_blk)
-      end
+      def release(_blk); end
     end
   end
 end

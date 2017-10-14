@@ -17,8 +17,7 @@ class Shoes
         end
 
         # Classes should override to dispose of any Swt resources they create
-        def dispose
-        end
+        def dispose; end
 
         private
 

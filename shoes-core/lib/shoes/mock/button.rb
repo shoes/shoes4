@@ -17,8 +17,7 @@ class Shoes
         dsl.height = 0 unless dsl.height
       end
 
-      def enabled(_value)
-      end
+      def enabled(_value); end
     end
   end
 end
