@@ -3,7 +3,7 @@
 class Shoes
   module DSL
     module Text
-      %w(banner title subtitle tagline caption para inscription).each do |method|
+      %w[banner title subtitle tagline caption para inscription].each do |method|
         define_method method do |*texts|
           styles = pop_style(texts)
           klass = Shoes.const_get(method.capitalize)

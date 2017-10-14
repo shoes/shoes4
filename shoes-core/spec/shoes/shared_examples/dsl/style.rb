@@ -8,7 +8,7 @@ shared_examples_for "style DSL method" do
     let(:font)   { "SOME FONT" }
     let(:style)  { {stroke: stroke, size: size, fill: fill, font: font} }
 
-    %w(Banner Title Subtitle Tagline Caption Para Inscription).each do |text_block|
+    %w[Banner Title Subtitle Tagline Caption Para Inscription].each do |text_block|
       describe text_block do
         let(:element) { dsl.public_send text_block.downcase, "Hello!" }
         let(:klass) { Shoes.const_get(text_block) }

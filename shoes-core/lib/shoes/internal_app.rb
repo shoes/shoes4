@@ -101,10 +101,10 @@ class Shoes
       true
     end
 
-    delegated_to_gui = %w(
+    delegated_to_gui = %w[
       fullscreen= fullscreen quit scroll_top= scroll_top
       clipboard clipboard= gutter focus open?
-    )
+    ]
 
     def_delegators :gui, *delegated_to_gui
 
