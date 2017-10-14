@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-NOTES = [['Welcome to the vJot Clone', <<-'END']].freeze
-This sample app is a notetaker, a clone of PJ Hyett's vjot.com.
+NOTES = [['Welcome to the vJot Clone', <<~'END']].freeze
+  This sample app is a notetaker, a clone of PJ Hyett's vjot.com.
 
-Creating
-----------
-Click "Add a New Note" and the jot will be loaded into the editor for reading or editing.
+  Creating
+  ----------
+  Click "Add a New Note" and the jot will be loaded into the editor for reading or editing.
 
-Editing
----------
-Click a jot's title to load it.
+  Editing
+  ---------
+  Click a jot's title to load it.
 
-Saving
---------
-There is no save button, the jot is saved as you edit.
+  Saving
+  --------
+  There is no save button, the jot is saved as you edit.
 
 END
 

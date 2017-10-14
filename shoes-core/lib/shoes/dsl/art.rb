@@ -24,12 +24,12 @@ class Shoes
 
         left, top, width, *leftovers = args
 
-        message = <<EOS
-Too many arguments. Must be one of:
-  - arrow(left, top, width, [opts])
-  - arrow(left, top, [opts])
-  - arrow(left, [opts])
-  - arrow([opts])
+        message = <<~EOS
+          Too many arguments. Must be one of:
+            - arrow(left, top, width, [opts])
+            - arrow(left, top, [opts])
+            - arrow(left, [opts])
+            - arrow([opts])
 EOS
         raise ArgumentError, message if leftovers.any?
 
@@ -52,15 +52,15 @@ EOS
 
         left, top, width, height, angle1, angle2, *leftovers = args
 
-        message = <<EOS
-Too many arguments. Must be one of:
-  - arc(left, top, width, height, angle1, angle2, [opts])
-  - arc(left, top, width, height, angle1, [opts])
-  - arc(left, top, width, height, [opts])
-  - arc(left, top, width, [opts])
-  - arc(left, top, [opts])
-  - arc(left, [opts])
-  - arc([opts])
+        message = <<~EOS
+          Too many arguments. Must be one of:
+            - arc(left, top, width, height, angle1, angle2, [opts])
+            - arc(left, top, width, height, angle1, [opts])
+            - arc(left, top, width, height, [opts])
+            - arc(left, top, width, [opts])
+            - arc(left, top, [opts])
+            - arc(left, [opts])
+            - arc([opts])
 EOS
         raise ArgumentError, message if leftovers.any?
 
@@ -79,13 +79,13 @@ EOS
 
         x1, y1, x2, y2, *leftovers = args
 
-        message = <<EOS
-Too many arguments. Must be one of:
-  - line(x1, y1, x2, y2, [opts])
-  - line(x1, y1, x2, [opts])
-  - line(x1, y1, [opts])
-  - line(x1, [opts])
-  - line([opts])
+        message = <<~EOS
+          Too many arguments. Must be one of:
+            - line(x1, y1, x2, y2, [opts])
+            - line(x1, y1, x2, [opts])
+            - line(x1, y1, [opts])
+            - line(x1, [opts])
+            - line([opts])
 EOS
         raise ArgumentError, message if leftovers.any?
 
@@ -119,13 +119,13 @@ EOS
 
         left, top, width, height, *leftovers = args
 
-        message = <<EOS
-Wrong number of arguments. Must be one of:
-  - oval(left, top, width, height, [opts])
-  - oval(left, top, diameter, [opts])
-  - oval(left, top, [opts])
-  - oval(left, [opts])
-  - oval(styles)
+        message = <<~EOS
+          Wrong number of arguments. Must be one of:
+            - oval(left, top, width, height, [opts])
+            - oval(left, top, diameter, [opts])
+            - oval(left, top, [opts])
+            - oval(left, [opts])
+            - oval(styles)
 EOS
         raise ArgumentError, message if leftovers.any?
 
@@ -160,14 +160,14 @@ EOS
         left, top, width, height, curve, *leftovers = args
         opts[:curve] = curve if curve
 
-        message = <<EOS
-Wrong number of arguments. Must be one of:
-  - rect(left, top, width, height, curve, [opts])
-  - rect(left, top, width, height, [opts])
-  - rect(left, top, side, [opts])
-  - rect(left, top, [opts])
-  - rect(left, [opts])
-  - rect(styles)
+        message = <<~EOS
+          Wrong number of arguments. Must be one of:
+            - rect(left, top, width, height, curve, [opts])
+            - rect(left, top, width, height, [opts])
+            - rect(left, top, side, [opts])
+            - rect(left, top, [opts])
+            - rect(left, [opts])
+            - rect(styles)
 EOS
 
         raise ArgumentError, message if leftovers.any?
@@ -208,14 +208,14 @@ EOS
 
         left, top, points, outer, inner, *leftovers = args
 
-        message = <<EOS
-Wrong number of arguments. Must be one of:
-  - star([styles])
-  - star(left, [styles])
-  - star(left, top, [styles])
-  - star(left, top, points, [styles])
-  - star(left, top, points, outer, [styles])
-  - star(left, top, points, outer, inner, [styles])
+        message = <<~EOS
+          Wrong number of arguments. Must be one of:
+            - star([styles])
+            - star(left, [styles])
+            - star(left, top, [styles])
+            - star(left, top, points, [styles])
+            - star(left, top, points, outer, [styles])
+            - star(left, top, points, outer, inner, [styles])
 EOS
         raise ArgumentError, message if leftovers.any?
 
@@ -241,11 +241,11 @@ EOS
 
         left, top, *leftovers = args
 
-        message = <<EOS
-Wrong number of arguments. Must be one of:
-  - shape(left, top, [opts])
-  - shape(left, [opts])
-  - shape([opts])
+        message = <<~EOS
+          Wrong number of arguments. Must be one of:
+            - shape(left, top, [opts])
+            - shape(left, [opts])
+            - shape([opts])
 EOS
 
         raise ArgumentError, message if leftovers.any?
