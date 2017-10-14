@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app width: 360, height: 600, resizable: false do
   stroke "#dde"
   background "#f1f5ff"

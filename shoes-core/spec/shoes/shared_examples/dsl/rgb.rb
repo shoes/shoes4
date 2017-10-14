@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "rgb DSL method" do
   let(:red) { 100 }
   let(:green) { 149 }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'yaml'
 
 Shoes.app title: "A Gentle Reminder",

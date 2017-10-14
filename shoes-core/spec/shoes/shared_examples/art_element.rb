@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "an art element" do
   it_behaves_like "object with dimensions"
   it_behaves_like "object with parent"

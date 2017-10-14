@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # The general Style module handles the many optional styles that may be passed
 # to shoes elements upon creates as well as the fact that they can later on be
 # altered through the #style method.

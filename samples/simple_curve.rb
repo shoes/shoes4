@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # based on the cairo curve_to example
 # http://www.cairographics.org/samples/curve_to/

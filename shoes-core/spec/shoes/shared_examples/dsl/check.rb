@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for 'check DSL method' do
   let(:checkbox) { dsl.check }
 

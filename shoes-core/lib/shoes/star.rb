@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Star < Common::ArtElement
     style_with :angle, :art_styles, :common_styles, :dimensions, :inner, :outer, :points

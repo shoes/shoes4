@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "object with rotate" do
   it "doesn't rotate on nil" do
     subject.rotate = nil

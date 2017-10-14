@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Provide `shape` (a double) and `subject` (a Painter)
 
 shared_context "painter context" do

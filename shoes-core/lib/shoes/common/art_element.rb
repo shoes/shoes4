@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Common
     class ArtElement < UIElement

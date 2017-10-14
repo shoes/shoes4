@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "creating gradient" do
   it "returns correct gradient according to #to_s" do
     expect(gradient.to_s).to eq("(Shoes::Gradient)")

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     # This class is intended as the single click listener held onto by the app.

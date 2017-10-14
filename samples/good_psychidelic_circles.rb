@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 degree = 0
 color  = 0
 size   = 0

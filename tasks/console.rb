@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 desc 'Start a pry console with Shoes loaded'
 task :console do
   require 'pry'

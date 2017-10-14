@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Shoes Minesweeper by que/varyform
 #

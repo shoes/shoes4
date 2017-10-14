@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Accordion
   OPEN_HEIGHT = 240
 

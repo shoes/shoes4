@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This is a common context for running Shoes::Swt specs.
 #   - parent:    use for instantiating a Shoes::Swt object
 #   - swt_app:   use for instantiating a Shoes::Swt object
