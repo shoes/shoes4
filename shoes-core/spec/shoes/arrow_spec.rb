@@ -88,4 +88,29 @@ describe Shoes::Arrow do
       expect { dsl.arrow 40, 50, 100, 666, left: -1 }.to raise_error(ArgumentError)
     end
   end
+
+  describe "redrawing region" do
+    subject(:arrow) { Shoes::Arrow.new(app, parent, 100, 100, 100, strokewidth: 0) }
+
+    before do
+      # faux positioning
+      arrow.absolute_left = 100
+      arrow.absolute_top = 100
+    end
+
+    it "positions around itself" do
+      expect(arrow.redraw_left).to eq(50)
+      expect(arrow.redraw_top).to eq(60)
+      expect(arrow.redraw_width).to eq(100)
+      expect(arrow.redraw_height).to eq(100)
+    end
+
+    it "factors in strokewidth" do
+      arrow.strokewidth = 5
+      expect(arrow.redraw_left).to eq(45)
+      expect(arrow.redraw_top).to eq(55)
+      expect(arrow.redraw_width).to eq(110)
+      expect(arrow.redraw_height).to eq(110)
+    end
+  end
 end
