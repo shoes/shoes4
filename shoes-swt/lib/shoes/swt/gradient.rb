@@ -58,7 +58,7 @@ class Shoes
         dsl    = gui.dsl
         width  = dsl.redraw_width * 0.5
         height = dsl.redraw_height * 0.5
-        angle  = normalize_angle(-dsl.angle)
+        angle  = normalize_angle(-(dsl.angle || 0))
         left, top, width, height = determine_args_based_on_angle(angle,
                                                                  dsl.redraw_left,
                                                                  dsl.redraw_top,

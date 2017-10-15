@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class Shoes
   class Star < Common::ArtElement
-    style_with :angle, :art_styles, :center, :common_styles, :dimensions, :inner, :outer, :points
-    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
+    style_with :art_styles, :center, :common_styles, :dimensions, :inner, :outer, :points
+    STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     # Don't use param defaults as DSL explicit passes nil for missing params
     def create_dimensions(left, top, points, outer, inner)

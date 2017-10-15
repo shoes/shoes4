@@ -5,8 +5,8 @@ class Shoes
   class Line < Common::ArtElement
     attr_reader :point_a, :point_b
 
-    style_with :angle, :art_styles, :dimensions, :x2, :y2
-    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
+    style_with :art_styles, :dimensions, :x2, :y2
+    STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(x1, y1, x2, y2)
       x1, y1, x2, y2 = default_coordinates(x1, y1, x2, y2)
