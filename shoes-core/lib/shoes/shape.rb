@@ -50,6 +50,26 @@ class Shoes
       false
     end
 
+    def redraw_left
+      return 0 unless @left_bound
+      @left_bound - strokewidth.to_i
+    end
+
+    def redraw_top
+      return 0 unless @top_bound
+      @top_bound - strokewidth.to_i
+    end
+
+    def redraw_width
+      return 0 unless element_width
+      element_width + 2 * strokewidth.to_i
+    end
+
+    def redraw_height
+      return 0 unless element_height
+      element_height + 2 * strokewidth.to_i
+    end
+
     # Moves the shape
     #
     # @param [Integer] left The new left value

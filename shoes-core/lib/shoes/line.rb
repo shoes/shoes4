@@ -5,8 +5,8 @@ class Shoes
   class Line < Common::ArtElement
     attr_reader :point_a, :point_b
 
-    style_with :angle, :art_styles, :dimensions, :x2, :y2
-    STYLES = { angle: 0, fill: Shoes::COLORS[:black] }.freeze
+    style_with :art_styles, :dimensions, :x2, :y2
+    STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
     def create_dimensions(x1, y1, x2, y2)
       x1, y1, x2, y2 = default_coordinates(x1, y1, x2, y2)
@@ -80,6 +80,22 @@ class Shoes
 
     alias x2= right=
     alias y2= bottom=
+
+    def redraw_left
+      [@point_a.x, @point_b.x].min - 0.5 * style[:strokewidth].to_i
+    end
+
+    def redraw_top
+      [@point_a.y, @point_b.y].min - 0.5 * style[:strokewidth].to_i
+    end
+
+    def redraw_width
+      (@point_a.x - @point_b.x).abs + style[:strokewidth].to_i
+    end
+
+    def redraw_height
+      (@point_a.y - @point_b.y).abs + style[:strokewidth].to_i
+    end
 
     def move(x, y, x2 = nil, y2 = nil)
       @point_a.x = x

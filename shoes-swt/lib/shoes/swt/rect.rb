@@ -12,8 +12,6 @@ class Shoes
       include Common::Translate
       include ::Shoes::BackendDimensionsDelegations
 
-      def_delegators :dsl, :angle
-
       attr_reader :dsl, :app, :transform, :painter
 
       def initialize(dsl, app)

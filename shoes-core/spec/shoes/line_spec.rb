@@ -213,4 +213,31 @@ describe Shoes::Line do
       expect { dsl.line 10, 20, 30, 40, 666, left: -1 }.to raise_error(ArgumentError)
     end
   end
+
+  describe "redrawing region" do
+    subject { Shoes::Line.new(app, parent, 0, 0, 100, 100, strokewidth: 0) }
+
+    it "positions around itself" do
+      expect(subject.redraw_left).to eq(0)
+      expect(subject.redraw_top).to eq(0)
+      expect(subject.redraw_width).to eq(100)
+      expect(subject.redraw_height).to eq(100)
+    end
+
+    it "reverses fine" do
+      subject.move(100, 100, 0, 0)
+      expect(subject.redraw_left).to eq(0)
+      expect(subject.redraw_top).to eq(0)
+      expect(subject.redraw_width).to eq(100)
+      expect(subject.redraw_height).to eq(100)
+    end
+
+    it "factors in strokewidth" do
+      subject.strokewidth = 4
+      expect(subject.redraw_left).to eq(-2)
+      expect(subject.redraw_top).to eq(-2)
+      expect(subject.redraw_width).to eq(104)
+      expect(subject.redraw_height).to eq(104)
+    end
+  end
 end

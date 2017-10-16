@@ -5,9 +5,11 @@ describe Shoes::Swt::Gradient do
   let(:color1) { Shoes::Color.create(Shoes::COLORS[:honeydew]) }
   let(:color2) { Shoes::Color.create(Shoes::COLORS[:salmon]) }
 
-  let(:applied_to) do
-    double("applied to", element_left: 0, element_top: 0, angle: 0,
-                         element_width: 10, element_height: 10)
+  let(:applied_to) { double("applied_to", dsl: element_dsl) }
+  let(:element_dsl) do
+    double("element_dsl", angle: 0,
+                          redraw_left: 0, redraw_top: 0,
+                          redraw_width: 10, redraw_height: 10)
   end
 
   let(:dsl) { Shoes::Gradient.new(color1, color2) }

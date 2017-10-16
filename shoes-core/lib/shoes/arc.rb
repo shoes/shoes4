@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class Shoes
   class Arc < Common::ArtElement
+    # angle is the gradient angle used across all art elements
+    # angle1/2 are the angles of the arc itself!
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false, fill: Shoes::COLORS[:black] }.freeze
 

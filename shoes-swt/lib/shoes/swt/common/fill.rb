@@ -25,7 +25,7 @@ class Shoes
 
         # @return [Integer] the angle to use when filling with a pattern
         def angle
-          @angle || 0
+          dsl.angle || 0
         end
 
         # Just clear it out and let next paint recreate and save our SWT color

@@ -15,7 +15,8 @@ class Shoes
       }
 
       STYLE_GROUPS = {
-        art_styles:           [:cap, :click, :fill, :rotate, :stroke, :strokewidth, :transform, :translate],
+        art_styles:           [:angle, :cap, :click, :fill, :rotate, :stroke,
+                               :strokewidth, :transform, :translate],
         common_styles:        [:displace_left, :displace_top, :hidden],
         dimensions:           [:bottom, :height, :left, :margin,
                                :margin_bottom, :margin_left, :margin_right,

@@ -156,4 +156,29 @@ describe Shoes::Shape do
       expect { dsl.shape 10, 20, 666, left: -1 }.to raise_error(ArgumentError)
     end
   end
+
+  describe "redrawing region" do
+    subject { Shoes::Shape.new app, parent, 100, 100, { strokewidth: 0 }, draw }
+
+    let(:draw) do
+      proc do
+        line_to 200, 200
+      end
+    end
+
+    it "positions around itself" do
+      expect(subject.redraw_left).to eq(0)
+      expect(subject.redraw_top).to eq(0)
+      expect(subject.redraw_width).to eq(200)
+      expect(subject.redraw_height).to eq(200)
+    end
+
+    it "factors in strokewidth" do
+      subject.strokewidth = 5
+      expect(subject.redraw_left).to eq(-5)
+      expect(subject.redraw_top).to eq(-5)
+      expect(subject.redraw_width).to eq(210)
+      expect(subject.redraw_height).to eq(210)
+    end
+  end
 end

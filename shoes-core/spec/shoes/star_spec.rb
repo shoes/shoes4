@@ -167,4 +167,38 @@ describe Shoes::Star do
       expect { dsl.star 10, 20, 6, 30, 40, 666, left: -1 }.to raise_error(ArgumentError)
     end
   end
+
+  describe "redrawing region" do
+    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 0) }
+
+    before do
+      # faux positioning
+      subject.absolute_left = 100
+      subject.absolute_top = 100
+    end
+
+    it "positions around itself" do
+      expect(subject.redraw_left).to eq(100)
+      expect(subject.redraw_top).to eq(100)
+      expect(subject.redraw_width).to eq(100)
+      expect(subject.redraw_height).to eq(100)
+    end
+
+    it "positions centered around itself" do
+      subject.center = true
+      expect(subject.redraw_left).to eq(50)
+      expect(subject.redraw_top).to eq(50)
+      expect(subject.redraw_width).to eq(100)
+      expect(subject.redraw_height).to eq(100)
+    end
+
+    it "factors in strokewidth when centered" do
+      subject.center = true
+      subject.strokewidth = 4
+      expect(subject.redraw_left).to eq(46)
+      expect(subject.redraw_top).to eq(46)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
+    end
+  end
 end
