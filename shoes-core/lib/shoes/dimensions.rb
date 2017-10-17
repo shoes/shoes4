@@ -82,6 +82,16 @@ class Shoes
       x_dimension.in_bounds?(x) && y_dimension.in_bounds?(y)
     end
 
+    def overlaps?(other)
+      return false unless other.element_left && other.element_top &&
+                          other.element_right && other.element_bottom
+
+      in_bounds?(other.element_left, other.element_top) ||
+        in_bounds?(other.element_left, other.element_bottom) ||
+        in_bounds?(other.element_right, other.element_top) ||
+        in_bounds?(other.element_right, other.element_bottom)
+    end
+
     def margin
       [margin_left, margin_top, margin_right, margin_bottom]
     end
