@@ -28,7 +28,7 @@ class Shoes
         # Painted elements handle slot bounds themselves when painting
         return false if @parent.nil? || painted?
 
-        !@parent.overlaps?(self.dimensions)
+        !@parent.overlaps?(dimensions)
       end
 
       # Reveals the element, if it is hidden. See also #hide and #toggle.
