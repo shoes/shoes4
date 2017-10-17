@@ -20,6 +20,17 @@ class Shoes
         !hidden?
       end
 
+      def hidden_from_view?
+        hidden? || outside_parent_view?
+      end
+
+      def outside_parent_view?
+        # Painted elements handle slot bounds themselves when painting
+        return false if @parent.nil? || painted?
+
+        !@parent.overlaps?(self.dimensions)
+      end
+
       # Reveals the element, if it is hidden. See also #hide and #toggle.
       def show
         style(hidden: false)
