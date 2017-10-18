@@ -76,7 +76,7 @@ class Shoes
     end
 
     def add_message_stack(type, message, index = nil)
-      return unless @app && @app.open?
+      return unless defined?(@app) && @app.open?
 
       @app.instance_exec do
         append do

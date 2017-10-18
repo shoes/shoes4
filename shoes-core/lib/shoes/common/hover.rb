@@ -25,32 +25,32 @@ class Shoes
       end
 
       def hovered?
-        @hovered
+        @hovered ||= false
       end
 
       def hover_class
-        return @hover_class if @hover_class
+        return @hover_class if defined?(@hover_class)
 
         name = self.class.name.split("::").last
         @hover_class = Shoes.const_get("#{name}Hover")
       end
 
       def mouse_hovered
-        return if @hovered
+        return if hovered?
 
         @hovered = true
 
         apply_style_from_hover_class
-        eval_hover_block(@hover_blk)
+        eval_hover_block(@hover_blk ||= nil)
       end
 
       def mouse_left
-        return unless @hovered
+        return unless hovered?
 
         @hovered = false
 
         apply_style_from_pre_hover
-        eval_hover_block(@leave_blk)
+        eval_hover_block(@leave_blk ||= nil)
       end
 
       def add_mouse_hover_control
@@ -74,7 +74,7 @@ class Shoes
       end
 
       def apply_style_from_pre_hover
-        style(@pre_hover_style) if @pre_hover_style
+        style(@pre_hover_style) if defined?(@pre_hover_style) && @pre_hover_style
         @pre_hover_style = nil
       end
     end

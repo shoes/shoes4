@@ -18,6 +18,19 @@ class Shoes
       @parent          = parent
       @start_as_center = start_as_center
       @combined_margins = 0
+      @displace_start = nil
+      @displace_start_relative = nil
+      @end             = nil
+      @extent          = nil
+      @extent_negative = nil
+      @extent_relative = nil
+      @margin_end      = nil
+      @margin_end_relative = nil
+      @margin_start    = nil
+      @margin_start_relative = nil
+      @start           = nil
+      @start           = nil
+      @start_relative  = nil
     end
 
     def start

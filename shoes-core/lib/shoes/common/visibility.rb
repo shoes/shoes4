@@ -11,7 +11,7 @@ class Shoes
       # Root method for determining whether we're visible or not, taking into
       # account our parent chain's visibility.
       def hidden?
-        @parent&.hidden? || style[:hidden]
+        (defined?(@parent) && @parent&.hidden?) || style[:hidden]
       end
 
       alias hidden hidden?

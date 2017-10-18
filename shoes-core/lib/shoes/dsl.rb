@@ -24,7 +24,7 @@ class Shoes
     end
 
     def logger
-      return @logger if @logger
+      return @logger if defined?(@logger)
 
       @logger ||= Shoes::LoggerCollection.new
       @logger << Shoes::StandardLogger.new

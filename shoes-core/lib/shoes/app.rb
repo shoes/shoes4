@@ -101,7 +101,7 @@ class Shoes
     end
 
     def method_missing(name, *args, &blk)
-      if @__additional_context__
+      if defined?(@__additional_context__) && @__additional_context__
         @__additional_context__.public_send(name, *args, &blk)
       else
         super
