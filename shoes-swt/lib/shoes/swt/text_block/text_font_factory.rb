@@ -44,7 +44,9 @@ class Shoes
       end
 
       def styles_bitmask(styles)
-        styles.reduce { |acc, elem| acc | elem }
+        styles.reduce do |acc, elem|
+          acc | elem
+        end
       end
     end
   end
