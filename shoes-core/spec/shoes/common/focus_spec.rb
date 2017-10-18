@@ -30,15 +30,15 @@ describe Shoes::Common::Focus do
     end
 
     it "has alias #focused" do
-      expect(subject.method(:focused) == subject.method(:focused?)).to be true
+      expect(subject.method(:focused)).to eq(subject.method(:focused?))
     end
 
     it "has alias #focussed" do
-      expect(subject.method(:focussed) == subject.method(:focused?)).to be true
+      expect(subject.method(:focussed)).to eq(subject.method(:focused?))
     end
 
     it "has alias #focussed" do
-      expect(subject.method(:focussed?) == subject.method(:focused?)).to be true
+      expect(subject.method(:focussed?)).to eq(subject.method(:focused?))
     end
   end
 end
