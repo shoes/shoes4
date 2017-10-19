@@ -10,9 +10,13 @@ RSpec.configure do |config|
     allow_any_instance_of(Shoes::Swt::App).to receive_messages(flush: true)
     allow_any_instance_of(Swt::Widgets::Shell).to receive(:open)
     allow_any_instance_of(Swt::Widgets::MessageBox).to receive(:open)
+
     # stubbed as otherwise all sorts of callbacks are added during certain specs,
     # which then fail because some doubles are not made for the methods called
     allow(Shoes::Swt::RedrawingAspect).to receive_messages new: true
+
+    # If we leak app registrations between tests, some tests get unhappy
+    Shoes::Swt.unregister_all
   end
 
   # https://github.com/jruby/jruby/wiki/Persistence
