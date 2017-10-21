@@ -5,8 +5,7 @@ class Shoes
       def remove
         parent&.remove_child self
         gui&.remove if gui&.respond_to?(:remove)
-
-        @app&.remove_mouse_hover_control(self)
+        @app&.remove_mouse_hover_control(self) if defined?(@app)
       end
     end
   end

@@ -25,6 +25,7 @@ class Shoes
 
     def before_initialize(*_)
       @contents = SlotContents.new
+      @last_hidden_state = nil
     end
 
     def handle_block(blk)

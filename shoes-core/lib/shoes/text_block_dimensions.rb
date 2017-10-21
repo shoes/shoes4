@@ -7,6 +7,14 @@ class Shoes
     attr_writer :absolute_right, :absolute_bottom,
                 :calculated_width, :calculated_height
 
+    def initialize(*args)
+      @absolute_right    = nil
+      @absolute_bottom   = nil
+      @calculated_width  = nil
+      @calculated_height = nil
+      super
+    end
+
     def absolute_right
       @absolute_right || super
     end

@@ -42,7 +42,7 @@ class Shoes
         end
 
         def result
-          @result
+          @result ||= nil
         end
       end
 

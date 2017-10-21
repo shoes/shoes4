@@ -6,6 +6,16 @@ class Shoes
     style_with :art_styles, :center, :common_styles, :dimensions
     STYLES = { fill: Shoes::COLORS[:black] }.freeze
 
+    def initialize(*args)
+      @bottom_bound = nil
+      @left_bound = nil
+      @right_bound = nil
+      @top_bound = nil
+      @x = nil
+      @y = nil
+      super
+    end
+
     def create_dimensions(left, top)
       left ||= @style[:left] || 0
       top  ||= @style[:top] || 0

@@ -205,7 +205,7 @@ class Shoes
     WRITER_METHODS.each do |meth|
       key = meth.to_s.sub("=", "").to_sym
       define_method(meth) do |value|
-        @style[key] = value if @style
+        @style[key] = value if defined?(@style)
         dimensions.send(meth, value)
       end
     end
