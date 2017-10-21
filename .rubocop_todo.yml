@@ -95,6 +95,9 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 648
+  Exclude:
+    - 'shoes-core/spec/**/*.rb'
+    - 'shoes-swt/spec/**/*.rb'
 
 # Offense count: 16
 # Configuration parameters: CountComments.
