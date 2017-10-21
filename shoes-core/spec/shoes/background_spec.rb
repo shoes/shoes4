@@ -26,6 +26,10 @@ describe Shoes::Background do
     expect(background.gui).not_to be_nil
   end
 
+  it "is painted" do
+    expect(subject.painted?).to eq(true)
+  end
+
   it_behaves_like "object with fill", :blue
 
   it_behaves_like "object with style" do

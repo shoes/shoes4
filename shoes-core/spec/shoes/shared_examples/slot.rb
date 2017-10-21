@@ -471,3 +471,18 @@ shared_examples_for 'margin and positioning' do
     end
   end
 end
+
+shared_examples_for 'contents alignment updates visibility' do
+  before do
+    allow(element).to receive(:update_visibility)
+  end
+
+  include_context 'one slot child'
+  include_context 'contents_alignment'
+
+  it 'sends updates along' do
+    subject.contents.each do |child|
+      expect(child).to have_received(:update_visibility)
+    end
+  end
+end

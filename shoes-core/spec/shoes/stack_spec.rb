@@ -9,6 +9,7 @@ describe Shoes::Stack do
 
   it_behaves_like "Slot"
   it_behaves_like "object with hover"
+  it_behaves_like "contents alignment updates visibility"
 
   describe 'Context' do
     class ContextObject

@@ -10,6 +10,7 @@ describe Shoes::Flow do
   it_behaves_like "clickable object"
   it_behaves_like "Slot"
   it_behaves_like "object with hover"
+  it_behaves_like "contents alignment updates visibility"
 
   describe "initialize" do
     let(:input_opts) { {width: 131, height: 137} }
