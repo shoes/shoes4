@@ -26,7 +26,7 @@ describe Shoes::Common::Visibility do
   subject { VisibilityTester.new(gui, parent) }
 
   let(:gui)    { double("gui", update_visibility: nil) }
-  let(:parent) { double("parent", hidden?: false) }
+  let(:parent) { double("parent", hidden?: false, variable_height?: false) }
 
   it "hides" do
     subject.hide
@@ -87,6 +87,11 @@ describe Shoes::Common::Visibility do
 
     it "is not hidden from view if no parent" do
       subject.parent = nil
+      expect(subject.hidden_from_view?).to eq(false)
+    end
+
+    it "is not hidden from view if variable height parent" do
+      allow(parent).to receive(:variable_height?).and_return(true)
       expect(subject.hidden_from_view?).to eq(false)
     end
 

@@ -26,7 +26,7 @@ class Shoes
 
       def outside_parent_view?
         # Painted elements handle slot bounds themselves when painting
-        return false if @parent.nil? || painted?
+        return false if @parent.nil? || @parent.variable_height? || painted?
 
         # We hide when we're at all outside our parent's bounds
         !@parent.contains?(dimensions)
