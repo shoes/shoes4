@@ -20,6 +20,7 @@ class Shoes
         @app = app
         @element = ::Swt::Path.new(::Swt.display)
         @painter = ShapePainter.new(self)
+        @transform = nil
         @app.add_paint_listener @painter
       end
 

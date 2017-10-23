@@ -19,9 +19,9 @@ class Shoes
 
       def group=(value)
         group_lookup = RadioGroup.group_lookup
-        group_lookup[@group].remove(self) unless @group.nil?
+        group_lookup[group].remove(self) unless group.nil?
         @group = value || RadioGroup::DEFAULT_RADIO_GROUP
-        group_lookup[@group].add self
+        group_lookup[group].add self
       end
     end
   end

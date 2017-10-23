@@ -19,6 +19,8 @@ class Shoes
       def initialize(dsl)
         @dsl = dsl
         @patterns = []
+        @color1 = nil
+        @color2 = nil
       end
 
       def dispose

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 ENV['SHOES_ENV'] = 'test'
 
-SHOESSPEC_ROOT = File.expand_path('..', __FILE__)
+SHOESSPEC_ROOT ||= File.expand_path('..', __FILE__)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT)
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../lib')
 $LOAD_PATH << File.join(SHOESSPEC_ROOT, '../../shoes-core/spec')

@@ -4,6 +4,7 @@ class Shoes
     class TextFontFactory
       def initialize
         @fonts = []
+        @display = nil
       end
 
       def create_font(font_style)
