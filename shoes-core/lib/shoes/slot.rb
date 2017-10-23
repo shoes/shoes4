@@ -30,11 +30,16 @@ class Shoes
     end
 
     def handle_block(blk)
-      @current_position = Position.new element_left,
-                                       element_top,
-                                       element_top
+      snapshot_current_position
+
       @blk = blk
       eval_block blk
+    end
+
+    def snapshot_current_position
+      offset = scroll ? @scroll_top : 0
+      top = element_top - offset
+      @current_position = Position.new element_left, top, top
     end
 
     def set_default_dimension_values
@@ -166,14 +171,13 @@ class Shoes
     Position = Struct.new(:x, :y, :next_line_start)
 
     def position_contents
-      @current_position = Position.new element_left,
-                                       element_top,
-                                       element_top
+      snapshot_current_position
 
       contents.each do |element|
         next if element.hidden?
         @current_position = positioning(element, @current_position)
       end
+
       @current_position
     end
 

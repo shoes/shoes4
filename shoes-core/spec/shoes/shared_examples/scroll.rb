@@ -4,6 +4,30 @@ shared_examples_for "scrollable slot" do
   it "initializes scroll_top to 0" do
     expect(subject.scroll_top).to eq(0)
   end
+
+  describe '#snapshot_current_position' do
+    before do
+      subject.absolute_left = 100
+      subject.absolute_top = 100
+    end
+
+    it "offsets when scrollable" do
+      subject.scroll = true
+      subject.scroll_top = 10
+
+      position = subject.snapshot_current_position
+      expect(position.y).to eq(90)
+      expect(position.next_line_start).to eq(90)
+    end
+
+    it "doesn't offset when not scrollable" do
+      subject.scroll = false
+
+      position = subject.snapshot_current_position
+      expect(position.y).to eq(100)
+      expect(position.next_line_start).to eq(100)
+    end
+  end
 end
 
 shared_examples_for "scrollable slot with overflowing content" do
