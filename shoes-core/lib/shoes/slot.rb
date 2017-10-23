@@ -10,6 +10,7 @@ class Shoes
     NEXT_ELEMENT_OFFSET = 1
 
     attr_reader :parent, :dimensions, :gui, :contents, :blk
+    attr_accessor :scroll_top, :scroll_height
 
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
     STYLES = { scroll: false, fill: Shoes::COLORS[:black] }.freeze
@@ -140,15 +141,9 @@ class Shoes
       @app.add_mouse_hover_control(self)
     end
 
-    def scroll_height
-      position_contents.y
-    end
-
     def scroll_max
       scroll_height - height
     end
-
-    attr_accessor :scroll_top
 
     def app
       @app.app # return the Shoes::App not the internal app
@@ -311,6 +306,7 @@ class Shoes
 
     def determine_slot_height
       content_height = compute_content_height
+      self.scroll_height = content_height
       self.element_height = content_height if variable_height?
       content_height
     end
