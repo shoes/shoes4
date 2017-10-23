@@ -5,6 +5,57 @@ shared_examples_for "scrollable slot" do
     expect(subject.scroll_top).to eq(0)
   end
 
+  before do
+    subject.scroll_height = 200
+    subject.height = 100
+  end
+
+  describe '#scroll_top' do
+    describe "when scrolling" do
+      before do
+        subject.scroll = true
+      end
+
+      it "allows setting scroll position" do
+        subject.scroll_top = 42
+        expect(subject.scroll_top).to eq(42)
+      end
+
+      it "can't scroll past maximum" do
+        subject.scroll_top = subject.scroll_max + 10
+        expect(subject.scroll_top).to eq(subject.scroll_max)
+      end
+    end
+
+    describe "when not scrolling" do
+      before do
+        subject.scroll = false
+        allow(Shoes.logger).to receive(:warn)
+      end
+
+      it "can't set scroll position" do
+        subject.scroll_top = 42
+        expect(subject.scroll_top).to eq(0)
+      end
+
+      it "logs a warning" do
+        subject.scroll_top = 42
+        expect(Shoes.logger).to have_received(:warn)
+      end
+    end
+  end
+
+  describe '#scroll_max' do
+    it 'allows some scrolling' do
+      expect(subject.scroll_max).to eq(100)
+    end
+
+    it 'caps scrolling' do
+      subject.scroll_height = 80
+      expect(subject.scroll_max).to eq(0)
+    end
+  end
+
   describe '#snapshot_current_position' do
     before do
       subject.absolute_left = 100

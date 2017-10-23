@@ -10,7 +10,9 @@ class Shoes
     NEXT_ELEMENT_OFFSET = 1
 
     attr_reader :parent, :dimensions, :gui, :contents, :blk
-    attr_accessor :scroll_top, :scroll_height
+
+    attr_reader :scroll_top
+    attr_accessor :scroll_height
 
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
     STYLES = { scroll: false, fill: Shoes::COLORS[:black] }.freeze
@@ -37,8 +39,7 @@ class Shoes
     end
 
     def snapshot_current_position
-      offset = scroll ? @scroll_top : 0
-      top = element_top - offset
+      top = element_top - scroll_offset
       @current_position = Position.new element_left, top, top
     end
 
@@ -146,8 +147,17 @@ class Shoes
       @app.add_mouse_hover_control(self)
     end
 
+    def scroll_top=(value)
+      unless scroll
+        Shoes.logger.warn "You've set scroll_top on a slot (#<#{self.class}:0x#{hash.to_s(16)}...>) that isn't scrollable. This will be ignored."
+        return
+      end
+
+      @scroll_top = [value, scroll_max].min
+    end
+
     def scroll_max
-      scroll_height - height
+      [scroll_height - height, 0].max
     end
 
     def app
@@ -323,7 +333,7 @@ class Shoes
                    .max
 
       if max_bottom
-        max_bottom - element_top + NEXT_ELEMENT_OFFSET
+        max_bottom - (element_top - scroll_offset) + NEXT_ELEMENT_OFFSET
       else
         0
       end
@@ -346,6 +356,10 @@ class Shoes
 
     def update_child_visibility
       contents.each(&:update_visibility)
+    end
+
+    def scroll_offset
+      scroll ? @scroll_top : 0
     end
   end
 
