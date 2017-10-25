@@ -12,6 +12,7 @@ describe Shoes::Swt::Background do
   let(:fill) { Shoes::COLORS[:salmon] }
   let(:dsl) do
     double("dsl object", app: shoes_app,
+                         parent: parent,
                          element_left: left, element_top: top,
                          element_width: width, element_height: height,
                          translate_left: 0, translate_top: 0,

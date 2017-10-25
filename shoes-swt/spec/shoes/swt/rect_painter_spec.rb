@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 describe Shoes::Swt::RectPainter do
+  include_context "swt app"
   include_context "painter context"
 
   let(:corners) { 0 }
@@ -9,7 +10,7 @@ describe Shoes::Swt::RectPainter do
   let(:container) { double('container', disposed?: false) }
 
   let(:dsl) do
-    double("dsl object", hidden: false, rotate: 0,
+    double("dsl object", parent: parent, hidden: false, rotate: 0,
                          translate_left: 0, translate_top: 0,
                          element_left: left, element_top: top,
                          element_width: width, element_height: height,

@@ -30,6 +30,7 @@ shared_context "swt app" do
 
   let(:parent) do
     double('parent', app: swt_app, add_child: true, real: true, hidden?: false,
+                     scroll_top: 0,
                      absolute_left: 0, absolute_top: 0,
                      width: 200, height: 100, fixed_height?: true)
   end

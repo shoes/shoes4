@@ -42,7 +42,7 @@ class Shoes
             if obj.needs_rotate?
               set_rotate graphics_context, obj.rotate,
                          obj.element_left + obj.element_width / 2.0,
-                         obj.element_top + obj.element_height / 2.0 do
+                         drawing_top + obj.element_height / 2.0 do
                 fill_and_draw(graphics_context)
               end
             else
@@ -100,6 +100,11 @@ class Shoes
           transform.rotate angle
           transform.translate(-left, -top)
           graphics_context.set_transform transform
+        end
+
+        def drawing_top
+          dsl = @obj.dsl
+          dsl.element_top - dsl.parent.scroll_top
         end
       end
     end
