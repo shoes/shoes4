@@ -38,4 +38,10 @@ describe Shoes::Swt::OvalPainter do
     expect(gc).to receive(:draw_oval).with(left + sw / 2, top + sw / 2, width - sw, height - sw)
     subject.paint_control(event)
   end
+
+  it "positions correctly when scrolled" do
+    allow(parent).to receive(:scroll_top).and_return(10)
+    expect(gc).to receive(:draw_oval).with(left + sw / 2, top - 10 + sw / 2, width - sw, height - sw)
+    subject.paint_control(event)
+  end
 end
