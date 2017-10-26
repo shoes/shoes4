@@ -46,7 +46,7 @@ class Shoes
     end
 
     def self.initialize_backend
-      return if @initialized
+      return if defined?(@initialized) && @initialized
       @initialized = true
 
       ::Shoes.configuration.backend = :swt

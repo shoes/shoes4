@@ -19,6 +19,7 @@ class Shoes
       def initialize(dsl, app)
         @dsl = dsl
         @app = app
+        @tmpname_or_data = nil
         update_image
         add_paint_listener
       end

@@ -197,7 +197,7 @@ EOS
       # Because SWT shutdown is hard to reverse, we only let you do it once
       # and warn you if you try to run again afterward.
       def self.main_app_closed?
-        @main_app_closed
+        @main_app_closed ||= false
       end
 
       def self.mark_main_app_closed

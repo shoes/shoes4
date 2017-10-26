@@ -13,22 +13,27 @@ class Shoes
           tmpname = File.join(Dir.tmpdir, "__shoes4_#{Time.now.to_i}_#{File.basename(name)}")
           FileUtils.cp(name, tmpname)
 
-          @cleanup_files ||= []
-          @cleanup_files << tmpname
+          cleanup_files << tmpname
           tmpname
         end
 
         def cleanup_temporary_files
-          return unless @cleanup_files
+          return unless cleanup_files.any?
 
-          @cleanup_files.each do |file|
+          cleanup_files.each do |file|
             begin
               FileUtils.rm(file)
             rescue => e
               Shoes.logger.debug("Error during image temp file cleanup.\n#{e.class}: #{e.message}")
             end
           end
-          @cleanup_files.clear
+          cleanup_files.clear
+        end
+
+        private
+
+        def cleanup_files
+          @cleanup_files ||= []
         end
       end
     end
