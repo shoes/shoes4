@@ -514,6 +514,45 @@ describe Shoes::Dimensions do
     end
   end
 
+  describe '#contains?' do
+    let(:left) { 100 }
+    let(:top) { 100 }
+    let(:width) { 100 }
+    let(:height) { 100 }
+
+    before :each do
+      subject.absolute_left = left
+      subject.absolute_top  = top
+    end
+
+    it 'is fully contained' do
+      other = create_other 150, 150, 50, 50
+      expect(subject.contains?(other)).to eq(true)
+    end
+
+    it 'has top corner out' do
+      other = create_other 75, 75, 50, 50
+      expect(subject.contains?(other)).to eq(false)
+    end
+
+    it 'has bottom corner out' do
+      other = create_other 175, 175, 50, 50
+      expect(subject.contains?(other)).to eq(false)
+    end
+
+    it 'is fully outside' do
+      other = create_other 250, 250, 50, 50
+      expect(subject.contains?(other)).to eq(false)
+    end
+
+    def create_other(top, left, width, height)
+      other = Shoes::Dimensions.new parent, top, left, width, height
+      other.absolute_left = left
+      other.absolute_top = top
+      other
+    end
+  end
+
   describe 'absolute positioning' do
     subject { Shoes::Dimensions.new parent }
     its(:absolutely_positioned?) { should be_falsey }

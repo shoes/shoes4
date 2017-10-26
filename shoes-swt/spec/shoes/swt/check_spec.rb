@@ -10,6 +10,7 @@ describe Shoes::Swt::Check do
     double('dsl', app: shoes_app,
                   gui: real,
                   visible?: true,
+                  hidden_from_view?: false,
                   left: 42,
                   top: 66,
                   element_left: 42,

@@ -6,6 +6,10 @@ class Shoes
         @dimensions = ParentDimensions.new @parent, @style
       end
 
+      def painted?
+        true
+      end
+
       # We derive everything from our parent, so we skip slot positioning.
       def needs_positioning?
         false

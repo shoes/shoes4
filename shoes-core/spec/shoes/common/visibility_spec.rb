@@ -6,20 +6,27 @@ describe Shoes::Common::Visibility do
     include Shoes::Common::Visibility
     include Shoes::Common::Style
 
-    attr_reader :gui
-    attr_accessor :parent
+    attr_reader :dimensions, :gui
+    attr_accessor :painted, :parent
 
     def initialize(gui, parent)
-      @style = {}
       @gui = gui
+      @painted = false
       @parent = parent
+
+      @dimensions = Shoes::Dimensions.new(nil, 0, 0, 0, 0)
+      @style = {}
+    end
+
+    def painted?
+      @painted
     end
   end
 
   subject { VisibilityTester.new(gui, parent) }
 
   let(:gui)    { double("gui", update_visibility: nil) }
-  let(:parent) { double("parent", hidden?: false) }
+  let(:parent) { double("parent", hidden?: false, variable_height?: false) }
 
   it "hides" do
     subject.hide
@@ -71,5 +78,38 @@ describe Shoes::Common::Visibility do
     allow(parent).to receive(:hidden?).and_return(true)
     subject.parent = nil
     expect(subject).to be_visible
+  end
+
+  describe "view checking" do
+    before do
+      subject.show
+    end
+
+    it "is not hidden from view if no parent" do
+      subject.parent = nil
+      expect(subject.hidden_from_view?).to eq(false)
+    end
+
+    it "is not hidden from view if variable height parent" do
+      allow(parent).to receive(:variable_height?).and_return(true)
+      expect(subject.hidden_from_view?).to eq(false)
+    end
+
+    it "is not hidden from view if painted" do
+      subject.painted = true
+      expect(subject.hidden_from_view?).to eq(false)
+    end
+
+    it "is not hidden from view if within parent" do
+      allow(parent).to receive(:contains?).and_return(true)
+      expect(subject.hidden?).to eq(false)
+      expect(subject.hidden_from_view?).to eq(false)
+    end
+
+    it "is hidden from view if outside parent" do
+      allow(parent).to receive(:contains?).and_return(false)
+      expect(subject.hidden?).to eq(false)
+      expect(subject.hidden_from_view?).to eq(true)
+    end
   end
 end

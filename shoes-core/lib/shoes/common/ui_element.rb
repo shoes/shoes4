@@ -107,6 +107,10 @@ class Shoes
       def redraw_height
         element_height
       end
+
+      def painted?
+        false
+      end
     end
   end
 end

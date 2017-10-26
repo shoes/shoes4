@@ -13,6 +13,10 @@ class Shoes
         # We need to include it at inheritance time to get that behavior.
         child.include Common::Hover
       end
+
+      def painted?
+        true
+      end
     end
   end
 end

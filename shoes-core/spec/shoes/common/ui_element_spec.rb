@@ -29,4 +29,8 @@ describe Shoes::Common::UIElement do
       expect(subject.needs_rotate?).to be_falsey
     end
   end
+
+  it "isn't painted by default" do
+    expect(subject.painted?).to eq(false)
+  end
 end

@@ -15,4 +15,8 @@ shared_examples "an art element" do
   # requires we define subject subject_without_style and subject_with_style
   # inside the example block!
   it_behaves_like "object with style"
+
+  it "is painted" do
+    expect(subject.painted?).to eq(true)
+  end
 end

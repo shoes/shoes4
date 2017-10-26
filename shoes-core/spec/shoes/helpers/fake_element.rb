@@ -14,6 +14,9 @@ class Shoes
     def adjust_current_position(*_)
     end
 
+    def update_visibility
+    end
+
     # Fake this out instead of using Common::Style to avoid things like touching
     # app level styles, etc. that we don't need for testing purposes
     def style(styles = {})
