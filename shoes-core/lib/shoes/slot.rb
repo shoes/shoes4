@@ -153,7 +153,7 @@ class Shoes
         return
       end
 
-      value = 0 if value < 0
+      value = 0 if value.negative?
       @scroll_top = [value, scroll_max].min
     end
 
