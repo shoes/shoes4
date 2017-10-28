@@ -49,4 +49,12 @@ describe Shoes::Swt::RectPainter do
       subject.paint_control(event)
     end
   end
+
+  describe "scrolling" do
+    it "draws rect offset" do
+      allow(parent).to receive(:scroll_top).and_return(10)
+      expect(gc).to receive(:draw_round_rectangle).with(left + sw / 2, top - 10 + sw / 2, width - sw, height - sw, corners * 2, corners * 2)
+      subject.paint_control(event)
+    end
+  end
 end
