@@ -17,6 +17,7 @@ class Shoes
         end
 
         def paint_control(event)
+          before_painted
           graphics_context = event.gc
           reset_graphics_context graphics_context
           if @obj.dsl.visible? && @obj.dsl.positioned?
@@ -112,6 +113,9 @@ class Shoes
         def drawing_bottom
           dsl = @obj.dsl
           dsl.element_bottom - dsl.parent.scroll_top
+        end
+
+        def before_painted
         end
 
         def after_painted
