@@ -7,14 +7,14 @@ class Shoes
       def fill(graphics_context)
         if @obj.wedge?
           graphics_context.fill_arc(@obj.translate_left + @obj.element_left,
-                                    @obj.translate_top + @obj.element_top,
+                                    @obj.translate_top + drawing_top,
                                     @obj.element_width,
                                     @obj.element_height,
                                     start_angle, sweep)
         else
           path = ::Swt::Path.new(::Swt.display)
           path.add_arc(@obj.translate_left + @obj.element_left,
-                       @obj.translate_top + @obj.element_top,
+                       @obj.translate_top + drawing_top,
                        @obj.element_width,
                        @obj.element_height,
                        start_angle, sweep)
@@ -26,7 +26,7 @@ class Shoes
         line_width = graphics_context.get_line_width
         if @obj.element_left && @obj.element_top && @obj.element_width && @obj.element_height
           graphics_context.draw_arc(@obj.translate_left + @obj.element_left + line_width / 2,
-                                    @obj.translate_top + @obj.element_top + line_width / 2,
+                                    @obj.translate_top + drawing_top + line_width / 2,
                                     @obj.element_width - line_width,
                                     @obj.element_height - line_width,
                                     start_angle, sweep)
