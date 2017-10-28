@@ -14,7 +14,8 @@ describe Shoes::Swt::Common::Painter do
 
   let(:dsl) do
     double 'dsl', parent: parent, visible?: true, positioned?: true, style: {},
-                  element_left: 0, element_top: 0, element_width: 0, element_height: 0
+                  element_left: 0, element_top: 0, element_bottom: 0,
+                  element_width: 0, element_height: 0
   end
 
   let(:event) { double 'paint event', gc: graphics_context }
@@ -98,6 +99,17 @@ describe Shoes::Swt::Common::Painter do
     it "is offset when parent is scrolled" do
       allow(parent).to receive(:scroll_top).and_return(10)
       expect(subject.drawing_top).to eq(dsl.element_top - 10)
+    end
+  end
+
+  describe "drawing_bottom" do
+    it "matches element_bottom if not scrolled" do
+      expect(subject.drawing_bottom).to eq(dsl.element_bottom)
+    end
+
+    it "is offset when parent is scrolled" do
+      allow(parent).to receive(:scroll_top).and_return(10)
+      expect(subject.drawing_bottom).to eq(dsl.element_bottom - 10)
     end
   end
 

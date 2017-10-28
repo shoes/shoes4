@@ -109,6 +109,11 @@ class Shoes
           dsl.element_top - dsl.parent.scroll_top
         end
 
+        def drawing_bottom
+          dsl = @obj.dsl
+          dsl.element_bottom - dsl.parent.scroll_top
+        end
+
         def after_painted
         end
       end
