@@ -30,6 +30,8 @@ class Shoes
           #
           puts "SWALLOWED PAINT EXCEPTION ON #{@obj} - go take care of it: " + e.to_s
           puts 'Unfortunately we have to swallow it because it causes odd failures :('
+        ensure
+          after_painted
         end
 
         def paint_object(graphics_context)
@@ -105,6 +107,9 @@ class Shoes
         def drawing_top
           dsl = @obj.dsl
           dsl.element_top - dsl.parent.scroll_top
+        end
+
+        def after_painted
         end
       end
     end

@@ -2,6 +2,7 @@
 require 'spec_helper'
 
 describe Shoes::Swt::ArrowPainter do
+  include_context "swt app"
   include_context "painter context"
 
   let(:corners) { 0 }
@@ -9,10 +10,12 @@ describe Shoes::Swt::ArrowPainter do
   let(:container) { double('container', disposed?: false) }
 
   let(:dsl) do
-    double("dsl object", hidden: false, rotate: 0,
+    double("dsl object", parent: parent, hidden: false, rotate: 0,
                          translate_left: 0, translate_top: 0,
                          left: left, top: top,
                          width: width, height: height,
+                         element_left: left, element_top: top,
+                         element_width: width, element_height: height,
                          style: {}, strokewidth: 1).as_null_object
   end
 
@@ -33,6 +36,11 @@ describe Shoes::Swt::ArrowPainter do
 
   it "fills on path" do
     expect(gc).to receive(:fill_path).with(subject.path)
+    subject.paint_control(event)
+  end
+
+  it "disposes of path after painting" do
+    expect(subject.path).to receive(:dispose)
     subject.paint_control(event)
   end
 

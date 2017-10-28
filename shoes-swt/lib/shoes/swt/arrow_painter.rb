@@ -28,14 +28,14 @@ class Shoes
 
           body_left   = @obj.translate_left + @obj.left - @obj.width * 0.5
           body_right  = @obj.translate_left + @obj.left + @obj.width * 0.1
-          body_top    = @obj.translate_top + @obj.top - @obj.width * 0.2
-          body_bottom = @obj.translate_top + @obj.top + @obj.width * 0.2
+          body_top    = @obj.translate_top + drawing_top - @obj.width * 0.2
+          body_bottom = @obj.translate_top + drawing_top + @obj.width * 0.2
 
-          middle = @obj.translate_top + @obj.top
+          middle = @obj.translate_top + drawing_top
 
           head_right  = @obj.translate_left + @obj.left + @obj.width * 0.5
-          head_top    = @obj.translate_top + @obj.top - @obj.width * 0.4
-          head_bottom = @obj.translate_top + @obj.top + @obj.width * 0.4
+          head_top    = @obj.translate_top + drawing_top - @obj.width * 0.4
+          head_bottom = @obj.translate_top + drawing_top + @obj.width * 0.4
 
           path = ::Swt::Path.new(::Swt.display)
           path.move_to(body_left, middle)
@@ -53,6 +53,10 @@ class Shoes
       end
 
       def dispose
+        clear_path
+      end
+
+      def after_painted
         clear_path
       end
 
