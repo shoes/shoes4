@@ -24,4 +24,10 @@ describe Shoes::Swt::LinePainter do
     expect(gc).to receive(:draw_line).with(10, 100, 300, 10)
     subject.paint_control(event)
   end
+
+  specify "draws line scrolled" do
+    allow(parent).to receive(:scroll_top).and_return(10)
+    expect(gc).to receive(:draw_line).with(10, 90, 300, 0)
+    subject.paint_control(event)
+  end
 end
