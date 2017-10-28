@@ -25,6 +25,11 @@ shared_examples_for "scrollable slot" do
         subject.scroll_top = subject.scroll_max + 10
         expect(subject.scroll_top).to eq(subject.scroll_max)
       end
+
+      it "can't scroll negative" do
+        subject.scroll_top = -10
+        expect(subject.scroll_top).to eq(0)
+      end
     end
 
     describe "when not scrolling" do
