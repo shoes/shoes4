@@ -11,6 +11,9 @@ class Shoes
 
     attr_reader :parent, :dimensions, :gui, :contents, :blk
 
+    attr_reader :scroll_top
+    attr_accessor :scroll_height
+
     style_with :art_styles, :attach, :common_styles, :dimensions, :scroll
     STYLES = { scroll: false, fill: Shoes::COLORS[:black] }.freeze
 
@@ -29,11 +32,15 @@ class Shoes
     end
 
     def handle_block(blk)
-      @current_position = Position.new element_left,
-                                       element_top,
-                                       element_top
+      snapshot_current_position
+
       @blk = blk
       eval_block blk
+    end
+
+    def snapshot_current_position
+      top = element_top - scroll_offset
+      @current_position = Position.new element_left, top, top
     end
 
     def set_default_dimension_values
@@ -140,15 +147,19 @@ class Shoes
       @app.add_mouse_hover_control(self)
     end
 
-    def scroll_height
-      position_contents.y
+    def scroll_top=(value)
+      unless scroll
+        Shoes.logger.warn "You've set scroll_top on a slot (#<#{self.class}:0x#{hash.to_s(16)}...>) that isn't scrollable. This will be ignored."
+        return
+      end
+
+      value = 0 if value.negative?
+      @scroll_top = [value, scroll_max].min
     end
 
     def scroll_max
-      scroll_height - height
+      [scroll_height - height, 0].max
     end
-
-    attr_accessor :scroll_top
 
     def app
       @app.app # return the Shoes::App not the internal app
@@ -171,14 +182,13 @@ class Shoes
     Position = Struct.new(:x, :y, :next_line_start)
 
     def position_contents
-      @current_position = Position.new element_left,
-                                       element_top,
-                                       element_top
+      snapshot_current_position
 
       contents.each do |element|
         next if element.hidden?
         @current_position = positioning(element, @current_position)
       end
+
       @current_position
     end
 
@@ -311,6 +321,7 @@ class Shoes
 
     def determine_slot_height
       content_height = compute_content_height
+      self.scroll_height = content_height
       self.element_height = content_height if variable_height?
       content_height
     end
@@ -323,7 +334,7 @@ class Shoes
                    .max
 
       if max_bottom
-        max_bottom - element_top + NEXT_ELEMENT_OFFSET
+        max_bottom - (element_top - scroll_offset) + NEXT_ELEMENT_OFFSET
       else
         0
       end
@@ -346,6 +357,10 @@ class Shoes
 
     def update_child_visibility
       contents.each(&:update_visibility)
+    end
+
+    def scroll_offset
+      scroll ? @scroll_top : 0
     end
   end
 

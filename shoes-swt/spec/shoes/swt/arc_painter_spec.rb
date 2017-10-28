@@ -13,7 +13,7 @@ describe Shoes::Swt::ArcPainter do
   let(:fill_color) { Shoes::Color.new(40, 50, 60, 70) }
   let(:stroke_color) { Shoes::Color.new(80, 90, 100, 110) }
   let(:dsl) do
-    double("dsl object", app: shoes_app,
+    double("dsl object", app: shoes_app, parent: parent,
                          element_width: width, element_height: height,
                          element_left: left, element_top: top,
                          translate_left: 0, translate_top: 0,

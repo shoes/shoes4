@@ -22,6 +22,7 @@ class Shoes
         @painter = ShapePainter.new(self)
         @transform = nil
         @app.add_paint_listener @painter
+        @scroll_top_applied = nil
       end
 
       def dispose
@@ -30,6 +31,7 @@ class Shoes
       end
 
       attr_reader :dsl, :app, :element, :painter
+      attr_accessor :scroll_top_applied
 
       def redraw_target
         @dsl

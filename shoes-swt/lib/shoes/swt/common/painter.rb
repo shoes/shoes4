@@ -17,6 +17,7 @@ class Shoes
         end
 
         def paint_control(event)
+          before_painted
           graphics_context = event.gc
           reset_graphics_context graphics_context
           if @obj.dsl.visible? && @obj.dsl.positioned?
@@ -30,6 +31,8 @@ class Shoes
           #
           puts "SWALLOWED PAINT EXCEPTION ON #{@obj} - go take care of it: " + e.to_s
           puts 'Unfortunately we have to swallow it because it causes odd failures :('
+        ensure
+          after_painted
         end
 
         def paint_object(graphics_context)
@@ -42,7 +45,7 @@ class Shoes
             if obj.needs_rotate?
               set_rotate graphics_context, obj.rotate,
                          obj.element_left + obj.element_width / 2.0,
-                         obj.element_top + obj.element_height / 2.0 do
+                         drawing_top + obj.element_height / 2.0 do
                 fill_and_draw(graphics_context)
               end
             else
@@ -100,6 +103,22 @@ class Shoes
           transform.rotate angle
           transform.translate(-left, -top)
           graphics_context.set_transform transform
+        end
+
+        def drawing_top
+          dsl = @obj.dsl
+          dsl.element_top - dsl.parent.scroll_top
+        end
+
+        def drawing_bottom
+          dsl = @obj.dsl
+          dsl.element_bottom - dsl.parent.scroll_top
+        end
+
+        def before_painted
+        end
+
+        def after_painted
         end
       end
     end

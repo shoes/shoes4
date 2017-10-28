@@ -9,11 +9,13 @@ describe Shoes::Swt::Common::Painter do
 
   let(:parent) do
     double 'parent', absolute_left: 0, absolute_top: 0, width: 200, height: 100,
-                     fixed_height?: true
+                     scroll_top: 0, fixed_height?: true
   end
 
   let(:dsl) do
-    double 'dsl', parent: parent, visible?: true, positioned?: true, style: {}
+    double 'dsl', parent: parent, visible?: true, positioned?: true, style: {},
+                  element_left: 0, element_top: 0, element_bottom: 0,
+                  element_width: 0, element_height: 0
   end
 
   let(:event) { double 'paint event', gc: graphics_context }
@@ -63,10 +65,6 @@ describe Shoes::Swt::Common::Painter do
     it 'rotates' do
       allow(dsl).to receive(:needs_rotate?) { true }
       allow(dsl).to receive(:rotate) { 10 }
-      allow(dsl).to receive(:element_left)   { 0 }
-      allow(dsl).to receive(:element_width)  { 0 }
-      allow(dsl).to receive(:element_top)    { 0 }
-      allow(dsl).to receive(:element_height) { 0 }
 
       expect_transform_for_rotate(dsl.rotate)
 
@@ -90,6 +88,28 @@ describe Shoes::Swt::Common::Painter do
       subject.set_rotate graphics_context, rotate_by, 0, 0 do
         # no-op
       end
+    end
+  end
+
+  describe "drawing_top" do
+    it "matches element_top if not scrolled" do
+      expect(subject.drawing_top).to eq(dsl.element_top)
+    end
+
+    it "is offset when parent is scrolled" do
+      allow(parent).to receive(:scroll_top).and_return(10)
+      expect(subject.drawing_top).to eq(dsl.element_top - 10)
+    end
+  end
+
+  describe "drawing_bottom" do
+    it "matches element_bottom if not scrolled" do
+      expect(subject.drawing_bottom).to eq(dsl.element_bottom)
+    end
+
+    it "is offset when parent is scrolled" do
+      allow(parent).to receive(:scroll_top).and_return(10)
+      expect(subject.drawing_bottom).to eq(dsl.element_bottom - 10)
     end
   end
 

@@ -13,7 +13,8 @@ describe Shoes::Swt::StarPainter do
   let(:corners) { 0 }
 
   let(:dsl) do
-    double("dsl object", hidden: false, points: points, outer: outer,
+    double("dsl object", parent: parent, hidden: false,
+                         points: points, outer: outer,
                          inner: inner, element_width: outer * 2.0,
                          element_height: outer * 2.0, element_left: left,
                          element_top: top).as_null_object
