@@ -15,7 +15,7 @@ class Shoes
         inner = obj.inner
         points = obj.points
         left = obj.translate_left + obj.element_left
-        top = obj.translate_top + obj.element_top
+        top = obj.translate_top + drawing_top
         @polygon = []
         add_edge(left, top + outer)
         (1..points * 2).each do |i|
