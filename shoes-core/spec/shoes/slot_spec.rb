@@ -179,12 +179,12 @@ describe Shoes::Slot do
   describe '#update_visibility' do
     let(:child_element) { Shoes::Para.new app, subject, ['text'] }
 
-    it 'does not update visibility on gui unless visible state changd' do
-      expect(subject.gui).not_to receive(:update_visibility)
+    it 'updates visibility on gui whenever called through' do
+      expect(subject.gui).to receive(:update_visibility)
       subject.send(:update_visibility)
     end
 
-    it 'updates visibility on gui when changed' do
+    it 'updates visibility on gui when toggled' do
       expect(subject.gui).to receive(:update_visibility)
       subject.toggle
     end
