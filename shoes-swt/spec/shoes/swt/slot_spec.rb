@@ -12,7 +12,7 @@ describe Shoes::Swt::Slot do
                                  contents: [content]
   end
 
-  let(:scroll)  do
+  let(:scroll) do
     double 'scroll', add_selection_listener: nil,
                      set_visible: nil, set_bounds: nil,
                      'selection=': nil, 'maximum=': nil
