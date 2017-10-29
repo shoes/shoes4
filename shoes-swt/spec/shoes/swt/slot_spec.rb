@@ -12,10 +12,13 @@ describe Shoes::Swt::Slot do
                                  contents: [content]
   end
 
+  let(:scroll)  do
+    double 'scroll', add_selection_listener: nil,
+                     set_visible: nil, set_bounds: nil,
+                     'selection=': nil, 'maximum=': nil
+  end
+
   let(:content) { double 'content', show: true, hide: true }
-  let(:scroll)  { double 'scroll', add_selection_listener: nil,
-                                   set_visible: nil, set_bounds: nil,
-                                   'selection=': nil, 'maximum=': nil }
 
   subject { Shoes::Swt::Slot.new dsl, swt_app }
 

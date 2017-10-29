@@ -16,7 +16,7 @@ class Shoes
         @app = @parent.app
 
         @scroll = ::Swt::Widgets::Slider.new(@app.real, ::Swt::SWT::VERTICAL)
-        @scroll.add_selection_listener do |event|
+        @scroll.add_selection_listener do |_event|
           update_scroll
         end
       end
