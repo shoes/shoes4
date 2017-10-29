@@ -343,14 +343,12 @@ class Shoes
     end
 
     def update_visibility
+      # Always update our backend via common implementation
+      super
+
       # Only alter contents on a visibility change
       if @last_hidden_state != hidden?
         @last_hidden_state = hidden?
-
-        # Let the common visibility implementation update the backend
-        super
-
-        # Pass it along to all our children that they should update
         update_child_visibility
       end
 

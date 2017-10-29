@@ -23,7 +23,8 @@ class Shoes
           TextBlock::CursorPainter         => [:move_textcursor],
           Timer                            => [:eval_block],
           ::Shoes::TextBlock               => [:replace],
-          ::Shoes::Common::Changeable      => [:call_change_listeners]
+          ::Shoes::Common::Changeable      => [:call_change_listeners],
+          ::Shoes::Swt::Slot               => [:update_scroll],
         }.freeze
 
       # These need to trigger a redraw
@@ -33,7 +34,8 @@ class Shoes
                            ::Shoes::Common::Style  => [:update_style],
                            ::Shoes::Common::Remove => [:remove],
                            ::Shoes::Slot           => [:mouse_hovered,
-                                                       :mouse_left]}.freeze
+                                                       :mouse_left],
+                         }.freeze
 
       CHANGED_POSITION = { ::Shoes::DimensionsDelegations => [:adjust_current_position],
                            ::Shoes::Common::Positioning   => [:_position, :displace],
