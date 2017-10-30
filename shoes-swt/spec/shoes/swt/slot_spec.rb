@@ -46,9 +46,9 @@ describe Shoes::Swt::Slot do
     subject.update_visibility
   end
 
-  it "sets scrolling maximum based on dsl" do
+  it "sets scrolling maximum based on dsl with padding" do
     allow(dsl).to receive(:scroll_max).and_return(100)
-    expect(scroll).to receive(:maximum=).with(100)
+    expect(scroll).to receive(:maximum=).with(110)
     subject.update_visibility
   end
 

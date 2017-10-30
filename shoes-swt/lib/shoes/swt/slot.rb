@@ -29,17 +29,21 @@ class Shoes
         @dsl.scroll_top = @scroll.selection
       end
 
+      # This is more than the scrollbar is expected to be on any OS
+      SCROLLBAR_MAX_WIDTH = 20
+
+      # For some reason, if we set max to match, you can't get past last 10!
+      SCROLLBAR_PADDING = 10
+
       def update_visibility
         @scroll.set_visible(@dsl.scroll && @dsl.scroll_max.positive?)
 
         if @dsl.scroll
-          scrollbar_width = 20
-
           @scroll.selection = @dsl.scroll_top
-          @scroll.maximum = @dsl.scroll_max
-          @scroll.set_bounds @dsl.element_right - scrollbar_width + 1,
+          @scroll.maximum = @dsl.scroll_max + SCROLLBAR_PADDING
+          @scroll.set_bounds @dsl.element_right - SCROLLBAR_MAX_WIDTH + 1,
                              @dsl.element_top,
-                             scrollbar_width,
+                             SCROLLBAR_MAX_WIDTH,
                              @dsl.element_height
         end
       end
