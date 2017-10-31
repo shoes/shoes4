@@ -90,6 +90,8 @@ Lint/RescueWithoutErrorClass:
 # Offense count: 83
 Metrics/AbcSize:
   Max: 84
+  Exclude:
+    - "shoes-swt/lib/shoes/swt.rb"
 
 # Offense count: 233
 # Configuration parameters: CountComments, ExcludedMethods.
@@ -120,6 +122,8 @@ Metrics/LineLength:
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 85
+  Exclude:
+    - "shoes-swt/lib/shoes/swt.rb"
 
 # Offense count: 3
 # Configuration parameters: CountComments.

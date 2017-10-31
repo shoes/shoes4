@@ -29,7 +29,7 @@ describe Shoes::Swt::Image do
 
   describe "paint callback" do
     let(:event) { double("event", gc: gc) }
-    let(:gc) { double("gc", drawImage: true) }
+    let(:gc) { double("gc", drawImage: true, clipping: nil, set_clipping: nil) }
 
     before :each do
       expect(swt_app).to receive(:add_paint_listener)
@@ -38,7 +38,7 @@ describe Shoes::Swt::Image do
     specify "draws image" do
       allow(dsl).to receive_messages element_left: left, element_top: top
       expect(gc).to receive(:drawImage).with(subject.real, 0, 0, 3, 1, left, top, 3, 1)
-      subject.painter.call(event)
+      subject.painter.paint_control(event)
     end
   end
 

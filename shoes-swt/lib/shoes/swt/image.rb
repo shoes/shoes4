@@ -14,14 +14,16 @@ class Shoes
       include Common::ImageHandling
       include ::Shoes::BackendDimensionsDelegations
 
-      attr_reader :app, :real, :dsl, :painter
+      attr_reader :app, :real, :dsl, :painter, :full_width, :full_height
 
       def initialize(dsl, app)
         @dsl = dsl
         @app = app
         @tmpname_or_data = nil
         update_image
-        add_paint_listener
+
+        @painter = ImagePainter.new(self)
+        app.add_paint_listener(@painter)
       end
 
       def update_image
@@ -116,14 +118,6 @@ class Shoes
           data = name_or_data
         end
         data
-      end
-
-      def add_paint_listener
-        @painter = lambda do |event|
-          graphics_context = event.gc
-          graphics_context.drawImage @real, 0, 0, @full_width, @full_height, dsl.element_left, dsl.element_top, dsl.element_width, dsl.element_height unless @dsl.hidden
-        end
-        app.add_paint_listener(@painter)
       end
     end
   end
