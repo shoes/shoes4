@@ -1,0 +1,5 @@
+name: Shoes
+shortname: shoes
+ignore:
+  - 'pkg'
+run: shoes_app.rb

@@ -17,6 +17,7 @@ Lint/AmbiguousBlockAssociation:
 Lint/HandleExceptions:
   Exclude:
     - 'shoes-core/lib/shoes/packager.rb'
+    - 'app/shoes_app.rb'
 
 # Offense count: 2
 Lint/IneffectiveAccessModifier:
