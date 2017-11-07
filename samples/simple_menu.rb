@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MenuPanel < Shoes::Widget
   def self.boxes
     @boxes ||= []

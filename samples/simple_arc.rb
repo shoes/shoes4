@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # a translation from a processing example
 # http://vormplus.be/weging/an-introduction-to-processing/

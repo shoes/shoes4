@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 SAMPLES_DIR = "samples"
 
 namespace :samples do

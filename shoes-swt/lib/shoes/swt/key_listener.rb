@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     class KeyListener
@@ -9,13 +10,13 @@ class Shoes
       end
 
       SPECIAL_KEY_NAMES = Hash[
-        %w(TAB PAGE_UP PAGE_DOWN HOME END F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
-           F13 F14 F15).map do |key|
+        %w[TAB PAGE_UP PAGE_DOWN HOME END F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
+           F13 F14 F15].map do |key|
           [get_swt_constant(key), key.downcase]
         end
       ]
 
-      %w(UP DOWN LEFT RIGHT).each do |key|
+      %w[UP DOWN LEFT RIGHT].each do |key|
         SPECIAL_KEY_NAMES[get_swt_constant "ARROW_#{key}"] = key.downcase
       end
 
@@ -26,7 +27,7 @@ class Shoes
 
       SPECIAL_KEY_NAMES.freeze
 
-      MODIFIER_KEYS = %w(CTRL SHIFT ALT CAPS_LOCK COMMAND).map do |key|
+      MODIFIER_KEYS = %w[CTRL SHIFT ALT CAPS_LOCK COMMAND].map do |key|
         get_swt_constant key
       end
 
@@ -49,7 +50,7 @@ class Shoes
       end
 
       BUTTON_EXCLUDES = ["\n", " "].freeze
-      COMBO_EXCLUDES  = %w(up down) + BUTTON_EXCLUDES
+      COMBO_EXCLUDES  = %w[up down] + BUTTON_EXCLUDES
 
       # For a variety of SWT controls, certain characters should not be passed
       # to Shoes key listeners, since they're already handled by the controls.

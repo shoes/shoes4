@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Shape < Common::ArtElement
     attr_reader :blk, :x, :y, :left_bound, :top_bound, :right_bound, :bottom_bound

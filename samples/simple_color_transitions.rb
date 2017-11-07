@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   background chocolate..black, angle: 130
   strokewidth 20

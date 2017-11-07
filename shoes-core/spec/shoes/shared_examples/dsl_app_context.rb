@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_context "dsl app" do
   let(:input_block) { proc {} }
   let(:input_opts) { {} }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Shared examples for Shoes::App and Shoes::Slot (flow and stack).
 # If DSL methods can be called with multiple number of arguments,
 # and if they set certain defaults, then that what needs to be tested
@@ -9,7 +10,7 @@
 shared_examples "DSL container" do
   let(:dsl) { app }
 
-  %w(
+  %w[
     animate
     button
     cap
@@ -28,7 +29,7 @@ shared_examples "DSL container" do
     strokewidth
     style
     video
-  ).each do |method|
+  ].each do |method|
     include_examples "#{method} DSL method"
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Pong in Shoes
 # a clone of http://billmill.org/pong.html

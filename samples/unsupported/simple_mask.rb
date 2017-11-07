@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # https://github.com/shoes/shoes4/issues/527
 #

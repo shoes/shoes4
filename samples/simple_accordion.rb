@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Accordion
   OPEN_HEIGHT = 240
 
@@ -62,37 +63,37 @@ Shoes.app do
   style(Shoes::Link, stroke: black, underline: nil, weight: "strong")
   style(Shoes::LinkHover, stroke: black, fill: nil, underline: nil)
 
-  page "0.0", true, <<-'END'
-There is a thought
-I have just had
-Which I don’t care to pass to
-Anyone at all at this time.
+  page "0.0", true, <<~'END'
+    There is a thought
+    I have just had
+    Which I don’t care to pass to
+    Anyone at all at this time.
 
-I have even forgotten it now,
-But kept only the pleasures
-Of my property
-And of my controlled mental slippage.
+    I have even forgotten it now,
+    But kept only the pleasures
+    Of my property
+    And of my controlled mental slippage.
 END
-  page "0.1", false, <<-'END'
-My eyes have blinked again
-And I have just realized
-This upright world
-I have been in.
+  page "0.1", false, <<~'END'
+    My eyes have blinked again
+    And I have just realized
+    This upright world
+    I have been in.
 
-My eyelids wipe
-My eyes hundreds of times
-Reseting and renovating
-The scenery.
+    My eyelids wipe
+    My eyes hundreds of times
+    Reseting and renovating
+    The scenery.
 END
-  page "0.2", false, <<-'END'
-Sister, without you,
-The universe would
-Have such a hole through it,
-Where infinity has been shot.
+  page "0.2", false, <<~'END'
+    Sister, without you,
+    The universe would
+    Have such a hole through it,
+    Where infinity has been shot.
 
-This cannot be, though.
-There will always be room
-For you—all of us are
-Holding the way open.
+    This cannot be, though.
+    There will always be room
+    For you—all of us are
+    Holding the way open.
 END
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   path = File.expand_path(File.join(__FILE__, ".."))
   boing     = sound("#{path}/61847__simon-rue__boink-v3.wav")

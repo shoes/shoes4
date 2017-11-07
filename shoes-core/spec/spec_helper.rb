@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 ENV['SHOES_ENV'] = 'test'
 
 SHOESSPEC_ROOT ||= File.expand_path('..', __FILE__)

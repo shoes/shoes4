@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PhotoFrame < Shoes
   url '/',        :index
   url '/cy',      :cy

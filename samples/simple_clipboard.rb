@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   stack do
     @line = edit_line "Put text here"

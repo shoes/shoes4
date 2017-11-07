@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app width: 300, height: 300 do
   fname = File.join(Shoes::DIR, 'static/shoes-icon.png')
   background yellow..orange, angle: 90

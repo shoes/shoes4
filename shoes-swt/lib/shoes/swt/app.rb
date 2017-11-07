@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     shoes_icon = ::Shoes::ICON
@@ -24,16 +25,16 @@ class Shoes
 
       def initialize(dsl)
         if self.class.main_app_closed?
-          Shoes.logger.error <<-EOS
-Sorry! You can't start another Shoes.app at after the main one has already
-finished like that! If you need multiple windows, try it more like this:
+          Shoes.logger.error <<~EOS
+            Sorry! You can't start another Shoes.app at after the main one has already
+            finished like that! If you need multiple windows, try it more like this:
 
-    Shoes.app do
-      para "first!"
-      Shoes.app do
-        para "second!"
-      end
-    end
+                Shoes.app do
+                  para "first!"
+                  Shoes.app do
+                    para "second!"
+                  end
+                end
 EOS
           exit 1
         end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   # This is the superclass for creating custom Shoes widgets.
   #

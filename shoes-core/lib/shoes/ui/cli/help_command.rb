@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module UI
     class CLI
@@ -22,9 +23,9 @@ class Shoes
         end
 
         def help
-          <<-EOS
-shoes help
-    Displays this help text
+          <<~EOS
+            shoes help
+                Displays this help text
 EOS
         end
       end

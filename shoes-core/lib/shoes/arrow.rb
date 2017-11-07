@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Arrow < Common::ArtElement
     style_with :art_styles, :curve, :common_styles, :dimensions

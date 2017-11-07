@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   slot = stack do
     background lightsteelblue

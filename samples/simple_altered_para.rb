@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # sample56.rb
 Para = Shoes::Para
 Shoes.app width: 200, height: 160 do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     # In Swt radio groups are managed by composites which occupy space

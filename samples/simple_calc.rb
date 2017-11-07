@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Calc
   def initialize
     @number   = 0
@@ -46,7 +47,7 @@ Shoes.app height: 250, width: 200, resizable: false do
     end
 
     flow width: 218, margin: 4 do
-      %w(7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +).each do |btn|
+      %w[7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +].each do |btn|
         button btn, width: 46, height: 46 do
           method = case btn
                    when /[0-9]/  then 'press_' + btn
