@@ -8,6 +8,8 @@ shared_examples_for "scrollable slot" do
 
   before do
     subject.scroll_height = 200
+    allow(subject).to receive(:compute_content_height).and_return(200)
+
     subject.height = 100
   end
 
@@ -58,11 +60,15 @@ shared_examples_for "scrollable slot" do
 
     it 'caps scrolling' do
       subject.scroll_height = 80
+      allow(subject).to receive(:compute_content_height).and_return(80)
+
       expect(subject.scroll_max).to eq(0)
     end
 
     it 'zeroes out if missing scroll_height' do
       subject.scroll_height = nil
+      allow(subject).to receive(:compute_content_height).and_return(nil)
+
       expect(subject.scroll_max).to eq(0)
     end
   end

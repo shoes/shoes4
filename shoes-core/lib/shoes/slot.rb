@@ -159,6 +159,7 @@ class Shoes
     end
 
     def scroll_max
+      contents_alignment
       return 0 unless scroll_height && height
 
       [scroll_height - height, 0].max
