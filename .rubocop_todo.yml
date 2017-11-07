@@ -100,13 +100,6 @@ Naming/AccessorMethodName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 89
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: compact, expanded
-Style/EmptyMethod:
-  Enabled: false
-
 # Offense count: 1
 # Configuration parameters: SupportedStyles.
 # SupportedStyles: annotated, template

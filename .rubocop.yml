@@ -53,6 +53,10 @@ Style/CollectionMethods:
   PreferredMethods:
     inject: 'inject'
 
+# Don't like the look for def thing i = 1; end
+Style/EmptyMethod:
+  Enabled: false
+
 # To make these actually constants is going to require significant changes to
 # Shoes internals
 Style/MutableConstant:
