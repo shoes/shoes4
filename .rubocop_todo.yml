@@ -56,7 +56,9 @@ Metrics/BlockLength:
 # Offense count: 16
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
-  Max: 257
+  Max: 250
+  Exclude:
+    - 'shoes-core/lib/shoes/slot.rb'
 
 # Offense count: 10
 Metrics/CyclomaticComplexity:
