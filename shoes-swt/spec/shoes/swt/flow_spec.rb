@@ -11,6 +11,11 @@ describe Shoes::Swt::Flow do
 
   let(:real) { double('real', disposed?: false) }
   let(:parent_real) { double('parent_real', get_layout: "ok") }
+  let(:scroll) { double 'scroll', add_selection_listener: nil }
+
+  before do
+    allow(::Swt::Widgets::Slider).to receive(:new).and_return(scroll)
+  end
 
   subject { Shoes::Swt::Flow.new(dsl, parent) }
 

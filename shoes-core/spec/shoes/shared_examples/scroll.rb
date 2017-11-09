@@ -60,6 +60,11 @@ shared_examples_for "scrollable slot" do
       subject.scroll_height = 80
       expect(subject.scroll_max).to eq(0)
     end
+
+    it 'zeroes out if missing scroll_height' do
+      subject.scroll_height = nil
+      expect(subject.scroll_max).to eq(0)
+    end
   end
 
   describe '#snapshot_current_position' do

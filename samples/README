@@ -67,6 +67,7 @@ simple_random_bubbles.rb
 simple_require.rb
 simple_sample_executor_all.rb
 simple_sample_executor.rb
+simple_scroll.rb
 simple_sesame_street_shoes.rb
 simple_shoes_intro.rb
 simple_slide.rb
