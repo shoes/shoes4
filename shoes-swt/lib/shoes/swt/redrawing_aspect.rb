@@ -24,7 +24,6 @@ class Shoes
           TextBlock::CursorPainter         => [:move_textcursor],
           Timer                            => [:eval_block],
           Slot                             => [:update_scroll],
-          ::Shoes::TextBlock               => [:replace],
           ::Shoes::Common::Changeable      => [:call_change_listeners],
         }.freeze
 
@@ -37,6 +36,7 @@ class Shoes
           ::Shoes::Common::Style  => [:update_style],
           ::Shoes::Common::Remove => [:remove],
           ::Shoes::Slot           => [:mouse_hovered, :mouse_left],
+          ::Shoes::TextBlock      => [:replace],
         }.freeze
 
       CHANGED_POSITION = { ::Shoes::DimensionsDelegations => [:adjust_current_position],
