@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app height: 150 do
   @stack = stack height: 150, scroll: true do
     para strong("Press arrow keys to scroll too!\n")
