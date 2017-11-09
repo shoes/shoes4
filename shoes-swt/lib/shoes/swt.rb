@@ -97,6 +97,7 @@ class Shoes
       require 'shoes/swt/font'
       require 'shoes/swt/gradient'
       require 'shoes/swt/image'
+      require 'shoes/swt/image_painter'
       require 'shoes/swt/image_pattern'
       require 'shoes/swt/key_listener'
       require 'shoes/swt/line'
