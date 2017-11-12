@@ -1,3 +1,27 @@
+v4.0.0.rc1 (83 commits) (Nov 12, 2017)
+----------------------------------------------
+
+Improvements (4)
+----------------
+
+* New logo!!! [393d0dd]
+* Basic slot scrolling [7d93126]
+* Hide elements outside of slot boundaries [9aeac16]
+* Consider parent visibility when deciding to show elements [1158406]
+* Added #focused? method [d4ee823]
+
+Bug Fixes (2)
+-------------
+
+* Apply clipping to image painting [6ac7a11]
+
+Contributors (5)
+----------------
+
+Jason R. Clark, Eric Boehs, Eric Stensland, Joe Martin, Tobias Pfeiffer
+
+
+
 v4.0.0.pre12 (31 commits) (Oct 1, 2017)
 ---------------------------------------------
 
