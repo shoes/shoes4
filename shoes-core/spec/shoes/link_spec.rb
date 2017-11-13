@@ -144,4 +144,18 @@ describe Shoes::Link do
       expect(subject.parent).to eq text_block
     end
   end
+
+  describe 'failure' do
+    
+    before do
+      subject.click { raise "click" }
+    end
+
+    describe "default behaviour" do
+      it "carries on with click" do
+        expect(Shoes.logger).to receive(:error).with("click")
+      end
+    end
+
+  end
 end
