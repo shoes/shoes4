@@ -149,11 +149,16 @@ describe Shoes::Link do
     
     before do
       subject.click { raise "click" }
+      subject.release { raise "release" }
     end
 
     describe "default behaviour" do
       it "carries on with click" do
         expect(Shoes.logger).to receive(:error).with("click")
+      end
+
+      it "carries on with release" do
+        expect(Shoes.logger).to receive(:error).with("release")
       end
     end
 
