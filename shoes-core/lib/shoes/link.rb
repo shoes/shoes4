@@ -35,7 +35,8 @@ class Shoes
     end
 
     def click(&blk)
-      @gui.click blk if blk
+      safely_evaluate(self, &blk) if blk
+      @gui.click blk
       @blk = blk
       self
     end
