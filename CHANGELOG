@@ -1,7 +1,7 @@
 v4.0.0.rc1 (83 commits) (Nov 12, 2017)
 ----------------------------------------------
 
-Improvements (4)
+Improvements (5)
 ----------------
 
 * New logo!!! [393d0dd]
@@ -10,7 +10,7 @@ Improvements (4)
 * Consider parent visibility when deciding to show elements [1158406]
 * Added #focused? method [d4ee823]
 
-Bug Fixes (2)
+Bug Fixes (1)
 -------------
 
 * Apply clipping to image painting [6ac7a11]
