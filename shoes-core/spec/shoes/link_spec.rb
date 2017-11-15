@@ -155,12 +155,24 @@ describe Shoes::Link do
     describe "default behaviour" do
       it "carries on with click" do
         expect(Shoes.logger).to receive(:error).with("click")
+        # What is the next activity to mock?
       end
 
       it "carries on with release" do
         expect(Shoes.logger).to receive(:error).with("release")
+        # What is the next activity to mock?
       end
     end
 
+    describe "when failing fast" do
+      before do
+        Shoes.configuration.fail_fast = true
+      end
+
+      it "carries on with click" do
+        expect(Shoes.logger).to receive(:error).with("click")
+        
+      end
+    end
   end
 end
