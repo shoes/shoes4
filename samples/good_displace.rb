@@ -26,7 +26,7 @@ class Layout
   end
 
   def edit_box
-    @app.edit_box "Edit me", left: left(:edit_box), top: top, width: width
+    @app.edit_box "Edit me", left: left(:edit_box), top: top, height: 50, width: width
   end
 
   def offset(element)
