@@ -171,7 +171,12 @@ describe Shoes::Link do
 
       it "carries on with click" do
         expect(Shoes.logger).to receive(:error).with("click")
-        
+        # Find next method to run and test if RuntimeError occurs
+      end
+
+      it "carries on with release" do
+        expect(Shoes.logger).to receive(:error).with("click")
+        # Find next method to run and test if RuntimeError occurs
       end
     end
   end
