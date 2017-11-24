@@ -84,7 +84,7 @@ class Shoes
     end
 
     def started?
-      gui && gui.started?
+      gui&.started?
     end
 
     def add_child(_child)

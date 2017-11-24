@@ -3,6 +3,8 @@
 class Shoes
   class Color
     class HexConverter
+      HEX_REGEX = /^#?(([0-9a-f]{3}){1,2})$/i
+
       def initialize(hex)
         @hex = validate(hex) || raise(ArgumentError, "Bad hex color: #{hex}")
         @red, @green, @blue = hex_to_rgb(pad_if_necessary(@hex))
@@ -25,10 +27,12 @@ class Shoes
 
       # Returns a 3- or 6-char hex string for valid input, or nil
       # for invalid input.
+      # rubocop:disable Style/SafeNavigation
       def validate(hex)
-        match = /^#?(([0-9a-f]{3}){1,2})$/i.match(hex)
-        match && match[1]
+        match = HEX_REGEX.match(hex)
+        match[1] if match
       end
+      # rubocop:enable Style/SafeNavigation
     end
   end
 end

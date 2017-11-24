@@ -17,7 +17,7 @@ class Shoes
     end
 
     def app
-      parent && parent.app
+      parent&.app
     end
 
     def links
