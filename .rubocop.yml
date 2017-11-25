@@ -74,6 +74,10 @@ Style/Next:
 Style/StringLiterals:
   Enabled: false
 
+# We don't care if you use %i or literal symbol arrays
+Style/SymbolArray:
+  Enabled: false
+
 # We like the flexibility of adding additional items to the hash
 # see discussion in #859
 Style/TrailingCommaInLiteral:
