@@ -24,7 +24,7 @@ class MimickIRB < RubyLex
       when "reset"
         @line = ""
       when "time"
-        @line = "puts %{You started \#{IRBalike.started.since} ago.}"
+        @line = "puts %<You started \#{IRBalike.started.since} ago.>"
       else
         @line = @line + l + "\n"
         raise Continue if @ltype || @continue || @indent.positive?
