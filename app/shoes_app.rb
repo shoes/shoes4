@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'thread'
+require 'bundler'
 require 'English'
 
 class ShoesApp < Shoes
@@ -19,6 +20,8 @@ class ShoesApp < Shoes
   end
 
   def self.notice_packaging_error(message)
+    Shoes.logger.error message
+
     @packaging_error = message
     ShoesApp.navigation.push "/error_packaging"
   end
@@ -45,7 +48,6 @@ class ShoesApp < Shoes
       tagline link("Open an app") { open_app }, align: "center"
       tagline link("Read the manual") { manual }, align: "center"
       tagline link("Package an app") { visit "/start_packaging" }, align: "center"
-      para "(requires shoes gem for now)\n", align: "center"
       para ""
       para Shoes::VERSION, align: "center"
       para "Press Alt+/ for Console", align: "center"
@@ -62,11 +64,8 @@ class ShoesApp < Shoes
   end
 
   def start_packaging
-    `which shoes`
-    unless $CHILD_STATUS.success?
-      ShoesApp.notice_packaging_error("We couldn't find shoes command installed.\n  Check https://github.com/shoes/shoes4 for install instructions.")
-      app.visit "/error_packaging"
-    end
+    jruby_command = ENV["JRUBY_COMMAND"] || "jruby"
+    shoes_command = ENV["SHOES_COMMAND"] || "#{jruby_command} -S shoes-swt"
 
     pictures
     stack width: 600, margin_left: 200, margin_top: 170 do
@@ -90,9 +89,18 @@ class ShoesApp < Shoes
             # Be careful, and plumb things through ShoesApp.navigation, etc.
             Thread.new do
               begin
-                # TODO: Get this to work in process...
+                output = ""
+
                 app_dir = File.dirname(ShoesApp.packaging_app)
-                output = `cd '#{app_dir}' && shoes #{args.join(" ")}`
+                Bundler.with_clean_env do
+                  if File.exist?(File.join(app_dir, "Gemfile"))
+                    puts "cd '#{app_dir}' && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")} 2>&1"
+                    output = `cd '#{app_dir}' && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")} 2>&1`
+                  else
+                    puts "cd '#{app_dir}' && #{shoes_command} #{args.join(" ")} 2>&1"
+                    output = `cd '#{app_dir}' && #{shoes_command} #{args.join(" ")} 2>&1`
+                  end
+                end
 
                 if $CHILD_STATUS.success?
                   ShoesApp.navigation.push "/done_packaging"
