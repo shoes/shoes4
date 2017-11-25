@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Color
     include Common::Inspect
@@ -18,12 +19,12 @@ class Shoes
       when 3, 4
         red, green, blue, alpha = *args
       else
-        message = <<EOS
-Wrong number of arguments (#{args.length} for 1, 3, or 4).
-Must be one of:
-  - #{self.class}.new(hex_string)
-  - #{self.class}.new(red, green, blue)
-  - #{self.class}.new(red, green, blue, alpha)
+        message = <<~EOS
+          Wrong number of arguments (#{args.length} for 1, 3, or 4).
+          Must be one of:
+            - #{self.class}.new(hex_string)
+            - #{self.class}.new(red, green, blue)
+            - #{self.class}.new(red, green, blue, alpha)
 EOS
         raise ArgumentError, message
       end

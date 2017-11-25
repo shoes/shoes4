@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   stack top: 0.5, left: 0.5 do
     para "Counting up:"

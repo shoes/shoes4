@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Original code paired on by Coraline and Jason Clark, 2014
 # https://youtu.be/jAnSsNga5Nk

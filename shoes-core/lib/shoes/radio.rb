@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Radio < CheckButton
     style_with :checked, :click, :common_styles, :dimensions, :group, :state

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app do
   para "The following art elements would have shown in the top corner if not for translate!", center: true, size: 20
 

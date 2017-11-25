@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   ICON = File.join(DIR, 'static/shoes-icon.png').freeze
 
@@ -83,11 +84,11 @@ class Shoes
       @__app__.current_slot.parent
     end
 
-    delegated_to_internal_app = %w(
+    delegated_to_internal_app = %w[
       width height owner started? location left top absolute_left
       absolute_top click release clear fullscreen fullscreen=
       contents wait_until_closed focus open? gui
-    )
+    ]
 
     def_delegators :@__app__, *delegated_to_internal_app
 

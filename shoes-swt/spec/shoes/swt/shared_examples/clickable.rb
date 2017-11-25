@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples 'clickable backend' do
   describe 'interaction with the swt app object' do
     it 'adds a listener for the MouseDown event when click is called' do

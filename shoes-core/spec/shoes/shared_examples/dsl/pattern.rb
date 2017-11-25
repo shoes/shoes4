@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "pattern DSL method" do
   let(:honeydew) { Shoes::COLORS[:honeydew] }
   let(:salmon) { Shoes::COLORS[:salmon] }

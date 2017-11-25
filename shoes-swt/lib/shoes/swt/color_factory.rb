@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Swt
     # ColorFactory is used for tracking SWT-backed resources related to colors

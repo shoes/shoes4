@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class FakeAbsoluteElement < FakeElement
     include Shoes::DimensionsDelegations

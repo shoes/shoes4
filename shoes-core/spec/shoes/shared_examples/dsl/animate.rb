@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "animate DSL method" do
   context "defaults" do
     let(:animation) { dsl.animate {} }

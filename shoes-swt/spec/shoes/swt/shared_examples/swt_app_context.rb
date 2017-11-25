@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This is a common context for running Shoes::Swt specs.
 #   - parent:    use for instantiating a Shoes::Swt object
 #   - swt_app:   use for instantiating a Shoes::Swt object
@@ -37,7 +38,9 @@ shared_context "swt app" do
 
   let(:parent_dsl) do
     double("parent dsl", add_child: true, contents: [], gui: parent,
-                         hidden?: false,
+                         hidden?: false, fixed_height?: false,
+                         absolute_left: 0, absolute_top: 0,
+                         width: 200, height: 100,
                          x_dimension: double.as_null_object,
                          y_dimension: double.as_null_object)
   end

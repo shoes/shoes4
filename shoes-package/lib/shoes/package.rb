@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module Package
     def self.create_packager(config, package_type)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Span < Text
     def initialize(texts, styles = {})

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "removable" do
   it "should respond to remove" do
     expect(subject).to respond_to :remove

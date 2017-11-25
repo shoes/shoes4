@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class << self
     # To ease the upgrade path from Shoes 3 we warn users they need to install

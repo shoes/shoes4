@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Shoes::BuiltinMethods do
@@ -23,7 +24,7 @@ describe Shoes::BuiltinMethods do
     end
   end
 
-  %w(info debug warn error).each do |level|
+  %w[info debug warn error].each do |level|
     describe "##{level}" do
       it 'sends to logger' do
         expect(Shoes.logger).to receive(level).with('test')
@@ -32,7 +33,7 @@ describe Shoes::BuiltinMethods do
     end
   end
 
-  %w(open_file save_file open_folder save_folder).each do |chooser_action|
+  %w[open_file save_file open_folder save_folder].each do |chooser_action|
     describe "#ask_#{chooser_action}" do
       before do
         allow(Shoes::Dialog).to receive(:new).and_return(dialog)
@@ -70,7 +71,7 @@ describe Shoes::BuiltinMethods do
     end
   end
 
-  %w(alert confirm).each do |type|
+  %w[alert confirm].each do |type|
     describe type do
       let(:message) { double('message') }
 

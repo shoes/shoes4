@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples "an element that can respond to change" do
   describe "when passing a block to the constructor" do
     it "should notify the block of change events" do

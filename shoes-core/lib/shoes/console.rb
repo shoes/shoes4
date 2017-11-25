@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Console
     attr_reader :messages, :message_stacks

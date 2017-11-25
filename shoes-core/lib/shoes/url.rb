@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   # Backwards compatibility, kind of likely to be removed
   def self.inherited(base_class)

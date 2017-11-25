@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 shared_examples_for "strokewidth DSL method" do
   it "returns a number" do
     expect(dsl.strokewidth(4)).to eq(4)

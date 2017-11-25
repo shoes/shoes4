@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :guard do
   [:core, :swt, :package].each do |gem|
     desc "Run Guard for shoes-#{gem}"

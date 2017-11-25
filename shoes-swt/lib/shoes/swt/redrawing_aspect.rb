@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This file uses the after_do gem, which you probably haven't heard of (yet)
 # It basically works like Class.after :method do ... end
 # So for every instance of Class, after method is executed the block you
@@ -22,18 +23,21 @@ class Shoes
           MouseMoveListener                => [:eval_move_block],
           TextBlock::CursorPainter         => [:move_textcursor],
           Timer                            => [:eval_block],
-          ::Shoes::TextBlock               => [:replace],
-          ::Shoes::Common::Changeable      => [:call_change_listeners]
+          Slot                             => [:update_scroll],
+          ::Shoes::Common::Changeable      => [:call_change_listeners],
         }.freeze
 
       # These need to trigger a redraw
-      SAME_POSITION    = { Common::Visibility      => [:update_visibility],
-                           Image                   => [:create_image],
-                           ::Shoes::Common::Hover  => [:eval_hover_block],
-                           ::Shoes::Common::Style  => [:update_style],
-                           ::Shoes::Common::Remove => [:remove],
-                           ::Shoes::Slot           => [:mouse_hovered,
-                                                       :mouse_left]}.freeze
+      SAME_POSITION =
+        {
+          Common::Visibility      => [:update_visibility],
+          Image                   => [:create_image],
+          ::Shoes::Common::Hover  => [:eval_hover_block],
+          ::Shoes::Common::Style  => [:update_style],
+          ::Shoes::Common::Remove => [:remove],
+          ::Shoes::Slot           => [:mouse_hovered, :mouse_left],
+          ::Shoes::TextBlock      => [:replace],
+        }.freeze
 
       CHANGED_POSITION = { ::Shoes::DimensionsDelegations => [:adjust_current_position],
                            ::Shoes::Common::Positioning   => [:_position, :displace],

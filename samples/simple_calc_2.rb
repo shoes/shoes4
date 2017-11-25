@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Shoes.app height: 250, width: 198 do
   def clear
     @accumulator = 0
@@ -20,7 +21,7 @@ Shoes.app height: 250, width: 198 do
       background '#996'..'#333', curve: 5
       number_field = para strong(@display, ' ' * 20), stroke: white, margin: 8
       flow width: 218 do
-        %w(7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +).each do |btn|
+        %w[7 8 9 / 4 5 6 * 1 2 3 - 0 Clr = +].each do |btn|
           button btn, width: 46, height: 46 do
             case btn
             when /[0-9]/

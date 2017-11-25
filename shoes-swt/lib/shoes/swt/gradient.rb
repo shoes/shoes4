@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 # Gradients are a little confusing, but don't let all the math below scare you.
 # Here's the (relatively) simple explanation of what's going on.
 #
@@ -10,7 +10,7 @@
 # we get a hard line where the color resets without fading, which looks bad.
 # Given that, we must keep those points outside our bounds of the element,
 # which are reported via the redraw_left, redraw_top, etc. methods.
-#
+
 class Shoes
   module Swt
     class Gradient

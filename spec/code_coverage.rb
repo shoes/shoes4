@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'simplecov'
 
 unless ENV["SHOES_SKIP_COVERAGE"]

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   CENTER = "center"
   DEFAULT_TEXTBLOCK_FONT = "Arial"

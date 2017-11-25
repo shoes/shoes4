@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Vader < SimpleDelegator
   def initialize(app)
     super(app)

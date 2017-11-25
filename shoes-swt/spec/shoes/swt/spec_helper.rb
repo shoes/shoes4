@@ -1,6 +1,6 @@
 # frozen_string_literal: true
+
 require "shoes/swt"
-require "spec_helper"
 
 Shoes.load_backend("swt").initialize_backend
 

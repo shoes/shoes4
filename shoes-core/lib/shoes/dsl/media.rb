@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   module DSL
     module Media
@@ -12,9 +13,9 @@ class Shoes
           opts = style_normalizer.normalize pop_style(args)
           path, *leftovers = args
 
-          message = <<EOS
-Wrong number of arguments. Must be:
-  - image(path, [opts])
+          message = <<~EOS
+            Wrong number of arguments. Must be:
+              - image(path, [opts])
 EOS
           raise ArgumentError, message if leftovers.any?
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 str = ""
 t = nil
 Shoes.app height: 500, width: 450 do

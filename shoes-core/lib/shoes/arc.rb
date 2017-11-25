@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Shoes
   class Arc < Common::ArtElement
     # angle is the gradient angle used across all art elements
