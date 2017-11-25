@@ -155,12 +155,14 @@ describe Shoes::Link do
     describe "default behaviour" do
       it "carries on with click" do
         expect(Shoes.logger).to receive(:error).with("click")
-        # What is the next activity to mock?
+        subject.register_click
+        # Behaviour to mock here?
       end
 
       it "carries on with release" do
         expect(Shoes.logger).to receive(:error).with("release")
-        # What is the next activity to mock?
+        subject.release
+        # Behaviour to mock here?
       end
     end
 
@@ -171,12 +173,12 @@ describe Shoes::Link do
 
       it "carries on with click" do
         expect(Shoes.logger).to receive(:error).with("click")
-        # Find next method to run and test if RuntimeError occurs
+        expect { subject.click }.to raise_error(RuntimeError)
       end
 
       it "carries on with release" do
-        expect(Shoes.logger).to receive(:error).with("click")
-        # Find next method to run and test if RuntimeError occurs
+        expect(Shoes.logger).to receive(:error).with("release")
+        expect { subject.release }.to raise_error(RuntimeError)
       end
     end
   end
