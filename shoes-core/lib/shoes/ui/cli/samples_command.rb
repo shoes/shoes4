@@ -10,15 +10,15 @@ class Shoes
         attr_accessor :destination_dir
 
         def run
-          if parse!(args)
-            source = Shoes::Samples.path
-            destination = File.join((destination_dir || Dir.pwd), "shoes_samples")
+          return unless parse!(args)
 
-            if File.exist?(destination)
-              puts "Oops, #{destination} already exists! Try somewhere else, maybe with -d."
-            else
-              FileUtils.cp_r source, destination
-            end
+          source = Shoes::Samples.path
+          destination = File.join((destination_dir || Dir.pwd), "shoes_samples")
+
+          if File.exist?(destination)
+            puts "Oops, #{destination} already exists! Try somewhere else, maybe with -d."
+          else
+            FileUtils.cp_r source, destination
           end
         end
 

@@ -77,18 +77,18 @@ class Shoes
     def add_child(element)
       contents.add_element element
 
-      if !element.hidden? && element.takes_up_space?
-        # Prepending would entail repositioning everyone after us, so just give
-        # it up and let contents_alignment save us the work.
-        if contents.prepending?
-          contents_alignment
-        else
-          original_height = self.height
-          @current_position = positioning(element, @current_position)
+      return if element.hidden? || !element.takes_up_space?
 
-          height_delta = slot_grew_by(original_height)
-          bump_parent_current_position(height_delta)
-        end
+      # Prepending would entail repositioning everyone after us, so just give
+      # it up and let contents_alignment save us the work.
+      if contents.prepending?
+        contents_alignment
+      else
+        original_height = self.height
+        @current_position = positioning(element, @current_position)
+
+        height_delta = slot_grew_by(original_height)
+        bump_parent_current_position(height_delta)
       end
     end
 

@@ -35,10 +35,10 @@ class Shoes
         end
 
         def apply_fill(context)
-          if fill
-            fill.apply_as_fill(context, self)
-            true
-          end
+          return unless fill
+
+          fill.apply_as_fill(context, self)
+          true
         end
       end
     end
