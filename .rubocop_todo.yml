@@ -106,11 +106,6 @@ Naming/AccessorMethodName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 35
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Enabled: false
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:

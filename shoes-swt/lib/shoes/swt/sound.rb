@@ -83,22 +83,22 @@ class Shoes
         sampled_data = Java::byte[BUFFER_SIZE].new
 
         line = getLine(decoded_audio_format)
-        unless line.nil?
 
-          # Start
-          line.start
-          bytes_read = 0
-          while bytes_read != -1
+        return if line.nil?
 
-            bytes_read = decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
-            line.write(sampled_data, 0, bytes_read) if bytes_read != -1
-          end
-          # Stop
-          line.drain
-          line.stop
-          line.close
-          decoded_audio_input_stream.close
+        # Start
+        line.start
+        bytes_read = 0
+        while bytes_read != -1
+          bytes_read = decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
+          line.write(sampled_data, 0, bytes_read) if bytes_read != -1
         end
+
+        # Stop
+        line.drain
+        line.stop
+        line.close
+        decoded_audio_input_stream.close
       end
 
       def getLine(audio_format)

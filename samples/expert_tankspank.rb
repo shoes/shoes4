@@ -195,11 +195,11 @@ class Tank
     Opp.app.fill Opp.app.red(@aimed ? 0.4 : 0.1)
     Opp.draw_opp_oval @target_x - 10, @target_x + 10, @target_y - 10, @target_y + 10, 1.00
 
-    if @moving
-      Opp.app.stroke Opp.app.green
-      Opp.app.fill Opp.app.green(0.2)
-      Opp.draw_opp_oval @dest_x - 20, @dest_x + 20, @dest_y - 20, @dest_y + 20, 1.00
-    end
+    return unless @moving
+
+    Opp.app.stroke Opp.app.green
+    Opp.app.fill Opp.app.green(0.2)
+    Opp.draw_opp_oval @dest_x - 20, @dest_x + 20, @dest_y - 20, @dest_y + 20, 1.00
   end
 end
 

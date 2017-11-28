@@ -5,16 +5,16 @@ class Shoes
     class CLI
       class DefaultCommand < BaseCommand
         def run
-          if parse!(args)
-            warn_on_unexpected_parameters
+          return unless parse!(args)
 
-            path = args.first
-            if path
-              $LOAD_PATH.unshift(File.dirname(path))
-              Shoes.configuration.app_dir = File.dirname(path)
-              load path
-            end
-          end
+          warn_on_unexpected_parameters
+          path = args.first
+
+          return unless path
+
+          $LOAD_PATH.unshift(File.dirname(path))
+          Shoes.configuration.app_dir = File.dirname(path)
+          load path
         end
 
         def options

@@ -150,9 +150,9 @@ class Shoes
           add_missing_file_error(config.run, "Run file")
         end
 
-        if config.icons[:osx] && !config.working_dir.join(config.icons[:osx]).exist?
-          add_missing_file_error(config.icons[:osx], "OS X icon file")
-        end
+        return unless config.icons[:osx] && !config.working_dir.join(config.icons[:osx]).exist?
+
+        add_missing_file_error(config.icons[:osx], "OS X icon file")
       end
     end
 

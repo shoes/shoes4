@@ -93,39 +93,40 @@ class Tetris
     end
 
     @dt += seconds
-    if dt > pace
-      @dt = dt - pace
-      drop
-    end
+
+    return if dt <= pace
+
+    @dt = dt - pace
+    drop
   end
 
   #----------------------------------------------------------------------------
 
   def move(direction)
     nextup = current.move(direction)
-    if unoccupied(nextup)
-      choose_new_piece(nextup)
-      true
-    end
+    return unless unoccupied(nextup)
+
+    choose_new_piece(nextup)
+    true
   end
 
   def rotate
     nextup = current.rotate
-    if unoccupied(nextup)
-      choose_new_piece(nextup)
-      true
-    end
+    return unless unoccupied(nextup)
+
+    choose_new_piece(nextup)
+    true
   end
 
   def drop
-    unless move(:down)
-      finalize_piece
-      reward_for_piece
-      remove_any_completed_lines
-      clear_pending_actions
-      choose_new_piece
-      lose if occupied(current)
-    end
+    return if move(:down)
+
+    finalize_piece
+    reward_for_piece
+    remove_any_completed_lines
+    clear_pending_actions
+    choose_new_piece
+    lose if occupied(current)
   end
 
   #----------------------------------------------------------------------------

@@ -46,10 +46,10 @@ class Shoes
     end
 
     def ensure_backend_loaded
-      unless defined?(Shoes.configuration.backend::App)
-        backend_const = Shoes.load_backend(Shoes.configuration.backend_name)
-        backend_const.initialize_backend
-      end
+      return if defined?(Shoes.configuration.backend::App)
+
+      backend_const = Shoes.load_backend(Shoes.configuration.backend_name)
+      backend_const.initialize_backend
     end
 
     attr_reader :gui, :top_slot, :app, :dimensions,

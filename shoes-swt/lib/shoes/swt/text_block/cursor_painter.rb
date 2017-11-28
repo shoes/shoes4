@@ -28,9 +28,8 @@ class Shoes
 
         # It's important to only move when necessary to avoid constant redraws
         def move_if_necessary(x, y)
-          unless textcursor.left == x && textcursor.top == y
-            move_textcursor(x, y)
-          end
+          return if textcursor.left == x && textcursor.top == y
+          move_textcursor(x, y)
         end
 
         def move_textcursor(x, y)

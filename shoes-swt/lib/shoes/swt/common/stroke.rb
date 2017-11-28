@@ -37,11 +37,11 @@ class Shoes
         end
 
         def apply_stroke(context)
-          if stroke
-            stroke.apply_as_stroke(context, self)
-            context.set_line_width strokewidth
-            true
-          end
+          return unless stroke
+
+          stroke.apply_as_stroke(context, self)
+          context.set_line_width strokewidth
+          true
         end
       end
     end

@@ -109,10 +109,10 @@ class Shoes
     def save
       filename = @app.ask_save_file
 
-      if filename
-        File.open(filename, "w") do |f|
-          f.write(formatted_messages)
-        end
+      return unless filename
+
+      File.open(filename, "w") do |f|
+        f.write(formatted_messages)
       end
     end
 
