@@ -18,7 +18,7 @@ class Shoes
     end
 
     def showing?
-      @app && @app.open?
+      @app&.open?
     end
 
     def create_app

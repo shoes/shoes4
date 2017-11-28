@@ -4,7 +4,7 @@ class Shoes
   module Common
     module Rotate
       def needs_rotate?
-        rotate && rotate.nonzero?
+        rotate&.nonzero?
       end
     end
   end

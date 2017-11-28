@@ -124,16 +124,3 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'shoes-core/lib/shoes/color/hex_converter.rb'
-    - 'shoes-core/lib/shoes/common/rotate.rb'
-    - 'shoes-core/lib/shoes/console.rb'
-    - 'shoes-core/lib/shoes/dimension.rb'
-    - 'shoes-core/lib/shoes/dimensions.rb'
-    - 'shoes-core/lib/shoes/internal_app.rb'
-    - 'shoes-core/lib/shoes/text.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block.rb'

@@ -41,7 +41,7 @@ class Shoes
         dispose_existing_segments
         raw_segments = Fitter.new(self, current_position).fit_it_in
 
-        if raw_segments && raw_segments.any?
+        if raw_segments&.any?
           @segments = TextSegmentCollection.new(@dsl, raw_segments, default_text_styles)
           set_absolutes_on_dsl(current_position)
           set_calculated_sizes
