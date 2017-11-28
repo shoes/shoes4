@@ -106,12 +106,6 @@ Naming/AccessorMethodName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 1
-# Configuration parameters: SupportedStyles.
-# SupportedStyles: annotated, template
-Style/FormatStringToken:
-  EnforcedStyle: template
-
 # Offense count: 35
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
