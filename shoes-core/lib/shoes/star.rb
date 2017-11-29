@@ -62,5 +62,12 @@ class Shoes
     def redraw_height
       element_height + style[:strokewidth].to_i * 2
     end
+
+    def center_point
+      center_x = left + (width / 2).to_i
+      center_y = top + (height / 2).to_i
+      Point.new(center_x, center_y)
+    end
+
   end
 end
