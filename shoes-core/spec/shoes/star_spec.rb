@@ -207,13 +207,11 @@ describe Shoes::Star do
     subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 0) }
 
     it "should return the center point of the star" do
-      expect(subject.center_point.to_a).to eq([150,150])
+      expect(subject.center_point.to_a).to eq([150, 150])
     end
 
     it "should return the coordinates as a Point" do
       expect(subject.center_point.class).to eq(Shoes::Point)
     end
-
   end
-
 end

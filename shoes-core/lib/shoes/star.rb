@@ -68,6 +68,5 @@ class Shoes
       center_y = top + (height / 2).to_i
       Point.new(center_x, center_y)
     end
-
   end
 end
