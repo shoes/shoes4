@@ -1,7 +1,10 @@
 # frozen_string_literal: true
+
 require 'thread'
 require 'bundler'
 require 'English'
+require 'open3'
+require 'shoes/version'
 
 class ShoesApp < Shoes
   url '/', :home
@@ -90,19 +93,18 @@ class ShoesApp < Shoes
             Thread.new do
               begin
                 output = ""
+                status = 0
 
                 app_dir = File.dirname(ShoesApp.packaging_app)
                 Bundler.with_clean_env do
                   if File.exist?(File.join(app_dir, "Gemfile"))
-                    puts "cd '#{app_dir}' && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")} 2>&1"
-                    output = `cd '#{app_dir}' && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")} 2>&1`
+                    run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")}"
                   else
-                    puts "cd '#{app_dir}' && #{shoes_command} #{args.join(" ")} 2>&1"
-                    output = `cd '#{app_dir}' && #{shoes_command} #{args.join(" ")} 2>&1`
+                    run_command "cd \"#{app_dir}\" && #{shoes_command} #{args.join(" ")}"
                   end
                 end
 
-                if $CHILD_STATUS.success?
+                if status ==  0
                   ShoesApp.navigation.push "/done_packaging"
                 else
                   ShoesApp.notice_packaging_error(output)
@@ -155,6 +157,12 @@ class ShoesApp < Shoes
       para "Something went wrong:\n  #{ShoesApp.packaging_error}\n\n",
            link("Start over") { app.visit "/" }
     end
+  end
+
+  def run_command(command)
+    puts command
+    out, err, status = Open3.capture3(command)
+    output = "STDOUT: #{out}\n\nSTDERR: #{err}"
   end
 
   def open_app
