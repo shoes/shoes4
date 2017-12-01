@@ -202,4 +202,26 @@ describe Shoes::Star do
       expect(subject.redraw_height).to eq(108)
     end
   end
+
+  describe "center_point" do
+    subject { Shoes::Star.new(app, parent, 125, 175, 5, 50, 30, center: false, strokewidth: 0) }
+
+    it "should return the center point of the star" do
+      expect(subject.center_point).to eq(Shoes::Point.new(175, 225))
+    end
+
+    it "should handle stars initialized with nil dimensions" do
+      nil_star = Shoes::Star.new(app, parent, 100, nil, 0, nil, nil, center: false, strokewidth: 0)
+      expect(nil_star.center_point).to eq(Shoes::Point.new(200, 100))
+    end
+  end
+
+  describe "center_point=" do
+    subject { Shoes::Star.new(app, parent, 125, 175, 5, 50, 30, center: false, strokewidth: 10) }
+
+    it "should set a new center_point" do
+      subject.center_point = Shoes::Point.new(80, 90)
+      expect(subject.center_point).to eq(Shoes::Point.new(80, 90))
+    end
+  end
 end
