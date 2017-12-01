@@ -39,14 +39,14 @@ class Shoes
       def update_visibility
         @scroll.set_visible(@dsl.scroll && @dsl.scroll_max.positive?)
 
-        if @dsl.scroll
-          @scroll.selection = @dsl.scroll_top
-          @scroll.maximum = @dsl.scroll_max + SCROLLBAR_PADDING
-          @scroll.set_bounds @dsl.element_right - SCROLLBAR_MAX_WIDTH + 1,
-                             @dsl.element_top,
-                             SCROLLBAR_MAX_WIDTH,
-                             @dsl.element_height
-        end
+        return unless @dsl.scroll
+
+        @scroll.selection = @dsl.scroll_top
+        @scroll.maximum = @dsl.scroll_max + SCROLLBAR_PADDING
+        @scroll.set_bounds @dsl.element_right - SCROLLBAR_MAX_WIDTH + 1,
+                           @dsl.element_top,
+                           SCROLLBAR_MAX_WIDTH,
+                           @dsl.element_height
       end
 
       def redraw_target

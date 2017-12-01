@@ -41,7 +41,7 @@ class Shoes
         dispose_existing_segments
         raw_segments = Fitter.new(self, current_position).fit_it_in
 
-        if raw_segments && raw_segments.any?
+        if raw_segments&.any?
           @segments = TextSegmentCollection.new(@dsl, raw_segments, default_text_styles)
           set_absolutes_on_dsl(current_position)
           set_calculated_sizes
@@ -70,14 +70,15 @@ class Shoes
         current_position.y = @dsl.absolute_bottom + NEXT_ELEMENT_OFFSET
 
         last_segment = segments.last
-        if last_segment && !@bumped_to_next_line
-          # Not quite sure why this is necessary. Could be a problem in some
-          # other part of positioning, or something about how text layouts
-          # actually draw themselves.
-          current_position.x -= 1
 
-          current_position.y -= last_segment.last_line_height
-        end
+        return if !last_segment || @bumped_to_next_line
+
+        # Not quite sure why this is necessary. Could be a problem in some
+        # other part of positioning, or something about how text layouts
+        # actually draw themselves.
+        current_position.x -= 1
+
+        current_position.y -= last_segment.last_line_height
       end
 
       def set_absolutes_on_dsl(current_position)

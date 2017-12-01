@@ -20,11 +20,11 @@ MEDIUM_FILE = File.expand_path(File.join(__FILE__, "..", "medium.jpg"))
 LARGE_FILE = File.expand_path(File.join(__FILE__, "..", "large.jpg"))
 
 def check_file(file, url)
-  unless File.exist?(file)
-    puts "Downloading #{file}..."
-    uri = URI.parse(url)
-    File.open(file, "w") { |f| f.write(Net::HTTP.get_response(uri).body) }
-  end
+  return if File.exist?(file)
+
+  puts "Downloading #{file}..."
+  uri = URI.parse(url)
+  File.open(file, "w") { |f| f.write(Net::HTTP.get_response(uri).body) }
 end
 
 def create_dsl(path)

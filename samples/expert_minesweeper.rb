@@ -91,31 +91,33 @@ class Field
 
   def render_bomb(x, y)
     render_cell(x, y)
-    if game_over? || all_found? # draw bomb
-      render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
-      @app.nostroke
-      @app.fill @app.rgb(0, 0, 0, 0.8)
-      @app.oval(x * cell_size + 3, y * cell_size + 3, 13)
-      @app.fill "#333"
-      @app.oval(x * cell_size + 5, y * cell_size + 5, 7)
-      @app.fill "#AAA"
-      @app.oval(x * cell_size + 6, y * cell_size + 6, 3)
-      @app.fill @app.rgb(0, 0, 0, 0.8)
-      @app.stroke "#222"
-      @app.strokewidth 2
-      @app.oval(x * cell_size + cell_size / 2 + 2, y * cell_size + cell_size / 4 - 2, 2)
-      @app.oval(x * cell_size + cell_size / 2 + 4, y * cell_size + cell_size / 4 - 2, 1)
-      @app.strokewidth 1
-    end
+    return unless game_over? || all_found?
+
+    # draw bomb
+    render_cell(x, y, @app.rgb(0xFF, 0, 0, 0.5)) if self[x, y].exploded
+    @app.nostroke
+    @app.fill @app.rgb(0, 0, 0, 0.8)
+    @app.oval(x * cell_size + 3, y * cell_size + 3, 13)
+    @app.fill "#333"
+    @app.oval(x * cell_size + 5, y * cell_size + 5, 7)
+    @app.fill "#AAA"
+    @app.oval(x * cell_size + 6, y * cell_size + 6, 3)
+    @app.fill @app.rgb(0, 0, 0, 0.8)
+    @app.stroke "#222"
+    @app.strokewidth 2
+    @app.oval(x * cell_size + cell_size / 2 + 2, y * cell_size + cell_size / 4 - 2, 2)
+    @app.oval(x * cell_size + cell_size / 2 + 4, y * cell_size + cell_size / 4 - 2, 1)
+    @app.strokewidth 1
   end
 
   def render_number(x, y)
     render_cell(x, y, "#999", false)
-    if self[x, y].number.nonzero?
-      @app.nostroke
-      @app.para self[x, y].number.to_s, left: x * cell_size + 3, top: y * cell_size,
-                                        font: '13px', stroke: COLORS[self[x, y].number - 1]
-    end
+
+    return if self[x, y].number.zero?
+
+    @app.nostroke
+    @app.para self[x, y].number.to_s, left: x * cell_size + 3, top: y * cell_size,
+                                      font: '13px', stroke: COLORS[self[x, y].number - 1]
   end
 
   def paint
@@ -141,12 +143,11 @@ class Field
   end
 
   def reveal!(x, y)
-    return unless cell_exists?(x, y)
-    return unless self[x, y].is_a?(Field::OpenCell)
-    if flags_around(x, y) >= self[x, y].number
-      (-1..1).each do |v|
-        (-1..1).each { |h| click!(x + h, y + v) unless (v.zero? && h.zero?) || flagged?(x + h, y + v) }
-      end
+    return unless cell_exists?(x, y) && self[x, y].is_a?(Field::OpenCell) &&
+                  flags_around(x, y) >= self[x, y].number
+
+    (-1..1).each do |v|
+      (-1..1).each { |h| click!(x + h, y + v) unless (v.zero? && h.zero?) || flagged?(x + h, y + v) }
     end
   end
 

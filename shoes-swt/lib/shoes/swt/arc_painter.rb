@@ -25,13 +25,15 @@ class Shoes
 
       def draw(graphics_context)
         line_width = graphics_context.get_line_width
-        if @obj.element_left && @obj.element_top && @obj.element_width && @obj.element_height
-          graphics_context.draw_arc(@obj.translate_left + @obj.element_left + line_width / 2,
-                                    @obj.translate_top + drawing_top + line_width / 2,
-                                    @obj.element_width - line_width,
-                                    @obj.element_height - line_width,
-                                    start_angle, sweep)
-        end
+
+        return unless @obj.element_left && @obj.element_top && @obj.element_width &&
+                      @obj.element_height
+
+        graphics_context.draw_arc(@obj.translate_left + @obj.element_left + line_width / 2,
+                                  @obj.translate_top + drawing_top + line_width / 2,
+                                  @obj.element_width - line_width,
+                                  @obj.element_height - line_width,
+                                  start_angle, sweep)
       end
 
       # Shoes angles to run clockwise, with 0 at the 3 o'clock position. SWT

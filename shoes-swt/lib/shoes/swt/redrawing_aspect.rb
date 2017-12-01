@@ -95,9 +95,9 @@ class Shoes
       end
 
       def redraw_area(left, top, width, height, include_children = true)
-        unless app.disposed?
-          app.redraw left, top, width, height, include_children
-        end
+        return if app.disposed?
+
+        app.redraw left, top, width, height, include_children
       end
 
       def redraw_target(element)

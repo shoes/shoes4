@@ -45,9 +45,9 @@ class Shoes
       def select_generator(desired_backend = nil)
         candidates = find_candidates(desired_backend)
 
-        if candidates.empty?
-          raise ArgumentError, "No gems found matching '#{desired_backend}'"
-        elsif candidates.one?
+        raise ArgumentError, "No gems found matching '#{desired_backend}'" if candidates.empty?
+
+        if candidates.one?
           candidate = candidates.first
           @output.puts "Selecting #{name_for_candidate(candidate)} backend to use. This is a one-time operation."
           candidate
