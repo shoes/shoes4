@@ -145,42 +145,4 @@ describe Shoes::Link do
       expect(subject.parent).to eq text_block
     end
   end
-
-  describe 'failure' do
-    
-    before do
-      subject.click { raise "click" }
-      subject.release { raise "release" }
-    end
-
-    describe "default behaviour" do
-      it "carries on with click" do
-        expect(Shoes.logger).to receive(:error).with("click")
-        subject.register_click
-        # Behaviour to mock here?
-      end
-
-      it "carries on with release" do
-        expect(Shoes.logger).to receive(:error).with("release")
-        subject.release
-        # Behaviour to mock here?
-      end
-    end
-
-    describe "when failing fast" do
-      before do
-        Shoes.configuration.fail_fast = true
-      end
-
-      it "carries on with click" do
-        expect(Shoes.logger).to receive(:error).with("click")
-        expect { subject.click }.to raise_error(RuntimeError)
-      end
-
-      it "carries on with release" do
-        expect(Shoes.logger).to receive(:error).with("release")
-        expect { subject.release }.to raise_error(RuntimeError)
-      end
-    end
-  end
 end
