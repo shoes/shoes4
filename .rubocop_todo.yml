@@ -18,11 +18,6 @@ Lint/HandleExceptions:
   Exclude:
     - 'shoes-core/lib/shoes/packager.rb'
 
-# Offense count: 2
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'shoes-core/lib/shoes/app.rb'
-
 # Offense count: 1
 Lint/NestedMethodDefinition:
   Exclude:
@@ -112,4 +107,3 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/app.rb'
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
-
