@@ -681,15 +681,15 @@ describe Shoes::Dimensions do
     describe 'displace_left' do
       let(:displace_left) { 3 }
       it 'modifies the value of element_left' do
-        expect do
-          subject.displace_left = displace_left
-        end.to change { subject.element_left }.by(displace_left)
+        expect { subject.displace_left = displace_left }.to(
+          change { subject.element_left }.by(displace_left)
+        )
       end
 
       it 'does not modify the value of absolute_left' do
-        expect do
-          subject.displace_left = displace_left
-        end.not_to change { subject.absolute_left }
+        expect { subject.displace_left = displace_left }.not_to(
+          change { subject.absolute_left }
+        )
       end
 
       context 'via opts' do
@@ -710,9 +710,9 @@ describe Shoes::Dimensions do
       end
 
       it 'does not modify the value of absolute_top' do
-        expect do
-          subject.displace_top = displace_top
-        end.not_to change { subject.absolute_top }
+        expect { subject.displace_top = displace_top }.not_to(
+          change { subject.absolute_top }
+        )
       end
 
       context 'via opts' do
