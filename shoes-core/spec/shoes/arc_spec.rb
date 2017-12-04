@@ -66,11 +66,11 @@ describe Shoes::Arc do
       expect(basic_arc.center_point).to eq(Shoes::Point.new(80, 90))
     end
 
-    # it "should work for centered arcs" do
-    #   centered_arc = Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, center: true)
-    #   centered_arc.center_point = Shoes::Point.new(80, 90)
-    #   expect(centered_arc.center_point).to eq(Shoes::Point.new(80, 90))
-    # end
+    it "should work for centered arcs" do
+      centered_arc = Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, center: true)
+      centered_arc.center_point = Shoes::Point.new(80, 90)
+      expect(centered_arc.center_point).to eq(Shoes::Point.new(80, 90))
+    end
   end
 
   describe "dsl" do
