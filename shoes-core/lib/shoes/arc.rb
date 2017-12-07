@@ -1,6 +1,21 @@
 # frozen_string_literal: true
 
 class Shoes
+  # Arc.  A basic element representing a curve of a circle or an oval.
+  #
+  # @param left [Integer] The number of pixels from the left side of the window.
+  # @param top [Integer] The number of pixels from the top side of the window
+  # @param width [Integer] The width of the arc element.
+  # @param height [Integer] The height of the arc element.
+  # @param angle1 [Float] The first angle of the arc to the center point, in Radians,
+  #   starting from the 3 o'clock position.
+  # @param angle2 [Float] The second angle of the arc to the center point, in Radians.
+  # @param [Hash] Style hash
+  # @example A simple arc which describes the bottom half of a circle.
+  #   arc 200, 200, 100, 100, 0, Shoes::PI, center: true
+  # @example An arc which describes the top half of a circle.
+  #   arc 200, 200, 100, 100, Shoes::PI, 0
+  # @author Jason Clark
   class Arc < Common::ArtElement
     # angle is the gradient angle used across all art elements
     # angle1/2 are the angles of the arc itself!
@@ -23,12 +38,22 @@ class Shoes
       wedge
     end
 
+    # Access the center point of the arc.
+    #
+    # @return [Shoes::Point] A point at the center of the arc.
+    # @example
+    #   my_point = my_arc.center_point
     def center_point
       center_x = left + (element_width * 0.5).to_i
       center_y = top + (element_height * 0.5).to_i
       Point.new(center_x, center_y)
     end
 
+    # Set the center point of an arc.
+    #
+    # @param point [Shoes::Point] the point to set as the center of the arc.
+    # @example Set an arc's center point at the [x, y] coordinates [100, 300]
+    #   my_arc.center_point = Shoes::Point.new(100, 300)
     def center_point=(point)
       self.left = point.x - (width * 0.5).to_i
       self.top = point.y - (height * 0.5).to_i
