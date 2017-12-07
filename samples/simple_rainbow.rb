@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# a simple shoes app to show how to use the star.center_point method
+# a simple shoes app to draw a rainbow and explain a little about how arcs work along
+# the way.
 Shoes.app width: 600, height: 600 do
   # Roy G. Biv!
   the_colors_of_the_rainbow = {
@@ -21,31 +22,30 @@ Shoes.app width: 600, height: 600 do
   band_width = 400
   band_height = 400
 
-  # tell Shoes how we're going to draw
+  # tell Shoes *how* we're going to draw it.
   nofill
   strokewidth band_thickness
 
-  # draw a band for each of the colors of the rainbow.
-  the_colors_of_the_rainbow.each do |_color_name, color_rgb|
+  # now draw a band for each of the colors of the rainbow!
+  the_colors_of_the_rainbow.each_value do |color_rgb|
     stroke(color_rgb)
+
+    # The starting point for drawing an arc is at 3 o'clock.  We want to start our
+    # rainbow 180 degrees from there (9 o'clock) and draw back to the 3 o'clock position.
+    # nb: arcs in shoes measure angels in radians!
     arc draw_left, draw_top, band_width, band_height, Shoes::PI, 0
 
     # update variables for next run.  the left and top point increase because
-    # we're drawing further in and down and the width decreases because we're
-    # because each successive band has to be contained within the one prior.
+    # we're drawing further in and down and the width decreases because each
+    # successive band has to be contained within the one prior.
     draw_left += band_thickness
     draw_top += band_thickness
     band_width -= (band_thickness * 2)
     band_height -= (band_thickness * 2)
   end
 
-  # add to docs
-  # 0 is 3 o'clock
-  # unit of angle expected in arguments is RADIANS!  DAWG!
-  # the arc has a left and top off set by the cumulative strokewidth of each band of the rainbow.
-  # each successive band has a width and height that is 2x the cumulative strokewidth
-  # shoes::PI, 0 remains the same.
-
+  # an info block that updates with the cordinates of the mouse when clicked.
+  # (so you can see where your arcs are being drawn!)
   stroke(black)
 
   stack do
