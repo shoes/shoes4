@@ -4,6 +4,7 @@ begin
   require 'yard'
 
   YARD::Rake::YardocTask.new do |t|
+    t.files = ['shoes-core/**/*.rb']
     t.options = ['-mmarkdown']
   end
 rescue LoadError
