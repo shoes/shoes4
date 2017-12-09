@@ -3,6 +3,13 @@
 class Shoes
   # Arc.  A basic element representing a curve of a circle or an oval.
   #
+  # @example A simple arc which describes the bottom half of a circle and uses the centered style.
+  #   arc 200, 200, 100, 100, 0, Shoes::PI, center: true
+  # @example An arc which describes the top half of a circle.
+  #   arc 200, 200, 100, 100, Shoes::PI, 0
+  # @note Angle is the gradient angle used across all art elements. Angle1/2 are the angles of 
+  #   the arc itself!
+  # @author Jason Clark
   # @param left [Integer] The number of pixels from the left side of the window.
   # @param top [Integer] The number of pixels from the top side of the window
   # @param width [Integer] The width of the arc element.
@@ -11,14 +18,7 @@ class Shoes
   #   starting from the 3 o'clock position.
   # @param angle2 [Float] The second angle of the arc to the center point, in Radians.
   # @param [Hash] Style hash
-  # @example A simple arc which describes the bottom half of a circle.
-  #   arc 200, 200, 100, 100, 0, Shoes::PI, center: true
-  # @example An arc which describes the top half of a circle.
-  #   arc 200, 200, 100, 100, Shoes::PI, 0
-  # @author Jason Clark
   class Arc < Common::ArtElement
-    # angle is the gradient angle used across all art elements
-    # angle1/2 are the angles of the arc itself!
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false, fill: Shoes::COLORS[:black] }.freeze
 
