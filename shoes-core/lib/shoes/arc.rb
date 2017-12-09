@@ -55,8 +55,13 @@ class Shoes
     # @example Set an arc's center point at the [x, y] coordinates [100, 300]
     #   my_arc.center_point = Shoes::Point.new(100, 300)
     def center_point=(point)
-      self.left = point.x - (width * 0.5).to_i
-      self.top = point.y - (height * 0.5).to_i
+      if style[:center]
+        self.left = point.x
+        self.top = point.y
+      else
+        self.left = point.x - (width * 0.5).to_i
+        self.top = point.y - (height * 0.5).to_i
+      end
     end
   end
 end

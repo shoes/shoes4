@@ -6,22 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'shoes-core/spec/shoes/dimensions_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/slot.rb'
-    - 'shoes-swt/spec/shoes/swt/shared_examples/clickable.rb'
-
 # Offense count: 2
 Lint/HandleExceptions:
   Exclude:
     - 'shoes-core/lib/shoes/packager.rb'
-
-# Offense count: 2
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'shoes-core/lib/shoes/app.rb'
 
 # Offense count: 1
 Lint/NestedMethodDefinition:
@@ -112,4 +100,3 @@ Style/MethodMissing:
     - 'shoes-core/lib/shoes/app.rb'
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
-
