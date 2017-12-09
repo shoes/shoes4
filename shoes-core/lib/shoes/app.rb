@@ -109,25 +109,6 @@ class Shoes
       end
     end
 
-    private
-
-    # If we didn't arrive by any of our executables (shoes or packaging)
-    # treat the starting directory in our call tree as the app directory.
-    def ensure_app_dir_set
-      return if Shoes.configuration.app_dir
-
-      path, *_ = caller.last.split(":")
-      Shoes.configuration.app_dir = File.dirname(path)
-    end
-
-    def inspect_details
-      " \"#{@__app__.app_title}\""
-    end
-
-    def to_s_details
-      inspect_details
-    end
-
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
@@ -148,6 +129,25 @@ class Shoes
     def self.new_dsl_method(name, &blk)
       define_method name, blk
       @method_subscribers.each { |klazz| klazz.def_delegator :app, name }
+    end
+
+    private
+
+    # If we didn't arrive by any of our executables (shoes or packaging)
+    # treat the starting directory in our call tree as the app directory.
+    def ensure_app_dir_set
+      return if Shoes.configuration.app_dir
+
+      path, *_ = caller.last.split(":")
+      Shoes.configuration.app_dir = File.dirname(path)
+    end
+
+    def inspect_details
+      " \"#{@__app__.app_title}\""
+    end
+
+    def to_s_details
+      inspect_details
     end
   end
 end

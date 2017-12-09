@@ -4,7 +4,7 @@ shared_examples_for "Slot" do
   it "should be able to append" do
     expect(subject.contents).to be_empty
     our_subject = subject
-    app.execute_block proc { our_subject.append { para "foo" } }
+    app.execute_block(proc { our_subject.append { para "foo" } })
     expect(subject.contents.size).to eq(1)
   end
 
