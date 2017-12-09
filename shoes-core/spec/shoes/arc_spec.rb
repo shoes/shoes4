@@ -47,6 +47,32 @@ describe Shoes::Arc do
     its(:wedge) { should eq(true) }
   end
 
+  describe "center_point" do
+    it "should return the center point of the arc" do
+      basic_arc = Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle)
+      expect(basic_arc.center_point).to eq(Shoes::Point.new(113, 194))
+    end
+
+    it "should handle arcs initialized with nil dimensions" do
+      nil_arc = Shoes::Arc.new(app, parent, nil, nil, width, height, start_angle, end_angle)
+      expect(nil_arc.center_point).to eq(Shoes::Point.new(100, 150))
+    end
+  end
+
+  describe "center_point=" do
+    it "should set a new center_point" do
+      basic_arc = Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle)
+      basic_arc.center_point = Shoes::Point.new(80, 90)
+      expect(basic_arc.center_point).to eq(Shoes::Point.new(80, 90))
+    end
+
+    it "should work for centered arcs" do
+      centered_arc = Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, center: true)
+      centered_arc.center_point = Shoes::Point.new(80, 90)
+      expect(centered_arc.center_point).to eq(Shoes::Point.new(80, 90))
+    end
+  end
+
   describe "dsl" do
     it "takes no arguments" do
       arc = dsl.arc

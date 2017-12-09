@@ -22,5 +22,21 @@ class Shoes
     def wedge?
       wedge
     end
+
+    def center_point
+      center_x = left + (element_width * 0.5).to_i
+      center_y = top + (element_height * 0.5).to_i
+      Point.new(center_x, center_y)
+    end
+
+    def center_point=(point)
+      if style[:center]
+        self.left = point.x
+        self.top = point.y
+      else
+        self.left = point.x - (width * 0.5).to_i
+        self.top = point.y - (height * 0.5).to_i
+      end
+    end
   end
 end
