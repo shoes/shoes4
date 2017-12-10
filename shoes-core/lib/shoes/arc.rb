@@ -7,7 +7,7 @@ class Shoes
   #   arc 200, 200, 100, 100, 0, Shoes::PI, center: true
   # @example An arc which describes the top half of a circle.
   #   arc 200, 200, 100, 100, Shoes::PI, 0
-  # @note Angle is the gradient angle used across all art elements. Angle1/2 are the angles of 
+  # @note Angle is the gradient angle used across all art elements. Angle1/2 are the angles of
   #   the arc itself!
   # @author Jason Clark
   # @param left [Integer] The number of pixels from the left side of the window.
