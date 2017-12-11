@@ -32,7 +32,8 @@ module Othello
 
       # FIXME: Possible infinite loop if neither player has a good move?
       next_turn
-      raise "Player #{@current_player.piece} (#{@current_player.color}) has no available moves. Player #{next_player.piece}'s (#{next_player.color}) turn."
+      raise "Player #{@current_player.piece} (#{@current_player.color}) has no available moves. " \
+            "Player #{next_player.piece}'s (#{next_player.color}) turn."
     end
 
     def current_player
@@ -81,15 +82,22 @@ module Othello
         pieces_to_change << check_direction(c, [-1, -1], piece, opp_piece) # SW
         pieces_to_change << check_direction(c, [-1, 0], piece, opp_piece) # W
         pieces_to_change << check_direction(c, [-1, 1], piece, opp_piece) # NW
-        raise "You must move to a spot that will turn your opponent's piece." if pieces_to_change.compact.all?(&:empty?)
-        pieces_to_change.compact.each { |direction| direction.each { |i| @board[i[0]][i[1]] = piece } }
+
+        if pieces_to_change.compact.all?(&:empty?)
+          raise "You must move to a spot that will turn your opponent's piece."
+        end
+
+        pieces_to_change.compact.each do |direction|
+          direction.each { |i| @board[i[0]][i[1]] = piece }
+        end
       end
       current_player.pieces -= 1
       @board[c[0]][c[1]] = piece
       current_winner = calculate_current_winner
 
       return if (@p1.pieces + @p2.pieces).nonzero?
-      raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!"
+      raise "Game over. Player #{current_winner.piece} wins with " \
+            "#{current_winner.pieces_on_board} pieces!"
     end
 
     def skip_turn?
@@ -220,7 +228,14 @@ module Othello
     stack height: 50, margin: 10 do
       if GAME.current_player == GAME.p1
         background yellow
-        para span("Player 1 (#{GAME.current_player.color}) turn", stroke: black, font: "Trebuchet 20px bold"), margin: 4
+        para(
+          span(
+            "Player 1 (#{GAME.current_player.color}) turn",
+            stroke: black,
+            font: "Trebuchet 20px bold"
+          ),
+          margin: 4
+        )
       else
         background white
         para span("Player 1", stroke: black, font: "Trebuchet 10px bold"), margin: 4
@@ -232,7 +247,14 @@ module Othello
     stack top: 550, left: 0, height: 50, margin: 10 do
       if GAME.current_player == GAME.p2
         background yellow
-        para span("Player 2's (#{GAME.current_player.color}) turn", stroke: black, font: "Trebuchet 20px bold"), margin: 4
+        para(
+          span(
+            "Player 2's (#{GAME.current_player.color}) turn",
+            stroke: black,
+            font: "Trebuchet 20px bold"
+          ),
+          margin: 4
+        )
       else
         background white
         para span("Player 2", stroke: black, font: "Trebuchet 10px bold"), margin: 4

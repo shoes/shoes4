@@ -26,8 +26,11 @@ DX     = WIDTH / NX     # pixel width  of a single tetris block
 DY     = HEIGHT / NY    # pixel height of a single tetris block
 FPS    = 60             # game animation frame rate (fps)
 
-PACE   = { start: 0.5, step: 0.005, min: 0.1 }.freeze # how long before a piece drops by 1 row (seconds)
-SCORE  = { line: 100, multiplier: 2 }.freeze          # score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
+# how long before a piece drops by 1 row (seconds)
+PACE   = { start: 0.5, step: 0.005, min: 0.1 }.freeze
+
+# score per line removed (100) and bonus multiplier when multiple lines cleared in a the same drop
+SCORE  = { line: 100, multiplier: 2 }.freeze
 
 #==================================================================================================
 # The 7 Tetromino Types
@@ -47,13 +50,47 @@ SCORE  = { line: 100, multiplier: 2 }.freeze          # score per line removed (
 #  (see http://codeincomplete.com/posts/2011/10/10/javascript_tetris/)
 #
 
-I = { blocks: {up: 0x0F00, right: 0x2222, down: 0x00F0, left: 0x4444}, color: '#00FFFF', size: 4 }.freeze
-J = { blocks: {up: 0x44C0, right: 0x8E00, down: 0x6440, left: 0x0E20}, color: '#0000FF', size: 3 }.freeze
-L = { blocks: {up: 0x4460, right: 0x0E80, down: 0xC440, left: 0x2E00}, color: '#FF8000', size: 3 }.freeze
-O = { blocks: {up: 0xCC00, right: 0xCC00, down: 0xCC00, left: 0xCC00}, color: '#FFFF00', size: 2 }.freeze
-S = { blocks: {up: 0x06C0, right: 0x8C40, down: 0x6C00, left: 0x4620}, color: '#00FF00', size: 3 }.freeze
-T = { blocks: {up: 0x0E40, right: 0x4C40, down: 0x4E00, left: 0x4640}, color: '#8040FF', size: 3 }.freeze
-Z = { blocks: {up: 0x0C60, right: 0x4C80, down: 0xC600, left: 0x2640}, color: '#FF0000', size: 3 }.freeze
+I = {
+  blocks: { up: 0x0F00, right: 0x2222, down: 0x00F0, left: 0x4444 },
+  color: '#00FFFF',
+  size: 4
+}.freeze
+
+J = {
+  blocks: { up: 0x44C0, right: 0x8E00, down: 0x6440, left: 0x0E20 },
+  color: '#0000FF',
+  size: 3
+}.freeze
+
+L = {
+  blocks: { up: 0x4460, right: 0x0E80, down: 0xC440, left: 0x2E00 },
+  color: '#FF8000',
+  size: 3
+}.freeze
+
+O = {
+  blocks: { up: 0xCC00, right: 0xCC00, down: 0xCC00, left: 0xCC00 },
+  color: '#FFFF00',
+  size: 2
+}.freeze
+
+S = {
+  blocks: { up: 0x06C0, right: 0x8C40, down: 0x6C00, left: 0x4620 },
+  color: '#00FF00',
+  size: 3
+}.freeze
+
+T = {
+  blocks: { up: 0x0E40, right: 0x4C40, down: 0x4E00, left: 0x4640 },
+  color: '#8040FF',
+  size: 3
+}.freeze
+
+Z = {
+  blocks: { up: 0x0C60, right: 0x4C80, down: 0xC600, left: 0x2640 },
+  color: '#FF0000',
+  size: 3
+}.freeze
 
 #==================================================================================================
 # The Game Runner
@@ -63,9 +100,13 @@ class Tetris
   attr_reader :dt,       # time since the current active piece last dropped a row
               :score,    # the current score
               :lost,     # bool to indicate when the game is lost
-              :pace,     # current game pace - how long until the current piece drops a single row
-              :blocks,   # 2 dimensional array (NX*NY) represeting the tetris court - either empty block or occupied by a piece
-              :actions,  # queue of user inputs collected by the game loop
+              :pace      # current game pace - how long until the current piece drops a single row
+
+  # 2 dimensional array (NX*NY) represeting the tetris court - either empty block or occupied
+  # by a piece
+  attr_reader :blocks
+
+  attr_reader :actions,  # queue of user inputs collected by the game loop
               :bag,      # a collection of random pieces to be used
               :current   # the current active piece
 
@@ -75,7 +116,10 @@ class Tetris
     @dt      = 0
     @score   = 0
     @pace    = PACE[:start]
-    @blocks  = Array.new(NX) { Array.new(NY) } # awkward way to initialize an already sized 2 dimensional array
+
+    # awkward way to initialize an already sized 2 dimensional array
+    @blocks  = Array.new(NX) { Array.new(NY) }
+
     @actions = []
     @bag     = new_bag
     @current = random_piece
@@ -159,7 +203,8 @@ class Tetris
   end
 
   def reward_lines(lines)
-    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines - 1)) # e.g. 1: 100, 2: 200, 3: 400, 4: 800
+    # e.g. 1: 100, 2: 200, 3: 400, 4: 800
+    @score = score + (SCORE[:line] * SCORE[:multiplier]**(lines - 1))
     @pace  = [pace - lines * PACE[:step], PACE[:min]].max
   end
 
@@ -230,8 +275,8 @@ class Piece
   def initialize(tetromino, x = nil, y = nil, direction = nil)
     @tetromino = tetromino
     @direction = direction || :up
-    @x         = x         || rand(NX - tetromino[:size]) # default to a random horizontal position (that fits)
-    @y         = y         || 0
+    @x = x || rand(NX - tetromino[:size]) # default to a random horizontal position (that fits)
+    @y = y || 0
   end
 
   #----------------------------------------------------------------------------
@@ -256,7 +301,9 @@ class Piece
 
   #----------------------------------------------------------------------------
 
-  def each_occupied_block # a bit complex, for more details see - http://codeincomplete.com/posts/2011/10/10/javascript_tetris/
+  # a bit complex, for more details see -
+  # http://codeincomplete.com/posts/2011/10/10/javascript_tetris/
+  def each_occupied_block
     bit = 0b1000000000000000
     row = 0
     col = 0

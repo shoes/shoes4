@@ -194,7 +194,12 @@ Shoes.app width: SIZE::WIDTH, height: SIZE::HEIGHT, title: 'Tic Tac Toe' do
   tics = []
   (1..3).each do |i|
     (1..3).each do |j|
-      rectangle = rect((SIZE::PADDING + SIZE::TIC_SIZE) * i, (SIZE::PADDING + SIZE::TIC_SIZE) * j, SIZE::TIC_SIZE, SIZE::TIC_SIZE, SIZE::B_RADIUS)
+      rectangle = rect(
+        (SIZE::PADDING + SIZE::TIC_SIZE) * i,
+        (SIZE::PADDING + SIZE::TIC_SIZE) * j,
+        SIZE::TIC_SIZE,
+        SIZE::TIC_SIZE, SIZE::B_RADIUS
+      )
       tics << [rectangle, i, j]
     end
   end

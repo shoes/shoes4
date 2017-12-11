@@ -53,7 +53,10 @@ class Changelog
 
   def commits_matching(pattern, commit_range)
     grep_placeholder = '{TOKEN}'
-    log_command_template = "git log --regexp-ignore-case --grep '#{grep_placeholder}' --format='%s#{BODY_START_SEPARATOR}%b#{BODY_END_SEPARATOR} [%h]#{COMMIT_SEPARATOR}' #{commit_range}"
+    log_command_template =
+      "git log --regexp-ignore-case --grep '#{grep_placeholder}' " \
+      "--format='%s#{BODY_START_SEPARATOR}%b#{BODY_END_SEPARATOR} " \
+      "[%h]#{COMMIT_SEPARATOR}' #{commit_range}"
     log_command = log_command_template.gsub(grep_placeholder, pattern)
 
     commits = `#{log_command}`
@@ -76,7 +79,9 @@ class Changelog
   end
 
   def misc_changes(commit_range, categorized_commits)
-    misc_change_commits = commits_matching('Changelog', commit_range).reject { |commit| categorized_commits.include? commit }
+    misc_change_commits = commits_matching('Changelog', commit_range).reject do |commit|
+      categorized_commits.include? commit
+    end
     changes_under_heading('Miscellaneous', misc_change_commits)
   end
 

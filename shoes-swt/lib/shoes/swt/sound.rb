@@ -39,7 +39,8 @@ class Shoes
             audio_input_stream = AudioSystem.getAudioInputStream(sound_file)
             audio_format = audio_input_stream.getFormat
 
-            decoded_audio_format, decoded_audio_input_stream = decode_input_stream(audio_format, audio_input_stream)
+            decoded_audio_format, decoded_audio_input_stream =
+              decode_input_stream(audio_format, audio_input_stream)
 
             # Play now.
             rawplay(decoded_audio_format, decoded_audio_input_stream)
@@ -60,7 +61,8 @@ class Shoes
 
       def decode_input_stream(audio_format, audio_input_stream)
         case audio_format.encoding
-        when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding, Java::JavazoomSpiMpegSampledFile::MpegEncoding
+        when Java::JavazoomSpiVorbisSampledFile::VorbisEncoding,
+             Java::JavazoomSpiMpegSampledFile::MpegEncoding
           decoded_format = AudioFormat.new(AudioFormat::Encoding::PCM_SIGNED,
                                            audio_format.getSampleRate,
                                            16,
@@ -68,7 +70,9 @@ class Shoes
                                            audio_format.getChannels * 2,
                                            audio_format.getSampleRate,
                                            false)
-          decoded_audio_input_stream = AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
+
+          decoded_audio_input_stream =
+            AudioSystem.getAudioInputStream(decoded_format, audio_input_stream)
 
           return decoded_format, decoded_audio_input_stream
 
@@ -90,7 +94,8 @@ class Shoes
         line.start
         bytes_read = 0
         while bytes_read != -1
-          bytes_read = decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
+          bytes_read =
+            decoded_audio_input_stream.read(sampled_data, 0, sampled_data.length)
           line.write(sampled_data, 0, bytes_read) if bytes_read != -1
         end
 

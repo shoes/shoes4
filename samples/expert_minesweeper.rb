@@ -83,7 +83,12 @@ class Field
 
   def render_flag(x, y)
     @app.stroke "#000"
-    @app.line(x * cell_size + cell_size / 4 + 1, y * cell_size + cell_size / 5, x * cell_size + cell_size / 4 + 1, y * cell_size + cell_size / 5 * 4)
+    @app.line(
+      x * cell_size + cell_size / 4 + 1,
+      y * cell_size + cell_size / 5,
+      x * cell_size + cell_size / 4 + 1,
+      y * cell_size + cell_size / 5 * 4
+    )
     @app.fill "#A00"
     @app.rect(x * cell_size + cell_size / 4 + 2, y * cell_size + cell_size / 5,
               cell_size / 3, cell_size / 4)
@@ -147,7 +152,9 @@ class Field
                   flags_around(x, y) >= self[x, y].number
 
     (-1..1).each do |v|
-      (-1..1).each { |h| click!(x + h, y + v) unless (v.zero? && h.zero?) || flagged?(x + h, y + v) }
+      (-1..1).each do |h|
+        click!(x + h, y + v) unless (v.zero? && h.zero?) || flagged?(x + h, y + v)
+      end
     end
   end
 
@@ -173,7 +180,8 @@ class Field
   end
 
   def open(x, y)
-    self[x, y] = OpenCell.new(bombs_around(x, y)) unless (self[x, y].is_a? OpenCell) || flagged?(x, y)
+    return if (self[x, y].is_a? OpenCell) || flagged?(x, y)
+    self[x, y] = OpenCell.new(bombs_around(x, y))
   end
 
   def neighbors
@@ -244,7 +252,8 @@ Shoes.app width: 730, height: 450, title: 'Minesweeper' do
       end
       stack { @status = para stroke: white }
       @field.paint
-      para "Left click - open cell, right click - put flag, middle click - reveal empty cells", top: 270, left: -100, stroke: white, font: "11px"
+      para "Left click - open cell, right click - put flag, middle click - reveal empty cells",
+           top: 270, left: -100, stroke: white, font: "11px"
     end
   end
 

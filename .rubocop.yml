@@ -23,6 +23,9 @@ Lint/InterpolationCheck:
   Exclude:
     - samples/expert_irb.rb
 
+Metrics/LineLength:
+  Max: 100
+
 # IRB sample is a rare example where we need to use eval
 Security/Eval:
   Exclude:

@@ -27,7 +27,10 @@ shared_examples_for "movable object" do
 end
 
 shared_examples_for "left, top as center" do |*params|
-  let(:centered_object) { described_class.new(app, parent, left, top, width, height, *params, center: true) }
+  let(:centered_object) do
+    described_class.new(app, parent, left, top, width, height, *params, center: true)
+  end
+
   it "should now be located somewhere" do
     expect(centered_object.left).to eq(left - (width / 2))
     expect(centered_object.top).to eq(top - (height / 2))

@@ -11,8 +11,13 @@ describe Shoes::Console do
 
   let(:console) { Shoes::Console.new }
 
-  let(:sample_message_array) { [[:debug, 'debug message'], [:warn, 'warn message'], [:error, 'error message']] }
-  let(:formatted_message_output) { "Debug\n debug message\n\nWarn\n warn message\n\nError\n error message\n\n" }
+  let(:sample_message_array) do
+    [[:debug, 'debug message'], [:warn, 'warn message'], [:error, 'error message']]
+  end
+
+  let(:formatted_message_output) do
+    "Debug\n debug message\n\nWarn\n warn message\n\nError\n error message\n\n"
+  end
 
   let(:mock_dialog) { Shoes::Mock::Dialog.new.dialog_chooser }
 
@@ -50,7 +55,9 @@ describe Shoes::Console do
   end
 
   describe 'message type methods' do
-    before(:each) { allow(console).to receive(:add_message) { |type, message| {type: type, message: message} } }
+    before(:each) do
+      allow(console).to receive(:add_message) { |type, message| {type: type, message: message} }
+    end
 
     describe '#debug' do
       it 'must pass the given message as a debug message to #add_message' do
@@ -83,13 +90,22 @@ describe Shoes::Console do
 
   describe '#add_message' do
     before(:each) do
-      allow(console).to receive(:add_message_stack) { |type, message, index| {type: type, message: message, index: index} }
+      allow(console).to(
+        receive(:add_message_stack) do |type, message, index|
+          { type: type, message: message, index: index }
+        end
+      )
       console.instance_variable_set(:@messages, sample_message_array.dup)
     end
 
     it 'must add input to @messages and call #add_message_stack' do
-      expect(console.add_message(:error, 'test error message')).to eq(type: :error, message: 'test error message', index: 3)
-      expect(console.instance_variable_get(:@messages)).to eq(sample_message_array << [:error, 'test error message'])
+      expect(console.add_message(:error, 'test error message')).to(
+        eq(type: :error, message: 'test error message', index: 3)
+      )
+
+      expect(console.instance_variable_get(:@messages)).to(
+        eq(sample_message_array << [:error, 'test error message'])
+      )
     end
   end
 

@@ -121,7 +121,11 @@ describe Shoes::Color do
 
       # Using patterns here so we can handle the variable hex string identifier
       let(:rgb_pattern) { 'rgb[(]10, 20, 30[)]' }
-      let(:inspect_pattern) { "[(]Shoes::Color:#{shoes_object_id_pattern} #{rgb_pattern} alpha:40[)]$" }
+
+      let(:inspect_pattern) do
+        "[(]Shoes::Color:#{shoes_object_id_pattern} #{rgb_pattern} alpha:40[)]$"
+      end
+
       subject(:color) { Shoes::Color.new(10, 20, 30, 40) }
 
       its(:to_s) { should match(rgb_pattern) }

@@ -20,7 +20,11 @@ class Shoes
       def dialog_chooser(title, folder = false, style = :open)
         style = (style == :save ? ::Swt::SWT::SAVE : ::Swt::SWT::OPEN)
         shell = ::Swt::Widgets::Shell.new Shoes.display
-        fd = folder ? ::Swt::Widgets::DirectoryDialog.new(shell, style) : ::Swt::Widgets::FileDialog.new(shell, style)
+        fd =  if folder
+                ::Swt::Widgets::DirectoryDialog.new(shell, style)
+              else
+                ::Swt::Widgets::FileDialog.new(shell, style)
+              end
         fd.setText title
         fd.open
       end
@@ -30,7 +34,11 @@ class Shoes
         cd = ::Swt::Widgets::ColorDialog.new shell
         cd.setText title
         color = cd.open
-        color ? ::Shoes::Color.new(color.red, color.green, color.blue, ::Shoes::Color::OPAQUE) : ::Shoes::Color.new(0, 0, 0, ::Shoes::Color::OPAQUE)
+        if color
+          ::Shoes::Color.new(color.red, color.green, color.blue, ::Shoes::Color::OPAQUE)
+        else
+          ::Shoes::Color.new(0, 0, 0, ::Shoes::Color::OPAQUE)
+        end
       end
 
       private

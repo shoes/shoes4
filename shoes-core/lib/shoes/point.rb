@@ -74,7 +74,9 @@ class Shoes
     end
 
     def assert_dimensions_match(other_dimension)
-      raise ArgumentError, "Dimensions mismatch: expected #{@dimensions}D point, given #{other_dimension}D point" if @dimensions != other_dimension
+      return if @dimensions == other_dimension
+      raise ArgumentError, "Dimensions mismatch: expected #{@dimensions}D point " \
+                           ", given #{other_dimension}D point"
     end
   end
 end

@@ -150,7 +150,10 @@ class Shoes
 
     def scroll_top=(value)
       unless scroll
-        Shoes.logger.warn "You've set scroll_top on a slot (#<#{self.class}:0x#{hash.to_s(16)}...>) that isn't scrollable. This will be ignored."
+        Shoes.logger.warn(
+          "You've set scroll_top on a slot (#<#{self.class}:0x#{hash.to_s(16)}...>) " \
+          "that isn't scrollable. This will be ignored."
+        )
         return
       end
 
@@ -170,7 +173,8 @@ class Shoes
     end
 
     def inspect
-      "#<#{self.class}:0x#{hash.to_s(16)} @contents=#{@contents.inspect} and so much stuff literally breaks the memory limit. Look at it selectively.>"
+      "#<#{self.class}:0x#{hash.to_s(16)} @contents=#{@contents.inspect} and " \
+      "so much stuff literally breaks the memory limit. Look at it selectively.>"
     end
 
     def fixed_height?

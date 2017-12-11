@@ -60,7 +60,9 @@ describe Shoes::Swt::App do
                     Swt::SWT::V_SCROLL
 
     it "should return a bitmask that represents being resizable" do
-      expect(subject.send(:main_window_style)).to eq(BASE_BITMASK | Swt::SWT::RESIZE | Swt::SWT::MAX)
+      expect(subject.send(:main_window_style)).to(
+        eq(BASE_BITMASK | Swt::SWT::RESIZE | Swt::SWT::MAX)
+      )
     end
 
     it "should return a bitmask that represents not being resizable" do

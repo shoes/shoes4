@@ -7,7 +7,10 @@ describe Shoes::Dimensions do
   let(:parent_top) { top }
   let(:parent_width) { width }
   let(:parent_height) { height }
-  let(:parent) { Shoes::AbsoluteDimensions.new parent_left, parent_top, parent_width, parent_height }
+
+  let(:parent) do
+    Shoes::AbsoluteDimensions.new parent_left, parent_top, parent_width, parent_height
+  end
 
   let(:left) { 10 }
   let(:top) { 20 }
@@ -16,6 +19,7 @@ describe Shoes::Dimensions do
   let(:right) { 17 }
   let(:bottom) { 23 }
   let(:opts) { {} }
+
   subject { Shoes::Dimensions.new parent, left, top, width, height, opts }
 
   shared_context 'margins' do
@@ -48,6 +52,10 @@ describe Shoes::Dimensions do
   describe 'initialization' do
     include InspectHelpers
 
+    let(:obj_pattern) { "Shoes::Dimensions:#{shoes_object_id_pattern}" }
+    let(:rel_pattern) { "[(]#{left || '_'},#{top || '_'}[)]->[(]_,_[)]" }
+    let(:abs_pattern) { "[(]_,_[)]->[(]_,_[)]" }
+
     describe 'without arguments (defaults)' do
       subject { Shoes::Dimensions.new parent }
 
@@ -70,7 +78,12 @@ describe Shoes::Dimensions do
       its(:element_width) { should be_nil }
       its(:element_height) { should be_nil }
       its(:to_s) { should == "(Shoes::Dimensions)" }
-      its(:inspect) { should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]_,_[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] _x_[)]/) }
+
+      its(:inspect) do
+        should match(
+          /[(]#{obj_pattern} relative:#{rel_pattern} absolute:#{abs_pattern} _x_[)]/
+        )
+      end
     end
 
     describe 'with 2 arguments' do
@@ -87,7 +100,12 @@ describe Shoes::Dimensions do
       its(:absolute_top_position?) { should be_truthy }
       its(:absolute_right_position?) { should be_falsey }
       its(:absolute_bottom_position?) { should be_falsey }
-      its(:inspect) { should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]#{left},#{top}[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] _x_[)]/) }
+
+      its(:inspect) do
+        should match(
+          /[(]#{obj_pattern} relative:#{rel_pattern} absolute:#{abs_pattern} _x_[)]/
+        )
+      end
     end
 
     describe 'with 4 arguments' do
@@ -99,7 +117,11 @@ describe Shoes::Dimensions do
       its(:height) { should eq height }
       its(:element_width) { should == width }
       its(:element_height) { should == height }
-      its(:inspect) { should match(/[(]Shoes::Dimensions:#{shoes_object_id_pattern} relative:[(]#{left},#{top}[)]->[(]_,_[)] absolute:[(]_,_[)]->[(]_,_[)] #{width}x#{height}[)]/) }
+      its(:inspect) do
+        should match(
+          /[(]#{obj_pattern} relative:#{rel_pattern} absolute:#{abs_pattern} #{width}x#{height}[)]/
+        )
+      end
     end
 
     describe 'with relative width and height' do

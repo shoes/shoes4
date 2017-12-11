@@ -60,7 +60,9 @@ describe Shoes::App do
         end
 
         it "shows title in #inspect" do
-          expect(subject.inspect).to match(/\(Shoes::App:#{shoes_object_id_pattern} "#{defaults.fetch :title}"\)/)
+          expect(subject.inspect).to(
+            match(/\(Shoes::App:#{shoes_object_id_pattern} "#{defaults.fetch :title}"\)/)
+          )
         end
       end
     end
@@ -77,7 +79,9 @@ describe Shoes::App do
       end
 
       it "passes opts to InternalApp" do
-        expect(Shoes::InternalApp).to receive(:new).with(kind_of(Shoes::App), opts).and_call_original
+        expect(Shoes::InternalApp).to(
+          receive(:new).with(kind_of(Shoes::App), opts).and_call_original
+        )
         subject
       end
 

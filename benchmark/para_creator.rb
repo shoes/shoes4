@@ -1,9 +1,22 @@
 # frozen_string_literal: true
 
 module ParaCreator
-  LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est"
+  ONION_IPSUM =
+    "Pretend that you’ve opened this book (although you probably have opened " \
+    "this book), just to find a huge onion right in the middle crease of the " \
+    "book. (The manufacturer of the book has included the onion at my " \
+    "request.) So you’re like, “Wow, this book comes with an onion!” " \
+    "(Even if you don’t particularly like onions, I’m sure you can " \
+    "appreciate the logistics of shipping any sort of produce discreetly " \
+    "inside of an alleged programming manual.) Then you ask yourself, " \
+    "“Wait a minute. I thought this was a book on Ruby, the incredible new " \
+    "programming language from Japan. And although I can appreciate the " \
+    "logistics of shipping any sort of produce discreetly inside of an " \
+    "alleged programming manual: Why an onion? What am I supposed to do with " \
+    "it?” No. Please don’t puzzle over it. You don’t need to do anything " \
+    "with the onion. Set the onion aside and let it do something with you."
 
   def create_paras(count)
-    count.times { para LOREM_IPSUM }
+    count.times { para ONION_IPSUM }
   end
 end

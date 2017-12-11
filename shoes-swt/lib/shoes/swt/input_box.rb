@@ -71,7 +71,8 @@ class Shoes
     end
 
     class EditBox < InputBox
-      DEFAULT_STYLES = ::Swt::SWT::MULTI | ::Swt::SWT::BORDER | ::Swt::SWT::WRAP | ::Swt::SWT::V_SCROLL
+      DEFAULT_STYLES = ::Swt::SWT::MULTI | ::Swt::SWT::BORDER |
+                       ::Swt::SWT::WRAP | ::Swt::SWT::V_SCROLL
       def initialize(dsl, app)
         super(dsl, app, DEFAULT_STYLES)
       end

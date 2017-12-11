@@ -17,8 +17,13 @@ describe Shoes::Arc do
     subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
 
     it_behaves_like "an art element" do
-      let(:subject_without_style) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
-      let(:subject_with_style) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, arg_styles) }
+      let(:subject_without_style) do
+        Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle)
+      end
+
+      let(:subject_with_style) do
+        Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, arg_styles)
+      end
     end
     it_behaves_like "left, top as center", :start_angle, :end_angle
 
@@ -32,7 +37,11 @@ describe Shoes::Arc do
   end
 
   describe "relative dimensions" do
-    subject(:arc) { Shoes::Arc.new(app, parent, left, top, relative_width, relative_height, start_angle, end_angle) }
+    subject(:arc) do
+      Shoes::Arc.new(
+        app, parent, left, top, relative_width, relative_height, start_angle, end_angle
+      )
+    end
     it_behaves_like "object with relative dimensions"
   end
 
@@ -42,7 +51,9 @@ describe Shoes::Arc do
   end
 
   describe "with wedge: true" do
-    subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, wedge: true) }
+    subject(:arc) do
+      Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle, wedge: true)
+    end
 
     its(:wedge) { should eq(true) }
   end
@@ -228,11 +239,15 @@ describe Shoes::Arc do
     end
 
     it "doesn't like too many arguments" do
-      expect { dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI, 666 }.to raise_error(ArgumentError)
+      expect { dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI, 666 }.to(
+        raise_error(ArgumentError)
+      )
     end
 
     it "doesn't like too many arguments and options too!" do
-      expect { dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI, 666, left: -1 }.to raise_error(ArgumentError)
+      expect { dsl.arc 10, 20, 30, 40, Shoes::PI, Shoes::TWO_PI, 666, left: -1 }.to(
+        raise_error(ArgumentError)
+      )
     end
   end
 end

@@ -128,7 +128,8 @@ class Shoes
     def inspect_details
       nothing = '_'
       " relative:#{Point.new left, top}->#{Point.new right, bottom}" \
-        " absolute:#{Point.new absolute_left, absolute_top}->#{Point.new absolute_right, absolute_bottom}" \
+        " absolute:#{Point.new absolute_left, absolute_top}->" \
+        "#{Point.new absolute_right, absolute_bottom}" \
         " #{width || nothing}x#{height || nothing}"
     end
 

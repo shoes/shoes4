@@ -97,7 +97,10 @@ class Shoes
 
     def default_error_proc
       lambda do |exception|
-        Shoes.logger.error "Failure downloading #{@url}. To handle this yourself, pass `:error` option to the download call."
+        Shoes.logger.error(
+          "Failure downloading #{@url}. To handle this yourself, pass " \
+          "`:error` option to the download call."
+        )
         Shoes.logger.error exception.message
         Shoes.logger.error exception.backtrace.join("\n\t")
       end

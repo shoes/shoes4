@@ -14,7 +14,9 @@ describe Shoes::Image do
     let(:width) { 100 }
     let(:height) { 200 }
 
-    subject(:image) { Shoes::Image.new(app, parent, filename, left: left, top: top, width: width, height: height) }
+    subject(:image) do
+      Shoes::Image.new(app, parent, filename, left: left, top: top, width: width, height: height)
+    end
 
     it { is_expected.to be_instance_of(Shoes::Image) }
 

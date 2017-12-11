@@ -4,8 +4,11 @@ require 'spec_helper'
 
 describe Shoes::Swt::RadioGroup do
   let(:name) { "Group Name" }
-  let(:real) { double('real', add_selection_listener: true, remove_selection_listener: true).as_null_object }
   let(:radio) { double('radio', real: real) }
+
+  let(:real) do
+    double('real', add_selection_listener: true, remove_selection_listener: true).as_null_object
+  end
 
   subject { Shoes::Swt::RadioGroup.new name }
 

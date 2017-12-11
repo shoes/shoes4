@@ -8,7 +8,8 @@ Shoes.app width: 360, height: 600, resizable: false do
 
   stack margin: 20 do
     title "Control Sizes", size: 16
-    para "This app measures various controls against a grid of lines, to be sure they size appropriately despite the platform."
+    para "This app measures various controls against a grid of lines, to be " \
+         "sure they size appropriately despite the platform."
     stack top: 122, left: 40 do
       button "Standard"
       button "Margin: 2, Height: 28", margin: 2, height: 30

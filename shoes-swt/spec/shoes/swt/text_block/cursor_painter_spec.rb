@@ -95,10 +95,14 @@ describe Shoes::Swt::TextBlock::CursorPainter do
 
           it "moves" do
             subject.draw
-            expect(textcursor).to have_received(:move).with(left + position.x,
-                                                            top + 100 + position.y,
-                                                            left + position.x,
-                                                            top + 100 + position.y + textcursor.height)
+            expect(textcursor).to(
+              have_received(:move).with(
+                left + position.x,
+                top + 100 + position.y,
+                left + position.x,
+                top + 100 + position.y + textcursor.height
+              )
+            )
             expect(textcursor).to have_received(:show)
           end
 

@@ -36,7 +36,9 @@ describe Shoes::Configuration do
 
     describe "#backend_for" do
       it "passes app.gui to backend" do
-        expect(Shoes.configuration.backend::Shape).to receive(:new).with(an_instance_of(Shoes::Shape), app.gui).and_call_original
+        expect(Shoes.configuration.backend::Shape).to(
+          receive(:new).with(an_instance_of(Shoes::Shape), app.gui).and_call_original
+        )
         dsl_object
       end
 
@@ -51,12 +53,15 @@ describe Shoes::Configuration do
 
     describe '#backend_class' do
       it 'returns the backend class for a dsl object' do
-        expect(Shoes.configuration.backend_class(dsl_object)).to eq(Shoes.configuration.backend::Shape)
+        expect(Shoes.configuration.backend_class(dsl_object)).to(
+          eq(Shoes.configuration.backend::Shape)
+        )
       end
 
       it 'returns the backend class if fed with a class' do
-        expect(Shoes.configuration.backend_class(Shoes::Shape)).to eq(Shoes.configuration
-                                                .backend::Shape)
+        expect(Shoes.configuration.backend_class(Shoes::Shape)).to(
+          eq(Shoes.configuration.backend::Shape)
+        )
       end
 
       it 'raises an error when fed with a non existant class' do

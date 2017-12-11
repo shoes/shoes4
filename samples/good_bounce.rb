@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# The Shoes logo/icon bounces on the screen. The logo/icon responds to menu options and if clicked on.
+# The Shoes logo/icon bounces on the screen. The logo/icon responds to menu
+# options and if clicked on.
 xspeed = 10
 yspeed = 6
 xdir = 1

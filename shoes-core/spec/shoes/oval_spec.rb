@@ -15,8 +15,12 @@ describe Shoes::Oval do
 
     it_behaves_like "an art element" do
       let(:subject_without_style) { Shoes::Oval.new(app, parent, left, top, width, height) }
-      let(:subject_with_style) { Shoes::Oval.new(app, parent, left, top, width, height, arg_styles) }
+
+      let(:subject_with_style) do
+        Shoes::Oval.new(app, parent, left, top, width, height, arg_styles)
+      end
     end
+
     it_behaves_like "left, top as center"
   end
 

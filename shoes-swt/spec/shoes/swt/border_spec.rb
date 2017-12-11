@@ -40,7 +40,11 @@ describe Shoes::Swt::Border do
       let(:corners) { 0 }
 
       specify "draws rect" do
-        expect(gc).to receive(:draw_round_rectangle).with(left + sw / 2, top + sw / 2, width - sw, height - sw, corners * 2, corners * 2)
+        expect(gc).to(
+          receive(:draw_round_rectangle).with(
+            left + sw / 2, top + sw / 2, width - sw, height - sw, corners * 2, corners * 2
+          )
+        )
         subject.paint_control(event)
       end
     end
@@ -49,7 +53,11 @@ describe Shoes::Swt::Border do
       let(:corners) { 13 }
 
       specify "draws rect" do
-        expect(gc).to receive(:draw_round_rectangle).with(left + sw / 2, top + sw / 2, width - sw, height - sw, corners * 2, corners * 2)
+        expect(gc).to(
+          receive(:draw_round_rectangle).with(
+            left + sw / 2, top + sw / 2, width - sw, height - sw, corners * 2, corners * 2
+          )
+        )
         subject.paint_control(event)
       end
     end

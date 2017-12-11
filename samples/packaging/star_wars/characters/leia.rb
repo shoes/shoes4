@@ -16,8 +16,11 @@ class Leia < SimpleDelegator
     line 602, 171, 658, 400
     line 540, 400, 658, 400
 
-    @leia_saber1 = line 495, 235, 495, 235, displace_left: 0, strokewidth: 10, stroke: fuchsia, cap: :curve
-    @leia_saber2 = line 495, 245, 495, 245, displace_left: 0, strokewidth: 5, stroke: darkmagenta, cap: :curve
+    @leia_saber1 = line 495, 235, 495, 235, displace_left: 0, strokewidth: 10, stroke: fuchsia,
+                                            cap: :curve
+
+    @leia_saber2 = line 495, 245, 495, 245, displace_left: 0, strokewidth: 5, stroke: darkmagenta,
+                                            cap: :curve
 
     line 494, 232, 561, 184
     line 494, 232, 555, 235
@@ -43,7 +46,8 @@ class Leia < SimpleDelegator
     return if @animate_leia
 
     @animate_leia = animate do
-      if (@leia_saber1.height > 150 && value.positive?) || (@leia_saber1.height < 1 && value.negative?)
+      if (@leia_saber1.height > 150 && value.positive?) ||
+         (@leia_saber1.height < 1 && value.negative?)
         @animate_leia.stop
         @animate_leia = nil
       else

@@ -7,7 +7,8 @@ class Answer < Shoes::Widget
     mark = nil
     flow do
       flow(width: 70, height: 20) { para word }
-      mark = image(File.expand_path(File.join(__FILE__, '../loogink.png')), width: 20, height: 20).hide
+      mark = image(File.expand_path(File.join(__FILE__, '../loogink.png')), width: 20, height: 20)
+             .hide
     end
     @mark = mark
   end

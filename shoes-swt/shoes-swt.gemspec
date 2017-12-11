@@ -10,7 +10,8 @@ Gem::Specification.new do |s|
   s.email       = ["shoes@lists.mvmanila.com"]
   s.homepage    = "https://github.com/shoes/shoes4"
   s.summary     = 'A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby.'
-  s.description = 'A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby. Shoes makes building for Mac, Windows, and Linux super simple.'
+  s.description = 'A JRuby and Swt backend for Shoes, the best little GUI toolkit for Ruby.' \
+                  'Shoes makes building for Mac, Windows, and Linux super simple.'
   s.license     = 'MIT'
 
   s.files         = Dir["LICENSE", "README.md", "lib/**/*"]

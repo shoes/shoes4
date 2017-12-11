@@ -294,7 +294,9 @@ describe Shoes::TextBlock do
     let!(:para) { helper.create_para }
 
     it "has full text of fragments" do
-      expect(para.text).to eq("Testing, test, test. Breadsticks. Breadsticks. Breadsticks. EVEN BETTER.fine!")
+      expect(para.text).to(
+        eq("Testing, test, test. Breadsticks. Breadsticks. Breadsticks. EVEN BETTER.fine!")
+      )
     end
 
     it "has fragment styles" do
