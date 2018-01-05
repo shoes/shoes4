@@ -193,13 +193,21 @@ describe Shoes::Star do
       expect(subject.redraw_height).to eq(100)
     end
 
+    it "factors in strokewidth" do
+      subject.strokewidth = 4
+      expect(subject.redraw_left).to eq(92)
+      expect(subject.redraw_top).to eq(92)
+      expect(subject.redraw_width).to eq(116)
+      expect(subject.redraw_height).to eq(116)
+    end
+
     it "factors in strokewidth when centered" do
       subject.center = true
       subject.strokewidth = 4
-      expect(subject.redraw_left).to eq(46)
-      expect(subject.redraw_top).to eq(46)
-      expect(subject.redraw_width).to eq(108)
-      expect(subject.redraw_height).to eq(108)
+      expect(subject.redraw_left).to eq(42)
+      expect(subject.redraw_top).to eq(42)
+      expect(subject.redraw_width).to eq(116)
+      expect(subject.redraw_height).to eq(116)
     end
   end
 
