@@ -24,13 +24,7 @@ class ShoesApp < Shoes
 
   def self.notice_error(message)
     Shoes.logger.error message
-
-    @error_message = message
     ShoesApp.navigation.push "/show_error"
-  end
-
-  def self.error_message
-    @error_message
   end
 
   def self.navigation
@@ -154,7 +148,8 @@ class ShoesApp < Shoes
     stack width: 600, margin_left: 150, margin_top: 170 do
       subtitle "Whoops!"
 
-      para "Something went wrong:\n  #{ShoesApp.error_message}\n\n",
+      para "Something went wrong\n" \
+           "Hit Alt + / to open the Shoes Console and see what it was\n\n",
            link("Start over") { app.visit "/" }
     end
   end
