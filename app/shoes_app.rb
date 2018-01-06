@@ -67,9 +67,6 @@ class ShoesApp < Shoes
   end
 
   def start_packaging
-    jruby_command = ENV["JRUBY_COMMAND"] || "jruby"
-    shoes_command = ENV["SHOES_COMMAND"] || "#{jruby_command} -S shoes-swt"
-
     pictures
     stack width: 600, margin_left: 200, margin_top: 170 do
       @mac = package_check("Mac")
@@ -174,6 +171,14 @@ class ShoesApp < Shoes
     require 'shoes/ui/cli/base_command'
     require 'shoes/ui/cli/manual_command'
     Shoes::UI::CLI::ManualCommand.new.run
+  end
+
+  def jruby_command
+    ENV["JRUBY_COMMAND"] || "jruby"
+  end
+
+  def shoes_command
+    ENV["SHOES_COMMAND"] || "#{jruby_command} -S shoes-swt"
   end
 end
 
