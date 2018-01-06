@@ -78,13 +78,7 @@ class ShoesApp < Shoes
         if @mac.checked? || @windows.checked? || @linux.checked? || @jar.checked?
           ShoesApp.packaging_app = app.ask_open_file
           if ShoesApp.packaging_app
-            args = ["package"]
-            args << "--mac" if @mac.checked?
-            args << "--windows" if @windows.checked?
-            args << "--linux" if @linux.checked?
-            args << "--jar" if @jar.checked?
-            args << ShoesApp.packaging_app
-
+            args = packaging_args
             # We can't touch actual UI elements from on the other thread!
             # Be careful, and plumb things through ShoesApp.navigation, etc.
             Thread.new do
@@ -93,13 +87,14 @@ class ShoesApp < Shoes
                 status = 0
 
                 app_dir = File.dirname(ShoesApp.packaging_app)
+                package_command = "#{shoes_command} #{args.join(' ')}"
                 if File.exist?(File.join(app_dir, "Gemfile"))
-                  output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")}"
+                  output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{package_command}"
                 else
-                  output, status = run_command "cd \"#{app_dir}\" && #{shoes_command} #{args.join(" ")}"
+                  output, status = run_command "cd \"#{app_dir}\" && #{package_command}"
                 end
 
-                if status ==  0
+                if status.success?
                   ShoesApp.navigation.push "/done_packaging"
                 else
                   ShoesApp.notice_error(output)
@@ -116,6 +111,16 @@ class ShoesApp < Shoes
         end
       end
     end
+  end
+
+  def packaging_args
+    args = ["package"]
+    args << "--mac" if @mac.checked?
+    args << "--windows" if @windows.checked?
+    args << "--linux" if @linux.checked?
+    args << "--jar" if @jar.checked?
+    args << ShoesApp.packaging_app
+    args
   end
 
   def packaging
@@ -175,7 +180,7 @@ class ShoesApp < Shoes
         output, status = run_command "cd \"#{app_dir}\" && #{shoes_command} #{file}"
       end
 
-      ShoesApp.notice_error(output) unless status == 0
+      ShoesApp.notice_error(output) unless status.success?
     end
   end
 
