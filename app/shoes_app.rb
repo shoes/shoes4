@@ -12,7 +12,7 @@ class ShoesApp < Shoes
   url '/start_packaging', :start_packaging
   url '/packaging',       :packaging
   url '/done_packaging',  :done_packaging
-  url '/error_packaging', :error_packaging
+  url '/show_error',      :show_error
 
   def self.packaging_app=(value)
     @packaging_app = value
@@ -22,15 +22,15 @@ class ShoesApp < Shoes
     @packaging_app
   end
 
-  def self.notice_packaging_error(message)
+  def self.notice_error(message)
     Shoes.logger.error message
 
-    @packaging_error = message
-    ShoesApp.navigation.push "/error_packaging"
+    @error_message = message
+    ShoesApp.navigation.push "/show_error"
   end
 
-  def self.packaging_error
-    @packaging_error
+  def self.error_message
+    @error_message
   end
 
   def self.navigation
@@ -104,10 +104,10 @@ class ShoesApp < Shoes
                 if status ==  0
                   ShoesApp.navigation.push "/done_packaging"
                 else
-                  ShoesApp.notice_packaging_error(output)
+                  ShoesApp.notice_error(output)
                 end
               rescue e
-                ShoesApp.notice_packaging_error("#{e}\n#{e.backtrace.join("\t\n")}")
+                ShoesApp.notice_error("#{e}\n#{e.backtrace.join("\t\n")}")
               end
             end
 
@@ -146,12 +146,12 @@ class ShoesApp < Shoes
     end
   end
 
-  def error_packaging
+  def show_error
     pictures
     stack width: 600, margin_left: 150, margin_top: 170 do
       subtitle "Whoops!"
 
-      para "Something went wrong:\n  #{ShoesApp.packaging_error}\n\n",
+      para "Something went wrong:\n  #{ShoesApp.error_message}\n\n",
            link("Start over") { app.visit "/" }
     end
   end
