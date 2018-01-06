@@ -93,12 +93,10 @@ class ShoesApp < Shoes
                 status = 0
 
                 app_dir = File.dirname(ShoesApp.packaging_app)
-                Bundler.with_clean_env do
-                  if File.exist?(File.join(app_dir, "Gemfile"))
-                    run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")}"
-                  else
-                    run_command "cd \"#{app_dir}\" && #{shoes_command} #{args.join(" ")}"
-                  end
+                if File.exist?(File.join(app_dir, "Gemfile"))
+                  output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{args.join(" ")}"
+                else
+                  output, status = run_command "cd \"#{app_dir}\" && #{shoes_command} #{args.join(" ")}"
                 end
 
                 if status ==  0
@@ -158,13 +156,27 @@ class ShoesApp < Shoes
 
   def run_command(command)
     puts command
-    out, err, status = Open3.capture3(command)
-    output = "STDOUT: #{out}\n\nSTDERR: #{err}"
+
+    Bundler.with_clean_env do
+      out, err, status = Open3.capture3(command)
+      output = "STDOUT: #{out}\n\nSTDERR: #{err}"
+      [output, status]
+    end
   end
 
   def open_app
     file = app.ask_open_file
-    load file if file
+    app_dir = File.dirname(file)
+
+    Thread.new do
+      if File.exist?(File.join(app_dir, "Gemfile"))
+        output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{file}"
+      else
+        output, status = run_command "cd \"#{app_dir}\" && #{shoes_command} #{file}"
+      end
+
+      ShoesApp.notice_error(output) unless status == 0
+    end
   end
 
   def manual
