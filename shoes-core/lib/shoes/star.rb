@@ -39,24 +39,24 @@ class Shoes
 
     def redraw_left
       return 0 unless element_left
-      calculated_left = super
-      calculated_left = element_left - width * 0.5 if center
-      calculated_left - strokewidth * 2
+      calculated_left = element_left
+      calculated_left -= width * 0.5 if center
+      calculated_left - strokewidth.ceil * 4
     end
 
     def redraw_top
       return 0 unless element_top
-      calculated_top = super
-      calculated_top = element_top - width * 0.5 if center
-      calculated_top - strokewidth * 2
+      calculated_top = element_top
+      calculated_top -= width * 0.5 if center
+      calculated_top - strokewidth.ceil * 4
     end
 
     def redraw_width
-      element_width + strokewidth * 4
+      element_width + strokewidth.ceil * 8
     end
 
     def redraw_height
-      element_height + strokewidth * 4
+      element_height + strokewidth.ceil * 8
     end
 
     def center_point

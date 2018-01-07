@@ -179,35 +179,35 @@ describe Shoes::Star do
     end
 
     it "positions around itself" do
-      expect(subject.redraw_left).to eq(98)
-      expect(subject.redraw_top).to eq(98)
-      expect(subject.redraw_width).to eq(104)
-      expect(subject.redraw_height).to eq(104)
+      expect(subject.redraw_left).to eq(96)
+      expect(subject.redraw_top).to eq(96)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
     end
 
     it "positions centered around itself" do
       subject.center = true
-      expect(subject.redraw_left).to eq(48)
-      expect(subject.redraw_top).to eq(48)
-      expect(subject.redraw_width).to eq(104)
-      expect(subject.redraw_height).to eq(104)
+      expect(subject.redraw_left).to eq(46)
+      expect(subject.redraw_top).to eq(46)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
     end
 
     it "factors in strokewidth" do
       subject.strokewidth = 4
-      expect(subject.redraw_left).to eq(92)
-      expect(subject.redraw_top).to eq(92)
-      expect(subject.redraw_width).to eq(116)
-      expect(subject.redraw_height).to eq(116)
+      expect(subject.redraw_left).to eq(84)
+      expect(subject.redraw_top).to eq(84)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
     end
 
     it "factors in strokewidth when centered" do
       subject.center = true
       subject.strokewidth = 4
-      expect(subject.redraw_left).to eq(42)
-      expect(subject.redraw_top).to eq(42)
-      expect(subject.redraw_width).to eq(116)
-      expect(subject.redraw_height).to eq(116)
+      expect(subject.redraw_left).to eq(34)
+      expect(subject.redraw_top).to eq(34)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
     end
   end
 
