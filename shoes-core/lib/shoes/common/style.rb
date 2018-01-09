@@ -55,11 +55,11 @@ class Shoes
       end
 
       def applicable_app_styles
-        @app.style.inject({}) do |memo, (key, value)|
-          if supported_styles.include?(key)
+        @app.style.each_with_object({}) do |(key, value), memo|
+          changed_from_default = DEFAULT_STYLES[key] != value
+          if supported_styles.include?(key) && changed_from_default
             memo[key] = value
           end
-          memo
         end
       end
 
