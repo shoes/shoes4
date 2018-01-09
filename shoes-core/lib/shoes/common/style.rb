@@ -35,11 +35,10 @@ class Shoes
       end
 
       def style_init(arg_styles, new_styles = {})
-        default_element_styles = {}
-        default_element_styles = self.class::STYLES if defined?(self.class::STYLES)
         create_style_hash
-        @style.merge!(default_element_styles)
-        merge_app_styles
+        @style.merge!(DEFAULT_STYLES)
+        @style.merge!(self.class::STYLES) if defined?(self.class::STYLES)
+        @style.merge!(applicable_app_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
@@ -55,9 +54,12 @@ class Shoes
         end
       end
 
-      def merge_app_styles
-        @app.style.each do |key, val|
-          @style[key] = val if supported_styles.include? key
+      def applicable_app_styles
+        @app.style.inject({}) do |memo, (key, value)|
+          if supported_styles.include?(key)
+            memo[key] = value
+          end
+          memo
         end
       end
 

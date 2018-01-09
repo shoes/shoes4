@@ -44,7 +44,8 @@ describe Shoes::Common::Style do
   let(:initial_style) do
     {
       key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue, margin: [0, 0, 0, 0],
-      margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0
+      margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0,
+      rotate: 0, stroke: Shoes::COLORS[:black]
     }
   end
 
