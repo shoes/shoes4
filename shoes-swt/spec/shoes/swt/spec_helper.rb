@@ -16,6 +16,7 @@ RSpec.configure do |config|
     allow(Shoes::Swt::RedrawingAspect).to receive_messages new: true
 
     # If we leak app registrations between tests, some tests get unhappy
+    Shoes.unregister_all
     Shoes::Swt.unregister_all
   end
 
