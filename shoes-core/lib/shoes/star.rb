@@ -37,26 +37,31 @@ class Shoes
         element_top - dy <= y && y <= element_bottom - dy
     end
 
+    # Redrawing needs a bit of extra room. We offset by this factor, then
+    # extend our size by twice that to evenly surround the whole thing.
+    REDRAW_OFFSET_FACTOR = 4
+    REDRAW_SIZING_FACTOR = REDRAW_OFFSET_FACTOR * 2
+
     def redraw_left
       return 0 unless element_left
       calculated_left = element_left
       calculated_left -= width * 0.5 if center
-      calculated_left - strokewidth.ceil * 4
+      calculated_left - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_top
       return 0 unless element_top
       calculated_top = element_top
       calculated_top -= width * 0.5 if center
-      calculated_top - strokewidth.ceil * 4
+      calculated_top - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_width
-      element_width + strokewidth.ceil * 8
+      element_width + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def redraw_height
-      element_height + strokewidth.ceil * 8
+      element_height + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def center_point

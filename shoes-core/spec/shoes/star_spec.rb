@@ -170,7 +170,7 @@ describe Shoes::Star do
   end
 
   describe "redrawing region" do
-    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false) }
+    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 1) }
 
     before do
       # faux positioning
