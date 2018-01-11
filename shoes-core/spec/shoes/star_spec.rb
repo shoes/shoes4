@@ -170,7 +170,7 @@ describe Shoes::Star do
   end
 
   describe "redrawing region" do
-    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 0) }
+    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 1) }
 
     before do
       # faux positioning
@@ -179,27 +179,35 @@ describe Shoes::Star do
     end
 
     it "positions around itself" do
-      expect(subject.redraw_left).to eq(100)
-      expect(subject.redraw_top).to eq(100)
-      expect(subject.redraw_width).to eq(100)
-      expect(subject.redraw_height).to eq(100)
+      expect(subject.redraw_left).to eq(96)
+      expect(subject.redraw_top).to eq(96)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
     end
 
     it "positions centered around itself" do
       subject.center = true
-      expect(subject.redraw_left).to eq(50)
-      expect(subject.redraw_top).to eq(50)
-      expect(subject.redraw_width).to eq(100)
-      expect(subject.redraw_height).to eq(100)
+      expect(subject.redraw_left).to eq(46)
+      expect(subject.redraw_top).to eq(46)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
+    end
+
+    it "factors in strokewidth" do
+      subject.strokewidth = 4
+      expect(subject.redraw_left).to eq(84)
+      expect(subject.redraw_top).to eq(84)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
     end
 
     it "factors in strokewidth when centered" do
       subject.center = true
       subject.strokewidth = 4
-      expect(subject.redraw_left).to eq(46)
-      expect(subject.redraw_top).to eq(46)
-      expect(subject.redraw_width).to eq(108)
-      expect(subject.redraw_height).to eq(108)
+      expect(subject.redraw_left).to eq(34)
+      expect(subject.redraw_top).to eq(34)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
     end
   end
 
