@@ -36,6 +36,7 @@ class Shoes
 
       PATTERN_APP_STYLES.each do |style|
         define_method style do |val|
+          @__app__.remove_styles.delete(style)
           @__app__.style[style] = pattern(val)
         end
       end

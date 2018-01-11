@@ -203,5 +203,13 @@ describe Shoes::Common::Style do
       user_facing_app.nofill
       expect(subject.style[:fill]).to be_nil
     end
+
+    it 'clears removal if fill is set again' do
+      user_facing_app.nofill
+      expect(StyleTester.new(app).style[:fill]).to be_nil
+
+      user_facing_app.fill(Shoes::COLORS[:red])
+      expect(StyleTester.new(app).style[:fill]).to eq(Shoes::COLORS[:red])
+    end
   end
 end
