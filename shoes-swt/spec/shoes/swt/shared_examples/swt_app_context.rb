@@ -27,7 +27,9 @@ shared_context "swt app" do
     swt_double
   end
 
-  let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0, style: Shoes::Common::Style::DEFAULT_STYLES.dup, element_styles: {}) }
+  let(:shoes_app) { double('shoes app', gui: swt_app, rotate: 0,
+                           style: Shoes::Common::Style::DEFAULT_STYLES.dup,
+                           element_styles: {}, remove_styles: []) }
 
   let(:parent) do
     double('parent', app: swt_app, add_child: true, real: true, hidden?: false,

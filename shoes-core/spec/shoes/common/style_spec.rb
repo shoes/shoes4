@@ -197,4 +197,11 @@ describe Shoes::Common::Style do
     its(:hover_blk) { should eq(hover_blk) }
     its(:leave_blk) { should eq(leave_blk) }
   end
+
+  describe 'removing styles' do
+    it 'drops defaults' do
+      user_facing_app.nofill
+      expect(subject.style[:fill]).to be_nil
+    end
+  end
 end

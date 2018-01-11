@@ -40,6 +40,11 @@ class Shoes
         @style.merge!(self.class::STYLES) if defined?(self.class::STYLES)
         @style.merge!(applicable_app_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
+
+        @app.remove_styles.each do |to_remove|
+          @style.delete(to_remove)
+        end
+
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
         @style = StyleNormalizer.new.normalize(@style)

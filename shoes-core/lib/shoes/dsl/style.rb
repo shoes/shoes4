@@ -51,10 +51,12 @@ class Shoes
       end
 
       def nostroke
+        @__app__.remove_styles << :stroke
         @__app__.style[:stroke] = nil
       end
 
       def nofill
+        @__app__.remove_styles << :fill
         @__app__.style[:fill] = nil
       end
 
