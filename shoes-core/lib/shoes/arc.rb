@@ -9,7 +9,6 @@ class Shoes
   #   arc 200, 200, 100, 100, Shoes::PI, 0
   # @note Angle is the gradient angle used across all art elements. Angle1/2 are the angles of
   #   the arc itself!
-  # @author Jason Clark
   # @param left [Integer] The number of pixels from the left side of the window.
   # @param top [Integer] The number of pixels from the top side of the window
   # @param width [Integer] The width of the arc element.

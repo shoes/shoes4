@@ -3,11 +3,7 @@
 begin
   require 'yard'
 
-  YARD::Rake::YardocTask.new do |t|
-    t.files = ['shoes-core/**/*.rb', 'README.md', 'LICENSE', 'CONTRIBUTING.md',
-               'CODE_OF_CONDUCT.MD']
-    t.options = ['-mmarkdown', '--no-private']
-  end
+  YARD::Rake::YardocTask.new
 rescue LoadError
   desc "Generate YARD Documentation"
   task :yard do

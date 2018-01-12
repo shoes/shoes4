@@ -1,0 +1,9 @@
+--no-private
+./shoes-core/lib/**/*.rb
+-
+LICENSE
+README.md
+shoes-core/README.md
+LICENSE
+CONTRIBUTING.md
+CODE_OF_CONDUCT.MD
