@@ -127,7 +127,7 @@ describe Shoes::Link do
       subject.parent = text_block
     end
 
-    it 'has the correct parent, namingly he text block' do
+    it 'has the correct parent, namely the text block' do
       expect(subject.parent).to eq text_block
     end
   end
