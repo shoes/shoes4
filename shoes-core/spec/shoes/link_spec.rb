@@ -3,17 +3,9 @@
 require 'spec_helper'
 
 describe Shoes::Link do
-  let(:gui) { double("gui").as_null_object }
-  let(:user_facing_app) { double("user facing app") }
-  let(:element_styles) { {} }
-
-  let(:app) do
-    double("app", gui: gui, style: {}, element_styles: element_styles,
-                  warn: true, add_mouse_hover_control: nil)
-  end
+  include_context "dsl app"
 
   let(:parent) { double("parent") }
-  let(:internal_app) { double("internal app", app: app, gui: gui, style: {}, element_styles: {}) }
   let(:texts) { ["text", "goes", "first"] }
   let(:text_block) { double 'text block', visible?: true, hidden?: false }
 
@@ -22,12 +14,6 @@ describe Shoes::Link do
     link.parent = parent
     link.text_block = text_block
     link
-  end
-
-  before do
-    allow(user_facing_app).to receive(:style) do |clazz, styles|
-      element_styles[clazz] = styles
-    end
   end
 
   it_behaves_like "object with hover"
@@ -69,7 +55,7 @@ describe Shoes::Link do
 
     context "with a block" do
       let(:callable) { double("callable") }
-      subject { Shoes::Link.new(internal_app, texts, {}, proc { callable.call }) }
+      subject { Shoes::Link.new(app, texts, {}, proc { callable.call }) }
 
       it "sets up for the click" do
         expect(callable).to receive(:call)
@@ -78,17 +64,17 @@ describe Shoes::Link do
     end
 
     context "with click option as text" do
-      subject { Shoes::Link.new(internal_app, texts, click: "/url") }
+      subject { Shoes::Link.new(app, texts, click: "/url") }
 
       it "should visit the url" do
-        expect(app).to receive(:visit).with("/url")
+        expect(app.app).to receive(:visit).with("/url")
         subject.blk.call
       end
     end
 
     context "with click option as Proc" do
       let(:callable) { double("callable", call: nil) }
-      subject { Shoes::Link.new(internal_app, texts, click: proc { callable.call }) }
+      subject { Shoes::Link.new(app, texts, click: proc { callable.call }) }
 
       it "calls the block" do
         expect(callable).to receive(:call)
@@ -99,7 +85,7 @@ describe Shoes::Link do
     context "calling click explicitly" do
       let(:original_block)    { double("original") }
       let(:replacement_block) { double("replacement") }
-      subject { Shoes::Link.new(internal_app, texts) { original_block.call } }
+      subject { Shoes::Link.new(app, texts) { original_block.call } }
 
       it "replaces original block" do
         expect(original_block).to_not receive(:call)

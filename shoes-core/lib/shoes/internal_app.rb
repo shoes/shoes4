@@ -52,8 +52,8 @@ class Shoes
       backend_const.initialize_backend
     end
 
-    attr_reader :gui, :top_slot, :app, :dimensions,
-                :mouse_motion, :owner, :element_styles, :resize_callbacks
+    attr_reader :gui, :top_slot, :app, :dimensions, :owner, :mouse_motion,
+                :element_styles, :remove_styles, :resize_callbacks
 
     attr_writer :width, :height
 
@@ -195,6 +195,7 @@ class Shoes
     def set_initial_attributes
       @style                = default_styles
       @element_styles       = {}
+      @remove_styles        = []
       @mouse_motion         = []
       @mouse_button         = 0
       @mouse_pos            = [0, 0]

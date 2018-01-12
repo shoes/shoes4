@@ -36,6 +36,7 @@ class Shoes
 
       PATTERN_APP_STYLES.each do |style|
         define_method style do |val|
+          @__app__.remove_styles.delete(style)
           @__app__.style[style] = pattern(val)
         end
       end
@@ -51,10 +52,12 @@ class Shoes
       end
 
       def nostroke
+        @__app__.remove_styles << :stroke
         @__app__.style[:stroke] = nil
       end
 
       def nofill
+        @__app__.remove_styles << :fill
         @__app__.style[:fill] = nil
       end
 

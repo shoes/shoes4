@@ -35,12 +35,16 @@ class Shoes
       end
 
       def style_init(arg_styles, new_styles = {})
-        default_element_styles = {}
-        default_element_styles = self.class::STYLES if defined?(self.class::STYLES)
         create_style_hash
-        @style.merge!(default_element_styles)
-        merge_app_styles
+        @style.merge!(DEFAULT_STYLES)
+        @style.merge!(self.class::STYLES) if defined?(self.class::STYLES)
+        @style.merge!(applicable_app_styles)
         @style.merge!(@app.element_styles[self.class]) if @app.element_styles[self.class]
+
+        @app.remove_styles.each do |to_remove|
+          @style.delete(to_remove)
+        end
+
         @style.merge!(new_styles)
         @style.merge!(arg_styles)
         @style = StyleNormalizer.new.normalize(@style)
@@ -55,9 +59,12 @@ class Shoes
         end
       end
 
-      def merge_app_styles
-        @app.style.each do |key, val|
-          @style[key] = val if supported_styles.include? key
+      def applicable_app_styles
+        @app.style.each_with_object({}) do |(key, value), memo|
+          changed_from_default = DEFAULT_STYLES[key] != value
+          if supported_styles.include?(key) && changed_from_default
+            memo[key] = value
+          end
         end
       end
 
