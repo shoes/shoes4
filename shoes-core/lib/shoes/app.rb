@@ -112,6 +112,7 @@ class Shoes
     # class definitions are evaluated top to bottom, want to have all of them
     # so define at bottom
     DELEGATE_METHODS = ((Shoes::App.public_instance_methods(false) +
+                         Shoes::BuiltinMethods.public_instance_methods +
                          Shoes::DSL.public_instance_methods)).freeze
 
     def self.subscribe_to_dsl_methods(klazz)
