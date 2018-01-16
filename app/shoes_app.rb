@@ -166,9 +166,10 @@ class ShoesApp < Shoes
 
   def open_app
     file = app.ask_open_file
-    app_dir = File.dirname(file)
+    return unless file
 
     Thread.new do
+      app_dir = File.dirname(file)
       if File.exist?(File.join(app_dir, "Gemfile"))
         output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{file}"
       else
