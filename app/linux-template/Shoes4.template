@@ -3,8 +3,8 @@
 JRUBY_VERSION="jruby-9.1.13.0"
 JRE_VERSION="jre1.8.0_131"
 
-JRUBY_COMMAND="jruby"
-SHOES_COMMAND="$JRUBY_COMMAND -S shoes-swt"
+export JRUBY_COMMAND="jruby"
+export SHOES_COMMAND="$JRUBY_COMMAND -S shoes-swt"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PATH="$DIR/$JRUBY_VERSION/bin:$PATH"

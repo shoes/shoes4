@@ -3,8 +3,8 @@
 JRUBY_VERSION="@@JRUBY_VERSION@@"
 JRE_VERSION="jre1.8.0_131"
 
-JRUBY_COMMAND="jruby -J-XstartOnFirstThread"
-SHOES_COMMAND="$JRUBY_COMMAND -S shoes-swt"
+export JRUBY_COMMAND="jruby -J-XstartOnFirstThread"
+export SHOES_COMMAND="$JRUBY_COMMAND -S shoes-swt"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PLUGIN_DIR="$DIR/../PlugIns"
