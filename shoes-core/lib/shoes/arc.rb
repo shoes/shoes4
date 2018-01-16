@@ -9,14 +9,7 @@ class Shoes
   #   arc 200, 200, 100, 100, Shoes::PI, 0
   # @note Angle is the gradient angle used across all art elements. Angle1/2 are the angles of
   #   the arc itself!
-  # @param left [Integer] The number of pixels from the left side of the window.
-  # @param top [Integer] The number of pixels from the top side of the window
-  # @param width [Integer] The width of the arc element.
-  # @param height [Integer] The height of the arc element.
-  # @param angle1 [Float] The first angle of the arc to the center point, in Radians,
-  #   starting from the 3 o'clock position.
-  # @param angle2 [Float] The second angle of the arc to the center point, in Radians.
-  # @param [Hash] Style hash
+  # @note The angle passed in is measured in Radians starting at 90 degrees or the 3 o'clock position.
   class Arc < Common::ArtElement
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
     STYLES = { wedge: false, fill: Shoes::COLORS[:black] }.freeze
