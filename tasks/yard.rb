@@ -3,9 +3,7 @@
 begin
   require 'yard'
 
-  YARD::Rake::YardocTask.new do |t|
-    t.options = ['-mmarkdown']
-  end
+  YARD::Rake::YardocTask.new
 rescue LoadError
   desc "Generate YARD Documentation"
   task :yard do
