@@ -50,33 +50,37 @@ describe Shoes::Console do
   end
 
   describe 'message type methods' do
-    before(:each) { allow(console).to receive(:add_message) { |type, message| {type: type, message: message} } }
+    let(:sample_message) { "sample message" }
 
     describe '#debug' do
       it 'must pass the given message as a debug message to #add_message' do
-        sample_message = 'test debugging message'
-        expect(console.debug(sample_message)).to eq(type: :debug, message: sample_message)
+        console.debug(sample_message)
+        console.drain_queued_messages
+        expect(console.messages).to eq([[:debug, sample_message]])
       end
     end
 
     describe '#info' do
       it 'must pass the given message as a info message to #add_message' do
-        sample_message = 'test info message'
-        expect(console.info(sample_message)).to eq(type: :info, message: sample_message)
+        console.info(sample_message)
+        console.drain_queued_messages
+        expect(console.messages).to eq([[:info, sample_message]])
       end
     end
 
     describe '#warn' do
       it 'must pass the given message as a warn message to #add_message' do
-        sample_message = 'test warning message'
-        expect(console.warn(sample_message)).to eq(type: :warn, message: sample_message)
+        console.warn(sample_message)
+        console.drain_queued_messages
+        expect(console.messages).to eq([[:warn, sample_message]])
       end
     end
 
     describe '#error' do
       it 'must pass the given message as a error message to #add_message' do
-        sample_message = 'test error message'
-        expect(console.error(sample_message)).to eq(type: :error, message: sample_message)
+        console.error(sample_message)
+        console.drain_queued_messages
+        expect(console.messages).to eq([[:error, sample_message]])
       end
     end
   end
