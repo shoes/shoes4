@@ -85,6 +85,19 @@ describe Shoes::Console do
     end
   end
 
+  describe "don't swamp with too many logs" do
+    it "buffers a few at a time" do
+      20.times do |i|
+        console.error("whoa #{i}")
+      end
+
+      console.drain_queued_messages
+
+      expected = 10.times.map {|i| [:error, "whoa #{i}"]}
+      expect(console.messages).to eq(expected)
+    end
+  end
+
   describe '#add_message' do
     before(:each) do
       allow(console).to receive(:add_message_stack) { |type, message, index| {type: type, message: message, index: index} }

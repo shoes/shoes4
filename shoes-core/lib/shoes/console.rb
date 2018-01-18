@@ -63,7 +63,7 @@ class Shoes
 
     def drain_queued_messages
       begin
-        loop do
+        10.times do
           # Non-blocking = true, so will raise ThreadError once we're done
           type, message = @queued_messages.pop(true)
           add_message(type, message)
