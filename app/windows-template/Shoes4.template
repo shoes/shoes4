@@ -16,7 +16,5 @@ if %ERRORLEVEL%==9009 (
 )
 
 set PATH=%~dp0\@@JRUBY_VERSION@@\bin;%PATH%
-set JRUBY_COMMAND=jruby
-set SHOES_COMMAND=%JRUBY_COMMAND% -S shoes-swt
 
 jruby -S shoes-swt %~dp0/app/shoes_app.rb

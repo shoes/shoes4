@@ -81,11 +81,11 @@ class ShoesApp < Shoes
                 status = 0
 
                 app_dir = File.dirname(ShoesApp.packaging_app)
-                package_command = "#{shoes_command} #{args.join(' ')}"
+                package_command = "shoes-swt #{args.join(' ')}"
                 if File.exist?(File.join(app_dir, "Gemfile"))
-                  output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{package_command}"
+                  output, status = run_command "cd \"#{app_dir}\" && jruby -S bundle install && jruby -S bundle exec #{package_command}"
                 else
-                  output, status = run_command "cd \"#{app_dir}\" && #{package_command}"
+                  output, status = run_command "cd \"#{app_dir}\" && jruby -S #{package_command}"
                 end
 
                 if status.success?
@@ -171,9 +171,9 @@ class ShoesApp < Shoes
     Thread.new do
       app_dir = File.dirname(file)
       if File.exist?(File.join(app_dir, "Gemfile"))
-        output, status = run_command "cd \"#{app_dir}\" && #{jruby_command} -S bundle install && bundle exec #{shoes_command} #{file}"
+        output, status = run_command "cd \"#{app_dir}\" && jruby -S bundle install && jruby -S bundle exec shoes-swt #{file}"
       else
-        output, status = run_command "cd \"#{app_dir}\" && #{shoes_command} #{file}"
+        output, status = run_command "cd \"#{app_dir}\" && jruby -S shoes-swt #{file}"
       end
 
       ShoesApp.notice_error(output) unless status.success?
@@ -184,14 +184,6 @@ class ShoesApp < Shoes
     require 'shoes/ui/cli/base_command'
     require 'shoes/ui/cli/manual_command'
     Shoes::UI::CLI::ManualCommand.new.run
-  end
-
-  def jruby_command
-    ENV["JRUBY_COMMAND"] || "jruby"
-  end
-
-  def shoes_command
-    ENV["SHOES_COMMAND"] || "#{jruby_command} -S shoes-swt"
   end
 end
 

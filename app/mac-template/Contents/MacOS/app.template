@@ -3,8 +3,7 @@
 JRUBY_VERSION="@@JRUBY_VERSION@@"
 JRE_VERSION="jre1.8.0_131"
 
-export JRUBY_COMMAND="jruby -J-XstartOnFirstThread"
-export SHOES_COMMAND="$JRUBY_COMMAND -S shoes-swt"
+export JRUBY_OPTS="-J-XstartOnFirstThread $JRUBY_OPTS"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PLUGIN_DIR="$DIR/../PlugIns"
@@ -30,4 +29,4 @@ if [ $? != 0 ]; then
   export JAVA_HOME=~/.shoes/jre/Contents/Home/
 fi
 
-$SHOES_COMMAND $DIR/../PlugIns/Shoes/shoes_app.rb
+jruby -S shoes-swt $DIR/../PlugIns/Shoes/shoes_app.rb

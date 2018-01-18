@@ -3,9 +3,6 @@
 JRUBY_VERSION="jruby-9.1.13.0"
 JRE_VERSION="jre1.8.0_131"
 
-export JRUBY_COMMAND="jruby"
-export SHOES_COMMAND="$JRUBY_COMMAND -S shoes-swt"
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PATH="$DIR/$JRUBY_VERSION/bin:$PATH"
 
@@ -29,4 +26,4 @@ if [ $? != 0 ]; then
   export PATH=$JAVA_HOME/bin/java:$PATH
 fi
 
-$SHOES_COMMAND $DIR/app/shoes_app.rb
+jruby -S shoes-swt $DIR/app/shoes_app.rb
