@@ -62,15 +62,14 @@ class Shoes
     end
 
     def drain_queued_messages
-      begin
-        10.times do
-          # Non-blocking = true, so will raise ThreadError once we're done
-          type, message = @queued_messages.pop(true)
-          add_message(type, message)
-        end
-      rescue ThreadError
-        # Queue's drained, carry on!
+      10.times do
+        # Non-blocking = true, so will raise ThreadError once we're done
+        type, message = @queued_messages.pop(true)
+        add_message(type, message)
       end
+    rescue ThreadError # rubocop:disable Lint/HandleExceptions
+      # Queue's drained, carry on!
+      # Disabled cop because this is Queue#pop's non-blocking API
     end
 
     def debug(message)

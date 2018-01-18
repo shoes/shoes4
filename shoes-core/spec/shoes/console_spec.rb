@@ -87,13 +87,11 @@ describe Shoes::Console do
 
   describe "don't swamp with too many logs" do
     it "buffers a few at a time" do
-      20.times do |i|
-        console.error("whoa #{i}")
-      end
+      20.times { |i| console.error("whoa #{i}") }
 
       console.drain_queued_messages
 
-      expected = 10.times.map {|i| [:error, "whoa #{i}"]}
+      expected = 10.times.map { |i| [:error, "whoa #{i}"] }
       expect(console.messages).to eq(expected)
     end
   end

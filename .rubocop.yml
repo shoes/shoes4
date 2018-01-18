@@ -44,6 +44,10 @@ Performance/UnfreezeString:
   Exclude:
     - 'tasks/changelog.rb'
 
+# We don't care about the performance of 10.times.map vs Array.new(10) {|i|...}
+Performance/TimesMap:
+  Enabled: false
+
 # We don't care if we do kind_of? or is_a?
 Style/ClassCheck:
   Enabled: false
