@@ -5,6 +5,8 @@ class Shoes
     attr_reader :messages, :message_stacks
 
     def initialize
+      @queued_messages = Queue.new
+
       @messages = []
       @message_stacks = []
     end
@@ -48,27 +50,42 @@ class Shoes
             end
           end
         end
+
+        every 0.1 do
+          # Periodically update UI with new log lines
+          @console.drain_queued_messages
+        end
       end
 
-      @messages.each_with_index do |(type, message), index|
-        add_message_stack(type, message, index)
+      # Synchronously drain queue first showing console
+      drain_queued_messages
+    end
+
+    def drain_queued_messages
+      10.times do
+        # Non-blocking = true, so will raise ThreadError once we're done
+        type, message = @queued_messages.pop(true)
+        add_message(type, message)
       end
+    rescue ThreadError # rubocop:disable Lint/HandleExceptions
+      # Queue's drained, carry on!
+      # Disabled cop because this is Queue#pop's non-blocking API
     end
 
     def debug(message)
-      add_message(:debug, message)
+      @queued_messages << [:debug, message]
     end
 
     def info(message)
-      add_message(:info, message)
+      @queued_messages << [:info, message]
     end
 
     def warn(message)
-      add_message(:warn, message)
+      @queued_messages << [:warn, message]
     end
 
     def error(message)
-      add_message(:error, message)
+      @queued_messages << [:error, message]
     end
 
     def add_message(type, message)
