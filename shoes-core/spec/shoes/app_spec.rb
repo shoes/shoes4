@@ -418,9 +418,14 @@ describe Shoes::App do
         expect(subscribed_instance).to respond_to :para, :image
       end
 
-      it 'delegates does methods to the passed in app' do
+      it 'delegates those methods to the passed in app' do
         expect(subject).to receive(:para)
         subscribed_instance.para
+      end
+
+      it 'delegates builtin (dialog) methods' do
+        expect(subject).to receive(:alert)
+        subscribed_instance.alert "Wowzies"
       end
 
       SUBSCRIBED_CLASSES.each do |klazz|
