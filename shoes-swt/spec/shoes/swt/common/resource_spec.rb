@@ -42,12 +42,27 @@ describe Shoes::Swt::Common::Resource do
   end
 
   describe "clipping" do
-    let(:element) { double("element", absolute_left: 0, absolute_top: 0, height: 100, width: 100) }
+    let(:element) { double("element", parent: parent, translate_left: nil, translate_top: nil) }
+    let(:parent) { double("parent", absolute_left: 0, absolute_top: 0, height: 100, width: 100) }
     let(:clipping) { double("clipping", x: 10, y: 10, height: 50, width: 50) }
     let(:graphic_context) { double("gc", clipping: clipping) }
 
     it "clips in a block" do
       expect(graphic_context).to receive(:set_clipping).with(0, 0, 100, 100)
+      expect(graphic_context).to receive(:set_clipping).with(10, 10, 50, 50)
+
+      resource.clip_context_to(graphic_context, element) do
+        @clipped = true
+      end
+
+      expect(@clipped).to eq(true)
+    end
+
+    it "factors in translate to clipping" do
+      allow(element).to receive(:translate_left).and_return(10)
+      allow(element).to receive(:translate_top).and_return(10)
+
+      expect(graphic_context).to receive(:set_clipping).with(0, 0, 110, 110)
       expect(graphic_context).to receive(:set_clipping).with(10, 10, 50, 50)
 
       resource.clip_context_to(graphic_context, element) do
