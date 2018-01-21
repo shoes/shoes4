@@ -82,20 +82,25 @@ class Shoes
     alias x2= right=
     alias y2= bottom=
 
+    # Redrawing needs a bit of extra room. We offset by this factor, then
+    # extend our size by twice that to evenly surround the whole thing.
+    REDRAW_OFFSET_FACTOR = 4
+    REDRAW_SIZING_FACTOR = REDRAW_OFFSET_FACTOR * 2
+
     def redraw_left
-      [@point_a.x, @point_b.x].min - 0.5 * style[:strokewidth].to_i
+      [@point_a.x, @point_b.x].min - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_top
-      [@point_a.y, @point_b.y].min - 0.5 * style[:strokewidth].to_i
+      [@point_a.y, @point_b.y].min - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_width
-      (@point_a.x - @point_b.x).abs + style[:strokewidth].to_i
+      (@point_a.x - @point_b.x).abs + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def redraw_height
-      (@point_a.y - @point_b.y).abs + style[:strokewidth].to_i
+      (@point_a.y - @point_b.y).abs + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def move(x, y, x2 = nil, y2 = nil)

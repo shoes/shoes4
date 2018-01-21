@@ -108,10 +108,10 @@ describe Shoes::Arrow do
 
     it "factors in strokewidth" do
       arrow.strokewidth = 5
-      expect(arrow.redraw_left).to eq(45)
-      expect(arrow.redraw_top).to eq(55)
-      expect(arrow.redraw_width).to eq(110)
-      expect(arrow.redraw_height).to eq(110)
+      expect(arrow.redraw_left).to eq(40)
+      expect(arrow.redraw_top).to eq(50)
+      expect(arrow.redraw_width).to eq(120)
+      expect(arrow.redraw_height).to eq(120)
     end
   end
 end

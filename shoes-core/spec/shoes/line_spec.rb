@@ -235,10 +235,10 @@ describe Shoes::Line do
 
     it "factors in strokewidth" do
       subject.strokewidth = 4
-      expect(subject.redraw_left).to eq(-2)
-      expect(subject.redraw_top).to eq(-2)
-      expect(subject.redraw_width).to eq(104)
-      expect(subject.redraw_height).to eq(104)
+      expect(subject.redraw_left).to eq(-16)
+      expect(subject.redraw_top).to eq(-16)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
     end
   end
 end
