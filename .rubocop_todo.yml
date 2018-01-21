@@ -10,6 +10,7 @@
 Lint/HandleExceptions:
   Exclude:
     - 'shoes-core/lib/shoes/packager.rb'
+    - 'app/shoes_app.rb'
 
 # Offense count: 1
 Lint/NestedMethodDefinition:
