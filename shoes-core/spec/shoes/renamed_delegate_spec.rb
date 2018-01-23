@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe RenamedDelegate do
+describe Shoes::RenamedDelegate do
   class ToDelegate
     def method_key
     end
@@ -24,7 +24,7 @@ describe RenamedDelegate do
   end
 
   class TestClass
-    extend RenamedDelegate
+    extend Shoes::RenamedDelegate
 
     attr_reader :delegate
 
