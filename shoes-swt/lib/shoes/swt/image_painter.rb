@@ -14,7 +14,7 @@ class Shoes
         return if @dsl.hidden
 
         graphics_context = event.gc
-        clip_context_to(graphics_context, @dsl.parent) do
+        clip_context_to(graphics_context, @dsl) do
           graphics_context.drawImage(@image.real, 0, 0,
                                      @image.full_width, @image.full_height,
                                      @dsl.element_left, @dsl.element_top,

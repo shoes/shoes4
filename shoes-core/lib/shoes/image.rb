@@ -5,10 +5,11 @@ class Shoes
     include Common::Clickable
     include Common::Hover
     include Common::ImageHandling
+    include Common::Translate
 
     BINARY_ENCODING = Encoding.find('binary')
 
-    style_with :art_styles, :common_styles, :dimensions, :file_path
+    style_with :art_styles, :common_styles, :dimensions, :file_path, :translate
 
     STYLES = { fill: Shoes::COLORS[:black] }.freeze
 

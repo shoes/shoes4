@@ -17,6 +17,7 @@ describe Shoes::Swt::StarPainter do
     double("dsl object", parent: parent, hidden: false,
                          points: points, outer: outer,
                          inner: inner, element_width: outer * 2.0,
+                         translate_left: 0, translate_top: 0,
                          element_height: outer * 2.0, element_left: left,
                          element_top: top).as_null_object
   end

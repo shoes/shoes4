@@ -42,7 +42,7 @@ class Shoes
           graphics_context.set_transform(@obj.transform)
 
           obj = @obj.dsl
-          clip_context_to(graphics_context, obj.parent, obj.parent.fixed_height?) do
+          clip_context_to(graphics_context, obj, obj.parent.fixed_height?) do
             if obj.needs_rotate?
               set_rotate graphics_context, obj.rotate,
                          obj.element_left + obj.element_width / 2.0,

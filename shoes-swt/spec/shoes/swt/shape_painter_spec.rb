@@ -8,6 +8,8 @@ describe Shoes::Swt::ShapePainter do
 
   let(:dsl) do
     double("Shoes::Shape", parent: parent, hidden: false,
+                           element_left: 0, element_top: 0,
+                           translate_left: 0, translate_top: 0,
                            needs_rotate?: false, style: {}).as_null_object
   end
 
