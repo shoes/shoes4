@@ -15,10 +15,10 @@ class Shoes
       # @overload arrow(opts)
       #   Creates an arrow using values from the opts Hash.
       #   @param [Hash] opts
-      #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
-      #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-      #   @option styles [Integer] width (0) the width
-      #   @option styles [Integer] rotate (false)
+      #   @option opts [Integer] left (0) the x-coordinate of the top-left corner
+      #   @option opts [Integer] top (0) the y-coordinate of the top-left corner
+      #   @option opts [Integer] width (0) the width
+      #   @option opts [Integer] rotate (false)
       def arrow(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -36,17 +36,19 @@ EOS
         create Shoes::Arrow, left, top, width, opts, blk
       end
 
-      # Creates an arc at (left, top)
+      # Creates an arc.
+      # Params are optional and may be passed by name in opts hash instead.
       #
-      # @param [Integer] left the x-coordinate of the top-left corner
-      # @param [Integer] top the y-coordinate of the top-left corner
-      # @param [Integer] width width of the arc's ellipse
-      # @param [Integer] height height of the arc's ellipse
-      # @param [Float] angle1 angle in radians marking the beginning of the arc segment
-      # @param [Float] angle2 angle in radians marking the end of the arc segment
-      # @param [Hash] opts Arc style options
-      # @option opts [Boolean] wedge (false)
-      # @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
+      # @overload arc(left, top, width, height, angle1, angle2, opts)
+      #   @param [Integer] left (0) the x-coordinate of the top-left corner
+      #   @param [Integer] top (0) the y-coordinate of the top-left corner
+      #   @param [Integer] width (0) width of the arc's ellipse
+      #   @param [Integer] height (0) height of the arc's ellipse
+      #   @param [Float] angle1 (0) angle in radians marking the beginning of the arc segment
+      #   @param [Float] angle2 (0) angle in radians marking the end of the arc segment
+      #   @param [Hash] opts
+      #   @option opts [Boolean] wedge (false)
+      #   @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
       def arc(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -69,11 +71,13 @@ EOS
 
       # Draws a line from point A (x1,y1) to point B (x2,y2)
       #
-      # @param [Integer] x1 The x-value of point A
-      # @param [Integer] y1 The y-value of point A
-      # @param [Integer] x2 The x-value of point B
-      # @param [Integer] y2 The y-value of point B
-      # @param [Hash] opts Style options
+      # @overload line(x1, y1, x2, y2, opts)
+      #   @param [Integer] x1 The x-value of point A
+      #   @param [Integer] y1 The y-value of point A
+      #   @param [Integer] x2 The x-value of point B
+      #   @param [Integer] y2 The y-value of point B
+      #   @param [Hash] opts Style options
+      #   @return [Shoes::Line]
       def line(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
