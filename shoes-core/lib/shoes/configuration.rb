@@ -26,12 +26,15 @@ class Shoes
         end
       end
 
-      # The Shoes backend to use. Can only be set once.
+      # Set the Shoes backend to use. Can only be set once. Note the backend is
+      # not required during this method, but rather when
+      # `Shoes::Configuration#backend` is called.
       #
-      # @param [Symbol] backend The backend's name
-      # @return [Module] The backend's root module
+      # @param [Symbol] name The backend's name
+      # @raise [RuntimeError] If backend has already been set.
+      # @see Shoes::Configuration#backend
       # @example
-      #   Shoes::Configuration.backend = :swt # => Shoes::Swt
+      #   Shoes::Configuration.backend = :swt
       def backend=(name)
         return if @backend_name == name
 
