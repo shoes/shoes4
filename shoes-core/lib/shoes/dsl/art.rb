@@ -7,7 +7,7 @@ class Shoes
     # @see Shoes::DSL
     module Art
       # Creates an arrow.
-      # Params are optional and may be passed by name in `opts` hash instead.
+      # Params are optional and may be passed by name in opts hash instead.
       #
       # @overload arrow(left = 0, top = 0, width = 0, opts)
       #   @param [Integer] left the x-coordinate of the element center
