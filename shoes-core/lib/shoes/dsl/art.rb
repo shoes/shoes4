@@ -2,23 +2,20 @@
 
 class Shoes
   module DSL
+    # DSL methods for drawing in Shoes applications.
+    #
+    # @see Shoes::DSL
     module Art
-      # Creates an arrow
+      # Creates an arrow.
+      # Params are optional and may be passed by name in `opts` hash instead.
       #
-      # @overload arrow(left, top, width, opts)
-      #   Creates an arrow centered at (left, top)
+      # @overload arrow(left = 0, top = 0, width = 0, opts)
       #   @param [Integer] left the x-coordinate of the element center
       #   @param [Integer] top the y-coordinate of the element center
       #   @param [Integer] width the width of the arrow
-      #   @param [Hash] opts Arrow style options
-      #   @option opts [Integer] rotate (false)
-      # @overload arrow(opts)
-      #   Creates an arrow using values from the opts Hash.
       #   @param [Hash] opts
-      #   @option opts [Integer] left (0) the x-coordinate of the top-left corner
-      #   @option opts [Integer] top (0) the y-coordinate of the top-left corner
-      #   @option opts [Integer] width (0) the width
       #   @option opts [Integer] rotate (false)
+      #   @return [Shoes::Arrow]
       def arrow(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -39,16 +36,17 @@ EOS
       # Creates an arc.
       # Params are optional and may be passed by name in opts hash instead.
       #
-      # @overload arc(left, top, width, height, angle1, angle2, opts)
-      #   @param [Integer] left (0) the x-coordinate of the top-left corner
-      #   @param [Integer] top (0) the y-coordinate of the top-left corner
-      #   @param [Integer] width (0) width of the arc's ellipse
-      #   @param [Integer] height (0) height of the arc's ellipse
-      #   @param [Float] angle1 (0) angle in radians marking the beginning of the arc segment
-      #   @param [Float] angle2 (0) angle in radians marking the end of the arc segment
+      # @overload arc(left = 0, top = 0, width = 0, height = 0, angle1 = 0, angle2 = 0, opts)
+      #   @param [Integer] left the x-coordinate of the top-left corner
+      #   @param [Integer] top the y-coordinate of the top-left corner
+      #   @param [Integer] width width of the arc's ellipse
+      #   @param [Integer] height height of the arc's ellipse
+      #   @param [Float] angle1 angle in radians marking the beginning of the arc segment
+      #   @param [Float] angle2 angle in radians marking the end of the arc segment
       #   @param [Hash] opts
       #   @option opts [Boolean] wedge (false)
       #   @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
+      #   @return [Shoes::Arc]
       def arc(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -69,14 +67,15 @@ EOS
         create Shoes::Arc, left, top, width, height, angle1, angle2, opts, blk
       end
 
-      # Draws a line from point A (x1,y1) to point B (x2,y2)
+      # Draws a line from point A (x1,y1) to point B (x2,y2).
+      # Params are optional and may be passed by name in opts hash instead.
       #
-      # @overload line(x1, y1, x2, y2, opts)
+      # @overload line(x1 = 0, y1 = 0, x2 = 0, y2 = 0, opts)
       #   @param [Integer] x1 The x-value of point A
       #   @param [Integer] y1 The y-value of point A
       #   @param [Integer] x2 The x-value of point B
       #   @param [Integer] y2 The y-value of point B
-      #   @param [Hash] opts Style options
+      #   @param [Hash] opts
       #   @return [Shoes::Line]
       def line(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
@@ -96,28 +95,17 @@ EOS
         create Shoes::Line, x1, y1, x2, y2, opts, blk
       end
 
-      # Creates an oval at (left, top)
+      # Creates an oval.
+      # Params are optional and may be passed by name in opts hash instead.
       #
-      # @overload oval(left, top, diameter)
-      #   Creates a circle at (left, top), with the given diameter
-      #   @param [Integer] left the x-coordinate of the top-left corner
-      #   @param [Integer] top the y-coordinate of the top-left corner
-      #   @param [Integer] diameter the diameter
-      # @overload oval(left, top, width, height)
-      #   Creates an oval at (left, top), with the given width and height
+      # @overload oval(left = 0, top = 0, width = 0, height = width, opts)
       #   @param [Integer] left the x-coordinate of the top-left corner
       #   @param [Integer] top the y-coordinate of the top-left corner
       #   @param [Integer] width the width
       #   @param [Integer] height the height
-      # @overload oval(styles)
-      #   Creates an oval using values from the styles Hash.
-      #   @param [Hash] styles
-      #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
-      #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-      #   @option styles [Integer] width (0) the width
-      #   @option styles [Integer] height (0) the height
-      #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-      #   @option styles [Boolean] center (false) is (left, top) the center of the oval
+      #   @param [Hash] opts
+      #   @option opts [Boolean] center (false) is (left, top) the center of the oval
+      #   @return [Shoes::Oval]
       def oval(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -136,28 +124,18 @@ EOS
         create Shoes::Oval, left, top, width, height, opts, blk
       end
 
-      # Creates a rectangle
+      # Creates a rectangle.
+      # Params are optional and may be passed by name in opts hash instead.
       #
-      # @overload rect(left, top, side, styles)
-      #   Creates a square at (left, top), with sides of the given length
-      #   @param [Integer] left the x-coordinate of the top-left corner
-      #   @param [Integer] top the y-coordinate of the top-left corner
-      #   @param [Integer] side the length of a side
-      # @overload rect(left, top, width, height, rounded = 0, styles)
-      #   Creates a rectangle at (left, top), with the given width and height
+      # @overload rect(left = 0, top = 0, width = 0, height = height, rounded = 0, opts)
       #   @param [Integer] left the x-coordinate of the top-left corner
       #   @param [Integer] top the y-coordinate of the top-left corner
       #   @param [Integer] width the width
       #   @param [Integer] height the height
-      # @overload rect(styles)
-      #   Creates a rectangle using values from the styles Hash.
-      #   @param [Hash] styles
-      #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
-      #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-      #   @option styles [Integer] width (0) the width
-      #   @option styles [Integer] height (0) the height
-      #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
-      #   @option styles [Boolean] center (false) is (left, top) the center of the rectangle?
+      #   @param [Integer] rounded curve amount to apply to corners
+      #   @param [Hash] opts
+      #   @option opts [Boolean] center (false) is (left, top) the center of the rectangle?
+      #   @return [Shoes::Rect]
       def rect(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -179,34 +157,17 @@ EOS
         create Shoes::Rect, left, top, width, height, style.merge(opts), blk
       end
 
-      # Creates a new Shoes::Star object
+      # Creates a star.
+      # Params are optional and may be passed by name in opts hash instead.
       #
-      # @overload star(left, top, styles, &block)
-      #   Creates a star at (left, top) with the given style
-      #   @param [Integer] left the x-coordinate of the top-left corner
-      #   @param [Integer] top the y-coordinate of the top-left corner
-      #   @param [Hash] styles optional, additional styling for the element
-      # @overload star(left, top, points, styles, &block)
-      #   Creates a star at (left, top) with the given style
-      #   @param [Integer] left the x-coordinate of the top-left corner
-      #   @param [Integer] top the y-coordinate of the top-left corner
-      #   @param [Integer] points count of points on the star
-      #   @param [Hash] styles optional, additional styling for the element
-      # @overload star(left, top, points, outer, styles, &block)
-      #   Creates a star at (left, top) with the given style
-      #   @param [Integer] left the x-coordinate of the top-left corner
-      #   @param [Integer] top the y-coordinate of the top-left corner
-      #   @param [Integer] points count of points on the star
-      #   @param [Integer] outer outer radius of star
-      #   @param [Hash] styles optional, additional styling for the element
-      # @overload star(left, top, points, outer, inner, styles, &block)
-      #   Creates a star at (left, top) with the given style
+      # @overload star(left = 0, top = 0, points = 10, outer = 100, inner = 50, opts)
       #   @param [Integer] left the x-coordinate of the top-left corner
       #   @param [Integer] top the y-coordinate of the top-left corner
       #   @param [Integer] points count of points on the star
       #   @param [Integer] outer outer radius of star
       #   @param [Integer] inner inner radius of star
-      #   @param [Hash] styles optional, additional styling for the element
+      #   @param [Hash] opts
+      #   @return [Shoes::Star]
       def star(*args, &blk)
         styles = style_normalizer.normalize pop_style(args)
 
@@ -226,20 +187,15 @@ EOS
         create Shoes::Star, left, top, points, outer, inner, styles, blk
       end
 
-      # Creates a new Shoes::Shape object
+      # Creates an arbitrary shape.
+      # Params are optional and may be passed by name in opts hash instead.
       #
-      # @overload shape(left, top, styles, &block)
-      #   Creates a shape at (left, top) with the given style
+      # @overload shape(left = 0, top = 0, styles, &block)
       #   @param [Integer] left the x-coordinate of the top-left corner
       #   @param [Integer] top the y-coordinate of the top-left corner
-      # @overload shape(left, top)
-      #   Creates a shape at (left, top, &block)
-      #   @param [Integer] left the x-coordinate of the top-left corner
-      #   @param [Integer] top the y-coordinate of the top-left corner
-      # @overload shape(styles, &block)
-      #   Creates a shape at (0, 0)
-      #   @option styles [Integer] left (0) the x-coordinate of the top-left corner
-      #   @option styles [Integer] top (0) the y-coordinate of the top-left corner
+      #   @param [Proc] blk code describing how to draw the shape
+      #   @param [Hash] opts
+      #   @return [Shoes::Shape]
       def shape(*args, &blk)
         opts = style_normalizer.normalize pop_style(args)
 
@@ -257,6 +213,10 @@ EOS
         create Shoes::Shape, left, top, opts, blk
       end
 
+      # Raises kinder error message for method Shoes 4 doesn't support.
+      # See https://github.com/shoes/shoes4/issues/527.
+      #
+      # @deprecated
       def mask(*_)
         raise Shoes::NotImplementedError,
               <<~EOS
