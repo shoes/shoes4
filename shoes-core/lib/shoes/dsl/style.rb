@@ -30,8 +30,12 @@ class Shoes
         end
       end
 
-      # Define app-level setter methods
+      # Each value is a top-level Shoes DSL method overriding the default
+      # styling of following elements.
       PATTERN_APP_STYLES = [:fill, :stroke].freeze
+
+      # Each value is a top-level Shoes DSL method overriding the default
+      # styling of following elements.
       OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform].freeze
 
       PATTERN_APP_STYLES.each do |style|
