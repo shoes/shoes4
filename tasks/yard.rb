@@ -23,5 +23,5 @@ namespace :yard do
   end
 
   desc "Clean and build"
-  task :all => [:'yard:clean', :'yard']
+  task all: [:'yard:clean', :yard]
 end
