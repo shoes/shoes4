@@ -46,32 +46,55 @@ class Shoes
       x_side + y_side <= 1
     end
 
+    def adjust_angle(input_angle)
+      # Must pad angle, since angles in here start at different location on the ellipse
+      input_angle + 1.5708
+    end
+
+    def y_adjust_negative?(input_angle)
+      ((0 <= input_angle) && (input_angle <= 1.5708)) || ((4.71239 <= input_angle) && (input_angle <= 6.28319))
+    end
+
+    def x_adjust_positive?(input_angle)
+      (0 <= input_angle) &&  (input_angle <= 3.14159)
+    end
+
+    def y_result_adjustment(input_angle, y_result)
+      if y_adjust_negative?(input_angle)
+        middle_y - y_result
+      else
+        middle_y + y_result
+      end
+    end
+
+    def x_result_adjustment(input_angle, x_result)
+      if x_adjust_positive?(input_angle)
+        middle_x + x_result
+      else
+        middle_x - x_result
+      end
+    end
+
+    def generate_coordinates(input_angle, x_result, y_result)
+      x_result = x_result_adjustment(input_angle, x_result).round(3)
+      y_result = y_result_adjustment(input_angle, y_result).round(3)
+
+      {
+        x_value: x_result,
+        y_value: y_result
+      }
+    end
+
     def angle_base_coords(given_angle)
       # https://math.stackexchange.com/questions/22064/calculating-a-point-that-lies-on-an-ellipse-given-an-angle
       # The above link was used in creating this method...but the implementation varies due to nature of shoes
+      modded_angle = adjust_angle(given_angle)
+      top_of_equation = (radius_x * radius_y)
 
-      # Must pad angle, since angles in here start at different location on the ellipse
-      modded_angle = given_angle + 1.5708
+      x_result = top_of_equation / ( ( (radius_y ** 2) + ((radius_x**2) / (Math::tan(modded_angle)**2) ) ) ** 0.5 )
+      y_result = top_of_equation / ( ( (radius_x ** 2) + ((radius_y**2) * (Math::tan(modded_angle)**2) ) ) ** 0.5 )
 
-      top_bit = (radius_x * radius_y)
-
-      x_check = top_bit / ( ( (radius_y ** 2) + ((radius_x**2) / (Math::tan(modded_angle)**2) ) ) ** 0.5 )
-
-      y_check = top_bit / ( ( (radius_x ** 2) + ((radius_y**2) * (Math::tan(modded_angle)**2) ) ) ** 0.5 )
-
-      if ((0 <= modded_angle) && (modded_angle <= 1.5708)) || ((4.71239 <= modded_angle) && (modded_angle <= 6.28319))
-        y_check = middle_y - y_check
-      else
-        y_check = middle_y + y_check
-      end
-
-      if (0 <= modded_angle) &&  (modded_angle <= 3.14159)
-        x_check = middle_x + x_check
-      else
-        x_check = middle_x - x_check
-      end
-
-      {x_value: x_check.round(3), y_value: y_check.round(3)}
+      generate_coordinates(modded_angle, x_result, y_result)
     end
 
     def angle1_coordinates
