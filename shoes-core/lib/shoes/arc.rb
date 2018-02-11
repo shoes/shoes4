@@ -31,12 +31,12 @@ class Shoes
       @radius_y ||= height.to_f / 2
     end
 
-    def middle_y
-      @middle_y ||= left + radius_x
+    def middle_x
+      @middle_x ||= left + radius_x
     end
 
-    def middle_x
-      @middle_x ||= top + radius_y
+    def middle_y
+      @middle_y ||= top + radius_y
     end
 
     def oval_in_bounds?(x, y)
@@ -46,16 +46,6 @@ class Shoes
       x_side + y_side <= 1
     end
 
-    def angle_from_coordinates_base_equation(axis, input_angle)
-      top_of_angle_coordinate_equation = (radius_x * radius_y)
-
-      if axis == :y
-        top_of_angle_coordinate_equation / ( ( (radius_x ** 2) + ((radius_y ** 2) * (Math::tan(modded_angle) ** 2) ) ) ** 0.5 )
-      else
-        top_of_angle_coordinate_equation / ( ( (radius_y ** 2) + ((radius_x ** 2) / (Math::tan(modded_angle) ** 2) ) ) ** 0.5 )
-      end
-    end
-
     def angle_base_coords(given_angle)
       # https://math.stackexchange.com/questions/22064/calculating-a-point-that-lies-on-an-ellipse-given-an-angle
       # The above link was used in creating this method...but the implementation varies due to nature of shoes
@@ -63,19 +53,22 @@ class Shoes
       # Must pad angle, since angles in here start at different location on the ellipse
       modded_angle = given_angle + 1.5708
 
-      x_check = angle_from_coordinates_base_equation(:x, modded_angle)
-      y_check = angle_from_coordinates_base_equation(:y, modded_angle)
+      top_bit = (radius_x * radius_y)
+
+      x_check = top_bit / ( ( (radius_y ** 2) + ((radius_x**2) / (Math::tan(modded_angle)**2) ) ) ** 0.5 )
+
+      y_check = top_bit / ( ( (radius_x ** 2) + ((radius_y**2) * (Math::tan(modded_angle)**2) ) ) ** 0.5 )
 
       if ((0 <= modded_angle) && (modded_angle <= 1.5708)) || ((4.71239 <= modded_angle) && (modded_angle <= 6.28319))
-        y_check = middle_x - y_check
+        y_check = middle_y - y_check
       else
-        y_check = middle_x + y_check
+        y_check = middle_y + y_check
       end
 
       if (0 <= modded_angle) &&  (modded_angle <= 3.14159)
-        x_check = middle_y + x_check
+        x_check = middle_x + x_check
       else
-        x_check = middle_y - x_check
+        x_check = middle_x - x_check
       end
 
       {x_value: x_check.round(3), y_value: y_check.round(3)}
@@ -164,10 +157,10 @@ class Shoes
     def in_bounds?(x, y)
       if oval_in_bounds?(x, y)
         if above_below_on(x,y) == :below && angle1 < angle2
-          true
-        elsif above_below_on(x,y) == :above && angle1 > angle2
-          true
-        end
+           true
+         elsif above_below_on(x,y) == :above && angle1 > angle2
+           true
+         end
       end
     end
   end
