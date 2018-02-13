@@ -52,11 +52,11 @@ class Shoes
     end
 
     def y_adjust_negative?(input_angle)
-      ((0 <= input_angle) && (input_angle <= 1.5708)) || ((4.71239 <= input_angle) && (input_angle <= 6.28319))
+      ((input_angle >= 0) && (input_angle <= 1.5708)) || ((input_angle >= 4.71239) && (input_angle <= 6.28319))
     end
 
     def x_adjust_positive?(input_angle)
-      (0 <= input_angle) &&  (input_angle <= 3.14159)
+      (input_angle >= 0) &&  (input_angle <= 3.14159)
     end
 
     def y_result_adjustment(input_angle, y_result)
@@ -91,14 +91,14 @@ class Shoes
       modded_angle = adjust_angle(given_angle)
       top_of_equation = (radius_x * radius_y)
 
-      x_result = top_of_equation / ( ( (radius_y ** 2) + ((radius_x**2) / (Math::tan(modded_angle)**2) ) ) ** 0.5 )
-      y_result = top_of_equation / ( ( (radius_x ** 2) + ((radius_y**2) * (Math::tan(modded_angle)**2) ) ) ** 0.5 )
+      x_result = top_of_equation / (((radius_y**2) + ((radius_x**2) / (tan(modded_angle)**2)))**0.5)
+      y_result = top_of_equation / (((radius_x**2) + ((radius_y**2) * (tan(modded_angle)**2)))**0.5)
 
       generate_coordinates(modded_angle, x_result, y_result)
     end
 
     def angle1_coordinates
-      @angle1_coordinates ||=  angle_base_coords(angle1)
+      @angle1_coordinates ||= angle_base_coords(angle1)
     end
 
     def angle2_coordinates
@@ -164,7 +164,6 @@ class Shoes
       end
     end
 
-
     def above_below_on(x_input, y_input)
       mx_value = (x_input * slope_of_angles)
 
@@ -179,11 +178,11 @@ class Shoes
 
     def in_bounds?(x, y)
       if oval_in_bounds?(x, y)
-        if above_below_on(x,y) == :below && angle1 < angle2
-           true
-         elsif above_below_on(x,y) == :above && angle1 > angle2
-           true
-         end
+        if above_below_on(x, y) == :below && angle1 < angle2
+          true
+        elsif above_below_on(x, y) == :above && angle1 > angle2
+          true
+        end
       end
     end
   end
