@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Shoes.app do
-  lb = list_box items: Shoes::COLORS.keys.map(&:to_s), choose: 'red' do |s|
+  lb = list_box items: Shoes::COLORS.keys.map(&:to_s), choose: 'black' do |s|
     @o.style fill: send(s.text)
     @p.text = s.text
   end.move(300, 0)
