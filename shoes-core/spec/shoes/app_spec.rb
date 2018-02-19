@@ -306,6 +306,13 @@ describe Shoes::App do
     end
   end
 
+  describe '#translate' do
+    it 'returns app when called' do
+      returned = subject.translate 100, 100
+      expect(returned).to eq(subject)
+    end
+  end
+
   describe 'fullscreen' do
     context 'defaults' do
       it 'is not fullscreen' do

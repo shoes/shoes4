@@ -58,9 +58,10 @@ class Shoes
       #
       # @param [Fixnum] left amount to shift element horizontally
       # @param [Fixnum] top amount to shift element vertically
-      # @return [Array<Fixnum>] current translation settings
+      # @return [Shoes::App]
       def translate(left, top)
         @__app__.style[:translate] = [left, top]
+        @__app__.app
       end
 
       # Clear any default stroke settings following this call.
