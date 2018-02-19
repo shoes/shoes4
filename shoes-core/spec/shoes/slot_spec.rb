@@ -64,6 +64,11 @@ describe Shoes::Slot do
       expect(subject.contents).to be_empty
     end
 
+    it 'returns the slot' do
+      returned = subject.clear
+      expect(returned).to eq(subject)
+    end
+
     describe 'with a block' do
       before :each do
         subject.clear { add_text_block }
