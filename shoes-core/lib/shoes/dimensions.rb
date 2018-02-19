@@ -34,14 +34,9 @@
 
 class Shoes
   class Dimensions
-    extend RenamedDelegate
     include Common::Inspect
 
-    attr_writer :width, :height, :margin_left, :margin_right, :margin_top,
-                :margin_bottom, :top, :left, :right, :bottom
     attr_reader :parent, :x_dimension, :y_dimension
-    attr_accessor :absolute_left, :absolute_top,
-                  :displace_left, :displace_top
     protected :parent # we shall not mess with parent,see #495
 
     # in case you wonder about the -1... it is used to adjust the right and
@@ -111,17 +106,183 @@ class Shoes
       true
     end
 
-    def self.setup_delegations
-      methods_to_rename = Dimension.public_instance_methods false
-      renamed_delegate_to :x_dimension, methods_to_rename, 'start'  => 'left',
-                                                           'end'    => 'right',
-                                                           'extent' => 'width'
-      renamed_delegate_to :y_dimension, methods_to_rename, 'start'  => 'top',
-                                                           'end'    => 'bottom',
-                                                           'extent' => 'height'
+    # Raw dimension delegations
+
+    def width
+      @x_dimension.extent
     end
 
-    setup_delegations
+    def width=(value)
+      @x_dimension.extent = value
+    end
+
+    def height
+      @y_dimension.extent
+    end
+
+    def height=(value)
+      @y_dimension.extent = value
+    end
+
+    def left
+      @x_dimension.start
+    end
+
+    def left=(value)
+      @x_dimension.start = value
+    end
+
+    def right
+      @x_dimension.end
+    end
+
+    def right=(value)
+      @x_dimension.end = value
+    end
+
+    def top
+      @y_dimension.start
+    end
+
+    def top=(value)
+      @y_dimension.start = value
+    end
+
+    def bottom
+      @y_dimension.end
+    end
+
+    def bottom=(value)
+      @y_dimension.end = value
+    end
+
+    # Element dimension delegations
+
+    def element_height
+      @y_dimension.element_extent
+    end
+
+    def element_height=(value)
+      @y_dimension.element_extent = value
+    end
+
+    def element_width
+      @x_dimension.element_extent
+    end
+
+    def element_width=(value)
+      @x_dimension.element_extent = value
+    end
+
+    def element_left
+      @x_dimension.element_start
+    end
+
+    def element_right
+      @x_dimension.element_end
+    end
+
+    def element_top
+      @y_dimension.element_start
+    end
+
+    def element_bottom
+      @y_dimension.element_end
+    end
+
+    # Margin dimension delegations
+
+    def margin_left
+      @x_dimension.margin_start
+    end
+
+    def margin_left=(value)
+      @x_dimension.margin_start = value
+    end
+
+    def margin_right
+      @x_dimension.margin_end
+    end
+
+    def margin_right=(value)
+      @x_dimension.margin_end = value
+    end
+
+    def margin_top
+      @y_dimension.margin_start
+    end
+
+    def margin_top=(value)
+      @y_dimension.margin_start = value
+    end
+
+    def margin_bottom
+      @y_dimension.margin_end
+    end
+
+    def margin_bottom=(value)
+      @y_dimension.margin_end = value
+    end
+
+    # Absolute dimension delegations
+
+    def absolute_left_position?
+      @x_dimension.absolute_start_position?
+    end
+
+    def absolute_left
+      @x_dimension.absolute_start
+    end
+
+    def absolute_left=(value)
+      @x_dimension.absolute_start = value
+    end
+
+    def absolute_right_position?
+      @x_dimension.absolute_end_position?
+    end
+
+    def absolute_right
+      @x_dimension.absolute_end
+    end
+
+    def absolute_top_position?
+      @y_dimension.absolute_start_position?
+    end
+
+    def absolute_top
+      @y_dimension.absolute_start
+    end
+
+    def absolute_top=(value)
+      @y_dimension.absolute_start = value
+    end
+
+    def absolute_bottom_position?
+      @y_dimension.absolute_end_position?
+    end
+
+    def absolute_bottom
+      @y_dimension.absolute_end
+    end
+
+    # Displace dimension delegation
+
+    def displace_left
+      @x_dimension.displace_start
+    end
+
+    def displace_left=(value)
+      @x_dimension.displace_start = value
+    end
+
+    def displace_top
+      @y_dimension.displace_start
+    end
+
+    def displace_top=(value)
+      @y_dimension.displace_start = value
+    end
 
     private
 

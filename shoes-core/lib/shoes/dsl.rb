@@ -37,7 +37,6 @@ end
 require 'shoes/core/version'
 require 'shoes/packager'
 
-require 'shoes/renamed_delegate'
 require 'shoes/common/image_handling'
 require 'shoes/common/inspect'
 require 'shoes/dimension'
