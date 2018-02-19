@@ -57,6 +57,7 @@ class Shoes
       # @param [Proc] blk code to when a key is pressed down
       def keypress(&blk)
         Shoes::Keypress.new @__app__, &blk
+        @__app__.app
       end
 
       # Register code to run when a key is released.
@@ -68,6 +69,7 @@ class Shoes
       # @param [Proc] blk code to when a key is released
       def keyrelease(&blk)
         Shoes::Keyrelease.new @__app__, &blk
+        @__app__.app
       end
 
       # Run a block in the context of the current slot. Typically used to
