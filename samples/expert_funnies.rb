@@ -32,7 +32,7 @@ Shoes.app width: 800, height: 600 do
   @feeds = [
     "http://xkcd.com/rss.xml",
     "http://www.smbc-comics.com/rss.php",
-    "http://www.daybydaycartoon.com/feed/",
+    "http://webcomicname.com/rss",
     "http://www.questionablecontent.net/QCRSS.xml",
     "http://thisisindexed.com/feed/",
   ]
