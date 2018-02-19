@@ -74,6 +74,11 @@ describe Shoes::TextBlock do
   end
 
   describe "#replace" do
+    it "returns element" do
+      returned = text_block.replace "Later"
+      expect(returned).to eq(text_block)
+    end
+
     it "replaces text" do
       text_block.replace "Goodbye Cruel World"
       expect(text_block.text).to eq("Goodbye Cruel World")
