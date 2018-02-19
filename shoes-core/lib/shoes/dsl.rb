@@ -122,18 +122,13 @@ require 'shoes/timer'
 require 'shoes/window'
 
 class Shoes
-  # Methods for creating and manipulating Shoes elements
+  # Methods for creating and manipulating elements from Shoes applications.
+  # The DSL methods define the primary interface into Shoes for people writing
+  # their own Shoes apps.
   #
-  # Requirements
-  #
-  # Including classes must provide:
-  #
-  #   @__app__
-  #
-  #   which provides
-  #     #style:          a hash of styles
-  #     #element_styles: a hash of {Class => styles}, where styles is
-  #                      a hash of default styles for elements of Class,
+  # For ease of maintenance, the DSL methods are defined in their own
+  # submodules which are included into Shoes::DSL for surfacing in the Shoes
+  # runtime context.
   module DSL
     include Color::DSLHelpers
 

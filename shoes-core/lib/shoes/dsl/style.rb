@@ -2,9 +2,11 @@
 
 class Shoes
   module DSL
+    # DSL methods for styling elements in Shoes applications
+    #
+    # @see Shoes::DSL
     module Style
-      # Set default style for elements of a particular class, or for all
-      # elements, or return the current defaults for all elements
+      # Apply default styling at the app or element class level.
       #
       # @overload style(klass, styles)
       #   Set default style for elements of a particular class
@@ -14,12 +16,13 @@ class Shoes
       #     style Para, :text_size => 42, :stroke => green
       #
       # @overload style(styles)
-      # Set default style for all elements
+      #   Set default style for all elements
       #   @param [Hash] styles default style for all elements
       #   @example
       #     style :stroke => alicewhite, :fill => black
       #
       # @overload style()
+      #   Set styles for application element
       #   @return [Hash] the default style for all elements
       def style(klass_or_styles = nil, styles = {})
         if klass_or_styles.kind_of? Class
@@ -30,8 +33,12 @@ class Shoes
         end
       end
 
-      # Define app-level setter methods
+      # Each value is a top-level Shoes DSL method overriding the default
+      # styling of following elements.
       PATTERN_APP_STYLES = [:fill, :stroke].freeze
+
+      # Each value is a top-level Shoes DSL method overriding the default
+      # styling of following elements.
       OTHER_APP_STYLES = [:cap, :rotate, :strokewidth, :transform].freeze
 
       PATTERN_APP_STYLES.each do |style|
@@ -47,15 +54,22 @@ class Shoes
         end
       end
 
+      # Shift position of all elements following this call.
+      #
+      # @param [Fixnum] left amount to shift element horizontally
+      # @param [Fixnum] top amount to shift element vertically
+      # @return [Array<Fixnum>] current translation settings
       def translate(left, top)
         @__app__.style[:translate] = [left, top]
       end
 
+      # Clear any default stroke settings following this call.
       def nostroke
         @__app__.remove_styles << :stroke
         @__app__.style[:stroke] = nil
       end
 
+      # Clear any default fill settings following this call.
       def nofill
         @__app__.remove_styles << :fill
         @__app__.style[:fill] = nil

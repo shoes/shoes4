@@ -2,7 +2,14 @@
 
 class Shoes
   module DSL
+    # DSL methods for handling media
+    #
+    # @see Shoes::DSL
     module Media
+      # Previously supported method for drawing an image. Very similar to
+      # shape. See https://github.com/shoes/shoes4/issues/1309 for details.
+      #
+      # @deprecated
       def image(*args, &blk)
         if blk
           raise Shoes::NotImplementedError,
@@ -23,6 +30,10 @@ EOS
         end
       end
 
+      # Previously supported method for showing video. Cut because codecs.
+      # See https://github.com/shoes/shoes4/issues/113 for details.
+      #
+      # @deprecated
       def video(*_args)
         raise Shoes::NotImplementedError,
               'Sorry video support has been cut from shoes 4!' \
@@ -30,7 +41,18 @@ EOS
               ' want to help :)'
       end
 
-      # similar controls as Shoes::Video (#video)
+      # Play a sound from supported file formats.
+      #
+      # Supported formats:
+      #
+      #  * aiff
+      #  * mp3
+      #  * ogg/vorbis
+      #  * wav
+      #
+      # @param [String] soundfile location of sound to play
+      # @param [Hash] opts none currently supported
+      # @return [Shoes::Sound]
       def sound(soundfile, opts = {}, &blk)
         Shoes::Sound.new @__app__, soundfile, opts, &blk
       end
