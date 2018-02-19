@@ -22,13 +22,16 @@ class Shoes
       # @return [Shoes::App]
       def motion(&blk)
         @__app__.mouse_motion << blk
+        @__app__.app
       end
 
       # Register code to run when the window is resized.
       #
       # @param [Proc] blk code to run on resize
+      # @return [Shoes::App]
       def resize(&blk)
         @__app__.add_resize_callback blk
+        @__app__.app
       end
 
       # Register code to run when the mouse hovers over the current slot.
