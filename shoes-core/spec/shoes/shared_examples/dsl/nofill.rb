@@ -5,4 +5,9 @@ shared_examples_for "nofill DSL method" do
     dsl.nofill
     expect(dsl.style[:fill]).to eq(nil)
   end
+
+  it "returns the element" do
+    returned = dsl.nofill
+    expect(returned).to eq(dsl)
+  end
 end
