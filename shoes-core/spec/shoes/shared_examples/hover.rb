@@ -11,9 +11,19 @@ shared_examples "object with hover" do
     subject.hover {}
   end
 
+  it "returns element from hover" do
+    returned = subject.hover {}
+    expect(returned).to eq(subject)
+  end
+
   it "registers with leave" do
     expect(subject).to receive(:add_mouse_hover_control)
     subject.leave {}
+  end
+
+  it "returns element from leave" do
+    returned = subject.leave {}
+    expect(returned).to eq(subject)
   end
 
   it "marks itself as hovered" do

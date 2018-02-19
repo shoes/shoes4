@@ -19,6 +19,7 @@ class Shoes
       # blk receives the x, y coordinates of the mouse at the time of moving.
       #
       # @param [Proc] blk code to run when the mouse moves
+      # @return [Shoes::App]
       def motion(&blk)
         @__app__.mouse_motion << blk
       end
@@ -35,6 +36,7 @@ class Shoes
       # blk is passed the hovered over element as a parameter.
       #
       # @param [Proc] blk code to run on hover
+      # @return [Shoes::App]
       def hover(&blk)
         @__app__.current_slot.hover(&blk)
       end
@@ -44,6 +46,7 @@ class Shoes
       # blk is passed the left element as a parameter.
       #
       # @param [Proc] blk code to run on leaving
+      # @return [Shoes::App]
       def leave(&blk)
         @__app__.current_slot.leave(&blk)
       end
@@ -55,6 +58,7 @@ class Shoes
       # symbol for pressing down the Alt key plus the a key simultaneously.
       #
       # @param [Proc] blk code to when a key is pressed down
+      # @return [Shoes::App]
       def keypress(&blk)
         Shoes::Keypress.new @__app__, &blk
         @__app__.app
@@ -67,6 +71,7 @@ class Shoes
       # symbol for pressing down the Alt key plus the a key simultaneously.
       #
       # @param [Proc] blk code to when a key is released
+      # @return [Shoes::App]
       def keyrelease(&blk)
         Shoes::Keyrelease.new @__app__, &blk
         @__app__.app
