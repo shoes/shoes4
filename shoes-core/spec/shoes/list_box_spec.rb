@@ -77,6 +77,11 @@ describe Shoes::ListBox do
       expect_any_instance_of(Shoes.configuration.backend::ListBox).to_not receive(:choose)
       Shoes::ListBox.new app, parent, input_opts.merge(choose: 'Wine')
     end
+
+    it 'returns the element' do
+      returned = list_box.choose "Wine"
+      expect(returned).to eq(list_box)
+    end
   end
 
   it "should delegate #text to the backend" do
