@@ -37,6 +37,7 @@ describe Shoes::Swt::MouseMoveListener do
 
   before :each do
     allow(::Shoes::Swt::Shoes).to receive(:display).and_return(display)
+    allow(Shoes.logger).to receive(:error) # Shhhhhh
     subject.mouse_move(mouse_event)
   end
 
@@ -145,6 +146,22 @@ describe Shoes::Swt::MouseMoveListener do
         expect(element2).to receive(:mouse_hovered).ordered
         subject.mouse_move(mouse_event)
       end
+    end
+  end
+
+  describe 'failure' do
+    let(:mouse_motion) do
+      [proc { raise "heck" }]
+    end
+
+    it 'catches errors' do
+      Shoes.configuration.fail_fast = false
+      subject.mouse_move(mouse_event)
+    end
+
+    it 'raises errors' do
+      Shoes.configuration.fail_fast = true
+      expect { subject.mouse_move(mouse_event) }.to raise_error(RuntimeError)
     end
   end
 end
