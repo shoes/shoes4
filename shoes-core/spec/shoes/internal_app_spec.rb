@@ -7,8 +7,6 @@ describe Shoes::InternalApp do
 
   subject { app }
 
-  it_behaves_like "clickable object"
-
   describe "#initialize" do
     context "with defaults" do
       let(:defaults) { Shoes::InternalApp::DEFAULT_OPTIONS }
@@ -148,6 +146,16 @@ describe Shoes::InternalApp do
         end
       end
     end
+  end
+
+  it "#click returns app instead of self" do
+    returned = subject.click {}
+    expect(returned).to eq(user_facing_app)
+  end
+
+  it "#release returns app instead of self" do
+    returned = subject.release {}
+    expect(returned).to eq(user_facing_app)
   end
 
   describe "resize callbacks" do

@@ -115,6 +115,16 @@ class Shoes
       false
     end
 
+    def click
+      super
+      @app
+    end
+
+    def release
+      super
+      @app
+    end
+
     def add_mouse_hover_control(element)
       return if mouse_hover_controls.include?(element)
       mouse_hover_controls << element

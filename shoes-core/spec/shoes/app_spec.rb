@@ -5,7 +5,9 @@ require 'spec_helper'
 describe Shoes::App do
   let(:input_blk) { proc {} }
   let(:opts) { {} }
+
   subject(:app) { Shoes::App.new(opts, &input_blk) }
+  let(:internal_app) { subject.instance_variable_get(:@__app__) }
 
   after do
     Shoes.unregister_all
@@ -275,8 +277,39 @@ describe Shoes::App do
   end
 
   describe '#resize' do
-    it 'understands resize' do
-      expect(subject).to respond_to :resize
+    it 'registers' do
+      called = false
+      subject.resize do
+        called = true
+      end
+
+      internal_app.trigger_resize_callbacks
+      expect(called).to eq(true)
+    end
+
+    it 'returns app when registering' do
+      returned = subject.resize {}
+      expect(returned).to eq(subject)
+    end
+  end
+
+  describe '#motion' do
+    it 'registers' do
+      registered = proc {}
+      subject.motion(&registered)
+      expect(internal_app.mouse_motion).to eq([registered])
+    end
+
+    it 'returns app when registering' do
+      returned = subject.motion {}
+      expect(returned).to eq(subject)
+    end
+  end
+
+  describe '#translate' do
+    it 'returns app when called' do
+      returned = subject.translate 100, 100
+      expect(returned).to eq(subject)
     end
   end
 
@@ -320,7 +353,6 @@ describe Shoes::App do
         para 'Hello'
       end
     end
-    let(:internal_app) { subject.instance_variable_get(:@__app__) }
 
     it 'has initial contents' do
       expect(subject.contents).to_not be_empty

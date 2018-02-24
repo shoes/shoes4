@@ -15,7 +15,8 @@ describe Shoes::Common::Remove do
 
   describe '#remove' do
     before :each do
-      subject.remove
+      returned = subject.remove
+      expect(returned).to eq(subject)
     end
 
     it 'calls removes itself from the parent' do

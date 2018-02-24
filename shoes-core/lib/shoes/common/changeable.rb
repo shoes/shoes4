@@ -10,12 +10,16 @@ class Shoes
       # Add an extra change event listener block
       #
       # @yield The block to execute on a change event
+      # @return [Shoes::ListBox, Shoes::EditBox, Shoes::EditLine]
       def change(&blk)
         add_change_listener(blk)
+        self
       end
 
       # The GUI backend needs to call this when an actual change happens in
       # the backend.
+      #
+      # @private
       def call_change_listeners
         change_listeners.each do |listener|
           listener.call(self)

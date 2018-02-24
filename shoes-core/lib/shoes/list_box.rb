@@ -63,6 +63,7 @@ class Shoes
         style(choose: item_or_hash[:item])
         @gui.choose item_or_hash[:item]
       end
+      self
     end
 
     alias choose= choose

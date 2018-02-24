@@ -18,9 +18,17 @@ describe Shoes::Common::Focus do
   let(:gui) { double("gui", update_visibility: nil) }
 
   describe "#focus" do
-    it 'must call #focus on gui' do
+    before do
       expect(gui).to receive(:focus)
+    end
+
+    it 'calls #focus on gui' do
       subject.focus
+    end
+
+    it 'returns the element' do
+      returned = subject.focus
+      expect(returned).to eq(subject)
     end
   end
 

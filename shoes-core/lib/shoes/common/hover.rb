@@ -18,11 +18,13 @@ class Shoes
       def hover(&blk)
         @hover_blk = blk
         add_mouse_hover_control
+        self
       end
 
       def leave(&blk)
         @leave_blk = blk
         add_mouse_hover_control
+        self
       end
 
       def hovered?

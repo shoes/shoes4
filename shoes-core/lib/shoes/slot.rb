@@ -54,11 +54,13 @@ class Shoes
     def clear(&blk)
       contents.clear
       eval_block blk
+      self
     end
 
     def remove
       clear
       super
+      self
     end
 
     def eval_block(blk, *args)

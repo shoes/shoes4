@@ -9,6 +9,13 @@ shared_examples "an element that can respond to change" do
   end
 
   describe "when setting up a callback with #change" do
+    it "returns the element, not the block" do
+      returned = subject.change do
+      end
+
+      expect(returned).to eq(subject)
+    end
+
     it "should notify the callback of change events" do
       called = false
       subject.change do

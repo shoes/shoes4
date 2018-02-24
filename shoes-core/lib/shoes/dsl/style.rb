@@ -58,21 +58,28 @@ class Shoes
       #
       # @param [Fixnum] left amount to shift element horizontally
       # @param [Fixnum] top amount to shift element vertically
-      # @return [Array<Fixnum>] current translation settings
+      # @return [Shoes::App]
       def translate(left, top)
         @__app__.style[:translate] = [left, top]
+        @__app__.app
       end
 
       # Clear any default stroke settings following this call.
+      #
+      # @return [Shoes::App]
       def nostroke
         @__app__.remove_styles << :stroke
         @__app__.style[:stroke] = nil
+        @__app__.app
       end
 
       # Clear any default fill settings following this call.
+      #
+      # @return [Shoes::App]
       def nofill
         @__app__.remove_styles << :fill
         @__app__.style[:fill] = nil
+        @__app__.app
       end
 
       private
