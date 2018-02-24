@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe Shoes::Swt::MouseMoveListener do
+  include_context "quiet logging"
+
   let(:app) do
     double 'SWT App', dsl: dsl_app, shell: shell,
                       clickable_elements: clickable_elements
@@ -37,7 +39,6 @@ describe Shoes::Swt::MouseMoveListener do
 
   before :each do
     allow(::Shoes::Swt::Shoes).to receive(:display).and_return(display)
-    allow(Shoes.logger).to receive(:error) # Shhhhhh
     subject.mouse_move(mouse_event)
   end
 

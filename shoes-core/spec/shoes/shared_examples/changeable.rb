@@ -34,9 +34,7 @@ shared_examples "an element that can respond to change" do
   end
 
   describe "failure handling" do
-    before do
-      allow(Shoes.logger).to receive(:error) # Shhhhhhh
-    end
+    include_context "quiet logging"
 
     it "allows for safe failure in callback" do
       Shoes.configuration.fail_fast = false
