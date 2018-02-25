@@ -161,4 +161,25 @@ describe Shoes::Swt::ClickListener do
       let(:add_method)  { :add_release_listener }
     end
   end
+
+  describe "failure" do
+    include_context "quiet logging"
+
+    let(:event) { double(type: ::Swt::SWT::MouseDown, x: 10, y: 10, button: 1) }
+
+    before do
+      allow(dsl).to receive(:in_bounds?).and_return(true)
+      subject.add_click_listener(dsl, proc { raise "heck" })
+    end
+
+    it "catches by default" do
+      Shoes.configuration.fail_fast = false
+      subject.handle_event(event)
+    end
+
+    it "raises if set to fail fast" do
+      Shoes.configuration.fail_fast = true
+      expect { subject.handle_event(event) }.to raise_error(RuntimeError)
+    end
+  end
 end

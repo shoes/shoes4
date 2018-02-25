@@ -7,6 +7,7 @@ class Shoes
     # please, instead of relying on whatever SWT thinks is right. See #882.
     class ClickListener
       include ::Swt::Widgets::Listener
+      include ::Shoes::Common::SafelyEvaluate
 
       attr_reader :clickable_elements
 
@@ -60,10 +61,12 @@ class Shoes
       def eval_block(event, dsl, block)
         return if block.nil?
 
-        if dsl.pass_coordinates?
-          block.call event.button, event.x, event.y
-        else
-          block.call(dsl)
+        safely_evaluate do
+          if dsl.pass_coordinates?
+            block.call event.button, event.x, event.y
+          else
+            block.call(dsl)
+          end
         end
       end
     end
