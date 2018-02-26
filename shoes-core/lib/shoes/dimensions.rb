@@ -1,51 +1,55 @@
 # frozen_string_literal: true
 
-# Dimensions is a central class that most Shoes classes use to represent their
-# dimensions, e.g. where they are and how much space they are taking up there.
-# All the different position types might be confusing. So here is a little list:
-#
-# Position (left, top, right, bottom)
-# plain (left, top, right, bottom)
-#   An offset relative to the parent (parents mostly are slots e.g.
-#   flows/stacks), e.g it isn't fully positioned/doesn't flow anymore when set
-#
-# absolute (absolute_left, absolute_top, absolute_right, absolute_bottom)
-#   The absolute position of an element in the app, set by positioning code (in
-#   slot.rb). Might not be the beginning of the element as it also takes margins
-#   into account, so it could be the beginning of the margin. Is also used in
-#   the positioning code.
-#
-# element_* (element_left, element_top, element_right, element_bottom)
-# Derived from absolute_* but shows the real position of the object, e.g. it
-# adds the margins to absolute_* (mostly used by backend drawing code).
-#
-# Space taken up (width/height)
-# plain (width, height)
-#   The whole space taken up by this element with margins and everything. Used
-#   for positioning/by the user.
-#
-# element_* (element_width, element_height)
-#   Just the space taken up by the element itself without margins.
-#   Used by drawing.
-#
-# Note that this is NOT how margins work in the CSS box model. We diverge for
-# reasons mentioned in this comment/thread:
-# https://github.com/shoes/shoes4/pull/467#issuecomment-27655355
-
 class Shoes
+  # Dimensions is a central class that most Shoes classes use to represent their
+  # dimensions, e.g. where they are and how much space they are taking up there.
+  # All the different position types might be confusing. So here is a little list:
+  #
+  # = Position (left, top, right, bottom)
+  #
+  # *plain* (+left+, +top+, +right+, +bottom+): An offset relative to
+  # the parent (parents mostly are slots e.g.  flows/stacks), e.g it isn't
+  # fully positioned/doesn't flow anymore when set
+  #
+  # *absolute_** (+absolute_left+, +absolute_top+, +absolute_right+,
+  # +absolute_bottom+): The absolute position of an element in the app, set
+  # by positioning code (in +slot.rb+). Might not be the beginning of the
+  # element as it also takes margins into account, so it could be the beginning
+  # of the margin. Is also used in the positioning code.
+  #
+  # *element_** (+element_left+, +element_top+, +element_right+,
+  # +element_bottom+): Derived from +absolute_+* but shows the real position
+  # of the object, e.g. it adds the margins to +absolute_+* (mostly used by
+  # backend drawing code).
+  #
+  # = Space Taken Up (width/height)
+  #
+  # *plain* (+width+, +height+): The whole space taken up by this
+  # element with margins and everything. Used for positioning/by the user.
+  #
+  # *element_** (+element_width+, +element_height+): Just the space
+  # taken up by the element itself without margins. Used by drawing.
+  #
+  # Note that this is NOT how margins work in the CSS box model. We diverge for
+  # reasons mentioned
+  # {here}[https://github.com/shoes/shoes4/pull/467#issuecomment-27655355]
   class Dimensions
     include Common::Inspect
 
     attr_reader :parent, :x_dimension, :y_dimension
     protected :parent # we shall not mess with parent,see #495
 
-    # in case you wonder about the -1... it is used to adjust the right and
-    # bottom values. Because right is not left + width but rather left + width -1
+    # In case you wonder about the -1... it is used to adjust the right and
+    # bottom values. Because right is not left + width but rather left + width
+    # -1
+    #
     # Let me give you an example:
+    #
     # Say left is 20 and we have a width of 100 then the right must be 119,
     # because you have to take pixel number 20 into account so 20..119 is 100
-    # while 20..120 is 101. E.g.:
-    # (20..119).size => 100
+    # while 20..120 is 101. E.g.: (20..119).size => 100
+    #
+    # @private
     PIXEL_COUNTING_ADJUSTMENT = -1
 
     def initialize(parent, left_or_hash = nil, top = nil, width = nil,
@@ -58,26 +62,58 @@ class Shoes
       end
     end
 
+    # Is this element absolutely positioned in the horizontal dimension
     def absolute_x_position?
       x_dimension.absolute_position?
     end
 
+    # Is this element absolutely positioned in the vertical dimension
     def absolute_y_position?
       y_dimension.absolute_position?
     end
 
+    # Is this element absolutely positioned in any dimension
     def absolutely_positioned?
       absolute_x_position? || absolute_y_position?
     end
 
+    # Is this element's left positioned absolutely
+    def absolute_left_position?
+      @x_dimension.absolute_start_position?
+    end
+
+    # Is this element's right positioned absolutely
+    def absolute_right_position?
+      @x_dimension.absolute_end_position?
+    end
+
+    # Is this element's top positioned absolutely
+    def absolute_top_position?
+      @y_dimension.absolute_start_position?
+    end
+
+    # Is this element's bottom positioned absolutely
+    def absolute_bottom_position?
+      @y_dimension.absolute_end_position?
+    end
+
+    # Has this element been positioned by layout
     def positioned?
       x_dimension.positioned? && y_dimension.positioned?
     end
 
+    # Is the given point within the bounds of this element
+    #
+    # @param [Fixnum] x Location the x dimension to check
+    # @param [Fiynum] y Location the y dimension to check
+    # @return [Boolean] true if point is within this element, false otherwise
     def in_bounds?(x, y)
       x_dimension.in_bounds?(x) && y_dimension.in_bounds?(y)
     end
 
+    # Is another element fully contained within this element?
+    #
+    # @param [Shoes::Common::UIElement] other Element to check is contained
     def contains?(other)
       return false unless other.element_left && other.element_top &&
                           other.element_right && other.element_bottom
@@ -88,25 +124,42 @@ class Shoes
         element_bottom >= other.element_bottom
     end
 
+    # Margins for the element
+    #
+    # @return [Array<Fixnum>] left, top, right and bottom margin as array
     def margin
       [margin_left, margin_top, margin_right, margin_bottom]
     end
 
+    # Set margin value for element
+    #
+    # If a single value is passed, all margins are set to that value.
+    #
+    # If an array is passed, values from array are spread to left, top,
+    # right and bottom in that order.
+    #
+    # @param [Fixnum, Array<Fixnum>] margin Value or array of values to set
+    # margin to
     def margin=(margin)
       margin = [margin, margin, margin, margin] unless margin.is_a? Array
       self.margin_left, self.margin_top,
       self.margin_right, self.margin_bottom = margin
     end
 
+    # Determines if this element participate in slot positioning
+    #
+    # @return [Boolean] Whether to position element during slot layout
     def needs_positioning?
       true
     end
 
+    # Determines whether to advance current position during slot layout
+    #
+    # @return [Boolean] Whether to advance position after laying out this
+    # element
     def takes_up_space?
       true
     end
-
-    # Raw dimension delegations
 
     def width
       @x_dimension.extent
@@ -156,8 +209,6 @@ class Shoes
       @y_dimension.end = value
     end
 
-    # Element dimension delegations
-
     def element_height
       @y_dimension.element_extent
     end
@@ -189,8 +240,6 @@ class Shoes
     def element_bottom
       @y_dimension.element_end
     end
-
-    # Margin dimension delegations
 
     def margin_left
       @x_dimension.margin_start
@@ -224,12 +273,6 @@ class Shoes
       @y_dimension.margin_end = value
     end
 
-    # Absolute dimension delegations
-
-    def absolute_left_position?
-      @x_dimension.absolute_start_position?
-    end
-
     def absolute_left
       @x_dimension.absolute_start
     end
@@ -238,16 +281,8 @@ class Shoes
       @x_dimension.absolute_start = value
     end
 
-    def absolute_right_position?
-      @x_dimension.absolute_end_position?
-    end
-
     def absolute_right
       @x_dimension.absolute_end
-    end
-
-    def absolute_top_position?
-      @y_dimension.absolute_start_position?
     end
 
     def absolute_top
@@ -258,15 +293,9 @@ class Shoes
       @y_dimension.absolute_start = value
     end
 
-    def absolute_bottom_position?
-      @y_dimension.absolute_end_position?
-    end
-
     def absolute_bottom
       @y_dimension.absolute_end
     end
-
-    # Displace dimension delegation
 
     def displace_left
       @x_dimension.displace_start
@@ -338,20 +367,25 @@ class Shoes
     end
   end
 
-  # for objects that do not depend on their parent (get 1.04 as real values)
+  # Dimenions for object that do not depend on their parent and do not
+  # participate in slot-based layout.
   class AbsoluteDimensions < Dimensions
+    # @private
     def initialize(*args)
       super(nil, *args)
     end
 
+    # Absolutely positioned elements don't include laying out content, so they
+    # aren't considered to "take up space"
     def takes_up_space?
       false
     end
   end
 
-  # for objects that are more defined by their parents, delegates method calls
-  # to crucial methods to the parent if the instance variable isn't set
+  # Dimensions for objects that are defined by their parents, delegating method
+  # calls to crucial methods to the parent if the instance variable isn't set
   class ParentDimensions < Dimensions
+    # @private
     def init_x_and_y_dimensions
       @x_dimension = ParentDimension.new @parent.x_dimension,
                                          @left_top_as_center
@@ -360,7 +394,12 @@ class Shoes
     end
   end
 
-  # depends on a #dimensions method being present that returns a Dimensions object
+  # Plumbing for depends on delegating to dimensions when making style-based
+  # access to left, top, etc.
+  #
+  # #dimensions method being present that returns a Dimensions object
+  #
+  # @private
   module DimensionsDelegations
     extend Forwardable
 
@@ -388,6 +427,8 @@ class Shoes
   end
 
   # depends on a #dsl method to forward to (e.g. for backend objects)
+  #
+  # @private
   module BackendDimensionsDelegations
     extend Forwardable
 
