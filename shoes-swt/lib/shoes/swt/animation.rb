@@ -9,7 +9,6 @@ class Shoes
       #
       # @param [Shoes::Animation] dsl The Shoes DSL Animation this represents
       # @param [Shoes::Swt::App] app The Swt representation of the current app
-      # @param [Proc] blk The block of code to execute for each animation frame
       def initialize(dsl, app)
         @dsl = dsl
         @app = app

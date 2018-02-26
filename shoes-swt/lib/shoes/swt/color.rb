@@ -27,14 +27,14 @@ class Shoes
       end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply fill
-      # @dsl unused by this method, passed to satisfy the Pattern interface
+      # _dsl unused by this method, passed to satisfy the Pattern interface
       def apply_as_fill(gc, _dsl = nil)
         gc.set_background real
         gc.set_alpha alpha
       end
 
       # @param [Swt::Graphics::GC] gc the graphics context on which to apply stroke
-      # @dsl unused by this method, passed to satisfy the Pattern interface
+      # _dsl unused by this method, passed to satisfy the Pattern interface
       def apply_as_stroke(gc, _dsl = nil)
         gc.set_foreground real
         gc.set_alpha alpha

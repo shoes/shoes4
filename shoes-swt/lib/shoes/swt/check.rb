@@ -6,8 +6,7 @@ class Shoes
       # Create a check box
       #
       # @param [Shoes::Button] dsl The Shoes DSL check box this represents
-      # @param [::Swt::Widgets::Composite] parent The parent element of this button
-      # @param [Proc] blk The block of code to call when this button is activated
+      # @param [Shoes::Swt::App] parent The parent element of this button
       def initialize(dsl, parent)
         super(dsl, parent, ::Swt::SWT::CHECK)
       end
