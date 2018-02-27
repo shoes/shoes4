@@ -12,10 +12,10 @@ class Shoes
   # fully positioned/doesn't flow anymore when set
   #
   # *absolute_** (+absolute_left+, +absolute_top+, +absolute_right+,
-  # +absolute_bottom+): The absolute position of an element in the app, set
-  # by positioning code (in +slot.rb+). Might not be the beginning of the
-  # element as it also takes margins into account, so it could be the beginning
-  # of the margin. Is also used in the positioning code.
+  # +absolute_bottom+): The absolute position an element begins positioning
+  # from in the app (in +slot.rb+). Margins are not included in absolute
+  # position values--that's the main difference between +absolute+ and
+  # +element+ values.
   #
   # *element_** (+element_left+, +element_top+, +element_right+,
   # +element_bottom+): Derived from +absolute_+* but shows the real position
