@@ -4,6 +4,7 @@ class Shoes
   module Swt
     class MouseMoveListener
       include ::Swt::Events::MouseMoveListener
+      include ::Shoes::Common::SafelyEvaluate
 
       def initialize(app)
         @app = app
@@ -20,7 +21,9 @@ class Shoes
       private
 
       def eval_move_block(blk, event)
-        blk.call event.x, event.y
+        safely_evaluate do
+          blk.call event.x, event.y
+        end
       end
 
       def mouse_shape_control(mouse_event)

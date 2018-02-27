@@ -15,9 +15,7 @@ shared_examples_for "Slot" do
   end
 
   describe "exception handling in block" do
-    before do
-      allow(Shoes.logger).to receive(:error) # Shhhhhhh
-    end
+    include_context "quiet logging"
 
     def append
       subject.append do

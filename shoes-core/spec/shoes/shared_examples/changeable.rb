@@ -32,4 +32,26 @@ shared_examples "an element that can respond to change" do
       subject.call_change_listeners
     end
   end
+
+  describe "failure handling" do
+    include_context "quiet logging"
+
+    it "allows for safe failure in callback" do
+      Shoes.configuration.fail_fast = false
+      subject.change do
+        raise "heck"
+      end
+
+      subject.call_change_listeners
+    end
+
+    it "fails in callback if configured" do
+      Shoes.configuration.fail_fast = true
+      subject.change do
+        raise "heck"
+      end
+
+      expect { subject.call_change_listeners }.to raise_error(RuntimeError)
+    end
+  end
 end

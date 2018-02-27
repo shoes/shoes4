@@ -4,6 +4,7 @@ class Shoes
   module Swt
     class KeyListener
       include ::Swt::KeyListener
+      include ::Shoes::Common::SafelyEvaluate
 
       def self.get_swt_constant(name)
         ::Swt::SWT.const_get name
@@ -76,7 +77,9 @@ class Shoes
       private
 
       def eval_block(key_string)
-        @block.call key_string
+        safely_evaluate do
+          @block.call key_string
+        end
       end
 
       def modifier_keys(event)
