@@ -1,9 +1,13 @@
 --no-private
 ./shoes-core/lib/**/*.rb
+./shoes-package/lib/**/*.rb
+./shoes-swt/lib/**/*.rb
 -
 LICENSE
 README.md
 shoes-core/README.md
+shoes-package/README.md
+shoes-swt/README.md
 LICENSE
 CONTRIBUTING.md
 CODE_OF_CONDUCT.MD

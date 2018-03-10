@@ -11,8 +11,7 @@ class Shoes
       # Create a radio button
       #
       # @param [Shoes::Radio] dsl The Shoes DSL radio this represents
-      # @param [::Swt::Widgets::Composite] app The app element of this button
-      # @param [Proc] blk The block of code to call when this button is activated
+      # @param [Shoes::Swt::App] app The app element of this button
       def initialize(dsl, app)
         super(dsl, app, ::Swt::SWT::RADIO)
         self.group = dsl.group

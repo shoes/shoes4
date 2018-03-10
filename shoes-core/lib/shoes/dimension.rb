@@ -1,20 +1,33 @@
 # frozen_string_literal: true
 
 class Shoes
+  # Class representing position and length in a single dimension (x or y).
+  #
+  # These are used primarily as the +x_dimension+ and +y_dimension+ variables
+  # in the Shoes::Dimensions class. Instances of this class are rarely expected
+  # to be accessed themselves directly.
   class Dimension
     attr_reader :parent
     attr_accessor :absolute_start
     protected :parent # we shall not mess with parent,see #495
 
     # in case you wonder about the -1... it is used to adjust the right and
-    # bottom values. Because right is not left + width but rather left + width -1
+    # bottom values. Because right is not left + width but rather left + width
+    # -1
+    #
     # Let me give you an example:
+    #
     # Say left is 20 and we have a width of 100 then the right must be 119,
     # because you have to take pixel number 20 into account so 20..119 is 100
-    # while 20..120 is 101. E.g.:
-    # (20..119).size => 100
+    # while 20..120 is 101. E.g.: # (20..119).size => 100
+    #
+    # @private
     PIXEL_COUNTING_ADJUSTMENT = -1
 
+    # @param [Shoes::Common::UIElement] parent Shoes element this dimension
+    # belongs to
+    # @param [Boolean] start_as_center  Whether to treat this dimensions
+    # starting positions as the center of its owning element or not.
     def initialize(parent = nil, start_as_center = false)
       @parent              = parent
       @start_as_center     = start_as_center
@@ -53,6 +66,15 @@ class Shoes
       result
     end
 
+    # Set length/extent of the element in a given dimension
+    #
+    # Float values between 0 and 1.0 are treated as a percentage of their
+    # parent extend.
+    #
+    # Negative values are treated as an amount less than the containing parent
+    # extent.
+    #
+    # @param [Fixnum, Float] value Length to set
     def extent=(value)
       @extent = value
       @extent = parse_from_string @extent if string? @extent
@@ -113,12 +135,12 @@ class Shoes
       (absolute_start <= value) && (value <= absolute_end)
     end
 
-    # For... reasons it is important to have the value of the instance variable
-    # set to nil if it's not modified and then return a default value on the
-    # getter... reason being that for ParentDimensions we need to be able to
-    # figure out if a value has been modified or if we should consult the
-    # parent value - see ParentDimension implementation
     def margin_start
+      # For... reasons it is important to have the value of the instance
+      # variable set to nil if it's not modified and then return a default
+      # value on the getter... reason being that for ParentDimensions we need
+      # to be able to figure out if a value has been modified or if we should
+      # consult the parent value - see ParentDimension implementation
       value_factoring_in_relative(@margin_start, @margin_start_relative)
     end
 
@@ -173,13 +195,14 @@ class Shoes
       value
     end
 
+    # As the value is relative to the parent values bigger than one don't
+    # make much sense and are problematic. E.g. through calculations users
+    # might end up with values like 5.14 meaning 5 pixel which would get
+    # interpreted as 514% of the parent
+    #
+    # Also check for existance of parent because otherwise relative
+    # calculation makes no sense
     def relative?(result)
-      # as the value is relative to the parent values bigger than one don't
-      # make much sense and are problematic. E.g. through calculations users
-      # might end up with values like 5.14 meaning 5 pixel which would get
-      # interpreted as 514% of the parent
-      # Also check for existance of parent because otherwise relative
-      # calculation makes no sense
       result.is_a?(Float) && result <= 1 && @parent
     end
 
@@ -247,6 +270,8 @@ class Shoes
     end
   end
 
+  # A dimension class that draws its values directly from parent container
+  # unless values are set explicitly in the dimension instance.
   class ParentDimension < Dimension
     def absolute_start
       parent.element_start
