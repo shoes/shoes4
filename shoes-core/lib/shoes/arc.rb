@@ -2,6 +2,7 @@
 
 class Shoes
   class Arc < Common::ArtElement
+    include Math
     # angle is the gradient angle used across all art elements
     # angle1/2 are the angles of the arc itself!
     style_with :angle1, :angle2, :art_styles, :center, :common_styles, :dimensions, :radius, :wedge
@@ -39,16 +40,43 @@ class Shoes
       @middle_y ||= top + radius_y
     end
 
-    def oval_in_bounds?(x, y)
+    def inside_oval?(x, y)
       x_side = (((x - middle_x)**2).to_f / radius_x**2)
       y_side = (((y - middle_y)**2).to_f / radius_y**2)
+      x_side + y_side <= 1
+    end
 
+    def inside_inner_oval?(dist, x, y)
+      dd = dist / 2
+      x_side = (((x - middle_x)**2).to_f / ((radius_x - dd))**2)
+      y_side = (((y - middle_y)**2).to_f / ((radius_y - dd))**2)
       x_side + y_side <= 1
     end
 
     def adjust_angle(input_angle)
       # Must pad angle, since angles in here start at different location on the ellipse
-      input_angle + 1.5708
+
+      l = if false#input_angle < 0
+        (Math::PI * 2) - input_angle
+      else
+        input_angle + 1.5708
+      end
+
+      if l < 0
+
+        while l < (Math::PI * -2)
+          l = l + (Math::PI * 2)
+        end
+
+        l = (Math::PI * 2) + l
+      end
+
+      while l > (Math::PI * 2)
+        l = l - (Math::PI * 2)
+      end
+
+
+      l
     end
 
     def y_adjust_negative?(input_angle)
@@ -176,14 +204,54 @@ class Shoes
       end
     end
 
+    def angle1_smaller_check(x,y)
+      above_below_on(x, y) == :below && angle1_coordinates[:x_value] > angle2_coordinates[:x_value]
+    end
+
+    def angle2_smaller_check(x,y)
+      above_below_on(x, y) == :above && angle1_coordinates[:x_value] < angle2_coordinates[:x_value]
+    end
+
+    def on_shaded_part?(x, y)
+      angle1_smaller_check(x,y) || angle2_smaller_check(x,y)
+    end
+
+    def get_y_value(x)
+      xie_fraction1 = ((x - middle_x) ** 2) / (radius_x ** 2)
+      xie_fraction2 = ((x + middle_x) ** 2) / (radius_x ** 2)
+
+      y_rad_bit    = radius_y ** 2
+
+      left_side1    = (1 - xie_fraction1) * y_rad_bit
+      left_side2    = (1 - xie_fraction2) * y_rad_bit
+
+      final_left1   = left_side1 ** 0.5
+      final_left2   = left_side2 ** 0.5
+
+      [final_left1 + middle_y,  middle_y - final_left1, final_left2 + middle_y,  middle_y - final_left2]
+    end
+
     def in_bounds?(x, y)
-      if oval_in_bounds?(x, y)
-        if above_below_on(x, y) == :below && angle1 < angle2
-          true
-        elsif above_below_on(x, y) == :above && angle1 > angle2
-          true
-        end
+      @x = x
+      @y = y
+
+      close_y_val = get_y_value(x)
+      check = close_y_val.detect do |attempt|
+        (y - attempt).abs <= (style[:strokewidth]) + 1
       end
+
+      check = inside_oval?(x, y) && on_shaded_part?(x, y)
+
+      if check && !style[:fill]
+        difference = style[:strokewidth] * 2
+
+        if difference < 4
+          difference = 4
+        end
+        check = !inside_inner_oval?(difference, x, y)
+      end
+
+      check
     end
   end
 end
