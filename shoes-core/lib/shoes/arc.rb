@@ -40,43 +40,36 @@ class Shoes
       @middle_y ||= top + radius_y
     end
 
+    def oval_axis_fraction(axis, input, difference = 0)
+      # x_side = (((x - middle_x)**2).to_f / radius_x**2)
+      (((input - send("middle_#{axis}")) ** 2).to_f / ((send("radius_#{axis}") - difference) ** 2))
+    end
+
+    def inner_oval_axis_fraction(axis, input)
+      oval_axis_fraction(axis, input, inner_oval_difference)
+    end
+
     def inside_oval?(x, y)
-      x_side = (((x - middle_x)**2).to_f / radius_x**2)
-      y_side = (((y - middle_y)**2).to_f / radius_y**2)
+      (oval_axis_fraction(:x, x) + oval_axis_fraction(:y, y)) <= 1
+    end
+
+    def inside_inner_oval?(x, y)
+      x_side = inner_oval_axis_fraction(:x, x)
+      y_side = inner_oval_axis_fraction(:y, y)
       x_side + y_side <= 1
     end
 
-    def inside_inner_oval?(dist, x, y)
-      dd = dist / 2
-      x_side = (((x - middle_x)**2).to_f / ((radius_x - dd))**2)
-      y_side = (((y - middle_y)**2).to_f / ((radius_y - dd))**2)
-      x_side + y_side <= 1
+    def normalize_angle(input_angle)
+      # This fixes angles > 6.283185 and < 0
+      input_angle % (Math::PI * 2)
     end
 
     def adjust_angle(input_angle)
-      # Must pad angle, since angles in here start at different location on the ellipse
+      # Must pad angle, since angles in standard formulas start at different location than in shoes
+      adjusted_angle = input_angle + 1.5708
 
-      l = if false#input_angle < 0
-        (Math::PI * 2) - input_angle
-      else
-        input_angle + 1.5708
-      end
-
-      if l < 0
-
-        while l < (Math::PI * -2)
-          l = l + (Math::PI * 2)
-        end
-
-        l = (Math::PI * 2) + l
-      end
-
-      while l > (Math::PI * 2)
-        l = l - (Math::PI * 2)
-      end
-
-
-      l
+      # Must make angle 0..6.28318
+      adjusted_angle = normalize_angle(adjusted_angle)
     end
 
     def y_adjust_negative?(input_angle)
@@ -199,59 +192,48 @@ class Shoes
         # If line is straight up and down..compare with x value to an x coordinate
         vertical_check(x_input)
       else
-        # If standard slope...find what the y value would be given the input x.
+        # If standard slope...find what the y value would be given the input x
         normal_above_below_check(mx_value, y_input)
       end
     end
 
     def angle1_smaller_check(x,y)
-      above_below_on(x, y) == :below && angle1_coordinates[:x_value] > angle2_coordinates[:x_value]
+      above_below_on(x, y) == :below && angle1_x > angle2_x
     end
 
     def angle2_smaller_check(x,y)
-      above_below_on(x, y) == :above && angle1_coordinates[:x_value] < angle2_coordinates[:x_value]
+      above_below_on(x, y) == :above && angle1_x < angle2_x
     end
 
     def on_shaded_part?(x, y)
       angle1_smaller_check(x,y) || angle2_smaller_check(x,y)
     end
 
-    def get_y_value(x)
-      xie_fraction1 = ((x - middle_x) ** 2) / (radius_x ** 2)
-      xie_fraction2 = ((x + middle_x) ** 2) / (radius_x ** 2)
+    def standard_arc_bounds_check(x,y)
+      inside_oval?(x, y) && on_shaded_part?(x, y)
+    end
 
-      y_rad_bit    = radius_y ** 2
+    def inner_oval_difference
+      @inner_oval_difference ||= calculate_inner_oval_difference
+    end
 
-      left_side1    = (1 - xie_fraction1) * y_rad_bit
-      left_side2    = (1 - xie_fraction2) * y_rad_bit
+    def calculate_inner_oval_difference
+      difference = style[:strokewidth].to_i * 2
 
-      final_left1   = left_side1 ** 0.5
-      final_left2   = left_side2 ** 0.5
+      difference = 4 if difference < 4
 
-      [final_left1 + middle_y,  middle_y - final_left1, final_left2 + middle_y,  middle_y - final_left2]
+      difference.to_f / 2
     end
 
     def in_bounds?(x, y)
-      @x = x
-      @y = y
+      bounds_check = standard_arc_bounds_check(x,y)
 
-      close_y_val = get_y_value(x)
-      check = close_y_val.detect do |attempt|
-        (y - attempt).abs <= (style[:strokewidth]) + 1
+      if bounds_check && !style[:fill]
+
+        bounds_check = !inside_inner_oval?(x, y)
       end
 
-      check = inside_oval?(x, y) && on_shaded_part?(x, y)
-
-      if check && !style[:fill]
-        difference = style[:strokewidth] * 2
-
-        if difference < 4
-          difference = 4
-        end
-        check = !inside_inner_oval?(difference, x, y)
-      end
-
-      check
+      bounds_check
     end
   end
 end
