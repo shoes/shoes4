@@ -211,7 +211,7 @@ describe Shoes::Arc do
   end
 
   describe 'in_bounds methods' do
-    subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, start_angle, end_angle) }
+    subject(:arc) { Shoes::Arc.new(app, parent, left, top, width, height, 0, Shoes::HALF_PI) }
 
     describe '#radius_x' do
       it 'must return half the width' do
@@ -240,13 +240,13 @@ describe Shoes::Arc do
     describe '#inside_oval?' do
       context 'when point is inside' do
         it 'must return true' do
-          expect(arc.inside_oval??(arc.middle_x, arc.middle_y)).to eq(true)
+          expect(arc.inside_oval?(arc.middle_x, arc.middle_y)).to eq(true)
         end
       end
 
       context 'when point is outside' do
         it 'must return false' do
-          expect(arc.inside_oval??(arc.top, arc.left)).to eq(false)
+          expect(arc.inside_oval?(arc.top, arc.left)).to eq(false)
         end
       end
     end
@@ -293,134 +293,133 @@ describe Shoes::Arc do
 
     describe '#y_result_adjustment' do
       context 'when #y_adjust_negative? is false' do
-        before(:each){allow(arc).to receive(:y_adjust_negative?){false}}
+        before(:each) { allow(arc).to receive(:y_adjust_negative?) { false } }
 
         it 'should add y_result to middle_y' do
-          expect(arc.y_result_adjustment(1,1)).to eq(195.0)
+          expect(arc.y_result_adjustment(1, 1)).to eq(195.0)
         end
       end
 
       context 'when #y_adjust_negative? is true' do
-        before(:each){allow(arc).to receive(:y_adjust_negative?){true}}
+        before(:each) { allow(arc).to receive(:y_adjust_negative?) { true } }
 
         it 'should subtract y_result from middle_y' do
-          expect(arc.y_result_adjustment(1,1)).to eq(193.0)
+          expect(arc.y_result_adjustment(1, 1)).to eq(193.0)
         end
       end
-
     end
 
     describe '#x_result_adjustment' do
       context 'when #x_adjust_positive? is false' do
-        before(:each){allow(arc).to receive(:x_adjust_positive?){false}}
+        before(:each) { allow(arc).to receive(:x_adjust_positive?) { false } }
 
         it 'should subtract y_result from middle_y' do
-          expect(arc.x_result_adjustment(1,1)).to eq(112.0)
+          expect(arc.x_result_adjustment(1, 1)).to eq(112.0)
         end
       end
 
       context 'when #x_adjust_positive? is true' do
-        before(:each){allow(arc).to receive(:x_adjust_positive?){true}}
+        before(:each) { allow(arc).to receive(:x_adjust_positive?) { true } }
 
         it 'should add y_result from middle_y' do
-          expect(arc.x_result_adjustment(1,1)).to eq(114.0)
+          expect(arc.x_result_adjustment(1, 1)).to eq(114.0)
         end
       end
     end
 
     describe '#generate_coordinates' do
       it 'must output a hash of the adjusted x and y coordinates' do
-        allow(arc).to receive(:x_result_adjustment){5.0035}
-        allow(arc).to receive(:y_result_adjustment){7.0034}
-        expect(arc.generate_coordinates(0,50,50)).to eq({x_value: 5.004, y_value: 7.003})
+        allow(arc).to receive(:x_result_adjustment) { 5.0035 }
+        allow(arc).to receive(:y_result_adjustment) { 7.0034 }
+        expect(arc.generate_coordinates(0, 50, 50)).to eq(x_value: 5.004, y_value: 7.003)
       end
     end
 
     describe '#angle_base_coords' do
       it 'must find the coordinates for a given angle' do
-        expect(arc.angle_base_coords(1.5708)).to eq({:x_value=>112.999, :y_value=>344.0})
+        expect(arc.angle_base_coords(1.5708)).to eq(x_value: 112.999, y_value: 195.5)
       end
     end
 
     describe '#angle1_coordinates' do
       it 'must call angle_base_coords' do
-        allow(arc).to receive(:angle_base_coords){|e| e}
+        allow(arc).to receive(:angle_base_coords) { |e| e }
         expect(arc.angle1_coordinates).to eq(arc.angle1)
       end
     end
 
     describe '#angle2_coordinates' do
       it 'must call angle_base_coords' do
-        allow(arc).to receive(:angle_base_coords){|e| e}
+        allow(arc).to receive(:angle_base_coords) { |e| e }
         expect(arc.angle2_coordinates).to eq(arc.angle2)
       end
     end
 
     describe '#angle1_x' do
       it 'must grab :x_value from @angle1_coordinates' do
-        allow(arc).to receive(:angle1_coordinates){{x_value: 55}}
+        allow(arc).to receive(:angle1_coordinates) { {x_value: 55 } }
         expect(arc.angle1_x).to eq(55)
       end
     end
 
     describe '#angle1_y' do
       it 'must grab :y_value from @angle1_coordinates' do
-        allow(arc).to receive(:angle1_coordinates){{y_value: 55}}
+        allow(arc).to receive(:angle1_coordinates) { {y_value: 55 } }
         expect(arc.angle1_y).to eq(55)
       end
     end
 
     describe '#angle2_x' do
       it 'must grab :x_value from @angle2_coordinates' do
-        allow(arc).to receive(:angle2_coordinates){{x_value: 55}}
+        allow(arc).to receive(:angle2_coordinates) { {x_value: 55 } }
         expect(arc.angle2_x).to eq(55)
       end
     end
 
     describe '#angle2_y' do
       it 'must grab :y_value from @angle2_coordinates' do
-        allow(arc).to receive(:angle2_coordinates){{y_value: 55}}
+        allow(arc).to receive(:angle2_coordinates) { {y_value: 55 } }
         expect(arc.angle2_y).to eq(55)
       end
     end
 
     describe '#slope_of_angles' do
       it 'must calculate the slope value from the angles' do
-        expect(arc.slope_of_angles).to eq(-0.0)
+        expect(arc.slope_of_angles).to eq(-2.245508982035907)
       end
     end
 
     describe '#b_value_for_line' do
       it 'must calculate the b value of the line equation from its angles' do
-        expect(arc.b_value_for_line).to eq(194.0  )
+        expect(arc.b_value_for_line).to eq(449.2402694610754)
       end
     end
 
     describe '#vertical_check' do
       context 'if angle_x is same as input' do
         it 'must return :on' do
-          allow(arc).to receive(:angle1_x){55}
+          allow(arc).to receive(:angle1_x) { 55 }
           expect(arc.vertical_check(55)).to eq(:on)
         end
       end
 
       context 'if angle_x is less than input' do
         it 'must return :above' do
-          allow(arc).to receive(:angle1_x){1}
+          allow(arc).to receive(:angle1_x) { 1 }
           expect(arc.vertical_check(55)).to eq(:above)
         end
       end
 
       context 'if angle_x is more than input' do
         it 'must return :below' do
-          allow(arc).to receive(:angle1_x){100}
+          allow(arc).to receive(:angle1_x) { 100 }
           expect(arc.vertical_check(55)).to eq(:below)
         end
       end
     end
 
     describe '#normal_above_below_check' do
-      before(:each){allow(arc).to receive(:b_value_for_line){0}}
+      before(:each) { allow(arc).to receive(:b_value_for_line) { 0 } }
 
       context 'if right_side_of_equation is same as y_input' do
         it 'must return :on' do
@@ -442,12 +441,12 @@ describe Shoes::Arc do
     end
 
     describe '#above_below_on' do
-      before(:each){allow(arc).to receive(:vertical_check){|x| x}}
-      before(:each){allow(arc).to receive(:normal_above_below_check){|x,y| [x,y]}}
+      before(:each) { allow(arc).to receive(:vertical_check) { |x| x } }
+      before(:each) { allow(arc).to receive(:normal_above_below_check) { |x, y| [x, y] } }
 
       context 'when mx_value over a million' do
         context 'when #slope_of_angles is positive' do
-          before(:each){allow(arc).to receive(:slope_of_angles){1}}
+          before(:each) { allow(arc).to receive(:slope_of_angles) { 1 } }
 
           it 'must call and return #vertical_check' do
             expect(arc.above_below_on(6_000_000, 100)).to eq(6_000_000)
@@ -455,7 +454,7 @@ describe Shoes::Arc do
         end
 
         context 'when #slope_of_angles is negative' do
-          before(:each){allow(arc).to receive(:slope_of_angles){-1}}
+          before(:each) { allow(arc).to receive(:slope_of_angles) { -1 } }
 
           it 'must call and return #vertical_check' do
             expect(arc.above_below_on(-6_000_000, 100)).to eq(-6_000_000)
@@ -465,24 +464,24 @@ describe Shoes::Arc do
 
       context 'when mx_value under a million' do
         it 'must call #normal_above_below_check' do
-          allow(arc).to receive(:slope_of_angles){1}
+          allow(arc).to receive(:slope_of_angles) { 1 }
           expect(arc.above_below_on(60, 100)).to eq([60, 100])
         end
       end
     end
 
     describe '#in_bounds?' do
-      context 'when #inside_oval?? is false' do
-        it 'must return nil' do
-          allow(arc).to receive(:inside_oval??){false}
-          expect(arc.in_bounds?(1,1)).to eq(nil)
+      context 'when #inside_oval? is false' do
+        it 'must return false' do
+          allow(arc).to receive(:inside_oval?) { false }
+          expect(arc.in_bounds?(1, 1)).to eq(false)
         end
       end
 
-      context 'when #inside_oval?? is true' do
-        it 'must return nil' do
-          allow(arc).to receive(:inside_oval??){true}
-          expect(arc.in_bounds?(1,1)).to eq(nil)
+      context 'when #inside_oval? is true' do
+        it 'must return false' do
+          allow(arc).to receive(:inside_oval?) { true }
+          expect(arc.in_bounds?(1, 1)).to eq(false)
         end
       end
     end

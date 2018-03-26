@@ -41,8 +41,7 @@ class Shoes
     end
 
     def oval_axis_fraction(axis, input, difference = 0)
-      # x_side = (((x - middle_x)**2).to_f / radius_x**2)
-      (((input - send("middle_#{axis}")) ** 2).to_f / ((send("radius_#{axis}") - difference) ** 2))
+      (((input - send("middle_#{axis}"))**2).to_f / ((send("radius_#{axis}") - difference)**2))
     end
 
     def inner_oval_axis_fraction(axis, input)
@@ -50,6 +49,10 @@ class Shoes
     end
 
     def inside_oval?(x, y)
+      # https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
+      #    (x - h)**2    (y - k)**2
+      #     -------    +  -------   <=   1
+      #      Rx ** 2      Ry ** 2
       (oval_axis_fraction(:x, x) + oval_axis_fraction(:y, y)) <= 1
     end
 
@@ -69,7 +72,7 @@ class Shoes
       adjusted_angle = input_angle + 1.5708
 
       # Must make angle 0..6.28318
-      adjusted_angle = normalize_angle(adjusted_angle)
+      normalize_angle(adjusted_angle)
     end
 
     def y_adjust_negative?(input_angle)
@@ -106,14 +109,18 @@ class Shoes
       }
     end
 
+    def tangent_squared(input_angle)
+      tan(input_angle)**2
+    end
+
     def angle_base_coords(given_angle)
       # https://math.stackexchange.com/questions/22064/calculating-a-point-that-lies-on-an-ellipse-given-an-angle
-      # The above link was used in creating this method...but the implementation varies due to nature of shoes
+      # The above link was used in creating this method...but this implementation varies due to nature of coordinates in shoes
       modded_angle = adjust_angle(given_angle)
       top_of_equation = (radius_x * radius_y)
 
-      x_result = top_of_equation / (((radius_y**2) + ((radius_x**2) / (tan(modded_angle)**2)))**0.5)
-      y_result = top_of_equation / (((radius_x**2) + ((radius_y**2) * (tan(modded_angle)**2)))**0.5)
+      x_result = top_of_equation / ((radius_y**2) + ((radius_x**2) / tangent_squared(modded_angle))**0.5)
+      y_result = top_of_equation / ((radius_x**2) + ((radius_y**2) * tangent_squared(modded_angle))**0.5)
 
       generate_coordinates(modded_angle, x_result, y_result)
     end
@@ -197,19 +204,20 @@ class Shoes
       end
     end
 
-    def angle1_smaller_check(x,y)
+    def angle2_x_smaller_check(x, y)
       above_below_on(x, y) == :below && angle1_x > angle2_x
     end
 
-    def angle2_smaller_check(x,y)
+    def angle1_x_smaller_check(x, y)
       above_below_on(x, y) == :above && angle1_x < angle2_x
     end
 
     def on_shaded_part?(x, y)
-      angle1_smaller_check(x,y) || angle2_smaller_check(x,y)
+      angle1_x_smaller_check(x, y) || angle2_x_smaller_check(x, y)
     end
 
-    def standard_arc_bounds_check(x,y)
+    def standard_arc_bounds_check(x, y)
+      # Check if it is in the oval, and then if on correct side of the line between points
       inside_oval?(x, y) && on_shaded_part?(x, y)
     end
 
@@ -218,18 +226,14 @@ class Shoes
     end
 
     def calculate_inner_oval_difference
-      difference = style[:strokewidth].to_i * 2
-
-      difference = 4 if difference < 4
-
-      difference.to_f / 2
+      [style[:strokewidth].to_f, 3.0].max
     end
 
     def in_bounds?(x, y)
-      bounds_check = standard_arc_bounds_check(x,y)
+      bounds_check = standard_arc_bounds_check(x, y)
 
       if bounds_check && !style[:fill]
-
+        # If no fill, then it is just the edge and needs a further check
         bounds_check = !inside_inner_oval?(x, y)
       end
 
