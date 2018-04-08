@@ -204,19 +204,19 @@ class Shoes
       end
     end
 
-    def angle2_x_smaller_check(x, y)
-      above_below_on(x, y) == :below && angle1_x > angle2_x
-    end
-
     def angle1_x_smaller_check(x, y)
       above_below_on(x, y) == :above && angle1_x < angle2_x
+    end
+
+    def angle2_x_smaller_check(x, y)
+      above_below_on(x, y) == :below && angle1_x > angle2_x
     end
 
     def on_shaded_part?(x, y)
       angle1_x_smaller_check(x, y) || angle2_x_smaller_check(x, y)
     end
 
-    def standard_arc_bounds_check(x, y)
+    def standard_arc_bounds_check?(x, y)
       # Check if it is in the oval, and then if on correct side of the line between points
       inside_oval?(x, y) && on_shaded_part?(x, y)
     end
@@ -230,7 +230,7 @@ class Shoes
     end
 
     def in_bounds?(x, y)
-      bounds_check = standard_arc_bounds_check(x, y)
+      bounds_check = standard_arc_bounds_check?(x, y)
 
       if bounds_check && !style[:fill]
         # If no fill, then it is just the edge and needs a further check
