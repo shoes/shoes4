@@ -16,7 +16,8 @@ describe Shoes::Swt::Common::Painter do
   let(:dsl) do
     double 'dsl', parent: parent, visible?: true, positioned?: true, style: {},
                   element_left: 0, element_top: 0, element_bottom: 0,
-                  element_width: 0, element_height: 0
+                  element_width: 0, element_height: 0,
+                  translate_left: 0, translate_top: 0
   end
 
   let(:event) { double 'paint event', gc: graphics_context }

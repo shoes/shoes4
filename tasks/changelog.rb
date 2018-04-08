@@ -81,10 +81,10 @@ class Changelog
   end
 
   def changes_under_heading(title, commits)
-    if commits.any?
-      heading = heading(title, commits.length)
-      heading << commits.join("\n")
-    end
+    return if commits.empty?
+
+    heading = heading(title, commits.length)
+    heading << commits.join("\n")
   end
 
   def contributors(commit_range)

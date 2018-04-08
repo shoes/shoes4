@@ -37,7 +37,6 @@ end
 require 'shoes/core/version'
 require 'shoes/packager'
 
-require 'shoes/renamed_delegate'
 require 'shoes/common/image_handling'
 require 'shoes/common/inspect'
 require 'shoes/dimension'
@@ -57,6 +56,8 @@ require 'shoes/dsl/interaction'
 require 'shoes/dsl/media'
 require 'shoes/dsl/text'
 
+require 'shoes/common/safely_evaluate'
+
 require 'shoes/common/attachable'
 require 'shoes/common/changeable'
 require 'shoes/common/clickable'
@@ -67,7 +68,6 @@ require 'shoes/common/link_finder'
 require 'shoes/common/positioning'
 require 'shoes/common/remove'
 require 'shoes/common/rotate'
-require 'shoes/common/safely_evaluate'
 require 'shoes/common/state'
 require 'shoes/common/stroke'
 require 'shoes/common/style'
@@ -122,18 +122,13 @@ require 'shoes/timer'
 require 'shoes/window'
 
 class Shoes
-  # Methods for creating and manipulating Shoes elements
+  # Methods for creating and manipulating elements from Shoes applications.
+  # The DSL methods define the primary interface into Shoes for people writing
+  # their own Shoes apps.
   #
-  # Requirements
-  #
-  # Including classes must provide:
-  #
-  #   @__app__
-  #
-  #   which provides
-  #     #style:          a hash of styles
-  #     #element_styles: a hash of {Class => styles}, where styles is
-  #                      a hash of default styles for elements of Class,
+  # For ease of maintenance, the DSL methods are defined in their own
+  # submodules which are included into Shoes::DSL for surfacing in the Shoes
+  # runtime context.
   module DSL
     include Color::DSLHelpers
 

@@ -5,9 +5,9 @@ class Shoes
     module Font
       class << self
         def add_font(path)
-          if File.exist? path
-            ::Shoes::Font.add_font_to_fonts(path) if load_font(path)
-          end
+          return unless File.exist?(path) && load_font(path)
+
+          ::Shoes::Font.add_font_to_fonts(path)
         end
 
         def setup_fonts

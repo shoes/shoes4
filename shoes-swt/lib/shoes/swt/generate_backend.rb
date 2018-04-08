@@ -6,26 +6,26 @@ class Shoes
   module SelectedBackend
     class << self
       def validate
-        if RUBY_ENGINE != "jruby"
-          puts <<~EOS
+        return if RUBY_ENGINE == "jruby"
 
-            *******************************************************************************
-            The shoes-swt backend requires a 9.X version of JRuby.
+        puts <<~EOS
 
-            You are running the following Ruby instead:
+          *******************************************************************************
+          The shoes-swt backend requires a 9.X version of JRuby.
 
-              #{RUBY_DESCRIPTION}
+          You are running the following Ruby instead:
 
-            Please download JRuby from http://jruby.org (or your favorite Ruby version
-            manager), then check our https://github.com/shoes/shoes4#installing-shoes-4 to
-            get Shoes installed.
+            #{RUBY_DESCRIPTION}
 
-            Sorry for the inconvenience!
-            *******************************************************************************
+          Please download JRuby from http://jruby.org (or your favorite Ruby version
+          manager), then check our https://github.com/shoes/shoes4#installing-shoes-4 to
+          get Shoes installed.
+
+          Sorry for the inconvenience!
+          *******************************************************************************
 
 EOS
-          exit 1
-        end
+        exit 1
       end
 
       def generate(path)

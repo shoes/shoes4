@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 class Shoes
+  # Arc.  A basic element representing a curve of a circle or an oval.
+  #
+  # @example A simple arc which describes the bottom half of a circle and uses the centered style.
+  #   arc 200, 200, 100, 100, 0, Shoes::PI, center: true
+  # @example An arc which describes the top half of a circle.
+  #   arc 200, 200, 100, 100, Shoes::PI, 0
+  # @note Angle is the gradient angle used across all art elements. Angle1/2 are the angles of
+  #   the arc itself!
+  # @note The angle passed in is measured in Radians starting at 90 degrees or the 3 o'clock position.
   class Arc < Common::ArtElement
     include Math
     # angle is the gradient angle used across all art elements
@@ -22,6 +31,32 @@ class Shoes
 
     def wedge?
       wedge
+    end
+
+     # Access the center point of the arc.
+    #
+    # @return [Shoes::Point] A point at the center of the arc.
+    # @example
+    #   my_point = my_arc.center_point
+    def center_point
+      center_x = left + (element_width * 0.5).to_i
+      center_y = top + (element_height * 0.5).to_i
+      Point.new(center_x, center_y)
+    end
+
+    # Set the center point of an arc.
+    #
+    # @param point [Shoes::Point] the point to set as the center of the arc.
+    # @example Set an arc's center point at the [x, y] coordinates [100, 300]
+    #   my_arc.center_point = Shoes::Point.new(100, 300)
+    def center_point=(point)
+      if style[:center]
+        self.left = point.x
+        self.top = point.y
+      else
+        self.left = point.x - (width * 0.5).to_i
+        self.top = point.y - (height * 0.5).to_i
+      end
     end
 
     def radius_x

@@ -21,7 +21,7 @@ group :development do
   gem "listen"
 
   gem "pry"
-  gem "pry-nav"
+  gem "pry-debugger-jruby"
 
   gem "rake"
   gem "rspec", "~>3.6.0"

@@ -7,6 +7,8 @@ xdir = 1
 ydir = 1
 
 Shoes.app width: 300, height: 300 do
+  background lightgray
+
   a = nil
   button('toggle') { a.toggle }
   button('stop') { a.stop }

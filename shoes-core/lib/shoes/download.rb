@@ -104,10 +104,10 @@ class Shoes
     end
 
     def try_progress(size)
-      if should_mark_progress?(size)
-        @transferred = size
-        mark_progress
-      end
+      return unless should_mark_progress?(size)
+
+      @transferred = size
+      mark_progress
     end
 
     def mark_progress

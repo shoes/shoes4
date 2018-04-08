@@ -104,12 +104,12 @@ EOS
       end
 
       def redraw(left = nil, top = nil, width = nil, height = nil, all = true)
-        unless @real.disposed?
-          if left.nil? || top.nil? || width.nil? || height.nil?
-            @real.redraw
-          else
-            @real.redraw(left, top, width, height, all)
-          end
+        return if @real.disposed?
+
+        if left.nil? || top.nil? || width.nil? || height.nil?
+          @real.redraw
+        else
+          @real.redraw(left, top, width, height, all)
         end
       end
 

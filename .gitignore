@@ -48,6 +48,7 @@ docs-*
 spec/test_app/pkg
 testing
 tmp/*
+app/tmp/*
 bin/shoes-backend
 shoes-core/bin/shoes-backend
 

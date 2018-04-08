@@ -10,7 +10,7 @@ Shoes.app width: 420, height: 420, resizable: false do
   sw = 1.0
   basesize = 600
   step = 60
-  stroke white(100)
+  stroke blue(100)
   nofill
 
   animate 40 do |i|

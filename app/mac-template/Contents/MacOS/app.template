@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+JRUBY_VERSION="@@JRUBY_VERSION@@"
+JRE_VERSION="jre1.8.0_131"
+
+export JRUBY_OPTS="-J-XstartOnFirstThread $JRUBY_OPTS"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PLUGIN_DIR="$DIR/../PlugIns"
+
+export PATH="$PLUGIN_DIR/$JRUBY_VERSION/bin:$PATH"
+
+# Check if we've got java available, download if not
+java -version > /dev/null
+if [ $? != 0 ]; then
+
+  # See if we already have a downloaded JRE we can use
+  if [ ! -d ~/.shoes/jre ]; then
+    mkdir -p ~/.shoes
+
+    # Download a JRE
+    pushd ~/.shoes
+    curl -L https://github.com/shoes/mac-app-templates/releases/download/$JRE_VERSION/$JRE_VERSION.tar.gz > jre.tar.gz
+    tar -zxvf jre.tar.gz
+    mv ~/.shoes/$JRE_VERSION.jre ~/.shoes/jre
+    popd
+  fi
+
+  export JAVA_HOME=~/.shoes/jre/Contents/Home/
+fi
+
+jruby -S shoes-swt $DIR/../PlugIns/Shoes/shoes_app.rb

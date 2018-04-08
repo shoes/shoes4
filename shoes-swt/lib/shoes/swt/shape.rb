@@ -13,9 +13,7 @@ class Shoes
       # Creates a new Shoes::Swt::Shape
       #
       # @param [Shoes::Shape] dsl The dsl object to provide gui for
-      # @param [Hash] opts Initialization options
-      #   If this shape is part of another shape (i.e. it is not responsible
-      #   for drawing itself), `opts` should be omitted
+      # @param [Shoes::Swt::App] app The app element of this shape
       def initialize(dsl, app)
         @dsl = dsl
         @app = app

@@ -46,14 +46,14 @@ class Shoes
     end
 
     def ensure_backend_loaded
-      unless defined?(Shoes.configuration.backend::App)
-        backend_const = Shoes.load_backend(Shoes.configuration.backend_name)
-        backend_const.initialize_backend
-      end
+      return if defined?(Shoes.configuration.backend::App)
+
+      backend_const = Shoes.load_backend(Shoes.configuration.backend_name)
+      backend_const.initialize_backend
     end
 
-    attr_reader :gui, :top_slot, :app, :dimensions,
-                :mouse_motion, :owner, :element_styles, :resize_callbacks
+    attr_reader :gui, :top_slot, :app, :dimensions, :owner, :mouse_motion,
+                :element_styles, :remove_styles, :resize_callbacks
 
     attr_writer :width, :height
 
@@ -84,7 +84,7 @@ class Shoes
     end
 
     def started?
-      gui && gui.started?
+      gui&.started?
     end
 
     def add_child(_child)
@@ -113,6 +113,16 @@ class Shoes
     # Necessary for click/mouse positioning checks
     def hidden?
       false
+    end
+
+    def click
+      super
+      @app
+    end
+
+    def release
+      super
+      @app
     end
 
     def add_mouse_hover_control(element)
@@ -195,6 +205,7 @@ class Shoes
     def set_initial_attributes
       @style                = default_styles
       @element_styles       = {}
+      @remove_styles        = []
       @mouse_motion         = []
       @mouse_button         = 0
       @mouse_pos            = [0, 0]

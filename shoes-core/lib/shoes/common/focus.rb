@@ -5,6 +5,7 @@ class Shoes
     module Focus
       def focus
         @gui.focus
+        self
       end
 
       def focused?

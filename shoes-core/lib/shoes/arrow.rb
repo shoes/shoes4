@@ -18,23 +18,28 @@ class Shoes
       gui.update_position
     end
 
+    # Redrawing needs a bit of extra room. We offset by this factor, then
+    # extend our size by twice that to evenly surround the whole thing.
+    REDRAW_OFFSET_FACTOR = 2
+    REDRAW_SIZING_FACTOR = REDRAW_OFFSET_FACTOR * 2
+
     # Our locations are nonstandard, so let redrawing and gradient know
     def redraw_left
       return 0 unless element_left
-      element_left - width * 0.5 - style[:strokewidth].to_i
+      element_left - width * 0.5 - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_top
       return 0 unless element_top
-      element_top - width * 0.4 - style[:strokewidth].to_i
+      element_top - width * 0.4 - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_width
-      width + style[:strokewidth].to_i * 2
+      width + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def redraw_height
-      width + style[:strokewidth].to_i * 2
+      width + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def gradient_left

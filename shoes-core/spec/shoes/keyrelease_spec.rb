@@ -10,4 +10,13 @@ describe Shoes::Keyrelease do
   it "should clear" do
     expect(keyrelease).to respond_to(:remove)
   end
+
+  describe "dsl" do
+    it "returns app, not the handler" do
+      returned = dsl.keyrelease do
+      end
+
+      expect(returned).to eq(user_facing_app)
+    end
+  end
 end

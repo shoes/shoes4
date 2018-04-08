@@ -6,22 +6,11 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 5
-Lint/AmbiguousBlockAssociation:
-  Exclude:
-    - 'shoes-core/spec/shoes/dimensions_spec.rb'
-    - 'shoes-core/spec/shoes/shared_examples/slot.rb'
-    - 'shoes-swt/spec/shoes/swt/shared_examples/clickable.rb'
-
 # Offense count: 2
 Lint/HandleExceptions:
   Exclude:
     - 'shoes-core/lib/shoes/packager.rb'
-
-# Offense count: 2
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'shoes-core/lib/shoes/app.rb'
+    - 'app/shoes_app.rb'
 
 # Offense count: 1
 Lint/NestedMethodDefinition:
@@ -106,41 +95,9 @@ Naming/AccessorMethodName:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 1
-# Configuration parameters: SupportedStyles.
-# SupportedStyles: annotated, template
-Style/FormatStringToken:
-  EnforcedStyle: template
-
-# Offense count: 35
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Enabled: false
-
 # Offense count: 3
 Style/MethodMissing:
   Exclude:
     - 'shoes-core/lib/shoes/app.rb'
     - 'shoes-core/lib/shoes/list_box.rb'
     - 'shoes-swt/lib/shoes/swt/disposed_protection.rb'
-
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil.
-Style/SafeNavigation:
-  Exclude:
-    - 'shoes-core/lib/shoes/color/hex_converter.rb'
-    - 'shoes-core/lib/shoes/common/rotate.rb'
-    - 'shoes-core/lib/shoes/console.rb'
-    - 'shoes-core/lib/shoes/dimension.rb'
-    - 'shoes-core/lib/shoes/dimensions.rb'
-    - 'shoes-core/lib/shoes/internal_app.rb'
-    - 'shoes-core/lib/shoes/text.rb'
-    - 'shoes-swt/lib/shoes/swt/text_block.rb'
-
-# Offense count: 16
-# Cop supports --auto-correct.
-# Configuration parameters: MinSize, SupportedStyles.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: brackets

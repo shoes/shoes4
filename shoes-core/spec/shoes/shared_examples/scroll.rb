@@ -36,9 +36,10 @@ shared_examples_for "scrollable slot" do
     end
 
     describe "when not scrolling" do
+      include_context "quiet logging"
+
       before do
         subject.scroll = false
-        allow(Shoes.logger).to receive(:warn)
       end
 
       it "can't set scroll position" do

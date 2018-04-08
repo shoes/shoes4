@@ -6,7 +6,7 @@ xdir = 1
 ydir = 1
 
 Shoes.app do
-  background "#DFA"
+  background green
   border black, strokewidth: 6
 
   nostroke

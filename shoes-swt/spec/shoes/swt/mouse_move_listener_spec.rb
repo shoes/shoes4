@@ -3,6 +3,8 @@
 require 'spec_helper'
 
 describe Shoes::Swt::MouseMoveListener do
+  include_context "quiet logging"
+
   let(:app) do
     double 'SWT App', dsl: dsl_app, shell: shell,
                       clickable_elements: clickable_elements
@@ -145,6 +147,22 @@ describe Shoes::Swt::MouseMoveListener do
         expect(element2).to receive(:mouse_hovered).ordered
         subject.mouse_move(mouse_event)
       end
+    end
+  end
+
+  describe 'failure' do
+    let(:mouse_motion) do
+      [proc { raise "heck" }]
+    end
+
+    it 'catches errors' do
+      Shoes.configuration.fail_fast = false
+      subject.mouse_move(mouse_event)
+    end
+
+    it 'raises errors' do
+      Shoes.configuration.fail_fast = true
+      expect { subject.mouse_move(mouse_event) }.to raise_error(RuntimeError)
     end
   end
 end

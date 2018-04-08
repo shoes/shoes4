@@ -44,6 +44,10 @@ Performance/UnfreezeString:
   Exclude:
     - 'tasks/changelog.rb'
 
+# We don't care about the performance of 10.times.map vs Array.new(10) {|i|...}
+Performance/TimesMap:
+  Enabled: false
+
 # We don't care if we do kind_of? or is_a?
 Style/ClassCheck:
   Enabled: false
@@ -72,6 +76,10 @@ Style/Next:
 # We like to be flexible if we want to add in interpolation
 # see discussion #859
 Style/StringLiterals:
+  Enabled: false
+
+# We don't care if you use %i or literal symbol arrays
+Style/SymbolArray:
   Enabled: false
 
 # We like the flexibility of adding additional items to the hash

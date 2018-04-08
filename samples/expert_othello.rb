@@ -28,11 +28,11 @@ module Othello
 
     def next_turn(check_available_moves = true)
       @current_player = next_player
-      if check_available_moves && skip_turn?
-        # FIXME: Possible infinite loop if neither player has a good move?
-        next_turn
-        raise "Player #{@current_player.piece} (#{@current_player.color}) has no available moves. Player #{next_player.piece}'s (#{next_player.color}) turn."
-      end
+      return unless check_available_moves && skip_turn?
+
+      # FIXME: Possible infinite loop if neither player has a good move?
+      next_turn
+      raise "Player #{@current_player.piece} (#{@current_player.color}) has no available moves. Player #{next_player.piece}'s (#{next_player.color}) turn."
     end
 
     def current_player
@@ -87,9 +87,9 @@ module Othello
       current_player.pieces -= 1
       @board[c[0]][c[1]] = piece
       current_winner = calculate_current_winner
-      if (@p1.pieces + @p2.pieces).zero?
-        raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!"
-      end
+
+      return if (@p1.pieces + @p2.pieces).nonzero?
+      raise "Game over. Player #{current_winner.piece} wins with #{current_winner.pieces_on_board} pieces!"
     end
 
     def skip_turn?

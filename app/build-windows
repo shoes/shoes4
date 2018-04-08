@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+JRUBY_VERSION=$(cat ../.ruby-version | sed 's/jruby-//')
+SHOES_VERSION=$(cat ../VERSION)
+
+echo "Building for JRuby $JRUBY_VERSION and Shoes $SHOES_VERSION"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Make a place to work in...
+mkdir -p $DIR/tmp
+
+BUILD_DIR=$DIR/tmp/Shoes4-windows
+rm -rf $BUILD_DIR
+rm $BUILD_DIR.zip
+
+cp -r $DIR/windows-template $BUILD_DIR
+pushd $BUILD_DIR
+
+# Put the Shoes app in there
+mkdir app
+cp ../../*.rb ./app
+cp ../../*.png ./app
+
+# Get our app script templated out right
+sed "s/@@JRUBY_VERSION@@/jruby-$JRUBY_VERSION/g" ./Shoes4.template > ./Shoes4.bat
+
+# Get me a JRuby
+curl -s https://repo1.maven.org/maven2/org/jruby/jruby-dist/$JRUBY_VERSION/jruby-dist-$JRUBY_VERSION-bin.tar.gz > ./jruby.tar.gz
+tar -C . -xvf ./jruby.tar.gz
+
+# Get me some Shoes!
+./jruby-$JRUBY_VERSION/bin/jruby -S gem install shoes -v $SHOES_VERSION
+
+# Clean up after ourselves
+rm ./jruby.tar.gz
+rm ./*.template
+
+cd ..
+zip -r Shoes4-windows.zip Shoes4-windows
+
+popd

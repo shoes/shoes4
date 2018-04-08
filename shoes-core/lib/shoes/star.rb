@@ -37,30 +37,51 @@ class Shoes
         element_top - dy <= y && y <= element_bottom - dy
     end
 
+    # Redrawing needs a bit of extra room. We offset by this factor, then
+    # extend our size by twice that to evenly surround the whole thing.
+    REDRAW_OFFSET_FACTOR = 4
+    REDRAW_SIZING_FACTOR = REDRAW_OFFSET_FACTOR * 2
+
     def redraw_left
       return 0 unless element_left
-      if center
-        element_left - width * 0.5 - style[:strokewidth].to_i
-      else
-        super
-      end
+      calculated_left = element_left
+      calculated_left -= width * 0.5 if center
+      calculated_left - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_top
       return 0 unless element_top
-      if center
-        element_top - width * 0.5 - style[:strokewidth].to_i
-      else
-        super
-      end
+      calculated_top = element_top
+      calculated_top -= width * 0.5 if center
+      calculated_top - strokewidth.ceil * REDRAW_OFFSET_FACTOR
     end
 
     def redraw_width
-      element_width + style[:strokewidth].to_i * 2
+      element_width + strokewidth.ceil * REDRAW_SIZING_FACTOR
     end
 
     def redraw_height
-      element_height + style[:strokewidth].to_i * 2
+      element_height + strokewidth.ceil * REDRAW_SIZING_FACTOR
+    end
+
+    def center_point
+      if style[:center]
+        Point.new(left, top)
+      else
+        center_x = left + (element_width * 0.5).to_i
+        center_y = top + (element_height * 0.5).to_i
+        Point.new(center_x, center_y)
+      end
+    end
+
+    def center_point=(point)
+      if style[:center]
+        self.left = point.x
+        self.top = point.y
+      else
+        self.left = point.x - (width * 0.5).to_i
+        self.top = point.y - (height * 0.5).to_i
+      end
     end
   end
 end

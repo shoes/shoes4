@@ -351,4 +351,21 @@ describe Shoes::Swt::Keypress do
       it_behaves_like 'accepts normal characters'
     end
   end
+
+  describe 'failure' do
+    let(:key) { double('key', character: 106, stateMask: 0, keyCode: 106.ord) }
+    let(:block) { proc { raise "heck" } }
+
+    include_context "quiet logging"
+
+    it 'catches by default' do
+      Shoes.configuration.fail_fast = false
+      subject.handle_key_event(key)
+    end
+
+    it 'raises when failing fast' do
+      Shoes.configuration.fail_fast = true
+      expect { subject.handle_key_event(key) }.to raise_error(RuntimeError)
+    end
+  end
 end

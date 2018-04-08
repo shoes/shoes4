@@ -170,7 +170,7 @@ describe Shoes::Star do
   end
 
   describe "redrawing region" do
-    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 0) }
+    subject { Shoes::Star.new(app, parent, 100, 100, 5, 50, 30, center: false, strokewidth: 1) }
 
     before do
       # faux positioning
@@ -179,27 +179,66 @@ describe Shoes::Star do
     end
 
     it "positions around itself" do
-      expect(subject.redraw_left).to eq(100)
-      expect(subject.redraw_top).to eq(100)
-      expect(subject.redraw_width).to eq(100)
-      expect(subject.redraw_height).to eq(100)
+      expect(subject.redraw_left).to eq(96)
+      expect(subject.redraw_top).to eq(96)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
     end
 
     it "positions centered around itself" do
       subject.center = true
-      expect(subject.redraw_left).to eq(50)
-      expect(subject.redraw_top).to eq(50)
-      expect(subject.redraw_width).to eq(100)
-      expect(subject.redraw_height).to eq(100)
+      expect(subject.redraw_left).to eq(46)
+      expect(subject.redraw_top).to eq(46)
+      expect(subject.redraw_width).to eq(108)
+      expect(subject.redraw_height).to eq(108)
+    end
+
+    it "factors in strokewidth" do
+      subject.strokewidth = 4
+      expect(subject.redraw_left).to eq(84)
+      expect(subject.redraw_top).to eq(84)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
     end
 
     it "factors in strokewidth when centered" do
       subject.center = true
       subject.strokewidth = 4
-      expect(subject.redraw_left).to eq(46)
-      expect(subject.redraw_top).to eq(46)
-      expect(subject.redraw_width).to eq(108)
-      expect(subject.redraw_height).to eq(108)
+      expect(subject.redraw_left).to eq(34)
+      expect(subject.redraw_top).to eq(34)
+      expect(subject.redraw_width).to eq(132)
+      expect(subject.redraw_height).to eq(132)
+    end
+  end
+
+  describe "center_point" do
+    it "should return the center point of the star" do
+      a_star = Shoes::Star.new(app, parent, 125, 175, 5, 50, 30, center: false, strokewidth: 0)
+      expect(a_star.center_point).to eq(Shoes::Point.new(175, 225))
+    end
+
+    it "should correctly return the center point of a centered star" do
+      centered_star = Shoes::Star.new(app, parent, 100, 50, 5, 50, 30, center: true, strokewidth: 0)
+      expect(centered_star.center_point).to eq(Shoes::Point.new(100, 50))
+    end
+
+    it "should handle stars initialized with nil dimensions" do
+      nil_star = Shoes::Star.new(app, parent, 100, nil, 0, nil, nil, center: false, strokewidth: 0)
+      expect(nil_star.center_point).to eq(Shoes::Point.new(200, 100))
+    end
+  end
+
+  describe "center_point=" do
+    it "should set a new center_point" do
+      a_star = Shoes::Star.new(app, parent, 125, 175, 5, 50, 30, center: false, strokewidth: 10)
+      a_star.center_point = Shoes::Point.new(80, 90)
+      expect(a_star.center_point).to eq(Shoes::Point.new(80, 90))
+    end
+
+    it "should correctly handle a centered star" do
+      centered_star = Shoes::Star.new(app, parent, 125, 175, 5, 50, 30, center: true)
+      centered_star.center_point = Shoes::Point.new(80, 90)
+      expect(centered_star.center_point).to eq(Shoes::Point.new(80, 90))
     end
   end
 end

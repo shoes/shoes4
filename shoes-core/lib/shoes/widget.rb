@@ -79,14 +79,14 @@ class Shoes
     end
 
     def self.warn_about_initialize
-      if instance_method(:initialize).owner != Shoes::Widget
-        Shoes.logger.warn <<~EOS
-          You've defined an `initialize` method on class '#{self}'. This is no longer supported.
-                Your widget likely won't display, and you'll potentially receive argument errors.
+      return if instance_method(:initialize).owner == Shoes::Widget
 
-                Instead, define `initialize_widget` and we'll call it from your generated widget method.
-        EOS
-      end
+      Shoes.logger.warn <<~EOS
+        You've defined an `initialize` method on class '#{self}'. This is no longer supported.
+              Your widget likely won't display, and you'll potentially receive argument errors.
+
+              Instead, define `initialize_widget` and we'll call it from your generated widget method.
+      EOS
     end
   end
 end

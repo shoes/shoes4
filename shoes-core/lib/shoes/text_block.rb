@@ -70,6 +70,8 @@ class Shoes
       @text        = texts.map(&:to_s).join
       @contents    = texts
       @text_styles = gather_text_styles(self, texts)
+
+      self
     end
 
     def to_s

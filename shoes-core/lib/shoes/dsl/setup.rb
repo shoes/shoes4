@@ -7,6 +7,7 @@ class Shoes
     #
     # @example
     #   Shoes.setup do
+    #     # This runs, but gem doesn't do anything anymore!
     #     gem 'bluecloth =2.0.6'
     #     gem 'metaid'
     #   end
@@ -21,7 +22,7 @@ class Shoes
 
     # Load the backend in memory. This does not set any configuration.
     #
-    # @param name [String|Symbol] The name, such as :swt or :mock
+    # @param name [String,Symbol] The name, such as :swt or :mock
     # @return The backend
     def load_backend(name)
       require "shoes/#{name.to_s.downcase}"
@@ -31,6 +32,7 @@ class Shoes
     end
   end
 
+  # @private
   class DeprecatedShoesGemSetup
     def gem(name)
       name, version = name.split

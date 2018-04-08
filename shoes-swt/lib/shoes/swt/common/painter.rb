@@ -42,7 +42,7 @@ class Shoes
           graphics_context.set_transform(@obj.transform)
 
           obj = @obj.dsl
-          clip_context_to(graphics_context, obj.parent, obj.parent.fixed_height?) do
+          clip_context_to(graphics_context, obj, obj.parent.fixed_height?) do
             if obj.needs_rotate?
               set_rotate graphics_context, obj.rotate,
                          obj.element_left + obj.element_width / 2.0,
@@ -82,20 +82,20 @@ class Shoes
           angle = angle.to_i
           left = left.to_i
           top = top.to_i
-          if block_given?
-            begin
-              transform = ::Swt::Transform.new Shoes.display
+          return unless block_given?
 
-              # Why the negative angle? Older shoes rotated from the middle
-              # right running counter clockwise (as seen on this web page:
-              # https://www.mathsisfun.com/geometry/degrees.html). To get the
-              # same effect, we have to negate the value passed in.
-              reset_rotate transform, graphics_context, -angle, left, top
-              yield
-              reset_rotate transform, graphics_context, angle, left, top
-            ensure
-              transform.dispose unless transform.nil? || transform.disposed?
-            end
+          begin
+            transform = ::Swt::Transform.new Shoes.display
+
+            # Why the negative angle? Older shoes rotated from the middle
+            # right running counter clockwise (as seen on this web page:
+            # https://www.mathsisfun.com/geometry/degrees.html). To get the
+            # same effect, we have to negate the value passed in.
+            reset_rotate transform, graphics_context, -angle, left, top
+            yield
+            reset_rotate transform, graphics_context, angle, left, top
+          ensure
+            transform.dispose unless transform.nil? || transform.disposed?
           end
         end
 

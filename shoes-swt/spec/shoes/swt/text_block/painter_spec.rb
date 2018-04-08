@@ -5,8 +5,13 @@ require 'spec_helper'
 describe Shoes::Swt::TextBlock::Painter do
   include_context "swt app"
 
+  let(:dsl) do
+    double("dsl", app: shoes_app, gui: gui, parent: parent,
+                  translate_left: 0, translate_top: 0,
+                  hidden?: false)
+  end
+
   let(:parent) { double("parent", absolute_left: 0, absolute_top: 0, height: 100, width: 200) }
-  let(:dsl)    { double("dsl", app: shoes_app, gui: gui, parent: parent, hidden?: false) }
   let(:gui)    { double("gui", dispose: nil, segments: segment_collection) }
   let(:segment_collection) { double("segment collection", empty?: false) }
 

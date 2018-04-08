@@ -4,7 +4,7 @@ shared_examples_for "Slot" do
   it "should be able to append" do
     expect(subject.contents).to be_empty
     our_subject = subject
-    app.execute_block proc { our_subject.append { para "foo" } }
+    app.execute_block(proc { our_subject.append { para "foo" } })
     expect(subject.contents.size).to eq(1)
   end
 
@@ -15,9 +15,7 @@ shared_examples_for "Slot" do
   end
 
   describe "exception handling in block" do
-    before do
-      allow(Shoes.logger).to receive(:error) # Shhhhhhh
-    end
+    include_context "quiet logging"
 
     def append
       subject.append do

@@ -44,7 +44,8 @@ describe Shoes::Common::Style do
   let(:initial_style) do
     {
       key: 'value', left: 15, click: nil, strokewidth: 1, fill: blue, margin: [0, 0, 0, 0],
-      margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0
+      margin_left: 0, margin_top: 0, margin_right: 0, margin_bottom: 0,
+      rotate: 0, stroke: Shoes::COLORS[:black]
     }
   end
 
@@ -195,5 +196,20 @@ describe Shoes::Common::Style do
 
     its(:hover_blk) { should eq(hover_blk) }
     its(:leave_blk) { should eq(leave_blk) }
+  end
+
+  describe 'removing styles' do
+    it 'drops defaults' do
+      user_facing_app.nofill
+      expect(subject.style[:fill]).to be_nil
+    end
+
+    it 'clears removal if fill is set again' do
+      user_facing_app.nofill
+      expect(StyleTester.new(app).style[:fill]).to be_nil
+
+      user_facing_app.fill(Shoes::COLORS[:red])
+      expect(StyleTester.new(app).style[:fill]).to eq(Shoes::COLORS[:red])
+    end
   end
 end
