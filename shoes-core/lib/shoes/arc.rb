@@ -33,7 +33,7 @@ class Shoes
       wedge
     end
 
-     # Access the center point of the arc.
+    # Access the center point of the arc.
     #
     # @return [Shoes::Point] A point at the center of the arc.
     # @example
@@ -154,8 +154,8 @@ class Shoes
       modded_angle = adjust_angle(given_angle)
       top_of_equation = (radius_x * radius_y)
 
-      x_result = top_of_equation / ((radius_y**2) + ((radius_x**2) / tangent_squared(modded_angle))**0.5)
-      y_result = top_of_equation / ((radius_x**2) + ((radius_y**2) * tangent_squared(modded_angle))**0.5)
+      x_result = top_of_equation / (((radius_y**2) + ((radius_x**2) / tangent_squared(modded_angle)))**0.5)
+      y_result = top_of_equation / (((radius_x**2) + ((radius_y**2) * tangent_squared(modded_angle)))**0.5)
 
       generate_coordinates(modded_angle, x_result, y_result)
     end

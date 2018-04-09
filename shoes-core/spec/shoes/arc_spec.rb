@@ -364,7 +364,7 @@ describe Shoes::Arc do
 
     describe '#angle_base_coords' do
       it 'must find the coordinates for a given angle' do
-        expect(arc.angle_base_coords(1.5708)).to eq(x_value: 112.999, y_value: 195.5)
+        expect(arc.angle_base_coords(1.5708)).to eq(x_value: 112.999, y_value: 344.0)
       end
     end
 
@@ -412,14 +412,14 @@ describe Shoes::Arc do
 
     describe '#slope_of_angles' do
       it 'must calculate the slope value from the angles' do
-        expect(arc.slope_of_angles).to eq(-2.245508982035907)
+        expect(arc.slope_of_angles).to eq(-1.4999850001499984)
       end
     end
 
     describe '#b_value_for_line' do
       context 'when #mx_value is not infinity' do
         it 'must calculate the b value of the line equation from its angles' do
-          expect(arc.b_value_for_line).to eq(449.2402694610754)
+          expect(arc.b_value_for_line).to eq(513.4968050319496)
         end
       end
 
@@ -618,46 +618,146 @@ describe Shoes::Arc do
       end
     end
 
-
     describe '#inner_oval_difference' do
       it 'must call #calculate_inner_oval_difference only once' do
         allow(arc).to receive(:calculate_inner_oval_difference) { 1 }
-        arc.should_receive(:calculate_inner_oval_difference).once
+        expect(arc).to receive(:calculate_inner_oval_difference).once
         arc.inner_oval_difference
         arc.inner_oval_difference
       end
     end
 
     describe '#in_bounds?' do
-      context 'when #standard_arc_bounds_check? is false' do
-        it 'must return false' do
-          allow(arc).to receive(:standard_arc_bounds_check?) { false }
-          expect(arc.in_bounds?(1, 1)).to eq(false)
-        end
-      end
+      context 'without stubbing methods' do
+        context 'with fill' do
+          context 'with standard angles' do
+            let(:test_arc) { Shoes::Arc.new(app, parent, 30, 30, 360, 360, 0.0, 4.71238898038469) }
+            context 'when point is inside the arc' do
+              it 'must return true' do
+                expect(test_arc.in_bounds?(245.0, 158.0)).to eq(true)
+              end
+            end
 
-      context 'when #standard_arc_bounds_check? is true' do
-        before(:each) { allow(arc).to receive(:standard_arc_bounds_check?) { true } }
-        context 'when #style[:fill] is present' do
-          it 'must return false' do
-            allow(arc).to receive(:style) { {fill: 1} }
-            expect(arc.in_bounds?(1, 1)).to eq(true)
+            context 'when point is outside the arc' do
+              it 'must return false' do
+                expect(test_arc.in_bounds?(215.0, 31.0)).to eq(false)
+              end
+            end
+          end
+
+          context 'with negative angles' do
+            let(:test_arc) { Shoes::Arc.new(app, parent, 30, 30, 360, 360, -7.330382858376184, -5.759586531581287) }
+            context 'when point is inside the arc' do
+              it 'must return true' do
+                expect(test_arc.in_bounds?(350.0, 170.0)).to eq(true)
+              end
+            end
+
+            context 'when point is outside the arc' do
+              it 'must return false' do
+                expect(test_arc.in_bounds?(385.0, 305.0)).to eq(false)
+              end
+            end
+          end
+
+          context 'with an angle over 2 PI' do
+            let(:test_arc) { Shoes::Arc.new(app, parent, 210, 210, 200, 200, 6.8067840827778845, 5.235987755982989) }
+            context 'when point is inside the arc' do
+              it 'must return true' do
+                expect(test_arc.in_bounds?(295.0, 239.0)).to eq(true)
+              end
+            end
+
+            context 'when point is outside the arc' do
+              it 'must return false' do
+                expect(test_arc.in_bounds?(385.0, 305.0)).to eq(false)
+              end
+            end
           end
         end
 
-        context 'when #style[:fill] is nil' do
-          before(:each) { allow(arc).to receive(:style) { {} } }
-          context 'when #inside_inner_oval? is false' do
-            it 'must return true' do
-              allow(arc).to receive(:inside_inner_oval?) { false }
+        context 'with fill' do
+          context 'with standard angles' do
+            let(:test_arc) { Shoes::Arc.new(app, parent, 30, 30, 360, 360, 0.0, 4.71238898038469) }
+            before(:each) { allow(test_arc).to receive(:style) { {fill: nil} } }
+            context 'when point is inside the arc' do
+              it 'must return true' do
+                expect(test_arc.in_bounds?(210.5, 30.5)).to eq(true)
+              end
+            end
+
+            context 'when point is outside the arc' do
+              it 'must return false' do
+                expect(test_arc.in_bounds?(245.0, 158.0)).to eq(false)
+              end
+            end
+          end
+
+          context 'with negative angles' do
+            let(:test_arc) { Shoes::Arc.new(app, parent, 30, 30, 360, 360, -7.330382858376184, -5.759586531581287) }
+            before(:each) { allow(test_arc).to receive(:style) { {fill: nil} } }
+            context 'when point is inside the arc' do
+              it 'must return true' do
+                expect(test_arc.in_bounds?(301, 55)).to eq(true)
+              end
+            end
+
+            context 'when point is outside the arc' do
+              it 'must return false' do
+                expect(test_arc.in_bounds?(350.0, 170.0)).to eq(false)
+              end
+            end
+          end
+
+          context 'with an angle over 2 PI' do
+            let(:test_arc) { Shoes::Arc.new(app, parent, 210, 210, 200, 200, 6.8067840827778845, 5.235987755982989) }
+            before(:each) { allow(test_arc).to receive(:style) { {fill: nil} } }
+            context 'when point is inside the arc' do
+              it 'must return true' do
+                expect(test_arc.in_bounds?(210.0, 310.0)).to eq(true)
+              end
+            end
+
+            context 'when point is outside the arc' do
+              it 'must return false' do
+                expect(test_arc.in_bounds?(295.0, 239.0)).to eq(false)
+              end
+            end
+          end
+        end
+      end
+
+      context 'with stubging methods' do
+        context 'when #standard_arc_bounds_check? is false' do
+          it 'must return false' do
+            allow(arc).to receive(:standard_arc_bounds_check?) { false }
+            expect(arc.in_bounds?(1, 1)).to eq(false)
+          end
+        end
+
+        context 'when #standard_arc_bounds_check? is true' do
+          before(:each) { allow(arc).to receive(:standard_arc_bounds_check?) { true } }
+          context 'when #style[:fill] is present' do
+            it 'must return false' do
+              allow(arc).to receive(:style) { {fill: 1} }
               expect(arc.in_bounds?(1, 1)).to eq(true)
             end
           end
 
-          context 'when #inside_inner_oval? is true' do
-            it 'must return false' do
-              allow(arc).to receive(:inside_inner_oval?) { true }
-              expect(arc.in_bounds?(1, 1)).to eq(false)
+          context 'when #style[:fill] is nil' do
+            before(:each) { allow(arc).to receive(:style) { {} } }
+            context 'when #inside_inner_oval? is false' do
+              it 'must return true' do
+                allow(arc).to receive(:inside_inner_oval?) { false }
+                expect(arc.in_bounds?(1, 1)).to eq(true)
+              end
+            end
+
+            context 'when #inside_inner_oval? is true' do
+              it 'must return false' do
+                allow(arc).to receive(:inside_inner_oval?) { true }
+                expect(arc.in_bounds?(1, 1)).to eq(false)
+              end
             end
           end
         end
