@@ -84,14 +84,21 @@ class Shoes
     end
 
     def inside_oval?(x, y)
-      # https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
+      # The following equation (https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse)
+      #
       #    (x - h)**2    (y - k)**2
       #     -------    +  -------   <=   1
       #      Rx ** 2      Ry ** 2
+      #
+      # The above equation determines if a pair of coordinates are located in an oval.
+      # Rx = Radius X; Ry = Radius Y; h,k is the origin; x,y are the input coordinate
       (oval_axis_fraction(:x, x) + oval_axis_fraction(:y, y)) <= 1
     end
 
     def inside_inner_oval?(x, y)
+      # For use when style[:fill] is nil, meaning it is just the edge of the arc
+      # This uses shared code with #inside_oval? to check if a point is also inside a second smaller oval.
+      # The smaller oval signifies the no_fill area of the arc
       x_side = inner_oval_axis_fraction(:x, x)
       y_side = inner_oval_axis_fraction(:y, y)
       x_side + y_side <= 1
@@ -111,14 +118,17 @@ class Shoes
     end
 
     def y_adjust_negative?(input_angle)
-      ((input_angle >= 0) && (input_angle <= 1.5708)) || ((input_angle >= 4.71239) && (input_angle <= 6.28319))
+      in_first_quater = (0..Shoes::HALF_PI).cover?(input_angle)
+      in_last_quarter = ((Shoes::HALF_PI * 3)..Shoes::TWO_PI).cover?(input_angle)
+      in_first_quater || in_last_quarter
     end
 
     def x_adjust_positive?(input_angle)
-      (input_angle >= 0) &&  (input_angle <= 3.14159)
+      (0..Math::PI).cover?(input_angle)
     end
 
     def y_result_adjustment(input_angle, y_result)
+      # This checks which way from center the angle is
       if y_adjust_negative?(input_angle)
         middle_y - y_result
       else
@@ -127,6 +137,7 @@ class Shoes
     end
 
     def x_result_adjustment(input_angle, x_result)
+      # This checks which way from center the angle is
       if x_adjust_positive?(input_angle)
         middle_x + x_result
       else
@@ -135,6 +146,7 @@ class Shoes
     end
 
     def generate_coordinates(input_angle, x_result, y_result)
+      # This turns results on distance from center into actual coordinates
       x_result = x_result_adjustment(input_angle, x_result).round(3)
       y_result = y_result_adjustment(input_angle, y_result).round(3)
 
@@ -149,17 +161,22 @@ class Shoes
     end
 
     def angle_base_coords(given_angle)
-      # https://math.stackexchange.com/questions/22064/calculating-a-point-that-lies-on-an-ellipse-given-an-angle
-      # The above link was used in creating this method...but this implementation varies due to nature of coordinates in shoes
+      # First the angle must be rotated to work with shoes, also be normalized into the 0..2PI range
       modded_angle = adjust_angle(given_angle)
+
+      # https://math.stackexchange.com/questions/22064/calculating-a-point-that-lies-on-an-ellipse-given-an-angle
+      # The above link was used in creating the below formula to find the point values from the center
+
       top_of_equation = (radius_x * radius_y)
 
       x_result = top_of_equation / (((radius_y**2) + ((radius_x**2) / tangent_squared(modded_angle)))**0.5)
       y_result = top_of_equation / (((radius_x**2) + ((radius_y**2) * tangent_squared(modded_angle)))**0.5)
 
+      # With distance from center for x and y found, we turn that into coordinates:
       generate_coordinates(modded_angle, x_result, y_result)
     end
 
+    # The following angle coordinate methods are to simply clean up code
     def angle1_coordinates
       @angle1_coordinates ||= angle_base_coords(angle1)
     end
@@ -194,6 +211,7 @@ class Shoes
       # THEN  b = y - mx
       mx_value = (angle1_x * slope_of_angles)
 
+      # If value of mx is Infinity, the line is horizontal, just return angle1_y
       if mx_value == Float::INFINITY
         angle1_y
       else
@@ -202,7 +220,7 @@ class Shoes
     end
 
     def vertical_check(x_input)
-      # The above/below are
+      # Since line is vertical, we can just compare x values and map to "above" or "below"
       if angle1_x == x_input
         :on
       elsif angle1_x < x_input
@@ -213,41 +231,48 @@ class Shoes
     end
 
     def normal_above_below_check(mx_value, y_input)
-      right_side_of_equation = mx_value + b_value_for_line
+      # SINCE y = mx + b
+      # We solve for where the y value is for the line between the arc's angles given the slope * input x
+      y_value_arc_line = mx_value + b_value_for_line
 
-      if right_side_of_equation == y_input
-        # If input y is same...input is on the line
+      if y_value_arc_line == y_input
+        # If input y is same as y on the arc line ...input is on the line
         :on
-      elsif right_side_of_equation > y_input
-        # If input y is more, point is above the line
+      elsif y_value_arc_line > y_input
+        # If input y is more than y on the arc line, point is above the line
         :above
       else
-        # If input y is less, point is below the line
+        # If input y is less than y on the arc line, point is below the line
         :below
       end
     end
 
     def above_below_on(x_input, y_input)
+      # SINCE y = mx + b
+      # We get mx_value of the line between arc points at the input of x
       mx_value = (x_input * slope_of_angles)
 
       if mx_value.abs > 1_000_000.00
-        # If line is straight up and down..compare with x value to an x coordinate
+        # If line is straight up and down, compare with x value to an x coordinate
         vertical_check(x_input)
       else
-        # If standard slope...find what the y value would be given the input x
+        # If standard slope...find what the y value between arc points would be given the input x
         normal_above_below_check(mx_value, y_input)
       end
     end
 
     def angle1_x_smaller_check(x, y)
+      # if angle 1 is smaller, point should be above
       above_below_on(x, y) == :above && angle1_x < angle2_x
     end
 
     def angle2_x_smaller_check(x, y)
+      # if angle 2 is smaller, point should be below
       above_below_on(x, y) == :below && angle1_x > angle2_x
     end
 
     def on_shaded_part?(x, y)
+      # This checks if point is on the correct side of the oval, based on the lines between the arc points
       angle1_x_smaller_check(x, y) || angle2_x_smaller_check(x, y)
     end
 
@@ -257,6 +282,7 @@ class Shoes
     end
 
     def inner_oval_difference
+      # this calculates how much smaller the inner oval must be to test a no_fill oval
       @inner_oval_difference ||= calculate_inner_oval_difference
     end
 
