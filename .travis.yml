@@ -3,14 +3,22 @@ script:
   - bundle exec rake
 rvm:
   - jruby-head
-  - jruby-9.1.13.0
+  - jruby-9.1.17.0
+  - jruby-9.2.0.0
 jdk:
   - openjdk7
+  - openjdk8
   - oraclejdk8
+  - oraclejdk9
 matrix:
   allow_failures:
     - rvm: jruby-head
   fast_finish: true
+  exclude:
+    - rvm: jruby-9.2.0.0
+      jdk: openjdk7
+    - rvm: jruby-head
+      jdk: openjdk7
 notifications:
   irc: "irc.freenode.org#shoes"
   email:
