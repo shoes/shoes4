@@ -36,9 +36,9 @@ class Shoes
       # @example
       #   Shoes::Configuration.backend = :swt
       def backend=(name)
-        return if @backend_name == name
+        return if defined?(@backend_name) && @backend_name == name
 
-        unless @backend.nil?
+        if defined?(@backend) && !@backend.nil?
           raise "Can't switch backend to Shoes::#{name.capitalize}, Shoes::#{backend_name.capitalize} backend already loaded."
         end
         @backend_name ||= name
