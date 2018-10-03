@@ -24,7 +24,7 @@ class Shoes
           if @obj.dsl.visible? && @obj.dsl.positioned?
             paint_object graphics_context
           end
-        rescue => e
+        rescue StandardError => e
           raise e if ENV['SHOES_ENV'] == 'test'
 
           # Really important to rescue here. Failures that escape this method

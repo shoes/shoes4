@@ -210,7 +210,7 @@ class Shoes
       end
 
       update_current_position(current_position, element)
-    rescue => e
+    rescue StandardError => e
       raise e if ENV['SHOES_ENV'] == 'test'
 
       puts "SWALLOWED POSITIONING EXCEPTION ON #{element} - go take care of it: " + e.to_s

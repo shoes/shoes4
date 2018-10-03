@@ -55,7 +55,7 @@ class ShoesApp < Shoes
         destination = ShoesApp.navigation.pop(true)
         app.visit destination
       rescue ThreadError
-        # Empty queue, no worries...
+        Shoes.logger.info "Empty queue:\n#{e.message}"
       end
     end
   end

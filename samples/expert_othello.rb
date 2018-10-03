@@ -314,7 +314,7 @@ Shoes.app width: 520, height: 600 do
         GAME.lay_piece(coords)
         GAME.next_turn
         draw_board
-      rescue => e
+      rescue StandardError => e
         alert(e.message)
       end
     else

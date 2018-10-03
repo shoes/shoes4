@@ -132,12 +132,12 @@ class Shoes
       def self.merge_gems(base, additional)
         base_gems = begin
                       base.fetch(:gems)
-                    rescue
+                    rescue StandardError
                       base['gems']
                     end
         additional_gems = begin
                             additional.fetch(:gems)
-                          rescue
+                          rescue StandardError
                             additional['gems']
                           end
         Array(base_gems).concat(Array(additional_gems)).uniq

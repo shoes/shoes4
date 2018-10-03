@@ -8,7 +8,7 @@ class Shoes
       @backend = Shoes.backend_for(self)
       configure_gems
     rescue ArgumentError
-      # Packaging unsupported by this backend
+      Shoes.logger.info "Packaging unsupported by this backend:\n#{e.message}"
     end
 
     def options
@@ -30,8 +30,8 @@ class Shoes
 
       @backend.gems = ::Bundler.environment.specs.map(&:name) - ["shoes"]
     rescue Bundler::GemfileNotFound
-      # Ok to be quiet since we didn't even have a Gemfile
-    rescue => e
+      return
+    rescue StandardError => e
       Shoes.logger.error "Looking up gems for packaging failed:\n#{e.message}"
     end
   end

@@ -24,7 +24,7 @@ class Shoes
           cleanup_files.each do |file|
             begin
               FileUtils.rm(file)
-            rescue => e
+            rescue StandardError => e
               Shoes.logger.debug("Error during image temp file cleanup.\n#{e.class}: #{e.message}")
             end
           end
