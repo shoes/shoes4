@@ -76,7 +76,7 @@ class Shoes
       if @text_block
         true
       else
-        @app.warn 'Stray link without TextBlock detected! Links have to be part of a text block like a para or title'
+        Shoes.logger.warn '`link` was called but not passed to a `para` or `title`. Please make sure all your `link` calls have a home in another text element!'
         false
       end
     end
