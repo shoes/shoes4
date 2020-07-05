@@ -14,7 +14,7 @@ class Shoes
       @dimensions = AbsoluteDimensions.new left, top, width, height, @style
     end
 
-    # Check out http://math.stackexchange.com/questions/60070/checking-whether-a-point-lies-on-a-wide-line-segment
+    # Check out https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
     # for explanations how the algorithm works
     def in_bounds?(x, y)
       radius_x = width.to_f / 2
