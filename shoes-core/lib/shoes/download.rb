@@ -89,7 +89,7 @@ class Shoes
           finish_download
         rescue SocketError => e
           Shoes.logger.error e
-        rescue => e
+        rescue StandardError => e
           eval_block(@error_blk, e)
         end
       end

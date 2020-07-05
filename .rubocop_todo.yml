@@ -6,29 +6,10 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-Lint/HandleExceptions:
-  Exclude:
-    - 'shoes-core/lib/shoes/packager.rb'
-    - 'app/shoes_app.rb'
-
 # Offense count: 1
 Lint/NestedMethodDefinition:
   Exclude:
     - 'shoes-core/lib/shoes/dialog.rb'
-
-# Offense count: 10
-Lint/RescueWithoutErrorClass:
-  Exclude:
-    - 'samples/expert_othello.rb'
-    - 'shoes-core/lib/shoes/common/safely_evaluate.rb'
-    - 'shoes-core/lib/shoes/download.rb'
-    - 'shoes-core/lib/shoes/packager.rb'
-    - 'shoes-core/lib/shoes/slot.rb'
-    - 'shoes-package/lib/shoes/package/configuration.rb'
-    - 'shoes-swt/lib/shoes/swt/common/image_handling.rb'
-    - 'shoes-swt/lib/shoes/swt/common/painter.rb'
-    - 'shoes-swt/lib/shoes/swt/sound.rb'
 
 # Offense count: 83
 Metrics/AbcSize:

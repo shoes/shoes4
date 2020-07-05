@@ -5,7 +5,7 @@ class Shoes
     module SafelyEvaluate
       def safely_evaluate(*args)
         yield(*args) if block_given?
-      rescue => e
+      rescue StandardError => e
         Shoes.logger.error(e.message)
         raise e if Shoes.configuration.fail_fast
       end
