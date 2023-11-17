@@ -31,7 +31,7 @@ The look and feel will differ for your operating system, as Shoes 4 uses native 
 
 ## Some history about Shoes
 
-Way way back in the day, there was a guy named \_why. He created a project known as [Hackety Hack](http://hackety-hack.com) to teach programming to everyone. In order to reach all corners of the earth, \_why decided to make Hackety Hack work on Windows, Mac OS X, and Linux. This was a lot of work, and so \_why decided to share his toolkit with the world. Thus, Shoes was born.
+Way way back in the day, there was a guy named \_why. He created a project known as [Hackety Hack](https://github.com/hacketyhack/hacketyhack) to teach programming to everyone. In order to reach all corners of the earth, \_why decided to make Hackety Hack work on Windows, Mac OS X, and Linux. This was a lot of work, and so \_why decided to share his toolkit with the world. Thus, Shoes was born.
 
 ## Preview Version
 
