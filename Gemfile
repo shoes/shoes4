@@ -14,6 +14,8 @@ gem 'furoshiki', git: 'https://github.com/shoes/furoshiki'
 
 gem 'shoes-highlighter'
 gem 'shoes-manual'
+gem 'matrix'
+gem 'glimmer-dsl-swt', '~> 4.30.1.1'
 
 group :development do
   gem "guard"
@@ -21,13 +23,13 @@ group :development do
   gem "listen"
 
   gem "pry"
-  gem "pry-debugger-jruby"
+  # pry-debugger-jruby is not compatible with JRuby 9.4 - removed for compatibility
 
   gem "rake"
-  gem "rspec", "~>3.6.0"
+  gem "rspec", "~>3.12.0"
   gem "rspec-its", "~>1.2.0"
 
-  gem "rubocop", "0.50.0"
+  gem "rubocop", "~>1.50.0"
 
   gem 'benchmark-ips'
   gem "codeclimate-test-reporter", "~> 1.0"

@@ -41,17 +41,29 @@ Hi there, thanks for checking by! Shoes 4 is in the preview stage. It currently 
 
 There are two ways to get your hands on Shoes 4 - the preview gem release and installing it straight from github. For both you need a current [JRuby](http://www.jruby.org/) installation.
 
-We recommend using JRuby 9.X+, with the majority of our testing currently against 9.1. JRuby 1.7.x *may* work, but has been untested since 4.0.0.pre6.
+We recommend using JRuby 9.4.8.0+ for modern systems. JRuby 9.1.x is supported but requires Java 8.
 
 ### Get a JDK and JRuby
 
 So your first step is to install a [JDK](http://www.oracle.com/technetwork/java/javase/downloads/) (shoes also works with [OpenJDK](http://openjdk.java.net/)) and [JRuby](http://jruby.org). Make sure to grab the appropriate JRuby version for your operating system. On Linux/Mac you can also use ruby installation tools to install JRuby. For instance [rvm](http://rvm.io/):
 
-    $ rvm install jruby
+    $ rvm install jruby-9.4.8.0
 
-**JDK version note:** JRuby version 9 requires a JDK version of **7 or 8** - **JDK 9 does not yet work with JRuby** and therefore not with Shoes.  Also within the JDK major version make sure to have the latest updates installed, we had cases where newer versions resolved bugs.
+**JDK version compatibility:**
+- **JRuby 9.1.x** requires Java 8 specifically
+- **JRuby 9.4.x** (recommended) supports Java 8, 11, 17, and 21
 
-**SWT requirement:** Be aware that Shoes 4 builds on [SWT](http://www.eclipse.org/swt/) for its default backend. That is usually no concern (other than the need for JRuby/JDK, described above) as you do not have to install SWT yourself. However, that means we have the same basic system requirements SWT does. For Linux that means you need GTK+ >= 2.10 or >= 3.0 if you like. Moreover, as of now there is no ARM support (as the Raspberry Pi would need).
+### 🎉 Native Apple Silicon (ARM64) Support
+
+Shoes 4 now runs natively on Apple Silicon Macs! If you have an M1/M2/M3 Mac:
+
+1. Install JRuby 9.4.8.0+ and Java 11+
+2. Use the ARM64-native launcher: `bin/shoes-arm64`
+3. See [README_ARM64.md](README_ARM64.md) for detailed setup instructions
+
+This provides native performance without Rosetta 2 emulation.
+
+**SWT requirement:** Shoes 4 builds on [SWT](http://www.eclipse.org/swt/) for its default backend. The included Glimmer DSL for SWT provides native ARM64 support for Apple Silicon Macs. For Linux, you need GTK+ >= 2.10 or >= 3.0.
 
 ### Installing Shoes 4 as a gem
 

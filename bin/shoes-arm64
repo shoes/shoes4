@@ -1,0 +1,23 @@
+#!/usr/bin/env jruby
+# Modern Shoes4 launcher for ARM64 Macs with Glimmer SWT
+
+require 'pathname'
+
+# Add Shoes to load path
+shoes_root = Pathname.new(__FILE__).dirname.parent
+$LOAD_PATH.unshift shoes_root.join('shoes-core/lib').to_s
+$LOAD_PATH.unshift shoes_root.join('shoes-swt/lib').to_s
+$LOAD_PATH.unshift shoes_root.join('lib').to_s
+
+# Load modern SWT with ARM64 support
+require 'shoes/swt_modern'
+
+# Run the app
+app_path = ARGV[0]
+if app_path && File.exist?(app_path)
+  load app_path
+else
+  puts "Usage: #{$0} <shoes_app.rb>"
+  puts "Example: #{$0} samples/simple_calc.rb"
+  exit 1
+end
